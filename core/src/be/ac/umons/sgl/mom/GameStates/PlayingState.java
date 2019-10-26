@@ -1,10 +1,12 @@
 package be.ac.umons.sgl.mom.GameStates;
 
+import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.GameKeys;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
+import be.ac.umons.sgl.mom.Interfaces.Animation;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
@@ -15,6 +17,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -31,6 +37,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     protected int mapHeight;
     protected int tileWidth;
     protected int tileHeight;
+
+    protected Map<String, Animation> animationsList;
 
     // Inspired from https://www.youtube.com/watch?v=zckxJn751Gw&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb&index=3&t=0s by dermetfan
     // Map showing inspired from https://www.youtube.com/watch?v=P8jgD-V5jG8&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt&index=6 by Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
@@ -78,12 +86,26 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         q2.finish();
         q3.activate();
         questShower.setQuest(q);
+
+        animationsList = new HashMap<>();
+        animateHUD();
     }
 
     @Override
     public void update(float dt) {
         handleInput();
         cam.update();
+
+        for (Animation a : animationsList.values()) {
+            a.update(dt);
+        }
+
+        for (Iterator<String> it = animationsList.keySet().iterator(); it.hasNext();) { // Done in 2 times because of ConcurrentModificationException
+            String key = it.next();
+            Animation a = animationsList.get(key);
+            if (a.isFinished())
+                it.remove();
+        }
     }
 
     @Override
@@ -122,5 +144,44 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void dispose() {
         map.dispose();
         itmr.dispose();
+    }
+
+    protected void animateHUD() {
+        animateInventoryShower(0);
+        animateQuestRectangle(0);
+    }
+
+    protected void animateQuestRectangle(float from) {
+        questShower.beginAnimation();
+        DoubleAnimation da = new DoubleAnimation(from, 1, 750);
+        da.setRunningAction(() -> {
+            questShower.setDuringAnimationQuestShowerWidth((int)((double)questShower.getQuestShowerWidth() * da.getActual()));
+            questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getQuestShowerHeight() * da.getActual()));
+            questShower.setDuringAnimationTextOpacity(da.getActual());
+        });
+        animationsList.put("QuestRectangleAnimation", da);
+        da.setEndingAction(() -> {
+            questShower.finishAnimation();
+        });
+    }
+
+    protected void animateInventoryShower(float from) {
+        inventoryShower.beginAnimation();
+        DoubleAnimation da = new DoubleAnimation(from, 1, 750);
+        da.setRunningAction(() -> {
+            inventoryShower.setDuringAnimationWidth((int)((double)inventoryShower.getMaximumWidth() * da.getActual()));
+            inventoryShower.setDuringAnimationHeight((int)((double)inventoryShower.getMaximumHeight() * da.getActual()));
+            inventoryShower.setDuringAnimationBackgroundOpacity(da.getActual());
+        });
+        animationsList.put("InventoryShowerAnimation", da);
+        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
+        da2.setEndingAction(() -> inventoryShower.finishAnimation());
+        da2.setRunningAction(() -> {
+            inventoryShower.setDuringAnimationForegroundOpacity(da2.getActual());
+        });
+        da.setEndingAction(() -> {
+            animationsList.put("InventoryShowerForegroundAnimation", da2);
+        });
+
     }
 }

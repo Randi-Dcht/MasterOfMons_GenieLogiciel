@@ -75,4 +75,43 @@ public class InventoryShower {
     public int getMaximumHeight() {
         return height;
     }
+
+    public void beginAnimation() {
+        isBeingAnimated = true;
+    }
+
+    public void finishAnimation() {
+        isBeingAnimated = false;
+    }
+
+    public double getDuringAnimationBackgroundOpacity() {
+        return duringAnimationBackgroundOpacity;
+    }
+
+    public void setDuringAnimationBackgroundOpacity(double duringAnimationBackgroundOpacity) {
+        this.duringAnimationBackgroundOpacity = duringAnimationBackgroundOpacity;
+    }
+
+    public double getDuringAnimationForegroundOpacity() {
+        return duringAnimationForegroundOpacity;
+    }
+    public void setDuringAnimationForegroundOpacity(double duringAnimationForegroundOpacity) {
+        this.duringAnimationForegroundOpacity = duringAnimationForegroundOpacity;
+    }
+
+    public float getDuringAnimationWidth() {
+        return duringAnimationWidth;
+    }
+
+    public void setDuringAnimationWidth(float duringAnimationWidth) {
+        this.duringAnimationWidth = duringAnimationWidth;
+    }
+
+    public float getDuringAnimationHeight() {
+        return duringAnimationHeight;
+    }
+
+    public void setDuringAnimationHeight(float duringAnimationHeight) {
+        this.duringAnimationHeight = duringAnimationHeight;
+    }
 }

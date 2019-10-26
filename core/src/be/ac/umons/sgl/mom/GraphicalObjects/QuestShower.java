@@ -29,8 +29,8 @@ public class QuestShower {
     protected float duringAnimationQuestShowerHeight, duringAnimationQuestShowerWidth;
     protected double duringAnimationTextOpacity;
     protected boolean isBeingAnimated;
-    protected int QuestShowerWidth;
-    protected int QuestShowerHeight;
+    protected int questShowerWidth;
+    protected int questShowerHeight;
     protected int circleRadius;
 
 
@@ -61,8 +61,8 @@ public class QuestShower {
     public void setQuest(Quest q) {
         questToShow = q;
         maximumQuestHeight = getMaximumQuestHeight(q);
-        QuestShowerWidth = getMaximumQuestNameWidth(q, 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN) + 2 * TEXT_AND_RECTANGLE_MARGIN;
-        QuestShowerHeight = getMaximumQuestHeight(q) + TEXT_AND_RECTANGLE_MARGIN * 2;
+        questShowerWidth = getMaximumQuestNameWidth(q, 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN) + 2 * TEXT_AND_RECTANGLE_MARGIN;
+        questShowerHeight = getMaximumQuestHeight(q) + TEXT_AND_RECTANGLE_MARGIN * 2;
     }
 
     // https://gamedev.stackexchange.com/a/115483
@@ -76,7 +76,7 @@ public class QuestShower {
         if (isBeingAnimated)
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - duringAnimationQuestShowerHeight + TEXT_AND_RECTANGLE_MARGIN, duringAnimationQuestShowerWidth, duringAnimationQuestShowerHeight);
         else
-            sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - QuestShowerHeight + TEXT_AND_RECTANGLE_MARGIN, QuestShowerWidth, QuestShowerHeight);
+            sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - questShowerHeight + TEXT_AND_RECTANGLE_MARGIN, questShowerWidth, questShowerHeight);
         drawQuestCircles(quest, x + TEXT_AND_RECTANGLE_MARGIN, y - (float)circleRadius, circleRadius);
         sr.end();
 
@@ -142,5 +142,45 @@ public class QuestShower {
         GlyphLayout layout = new GlyphLayout();
         layout.setText(gs.getQuestFont(), text);
         return new Point((int)layout.width, (int)layout.height);// contains the width of the current set text
+    }
+
+    public int getQuestShowerWidth() {
+        return questShowerWidth;
+    }
+
+    public int getQuestShowerHeight() {
+        return questShowerHeight;
+    }
+
+    public float getDuringAnimationQuestShowerHeight() {
+        return duringAnimationQuestShowerHeight;
+    }
+
+    public float getDuringAnimationQuestShowerWidth() {
+        return duringAnimationQuestShowerWidth;
+    }
+
+    public void setDuringAnimationQuestShowerHeight(float duringAnimationQuestShowerHeight) {
+        this.duringAnimationQuestShowerHeight = duringAnimationQuestShowerHeight;
+    }
+
+    public void setDuringAnimationQuestShowerWidth(float duringAnimationQuestShowerWidth) {
+        this.duringAnimationQuestShowerWidth = duringAnimationQuestShowerWidth;
+    }
+
+    public double getDuringAnimationTextOpacity() {
+        return duringAnimationTextOpacity;
+    }
+
+    public void setDuringAnimationTextOpacity(double duringAnimationTextOpacity) {
+        this.duringAnimationTextOpacity = duringAnimationTextOpacity;
+    }
+
+    public void beginAnimation() {
+        isBeingAnimated = true;
+    }
+
+    public void finishAnimation() {
+        isBeingAnimated = false;
     }
 }
