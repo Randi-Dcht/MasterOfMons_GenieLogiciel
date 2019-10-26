@@ -29,6 +29,7 @@ import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGL
 public class PlayingState extends GameState { // TODO : Put all disposes
     protected static final int SHOWED_MAP_WIDTH = 31;
     protected static final int SHOWED_MAP_HEIGHT = 17;
+    private final float VELOCITY = 500;
 
 //    protected static final String FINISHED_QUEST_INDICATOR = "<> ";
 //    protected static final String ACTIVATED_QUEST_INDICATOR = "<!> ";
@@ -108,6 +109,53 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             if (a.isFinished())
                 it.remove();
         }
+
+        makePlayerMove(dt);
+    }
+
+    protected void makePlayerMove(float dt) {
+        float middleHeight = SHOWED_MAP_HEIGHT * tileHeight / 2;
+        float middleWidth = SHOWED_MAP_WIDTH * tileWidth / 2;
+
+        int toMove = Math.round(VELOCITY * dt);
+        if (gim.isKey(GameKeys.Down, KeyStatus.Down)) {
+            player.setOrientation(Orientation.Bottom);
+            if (player.getYT() > 0)
+                player.translate(0, -toMove);
+            else if (cam.position.y > -middleHeight + player.getHeight())
+                cam.translate(0, -toMove);
+            else if (player.getYT() > -MasterOfMonsGame.HEIGHT / 2 ) // + inventoryShower.getMaximumHeight() si tu veux pas qu'il puisse aller derrière le HUD
+                player.translate(0, -toMove);
+        }
+        if (gim.isKey(GameKeys.Up, KeyStatus.Down)) {
+            player.setOrientation(Orientation.Top);
+            if (player.getYT() < 0)
+                player.translate(0, toMove);
+            else if (cam.position.y < -mapHeight + player.getHeight()) // CAUTION : Works here because tileHeight / 2 = 16 which is an int, won't work if that's not the case
+                cam.translate(0, toMove);
+            else if (player.getYT() < MasterOfMonsGame.HEIGHT / 2 - player.getHeight())
+                player.translate(0, toMove);
+        }
+
+        if (gim.isKey(GameKeys.Right, KeyStatus.Down)) {
+            player.setOrientation(Orientation.Right);
+            if (player.getXT() < 0)
+                player.translate(toMove, 0);
+            else if (cam.position.x < mapWidth * tileWidth - middleWidth) // CAUTION : Works here because tileWidth / 2 = 16 which is an int, won't work if that's not the case
+                cam.translate(toMove, 0);
+            else if (player.getXT() < MasterOfMonsGame.WIDTH / 2)
+                player.translate(toMove, 0);
+        }
+
+        if (gim.isKey(GameKeys.Left, KeyStatus.Down)) {
+            player.setOrientation(Orientation.Left);
+            if (player.getXT() > 0)
+                player.translate(-toMove, 0);
+            if (cam.position.x > middleWidth)
+                cam.translate(-toMove, 0);
+            else if (player.getXT() > -MasterOfMonsGame.WIDTH / 2)
+                player.translate(-toMove, 0);
+        }
     }
 
     @Override
@@ -125,51 +173,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     @Override
     public void handleInput() {
-        float middleHeight = SHOWED_MAP_HEIGHT * tileHeight / 2;
-        float middleWidth = SHOWED_MAP_WIDTH * tileWidth / 2;
-//        float middleHeight = MasterOfMonsGame.HEIGHT / 2;
-//        float middleWidth = MasterOfMonsGame.WIDTH / 2;
-
-        if (gim.isKey(GameKeys.Down, KeyStatus.Down)) {
-            player.setOrientation(Orientation.Bottom);
-            if (player.getYT() > 0)
-                player.translate(0, -10);
-            else if (cam.position.y > -middleHeight + player.getHeight())
-                cam.translate(0, -10);
-            else if (player.getYT() > -MasterOfMonsGame.HEIGHT / 2) //  + player.getHeight() si tu veux pas qu'il puisse aller derrière le HUD
-                player.translate(0, -10);
-        }
-
-        if (gim.isKey(GameKeys.Up, KeyStatus.Down)) {
-            player.setOrientation(Orientation.Top);
-            if (player.getYT() < 0)
-                player.translate(0, 10);
-            else if (cam.position.y < -mapHeight + player.getHeight()) // CAUTION : Works here because tileHeight / 2 = 16 which is an int, won't work if that's not the case
-                cam.translate(0, 10);
-            else if (player.getYT() < MasterOfMonsGame.HEIGHT / 2 - player.getHeight())
-                player.translate(0, 10);
-        }
-
-        if (gim.isKey(GameKeys.Right, KeyStatus.Down)) {
-            player.setOrientation(Orientation.Right);
-            if (player.getXT() < 0)
-                player.translate(10, 0);
-            else if (cam.position.x < mapWidth * tileWidth - middleWidth) // CAUTION : Works here because tileWidth / 2 = 16 which is an int, won't work if that's not the case
-                cam.translate(10, 0);
-            else if (player.getXT() < MasterOfMonsGame.WIDTH / 2)
-                player.translate(10, 0);
-        }
-
-        if (gim.isKey(GameKeys.Left, KeyStatus.Down)) {
-            player.setOrientation(Orientation.Left);
-            if (player.getXT() > 0)
-                player.translate(-10, 0);
-            if (cam.position.x > middleWidth)
-                cam.translate(-10, 0);
-            else if (player.getXT() > -MasterOfMonsGame.WIDTH / 2)
-                player.translate(-10, 0);
-        }
-
         if (gim.isKey(GameKeys.ESC, KeyStatus.Pressed)) {
             gsm.setState(GameStates.InGameMenu);
         }
