@@ -2,14 +2,19 @@ package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.GameKeys;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+
+import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
 public class PlayingState extends GameState { // TODO : Put all disposes
     protected static final int SHOWED_MAP_WIDTH = 31;
@@ -32,6 +37,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private TiledMap map;
     private IsometricTiledMapRenderer itmr;
     private OrthographicCamera cam;
+    private QuestShower questShower;
 
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -39,7 +45,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     @Override
     public void init() {
-
         sb = new SpriteBatch();
 
         map = new TmxMapLoader().load("Map/isoTest.tmx");
@@ -57,6 +62,16 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         cam.setToOrtho(false, tileWidth * SHOWED_MAP_WIDTH, tileHeight * SHOWED_MAP_HEIGHT); // Rend la map 31 * 17
         cam.translate(0, -SHOWED_MAP_HEIGHT * tileHeight / 2);
         cam.update();
+
+        questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
+        Quest q = new Quest("Test");
+        Quest q2 = new Quest("Test222222222222222222222");
+        Quest q3 = new Quest("Test3");
+        q.addSubQuests(q2, q3);
+        q2.finish();
+        q3.activate();
+
+        questShower.setQuest(q);
     }
 
     @Override
@@ -69,6 +84,11 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void draw() {
         itmr.setView(cam);
         itmr.render();
+        drawHud();
+    }
+
+    protected void drawHud() {
+        questShower.draw();
     }
 
     @Override
