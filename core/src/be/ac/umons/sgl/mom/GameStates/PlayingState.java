@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.GameKeys;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -40,6 +41,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private OrthographicCamera cam;
     private QuestShower questShower;
     private InventoryShower inventoryShower;
+    private Character player;
 
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -67,6 +69,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
         inventoryShower = new InventoryShower(sb, MasterOfMonsGame.WIDTH / 2, tileHeight, tileWidth, tileHeight);
+        player = new Character(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
 
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");
@@ -88,6 +91,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         itmr.setView(cam);
         itmr.render();
         drawHud();
+        player.draw(sb);
     }
 
     protected void drawHud() {
