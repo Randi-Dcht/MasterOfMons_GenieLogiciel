@@ -23,6 +23,10 @@ public class GameStateManager {
             case MainMenu:
                 gameStateStack.push(new MainMenuState(this, gim, gs));
                 break;
+            case Play:
+                gameStateStack.pop(); // Can be done because Menu would already be there...
+                gameStateStack.push(new PlayingState(this, gim, gs));
+                break;
             case InGameMenu:
                 gameStateStack.push(new InGameMenuState(this, gim, gs));
             default:
