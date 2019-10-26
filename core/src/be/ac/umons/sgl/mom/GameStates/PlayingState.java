@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.GameKeys;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -38,6 +39,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private IsometricTiledMapRenderer itmr;
     private OrthographicCamera cam;
     private QuestShower questShower;
+    private InventoryShower inventoryShower;
 
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -64,13 +66,14 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         cam.update();
 
         questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
+        inventoryShower = new InventoryShower(sb, MasterOfMonsGame.WIDTH / 2, tileHeight, tileWidth, tileHeight);
+
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");
         Quest q3 = new Quest("Test3");
         q.addSubQuests(q2, q3);
         q2.finish();
         q3.activate();
-
         questShower.setQuest(q);
     }
 
@@ -89,6 +92,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     protected void drawHud() {
         questShower.draw();
+        inventoryShower.draw();
     }
 
     @Override
