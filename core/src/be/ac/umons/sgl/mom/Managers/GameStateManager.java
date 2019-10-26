@@ -23,6 +23,8 @@ public class GameStateManager {
             case MainMenu:
                 gameStateStack.push(new MainMenuState(this, gim, gs));
                 break;
+            case InGameMenu:
+                gameStateStack.push(new InGameMenuState(this, gim, gs));
             default:
                 break;
         }
@@ -40,6 +42,5 @@ public class GameStateManager {
         for (GameState gs: gameStateStack) {
             gs.draw();
         }
-//        gameStateStack.peek().draw();
     }
 }
