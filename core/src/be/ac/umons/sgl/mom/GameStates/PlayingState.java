@@ -27,8 +27,8 @@ import java.util.Map;
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
 public class PlayingState extends GameState { // TODO : Put all disposes
-    protected static final int SHOWED_MAP_WIDTH = 31;
-    protected static final int SHOWED_MAP_HEIGHT = 17;
+    public static final int SHOWED_MAP_WIDTH = 31;
+    public static final int SHOWED_MAP_HEIGHT = 17;
     private final float VELOCITY = 500;
 
 //    protected static final String FINISHED_QUEST_INDICATOR = "<> ";
@@ -64,7 +64,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         map = new TmxMapLoader().load("Map/isoTest.tmx");
         tileWidth = (int)map.getProperties().get("tilewidth");
-        tileHeight = (int)map.getProperties().get("tileheight") * 2;
+        tileHeight = (int)map.getProperties().get("tileheight");
         mapWidth = (int)map.getProperties().get("width");
         mapHeight = (int)map.getProperties().get("height");
 
@@ -73,14 +73,13 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
 //        itmr = new OrthogonalTiledMapRenderer(map);
         itmr = new IsometricTiledMapRenderer(map);
-        cam = new OrthographicCamera();
-        cam.setToOrtho(false, tileWidth * SHOWED_MAP_WIDTH, tileHeight * SHOWED_MAP_HEIGHT); // Rend la map 31 * 17
-        cam.translate(0, -SHOWED_MAP_HEIGHT * tileHeight / 2);
+        System.out.println(itmr.getUnitScale());
+        cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
 
         questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
         inventoryShower = new InventoryShower(sb, MasterOfMonsGame.WIDTH / 2, tileHeight, tileWidth, tileHeight);
-        player = new Character(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
+        player = new Character(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
 
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");
@@ -97,7 +96,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     @Override
     public void update(float dt) {
         handleInput();
-        cam.update();
 
         for (Animation a : animationsList.values()) {
             a.update(dt);
@@ -111,51 +109,54 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         }
 
         makePlayerMove(dt);
+        cam.update();
     }
 
     protected void makePlayerMove(float dt) {
-        float middleHeight = SHOWED_MAP_HEIGHT * tileHeight / 2;
-        float middleWidth = SHOWED_MAP_WIDTH * tileWidth / 2;
-
         int toMove = Math.round(VELOCITY * dt);
+        int toMoveX = 0, toMoveY = 0;
+
         if (gim.isKey(GameKeys.Down, KeyStatus.Down)) {
             player.setOrientation(Orientation.Bottom);
-            if (player.getYT() > 0)
-                player.translate(0, -toMove);
-            else if (cam.position.y > -middleHeight + player.getHeight())
-                cam.translate(0, -toMove);
-            else if (player.getYT() > -MasterOfMonsGame.HEIGHT / 2 ) // + inventoryShower.getMaximumHeight() si tu veux pas qu'il puisse aller derrière le HUD
-                player.translate(0, -toMove);
+            toMoveY = -toMove;
         }
         if (gim.isKey(GameKeys.Up, KeyStatus.Down)) {
             player.setOrientation(Orientation.Top);
-            if (player.getYT() < 0)
-                player.translate(0, toMove);
-            else if (cam.position.y < -mapHeight + player.getHeight()) // CAUTION : Works here because tileHeight / 2 = 16 which is an int, won't work if that's not the case
-                cam.translate(0, toMove);
-            else if (player.getYT() < MasterOfMonsGame.HEIGHT / 2 - player.getHeight())
-                player.translate(0, toMove);
+            toMoveY = toMove;
         }
-
-        if (gim.isKey(GameKeys.Right, KeyStatus.Down)) {
-            player.setOrientation(Orientation.Right);
-            if (player.getXT() < 0)
-                player.translate(toMove, 0);
-            else if (cam.position.x < mapWidth * tileWidth - middleWidth) // CAUTION : Works here because tileWidth / 2 = 16 which is an int, won't work if that's not the case
-                cam.translate(toMove, 0);
-            else if (player.getXT() < MasterOfMonsGame.WIDTH / 2)
-                player.translate(toMove, 0);
-        }
-
         if (gim.isKey(GameKeys.Left, KeyStatus.Down)) {
             player.setOrientation(Orientation.Left);
-            if (player.getXT() > 0)
-                player.translate(-toMove, 0);
-            if (cam.position.x > middleWidth)
-                cam.translate(-toMove, 0);
-            else if (player.getXT() > -MasterOfMonsGame.WIDTH / 2)
-                player.translate(-toMove, 0);
+            toMoveX = -toMove;
         }
+        if (gim.isKey(GameKeys.Right, KeyStatus.Down)) {
+            player.setOrientation(Orientation.Right);
+            toMoveX = toMove;
+        }
+
+        player.move(toMoveX, toMoveY);
+        if ((toMoveX < 0 && player.getXT() > -toMoveX) || (toMoveX > 0 && player.getXT() < -toMoveX))
+            toMoveX = 0;
+        else if ((toMoveX < 0 && player.getXT() > 0) || (toMoveX > 0 && player.getXT() < 0))
+            toMoveX = player.getXT() + toMoveX;
+
+        if ((toMoveY < 0 && player.getYT() > -toMoveY) || (toMoveY > 0 && player.getYT() < -toMoveY))
+            toMoveY = 0;
+        else if ((toMoveY < 0 && player.getYT() > 0) || (toMoveY > 0 && player.getYT() < 0))
+            toMoveY = player.getYT() + toMoveY;
+
+        cam.translate(toMoveX, toMoveY);
+        if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
+            cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
+        else if (cam.position.x > (mapWidth - SHOWED_MAP_WIDTH) * tileWidth)
+            cam.position.x = (mapWidth - SHOWED_MAP_WIDTH) * tileWidth;
+
+        if (cam.position.y > 0)
+            cam.position.y = 0;
+        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight)
+            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight;
+
+//        System.out.println(player.getPosX() + " / " + cam.position.x);
+//        System.out.println(player.getPosY() + " / " + cam.position.y);
     }
 
     @Override
