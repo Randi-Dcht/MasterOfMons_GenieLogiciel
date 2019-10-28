@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="batiment" tilewidth="132" tileheight="127" tilecount="5" columns="0">
+<tileset name="batiment" tilewidth="149" tileheight="148" tilecount="6" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="132" height="127" source="buildingTiles_002.png"/>
@@ -15,5 +15,8 @@
  </tile>
  <tile id="4">
   <image width="99" height="85" source="buildingTiles_032.png"/>
+ </tile>
+ <tile id="5">
+  <image width="149" height="148" source="interdit.png"/>
  </tile>
 </tileset>
