@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.io.File;
-import java.io.FileFilter;
 
 public class GraphicalSettings {
     private BitmapFont titleFont;

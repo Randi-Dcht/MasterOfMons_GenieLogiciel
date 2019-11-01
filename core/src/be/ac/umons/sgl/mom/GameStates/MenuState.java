@@ -5,10 +5,11 @@ import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
-import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import static be.ac.umons.sgl.mom.MasterOfMonsGame.gs;
 
 public abstract class MenuState extends GameState {
 
@@ -21,8 +22,8 @@ public abstract class MenuState extends GameState {
     protected double topMargin;
     protected double betweenItemMargin;
 
-    public MenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public MenuState(GameStateManager gsm, GameInputManager gim) {
+        super(gsm, gim);
     }
 
     @Override

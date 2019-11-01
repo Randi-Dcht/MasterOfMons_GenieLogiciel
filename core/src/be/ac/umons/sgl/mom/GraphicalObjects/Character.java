@@ -1,14 +1,15 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
+import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
-import be.ac.umons.sgl.mom.GameStates.PlayingState;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_HEIGHT;
 import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_WIDTH;
@@ -20,6 +21,7 @@ public class Character {
     private Orientation orientation = Orientation.Top;
     private int posX, posY;
     private int mapWidth, mapHeight;
+    private List<GameObjects> inventory;
 
     public Character(int middleX, int middleY, int tileWidth, int tileHeight, int mapWidth, int mapHeight) {
         this.middleX = middleX;
@@ -34,6 +36,9 @@ public class Character {
         playerBottom = new Texture(Gdx.files.internal("Pictures/arrowBottom.png"));
         playerLeft = new Texture(Gdx.files.internal("Pictures/arrowLeft.png"));
         playerRight = new Texture(Gdx.files.internal("Pictures/arrowRight.png"));
+        inventory = new ArrayList<>();
+        inventory.add(GameObjects.Object1);
+        inventory.add(GameObjects.Object2);
     }
 
     protected Texture getTexture() {
@@ -130,5 +135,9 @@ public class Character {
         int y = getPosX() - x;
         return new Rectangle(x , y, getWidth(), getHeight());
 
+    }
+
+    public List<GameObjects> getInventory() {
+        return new ArrayList<>(inventory);
     }
 }

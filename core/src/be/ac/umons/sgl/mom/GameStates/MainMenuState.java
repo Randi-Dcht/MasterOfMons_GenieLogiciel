@@ -10,8 +10,8 @@ import com.badlogic.gdx.Gdx;
 
 public class MainMenuState extends MenuState {
 
-    public MainMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public MainMenuState(GameStateManager gsm, GameInputManager gim) {
+        super(gsm, gim);
     }
 
     @Override

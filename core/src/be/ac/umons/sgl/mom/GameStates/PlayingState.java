@@ -16,35 +16,25 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
+import static be.ac.umons.sgl.mom.MasterOfMonsGame.gs;
 
 public class PlayingState extends GameState { // TODO : Put all disposes
     public static final int SHOWED_MAP_WIDTH = 31;
     public static final int SHOWED_MAP_HEIGHT = 17;
     private final float VELOCITY = 500;
-
-//    protected static final String FINISHED_QUEST_INDICATOR = "<> ";
-//    protected static final String ACTIVATED_QUEST_INDICATOR = "<!> ";
-//    protected static final String UNACTIVATED_QUEST_INDICATOR = ">!< ";
 
 
     protected int mapWidth;
@@ -66,8 +56,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private InventoryShower inventoryShower;
     private Character player;
 
-    public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public PlayingState(GameStateManager gsm, GameInputManager gim) {
+        super(gsm, gim);
     }
 
     @Override
@@ -83,19 +73,17 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         gs.setQuestFont("Fonts/Comfortaa/Comfortaa-Light.ttf", tileHeight / 2);
 
-//        itmr = new OrthogonalTiledMapRenderer(map);
         itmr = new IsometricTiledMapRenderer(map);
         collisionObjects = map.getLayers().get("Interdit").getObjects();
 
-//        System.out.println(itmr.getUnitScale());
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.position.x = 212;
         cam.position.y = 318;
         cam.update();
 
         questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
-        inventoryShower = new InventoryShower(sb, MasterOfMonsGame.WIDTH / 2, tileHeight, tileWidth, tileHeight);
         player = new Character(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
+        inventoryShower = new InventoryShower(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileHeight, player);
 
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");
@@ -113,9 +101,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void update(float dt) {
         handleInput();
 
-        for (Animation a : animationsList.values()) {
+        for (Animation a : animationsList.values())
             a.update(dt);
-        }
 
         for (Iterator<String> it = animationsList.keySet().iterator(); it.hasNext();) { // Done in 2 times because of ConcurrentModificationException
             String key = it.next();
@@ -174,9 +161,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             cam.position.y = 0;
         else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight)
             cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight;
-
-//        System.out.println(player.getPosX() + " / " + cam.position.x);
-//        System.out.println(player.getPosY() + " / " + cam.position.y);
     }
 
     protected boolean checkForCollision(Character player) {

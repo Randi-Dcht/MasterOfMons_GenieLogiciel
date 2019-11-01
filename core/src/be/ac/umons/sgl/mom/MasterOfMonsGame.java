@@ -20,7 +20,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 
 	protected GameInputManager gim;
 	protected GameStateManager gsm;
-	protected GraphicalSettings gs;
+	public static GraphicalSettings gs;
 
 	@Override
 	public void create () {
