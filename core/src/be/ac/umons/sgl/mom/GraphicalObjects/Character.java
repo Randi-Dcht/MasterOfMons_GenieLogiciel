@@ -2,9 +2,13 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.GameStates.PlayingState;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_HEIGHT;
 import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_WIDTH;
@@ -115,5 +119,16 @@ public class Character {
 
     public int getPosX() {
         return posX;
+    }
+
+    public Rectangle getRectangle() {
+        return new Rectangle(getPosX(), getPosY(), getWidth(), getHeight());
+    }
+
+    public Rectangle getMapRectangle() {
+        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2; // https://stackoverflow.com/a/13838164
+        int y = getPosX() - x;
+        return new Rectangle(x , y, getWidth(), getHeight());
+
     }
 }

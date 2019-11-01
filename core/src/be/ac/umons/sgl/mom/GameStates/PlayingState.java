@@ -16,9 +16,20 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,7 +60,9 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private SpriteBatch sb;
     private TiledMap map;
     private IsometricTiledMapRenderer itmr;
-    private OrthographicCamera cam;
+//    private TiledMapTileLayer collisionLayer;
+    private MapObjects collisionObjects;
+    public static OrthographicCamera cam;
     private QuestShower questShower;
     private InventoryShower inventoryShower;
     private Character player;
@@ -73,8 +86,12 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
 //        itmr = new OrthogonalTiledMapRenderer(map);
         itmr = new IsometricTiledMapRenderer(map);
-        System.out.println(itmr.getUnitScale());
+        collisionObjects = map.getLayers().get("Interdit").getObjects();
+
+//        System.out.println(itmr.getUnitScale());
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
+        cam.position.x = 212;
+        cam.position.y = 318;
         cam.update();
 
         questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
@@ -155,8 +172,20 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight)
             cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight;
 
+        checkForCollision(player);
+
 //        System.out.println(player.getPosX() + " / " + cam.position.x);
 //        System.out.println(player.getPosY() + " / " + cam.position.y);
+    }
+
+    protected boolean checkForCollision(Character player) {
+//        System.out.println(collisionLayer.getCell((int)(player.getPosX() / tileWidth), (int)(player.getPosY() / tileHeight)));
+        for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
+            Rectangle rect = rectangleMapObject.getRectangle();
+            Rectangle playerRect = player.getMapRectangle();
+            return Intersector.overlaps(rect, playerRect);
+        }
+        return false;
     }
 
     @Override
@@ -221,6 +250,5 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         da.setEndingAction(() -> {
             animationsList.put("InventoryShowerForegroundAnimation", da2);
         });
-
     }
 }
