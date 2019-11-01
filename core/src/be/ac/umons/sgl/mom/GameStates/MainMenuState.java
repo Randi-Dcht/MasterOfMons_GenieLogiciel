@@ -31,7 +31,7 @@ public class MainMenuState extends MenuState {
         if (gim.isKey(GameKeys.Enter, KeyStatus.Pressed)) {
             switch (selectedItem) {
                 case 1:
-                    gsm.setState(GameStates.Play);
+                    gsm.setState(GameStates.Loading);
                     break;
                 case 2:
                     break;
