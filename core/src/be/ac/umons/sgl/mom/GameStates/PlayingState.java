@@ -60,7 +60,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private SpriteBatch sb;
     private TiledMap map;
     private IsometricTiledMapRenderer itmr;
-//    private TiledMapTileLayer collisionLayer;
     private MapObjects collisionObjects;
     public static OrthographicCamera cam;
     private QuestShower questShower;
@@ -151,6 +150,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         }
 
         player.move(toMoveX, toMoveY);
+        if (checkForCollision(player)) {
+            player.move(-toMoveX, -toMoveY);
+            return;
+        }
         if ((toMoveX < 0 && player.getXT() > -toMoveX) || (toMoveX > 0 && player.getXT() < -toMoveX))
             toMoveX = 0;
         else if ((toMoveX < 0 && player.getXT() > 0) || (toMoveX > 0 && player.getXT() < 0))
@@ -172,14 +175,11 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight)
             cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight;
 
-        checkForCollision(player);
-
 //        System.out.println(player.getPosX() + " / " + cam.position.x);
 //        System.out.println(player.getPosY() + " / " + cam.position.y);
     }
 
     protected boolean checkForCollision(Character player) {
-//        System.out.println(collisionLayer.getCell((int)(player.getPosX() / tileWidth), (int)(player.getPosY() / tileHeight)));
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = rectangleMapObject.getRectangle();
             Rectangle playerRect = player.getMapRectangle();
