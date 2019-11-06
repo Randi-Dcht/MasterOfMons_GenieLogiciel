@@ -9,7 +9,7 @@ public class DoubleAnimation implements Animation {
     protected double to;
     protected double toAddBySecond;
     protected Runnable runningAction;
-    protected Runnable endCallback;
+    protected Runnable endingAction;
 
     public DoubleAnimation(double from, double to, double time) {
         this.time = time;
@@ -22,7 +22,7 @@ public class DoubleAnimation implements Animation {
     public DoubleAnimation(double from, double to, double time, Runnable runningAction, Runnable endCallback) {
         this(from, to, time);
         this.runningAction = runningAction;
-        this.endCallback = endCallback;
+        this.endingAction = endCallback;
     }
 
     public void update(double dt) {
@@ -32,8 +32,8 @@ public class DoubleAnimation implements Animation {
         actualState = actualState + toAddBySecond * dt;
         if (actualState > to) {
             actualState = to;
-            if (endCallback != null)
-                endCallback.run();
+            if (endingAction != null)
+                endingAction.run();
             return;
         }
         if (runningAction != null)
@@ -54,6 +54,14 @@ public class DoubleAnimation implements Animation {
     }
 
     public void setEndingAction(Runnable run) {
-        this.endCallback = run;
+        this.endingAction = run;
+    }
+
+    public Runnable getRunningAction() {
+        return runningAction;
+    }
+
+    public Runnable getEndingAction() {
+        return endingAction;
     }
 }

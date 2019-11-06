@@ -8,11 +8,10 @@ import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
-import be.ac.umons.sgl.mom.Interfaces.Animation;
+import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
-import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,10 +22,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 import static be.ac.umons.sgl.mom.MasterOfMonsGame.gs;
@@ -42,7 +37,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     protected int tileWidth;
     protected int tileHeight;
 
-    protected Map<String, Animation> animationsList;
+    protected AnimationManager am;
 
     // Inspired from https://www.youtube.com/watch?v=zckxJn751Gw&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb&index=3&t=0s by dermetfan
     // Map showing inspired from https://www.youtube.com/watch?v=P8jgD-V5jG8&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt&index=6 by Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
@@ -93,7 +88,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         q3.activate();
         questShower.setQuest(q);
 
-        animationsList = new HashMap<>();
+        am = new AnimationManager();
         animateHUD();
     }
 
@@ -101,15 +96,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void update(float dt) {
         handleInput();
 
-        for (Animation a : animationsList.values())
-            a.update(dt);
-
-        for (Iterator<String> it = animationsList.keySet().iterator(); it.hasNext();) { // Done in 2 times because of ConcurrentModificationException
-            String key = it.next();
-            Animation a = animationsList.get(key);
-            if (a.isFinished())
-                it.remove();
-        }
+        am.update(dt);
 
         makePlayerMove(dt);
         cam.update();
@@ -211,7 +198,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getQuestShowerHeight() * da.getActual()));
             questShower.setDuringAnimationTextOpacity(da.getActual());
         });
-        animationsList.put("QuestRectangleAnimation", da);
+        am.addAnAnimation("QuestRectangleAnimation", da);
         da.setEndingAction(() -> {
             questShower.finishAnimation();
         });
@@ -225,14 +212,14 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             inventoryShower.setDuringAnimationHeight((int)((double)inventoryShower.getMaximumHeight() * da.getActual()));
             inventoryShower.setDuringAnimationBackgroundOpacity(da.getActual());
         });
-        animationsList.put("InventoryShowerAnimation", da);
+        am.addAnAnimation("InventoryShowerAnimation", da);
         DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
         da2.setEndingAction(() -> inventoryShower.finishAnimation());
         da2.setRunningAction(() -> {
             inventoryShower.setDuringAnimationForegroundOpacity(da2.getActual());
         });
         da.setEndingAction(() -> {
-            animationsList.put("InventoryShowerForegroundAnimation", da2);
+            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
         });
     }
 }

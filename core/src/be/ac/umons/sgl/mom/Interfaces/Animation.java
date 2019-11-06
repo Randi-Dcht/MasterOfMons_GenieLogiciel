@@ -6,4 +6,9 @@ public interface Animation {
     double getActual();
 
     boolean isFinished();
+
+    Runnable getEndingAction();
+    Runnable getRunningAction();
+    void setEndingAction(Runnable action);
+    void setRunningAction(Runnable action);
 }
