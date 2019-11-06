@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -15,15 +16,16 @@ import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_HEIGHT;
 import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_WIDTH;
 
 public class Character {
-    private Texture playerTop, playerBottom, playerLeft, playerRight;
     private int middleX, middleY, tileWidth, tileHeight;
     private int xT, yT;
     private Orientation orientation = Orientation.Top;
     private int posX, posY;
     private int mapWidth, mapHeight;
     private List<GameObjects> inventory;
+    protected AssetManager assetManager;
 
     public Character(int middleX, int middleY, int tileWidth, int tileHeight, int mapWidth, int mapHeight) {
+        assetManager = MasterOfMonsGame.gs.getAssetManager();
         this.middleX = middleX;
         this.middleY = middleY;
         posX = middleX;
@@ -32,10 +34,6 @@ public class Character {
         this.tileHeight = tileHeight;
         this.mapHeight = mapHeight;
         this.mapWidth = mapWidth;
-        playerTop = new Texture(Gdx.files.internal("Pictures/arrowTop.png"));
-        playerBottom = new Texture(Gdx.files.internal("Pictures/arrowBottom.png"));
-        playerLeft = new Texture(Gdx.files.internal("Pictures/arrowLeft.png"));
-        playerRight = new Texture(Gdx.files.internal("Pictures/arrowRight.png"));
         inventory = new ArrayList<>();
         inventory.add(GameObjects.Object1);
         inventory.add(GameObjects.Object2);
@@ -44,15 +42,15 @@ public class Character {
     protected Texture getTexture() {
         switch (orientation) {
             case Top:
-                return playerTop;
+                return (getPosY() / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/hautbh.png") : assetManager.get("Pictures/Characters/hautbh2.png");
             case Bottom:
-                return playerBottom;
+                return (getPosY() / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/basbh.png") : assetManager.get("Pictures/Characters/basbh2.png");
             case Left:
-                return playerLeft;
+                return (getPosX() / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/gauchebh.png") : assetManager.get("Pictures/Characters/gauchebh2.png");
             case Right:
-                return playerRight;
+                return (getPosX() / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/droitebh.png") : assetManager.get("Pictures/Characters/droitebh2.png");
         }
-        return playerTop;
+        return assetManager.get("Characters/hautbh.png");
     }
 
     public void draw(Batch batch) {

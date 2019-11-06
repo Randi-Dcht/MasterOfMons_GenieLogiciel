@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.util.Objects;
 
 public class GraphicalSettings {
     private BitmapFont titleFont;
@@ -54,11 +56,13 @@ public class GraphicalSettings {
     }
 
     protected void prepareAssetManagerForLoading() {
-        String[] folderToLoad = {"Pictures", "Pictures/Objects"};
-        for (String folder : folderToLoad) {
-            for (File f : new File(folder).listFiles(pathname -> pathname.isFile())) {
+        for (File folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory))) {
+            for (File f : Objects.requireNonNull(folder.listFiles(File::isFile))) {
                 assetManager.load(f.getPath(), Texture.class);
             }
+        }
+        for (File f : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isFile))) {
+            assetManager.load(f.getPath(), Texture.class);
         }
     }
 
