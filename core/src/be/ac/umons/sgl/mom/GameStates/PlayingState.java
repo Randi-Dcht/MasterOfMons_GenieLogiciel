@@ -154,7 +154,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = rectangleMapObject.getRectangle();
             Rectangle playerRect = player.getMapRectangle();
-            return Intersector.overlaps(rect, playerRect);
+            if (Intersector.overlaps(rect, playerRect))
+                return true;
         }
         return false;
     }
