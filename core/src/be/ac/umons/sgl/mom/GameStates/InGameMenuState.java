@@ -61,8 +61,10 @@ public class InGameMenuState extends MenuState {
                     gsm.removeFirstState();
                     break;
                 case 2:
+                    gsm.setState(GameStates.Save);
                     break;
                 case 3:
+                    gsm.setState(GameStates.Load);
                     break;
                 case 4:
                     break;

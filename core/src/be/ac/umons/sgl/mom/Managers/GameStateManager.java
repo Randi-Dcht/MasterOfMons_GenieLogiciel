@@ -39,6 +39,7 @@ public class GameStateManager {
                 gameStateStack.push(new SettingsState(this, gim));
                 break;
             case Save:
+                gameStateStack.push(new SaveState(this, gim));
                 break;
             case Load:
                 break;
