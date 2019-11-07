@@ -1,7 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
-import be.ac.umons.sgl.mom.Enums.GameKeys;
 import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
@@ -13,6 +12,7 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.Quest;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
@@ -106,19 +106,19 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         int toMove = Math.round(VELOCITY * dt);
         int toMoveX = 0, toMoveY = 0;
 
-        if (gim.isKey(GameKeys.Down, KeyStatus.Down)) {
+        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Down)) {
             player.setOrientation(Orientation.Bottom);
             toMoveY = -toMove;
         }
-        if (gim.isKey(GameKeys.Up, KeyStatus.Down)) {
+        if (gim.isKey(Input.Keys.UP, KeyStatus.Down)) {
             player.setOrientation(Orientation.Top);
             toMoveY = toMove;
         }
-        if (gim.isKey(GameKeys.Left, KeyStatus.Down)) {
+        if (gim.isKey(Input.Keys.LEFT, KeyStatus.Down)) {
             player.setOrientation(Orientation.Left);
             toMoveX = -toMove;
         }
-        if (gim.isKey(GameKeys.Right, KeyStatus.Down)) {
+        if (gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)) {
             player.setOrientation(Orientation.Right);
             toMoveX = toMove;
         }
@@ -175,7 +175,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     @Override
     public void handleInput() {
-        if (gim.isKey(GameKeys.ESC, KeyStatus.Pressed)) {
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
             gsm.setState(GameStates.InGameMenu);
         }
     }

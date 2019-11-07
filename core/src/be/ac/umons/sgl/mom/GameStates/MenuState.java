@@ -1,10 +1,10 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Enums.GameKeys;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -65,11 +65,11 @@ public abstract class MenuState extends GameState {
 
     @Override
     public void handleInput() {
-        if (gim.isKey(GameKeys.Down, KeyStatus.Pressed))
+        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed))
             do
                 selectedItem = (selectedItem + 1) % menuItems.length;
             while ( ! menuItems[selectedItem].selectable);
-        if (gim.isKey(GameKeys.Up, KeyStatus.Pressed))
+        if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed))
             do {
                 selectedItem = (selectedItem - 1) % menuItems.length; // HOW THE HELL DOES THAT RETURN -1
                 if (selectedItem < 0)

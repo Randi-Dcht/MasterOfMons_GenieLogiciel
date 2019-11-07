@@ -1,6 +1,4 @@
 package be.ac.umons.sgl.mom.GameStates;
-
-import be.ac.umons.sgl.mom.Enums.GameKeys;
 import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -8,6 +6,7 @@ import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -55,7 +54,7 @@ public class InGameMenuState extends MenuState {
     public void handleInput() {
         super.handleInput();
 
-        if (gim.isKey(GameKeys.Enter, KeyStatus.Pressed)) {
+        if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
             switch (selectedItem) {
                 case 1:
                     gsm.removeFirstState();
