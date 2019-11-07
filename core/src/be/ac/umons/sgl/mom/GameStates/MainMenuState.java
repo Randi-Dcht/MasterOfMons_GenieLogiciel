@@ -5,7 +5,6 @@ import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
-import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 
 public class MainMenuState extends MenuState {
@@ -34,6 +33,7 @@ public class MainMenuState extends MenuState {
                     gsm.setState(GameStates.Loading);
                     break;
                 case 2:
+                    gsm.setState(GameStates.Settings);
                     break;
                 case 3:
                     Gdx.app.exit();

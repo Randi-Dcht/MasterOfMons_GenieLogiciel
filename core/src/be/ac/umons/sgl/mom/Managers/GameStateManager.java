@@ -29,9 +29,19 @@ public class GameStateManager {
                 break;
             case InGameMenu:
                 gameStateStack.push(new InGameMenuState(this, gim));
+                break;
             case Loading:
                 gameStateStack.pop();
                 gameStateStack.push(new LoadingState(this, gim));
+                break;
+            case Settings:
+                gameStateStack.pop();
+                gameStateStack.push(new SettingsState(this, gim));
+                break;
+            case Save:
+                break;
+            case Load:
+                break;
             default:
                 break;
         }

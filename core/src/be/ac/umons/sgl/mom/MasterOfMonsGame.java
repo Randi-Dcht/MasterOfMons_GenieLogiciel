@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom;
 
+import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;

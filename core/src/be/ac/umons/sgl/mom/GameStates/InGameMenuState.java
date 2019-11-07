@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.GameKeys;
+import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -68,6 +69,7 @@ public class InGameMenuState extends MenuState {
                 case 5:
                     break;
                 case 6:
+                    gsm.setState(GameStates.Settings);
                     break;
                 case 7:
                     Gdx.app.exit();

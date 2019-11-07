@@ -5,4 +5,7 @@ public enum GameStates {
     Play,
     InGameMenu,
     Loading,
+    Settings,
+    Save,
+    Load
 }
