@@ -33,12 +33,14 @@ public class InventoryItem {
         sr.rect(x, y, width, height);
         sr.end();
 
-        Texture t = MasterOfMonsGame.gs.getAssetManager().get("Pictures/Objects/" + go.toString() + ".png");
-        batch.begin();
-        Color c = batch.getColor();
-        batch.setColor(c.r, c.g, c.b, isBeingAnimated ? duringAnimationForegroundOpacity : 1);
-        batch.draw(t, x, y, width, height);
-        batch.end();
+        if (MasterOfMonsGame.gs.getAssetManager().contains("Pictures/Objects/" + go.toString() + ".png")) {
+            Texture t = MasterOfMonsGame.gs.getAssetManager().get("Pictures/Objects/" + go.toString() + ".png");
+            batch.begin();
+            Color c = batch.getColor();
+            batch.setColor(c.r, c.g, c.b, isBeingAnimated ? duringAnimationForegroundOpacity : 1);
+            batch.draw(t, x, y, width, height);
+            batch.end();
+        }
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
