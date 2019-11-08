@@ -36,6 +36,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		cam.update();
 
 		Gdx.input.setInputProcessor(gim);
+		gs.setSmallFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.02 * (float)HEIGHT));
 		gs.setNormalFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.05 * (float)HEIGHT));
 		gs.setTitleFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.1 * (float)HEIGHT));
 	}

@@ -15,6 +15,7 @@ public class GraphicalSettings {
     private BitmapFont titleFont;
     private BitmapFont normalFont;
     private BitmapFont questFont;
+    private BitmapFont smallFont;
     private AssetManager assetManager;
     private FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
 
@@ -23,6 +24,16 @@ public class GraphicalSettings {
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
+    }
+
+    public void setSmallFont(String fontPath, int size) {
+        FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
+        ftfp.size = size;
+        smallFont = ftfg.generateFont(ftfp);
+    }
+
+    public BitmapFont getSmallFont() {
+        return smallFont;
     }
 
     public void setNormalFont(String fontPath, int size) {
