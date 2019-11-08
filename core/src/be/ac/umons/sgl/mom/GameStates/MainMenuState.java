@@ -25,22 +25,19 @@ public class MainMenuState extends MenuState {
     }
 
     @Override
-    public void handleInput() {
-        super.handleInput();
-        if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
-            switch (selectedItem) {
-                case 1:
-                    gsm.setState(GameStates.Loading);
-                    break;
-                case 2:
-                    gsm.setState(GameStates.Settings);
-                    break;
-                case 3:
-                    Gdx.app.exit();
-                    break;
-                default:
-                    break;
-            }
+    protected void goToSelectedItem() {
+        switch (selectedItem) {
+            case 1:
+                gsm.setState(GameStates.Loading);
+                break;
+            case 2:
+                gsm.setState(GameStates.Settings);
+                break;
+            case 3:
+                Gdx.app.exit();
+                break;
+            default:
+                break;
         }
     }
 }

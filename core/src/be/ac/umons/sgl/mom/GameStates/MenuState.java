@@ -7,7 +7,10 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.awt.*;
 
 import static be.ac.umons.sgl.mom.MasterOfMonsGame.gs;
 
@@ -47,15 +50,20 @@ public abstract class MenuState extends GameState {
 
         sb.begin();
 
+        GlyphLayout layout;
+        BitmapFont font;
         for (int i = 0; i < menuItems.length; i++) {
-            BitmapFont font;
+            layout = new GlyphLayout();
+            menuItems[i].screenTextBound = new Rectangle();
             if (menuItems[i].mit.equals(MenuItemType.Normal))
                 font = gs.getNormalFont();
             else
                 font = gs.getTitleFont();
             if (i == selectedItem)
                 font.setColor(Color.ORANGE);
-            font.draw(sb, menuItems[i].header, (int)(.05 * MasterOfMonsGame.WIDTH), MasterOfMonsGame.HEIGHT - alreadyUsed);
+            layout.setText(font, menuItems[i].header);
+            menuItems[i].screenTextBound.setRect((int)(.05 * MasterOfMonsGame.WIDTH), alreadyUsed, menuItems[i].header.length() * font.getXHeight(), font.getLineHeight());
+            font.draw(sb, layout, (int)(.05 * MasterOfMonsGame.WIDTH), MasterOfMonsGame.HEIGHT - alreadyUsed);
             alreadyUsed += (int)(font.getLineHeight() + betweenItemMargin * MasterOfMonsGame.HEIGHT);
             font.setColor(Color.WHITE);
         }
@@ -65,18 +73,33 @@ public abstract class MenuState extends GameState {
 
     @Override
     public void handleInput() {
-        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed))
+        if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
+            goToSelectedItem();
+        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
             do
                 selectedItem = (selectedItem + 1) % menuItems.length;
             while ( ! menuItems[selectedItem].selectable);
-        if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed))
+        }
+        if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
             do {
                 selectedItem = (selectedItem - 1) % menuItems.length; // HOW THE HELL DOES THAT RETURN -1
                 if (selectedItem < 0)
                     selectedItem += menuItems.length;
             }
             while ( ! menuItems[selectedItem].selectable);
+        }
+        for (Point click: gim.getRecentClicks()) {
+            for (int i = 0; i < menuItems.length; i++) {
+                if (menuItems[i].screenTextBound.contains(click.x, click.y))
+                    if (selectedItem == i)
+                        goToSelectedItem();
+                    else
+                        selectedItem = i;
+            }
+        }
     }
+
+    protected abstract void goToSelectedItem();
 
     @Override
     public void dispose() {
@@ -86,7 +109,8 @@ public abstract class MenuState extends GameState {
     protected class MenuItem {
         private String header;
         private MenuItemType mit;
-        protected boolean selectable;
+        private boolean selectable;
+        private Rectangle screenTextBound;
 
         public MenuItem(String header) {
             this(header, MenuItemType.Normal);

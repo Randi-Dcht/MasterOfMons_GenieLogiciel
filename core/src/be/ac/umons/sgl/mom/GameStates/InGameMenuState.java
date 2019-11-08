@@ -51,33 +51,29 @@ public class InGameMenuState extends MenuState {
     }
 
     @Override
-    public void handleInput() {
-        super.handleInput();
-
-        if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
-            switch (selectedItem) {
-                case 1:
-                    gsm.removeFirstState();
-                    break;
-                case 2:
-                    gsm.setState(GameStates.Save);
-                    break;
-                case 3:
-                    gsm.setState(GameStates.Load);
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    gsm.setState(GameStates.Settings);
-                    break;
-                case 7:
-                    Gdx.app.exit();
-                    break;
-                default:
-                    break;
-            }
+    protected void goToSelectedItem() {
+        switch (selectedItem) {
+            case 1:
+                gsm.removeFirstState();
+                break;
+            case 2:
+                gsm.setState(GameStates.Save);
+                break;
+            case 3:
+                gsm.setState(GameStates.Load);
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                gsm.setState(GameStates.Settings);
+                break;
+            case 7:
+                Gdx.app.exit();
+                break;
+            default:
+                break;
         }
     }
 
