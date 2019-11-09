@@ -62,7 +62,7 @@ public class TextBox extends Control {
     }
 
     public String getText() {
-        return actualText;
+        return actualText + suffix;
     }
 
     public void setText(String text) {

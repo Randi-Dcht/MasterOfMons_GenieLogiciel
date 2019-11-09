@@ -25,6 +25,7 @@ public class SaveState extends GameState {
     protected int topMargin;
     protected int leftMargin;
     protected TextBox nameBox;
+    protected Button saveButton;
 
     public SaveState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -39,6 +40,10 @@ public class SaveState extends GameState {
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         nameBox.setText(String.format("MOM - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())));
+        nameBox.setSuffix(".mom");
+        saveButton = new Button(gim, gs);
+        saveButton.setText(SAVE_STR);
+        saveButton.setOnClick(this::save);
     }
 
     @Override
@@ -67,20 +72,26 @@ public class SaveState extends GameState {
         int controlHeight = (int)(fontLineHeight + 2 * topMargin);
         int controlWidth = (int)(halfWidth - 2 * leftMargin);
         nameBox.draw(sb, (int)(quartWidth + leftMargin), nameBoxY, controlWidth, controlHeight);
+        saveButton.draw(sb, (int)(quartWidth + leftMargin), nameBoxY - controlHeight - topMargin, controlWidth, controlHeight);
     }
 
     // https://stackoverflow.com/a/44956044
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
-            // TODO : Call the save object and save the essential parts of the game.
+            save();
             gsm.removeFirstState();
         }
         nameBox.handleInput();
+        saveButton.handleInput();
     }
 
     @Override
     public void dispose() {
 
+    }
+
+    private void save() {
+        // TODO : Call the save object and save the essential parts of the game.
     }
 }
