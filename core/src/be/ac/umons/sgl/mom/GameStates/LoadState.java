@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadState extends GameState {
+    protected final String SAVE_PATH = "D:\\Users\\Guillaume\\Documents\\Test\\MOM"; // TODO : Define it itself
 
     private ShapeRenderer sr;
     private SpriteBatch sb;
@@ -36,7 +37,10 @@ public class LoadState extends GameState {
         buttonList = new ArrayList<>();
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         leftMargin = MasterOfMonsGame.WIDTH / 100;
-        for (File f : listSaveFile("D:\\Users\\Guillaume\\Documents\\Test\\MOM")) {
+        File saveDir = new File(SAVE_PATH);
+        if (! saveDir.exists())
+            saveDir.mkdir();
+        for (File f : listSaveFile(SAVE_PATH)) { // TODO : Replace with real path
             Button b = new Button(gim, gs);
             b.setOnClick(() -> load(f.getPath()));
             b.setText(f.getName());
@@ -66,7 +70,8 @@ public class LoadState extends GameState {
         if (mouseWheeled > maxDown)
             mouseWheeled = (int)maxDown;
         for (Button b : buttonList) {
-            b.draw(sb, (int)leftMargin, (int)(MasterOfMonsGame.HEIGHT - alreadyUsed - buttonHeight + mouseWheeled), (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin), buttonHeight);
+            if (mouseWheeled < alreadyUsed - buttonHeight)
+                b.draw(sb, (int)leftMargin, (int)(MasterOfMonsGame.HEIGHT - alreadyUsed - buttonHeight + mouseWheeled), (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin), buttonHeight);
             alreadyUsed += topMargin + buttonHeight;
         }
         Gdx.gl.glDisable(GL30.GL_BLEND);
@@ -84,7 +89,8 @@ public class LoadState extends GameState {
 
     @Override
     public void dispose() {
-
+        sr.dispose();
+        sb.dispose();
     }
 
     private File[] listSaveFile(String saveDirPath) {
@@ -92,6 +98,7 @@ public class LoadState extends GameState {
     }
 
     private void load(String loadFilePath) {
-
+        // TODO : call the load system
+        gsm.removeFirstState();
     }
 }
