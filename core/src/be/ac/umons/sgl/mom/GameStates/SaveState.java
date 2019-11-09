@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GraphicalObjects.Button;
+import be.ac.umons.sgl.mom.GraphicalObjects.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
@@ -13,7 +15,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.stream.IntStream;
 
 public class SaveState extends GameState {
     protected final String SAVE_STR = "Save";
@@ -23,7 +24,7 @@ public class SaveState extends GameState {
 
     protected int topMargin;
     protected int leftMargin;
-    protected String actualName;
+    protected TextBox nameBox;
 
     public SaveState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -34,9 +35,10 @@ public class SaveState extends GameState {
     public void init() {
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
+        nameBox = new TextBox(gim, gs);
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         leftMargin = MasterOfMonsGame.WIDTH / 100;
-        actualName = String.format("MOM - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
+        nameBox.setText(String.format("MOM - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())));
     }
 
     @Override
@@ -56,31 +58,25 @@ public class SaveState extends GameState {
         float quartWidth = (float)MasterOfMonsGame.WIDTH / 4;
         float fontLineHeight = gs.getNormalFont().getLineHeight();
         sr.rect(quartWidth,  halfHeight - quartHeight / 2, halfWidth, quartHeight); // TODO : Variables would be great here and there
-        sr.rect(quartWidth + leftMargin, halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin, halfWidth - 2 * leftMargin, fontLineHeight + 2 * topMargin);
         sr.end();
         sb.begin();
         gs.getNormalFont().draw(sb, SAVE_STR, halfWidth - SAVE_STR.length() * gs.getNormalFont().getXHeight() / 2, halfHeight + quartHeight / 2 - topMargin);
-        gs.getNormalFont().draw(sb, actualName + ".mom", quartWidth + 2 * leftMargin, halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin + gs.getNormalFont().getLineHeight());
         sb.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
+        int nameBoxY = (int)(halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin);
+        int controlHeight = (int)(fontLineHeight + 2 * topMargin);
+        int controlWidth = (int)(halfWidth - 2 * leftMargin);
+        nameBox.draw(sb, (int)(quartWidth + leftMargin), nameBoxY, controlWidth, controlHeight);
     }
 
     // https://stackoverflow.com/a/44956044
     @Override
     public void handleInput() {
-        boolean upper = false;
-        if (gim.isKey(Input.Keys.SHIFT_LEFT | Input.Keys.SHIFT_RIGHT, KeyStatus.Pressed))
-            upper = true;
-        for (int key : IntStream.rangeClosed(Input.Keys.A, Input.Keys.Z).toArray())
-            if (gim.isKey(key, KeyStatus.Pressed))
-                actualName += upper ? Input.Keys.toString(key) : Input.Keys.toString(key).toLowerCase();
-        if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed))
-            actualName = actualName.substring(0, actualName.length() - 1);
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
-            actualName += ".mom";
             // TODO : Call the save object and save the essential parts of the game.
             gsm.removeFirstState();
         }
+        nameBox.handleInput();
     }
 
     @Override

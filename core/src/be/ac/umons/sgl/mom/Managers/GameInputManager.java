@@ -11,11 +11,13 @@ import java.util.List;
 public class GameInputManager implements InputProcessor {
     private final int AVAILABLE_INPUT_KEYS = 256;
     private List<Point> recentClicks;
+    private Point lastMousePosition;
 
     private KeyStatus[] keys;
 
     public GameInputManager() {
         keys = new KeyStatus[AVAILABLE_INPUT_KEYS];
+        lastMousePosition = new Point();
         recentClicks = new LinkedList<>();
         Arrays.fill(keys, KeyStatus.Up);
     }
@@ -57,6 +59,8 @@ public class GameInputManager implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        lastMousePosition.x = screenX;
+        lastMousePosition.y = screenY;
         return false;
     }
 
@@ -81,5 +85,9 @@ public class GameInputManager implements InputProcessor {
 
     public List<Point> getRecentClicks() {
         return recentClicks;
+    }
+
+    public Point getLastMousePosition() {
+        return lastMousePosition;
     }
 }
