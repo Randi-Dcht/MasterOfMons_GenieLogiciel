@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.GameObjects;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,6 +20,7 @@ public class InventoryShower {
 
     private ShapeRenderer sr;
     private Batch batch;
+    protected GraphicalSettings gs;
     protected List<GameObjects> inventory;
     protected boolean isBeingAnimated = false;
     protected float duringAnimationHeight, duringAnimationWidth;
@@ -26,7 +28,7 @@ public class InventoryShower {
     protected Character player;
     protected List<InventoryItem> inventoryItemList;
 
-    public InventoryShower(Batch batch, int centerX, int height, int tileWidth, int tileHeight, Character inventoryOf) {
+    public InventoryShower(GraphicalSettings gs, Batch batch, int centerX, int height, int tileWidth, int tileHeight, Character inventoryOf) {
         itemWidth = tileWidth;
         itemHeight = tileWidth;
         player = inventoryOf;
@@ -36,13 +38,14 @@ public class InventoryShower {
         this.tileHeight = tileHeight;
         this.tileWidth = tileWidth;
         this.batch = batch;
+        this.gs = gs;
         init();
     }
 
     public void init() {
         inventoryItemList = new ArrayList<>();
         for (GameObjects go : inventory)
-            inventoryItemList.add(new InventoryItem(go));
+            inventoryItemList.add(new InventoryItem(gs, go));
         sr = new ShapeRenderer();
         sr.setProjectionMatrix(batch.getProjectionMatrix());
         sr.setAutoShapeType(true);

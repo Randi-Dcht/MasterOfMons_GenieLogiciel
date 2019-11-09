@@ -3,16 +3,17 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
-import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.awt.*;
 
-import static be.ac.umons.sgl.mom.MasterOfMonsGame.gs;
+import static be.ac.umons.sgl.mom.MasterOfMonsGame.*;
 
 public abstract class MenuState extends GameState {
 
@@ -24,14 +25,18 @@ public abstract class MenuState extends GameState {
 
     protected double topMargin;
     protected double betweenItemMargin;
+    protected OrthographicCamera cam;
 
-    public MenuState(GameStateManager gsm, GameInputManager gim) {
-        super(gsm, gim);
+    protected MenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+        super(gsm, gim, gs);
     }
 
     @Override
     public void init() {
         sb = new SpriteBatch();
+		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
+		cam.translate(WIDTH / 2, HEIGHT / 2);
+		cam.update();
     }
 
     @Override
@@ -41,9 +46,9 @@ public abstract class MenuState extends GameState {
 
     @Override
     public void draw() {
-        int alreadyUsed = (int)(topMargin * MasterOfMonsGame.HEIGHT);
+        int alreadyUsed = (int)(topMargin * HEIGHT);
 
-        sb.setProjectionMatrix(MasterOfMonsGame.cam.combined);
+        sb.setProjectionMatrix(cam.combined);
 
         while (! menuItems[selectedItem].selectable)
             selectedItem = (selectedItem + 1) % menuItems.length;
@@ -62,9 +67,9 @@ public abstract class MenuState extends GameState {
             if (i == selectedItem)
                 font.setColor(Color.ORANGE);
             layout.setText(font, menuItems[i].header);
-            menuItems[i].screenTextBound.setRect((int)(.05 * MasterOfMonsGame.WIDTH), alreadyUsed, menuItems[i].header.length() * font.getXHeight(), font.getLineHeight());
-            font.draw(sb, layout, (int)(.05 * MasterOfMonsGame.WIDTH), MasterOfMonsGame.HEIGHT - alreadyUsed);
-            alreadyUsed += (int)(font.getLineHeight() + betweenItemMargin * MasterOfMonsGame.HEIGHT);
+            menuItems[i].screenTextBound.setRect((int)(.05 * WIDTH), alreadyUsed, menuItems[i].header.length() * font.getXHeight(), font.getLineHeight());
+            font.draw(sb, layout, (int)(.05 * WIDTH), HEIGHT - alreadyUsed);
+            alreadyUsed += (int)(font.getLineHeight() + betweenItemMargin * HEIGHT);
             font.setColor(Color.WHITE);
         }
 

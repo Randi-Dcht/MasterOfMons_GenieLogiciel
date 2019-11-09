@@ -11,6 +11,7 @@ import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,7 +25,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
-import static be.ac.umons.sgl.mom.MasterOfMonsGame.gs;
 
 public class PlayingState extends GameState { // TODO : Put all disposes
     public static final int SHOWED_MAP_WIDTH = 31;
@@ -51,8 +51,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private InventoryShower inventoryShower;
     private Character player;
 
-    public PlayingState(GameStateManager gsm, GameInputManager gim) {
-        super(gsm, gim);
+    public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+        super(gsm, gim, gs);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         cam.update();
 
         questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
-        player = new Character(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
-        inventoryShower = new InventoryShower(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileHeight, player);
+        player = new Character(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
+        inventoryShower = new InventoryShower(gs, sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileHeight, player);
 
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");

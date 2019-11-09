@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
@@ -24,8 +25,8 @@ public class SaveState extends GameState {
     protected int leftMargin;
     protected String actualName;
 
-    public SaveState(GameStateManager gsm, GameInputManager gim) {
-        super(gsm, gim);
+    public SaveState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+        super(gsm, gim, gs);
     }
 
     // https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
@@ -53,13 +54,13 @@ public class SaveState extends GameState {
         float quartHeight = (float)MasterOfMonsGame.HEIGHT / 4;
         float halfWidth = (float)MasterOfMonsGame.WIDTH / 2;
         float quartWidth = (float)MasterOfMonsGame.WIDTH / 4;
-        float fontLineHeight = MasterOfMonsGame.gs.getNormalFont().getLineHeight();
+        float fontLineHeight = gs.getNormalFont().getLineHeight();
         sr.rect(quartWidth,  halfHeight - quartHeight / 2, halfWidth, quartHeight); // TODO : Variables would be great here and there
         sr.rect(quartWidth + leftMargin, halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin, halfWidth - 2 * leftMargin, fontLineHeight + 2 * topMargin);
         sr.end();
         sb.begin();
-        MasterOfMonsGame.gs.getNormalFont().draw(sb, SAVE_STR, halfWidth - SAVE_STR.length() * MasterOfMonsGame.gs.getNormalFont().getXHeight() / 2, halfHeight + quartHeight / 2 - topMargin);
-        MasterOfMonsGame.gs.getNormalFont().draw(sb, actualName + ".mom", quartWidth + 2 * leftMargin, halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin + MasterOfMonsGame.gs.getNormalFont().getLineHeight());
+        gs.getNormalFont().draw(sb, SAVE_STR, halfWidth - SAVE_STR.length() * gs.getNormalFont().getXHeight() / 2, halfHeight + quartHeight / 2 - topMargin);
+        gs.getNormalFont().draw(sb, actualName + ".mom", quartWidth + 2 * leftMargin, halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin + gs.getNormalFont().getLineHeight());
         sb.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }

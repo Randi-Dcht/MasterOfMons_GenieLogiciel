@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,8 +17,8 @@ public class SettingsState extends GameState {
     protected double topMargin;
     protected double leftMargin;
 
-    public SettingsState(GameStateManager gsm, GameInputManager gim) {
-        super(gsm, gim);
+    public SettingsState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+        super(gsm, gim, gs);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class SettingsState extends GameState {
         sr.rect(0, 0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
         sr.end();
         sb.begin();
-        MasterOfMonsGame.gs.getTitleFont().draw(sb, "Settings", (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin);
+        gs.getTitleFont().draw(sb, "Settings", (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin);
         sb.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }

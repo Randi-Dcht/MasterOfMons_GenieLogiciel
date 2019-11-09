@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -13,12 +14,14 @@ public class InventoryItem {
     protected static float FOREGROUND_RECTANGLE_OPACITY = .8f;
 
     protected GameObjects go;
+    protected GraphicalSettings gs;
     protected ShapeRenderer sr;
     protected boolean isBeingAnimated;
     protected float duringAnimationForegroundOpacity;
 
-    public InventoryItem(GameObjects go) {
+    public InventoryItem(GraphicalSettings gs, GameObjects go) {
         this.go = go;
+        this.gs = gs;
         sr = new ShapeRenderer();
     }
 
@@ -33,8 +36,8 @@ public class InventoryItem {
         sr.rect(x, y, width, height);
         sr.end();
 
-        if (MasterOfMonsGame.gs.getAssetManager().contains("Pictures/Objects/" + go.toString() + ".png")) {
-            Texture t = MasterOfMonsGame.gs.getAssetManager().get("Pictures/Objects/" + go.toString() + ".png");
+        if (gs.getAssetManager().contains("Pictures/Objects/" + go.toString() + ".png")) {
+            Texture t = gs.getAssetManager().get("Pictures/Objects/" + go.toString() + ".png");
             batch.begin();
             Color c = batch.getColor();
             batch.setColor(c.r, c.g, c.b, isBeingAnimated ? duringAnimationForegroundOpacity : 1);

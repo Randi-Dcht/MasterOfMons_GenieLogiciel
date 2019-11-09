@@ -21,25 +21,25 @@ public class GameStateManager {
     public void setState(GameStates gst) {
         switch (gst) {
             case MainMenu:
-                gameStateStack.push(new MainMenuState(this, gim));
+                gameStateStack.push(new MainMenuState(this, gim, gs));
                 break;
             case Play:
                 gameStateStack.pop(); // Can be done because Menu would already be there...
-                gameStateStack.push(new PlayingState(this, gim));
+                gameStateStack.push(new PlayingState(this, gim, gs));
                 break;
             case InGameMenu:
-                gameStateStack.push(new InGameMenuState(this, gim));
+                gameStateStack.push(new InGameMenuState(this, gim, gs));
                 break;
             case Loading:
                 gameStateStack.pop();
-                gameStateStack.push(new LoadingState(this, gim));
+                gameStateStack.push(new LoadingState(this, gim, gs));
                 break;
             case Settings:
                 gameStateStack.pop();
-                gameStateStack.push(new SettingsState(this, gim));
+                gameStateStack.push(new SettingsState(this, gim, gs));
                 break;
             case Save:
-                gameStateStack.push(new SaveState(this, gim));
+                gameStateStack.push(new SaveState(this, gim, gs));
                 break;
             case Load:
                 break;

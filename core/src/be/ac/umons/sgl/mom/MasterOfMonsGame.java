@@ -6,7 +6,6 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class MasterOfMonsGame extends ApplicationAdapter {
 
@@ -16,11 +15,11 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	public static int WIDTH;
 	public static int HEIGHT;
 
-	public static OrthographicCamera cam;
+//	public static OrthographicCamera cam;
 
 	protected GameInputManager gim;
 	protected GameStateManager gsm;
-	public static GraphicalSettings gs;
+	protected GraphicalSettings gs;
 
 	@Override
 	public void create () {
@@ -30,10 +29,6 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		gs = new GraphicalSettings();
 		gim = new GameInputManager();
 		gsm = new GameStateManager(gim, gs);
-
-		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
-		cam.translate(WIDTH / 2, HEIGHT / 2);
-		cam.update();
 
 		Gdx.input.setInputProcessor(gim);
 		gs.setSmallFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.02 * (float)HEIGHT));

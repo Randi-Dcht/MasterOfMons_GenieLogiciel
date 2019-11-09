@@ -9,10 +9,12 @@ public abstract class GameState {
 
     protected GameInputManager gim;
     protected GameStateManager gsm;
+    protected GraphicalSettings gs;
 
-    protected GameState(GameStateManager gsm, GameInputManager gim) {
+    protected GameState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         this.gim = gim;
         this.gsm = gsm;
+        this.gs = gs;
         init();
     }
 

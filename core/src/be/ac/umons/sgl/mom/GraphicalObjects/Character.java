@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,8 +25,8 @@ public class Character {
     private List<GameObjects> inventory;
     protected AssetManager assetManager;
 
-    public Character(int middleX, int middleY, int tileWidth, int tileHeight, int mapWidth, int mapHeight) {
-        assetManager = MasterOfMonsGame.gs.getAssetManager();
+    public Character(GraphicalSettings gs, int middleX, int middleY, int tileWidth, int tileHeight, int mapWidth, int mapHeight) {
+        assetManager = gs.getAssetManager();
         this.middleX = middleX;
         this.middleY = middleY;
         posX = middleX;

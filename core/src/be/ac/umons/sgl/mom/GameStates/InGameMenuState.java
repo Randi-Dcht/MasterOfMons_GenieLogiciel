@@ -14,8 +14,8 @@ public class InGameMenuState extends MenuState {
 
     ShapeRenderer sr;
 
-    public InGameMenuState(GameStateManager gsm, GameInputManager gim) {
-        super(gsm, gim);
+    public InGameMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+        super(gsm, gim, gs);
     }
 
     @Override
