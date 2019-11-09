@@ -1,10 +1,12 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 import be.ac.umons.sgl.mom.Enums.GameStates;
+import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -60,8 +62,10 @@ public class InGameMenuState extends MenuState {
                 gsm.setState(GameStates.Load);
                 break;
             case 4:
+                // TODO : Call save system with default name.
                 break;
             case 5:
+                // TODO : Call load system with last save (automatic or not).
                 break;
             case 6:
                 gsm.setState(GameStates.Settings);
@@ -78,5 +82,12 @@ public class InGameMenuState extends MenuState {
     public void dispose() {
         super.dispose();
         sr.dispose();
+    }
+
+    @Override
+    public void handleInput() {
+        super.handleInput();
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
+            gsm.removeFirstState();
     }
 }

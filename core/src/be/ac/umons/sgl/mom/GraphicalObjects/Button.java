@@ -15,7 +15,7 @@ public class Button extends Control {
 
     private Runnable onClick;
     private ShapeRenderer sr;
-    private String textToShow;
+    private String textToShow = "";
     private boolean isMouseOver;
 
     public Button(GameInputManager gim, GraphicalSettings gs) {
@@ -35,7 +35,7 @@ public class Button extends Control {
         sr.rect(x, y, width, height);
         sr.end();
         batch.begin();
-        gs.getNormalFont().draw(batch, "Save", x + leftMargin, y + gs.getNormalFont().getLineHeight());
+        gs.getNormalFont().draw(batch, textToShow, x + leftMargin, y + gs.getNormalFont().getLineHeight());
         batch.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
@@ -54,7 +54,7 @@ public class Button extends Control {
     }
 
     public void setText(String text) {
-        this.textToShow = textToShow;
+        this.textToShow = text;
     }
 
     public void setOnClick(Runnable onClick) {

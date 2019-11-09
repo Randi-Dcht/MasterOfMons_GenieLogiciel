@@ -8,10 +8,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+
+/** Part of content below was inspired by https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike */
+
 public class GameInputManager implements InputProcessor {
     private final int AVAILABLE_INPUT_KEYS = 256;
     private List<Point> recentClicks;
     private Point lastMousePosition;
+    private int scrolledAmount = 0;
 
     private KeyStatus[] keys;
 
@@ -66,6 +70,7 @@ public class GameInputManager implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
+        scrolledAmount += amount;
         return false;
     }
 
@@ -81,6 +86,7 @@ public class GameInputManager implements InputProcessor {
                 keys[i] = KeyStatus.Up;
         }
         recentClicks.clear();
+        scrolledAmount = 0;
     }
 
     public List<Point> getRecentClicks() {
@@ -89,5 +95,9 @@ public class GameInputManager implements InputProcessor {
 
     public Point getLastMousePosition() {
         return lastMousePosition;
+    }
+
+    public int getScrolledAmount() {
+        return scrolledAmount;
     }
 }

@@ -18,6 +18,7 @@ import java.util.Date;
 
 public class SaveState extends GameState {
     protected final String SAVE_STR = "Save";
+    protected final String SAVE_FILE_EXTENSION = ".mom";
 
     protected ShapeRenderer sr;
     protected SpriteBatch sb;
@@ -40,7 +41,7 @@ public class SaveState extends GameState {
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         nameBox.setText(String.format("MOM - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())));
-        nameBox.setSuffix(".mom");
+        nameBox.setSuffix(SAVE_FILE_EXTENSION);
         saveButton = new Button(gim, gs);
         saveButton.setText(SAVE_STR);
         saveButton.setOnClick(this::save);
@@ -78,10 +79,10 @@ public class SaveState extends GameState {
     // https://stackoverflow.com/a/44956044
     @Override
     public void handleInput() {
-        if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
+        if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             save();
+        else if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.removeFirstState();
-        }
         nameBox.handleInput();
         saveButton.handleInput();
     }
@@ -92,6 +93,7 @@ public class SaveState extends GameState {
     }
 
     private void save() {
-        // TODO : Call the save object and save the essential parts of the game.
+        // TODO : Call the save object and save the essential parts of the game. (nameBox.getText() will returns the choosed name + ".mom")
+        gsm.removeFirstState();
     }
 }

@@ -8,6 +8,9 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 
 import java.util.Stack;
 
+
+/** Part of content below was inspired by https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike */
+
 public class GameStateManager {
     private Stack<GameState> gameStateStack;
     private GameInputManager gim;
@@ -44,6 +47,8 @@ public class GameStateManager {
                 gameStateStack.push(new SaveState(this, gim, gs));
                 break;
             case Load:
+                gameStateStack.pop();
+                gameStateStack.push(new LoadState(this, gim, gs));
                 break;
             default:
                 break;
