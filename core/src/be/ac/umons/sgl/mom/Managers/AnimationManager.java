@@ -7,23 +7,27 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class AnimationManager {
-    protected Map<String, Animation> animationsList;
+    private Map<String, Animation> animations;
 
     public AnimationManager() {
-        animationsList = new HashMap<>();
+        animations = new HashMap<>();
     }
 
     public void addAnAnimation(String animName, Animation anim) {
-        animationsList.put(animName, anim);
+        animations.put(animName, anim);
+    }
+
+    public Animation getAnAnimation(String animName) {
+        return animations.get(animName);
     }
 
     public void update(float dt) {
-        for (Animation a : animationsList.values())
+        for (Animation a : animations.values())
             a.update(dt);
 
-        for (Iterator<String> it = animationsList.keySet().iterator(); it.hasNext();) { // Done in 2 times because of ConcurrentModificationException
+        for (Iterator<String> it = animations.keySet().iterator(); it.hasNext();) { // Done in 2 times because of ConcurrentModificationException
             String key = it.next();
-            Animation a = animationsList.get(key);
+            Animation a = animations.get(key);
             if (a.isFinished())
                 it.remove();
         }

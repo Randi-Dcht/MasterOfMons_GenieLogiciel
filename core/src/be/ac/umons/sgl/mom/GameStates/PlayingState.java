@@ -37,7 +37,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     protected int tileWidth;
     protected int tileHeight;
 
-    protected AnimationManager am;
 
     // Inspired from https://www.youtube.com/watch?v=zckxJn751Gw&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb&index=3&t=0s by dermetfan
     // Map showing inspired from https://www.youtube.com/watch?v=P8jgD-V5jG8&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt&index=6 by Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
@@ -50,6 +49,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     private QuestShower questShower;
     private InventoryShower inventoryShower;
     private Character player;
+    private AnimationManager am;
 
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -209,8 +209,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         inventoryShower.beginAnimation();
         DoubleAnimation da = new DoubleAnimation(from, 1, 750);
         da.setRunningAction(() -> {
-            inventoryShower.setDuringAnimationWidth((int)((double)inventoryShower.getMaximumWidth() * da.getActual()));
-            inventoryShower.setDuringAnimationHeight((int)((double)inventoryShower.getMaximumHeight() * da.getActual()));
+            inventoryShower.setDuringAnimationWidth((int)((double)inventoryShower.getWidth() * da.getActual()));
+            inventoryShower.setDuringAnimationHeight((int)((double)inventoryShower.getHeight() * da.getActual()));
             inventoryShower.setDuringAnimationBackgroundOpacity(da.getActual());
         });
         am.addAnAnimation("InventoryShowerAnimation", da);

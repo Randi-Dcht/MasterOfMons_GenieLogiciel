@@ -62,7 +62,7 @@ public class InventoryShower {
         }
         else {
             sr.setColor(21f / 255, 21f / 255, 21f / 255, BACKGROUND_RECTANGLE_OPACITY);
-            sr.rect(beginX, BOTTOM_MARGIN, getMaximumWidth(), height);
+            sr.rect(beginX, BOTTOM_MARGIN, getWidth(), height);
         }
         sr.end();
         int tmpBeginX = beginX + BETWEEN_ITEM_MARGIN;
@@ -74,10 +74,10 @@ public class InventoryShower {
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
-    public int getMaximumWidth() {
+    public int getWidth() {
         return itemWidth * inventory.size() + (inventory.size() + 1) * BETWEEN_ITEM_MARGIN;
     }
-    public int getMaximumHeight() {
+    public int getHeight() {
         return height;
     }
 

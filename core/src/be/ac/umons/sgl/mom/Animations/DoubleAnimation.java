@@ -3,17 +3,13 @@ package be.ac.umons.sgl.mom.Animations;
 import be.ac.umons.sgl.mom.Interfaces.Animation;
 
 public class DoubleAnimation implements Animation {
-    protected double time;
-    protected double actualState;
-    protected double from;
-    protected double to;
-    protected double toAddBySecond;
-    protected Runnable runningAction;
-    protected Runnable endingAction;
+    private double actualState;
+    private double to;
+    private double toAddBySecond;
+    private Runnable runningAction;
+    private Runnable endingAction;
 
     public DoubleAnimation(double from, double to, double time) {
-        this.time = time;
-        this.from = from;
         this.actualState = from;
         this.to = to;
 

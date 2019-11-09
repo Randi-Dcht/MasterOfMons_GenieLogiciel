@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import com.badlogic.gdx.InputProcessor;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,14 +12,12 @@ public class GameInputManager implements InputProcessor {
     private final int AVAILABLE_INPUT_KEYS = 256;
     private List<Point> recentClicks;
 
-    protected KeyStatus[] keys;
+    private KeyStatus[] keys;
 
     public GameInputManager() {
         keys = new KeyStatus[AVAILABLE_INPUT_KEYS];
         recentClicks = new LinkedList<>();
-        for (int i = 0; i < keys.length; i++) {
-            keys[i] = KeyStatus.Up;
-        }
+        Arrays.fill(keys, KeyStatus.Up);
     }
     
     @Override

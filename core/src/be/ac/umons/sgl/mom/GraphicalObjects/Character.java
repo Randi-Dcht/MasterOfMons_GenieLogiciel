@@ -4,7 +4,6 @@ import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -23,7 +22,7 @@ public class Character {
     private int posX, posY;
     private int mapWidth, mapHeight;
     private List<GameObjects> inventory;
-    protected AssetManager assetManager;
+    private AssetManager assetManager;
 
     public Character(GraphicalSettings gs, int middleX, int middleY, int tileWidth, int tileHeight, int mapWidth, int mapHeight) {
         assetManager = gs.getAssetManager();
@@ -40,7 +39,7 @@ public class Character {
         inventory.add(GameObjects.Object2);
     }
 
-    protected Texture getTexture() {
+    private Texture getTexture() {
         switch (orientation) {
             case Top:
                 return ((posY < 0 ? -posY : posY) / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/hautbh.png") : assetManager.get("Pictures/Characters/hautbh2.png");

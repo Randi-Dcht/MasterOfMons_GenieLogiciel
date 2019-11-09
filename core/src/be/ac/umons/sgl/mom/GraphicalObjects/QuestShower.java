@@ -25,16 +25,17 @@ public class QuestShower {
     private ShapeRenderer sr;
     protected GraphicalSettings gs;
 
-    protected float x, y;
+    protected int x, y;
     protected float duringAnimationQuestShowerHeight, duringAnimationQuestShowerWidth;
     protected double duringAnimationTextOpacity;
     protected boolean isBeingAnimated;
     protected int questShowerWidth;
     protected int questShowerHeight;
     protected int circleRadius;
+    private Quest questToShow;
 
 
-    public QuestShower(GraphicalSettings gs, Batch batch, float x, float y) {
+    public QuestShower(GraphicalSettings gs, Batch batch, int x, int y) {
         this.gs = gs;
         this.batch = batch;
         this.x = x;
@@ -47,27 +48,22 @@ public class QuestShower {
     }
 
     protected void init() {
-        circleRadius = getTextSize("A").y / 2;
+        circleRadius = (int)gs.getQuestFont().getLineHeight() / 2;
 
         sr = new ShapeRenderer();
         sr.setProjectionMatrix(batch.getProjectionMatrix());
         sr.setAutoShapeType(true);
     }
 
-
-    int maximumQuestHeight = 0;
-    Quest questToShow;
-
     public void setQuest(Quest q) {
         questToShow = q;
-        maximumQuestHeight = getMaximumQuestHeight(q);
         questShowerWidth = getMaximumQuestNameWidth(q, 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN) + 2 * TEXT_AND_RECTANGLE_MARGIN;
         questShowerHeight = getMaximumQuestHeight(q) + TEXT_AND_RECTANGLE_MARGIN * 2;
     }
 
     // https://gamedev.stackexchange.com/a/115483
     // https://stackoverflow.com/a/14721570
-    protected void showQuest(Quest quest, float x, float y) {
+    protected void showQuest(Quest quest, int x, int y) {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -77,7 +73,7 @@ public class QuestShower {
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - duringAnimationQuestShowerHeight + TEXT_AND_RECTANGLE_MARGIN, duringAnimationQuestShowerWidth, duringAnimationQuestShowerHeight);
         else
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - questShowerHeight + TEXT_AND_RECTANGLE_MARGIN, questShowerWidth, questShowerHeight);
-        drawQuestCircles(quest, x + TEXT_AND_RECTANGLE_MARGIN, y - (float)circleRadius, circleRadius);
+        drawQuestCircles(quest, x + TEXT_AND_RECTANGLE_MARGIN, y - circleRadius, circleRadius);
         sr.end();
 
         Gdx.gl.glDisable(GL30.GL_BLEND);
@@ -89,17 +85,17 @@ public class QuestShower {
         batch.end();
     }
 
-    protected void printQuest(Quest q, float beginningX, float beginningY, float textOpacity) {
+    protected void printQuest(Quest q, int beginningX, int beginningY, float textOpacity) {
         gs.getQuestFont().setColor(1, 1, 1, textOpacity);
         gs.getQuestFont().draw(batch, q.getName() + '\n', beginningX, beginningY);
         gs.getQuestFont().setColor(1, 1, 1, 1); // Si jamais il est utilisé entre temps
         for (Quest q2 : q.getSubQuests()) {
-            beginningY -= (getTextSize(q.getName()).y + BETWEEN_QUEST_MARGIN_HEIGHT);
+            beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
             printQuest(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
         }
     }
 
-    protected void drawQuestCircles(Quest q, float beginningX, float beginningY, float radius) {
+    protected void drawQuestCircles(Quest q, int beginningX, int beginningY, float radius) {
 //        sr.setColor(21f / 255, 21f / 255, 21f / 255, 1f);
         float degrees = q.getProgress() * 360;
 
@@ -118,7 +114,7 @@ public class QuestShower {
             sr.arc(beginningX, beginningY, radius, 0, (degrees == 0 ? 360 : degrees));
         }
         for (Quest q2 : q.getSubQuests()) {
-            beginningY -= (getTextSize(q.getName()).y + BETWEEN_QUEST_MARGIN_HEIGHT);
+            beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
             drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
         }
     }
@@ -134,7 +130,7 @@ public class QuestShower {
     }
 
     protected int getMaximumQuestHeight(Quest mainQuest) {
-        return mainQuest.getTotalSubQuestsNumber() * getTextSize("A").y + BETWEEN_QUEST_MARGIN_HEIGHT * mainQuest.getTotalSubQuestsNumber();
+        return (int)(mainQuest.getTotalSubQuestsNumber() * gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT * mainQuest.getTotalSubQuestsNumber());
     }
 
     // https://stackoverflow.com/a/16606599

@@ -2,6 +2,8 @@ package be.ac.umons.sgl.mom.Managers;
 
 import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.GameStates.*;
+import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
+import be.ac.umons.sgl.mom.GameStates.Menus.MainMenuState;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 
 import java.util.Stack;
