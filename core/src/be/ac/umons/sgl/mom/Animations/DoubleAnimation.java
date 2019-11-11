@@ -54,15 +54,13 @@ public class DoubleAnimation extends Animation {
             return;
 
         actualState = actualState + toAddBySecond * dt;
-        if (actualState > to) {
+        if (runningAction != null)
+            runningAction.run();
+        if (actualState >= to) {
             actualState = to;
             if (endingAction != null)
                 endingAction.run();
-            return;
         }
-        if (runningAction != null)
-            runningAction.run();
-
     }
 
     /**
