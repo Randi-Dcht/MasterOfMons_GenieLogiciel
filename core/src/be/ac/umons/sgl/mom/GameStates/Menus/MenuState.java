@@ -112,7 +112,7 @@ public abstract class MenuState extends GameState {
         }
         if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
             do {
-                selectedItem = (selectedItem - 1) % menuItems.length; // HOW THE HELL DOES THAT RETURN -1
+                selectedItem = (selectedItem - 1) % menuItems.length;
                 if (selectedItem < 0)
                     selectedItem += menuItems.length;
             }
@@ -120,7 +120,7 @@ public abstract class MenuState extends GameState {
         }
         for (Point click: gim.getRecentClicks()) {
             for (int i = 0; i < menuItems.length; i++) {
-                if (menuItems[i].screenTextBound.contains(click.x, click.y))
+                if (menuItems[i].selectable && menuItems[i].screenTextBound.contains(click.x, click.y))
                     if (selectedItem == i)
                         executeSelectedItem();
                     else
