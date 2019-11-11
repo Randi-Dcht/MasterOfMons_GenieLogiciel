@@ -11,18 +11,39 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 
+/**
+ * Un bouton avec du texte.
+ */
 public class Button extends Control {
 
+    /**
+     * L'action a éffectué quand le bouton reçoit un clique.
+     */
     private Runnable onClick;
+    /**
+     * Permet de dessiner les formes comme les rectangles.
+     */
     private ShapeRenderer sr;
+    /**
+     * Le texte affiché sur le bouton.
+     */
     private String textToShow = "";
+    /**
+     * Si la souris est au dessus du bouton ou non.
+     */
     private boolean isMouseOver;
 
+    /**
+     * Crée un nouveau bouton.
+     * @param gim Le GameInputManager du jeu.
+     * @param gs Les paramètres graphiques à utiliser.
+     */
     public Button(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         sr = new ShapeRenderer();
     }
 
+    @Override
     public void draw(Batch batch, int x, int y, int width, int height) {
         super.draw(batch, x, y, width, height);
         Gdx.gl.glEnable(GL30.GL_BLEND);
@@ -40,6 +61,7 @@ public class Button extends Control {
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
+    @Override
     public void handleInput() {
         Rectangle buttonRectangle = new Rectangle(x, MasterOfMonsGame.HEIGHT - y - height, width, height);
         for (Point click : gim.getRecentClicks())
@@ -49,14 +71,26 @@ public class Button extends Control {
 
     }
 
+    /**
+     * Retourne le texte affiché.
+     * @return Le texte affiché.
+     */
     public String getText() {
         return textToShow;
     }
 
+    /**
+     * Défini le texte à afficher.
+     * @param text Le texte à afficher.
+     */
     public void setText(String text) {
         this.textToShow = text;
     }
 
+    /**
+     * Défini l'action à éxécuter si l'on clique sur le bouton.
+     * @param onClick L'action à éxécuter en cas de clique.
+     */
     public void setOnClick(Runnable onClick) {
         this.onClick = onClick;
     }

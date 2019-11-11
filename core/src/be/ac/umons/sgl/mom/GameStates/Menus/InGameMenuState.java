@@ -10,13 +10,26 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/***
+ * Un menu "in-game". Il permet entre autre de continuer le jeu, d'accéder aux paramètres, de sauvegarder, de charger une partie, ...
+ */
 public class InGameMenuState extends MenuState {
 
-    ShapeRenderer sr;
+    /***
+     * Permet de dessiner les formes comme les rectangles.
+     */
+    protected ShapeRenderer sr;
 
+    /***
+     * Initialise un menu "in-game".
+     * @param gsm Le GameStateManager du jeu.
+     * @param gim Le GameInputManager du jeu.
+     * @param gs Les paramètres graphiques à utiliser.
+     */
     public InGameMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+
 
     @Override
     public void init() {
@@ -36,7 +49,11 @@ public class InGameMenuState extends MenuState {
                 new MenuItem("Quit")};
     }
 
-    // https://gamedev.stackexchange.com/questions/67817/how-do-i-render-a-png-with-transparency-in-libgdx
+
+    /***
+     * Dessine les éléments du menu avec un fond transparent.
+     * Code was inspired by CNIAngel from gamedev.stackexchange.com (https://gamedev.stackexchange.com/a/67837)
+     */
     @Override
     public void draw() {
         Gdx.gl.glEnable(GL30.GL_BLEND);
@@ -50,7 +67,7 @@ public class InGameMenuState extends MenuState {
     }
 
     @Override
-    protected void goToSelectedItem() {
+    protected void executeSelectedItem() {
         switch (selectedItem) {
             case 1:
                 gsm.removeFirstState();

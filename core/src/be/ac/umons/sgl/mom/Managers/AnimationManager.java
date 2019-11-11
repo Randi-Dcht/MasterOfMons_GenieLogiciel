@@ -6,21 +6,44 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Gère toutes les animations du jeu et les mets à jour.
+ */
 public class AnimationManager {
+    /**
+     * Le lien entre le nom d'une animation et l'animation en elle-même.
+     */
     private Map<String, Animation> animations;
 
+    /**
+     * Crée un nouveau gestionnaire d'animation.
+     */
     public AnimationManager() {
         animations = new HashMap<>();
     }
 
+    /**
+     * Ajoute l'animation <code>anim</code> sous le nom <code>animName</code>
+     * @param animName Le nom de l'animation.
+     * @param anim L'animation à ajouter.
+     */
     public void addAnAnimation(String animName, Animation anim) {
         animations.put(animName, anim);
     }
 
+    /**
+     * Retourne l'animation avec le nom <code>animName</code>
+     * @param animName Le nom de l'animation.
+     * @return L'animation avec le nom <code>animName</code>
+     */
     public Animation getAnAnimation(String animName) {
         return animations.get(animName);
     }
 
+    /**
+     * Mets à jour toutes les animations en fonction de <code>dt</code>.
+     * @param dt Le temps entre l'appel précédent de cette fonction et cet appel-ci.
+     */
     public void update(float dt) {
         for (Animation a : animations.values())
             a.update(dt);

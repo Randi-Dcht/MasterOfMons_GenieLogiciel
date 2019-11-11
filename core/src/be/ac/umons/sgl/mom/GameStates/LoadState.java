@@ -14,29 +14,49 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * L'état où l'utilisateur peut selectionner le fichier de sauvegarde à charger pour continuer une partie précedemment sauvegardé.
+ */
 public class LoadState extends GameState {
+    /**
+     * Un chemin de sauvegarde temporaire afin de tester le jeu.
+     */
     protected final String SAVE_PATH = "D:\\Users\\Guillaume\\Documents\\Test\\MOM"; // TODO : Define it itself
 
+    /**
+     * Permet de dessiner les formes comme les rectangles.
+     */
     private ShapeRenderer sr;
+    /**
+     * Utilisé afin de dessiner en autre le texte.
+     */
     private SpriteBatch sb;
 
-    private double topMargin;
-    private double leftMargin;
+    /**
+     * Un entier indiquant à quel point l'utilisateur est descendu dans la liste.
+     */
     private int mouseWheeled = 0;
-
+    /**
+     * La liste de tout les boutons (représentant les noms de fichiers) affichés sur l'écran.
+     */
     private List<Button> buttonList;
 
+    /**
+     * Crée un nouvel état de chargement de sauvegarde.
+     * @param gsm Le GameStateManager du jeu.
+     * @param gim Le GameInputManager du jeu.
+     * @param gs Les paramètres graphiques à utiliser.
+     */
     public LoadState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
 
     @Override
     public void init() {
+        super.init();
         sr = new ShapeRenderer();
         sb = new SpriteBatch();
         buttonList = new ArrayList<>();
-        topMargin = MasterOfMonsGame.HEIGHT / 100;
-        leftMargin = MasterOfMonsGame.WIDTH / 100;
         File saveDir = new File(SAVE_PATH);
         if (! saveDir.exists())
             saveDir.mkdir();
@@ -93,10 +113,19 @@ public class LoadState extends GameState {
         sb.dispose();
     }
 
+    /**
+     * Retourne une liste des différents fichiers correspondant à "*.mom" contenu dans le repertoire <code>saveDirPath</code>. Retourne <code>null</code> si le repertoire n'existe pas.
+     * @param saveDirPath Le repertoire de sauvegarde.
+     * @return Une liste des différents fichiers correspondant à "*.mom" contenu dans <code>saveDirPath</code>
+     */
     private File[] listSaveFile(String saveDirPath) {
         return new File(saveDirPath).listFiles((dir, name) -> name.endsWith(".mom"));
     }
 
+    /**
+     * Enclenche le chargement du fichier de sauvegarde <code>loadFilePath</code> et quitte l'état.
+     * @param loadFilePath Le lien vers le fichier de sauvegarde.
+     */
     private void load(String loadFilePath) {
         // TODO : call the load system
         gsm.removeFirstState();

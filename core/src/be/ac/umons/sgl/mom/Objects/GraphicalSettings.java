@@ -8,17 +8,40 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.Objects;
 
+/**
+ * Représente les paramètres graphiques du jeu.
+ */
 public class GraphicalSettings {
+    /**
+     * La police d'écriture utilisée pour les titres.
+     */
     private BitmapFont titleFont;
+    /**
+     * La police d'écriture utilisée pour le texte normal.
+     */
     private BitmapFont normalFont;
+    /**
+     * La police d'écriture utilisée pour les quêtes.
+     */
     private BitmapFont questFont;
+    /**
+     * La police d'écriture utilisée pour les textes plus petit.
+     */
     private BitmapFont smallFont;
+    /**
+     * L'AssetManager (gestionnaire de ressources) du jeu.
+     */
     private AssetManager assetManager;
+    /**
+     * Le générateur de BitmapFont afin d'éviter la pixelisation.
+     */
     private FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
 
+    /**
+     * Crée de nouveaux paramètres graphiques.
+     */
     public GraphicalSettings() {
         assetManager = new AssetManager();
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -26,46 +49,85 @@ public class GraphicalSettings {
         prepareAssetManagerForLoading();
     }
 
+    /**
+     * Défini la police d'écriture utilisée pour les textes plus petit.
+     * @param fontPath Le lien vers la police d'écriture utilisée pour les textes plus petit.
+     * @param size La taille de la police.
+     */
     public void setSmallFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         smallFont = ftfg.generateFont(ftfp);
     }
 
+    /**
+     * Retourne la police d'écriture utilisée pour les textes plus petit.
+     * @return La police d'écriture utilisée pour les textes plus petit.
+     */
     public BitmapFont getSmallFont() {
         return smallFont;
     }
 
+    /**
+     * Défini la police d'écriture utilisée pour le texte normal.
+     * @param fontPath Le lien vers la police d'écriture utilisée pour le texte normal.
+     * @param size La taille de la police.
+     */
     public void setNormalFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         normalFont = ftfg.generateFont(ftfp);
     }
 
+    /**
+     * Retourne la police d'écriture utilisée pour le texte normal.
+     * @return La police d'écriture utilisée pour le texte normal.
+     */
     public BitmapFont getNormalFont() {
         return normalFont;
     }
 
+    /**
+     * Défini la police d'écriture utilisée pour les titres.
+     * @param fontPath Le lien vers la police d'écriture utilisée pour les titres.
+     * @param size La taille de la police.
+     */
     public void setTitleFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         titleFont = ftfg.generateFont(ftfp);
     }
 
+    /**
+     * Retourne la police d'écriture utilisée pour les titres.
+     * @return La police d'écriture utilisée pour les titres.
+     */
     public BitmapFont getTitleFont() {
         return titleFont;
     }
 
+    /**
+     * Défini la police d'écriture utilisée pour les quêtes.
+     * @param fontPath Le lien vers la police d'écriture utilisée pour les quêtes.
+     * @param size La taille de la police.
+     */
     public void setQuestFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         questFont = ftfg.generateFont(ftfp);
     }
 
+    /**
+     * Retourne la police d'écriture utilisée pour les quêtes.
+     * @return La police d'écriture utilisée pour les quêtes.
+     */
     public BitmapFont getQuestFont() {
         return questFont;
     }
 
+    /**
+     * Initialise les fichiers que le gestionnaire de ressources devra charger durant l'écran de chargement.
+     */
     protected void prepareAssetManagerForLoading() {
         for (File folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory))) {
             for (File f : Objects.requireNonNull(folder.listFiles(File::isFile))) {
@@ -77,10 +139,17 @@ public class GraphicalSettings {
         }
     }
 
+    /**
+     * Retourne le gestionnaire de ressources.
+     * @return Le gestionnaire de ressources.
+     */
     public AssetManager getAssetManager() {
         return assetManager;
     }
 
+    /**
+     * Libère les ressources alloué lors de l'utilisation de l'état.
+     */
     public void dispose() {
         if (titleFont != null)
             titleFont.dispose();

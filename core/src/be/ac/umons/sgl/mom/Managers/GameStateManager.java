@@ -9,13 +9,29 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import java.util.Stack;
 
 
-/** Part of content below was inspired by https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike */
-
+/**
+ * Gère les différents états du jeu ainsi que le passage de l'un à l'autre.
+ * Une partie du contenu est tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ */
 public class GameStateManager {
+    /**
+     * La pile des différents états du jeu.
+     */
     private Stack<GameState> gameStateStack;
+    /**
+     * Le GameInputManager du jeu.
+     */
     private GameInputManager gim;
+    /**
+     * Les paramètres graphiques du jeu.
+     */
     protected GraphicalSettings gs;
 
+    /**
+     * Crée un nouveau gestionnaire d'état du jeu.
+     * @param gim Le GameInputManager du jeu.
+     * @param gs Les paramètres graphiques du jeu.
+     */
     public GameStateManager(GameInputManager gim, GraphicalSettings gs) {
         gameStateStack = new Stack<>();
         this.gim = gim;
@@ -23,6 +39,10 @@ public class GameStateManager {
         setState(GameStates.MainMenu);
     }
 
+    /**
+     * Change l'état actuelle du jeu et enlève le précédent en fonction du nouvel état.
+     * @param gst Le nouvel état à ajouter.
+     */
     public void setState(GameStates gst) {
         switch (gst) {
             case MainMenu:
@@ -55,14 +75,24 @@ public class GameStateManager {
         }
     }
 
+    /**
+     * Retire l'état en cours et revient à l'état précédent.
+     */
     public void removeFirstState() {
         gameStateStack.pop();
     }
 
+    /**
+     * Met à jour l'état en cours.
+     * @param dt Le temps entre l'appel précédent de cette fonction et l'appel actuel.
+     */
     public void update(float dt) {
         gameStateStack.peek().update(dt);
     }
 
+    /**
+     * Dessine tout les états présent dans la pile dans l'ordre de la pile.
+     */
     public void draw() {
         for (GameState gs: gameStateStack) {
             gs.draw();

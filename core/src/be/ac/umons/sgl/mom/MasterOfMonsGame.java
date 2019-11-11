@@ -7,20 +7,42 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
+/**
+ * La classe principale du jeu.
+ * Une partie du contenu est tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ */
 public class MasterOfMonsGame extends ApplicationAdapter {
 
-	/** Part of content below was inspired by https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike */
+
 	// For me : https://www.youtube.com/watch?v=VAMEpiKTUZI&list=PL-2t7SM0vDfeZUKeM7Jm4U9utHwFS1N-C&index=4
 
+	/**
+	 * La taille horizontale de la fenêtre.
+	 */
 	public static int WIDTH;
+	/**
+	 * La taille verticale de la fenêtre.
+	 */
 	public static int HEIGHT;
 
 //	public static OrthographicCamera cam;
 
+	/**
+	 * Le gestionnaire d'entrée du jeu.
+	 */
 	protected GameInputManager gim;
+	/**
+	 * Le gestionnaire d'état du jeu.
+	 */
 	protected GameStateManager gsm;
+	/**
+	 * Les paramètres graphiques du jeu.
+	 */
 	protected GraphicalSettings gs;
 
+	/**
+	 * S'éxécute quand l'application est crée.
+	 */
 	@Override
 	public void create () {
 		WIDTH = Gdx.graphics.getWidth();
@@ -36,6 +58,9 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		gs.setTitleFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.1 * (float)HEIGHT));
 	}
 
+	/**
+	 * S'éxécute quand l'application doit se dessiner.
+	 */
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -48,6 +73,9 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		gim.update();
 	}
 
+	/**
+	 * S'éxécute quand l'application se détruit.
+	 */
 	@Override
 	public void dispose () {
 		gs.dispose();

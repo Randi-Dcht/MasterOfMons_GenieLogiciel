@@ -1,24 +1,29 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Enums.KeyStatus;
-import be.ac.umons.sgl.mom.GraphicalObjects.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * L'état où l'utilisateur peut choisir les différents paramètres du jeu.
+ */
 public class SettingsState extends GameState {
 
-    SpriteBatch sb;
-    ShapeRenderer sr;
+    /**
+     * Utilisé afin de dessiner en autre le texte.
+     */
+    protected SpriteBatch sb;
+    /**
+     * Permet de dessiner les formes comme les rectangles.
+     */
+    protected ShapeRenderer sr;
 
-    protected double topMargin;
-    protected double leftMargin;
+
 
     public SettingsState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -26,8 +31,7 @@ public class SettingsState extends GameState {
 
     @Override
     public void init() {
-        topMargin = MasterOfMonsGame.HEIGHT / 100;
-        leftMargin = MasterOfMonsGame.WIDTH / 100;
+        super.init();
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
 

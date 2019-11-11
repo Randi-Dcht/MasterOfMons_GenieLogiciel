@@ -16,24 +16,48 @@ import java.awt.*;
 
 import static be.ac.umons.sgl.mom.MasterOfMonsGame.*;
 
+/**
+ * CLasse abstraite représentant un menu du jeu.
+ */
 public abstract class MenuState extends GameState {
 
+    /**
+     * Utilisé afin de dessiner en autre le texte.
+     */
     protected SpriteBatch sb;
 
+    /**
+     * L'indice de l'élement selectionné.
+     */
     protected int selectedItem = 0;
 
+    /**
+     * Les différents éléments à montrer à l'écran.
+     */
     protected MenuItem[] menuItems;
 
-    protected double topMargin;
+    /**
+     * La marge entre les différents éléments.
+     */
     protected double betweenItemMargin;
+    /**
+     * La caméra permettant d'afficher le texte et de zoomer au besoin.
+     */
     protected OrthographicCamera cam;
 
+    /**
+     * Crée un nouveau menu.
+     * @param gsm Le GameStateManager du jeu.
+     * @param gim Le GameInputManager du jeu.
+     * @param gs Les paramètres graphiques à utiliser.
+     */
     protected MenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
 
     @Override
     public void init() {
+        super.init();
         sb = new SpriteBatch();
 		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
 		cam.translate(WIDTH / 2, HEIGHT / 2);
@@ -80,7 +104,7 @@ public abstract class MenuState extends GameState {
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
-            goToSelectedItem();
+            executeSelectedItem();
         if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
             do
                 selectedItem = (selectedItem + 1) % menuItems.length;
@@ -98,32 +122,67 @@ public abstract class MenuState extends GameState {
             for (int i = 0; i < menuItems.length; i++) {
                 if (menuItems[i].screenTextBound.contains(click.x, click.y))
                     if (selectedItem == i)
-                        goToSelectedItem();
+                        executeSelectedItem();
                     else
                         selectedItem = i;
             }
         }
     }
 
-    protected abstract void goToSelectedItem();
+    /***
+     * Exécute l'action relié à un des éléments du menu en fonction de celui selectionné par l'utilisateur.
+     */
+    protected abstract void executeSelectedItem();
 
     @Override
     public void dispose() {
         sb.dispose();
     }
 
+    /***
+     * Représente un élément du menu.
+     */
     protected class MenuItem {
+        /***
+         * Le nom de l'élément.
+         */
         private String header;
+        /***
+         * Le type de l'élément.
+         */
         private MenuItemType mit;
+        /***
+         * L'élément est-il selectionnable ?
+         */
         private boolean selectable;
+        /***
+         * Représente la position et la taille de l'élément (ATTENTION : En fonction des coordonnées de l'écran)
+         */
         private Rectangle screenTextBound;
 
+        /***
+         * Initialise un élément du menu.
+         * @param header Le nom de l'élément.
+         */
         public MenuItem(String header) {
             this(header, MenuItemType.Normal);
         }
+
+        /***
+         * Initialise un élément du menu.
+         * @param header Le nom de l'élément.
+         * @param mit Le type de l'élement.
+         */
         public MenuItem(String header, MenuItemType mit) {
             this(header, mit, true);
         }
+
+        /***
+         * Initialise un élément du menu.
+         * @param header Le nom de l'élément.
+         * @param mit Le type de l'élement.
+         * @param selectable L'élément est-il selectionnable ?
+         */
         public MenuItem(String header, MenuItemType mit, boolean selectable) {
             this.header = header;
             this.mit = mit;
@@ -131,6 +190,9 @@ public abstract class MenuState extends GameState {
         }
     }
 
+    /***
+     * Les différents types possibles des éléments d'un menu.
+     */
     public enum MenuItemType {
         Title,
         Normal;
