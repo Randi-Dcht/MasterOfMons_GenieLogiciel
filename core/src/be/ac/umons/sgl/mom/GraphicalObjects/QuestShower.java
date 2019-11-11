@@ -245,14 +245,14 @@ public class QuestShower {
      * Retourne la taille horizontale du support.
      * @return La taille horizontale du support.
      */
-    public int getQuestShowerWidth() {
+    public int getWidth() {
         return questShowerWidth;
     }
     /**
      * Retourne la taille verticale du support.
      * @return La taille verticale du support.
      */
-    public int getQuestShowerHeight() {
+    public int getHeight() {
         return questShowerHeight;
     }
     /**

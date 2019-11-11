@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Managers;
 
-import be.ac.umons.sgl.mom.Interfaces.Animation;
+import be.ac.umons.sgl.mom.Animations.Animation;
 
 import java.util.HashMap;
 import java.util.Iterator;

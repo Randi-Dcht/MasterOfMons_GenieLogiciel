@@ -1,11 +1,9 @@
 package be.ac.umons.sgl.mom.Animations;
 
-import be.ac.umons.sgl.mom.Interfaces.Animation;
-
 /**
  * Cette classe implémente Animation. Elle permet d'animer un Double dans un temps donné et entre 2 valeurs données.
  */
-public class DoubleAnimation implements Animation {
+public class DoubleAnimation extends Animation {
     /**
      * Représente la valeur actuelle.
      */
@@ -18,14 +16,7 @@ public class DoubleAnimation implements Animation {
      * Valeur à ajouter à chaque seconde.
      */
     private double toAddBySecond;
-    /**
-     * Action à éxécuter à chaque mise à jour de la valeur.
-     */
-    private Runnable runningAction;
-    /**
-     * Action à éxécuter une fois l'animation terminée.
-     */
-    private Runnable endingAction;
+
 
     /**
      * Initialise une nouvelle animation.
@@ -88,37 +79,5 @@ public class DoubleAnimation implements Animation {
      */
     public boolean isFinished() {
         return Double.compare(actualState, to) == 0;
-    }
-
-    /**
-     * Défini l'action à éxécuter à chaque mise à jour de la valeur.
-     * @param run L'action à éxécuter à chaque mise à jour de la valeur.
-     */
-    public void setRunningAction(Runnable run) {
-        this.runningAction = run;
-    }
-
-    /**
-     * Défini l'action à éxécuter une fois l'animation terminée.
-     * @param run L'action à éxécuter une fois l'animation terminée.
-     */
-    public void setEndingAction(Runnable run) {
-        this.endingAction = run;
-    }
-
-    /**
-     * Retourne l'action à éxécuter à chaque mise à jour de la valeur
-     * @return L'action à éxécuter à chaque mise à jour de la valeur
-     */
-    public Runnable getRunningAction() {
-        return runningAction;
-    }
-
-    /**
-     * Retourne l'action à éxécuter une fois l'animation terminée.
-     * @return L'action à éxécuter une fois l'animation terminée.
-     */
-    public Runnable getEndingAction() {
-        return endingAction;
     }
 }

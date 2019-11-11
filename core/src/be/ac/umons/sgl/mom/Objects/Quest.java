@@ -158,7 +158,7 @@ public class Quest {
         int res = subQuests.size();
         for (Quest q :
                 subQuests) {
-            res += q.getTotalSubQuestsNumber();
+            res += q.calculateTotalSubQuestsNumber();
         }
         return res;
     }

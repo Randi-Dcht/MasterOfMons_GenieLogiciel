@@ -267,8 +267,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         questShower.beginAnimation();
         DoubleAnimation da = new DoubleAnimation(0, 1, 750);
         da.setRunningAction(() -> {
-            questShower.setDuringAnimationQuestShowerWidth((int)((double)questShower.getQuestShowerWidth() * da.getActual()));
-            questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getQuestShowerHeight() * da.getActual()));
+            questShower.setDuringAnimationQuestShowerWidth((int)((double)questShower.getWidth() * da.getActual()));
+            questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getHeight() * da.getActual()));
             questShower.setDuringAnimationTextOpacity(da.getActual());
         });
         am.addAnAnimation("QuestRectangleAnimation", da);
