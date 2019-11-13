@@ -71,6 +71,11 @@ public class Button extends Control {
 
     }
 
+    @Override
+    public void dispose() {
+        sr.dispose();
+    }
+
     /**
      * Retourne le texte affiché.
      * @return Le texte affiché.

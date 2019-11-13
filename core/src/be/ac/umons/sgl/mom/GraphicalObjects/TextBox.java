@@ -82,6 +82,11 @@ public class TextBox extends Control {
         }
     }
 
+    @Override
+    public void dispose() {
+        sr.dispose();
+    }
+
     /**
      * Retourne le texte entré par l'utilisateur ainsi que le suffixe si celui-ci a été défini.
      * @return Le texte entré par l'utilisateur ainsi que le suffixe si celui-ci a été défini.

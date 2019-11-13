@@ -110,7 +110,8 @@ public class SaveState extends GameState {
 
     @Override
     public void dispose() {
-
+        sb.dispose();
+        sr.dispose();
     }
 
     /**

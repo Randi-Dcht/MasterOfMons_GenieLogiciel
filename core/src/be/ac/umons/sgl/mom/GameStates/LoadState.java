@@ -111,6 +111,8 @@ public class LoadState extends GameState {
     public void dispose() {
         sr.dispose();
         sb.dispose();
+        for (Button b: buttonList)
+            b.dispose();
     }
 
     /**

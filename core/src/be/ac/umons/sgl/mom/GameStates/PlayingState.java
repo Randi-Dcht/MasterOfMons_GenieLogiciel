@@ -80,7 +80,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * La caméra permettant de déplacer la partie de la carte montrée et ainsi le joueur. Elle permet aussi de montrer seulement une partie de carte en effectuant un zoom sur celle-ci.
      */
-    public static OrthographicCamera cam;
+    private static OrthographicCamera cam;
     /**
      * Une partie du HUD montrant la quête active.
      */
@@ -118,9 +118,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         tileHeight = (int)map.getProperties().get("tileheight");
         mapWidth = (int)map.getProperties().get("width");
         mapHeight = (int)map.getProperties().get("height");
-
-
-        gs.setQuestFont("Fonts/Comfortaa/Comfortaa-Light.ttf", tileHeight / 2);
 
         itmr = new IsometricTiledMapRenderer(map);
         collisionObjects = map.getLayers().get("Interdit").getObjects();
@@ -250,6 +247,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void dispose() {
         map.dispose();
         itmr.dispose();
+        sb.dispose();
     }
 
     /**

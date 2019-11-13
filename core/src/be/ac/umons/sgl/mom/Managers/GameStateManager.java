@@ -98,4 +98,13 @@ public class GameStateManager {
             gs.draw();
         }
     }
+
+    /**
+     * S'éxécute quand l'application se détruit.
+     */
+    public void dispose() {
+        for (GameState gs: gameStateStack) {
+            gs.dispose();
+        }
+    }
 }

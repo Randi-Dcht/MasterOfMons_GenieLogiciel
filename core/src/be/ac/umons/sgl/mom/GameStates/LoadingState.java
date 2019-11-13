@@ -63,7 +63,7 @@ public class LoadingState extends GameState {
 
     @Override
     public void update(float dt) {
-        actualAngle += (actualAngle + CIRCLE_SPEED_RAD_SEC * dt) % (2 * Math.PI);
+        actualAngle = (actualAngle + CIRCLE_SPEED_RAD_SEC * dt) % (2 * Math.PI);
     }
 
     @Override

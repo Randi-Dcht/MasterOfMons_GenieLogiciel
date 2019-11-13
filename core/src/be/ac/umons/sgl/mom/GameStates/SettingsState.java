@@ -63,6 +63,7 @@ public class SettingsState extends GameState {
 
     @Override
     public void dispose() {
+        sr.dispose();
         sb.dispose();
     }
 }

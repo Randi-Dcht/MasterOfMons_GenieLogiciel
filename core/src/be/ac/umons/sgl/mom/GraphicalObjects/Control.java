@@ -66,4 +66,6 @@ public abstract class Control {
      * Genère une action en fonction des entrées (clavier ou souris) de l'utilisateur.
      */
     public abstract void handleInput();
+
+    public abstract void dispose();
 }
