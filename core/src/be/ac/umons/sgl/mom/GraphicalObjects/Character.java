@@ -210,10 +210,11 @@ public class Character {
 
     /**
      * Retourne un rectangle représentant la taille et la position (d'un point de vue isométrique où le (0,0) est l'extrémité au-dessus la carte) du personnage sur la carte.
+     * Une partie du code a été tiré de https://stackoverflow.com/a/13838164 par Tijgerd
      * @return Un rectangle représentant la taille et la position (d'un point de vue isométrique où le (0,0) est l'extrémité au-dessus la carte) du personnage sur la carte.
      */
     public Rectangle getMapRectangle() {
-        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2; // https://stackoverflow.com/a/13838164
+        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2;
         int y = getPosX() - x;
         return new Rectangle(x , y, getWidth(), getHeight());
     }

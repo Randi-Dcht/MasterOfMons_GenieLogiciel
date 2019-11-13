@@ -19,19 +19,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-
-import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
+import com.badlogic.gdx.math.Vector3;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 /**
- * L'état de jeu du jeu. Il affiche la carte, un joueur ainsi qu'un HUD.
+ * Cette classe correspond à la classe de test de la classe PLayingState. Tout le code testé est équivalent, cependant, certaines parties jugées inutiles ont été retirées.
  * Une partie du contenu a été tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike.
  * L'affichage de la carte a été tiré de https://www.youtube.com/watch?v=P8jgD-V5jG8 par Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
  */
-public class PlayingState extends GameState { // TODO : Put all disposes
+public class PlayingStateTest { // TODO : Put all disposes
     /**
      * La taille horizontale de la carte montré à l'écran.
      */
@@ -43,7 +47,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * La vitesse du joueur.
      */
-    private final float VELOCITY = 500;
+    private final float VELOCITY = 5; // Modifié pour le bien du test
 
     /**
      * La taille horizontale (en nombre de tuile) de la carte entière.
@@ -64,14 +68,17 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * Utilisé afin de dessiner en autre le texte.
      */
+    @Mock
     private SpriteBatch sb;
     /**
      * La carte du jeu.
      */
+    @Mock
     private TiledMap map;
     /**
      * Le "renderer" de la carte du jeu.
      */
+    @Mock
     private IsometricTiledMapRenderer itmr;
     /**
      * Les objets empêchant le joueur d'aller plus loin.
@@ -80,14 +87,17 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * La caméra permettant de déplacer la partie de la carte montrée et ainsi le joueur. Elle permet aussi de montrer seulement une partie de carte en effectuant un zoom sur celle-ci.
      */
+    @Mock
     private OrthographicCamera cam;
     /**
      * Une partie du HUD montrant la quête active.
      */
+    @Mock
     private QuestShower questShower;
     /**
      * Une partie du HUD montrant l'inventaire du joueur.
      */
+    @Mock
     private InventoryShower inventoryShower;
     /**
      * Le joueur de la partie.
@@ -96,40 +106,40 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * L'objet responsable des animations.
      */
+    @Mock
     private AnimationManager am;
 
     /**
-     * Crée un nouvel état de jeu.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * Représente les paramètres graphiques du jeu normalement donné par la classe mère de LoadingState.
      */
-    public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
-    }
+    @Mock
+    protected GraphicalSettings gs;
 
-    @Override
+    /**
+     * Représente le gestionnaire d'entrée du jeu normalement donné par la classe mère de LoadingState.
+     */
+    @Mock
+    protected GameInputManager gim;
+
+    /**
+     * Représente le gestionnaire d'état du jeu normalement donné par la classe mère de LoadingState.
+     */
+    @Mock
+    protected GameStateManager gsm;
+
+    @BeforeEach
     public void init() {
-        super.init();
-        sb = new SpriteBatch();
 
-        map = new TmxMapLoader().load("Map/isoTest.tmx");
-        tileWidth = (int)map.getProperties().get("tilewidth");
-        tileHeight = (int)map.getProperties().get("tileheight");
-        mapWidth = (int)map.getProperties().get("width");
-        mapHeight = (int)map.getProperties().get("height");
+        MockitoAnnotations.initMocks(this);
 
-        itmr = new IsometricTiledMapRenderer(map);
-        collisionObjects = map.getLayers().get("Interdit").getObjects();
+        tileWidth = 5; // Re-défini pour le bien du test.
+        tileHeight = 5;
+        mapWidth = 10;
+        mapHeight = 10;
 
-        cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
-        cam.position.x = 212;
-        cam.position.y = 318;
-        cam.update();
+        collisionObjects = new MapObjects();
 
-        questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
-        player = new Character(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
-        inventoryShower = new InventoryShower(gs, sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth, player);
+        player = new Character(gs,25, 25, 5, 5, 50, 50); // TODO : BUG AVEC EN BAS ET A GAUCHE
 
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");
@@ -139,11 +149,9 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         q3.activate();
         questShower.setQuest(q);
 
-        am = new AnimationManager();
         animateHUD();
     }
 
-    @Override
     public void update(float dt) {
         handleInput();
 
@@ -193,16 +201,16 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         else if ((toMoveY < 0 && player.getYT() > 0) || (toMoveY > 0 && player.getYT() < 0))
             toMoveY = player.getYT() + toMoveY;
 
-        cam.translate(toMoveX, toMoveY);
-        if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
-            cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
-        else if (cam.position.x > (mapWidth - SHOWED_MAP_WIDTH) * tileWidth)
-            cam.position.x = (mapWidth - SHOWED_MAP_WIDTH) * tileWidth;
-
-        if (cam.position.y > 0)
-            cam.position.y = 0;
-        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight)
-            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight;
+//        cam.translate(toMoveX, toMoveY);
+//        if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
+//            cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
+//        else if (cam.position.x > (mapWidth - SHOWED_MAP_WIDTH) * tileWidth)
+//            cam.position.x = (mapWidth - SHOWED_MAP_WIDTH) * tileWidth;
+//
+//        if (cam.position.y > 0)
+//            cam.position.y = 0;
+//        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight)
+//            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight;
     }
 
     /**
@@ -220,7 +228,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         return false;
     }
 
-    @Override
     public void draw() {
         itmr.setView(cam);
         itmr.render();
@@ -236,14 +243,12 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         inventoryShower.draw();
     }
 
-    @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
             gsm.setState(GameStates.InGameMenu);
         }
     }
 
-    @Override
     public void dispose() {
         map.dispose();
         itmr.dispose();
@@ -295,5 +300,63 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         da.setEndingAction(() -> {
             am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
         });
+    }
+
+    @Test
+    public void movementTest() {
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Down)).thenReturn(true);
+        update(1);
+        Assertions.assertEquals(25, player.getPosX());
+        Assertions.assertEquals(-5, player.getPosY());
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Down)).thenReturn(true);
+        update(1);
+        Assertions.assertEquals(20, player.getPosX());
+        Assertions.assertEquals(-10, player.getPosY());
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Down)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)).thenReturn(true);
+        update(1);
+        Assertions.assertEquals(20, player.getPosX());
+        Assertions.assertEquals(-10, player.getPosY());
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Down)).thenReturn(false);
+        update(1);
+        Assertions.assertEquals(25, player.getPosX());
+        Assertions.assertEquals(-10, player.getPosY());
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.UP, KeyStatus.Down)).thenReturn(true);
+        update(1);
+        Assertions.assertEquals(25, player.getPosX());
+        Assertions.assertEquals(-5, player.getPosY());
+        update(.5f);
+        Assertions.assertEquals(25, player.getPosX());
+        Assertions.assertEquals(-2, player.getPosY()); // -2.5 arrondi à -2
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)).thenReturn(true);
+        update(.5f);
+        Assertions.assertEquals(28, player.getPosX()); // 2.5 arrondi à 3
+        Assertions.assertEquals(1, player.getPosY());
+        update(.5f);
+        Assertions.assertEquals(31, player.getPosX()); // 2.5 arrondi à 3
+        Assertions.assertEquals(4, player.getPosY()); // 2.5 arrondi à 3 pour éviter le "entre 2 pixels"
+    }
+
+    @Test
+    public void collisionTest() {
+        Mockito.when(gim.isKey(Input.Keys.UP, KeyStatus.Down)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Down)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Down)).thenReturn(false);
+        player.move(-player.getPosX(), -player.getPosY()); // Remet coordonnée à 0,0
+
+        Assertions.assertEquals(0, player.getPosX());
+        Assertions.assertEquals(0, player.getPosY());
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)).thenReturn(true);
+        collisionObjects.add(new RectangleMapObject(player.getMapRectangle().x + 1, player.getMapRectangle().y - 1,10,10));
+        update(1);
+        Assertions.assertEquals(0, player.getPosX());
+        Assertions.assertEquals(0, player.getPosY());
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Down)).thenReturn(true);
+        update(1);
+        Assertions.assertEquals(0, player.getPosX());
+        Assertions.assertEquals(0, player.getPosY());
     }
 }
