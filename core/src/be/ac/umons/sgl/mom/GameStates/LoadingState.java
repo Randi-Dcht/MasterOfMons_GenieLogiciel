@@ -52,18 +52,18 @@ public class LoadingState extends GameState {
      */
     public LoadingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
-        sb = new SpriteBatch();
-        sr = new ShapeRenderer();
     }
 
     @Override
     public void init() {
         super.init();
+        sb = new SpriteBatch();
+        sr = new ShapeRenderer();
     }
 
     @Override
     public void update(float dt) {
-        actualAngle += CIRCLE_SPEED_RAD_SEC * dt;
+        actualAngle += (actualAngle + CIRCLE_SPEED_RAD_SEC * dt) % (2 * Math.PI);
     }
 
     @Override
@@ -76,9 +76,8 @@ public class LoadingState extends GameState {
         int fromCenterX = (int)((gs.getTitleFont().getXHeight() * txt.length() / 2 + CIRCLE_MARGIN_X) * Math.cos(actualAngle));
         int fromCenterY = (int)((gs.getTitleFont().getLineHeight() / 2 + CIRCLE_MARGIN_Y) * Math.sin(actualAngle));
 
-        if (! assetsLoaded)
-            assetsLoaded = gs.getAssetManager().update();
-        else
+        assetsLoaded = gs.getAssetManager().update();
+        if (assetsLoaded)
             gsm.setState(GameStates.Play);
 
         float progress = gs.getAssetManager().getProgress();
@@ -95,6 +94,7 @@ public class LoadingState extends GameState {
 
     @Override
     public void dispose() {
+        sr.dispose();
         sb.dispose();
     }
 }
