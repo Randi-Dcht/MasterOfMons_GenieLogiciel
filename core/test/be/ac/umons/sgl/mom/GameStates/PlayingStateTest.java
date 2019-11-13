@@ -110,19 +110,19 @@ public class PlayingStateTest { // TODO : Put all disposes
     private AnimationManager am;
 
     /**
-     * Représente les paramètres graphiques du jeu normalement donné par la classe mère de LoadingState.
+     * Représente les paramètres graphiques du jeu normalement donné par la classe mère de PlayingState.
      */
     @Mock
     protected GraphicalSettings gs;
 
     /**
-     * Représente le gestionnaire d'entrée du jeu normalement donné par la classe mère de LoadingState.
+     * Représente le gestionnaire d'entrée du jeu normalement donné par la classe mère de PlayingState.
      */
     @Mock
     protected GameInputManager gim;
 
     /**
-     * Représente le gestionnaire d'état du jeu normalement donné par la classe mère de LoadingState.
+     * Représente le gestionnaire d'état du jeu normalement donné par la classe mère de PlayingState.
      */
     @Mock
     protected GameStateManager gsm;

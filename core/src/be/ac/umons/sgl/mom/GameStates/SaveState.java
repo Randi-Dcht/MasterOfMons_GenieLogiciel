@@ -97,7 +97,6 @@ public class SaveState extends GameState {
         saveButton.draw(sb, (int)(quartWidth + leftMargin), (int)(nameBoxY - controlHeight - topMargin), controlWidth, controlHeight);
     }
 
-    // https://stackoverflow.com/a/44956044
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))

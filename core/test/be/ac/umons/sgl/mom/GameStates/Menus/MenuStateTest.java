@@ -29,6 +29,9 @@ public class MenuStateTest {
      */
     protected MenuItem[] menuItems;
 
+    /**
+     * Représente le gestionnaire d'entrée du jeu normalement donné par la classe mère de MenuState.
+     */
     @Mock
     GameInputManager gim;
 
