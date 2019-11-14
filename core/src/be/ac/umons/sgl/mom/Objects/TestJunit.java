@@ -19,4 +19,19 @@ public class TestJunit
     assertTrue("Obligatory of lesson",l1.obligatoryCourse());
     assertSame("same place",l1.location(),Place.Nimy);
   }
+
+  @Test
+ public void PeopleObjectTest()
+ {
+   People people = new People("MasterOfMons",5,5,5);
+   Battery[] b = {new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0)};
+   Energizing e = new Energizing(0,0);
+   for (int i = 0; i < 5 ; i++)
+   {
+     assertTrue("add not over full",people.pushObject(b[i]));
+   }
+   assertFalse("add over full",people.pushObject(b[5]));
+   assertTrue("remove object",people.removeObject(b[0]));
+   assertFalse("remove false object",people.removeObject(e));
+ }
 }
