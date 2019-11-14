@@ -72,6 +72,11 @@ public abstract class Quest
   }
 
 /**
+* Retourne une liste ses sous-quêtes de cette quête.
+*/
+  public abstract GoalsQuest[] getSubQuests();
+
+/**
 * Retourne le nom de la quête.
 * @return Le nom de la quête.
 */

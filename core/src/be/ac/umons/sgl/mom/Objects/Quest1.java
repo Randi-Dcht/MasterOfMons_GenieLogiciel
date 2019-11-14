@@ -23,6 +23,11 @@ public class Quest1 extends Quest
       eventMaps();
     }
 
+    public GoalsQuest[] getSubQuests()
+    {
+        return goalsQuest;
+    }
+
   /**
   *Cette méthode renvoie l'object de la quête
   */
@@ -37,11 +42,19 @@ public class Quest1 extends Quest
       public void evenActivity()
       {
       }
+      public String getName()
+      {
+        return "x";
+      }
     };
     public class GoToTest implements GoalsQuest
     {
       public void evenActivity()
       {
+      }
+      public String getName()
+      {
+        return "x";
       }
     };
     public class MeetManyPeople implements GoalsQuest
@@ -50,11 +63,19 @@ public class Quest1 extends Quest
       public void evenActivity()
       {
       }
+      public String getName()
+      {
+        return "x";
+      }
     };
     public class BattleForPlace implements GoalsQuest
     {
       public void evenActivity()
       {
+      }
+      public String getName()
+      {
+        return "x";
       }
     };
 }
