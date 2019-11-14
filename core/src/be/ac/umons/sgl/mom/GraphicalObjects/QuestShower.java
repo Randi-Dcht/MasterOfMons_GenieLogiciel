@@ -228,10 +228,9 @@ public class QuestShower {
         return (int)(mainQuest.getTotalSubQuestsNumber() * gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT * mainQuest.getTotalSubQuestsNumber());
     }
 
-    // https://stackoverflow.com/a/16606599
-
     /**
      * Retourne la taille du texte <code>text</code> avec l'écriture utilisée pour les quêtes.
+     * Code inspiré de https://stackoverflow.com/a/16606599 par BennX
      * @param text Le texte
      * @return La taille du texte <code>text</code> avec l'écriture utilisée pour les quêtes.
      */

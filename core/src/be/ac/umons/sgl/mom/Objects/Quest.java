@@ -77,12 +77,11 @@ public class Quest {
      * @param subQuest Les sous-quêtes à ajouter.
      */
     public void addSubQuests(Quest... subQuest) {
-        for (Quest q :
-                subQuest) {
+        for (Quest q : subQuest) {
             subQuests.add(q);
             q.setParentQuest(this);
         }
-        totalQuest = calculateTotalSubQuestsNumber() + 1;
+        totalQuest = calculateTotalSubQuestsNumber(true);
     }
 
     /**
@@ -154,12 +153,17 @@ public class Quest {
      * Calcule le nombre total de quête et de sous-quête qu'il faudra afficher.
      * @return Le nombre total de quête et de sous-quête qu'il faudra afficher.
      */
-    protected int calculateTotalSubQuestsNumber() {
+    protected int calculateTotalSubQuestsNumber(boolean main) {
         int res = subQuests.size();
-        for (Quest q :
-                subQuests) {
-            res += q.calculateTotalSubQuestsNumber();
+        for (Quest q : subQuests) {
+            res += q.calculateTotalSubQuestsNumber(false);
         }
+        if (main)
+            res += 1;
+        if (res != totalQuest)
+            totalQuest = res;
+        if (parentQuest != null && main)
+            parentQuest.calculateTotalSubQuestsNumber(true);
         return res;
     }
 
