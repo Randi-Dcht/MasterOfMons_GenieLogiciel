@@ -6,19 +6,21 @@ import java.util.*;
 *@param before qui est la quête avant
 *@param id qui le numéro de la quête (1 à 5)
 *@param course qui est la liste des cours que le personnage doit suivre pour cette quête
-*@author Randy Dauchot (étudiant en Sciences informatique)
+*@author Randy Dauchot & Guillaume Cardoen (étudiant en Sciences informatique)
 */
 public abstract class Quest
 {
+  protected static int NumberQuest = 0;
   protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
   protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
-  protected int percentage = 0; //avanacement de la quête
+  protected double percent = 0; //avanacement de la quête
   final Quest before; //quête qui se trouve juste avant
   final int id; //permet de dire dans quelle quête cela se passe (1 à 5)
   final People people;
   final Lesson[] course; //cours que le personnage doit prendre pour cette quête
   protected Quest after = null; //la quête qui suit
   protected GoalsQuest[] goalsQuest;
+  protected boolean finish = false;
 
   public Quest(Quest before, int id, Lesson[] course,People people)
   {
@@ -35,11 +37,20 @@ public abstract class Quest
 */
   public void newQuest(People people,Quest after)
   {
-    if(percentage >= 100 )
+    if(finish)
     {
       this.after = after;
       people.newQuest(after);
     }
+  }
+
+/**
+* Retourne si la quête est terminée.
+* @return Si la quête est terminée.
+*/
+  public boolean isFinished()
+  {
+      return finished;
   }
 
 /**
@@ -51,6 +62,32 @@ public abstract class Quest
     return course;
   }
 
+/**
+* Retourne le progrés de la quête compris dans l'interval [0,1].
+* @return Le progrés de la quête compris dans l'interval [0,1].
+*/
+  public double getProgress()
+  {
+      return (percent/100);
+  }
+
+/**
+* Retourne le nom de la quête.
+* @return Le nom de la quête.
+*/
+  public String getName()
+  {
+        return ("Quest"+id);
+  }
+
+/**
+* Retourne si la quête est active ?
+* @return Si la quête est active ?
+*/
+  public boolean isActive()
+  {
+    return active;
+  }
 /**
 *Cette méthode permet d'ajouter à la liste d'interrogation les cours qui ont été raté dans la quête précédent
 *@param list qui est une ArrayList des cours que le personnage suit.
@@ -88,7 +125,7 @@ public void eventMaps()
 */
   public void successful(int many)
   {
-    percentage = percentage + many;
+    percent = percent + many;
   }
 
 /*------------------------------------------------------------------------------------------------------------*/
