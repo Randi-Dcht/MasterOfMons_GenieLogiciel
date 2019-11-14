@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- *
+ * Cette classe représente les tests de la classe QuestShower.
  */
 public class QuestShowerTest {
     /**
@@ -20,7 +20,7 @@ public class QuestShowerTest {
      * @return La taille hozizontale maximale qui sera utilisée par l'affichage d'une quête <code>mainQuest</code> et de ces sous-quêtes.
      */
     protected int getMaximumQuestNameWidth(Quest mainQuest, int defaultMargin) {
-        int max = mainQuest.getName().length() + defaultMargin; // Pour des raisons de simpliciter de texte, on suppose que 1 caractère à une longueur de 1.
+        int max = mainQuest.getName().length() + defaultMargin; // Pour des raisons de simplicité de test, on suppose que 1 caractère à une longueur de 1.
         for (Quest q: mainQuest.getSubQuests()) {
             int i = getMaximumQuestNameWidth(q, max + BETWEEN_QUEST_MARGIN_WIDTH);
             if (i > max)
@@ -29,6 +29,9 @@ public class QuestShowerTest {
         return max;
     }
 
+    /**
+     * Vérifie si getMaximumQuestWidth retourne la valeur attendue.
+     */
     @Test
     public void questNameWidthTest() {
         Quest q1 = new Quest("Test");

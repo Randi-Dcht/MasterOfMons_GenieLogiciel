@@ -31,6 +31,9 @@ public class TextBoxTest {
      */
     private boolean isSelected = false;
 
+    /**
+     * Le GameInputManager du jeu normalement donné par la classe mère de TextBox.
+     */
     @Mock
     private GameInputManager gim;
 
@@ -40,6 +43,9 @@ public class TextBoxTest {
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
     }
 
+    /**
+     * Prends en compte les entrées utilisateur.
+     */
     public void handleInput() {
         for (Point click : gim.getRecentClicks())
             isSelected = new Rectangle(10, 30, 20, 20).contains(click); // Changer afin de simplifier le test. (30 = 50 (Window's height) - 20)
@@ -55,6 +61,9 @@ public class TextBoxTest {
         }
     }
 
+    /**
+     * Test si la variable isSelected se met à jour comme attendu.
+     */
     @Test
     public void isSelectedTest() {
         handleInput();
@@ -71,6 +80,9 @@ public class TextBoxTest {
         Assertions.assertFalse(isSelected);
     }
 
+    /**
+     * Test si la variable actualText se met à jour comme attendu.
+     */
     @Test
     public void actualTextTest() {
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
