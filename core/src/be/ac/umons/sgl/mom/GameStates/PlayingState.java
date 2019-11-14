@@ -4,7 +4,7 @@ import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
-import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
@@ -43,7 +43,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * La vitesse du joueur.
      */
-    private final float VELOCITY = 500;
+    protected final float VELOCITY = 500;
 
     /**
      * La taille horizontale (en nombre de tuile) de la carte entière.
@@ -64,39 +64,39 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * Utilisé afin de dessiner en autre le texte.
      */
-    private SpriteBatch sb;
+    protected SpriteBatch sb;
     /**
      * La carte du jeu.
      */
-    private TiledMap map;
+    protected TiledMap map;
     /**
      * Le "renderer" de la carte du jeu.
      */
-    private IsometricTiledMapRenderer itmr;
+    protected IsometricTiledMapRenderer itmr;
     /**
      * Les objets empêchant le joueur d'aller plus loin.
      */
-    private MapObjects collisionObjects;
+    protected MapObjects collisionObjects;
     /**
      * La caméra permettant de déplacer la partie de la carte montrée et ainsi le joueur. Elle permet aussi de montrer seulement une partie de carte en effectuant un zoom sur celle-ci.
      */
-    private OrthographicCamera cam;
+    protected OrthographicCamera cam;
     /**
      * Une partie du HUD montrant la quête active.
      */
-    private QuestShower questShower;
+    protected QuestShower questShower;
     /**
      * Une partie du HUD montrant l'inventaire du joueur.
      */
-    private InventoryShower inventoryShower;
+    protected InventoryShower inventoryShower;
     /**
      * Le joueur de la partie.
      */
-    private Character player;
+    protected Player player;
     /**
      * L'objet responsable des animations.
      */
-    private AnimationManager am;
+    protected AnimationManager am;
 
     /**
      * Crée un nouvel état de jeu.
@@ -123,12 +123,12 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         collisionObjects = map.getLayers().get("Interdit").getObjects();
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
-        cam.position.x = 212;
-        cam.position.y = 318;
+        cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
+        cam.position.y = SHOWED_MAP_HEIGHT * tileHeight;
         cam.update();
 
         questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
-        player = new Character(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
+        player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gs, sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth, player);
 
         Quest q = new Quest("Test");
@@ -196,6 +196,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         else if ((toMoveY < 0 && player.getYT() > 0) || (toMoveY > 0 && player.getYT() < 0))
             toMoveY = player.getYT() + toMoveY;
 
+        translateCamera(toMoveX, toMoveY);
+    }
+
+    protected void translateCamera(int toMoveX, int toMoveY) {
         cam.translate(toMoveX, toMoveY);
         if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
             cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
@@ -213,7 +217,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      * @param player Le joueur.
      * @return Si le joueur est en collision avec un des objets de la carte.
      */
-    protected boolean checkForCollision(Character player) {
+    protected boolean checkForCollision(Player player) {
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = rectangleMapObject.getRectangle();
             Rectangle playerRect = player.getMapRectangle();

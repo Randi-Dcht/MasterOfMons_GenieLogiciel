@@ -79,7 +79,7 @@ public class InventoryShower {
     /**
      * Le joueur dont l'inventaire doit être montré.
      */
-    private Character player;
+    private Player player;
     /**
      * La liste de tout les éléments d'inventaire actuellement à montrer.
      */
@@ -95,7 +95,7 @@ public class InventoryShower {
      * @param itemHeight La taille verticale d'un seul élément d'inventaire.
      * @param inventoryOf Le joueur dont l'inventaire doit être montré.
      */
-    public InventoryShower(GraphicalSettings gs, Batch batch, int centerX, int height, int itemWidth, int itemHeight, Character inventoryOf) {
+    public InventoryShower(GraphicalSettings gs, Batch batch, int centerX, int height, int itemWidth, int itemHeight, Player inventoryOf) {
         this.itemWidth = itemWidth;
         this.itemHeight = itemHeight;
         player = inventoryOf;
