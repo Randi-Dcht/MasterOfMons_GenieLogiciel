@@ -134,8 +134,11 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");
         Quest q3 = new Quest("Test3");
-        q.addSubQuests(q2, q3);
-        q2.finish();
+        Quest q4 = new Quest("Test4");
+        q.addSubQuests(q2);
+        q2.addSubQuests(q3);
+        q3.addSubQuests(q4);
+//        q2.finish();
         q3.activate();
         questShower.setQuest(q);
 

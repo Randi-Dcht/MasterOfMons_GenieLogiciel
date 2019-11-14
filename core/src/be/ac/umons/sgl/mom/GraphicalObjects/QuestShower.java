@@ -209,10 +209,10 @@ public class QuestShower {
      * @param defaultMargin La marge de départ.
      * @return La taille hozizontale maximale qui sera utilisée par l'affichage d'une quête <code>mainQuest</code> et de ces sous-quêtes.
      */
-    protected int getMaximumQuestNameWidth(Quest mainQuest, double defaultMargin) {
-        int max = getTextSize(mainQuest.getName()).x + (int)defaultMargin;
+    protected int getMaximumQuestNameWidth(Quest mainQuest, int defaultMargin) {
+        int max = getTextSize(mainQuest.getName()).x + defaultMargin;
         for (Quest q: mainQuest.getSubQuests()) {
-            int i = getMaximumQuestNameWidth(q, defaultMargin) + BETWEEN_QUEST_MARGIN_WIDTH;
+            int i = getMaximumQuestNameWidth(q, max + BETWEEN_QUEST_MARGIN_WIDTH);
             if (i > max)
                 max = i;
         }
@@ -228,10 +228,9 @@ public class QuestShower {
         return (int)(mainQuest.getTotalSubQuestsNumber() * gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT * mainQuest.getTotalSubQuestsNumber());
     }
 
-    // https://stackoverflow.com/a/16606599
-
     /**
      * Retourne la taille du texte <code>text</code> avec l'écriture utilisée pour les quêtes.
+     * Code inspiré de https://stackoverflow.com/a/16606599 par BennX
      * @param text Le texte
      * @return La taille du texte <code>text</code> avec l'écriture utilisée pour les quêtes.
      */
