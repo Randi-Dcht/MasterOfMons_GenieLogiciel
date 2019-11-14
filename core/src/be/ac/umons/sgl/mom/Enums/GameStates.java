@@ -10,5 +10,6 @@ public enum GameStates {
     Loading,
     Settings,
     Save,
-    Load
+    Load,
+    LANPlayingState
 }

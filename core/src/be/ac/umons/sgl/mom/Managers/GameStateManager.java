@@ -70,6 +70,10 @@ public class GameStateManager {
                 gameStateStack.pop();
                 gameStateStack.push(new LoadState(this, gim, gs));
                 break;
+            case LANPlayingState:
+                gameStateStack.pop(); // Can be done because Menu would already be there...
+                gameStateStack.push(new be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState(this, gim, gs));
+                break;
             default:
                 break;
         }
