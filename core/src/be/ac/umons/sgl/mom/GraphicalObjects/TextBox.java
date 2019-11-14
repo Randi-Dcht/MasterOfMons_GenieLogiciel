@@ -72,7 +72,7 @@ public class TextBox extends Control {
             isSelected = new Rectangle(x, MasterOfMonsGame.HEIGHT - y - height, width, height).contains(click);
         if (isSelected) {
             boolean upper = false;
-            if (gim.isKey(Input.Keys.SHIFT_LEFT | Input.Keys.SHIFT_RIGHT, KeyStatus.Pressed))
+            if (gim.isKey(Input.Keys.SHIFT_LEFT, KeyStatus.Pressed) || gim.isKey(Input.Keys.SHIFT_RIGHT, KeyStatus.Pressed))
                 upper = true;
             for (int key : IntStream.rangeClosed(Input.Keys.A, Input.Keys.Z).toArray())
                 if (gim.isKey(key, KeyStatus.Pressed))
