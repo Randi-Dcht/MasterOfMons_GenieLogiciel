@@ -10,19 +10,22 @@ import java.util.*;
 */
 public abstract class Quest
 {
-  private ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
-  private ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
-  private int percentage = 0; //avanacement de la quête
+  protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
+  protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
+  protected int percentage = 0; //avanacement de la quête
   final Quest before; //quête qui se trouve juste avant
   final int id; //permet de dire dans quelle quête cela se passe (1 à 5)
+  final People people;
   final Lesson[] course; //cours que le personnage doit prendre pour cette quête
-  private Quest after = null; //la quête qui suit
+  protected Quest after = null; //la quête qui suit
+  protected GoalsQuest[] goalsQuest;
 
-  public Quest(Quest before, int id, Lesson[] course)
+  public Quest(Quest before, int id, Lesson[] course,People people)
   {
     this.before = before;
-    this.id = id;
+    this.id     = id;
     this.course = course;
+    this.people = people;
   }
 
 /**
@@ -30,10 +33,13 @@ public abstract class Quest
 *@param people qui est le personnage qui va réalisé la quête.
 *@param after qui est la quête suiavnte celle-ci (liste chainée).
 */
-  public void newQuest(People people,Quete after)
+  public void newQuest(People people,Quest after)
   {
-    this.after = after;
-    personne.newQuest(after);
+    if(percentage >= 100 )
+    {
+      this.after = after;
+      people.newQuest(after);
+    }
   }
 
 /**
@@ -49,18 +55,43 @@ public abstract class Quest
 *Cette méthode permet d'ajouter à la liste d'interrogation les cours qui ont été raté dans la quête précédent
 *@param list qui est une ArrayList des cours que le personnage suit.
 */
-  public void retake(ArrayList<Cours> list)
+  public void retake(ArrayList<Lesson> list)
   {
     interrogation.addAll(list);
   }
 
-/*------------------------------------------------------------------------------------------------------------*/
+/**
+*Cette méthod permet de dire où est le personnage et en fonction changer son état
+*/
+public void location(Place place)
+{
+  if(place.equals(Place.GrandAmphi) || place.equals(Place.Waroque))
+   people.changedState(2);/*
+  else if(place.equals(Place.kot))
+   //gérer car étudie ou dort
+  else
+   //gérer soit courir ou rien*/
+  eventMaps();
+}
+
+public void eventMaps()
+{
+  for(GoalsQuest gq : goalsQuest)
+  {
+    gq.evenActivity();
+  }
+}
 
 /**
 *Cette méthode permet de voir si la quête est terminée pour changer de quête ou continuer
 *@param many ajoute du pourcentage de terminer quand le personnage a fait quelque chose
 */
-  public abstract void successful(int many);
+  public void successful(int many)
+  {
+    percentage = percentage + many;
+  }
+
+/*------------------------------------------------------------------------------------------------------------*/
 
 /**
 *Cette méthode permet de gérer les rencontres entres PNJ et le personnage
@@ -68,14 +99,11 @@ public abstract class Quest
 */
   public abstract void meetOther(PNJ other);
 
-/**
-*Cette méthode permet de gérer les rencontres entres Persoonage1 et le personnage2
-*@param other qui est l'autre personnages dans le jeu (aider - combat)
-*/
-  public abstract void meetOther(People other);
 
 /**
-*Cette méthode permet de gérer les évènement lorsque le joueur évolue sur la carte
+*Cette méthode permet d'énoner l'objectif de la quête
+*@return l'objectif
 */
-  public abstract void eventMaps();
+  public abstract String question();
+
 }
