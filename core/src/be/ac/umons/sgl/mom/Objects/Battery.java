@@ -16,4 +16,9 @@ public class Battery extends Objet
   {
 
   }
+
+  public double getObsolete()
+  {
+    return 0;
+  }
 }
