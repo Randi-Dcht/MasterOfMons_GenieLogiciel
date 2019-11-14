@@ -1,3 +1,4 @@
+package be.ac.umons.sgl.mom;
 /**
 *Cette classe permet de définir un personnage qui est piloté par l'ordianteur
 *@author Randy Dauchot (étudiant en Sciences informatique)
