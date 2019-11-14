@@ -51,9 +51,9 @@ public enum Lesson
 		return place;
 	}
 
-	public boolean take(int year)
+  public boolean take(int year)
 	{
-		if(this.year >= year)
+		if(this.year <= year)
 		  return true;
 		return false;
 	}
