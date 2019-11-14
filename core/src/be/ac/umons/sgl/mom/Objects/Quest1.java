@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom;
+package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
 /**
 *Cette classe définit ce qu'est une quête de bachelier 1

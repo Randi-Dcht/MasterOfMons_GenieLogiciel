@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom;
+package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
 
 /**
@@ -10,7 +10,7 @@ import java.util.*;
 */
 public abstract class Quest
 {
-  protected static int NumberQuest = 0;
+  protected static int numberQuest = 0;
   protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
   protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
   protected double percent = 0; //avanacement de la quête
@@ -20,7 +20,7 @@ public abstract class Quest
   final Lesson[] course; //cours que le personnage doit prendre pour cette quête
   protected Quest after = null; //la quête qui suit
   protected GoalsQuest[] goalsQuest;
-  protected boolean finish = false;
+  protected boolean finished = false;
 
   public Quest(Quest before, int id, Lesson[] course,People people)
   {
@@ -37,7 +37,7 @@ public abstract class Quest
 */
   public void newQuest(People people,Quest after)
   {
-    if(finish)
+    if(finished)
     {
       this.after = after;
       people.newQuest(after);
@@ -86,7 +86,12 @@ public abstract class Quest
 */
   public boolean isActive()
   {
-    return active;
+    return !finished;
+  }
+
+  public int getTotalSubQuestsNumber()
+  {
+    return numberQuest;
   }
 /**
 *Cette méthode permet d'ajouter à la liste d'interrogation les cours qui ont été raté dans la quête précédent

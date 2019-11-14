@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom;
+package be.ac.umons.sgl.mom.Objects;
 /**
 *Cette classe permet de définir les cours pour tout son cursus scolaire
 *@author Randy Dauchot (étudiant en Sciences informatique)

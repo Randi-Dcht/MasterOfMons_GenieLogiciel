@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom;
+package be.ac.umons.sgl.mom.Objects;
 
 public interface GoalsQuest
 {

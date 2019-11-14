@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom;
+package be.ac.umons.sgl.mom.Objects;
 /**
 *Cette classe permet d'implémente les objet que le personnage pourra prendre lors de parcours
 *@author Randy Dauchot (étudiant en Sciences informatique)
