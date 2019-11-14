@@ -4,4 +4,5 @@ public interface GoalsQuest
 {
   public void evenActivity();
   public String getName();
+  public double getProgress();
 }

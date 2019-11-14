@@ -7,8 +7,11 @@ import java.util.*;
 
 public class Quest1 extends Quest
 {
+  /*lesson que le personnage va suivre lors de ce bachelier*/
   public final Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
+  /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
   public final GoalsQuest[] goalsQuest = {new FollowLesson(),new GoToTest(),new MeetManyPeople(),new BattleForPlace()};
+
   public Quest1(People people)
   {
     super(null,1,null,people);
@@ -23,6 +26,10 @@ public class Quest1 extends Quest
       eventMaps();
     }
 
+/**
+*Cette méthode permet de retourner les sous quêtes (objectif) de cette quête
+*@return goalsQuest qui sont les sous quêtes.
+*/
     public GoalsQuest[] getSubQuests()
     {
         return goalsQuest;
@@ -44,38 +51,53 @@ public class Quest1 extends Quest
       }
       public String getName()
       {
-        return "x";
+        return "Go to follow the lesson";
       }
     };
     public class GoToTest implements GoalsQuest
     {
+      private double advancement = 0;
       public void evenActivity()
       {
       }
       public String getName()
       {
-        return "x";
+        return "Go to the tests";
+      }
+      public double getProgress()
+      {
+        return (advancement/100);
       }
     };
     public class MeetManyPeople implements GoalsQuest
     {
-      public int safeFriend = 0;
+      private int safeFriend = 0;
+      private double advancement = 0;
       public void evenActivity()
       {
       }
       public String getName()
       {
-        return "x";
+        return "go to meet other people";
+      }
+      public double getProgress()
+      {
+        return (advancement/100);
       }
     };
     public class BattleForPlace implements GoalsQuest
     {
+      private double advancement = 0;
       public void evenActivity()
       {
       }
       public String getName()
       {
-        return "x";
+        return "battle in Umons to have a place";
+      }
+      public double getProgress()
+      {
+        return (advancement/100);
       }
     };
 }

@@ -10,16 +10,27 @@ import java.util.*;
 */
 public abstract class Quest
 {
+/*nombre de quête qui sont chainées*/
   protected static int numberQuest = 0;
+/*interrogation qui doit encore passer*/
   protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
+/*objet disponible dans son sac à dos*/
   protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
+/*avancement de la quete en %*/
   protected double percent = 0; //avanacement de la quête
+/*la quete parent de celle-ci*/
   final Quest before; //quête qui se trouve juste avant
+/*numéro de la quête pour savoir si elle peut être débuté*/
   final int id; //permet de dire dans quelle quête cela se passe (1 à 5)
+/*qui joue cette quête*/
   final People people;
+/*liste des cours de cette années*/
   final Lesson[] course; //cours que le personnage doit prendre pour cette quête
+/*quête qui suit celle-ci qui est la quete fils*/
   protected Quest after = null; //la quête qui suit
+/*liste des objectifs de cette quete (sous quete)*/
   protected GoalsQuest[] goalsQuest;
+/*est ce que la quete est terminée*/
   protected boolean finished = false;
 
   public Quest(Quest before, int id, Lesson[] course,People people)
@@ -28,6 +39,7 @@ public abstract class Quest
     this.id     = id;
     this.course = course;
     this.people = people;
+    numberQuest++;
   }
 
 /**
@@ -70,11 +82,6 @@ public abstract class Quest
   {
       return (percent/100);
   }
-
-/**
-* Retourne une liste ses sous-quêtes de cette quête.
-*/
-  public abstract GoalsQuest[] getSubQuests();
 
 /**
 * Retourne le nom de la quête.
@@ -146,6 +153,10 @@ public void eventMaps()
 */
   public abstract void meetOther(PNJ other);
 
+/**
+* Retourne une liste ses sous-quêtes de cette quête.
+*/
+  public abstract GoalsQuest[] getSubQuests();
 
 /**
 *Cette méthode permet d'énoner l'objectif de la quête
