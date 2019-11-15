@@ -29,7 +29,7 @@ public abstract class Quest
 /*quête qui suit celle-ci qui est la quete fils*/
   protected Quest after = null; //la quête qui suit
 /*liste des objectifs de cette quete (sous quete)*/
-  protected GoalsQuest[] goalsQuest;
+//  protected GoalsQuest[] goalsQuest;
 /*est ce que la quete est terminée*/
   protected boolean finished = false;
 
@@ -219,7 +219,7 @@ public void eventMaps()
 /**
 * Retourne une liste ses sous-quêtes de cette quête.
 */
-  public abstract GoalsQuest[] getSubQuests();
+//  public abstract GoalsQuest[] getSubQuests();
 
 /**
 *Cette méthode permet d'énoner l'objectif de la quête

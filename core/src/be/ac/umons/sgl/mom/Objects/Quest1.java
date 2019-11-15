@@ -10,7 +10,7 @@ public class Quest1 extends Quest
   /*lesson que le personnage va suivre lors de ce bachelier*/
 
   /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
-  public final GoalsQuest[] goalsQuest = {new FollowLesson(),new GoToTest(),new MeetManyPeople(),new BattleForPlace()};
+//  public final GoalsQuest[] goalsQuest = {new FollowLesson(),new GoToTest(),new MeetManyPeople(),new BattleForPlace()};
 
   public Quest1(People people)
   {
@@ -32,10 +32,10 @@ public class Quest1 extends Quest
 *Cette méthode permet de retourner les sous quêtes (objectif) de cette quête
 *@return goalsQuest qui sont les sous quêtes.
 */
-    public GoalsQuest[] getSubQuests()
-    {
-        return goalsQuest;
-    }
+//    public Quest[] getSubQuests()
+//    {
+//        return underQuest;
+//    }
 
   /**
   *Cette méthode renvoie l'object de la quête
@@ -46,7 +46,7 @@ public class Quest1 extends Quest
     }
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    public class FollowLesson implements GoalsQuest
+    public class FollowLesson
     {
       private double advancement = 0;
       public void evenActivity()
@@ -61,7 +61,7 @@ public class Quest1 extends Quest
         return (advancement/100);
       }
     };
-    public class GoToTest implements GoalsQuest
+    public class GoToTest 
     {
       private double advancement = 0;
       public void evenActivity()
@@ -76,7 +76,7 @@ public class Quest1 extends Quest
         return (advancement/100);
       }
     };
-    public class MeetManyPeople implements GoalsQuest
+    public class MeetManyPeople
     {
       private int safeFriend = 0;
       private double advancement = 0;
@@ -92,7 +92,7 @@ public class Quest1 extends Quest
         return (advancement/100);
       }
     };
-    public class BattleForPlace implements GoalsQuest
+    public class BattleForPlace
     {
       private double advancement = 0;
       public void evenActivity()
