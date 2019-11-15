@@ -1,192 +1,230 @@
 package be.ac.umons.sgl.mom.Objects;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
- * Représente une quête du jeu.
- */
-public class Quest {
-    /**
-     * Le nom de la quête qui sera affiché à l'utilisateur.
-     */
-    protected String name;
-    /**
-     * La liste des sous-quêtes de cette quête.
-     */
-    protected List<Quest> subQuests;
-    /**
-     * Est-ce que la quête est active ?
-     */
-    protected boolean active = false;
-    /**
-     * La quête parente si cette quête est une sous-quête.
-     */
-    protected Quest parentQuest;
-    /**
-     * Est-ce que la quête est terminée.
-     */
-    protected boolean finished = false;
-    /**
-     * Le progrés de cette quête compris dans l'intervalle [0, 1].
-     */
-    protected float progress = 0;
-    /**
-     * Le nombre total de quête et de sous-quête qu'il faudra afficher.
-     */
-    protected int totalQuest = 1;
+*Cette classe abstraite permet de définir des méthodes générales pour toute les quetes et certaines varaibles communes
+*@param before qui est la quête avant
+*@param id qui le numéro de la quête (1 à 5)
+*@param course qui est la liste des cours que le personnage doit suivre pour cette quête
+*@author Randy Dauchot & Guillaume Cardoen (étudiant en Sciences informatique)
+*/
+public abstract class Quest
+{
+/*nombre de quête qui sont chainées*/
+  protected static int numberQuest = 0;
+/*interrogation qui doit encore passer*/
+  protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
+/*objet disponible dans son sac à dos*/
+  protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
+/*avancement de la quete en %*/
+  protected double percent = 0; //avanacement de la quête
+/*la quete parent de celle-ci*/
+  final Quest before; //quête qui se trouve juste avant
+/*numéro de la quête pour savoir si elle peut être débuté*/
+  final int id; //permet de dire dans quelle quête cela se passe (1 à 5)
+/*qui joue cette quête*/
+  final People people;
+/*liste des cours de cette années*/
+  protected Lesson[] course; //cours que le personnage doit prendre pour cette quête
+/*quête qui suit celle-ci qui est la quete fils*/
+  protected Quest after = null; //la quête qui suit
+/*liste des objectifs de cette quete (sous quete)*/
+  protected GoalsQuest[] goalsQuest;
+/*est ce que la quete est terminée*/
+  protected boolean finished = false;
 
-    /**
-     * Crée une nouvelle quête.
-     * @param name Le nom de la quête.
-     */
-    public Quest(String name) {
-        this.name = name;
-        subQuests = new ArrayList<>();
-    }
+  public Quest(Quest before, int id, People people)
+  {
+    this.before = before;
+    this.id     = id;
+    this.people = people;
+    numberQuest++;
+  }
 
-    /**
-     * Crée une nouvelle quête.
-     * @param name Le nom de la quête.
-     * @param subQuest La/Les sous-quête(s) de la quête.
-     */
-    public Quest(String name, Quest... subQuest) {
-        this.name = name;
-        subQuests = new ArrayList<>();
-        addSubQuests(subQuest);
+/**
+*Cette méthode permet de créer une nouvelle quête quand celle-ci est terminé
+*@param people qui est le personnage qui va réalisé la quête.
+*@param after qui est la quête suiavnte celle-ci (liste chainée).
+*/
+  public void newQuest(People people,Quest after)
+  {
+    if(finished)
+    {
+      this.after = after;
+      people.newQuest(after);
     }
+  }
 
-    /**
-     * Retourne le nom de la quête.
-     * @return Le nom de la quête.
-     */
-    public String getName() {
-        return name;
-    }
+/**
+* Retourne si la quête est terminée.
+* @return Si la quête est terminée.
+*/
+  public boolean isFinished()
+  {
+      return finished;
+  }
 
-    /**
-     * Retourne une liste ses sous-quêtes de cette quête.
-     * @return Une liste ses sous-quêtes de cette quête
-     */
-    public List<Quest> getSubQuests() {
-        return subQuests;
-    }
+/**
+*Cette méthode permet de retourner les cours suivis.
+*@return couse qui retourne la liste des cours suivis pour cette quête.
+*/
+  public Lesson[] getLesson()
+  {
+    return course;
+  }
 
-    /**
-     * Ajoute des sous-quêtes à cette quête.
-     * @param subQuest Les sous-quêtes à ajouter.
-     */
-    public void addSubQuests(Quest... subQuest) {
-        for (Quest q : subQuest) {
-            subQuests.add(q);
-            q.setParentQuest(this);
-        }
-        totalQuest = calculateTotalSubQuestsNumber(true);
-    }
+  protected void ObligationLesson(Lesson[] course)
+  {
+    this.course = course;
+  }
 
-    /**
-     * Retourne si la quête est active ?
-     * @return Si la quête est active ?
-     */
-    public boolean isActive() {
-        return active;
-    }
+/**
+* Retourne le progrés de la quête compris dans l'interval [0,1].
+* @return Le progrés de la quête compris dans l'interval [0,1].
+*/
+  public double getProgress()
+  {
+      return (percent/100);
+  }
 
-    /**
-     * Active la quête.
-     */
-    public void activate() {
-        if (parentQuest != null)
-            parentQuest.activate();
-        active = true;
-    }
+/**
+*Cette méthode permet de retourner l'avancement entre 0 et 100 %
+*@return percent qui est l'avancement
+*/
+  public double getAdvancement()
+  {
+    return percent;
+  }
 
-    /**
-     * Désactive la quête.
-     */
-    public void desactivate() {
-        active = true;
-        for (Quest q :
-                subQuests) {
-            q.desactivate();
-        }
-//        parentQuest.desactivate();
-    }
+/**
+* Retourne le nom de la quête.
+* @return Le nom de la quête.
+*/
+  public String getName()
+  {
+        return ("Quest"+id);
+  }
 
-    /**
-     * Marque la quête comme terminée.
-     */
-    public void finish() {
-        finished = true;
-        progress = 1;
-        if (parentQuest != null)
-            parentQuest.calculateProgress();
-    }
+/**
+* Retourne si la quête est active ?
+* @return Si la quête est active ?
+*/
+  public boolean isActive()
+  {
+    return !finished;
+  }
 
-    /**
-     * Retourne si la quête est terminée.
-     * @return Si la quête est terminée.
-     */
-    public boolean isFinished() {
-        return finished;
-    }
+/**
+*Cette méthode permet de dire le nombre de quête qu'il y a déjà
+*/
+  public int getTotalSubQuestsNumber()
+  {
+    return numberQuest;
+  }
+/**
+*Cette méthode permet d'ajouter à la liste d'interrogation les cours qui ont été raté dans la quête précédent
+*@param list qui est une ArrayList des cours que le personnage suit.
+*/
+  public void retake(ArrayList<Lesson> list)
+  {
+    interrogation.addAll(list);
+  }
 
-    /**
-     * Défini la quête parente à celle-ci. (ATTENTION : Cette méthode ne doit être appelée que par la quête parente à celle-ci).
-     * @param parentQuest La quête parente.
-     */
-    private void setParentQuest(Quest parentQuest) {
-        this.parentQuest = parentQuest;
-        if (active)
-            parentQuest.activate();
-    }
+/**
+*Cette méthod permet de dire où est le personnage et en fonction changer son état
+*/
+public void location(Place place)
+{
+  if(place.equals(Place.GrandAmphi) || place.equals(Place.Waroque))
+   people.changedState(2);/*
+  else if(place.equals(Place.kot))
+   //gérer car étudie ou dort
+  else
+   //gérer soit courir ou rien*/
+  eventMaps();
+}
 
-    /**
-     * Retourne le nombre total de quête et de sous-quête qu'il faudra afficher.
-     * @return Le nombre total de quête et de sous-quête qu'il faudra afficher.
-     */
-    public int getTotalSubQuestsNumber() {
-        return totalQuest;
-    }
+/**
+*Cette méthode permet de dire au sous quete qu'il y a eu un évènement et qu'il faut vérifier l'avancement
+*/
+public void eventMaps()
+{
+  for(GoalsQuest gq : goalsQuest)
+  {
+    gq.evenActivity();
+  }
+}
 
-    /**
-     * Calcule le nombre total de quête et de sous-quête qu'il faudra afficher.
-     * @return Le nombre total de quête et de sous-quête qu'il faudra afficher.
-     */
-    protected int calculateTotalSubQuestsNumber(boolean main) {
-        int res = subQuests.size();
-        for (Quest q : subQuests) {
-            res += q.calculateTotalSubQuestsNumber(false);
-        }
-        if (main)
-            res += 1;
-        if (res != totalQuest)
-            totalQuest = res;
-        if (parentQuest != null && main)
-            parentQuest.calculateTotalSubQuestsNumber(true);
-        return res;
-    }
+/**
+*Cette méthode permet de voir si la quête est terminée pour changer de quête ou continuer
+*@param many ajoute du pourcentage de terminer quand le personnage a fait quelque chose
+*/
+  public void successful(double many)
+  {
+    percent = percent + many;
+  }
 
-    /**
-     * Retourne le progrés de la quête compris dans l'interval [0,1].
-     * @return Le progrés de la quête compris dans l'interval [0,1].
-     */
-    public float getProgress() {
-        return progress;
-    }
+/**
+*Cette méthode permet dedonner la quete d'avant celle-ci
+*@return before qui est la quete juste avant
+*/
+  public Quest getParent()
+  {
+    return before;
+  }
 
-    /**
-     * Calcule le progrés de la quête actuelle ainsi que de ces sous-quêtes.
-     */
-    protected void calculateProgress() {
-        int questFinished = 0;
-        int totalQuest = 0;
-        for (Quest q :
-                subQuests) {
-            totalQuest++;
-            if (q.isFinished())
-                questFinished++;
-        }
-        progress = (float)questFinished / totalQuest;
-    }
+/**
+*Cette méthode permet de voir les quêtes après celle-ci
+@return after qui est la quete d'après
+*/
+  public Quest getChildren()
+  {
+    return after;
+  }
+
+/**
+*Cette méthode permet de voir quelle joueur joue cette quête
+*@return people qui joue
+*/
+  public People getPlayer()
+  {
+    return people;
+  }
+
+/**
+*Cette méthode permet de voir les interrogations que le personnage doit passer
+*@return  interrogations qui lui reste à faire
+*/
+  public ArrayList<Lesson> getInterrogation()
+  {
+    return interrogation;
+  }
+
+/**
+*Cette méthode permet de retourner les objets que le personnages a dans son sac à dos
+*@return  availableObject qui est son sac à dos
+*/
+  public ArrayList<Objet> getObjets()
+  {
+    return availableObject;
+  }
+/*------------------------------------------------------------------------------------------------------------*/
+
+/**
+*Cette méthode permet de gérer les rencontres entres PNJ et le personnage
+*@param other qui le PNJ que le joueur va rencontrés
+*/
+  public abstract void meetOther(PNJ other);
+
+/**
+* Retourne une liste ses sous-quêtes de cette quête.
+*/
+  public abstract GoalsQuest[] getSubQuests();
+
+/**
+*Cette méthode permet d'énoner l'objectif de la quête
+*@return l'objectif
+*/
+  public abstract String question();
+
 }

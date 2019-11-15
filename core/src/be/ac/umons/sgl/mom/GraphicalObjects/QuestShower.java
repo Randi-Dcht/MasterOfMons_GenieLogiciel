@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
+import be.ac.umons.sgl.mom.Objects.GoalsQuest;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -166,9 +167,9 @@ public class QuestShower {
         gs.getQuestFont().setColor(1, 1, 1, textOpacity);
         gs.getQuestFont().draw(batch, q.getName() + '\n', beginningX, beginningY);
         gs.getQuestFont().setColor(1, 1, 1, 1); // Si jamais il est utilisé entre temps
-        for (Quest q2 : q.getSubQuests()) {
+        for (GoalsQuest q2 : q.getSubQuests()) {
             beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
-            printQuest(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
+            //printQuest(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
         }
     }
 
@@ -181,7 +182,7 @@ public class QuestShower {
      */
     protected void drawQuestCircles(Quest q, int beginningX, int beginningY, float radius) {
 //        sr.setColor(21f / 255, 21f / 255, 21f / 255, 1f);
-        float degrees = q.getProgress() * 360;
+        float degrees = (float)q.getProgress() * 360;
 
         sr.setColor(UNACTIVATED_QUEST_CIRCLE_COLOR);
         if (q.isFinished())
@@ -197,9 +198,9 @@ public class QuestShower {
             sr.set(ShapeRenderer.ShapeType.Filled);
             sr.arc(beginningX, beginningY, radius, 0, (degrees == 0 ? 360 : degrees));
         }
-        for (Quest q2 : q.getSubQuests()) {
+        for (GoalsQuest q2 : q.getSubQuests()) {
             beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
-            drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
+            //drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
         }
     }
 
@@ -211,11 +212,11 @@ public class QuestShower {
      */
     protected int getMaximumQuestNameWidth(Quest mainQuest, int defaultMargin) {
         int max = getTextSize(mainQuest.getName()).x + defaultMargin;
-        for (Quest q: mainQuest.getSubQuests()) {
+        /*for (GoalsQuest q: mainQuest.getSubQuests()) {
             int i = getMaximumQuestNameWidth(q, max + BETWEEN_QUEST_MARGIN_WIDTH);
             if (i > max)
                 max = i;
-        }
+        }*/
         return max;
     }
 
