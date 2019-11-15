@@ -29,15 +29,21 @@ public class Rule extends TimerTask
 
   public void run()
   {
-    for (People p : people)
+    if(people != null)
     {
-      p.energy();
-      System.out.println("E:" + p.getEnergy());
+      for (People p : people)
+      {
+        p.energy();
+        System.out.println("E:" + p.getEnergy());
+      }
     }
-    for (Objet o : objet)
+    if(objet != null)
     {
-      o.make();
-      System.out.println("O:" + o.getObsolete());
+      for (Objet o : objet)
+      {
+        o.make();
+        System.out.println("O:" + o.getObsolete());
+      }
     }
   }
 
