@@ -69,7 +69,7 @@ public abstract class Quest
 *Cette méthode permet de retourner les cours suivis.
 *@return couse qui retourne la liste des cours suivis pour cette quête.
 */
-  public Lesson[] lesson()
+  public Lesson[] getLesson()
   {
     return course;
   }
@@ -81,6 +81,15 @@ public abstract class Quest
   public double getProgress()
   {
       return (percent/100);
+  }
+
+/**
+*Cette méthode permet de retourner l'avancement entre 0 et 100 %
+*@return percent qui est l'avancement
+*/
+  public double getAdvancement()
+  {
+    return percent;
   }
 
 /**
@@ -101,6 +110,9 @@ public abstract class Quest
     return !finished;
   }
 
+/**
+*Cette méthode permet de dire le nombre de quête qu'il y a déjà
+*/
   public int getTotalSubQuestsNumber()
   {
     return numberQuest;
@@ -128,6 +140,9 @@ public void location(Place place)
   eventMaps();
 }
 
+/**
+*Cette méthode permet de dire au sous quete qu'il y a eu un évènement et qu'il faut vérifier l'avancement
+*/
 public void eventMaps()
 {
   for(GoalsQuest gq : goalsQuest)
@@ -145,6 +160,50 @@ public void eventMaps()
     percent = percent + many;
   }
 
+/**
+*Cette méthode permet dedonner la quete d'avant celle-ci
+*@return before qui est la quete juste avant
+*/
+  public Quest getParent()
+  {
+    return before;
+  }
+
+/**
+*Cette méthode permet de voir les quêtes après celle-ci
+@return after qui est la quete d'après
+*/
+  public Quest getChildren()
+  {
+    return after;
+  }
+
+/**
+*Cette méthode permet de voir quelle joueur joue cette quête
+*@return people qui joue
+*/
+  public People getPlayer()
+  {
+    return people;
+  }
+
+/**
+*Cette méthode permet de voir les interrogations que le personnage doit passer
+*@return  interrogations qui lui reste à faire
+*/
+  public ArrayList<Lesson> getInterrogation()
+  {
+    return interrogation;
+  }
+
+/**
+*Cette méthode permet de retourner les objets que le personnages a dans son sac à dos
+*@return  availableObject qui est son sac à dos
+*/
+  public ArrayList<Objet> getObjets()
+  {
+    return availableObject;
+  }
 /*------------------------------------------------------------------------------------------------------------*/
 
 /**

@@ -34,7 +34,7 @@ public class Rule extends TimerTask
       for (People p : people)
       {
         p.energy();
-        System.out.println("E:" + p.getEnergy());
+        System.out.println("Energie:" + p.getEnergy());
       }
     }
     if(objet != null)
@@ -42,7 +42,6 @@ public class Rule extends TimerTask
       for (Objet o : objet)
       {
         o.make();
-        System.out.println("O:" + o.getObsolete());
       }
     }
   }

@@ -56,9 +56,9 @@ public class People
 	{
 		myQuest = quest;
 		quest.retake(myCourse);
-		for(int i = 0 ; i < quest.lesson().length ; i++)
+		for(int i = 0 ; i < quest.getLesson().length ; i++)
 		{
-			myCourse.add(quest.lesson()[i]);
+			myCourse.add(quest.getLesson()[i]);
 		}
 	}
 
