@@ -132,21 +132,19 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         player = new Character(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gs, sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth, player);
 
-        Quest q = new Quest1(null);
-        Quest q2 = new Quest1(null);
-        Quest q3 = new Quest1(null);
-        Quest q4 = new Quest1(null);
+
+        //Quest q2 = new Quest1(null);
+        //Quest q3 = new Quest1(null);
+        //Quest q4 = new Quest1(null);
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         People[] p = {new People("MasterOfMons",5,5,5)};
+        Quest q = new Quest1(p[0]);
+        p[0].newQuest(q);
         Objet[] o ={new Energizing(0,0)};
         Rule rule = new Rule(1,p,o);
         Timer timer = new Timer();
         timer.schedule(rule,0,100);
-        //q.addSubQuests(q2);
-        //q2.addSubQuests(q3);
-        //q3.addSubQuests(q4);
-//        q2.finish();
-    //    q3.activate();
+
         questShower.setQuest(q);
 
         am = new AnimationManager();

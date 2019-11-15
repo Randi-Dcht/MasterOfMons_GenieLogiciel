@@ -8,13 +8,15 @@ import java.util.*;
 public class Quest1 extends Quest
 {
   /*lesson que le personnage va suivre lors de ce bachelier*/
-  public final Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
+
   /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
   public final GoalsQuest[] goalsQuest = {new FollowLesson(),new GoToTest(),new MeetManyPeople(),new BattleForPlace()};
 
   public Quest1(People people)
   {
-    super(null,1,null,people);
+    super(null,1,people);
+    Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
+    ObligationLesson(lesson);
   }
 
   /**

@@ -62,6 +62,11 @@ public class People
 		}
 	}
 
+	public Quest getQuest()
+	{
+		return myQuest;
+	}
+	
 /**
 *Permet de définir les caracteristique du personnage quand il gagne des points ou au début.
 *@param strength qui est sa force

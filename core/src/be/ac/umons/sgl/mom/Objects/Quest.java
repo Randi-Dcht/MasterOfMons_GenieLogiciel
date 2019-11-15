@@ -25,7 +25,7 @@ public abstract class Quest
 /*qui joue cette quête*/
   final People people;
 /*liste des cours de cette années*/
-  final Lesson[] course; //cours que le personnage doit prendre pour cette quête
+  protected Lesson[] course; //cours que le personnage doit prendre pour cette quête
 /*quête qui suit celle-ci qui est la quete fils*/
   protected Quest after = null; //la quête qui suit
 /*liste des objectifs de cette quete (sous quete)*/
@@ -33,11 +33,10 @@ public abstract class Quest
 /*est ce que la quete est terminée*/
   protected boolean finished = false;
 
-  public Quest(Quest before, int id, Lesson[] course,People people)
+  public Quest(Quest before, int id, People people)
   {
     this.before = before;
     this.id     = id;
-    this.course = course;
     this.people = people;
     numberQuest++;
   }
@@ -72,6 +71,11 @@ public abstract class Quest
   public Lesson[] getLesson()
   {
     return course;
+  }
+
+  protected void ObligationLesson(Lesson[] course)
+  {
+    this.course = course;
   }
 
 /**
@@ -155,7 +159,7 @@ public void eventMaps()
 *Cette méthode permet de voir si la quête est terminée pour changer de quête ou continuer
 *@param many ajoute du pourcentage de terminer quand le personnage a fait quelque chose
 */
-  public void successful(int many)
+  public void successful(double many)
   {
     percent = percent + many;
   }
