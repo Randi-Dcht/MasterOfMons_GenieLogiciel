@@ -25,7 +25,7 @@ public class People
 	private double experience = 0;
 	private int level = 1;
 	//private Niveau annee;
-	private Quest myQuest;
+	private MasterQuest myQuest;
 	final String name;
 	final int maxObject = 5; //nombre d'objet que peut avoir le personnage
 	private ArrayList<Objet> myObject = new ArrayList<Objet>(); //objet dans son sac à dos
@@ -52,7 +52,7 @@ public class People
 *Permet de changer de quête pour monter dans tes quêtes supérieur
 *@param quest qui est la nouvelle quête
 */
-	public void newQuest(Quest quest)
+	public void newQuest(MasterQuest quest)
 	{
 		myQuest = quest;
 		quest.retake(myCourse);
@@ -62,11 +62,11 @@ public class People
 		}
 	}
 
-	public Quest getQuest()
+	public MasterQuest getQuest()
 	{
 		return myQuest;
 	}
-	
+
 /**
 *Permet de définir les caracteristique du personnage quand il gagne des points ou au début.
 *@param strength qui est sa force
