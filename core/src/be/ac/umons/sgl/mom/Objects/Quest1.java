@@ -46,12 +46,17 @@ public class Quest1 extends Quest
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------*/
     public class FollowLesson implements GoalsQuest
     {
+      private double advancement = 0;
       public void evenActivity()
       {
       }
       public String getName()
       {
         return "Go to follow the lesson";
+      }
+      public double getProgress()
+      {
+        return (advancement/100);
       }
     };
     public class GoToTest implements GoalsQuest

@@ -14,6 +14,7 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.*;
 import com.badlogic.gdx.Input;
+import java.util.Timer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
@@ -135,6 +136,12 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         Quest q2 = new Quest1(null);
         Quest q3 = new Quest1(null);
         Quest q4 = new Quest1(null);
+/*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
+        People[] p = {new People("MasterOfMons",5,5,5)};
+        Objet[] o ={new Energizing(0,0)};
+        Rule rule = new Rule(1,p,o);
+        Timer timer = new Timer();
+        timer.schedule(rule,0,100);
         //q.addSubQuests(q2);
         //q2.addSubQuests(q3);
         //q3.addSubQuests(q4);

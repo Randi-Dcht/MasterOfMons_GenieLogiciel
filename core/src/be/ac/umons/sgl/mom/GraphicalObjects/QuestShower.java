@@ -169,7 +169,7 @@ public class QuestShower {
         gs.getQuestFont().setColor(1, 1, 1, 1); // Si jamais il est utilisé entre temps
         for (GoalsQuest q2 : q.getSubQuests()) {
             beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
-            printQuest(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
+            //printQuest(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
         }
     }
 
@@ -200,7 +200,7 @@ public class QuestShower {
         }
         for (GoalsQuest q2 : q.getSubQuests()) {
             beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
-            drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
+            //drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
         }
     }
 
@@ -212,11 +212,11 @@ public class QuestShower {
      */
     protected int getMaximumQuestNameWidth(Quest mainQuest, int defaultMargin) {
         int max = getTextSize(mainQuest.getName()).x + defaultMargin;
-        for (Quest q: mainQuest.getSubQuests()) {
+        /*for (GoalsQuest q: mainQuest.getSubQuests()) {
             int i = getMaximumQuestNameWidth(q, max + BETWEEN_QUEST_MARGIN_WIDTH);
             if (i > max)
                 max = i;
-        }
+        }*/
         return max;
     }
 
