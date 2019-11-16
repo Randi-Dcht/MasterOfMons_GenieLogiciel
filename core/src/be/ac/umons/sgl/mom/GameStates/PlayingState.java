@@ -137,13 +137,13 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         //Quest q3 = new Quest1(null);
         //Quest q4 = new Quest1(null);
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        People[] p = {new People("MasterOfMons",5,5,5)};
-        Quest q = new Quest1(p[0]);
-        p[0].newQuest(q);
-        Objet[] o ={new Energizing(0,0)};
-        Rule rule = new Rule(1,p,o);
-        Timer timer = new Timer();
-        timer.schedule(rule,0,100);
+        /*supprimer =>*/People[] p = {new People("MasterOfMons",5,5,5)};
+        /*supprimer =>*/MasterQuest q = new Quest1(p[0]);
+        /*supprimer =>*/p[0].newQuest(q);
+        /*supprimer =>*/Objet[] o ={new Energizing(0,0)};
+        /*supprimer =>*/Rule rule = new Rule(1,p,o);
+        /*supprimer =>*/Timer timer = new Timer();
+        /*supprimer =>*/timer.schedule(rule,0,100);
 
         questShower.setQuest(q);
 
