@@ -48,6 +48,28 @@ public class People
 	{
 	}
 
+	public double getLife()
+	{
+		return life;
+	}
+
+	public int getStrength()
+	{
+		return strength;
+	}
+	public int getDefence()
+	{
+		return defence;
+	}
+	public int getAgility()
+	{
+		return agility;
+	}
+
+	public double getExperience()
+	{
+		return experience;
+	}
 /**
 *Permet de changer de quête pour monter dans tes quêtes supérieur
 *@param quest qui est la nouvelle quête
