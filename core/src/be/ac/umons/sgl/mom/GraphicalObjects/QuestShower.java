@@ -1,15 +1,18 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
+import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
+import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Support pour montrer les quêtes actuelles du jeu ainsi que leur avancement.
@@ -32,24 +35,6 @@ public class QuestShower {
      * La marge entre le cercle et le texte.
      */
     public static final int BETWEEN_CIRCLE_AND_TEXT_MARGIN = 7;
-
-    /**
-     * La couleur du cercle lorsque la quête est active.
-     */
-    protected static final Color ACTIVATED_QUEST_CIRCLE_COLOR = Color.valueOf("FF5722");
-    /**
-     * La couleur du cercle lorsque la quête est finie.
-     */
-    protected static final Color FINISHED_QUEST_CIRCLE_COLOR = Color.valueOf("00C853");
-    /**
-     * La couleur du cercle lorsque la quête est inactive.
-     */
-    protected static final Color UNACTIVATED_QUEST_CIRCLE_COLOR = Color.valueOf("616161");
-
-    /**
-     * Où le support doit être dessiné.
-     */
-    protected Batch batch;
     /**
      * Permet de dessiner les formes comme les rectangles.
      */
@@ -58,11 +43,6 @@ public class QuestShower {
      * Les paramètres graphiques du jeu.
      */
     protected GraphicalSettings gs;
-
-    /**
-     * La position du support.
-     */
-    protected int x, y;
     /**
      * La taille du support durant une animation.
      */
@@ -70,7 +50,7 @@ public class QuestShower {
     /**
      * L'opacité du texte durant une animation.
      */
-    protected double duringAnimationTextOpacity;
+    protected double duringAnimationForegroundOpacity;
     /**
      * Le support est-il en train d'être animé ?
      */
@@ -88,19 +68,20 @@ public class QuestShower {
      */
     private Quest questToShow;
 
+    protected Map<Quest, QuestProgressCircle> questProgressCircleMap;
+    /**
+     * L'objet responsable des animations.
+     */
+    protected AnimationManager am;
+
 
     /**
      * Crée un nouveau support de quête.
      * @param gs Les paramètres graphiques du jeu.
-     * @param batch Où le support doit être dessiné.
-     * @param x La position horizontale.
-     * @param y La position verticale.
      */
-    public QuestShower(GraphicalSettings gs, Batch batch, int x, int y) {
+    public QuestShower(GraphicalSettings gs, AnimationManager am) {
         this.gs = gs;
-        this.batch = batch;
-        this.x = x;
-        this.y = y;
+        this.am = am;
         init();
     }
 
@@ -108,8 +89,11 @@ public class QuestShower {
      * Dessine le support.
      * Code inspiré de https://gamedev.stackexchange.com/a/115483 par NuttyBunny
      * et https://stackoverflow.com/a/14721570 par UVM
+     * @param batch Où le support doit être dessiné.
+     * @param x La position horizontale.
+     * @param y La position verticale.
      */
-    public void draw() {
+    public void draw(Batch batch, int x, int y) {
         if (questToShow == null)
             return;
 
@@ -122,15 +106,15 @@ public class QuestShower {
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - duringAnimationQuestShowerHeight + TEXT_AND_RECTANGLE_MARGIN, duringAnimationQuestShowerWidth, duringAnimationQuestShowerHeight);
         else
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - questShowerHeight + TEXT_AND_RECTANGLE_MARGIN, questShowerWidth, questShowerHeight);
-        drawQuestCircles(questToShow, x + TEXT_AND_RECTANGLE_MARGIN, y - circleRadius, circleRadius);
         sr.end();
+        drawQuestCircles(questToShow, x + TEXT_AND_RECTANGLE_MARGIN, y - circleRadius, circleRadius);
 
         Gdx.gl.glDisable(GL30.GL_BLEND);
         batch.begin();
         if (isBeingAnimated)
-            printQuest(questToShow, x + 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN, y, (float)duringAnimationTextOpacity);
+            printQuest(questToShow, batch, x + 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN, y, (float)duringAnimationForegroundOpacity);
         else
-            printQuest(questToShow, x + 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN, y, 1);
+            printQuest(questToShow, batch, x + 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN, y, 1);
         batch.end();
     }
 
@@ -139,9 +123,9 @@ public class QuestShower {
      */
     protected void init() {
         circleRadius = (int)gs.getQuestFont().getLineHeight() / 2;
+        questProgressCircleMap = new HashMap<>();
 
         sr = new ShapeRenderer();
-        sr.setProjectionMatrix(batch.getProjectionMatrix());
         sr.setAutoShapeType(true);
     }
 
@@ -151,25 +135,31 @@ public class QuestShower {
      */
     public void setQuest(Quest q) {
         questToShow = q;
+        questProgressCircleMap.put(q, new QuestProgressCircle(gs, q));
         questShowerWidth = getMaximumQuestNameWidth(q, 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN) + 2 * TEXT_AND_RECTANGLE_MARGIN;
         questShowerHeight = getMaximumQuestHeight(q) + TEXT_AND_RECTANGLE_MARGIN * 2;
+        for (Quest q2 : q.getSubQuests()) {
+            questProgressCircleMap.put(q2, new QuestProgressCircle(gs, q2));
+        }
+        animateQuestProgressCircle();
     }
 
 
     /**
      * Affiche la ligne correspondante à la quête <code>q</code> et les lignes correspondantes à ces sous-quêtes à partir de la position(<code>beginningX</code>, <code>beginningY</code>) avec l'opacité de texte <code>textOpacity</code>.
      * @param q La quête à afficher.
+     * @param batch Où l'on doit dessiner.
      * @param beginningX La position horizontale de départ.
      * @param beginningY La position verticale de départ.
      * @param textOpacity L'opacité du texte.
      */
-    protected void printQuest(Quest q, int beginningX, int beginningY, float textOpacity) {
+    protected void printQuest(Quest q, Batch batch, int beginningX, int beginningY, float textOpacity) {
         gs.getQuestFont().setColor(1, 1, 1, textOpacity);
         gs.getQuestFont().draw(batch, q.getName() + '\n', beginningX, beginningY);
         gs.getQuestFont().setColor(1, 1, 1, 1); // Si jamais il est utilisé entre temps
         for (Quest q2 : q.getSubQuests()) {
             beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
-            printQuest(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
+            printQuest(q2, batch, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
         }
     }
 
@@ -182,24 +172,10 @@ public class QuestShower {
      */
     protected void drawQuestCircles(Quest q, int beginningX, int beginningY, float radius) {
 //        sr.setColor(21f / 255, 21f / 255, 21f / 255, 1f);
-        float degrees = (float)q.getProgress() * 360;
 
-        sr.setColor(UNACTIVATED_QUEST_CIRCLE_COLOR);
-        if (q.isFinished())
-            sr.setColor(FINISHED_QUEST_CIRCLE_COLOR);
-        else if (q.isActive() || degrees != 0)
-            sr.setColor(ACTIVATED_QUEST_CIRCLE_COLOR);
-
-        if (q.isActive() && degrees == 0) {
-            sr.set(ShapeRenderer.ShapeType.Line); // Ce n'est pas dérangeant qu'il s'éxécute en dernier comme le end est appelé juste après.
-            sr.circle(beginningX, beginningY, radius); // Evite une ligne en plein milieu de tout !!!
-        }
-        else {
-            sr.set(ShapeRenderer.ShapeType.Filled);
-            sr.arc(beginningX, beginningY, radius, 0, (degrees == 0 ? 360 : degrees));
-        }
+        questProgressCircleMap.get(q).draw(beginningX, beginningY, radius);
         for (Quest q2 : q.getSubQuests()) {
-            beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
+            beginningY -= (questProgressCircleMap.get(q).getHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
             drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
         }
     }
@@ -290,15 +266,15 @@ public class QuestShower {
      * Retourne l'opacité du texte durant l'animation du support.
      * @return L'opacité du texte durant l'animation du support.
      */
-    public double getDuringAnimationTextOpacity() {
-        return duringAnimationTextOpacity;
+    public double getDuringAnimationForegroundOpacity() {
+        return duringAnimationForegroundOpacity;
     }
     /**
      * Défini l'opacité du texte durant l'animation du support.
-     * @param duringAnimationTextOpacity L'opacité du texte durant l'animation du support.
+     * @param duringAnimationForegroundOpacity L'opacité du texte durant l'animation du support.
      */
-    public void setDuringAnimationTextOpacity(double duringAnimationTextOpacity) {
-        this.duringAnimationTextOpacity = duringAnimationTextOpacity;
+    public void setDuringAnimationForegroundOpacity(double duringAnimationForegroundOpacity) {
+        this.duringAnimationForegroundOpacity = duringAnimationForegroundOpacity;
     }
 
     /**
@@ -313,5 +289,23 @@ public class QuestShower {
      */
     public void finishAnimation() {
         isBeingAnimated = false;
+    }
+
+    /**
+     * Anime tout les cercles de progression de quête.
+     */
+    public void animateQuestProgressCircle() {
+        for (QuestProgressCircle qpc : questProgressCircleMap.values()) {
+            qpc.beginAnimation();
+            DoubleAnimation da = new DoubleAnimation(0, 1, 1500);
+            da.setRunningAction(() -> {
+                qpc.setDuringAnimationProgressPercent(da.getActual());
+                qpc.setDuringAnimationOpacity((float)da.getActual());
+                System.out.println(qpc.getDuringAnimationCircleDegrees());
+            });
+            am.addAnAnimation("QuestCircleRectangleAnimation" + qpc.toString(), da);
+            da.setEndingAction(qpc::finishAnimation);
+        }
+
     }
 }

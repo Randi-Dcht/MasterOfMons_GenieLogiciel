@@ -111,4 +111,12 @@ public class InventoryItem {
     public void finishAnimation() {
         isBeingAnimated = false;
     }
+    /**
+     * Retourne la quête associée à ce cercle.
+     * @return La quête associée à ce cercle.
+     */
+    public void dispose() {
+        sr.dispose();
+    }
+
 }

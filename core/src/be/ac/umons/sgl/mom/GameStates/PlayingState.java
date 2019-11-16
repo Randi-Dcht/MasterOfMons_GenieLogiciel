@@ -114,6 +114,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void init() {
         super.init();
         sb = new SpriteBatch();
+        am = new AnimationManager();
 
         map = new TmxMapLoader().load("Map/isoTest.tmx");
         tileWidth = (int)map.getProperties().get("tilewidth");
@@ -129,7 +130,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         cam.position.y = SHOWED_MAP_HEIGHT * tileHeight;
         cam.update();
 
-        questShower = new QuestShower(gs, sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
+        questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gs, sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth, player);
 
@@ -147,8 +148,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         /*supprimer =>*/timer.schedule(rule,0,100);
 
         questShower.setQuest(q);
+        q.addProgress(50);
 
-        am = new AnimationManager();
         animateHUD();
     }
 
@@ -245,7 +246,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      * Dessine le HUD.
      */
     protected void drawHud() {
-        questShower.draw();
+        questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
         inventoryShower.draw();
     }
 
@@ -280,7 +281,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         da.setRunningAction(() -> {
             questShower.setDuringAnimationQuestShowerWidth((int)((double)questShower.getWidth() * da.getActual()));
             questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getHeight() * da.getActual()));
-            questShower.setDuringAnimationTextOpacity(da.getActual());
+            questShower.setDuringAnimationForegroundOpacity(da.getActual());
         });
         am.addAnAnimation("QuestRectangleAnimation", da);
         da.setEndingAction(() -> {

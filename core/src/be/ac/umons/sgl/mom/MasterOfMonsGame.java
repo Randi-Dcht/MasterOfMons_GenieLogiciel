@@ -71,8 +71,8 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		HEIGHT = Gdx.graphics.getHeight();
 
 		gsm.update(Gdx.graphics.getDeltaTime());
-		gsm.draw();
 		gim.update();
+		gsm.draw();
 	}
 
 	/**
