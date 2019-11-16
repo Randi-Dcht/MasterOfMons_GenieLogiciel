@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
+import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -15,6 +16,8 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.*;
 import com.badlogic.gdx.Input;
 import java.util.Timer;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
@@ -100,6 +103,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      */
     protected AnimationManager am;
 
+    protected ProgressBar lifeBar;
+    protected ProgressBar expBar;
+    protected ProgressBar energyBar;
+
     /**
      * Crée un nouvel état de jeu.
      * @param gsm Le GameStateManager du jeu.
@@ -149,6 +156,13 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         questShower.setQuest(q);
         q.addProgress(50);
+
+        lifeBar = new ProgressBar();
+        lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
+        expBar = new ProgressBar();
+        expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
+        energyBar = new ProgressBar();
+        energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
 
         animateHUD();
     }
@@ -236,18 +250,19 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     @Override
     public void draw() {
+        int topBarWidth = (int)((MasterOfMonsGame.WIDTH - 4 * leftMargin) / 3);
+        int topBarHeight = 10;
+
         itmr.setView(cam);
         itmr.render();
         player.draw(sb);
-        drawHud();
-    }
 
-    /**
-     * Dessine le HUD.
-     */
-    protected void drawHud() {
-        questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, MasterOfMonsGame.HEIGHT - tileHeight / 2);
+        // Dessine le HUD.
+        questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw();
+        lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
+        expBar.draw((int)leftMargin * 2 + topBarWidth, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
+        energyBar.draw((int)leftMargin * 3 + topBarWidth * 2, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
     }
 
     @Override
