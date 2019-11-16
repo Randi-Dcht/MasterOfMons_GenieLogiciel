@@ -34,13 +34,89 @@ public class QuestShowerTest {
      */
     @Test
     public void questNameWidthTest() {
-        Quest q1 = new Quest("Test");
-        Quest q2 = new Quest("Test", q1);
-        Quest q3 = new Quest("Test", q2);
-        Quest q = new Quest("Test", q3);
-        Assertions.assertEquals(22, getMaximumQuestNameWidth(q, 0));
-        Assertions.assertEquals(16, getMaximumQuestNameWidth(q3, 0));
-        Assertions.assertEquals(10, getMaximumQuestNameWidth(q2, 0));
-        Assertions.assertEquals(4, getMaximumQuestNameWidth(q1, 0));
+        Quest q2 = new Quest() {
+            @Override
+            public double getProgress() {
+                return 0;
+            }
+
+            @Override
+            public double getAdvancement() {
+                return 0;
+            }
+
+            @Override
+            public boolean isActive() {
+                return false;
+            }
+
+            @Override
+            public Quest[] getSubQuests() {
+                return new Quest[0];
+            }
+
+            @Override
+            public String getName() {
+                return "Test";
+            }
+
+            @Override
+            public int getTotalSubQuestsNumber() {
+                return 0;
+            }
+
+            @Override
+            public void addProgress(double many) {
+
+            }
+
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
+        };
+        Quest q1 = new Quest() {
+            @Override
+            public double getProgress() {
+                return 0;
+            }
+
+            @Override
+            public double getAdvancement() {
+                return 0;
+            }
+
+            @Override
+            public boolean isActive() {
+                return false;
+            }
+
+            @Override
+            public Quest[] getSubQuests() {
+                return new Quest[] {q2};
+            }
+
+            @Override
+            public String getName() {
+                return "Test";
+            }
+
+            @Override
+            public int getTotalSubQuestsNumber() {
+                return 0;
+            }
+
+            @Override
+            public void addProgress(double many) {
+
+            }
+
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
+        };
+        Assertions.assertEquals(10, getMaximumQuestNameWidth(q1, 0));
+        Assertions.assertEquals(4, getMaximumQuestNameWidth(q2, 0));
     }
 }

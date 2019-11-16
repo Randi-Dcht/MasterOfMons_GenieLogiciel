@@ -4,8 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-public class ProgressBar {
+
+/**
+ * Classe de Test de ProgressBar
+ */
+public class ProgressBarTest {
     /**
      * La marge horizontale entre le rectangle d'avant plan et celui d'arrière-plan.
      */
@@ -40,14 +49,20 @@ public class ProgressBar {
     /**
      * Permet de dessiner les formes comme les rectangles.
      */
+    @Mock
     protected ShapeRenderer sr;
 
-    /**
-     * Initialise une nouvelle bar de progression.
-     */
-    public ProgressBar() {
-        sr = new ShapeRenderer();
-        sr.setAutoShapeType(true);
+//    /**
+//     * Initialise une nouvelle bar de progression.
+//     */
+//    public ProgressBarTest() {
+//        sr = new ShapeRenderer();
+//        sr.setAutoShapeType(true);
+//    }
+
+    @BeforeEach
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     /**
@@ -96,6 +111,7 @@ public class ProgressBar {
      */
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
+        percent = (double)value / maxValue;
     }
     /**
      * Retourne la valeur maximale de la barre.
@@ -127,5 +143,14 @@ public class ProgressBar {
      */
     public double getPercent() {
         return percent;
+    }
+
+    @Test
+    public void percentTest() {
+        setMaxValue(20);
+        setValue(5);
+        Assertions.assertEquals(.25, getPercent());
+        setMaxValue(50);
+        Assertions.assertEquals(.1, getPercent());
     }
 }

@@ -10,6 +10,7 @@ import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.Input;
@@ -27,6 +28,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
 /**
  * Cette classe correspond à la classe de test de la classe PLayingState. Tout le code testé est équivalent, cependant, certaines parties jugées inutiles ont été retirées.
@@ -139,15 +142,15 @@ public class PlayingStateTest { // TODO : Put all disposes
 
         player = new Player(gs,25, 25, 5, 5, 50, 50); // TODO : BUG AVEC EN BAS ET A GAUCHE
 
-        Quest q = new Quest("Test");
-        Quest q2 = new Quest("Test222222222222222222222");
-        Quest q3 = new Quest("Test3");
-        q.addSubQuests(q2, q3);
-        q2.finish();
-        q3.activate();
-        questShower.setQuest(q);
+//        Quest q = new Quest("Test");
+//        Quest q2 = new Quest("Test222222222222222222222");
+//        Quest q3 = new Quest("Test3");
+//        q.addSubQuests(q2, q3);
+//        q2.finish();
+//        q3.activate();
+//        questShower.setQuest(q);
 
-        animateHUD();
+//        animateHUD();
     }
 
     public void update(float dt) {
@@ -226,20 +229,20 @@ public class PlayingStateTest { // TODO : Put all disposes
         return false;
     }
 
-    public void draw() {
-        itmr.setView(cam);
-        itmr.render();
-        player.draw(sb);
-        drawHud();
-    }
+//    public void draw() {
+//        itmr.setView(cam);
+//        itmr.render();
+//        player.draw(sb);
+//        drawHud();
+//    }
 
-    /**
-     * Dessine le HUD.
-     */
-    protected void drawHud() {
-        questShower.draw();
-        inventoryShower.draw();
-    }
+//    /**
+//     * Dessine le HUD.
+//     */
+//    protected void drawHud() {
+//        questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
+//        inventoryShower.draw();
+//    }
 
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
@@ -253,52 +256,52 @@ public class PlayingStateTest { // TODO : Put all disposes
         sb.dispose();
     }
 
-    /**
-     * Lance les animations du HUD.
-     */
-    protected void animateHUD() {
-        animateInventoryShower();
-        animateQuestRectangle();
-    }
-
-    /**
-     * Lance les animations de la partie "Quête" du HUD.
-     */
-    protected void animateQuestRectangle() {
-        questShower.beginAnimation();
-        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-        da.setRunningAction(() -> {
-            questShower.setDuringAnimationQuestShowerWidth((int)((double)questShower.getWidth() * da.getActual()));
-            questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getHeight() * da.getActual()));
-            questShower.setDuringAnimationTextOpacity(da.getActual());
-        });
-        am.addAnAnimation("QuestRectangleAnimation", da);
-        da.setEndingAction(() -> {
-            questShower.finishAnimation();
-        });
-    }
-
-    /**
-     * Lance les animations de la partie "Inventaire" du HUD.
-     */
-    protected void animateInventoryShower() {
-        inventoryShower.beginAnimation();
-        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-        da.setRunningAction(() -> {
-            inventoryShower.setDuringAnimationWidth((int)((double)inventoryShower.getWidth() * da.getActual()));
-            inventoryShower.setDuringAnimationHeight((int)((double)inventoryShower.getHeight() * da.getActual()));
-            inventoryShower.setDuringAnimationBackgroundOpacity(da.getActual());
-        });
-        am.addAnAnimation("InventoryShowerAnimation", da);
-        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
-        da2.setEndingAction(() -> inventoryShower.finishAnimation());
-        da2.setRunningAction(() -> {
-            inventoryShower.setDuringAnimationForegroundOpacity(da2.getActual());
-        });
-        da.setEndingAction(() -> {
-            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
-        });
-    }
+//    /**
+//     * Lance les animations du HUD.
+//     */
+//    protected void animateHUD() {
+//        animateInventoryShower();
+//        animateQuestRectangle();
+//    }
+//
+//    /**
+//     * Lance les animations de la partie "Quête" du HUD.
+//     */
+//    protected void animateQuestRectangle() {
+//        questShower.beginAnimation();
+//        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
+//        da.setRunningAction(() -> {
+//            questShower.setDuringAnimationQuestShowerWidth((int)((double)questShower.getWidth() * da.getActual()));
+//            questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getHeight() * da.getActual()));
+////            questShower.setDuringAnimationTextOpacity(da.getActual());
+//        });
+//        am.addAnAnimation("QuestRectangleAnimation", da);
+//        da.setEndingAction(() -> {
+//            questShower.finishAnimation();
+//        });
+//    }
+//
+//    /**
+//     * Lance les animations de la partie "Inventaire" du HUD.
+//     */
+//    protected void animateInventoryShower() {
+//        inventoryShower.beginAnimation();
+//        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
+//        da.setRunningAction(() -> {
+//            inventoryShower.setDuringAnimationWidth((int)((double)inventoryShower.getWidth() * da.getActual()));
+//            inventoryShower.setDuringAnimationHeight((int)((double)inventoryShower.getHeight() * da.getActual()));
+//            inventoryShower.setDuringAnimationBackgroundOpacity(da.getActual());
+//        });
+//        am.addAnAnimation("InventoryShowerAnimation", da);
+//        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
+//        da2.setEndingAction(() -> inventoryShower.finishAnimation());
+//        da2.setRunningAction(() -> {
+//            inventoryShower.setDuringAnimationForegroundOpacity(da2.getActual());
+//        });
+//        da.setEndingAction(() -> {
+//            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
+//        });
+//    }
 
     @Test
     public void movementTest() {
