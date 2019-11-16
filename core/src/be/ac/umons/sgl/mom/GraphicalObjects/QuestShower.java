@@ -2,7 +2,6 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
-import be.ac.umons.sgl.mom.Objects.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -14,6 +13,7 @@ import java.awt.*;
 
 /**
  * Support pour montrer les quêtes actuelles du jeu ainsi que leur avancement.
+ * @author Guillaume Cardoen
  */
 public class QuestShower {
     /**

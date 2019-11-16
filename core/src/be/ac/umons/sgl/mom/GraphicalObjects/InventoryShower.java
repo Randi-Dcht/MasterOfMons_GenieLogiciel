@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Support pour montrer l'inventaire d'un personnage.
+ * @author Guillaume Cardoen
  */
 public class InventoryShower {
     /**

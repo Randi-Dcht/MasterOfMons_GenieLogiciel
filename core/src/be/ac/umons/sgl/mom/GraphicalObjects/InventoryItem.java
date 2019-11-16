@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
  * Montre un élément de l'inventaire d'un personnage.
+ * @author Guillaume Cardoen
  */
 public class InventoryItem {
     /**

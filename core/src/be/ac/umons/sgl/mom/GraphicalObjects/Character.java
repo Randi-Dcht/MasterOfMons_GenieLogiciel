@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Un mobile du jeu.
+ * @author Guillaume Cardoen
+ */
 public class Character {
 
     protected GraphicalSettings gs;

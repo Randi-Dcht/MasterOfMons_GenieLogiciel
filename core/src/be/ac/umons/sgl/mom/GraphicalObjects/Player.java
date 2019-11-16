@@ -3,7 +3,6 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -14,6 +13,7 @@ import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_WIDTH;
 
 /**
  * Représente un joueur du jeu ainsi que ces principales caractéristiques (position, inventaire, etc...).
+ * @author Guillaume Cardoen
  */
 public class Player extends Character {
     /**
@@ -59,6 +59,17 @@ public class Player extends Character {
         inventory.add(GameObjects.Object2);
     }
 
+    /**
+     * Crée un nouveau personnage.
+     * @param gs Les paramètres graphiques.
+     */
+    public Player(GraphicalSettings gs) {
+        super(gs);
+        inventory = new ArrayList<>();
+        inventory.add(GameObjects.Object1);
+        inventory.add(GameObjects.Object2);
+    }
+
 //    /**
 //     * Retourne la texture à utiliser pour le personnage en fonction de l'orientation du personnage.
 //     * @return La texture à utiliser pour le personnage.
@@ -96,16 +107,16 @@ public class Player extends Character {
     public void move(int x, int y) {
         super.move(x, y);
 
-        if (posX < 0)
-            posX = 0;
-        else if (posX > mapWidth * Math.cos(42.5f / 360 * 2 * Math.PI) - getWidth())
-            posX = (int)(mapWidth * Math.cos(42.5f / 360 * 2 * Math.PI) - getWidth());
-
-        if (posY > SHOWED_MAP_HEIGHT * tileHeight - getHeight())
-            posY = SHOWED_MAP_HEIGHT * tileHeight - getHeight();
-        else if (posY < -mapHeight + getHeight())
-            posY = -mapHeight + getHeight();
-
+//        if (posX < 0)
+//            posX = 0;
+//        else if (posX > mapWidth * Math.cos(42.5f / 360 * 2 * Math.PI) - getWidth())
+//            posX = (int)(mapWidth * Math.cos(42.5f / 360 * 2 * Math.PI) - getWidth());
+//
+//        if (posY > SHOWED_MAP_HEIGHT * tileHeight - getHeight())
+//            posY = SHOWED_MAP_HEIGHT * tileHeight - getHeight();
+//        else if (posY < -mapHeight + getHeight())
+//            posY = -mapHeight + getHeight();
+//
         if (posX < SHOWED_MAP_WIDTH * tileWidth / 2)
             xT = -(SHOWED_MAP_WIDTH * tileWidth / 2 - posX);
         else if (posX > mapWidth - SHOWED_MAP_WIDTH * tileWidth - getWidth())

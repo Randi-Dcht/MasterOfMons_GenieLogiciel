@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Managers;
 
 import be.ac.umons.sgl.mom.Enums.GameStates;
+import be.ac.umons.sgl.mom.Extensions.LAN.Objects.NetworkManager;
 import be.ac.umons.sgl.mom.GameStates.*;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.MainMenuState;
@@ -12,6 +13,7 @@ import java.util.Stack;
 /**
  * Gère les différents états du jeu ainsi que le passage de l'un à l'autre.
  * Une partie du contenu est tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * @author Guillaume Cardoen
  */
 public class GameStateManager {
     /**
@@ -72,7 +74,7 @@ public class GameStateManager {
                 break;
             case LANPlayingState:
                 gameStateStack.pop(); // Can be done because Menu would already be there...
-                gameStateStack.push(new be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState(this, gim, gs));
+                gameStateStack.push(new be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState(this, gim, gs, new NetworkManager()));
                 break;
             default:
                 break;

@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * Cette classe gère les entrées avec l'utilisateur (clavier, souris, ...).
  * Une partie du code ci-dessous à été tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * @author Guillaume Cardoen
  */
 public class GameInputManager implements InputProcessor {
     /**

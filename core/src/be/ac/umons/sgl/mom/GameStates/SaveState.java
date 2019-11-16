@@ -18,6 +18,7 @@ import java.util.Date;
 
 /**
  * L'état où l'utilisateur peut sauvegarder la partie en cours. Elle permet de choisir le nom du fichier de sauvegarde (Un nom par défaut est proposé à l'utilisateur).
+ * @author Guillaume Cardoen
  */
 public class SaveState extends GameState {
     protected final String SAVE_STR = "Save";

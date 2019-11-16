@@ -1,5 +1,9 @@
 package be.ac.umons.sgl.mom.Animations;
 
+/**
+ * Classe asbtraite représentant la base d'une animation.
+ * @author Guillaume Cardoen
+ */
 public abstract class Animation {
 
     /**

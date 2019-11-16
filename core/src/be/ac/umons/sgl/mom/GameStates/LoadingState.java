@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
  * L'état de chargement avant de lancer l'état de jeu. Il charge toutes les images nécessaires aux bon déroulement du jeu.
+ * @author Guillaume Cardoen
  */
 public class LoadingState extends GameState {
     /**

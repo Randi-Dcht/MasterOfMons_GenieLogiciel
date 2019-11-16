@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 
 /***
  * Le menu qui s'affiche en premier lors du lancement du jeu. Il permettra, en autre, de lancer le jeu (via une sauvegarde ou non), d'activer/désactiver une extension, ainsi que de quitter le jeu.
+ * @author Guillaume Cardoen
  */
 public class MainMenuState extends MenuState {
 

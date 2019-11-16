@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 /**
  * La classe principale du jeu.
  * Une partie du contenu est tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * @author Guillaume Cardoen
  */
 public class MasterOfMonsGame extends ApplicationAdapter {
 

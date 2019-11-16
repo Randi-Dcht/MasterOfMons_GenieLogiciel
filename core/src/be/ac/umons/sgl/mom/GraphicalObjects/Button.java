@@ -13,6 +13,7 @@ import java.awt.*;
 
 /**
  * Un bouton avec du texte.
+ * @author Guillaume Cardoen
  */
 public class Button extends Control {
 

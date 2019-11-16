@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 /**
  * Représente une partie d'interface utilisateur comme un bouton, une "boîte de texte", ...
+ * @author Guillaume Cardoen
  */
 public abstract class Control {
     /**

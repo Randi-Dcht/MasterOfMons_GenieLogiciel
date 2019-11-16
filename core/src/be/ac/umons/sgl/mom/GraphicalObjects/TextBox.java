@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
 
 /**
  * Une classe fille de <code>Control</code> permettant à l'utilisateur d'entrer du texte lorsqu'elle est selectionnée.
+ * @author Guillaume Cardoen
  */
 public class TextBox extends Control {
 

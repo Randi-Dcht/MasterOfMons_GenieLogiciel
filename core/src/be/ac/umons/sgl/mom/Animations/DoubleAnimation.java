@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Animations;
 
 /**
  * Cette classe implémente Animation. Elle permet d'animer un Double dans un temps donné et entre 2 valeurs données.
+ * @author Guillaume Cardoen
  */
 public class DoubleAnimation extends Animation {
     /**

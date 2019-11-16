@@ -31,6 +31,7 @@ import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGL
  * L'état de jeu du jeu. Il affiche la carte, un joueur ainsi qu'un HUD.
  * Une partie du contenu a été tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike.
  * L'affichage de la carte a été tiré de https://www.youtube.com/watch?v=P8jgD-V5jG8 par Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
+ * @author Guillaume Cardoen
  */
 public class PlayingState extends GameState { // TODO : Put all disposes
     /**
