@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Gère toutes les animations du jeu et les mets à jour.
+ * @author Guillaume Cardoen
  */
 public class AnimationManager {
     /**

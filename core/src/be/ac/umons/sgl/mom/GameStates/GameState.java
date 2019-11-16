@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 /**
  * Un état du jeu.
  * Une partie du contenu a été tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * @author Guillaume Cardoen
  */
 public abstract class GameState {
 

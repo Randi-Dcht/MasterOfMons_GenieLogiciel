@@ -36,7 +36,7 @@ public class Rule extends TimerTask
       for (People p : people)
       {
         p.energy();
-        /*supprimer =>*/System.out.println("Energie:" + p.getEnergy());
+//        /*supprimer =>*/System.out.println("Energie:" + p.getEnergy());
       }
     }
     if(objet != null)

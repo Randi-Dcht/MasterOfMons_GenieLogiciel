@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * L'état où l'utilisateur peut selectionner le fichier de sauvegarde à charger pour continuer une partie précedemment sauvegardé.
+ * @author Guillaume Cardoen
  */
 public class LoadState extends GameState {
     /**

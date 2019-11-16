@@ -4,13 +4,12 @@ import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
-import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
-import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Quest;
 import com.badlogic.gdx.Input;
@@ -22,7 +21,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -102,7 +100,7 @@ public class PlayingStateTest { // TODO : Put all disposes
     /**
      * Le joueur de la partie.
      */
-    private Character player;
+    private Player player;
     /**
      * L'objet responsable des animations.
      */
@@ -139,7 +137,7 @@ public class PlayingStateTest { // TODO : Put all disposes
 
         collisionObjects = new MapObjects();
 
-        player = new Character(gs,25, 25, 5, 5, 50, 50); // TODO : BUG AVEC EN BAS ET A GAUCHE
+        player = new Player(gs,25, 25, 5, 5, 50, 50); // TODO : BUG AVEC EN BAS ET A GAUCHE
 
         Quest q = new Quest("Test");
         Quest q2 = new Quest("Test222222222222222222222");
@@ -218,7 +216,7 @@ public class PlayingStateTest { // TODO : Put all disposes
      * @param player Le joueur.
      * @return Si le joueur est en collision avec un des objets de la carte.
      */
-    protected boolean checkForCollision(Character player) {
+    protected boolean checkForCollision(Player player) {
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = rectangleMapObject.getRectangle();
             Rectangle playerRect = player.getMapRectangle();

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
  * L'état où l'utilisateur peut choisir les différents paramètres du jeu.
+ * @author Guillaume Cardoen
  */
 public class SettingsState extends GameState {
 

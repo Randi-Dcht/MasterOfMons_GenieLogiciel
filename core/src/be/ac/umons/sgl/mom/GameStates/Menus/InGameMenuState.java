@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /***
  * Un menu "in-game". Il permet entre autre de continuer le jeu, d'accéder aux paramètres, de sauvegarder, de charger une partie, ...
+ * @author Guillaume Cardoen
  */
 public class InGameMenuState extends MenuState {
 

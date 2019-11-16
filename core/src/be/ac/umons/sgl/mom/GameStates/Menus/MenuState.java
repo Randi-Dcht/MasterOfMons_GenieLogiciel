@@ -18,6 +18,7 @@ import static be.ac.umons.sgl.mom.MasterOfMonsGame.*;
 
 /**
  * CLasse abstraite représentant un menu du jeu.
+ * @author Guillaume Cardoen
  */
 public abstract class MenuState extends GameState {
 

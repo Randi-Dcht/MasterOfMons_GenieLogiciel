@@ -6,7 +6,8 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 /**
- * Représente une partie d'interface utilisateur comme un bouton, une "boîte de texte", ...
+ * Représente une partie d'interface utilisateur comme un bouton, une "boîte de texte", ... qui devra intéragir avec l'utilisateur.
+ * @author Guillaume Cardoen
  */
 public abstract class Control {
     /**

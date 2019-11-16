@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 /**
  * La classe principale du jeu.
  * Une partie du contenu est tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * @author Guillaume Cardoen
  */
 public class MasterOfMonsGame extends ApplicationAdapter {
 
@@ -70,8 +71,8 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		HEIGHT = Gdx.graphics.getHeight();
 
 		gsm.update(Gdx.graphics.getDeltaTime());
-		gsm.draw();
 		gim.update();
+		gsm.draw();
 	}
 
 	/**
