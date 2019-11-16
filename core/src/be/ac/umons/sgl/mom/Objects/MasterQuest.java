@@ -119,13 +119,21 @@ public abstract class MasterQuest implements Quest
     return !finished;
   }
 
+  /**
+   *Cette méthode permet de dire le nombre de quête qu'il y a déjà
+   */
+  public int getTotalSubQuestsNumber()
+  {
+    return getTotalSubQuestsNumber(true);
+  }
 
 /**
 *Cette méthode permet de dire le nombre de quête qu'il y a déjà
+ * @param main Si l'appel est récursif ou non.
 */
-  public int getTotalSubQuestsNumber()
+  protected int getTotalSubQuestsNumber(boolean main)
   {
-    return underQuest.length;
+    return underQuest.length + (main ? 1 : 0);
   }
 /**
 *Cette méthode permet d'ajouter à la liste d'interrogation les cours qui ont été raté dans la quête précédent
