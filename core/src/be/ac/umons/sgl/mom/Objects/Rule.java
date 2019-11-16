@@ -30,6 +30,7 @@ public class Rule extends TimerTask
   public void run()
   {
     /*supprimer =>*/ people[0].getQuest().addProgress(0.5);
+    /*supprimer =>*/ //people[0].getQuest().eventMaps();
     if(people != null)
     {
       for (People p : people)
