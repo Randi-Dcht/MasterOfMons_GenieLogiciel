@@ -103,8 +103,17 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      */
     protected AnimationManager am;
 
+    /**
+     * La barre de vie du joueur.
+     */
     protected ProgressBar lifeBar;
+    /**
+     * La barre d'expérience du joueur.
+     */
     protected ProgressBar expBar;
+    /**
+     * La barre d'énergie du joueur.
+     */
     protected ProgressBar energyBar;
 
     /**
@@ -220,8 +229,13 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         translateCamera(toMoveX, toMoveY);
     }
 
-    protected void translateCamera(int toMoveX, int toMoveY) {
-        cam.translate(toMoveX, toMoveY);
+    /**
+     * Bouge la caméra en fonction de la position du joueur.
+     * @param movedX Le mouvement horizontal du joueur.
+     * @param movedY La mouvement vertical du joueur.
+     */
+    protected void translateCamera(int movedX, int movedY) {
+        cam.translate(movedX, movedY);
         if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
             cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
         else if (cam.position.x > (mapWidth - SHOWED_MAP_WIDTH) * tileWidth)

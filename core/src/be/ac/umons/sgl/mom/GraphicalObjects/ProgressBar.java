@@ -6,24 +6,57 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class ProgressBar {
+    /**
+     * La marge horizontale entre le rectangle d'avant plan et celui d'arrière-plan.
+     */
     protected int BETWEEN_BACKGROUND_FOREGROUND_MARGIN_WIDTH = 7;
+
+    /**
+     * La marge verticale entre le rectangle d'avant plan et celui d'arrière-plan.
+     */
     protected int BETWEEN_BACKGROUND_FOREGROUND_MARGIN_HEIGHT = 2;
 
+    /**
+     * La couleur d'arrière-plan.
+     */
     protected Color backgroundColor = new Color(21f / 255, 21f/255, 21f/255, .5f);
+    /**
+     * La couleur d'avant-plan.
+     */
     protected Color foregroundColor = new Color(42f / 255, 42f/255, 42f/255, .8f);
 
+    /**
+     * La valeur actuelle de la barre.
+     */
     protected int value = 50;
+    /**
+     * La valeur maximale actuelle de la barre.
+     */
     protected int maxValue = 100;
+    /**
+     * Le ratio entre la valeur et la valeur maximale de la barre.
+     */
     protected double percent = .5f;
-
+    /**
+     * Permet de dessiner les formes comme les rectangles.
+     */
     protected ShapeRenderer sr;
 
+    /**
+     * Initialise une nouvelle bar de progression.
+     */
     public ProgressBar() {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
     }
 
-
+    /**
+     * Dessine la barre de progression aux coordonnées fournies avec la taille fournie..
+     * @param x La position horizontale.
+     * @param y La position verticale.
+     * @param width La longueur.
+     * @param height La largeur.
+     */
     public void draw(int x, int y, int width, int height) {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
@@ -41,27 +74,49 @@ public class ProgressBar {
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
+    /**
+     * Défini la valeur de la barre.
+     * @param value La valeur de la barre.
+     */
     public void setValue(int value) {
         this.value = value;
         percent = (double)value / maxValue;
     }
 
+    /**
+     * Retourne la valeur de la barre.
+     * @return La valeur de la barre.
+     */
     public int getValue() {
         return value;
     }
-
+    /**
+     * Défini la valeur maximale de la barre.
+     * @param maxValue La valeur maximale de la barre.
+     */
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
     }
-
+    /**
+     * Retourne la valeur maximale de la barre.
+     * @return La valeur maximale de la barre.
+     */
     public int getMaxValue() {
         return maxValue;
     }
 
+    /**
+     * Défini la couleur d'arrière plan de la barre.
+     * @param backgroundColor La couleur d'arrière plan de la barre.
+     */
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
+    /**
+     * Défini la couleur d'avant-plan de la barre.
+     * @param foregroundColor La couleur d'avant-plan de la barre.
+     */
     public void setForegroundColor(Color foregroundColor) {
         this.foregroundColor = foregroundColor;
     }

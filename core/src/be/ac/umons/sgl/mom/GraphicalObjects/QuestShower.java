@@ -301,7 +301,6 @@ public class QuestShower {
             da.setRunningAction(() -> {
                 qpc.setDuringAnimationProgressPercent(da.getActual());
                 qpc.setDuringAnimationOpacity((float)da.getActual());
-                System.out.println(qpc.getDuringAnimationCircleDegrees());
             });
             am.addAnAnimation("QuestCircleRectangleAnimation" + qpc.toString(), da);
             da.setEndingAction(qpc::finishAnimation);
