@@ -156,7 +156,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         //Quest q4 = new Quest1(null);
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*/People[] p = {new People("MasterOfMons",5,5,5)};
-        /*supprimer =>*/MasterQuest q = new Quest1(p[0]);
+        /*supprimer =>*/MasterQuest q = new Bachelor1(p[0],null);
         /*supprimer =>*/p[0].newQuest(q);
         /*supprimer =>*/Objet[] o ={new Energizing(0,0)};
         /*supprimer =>*/Rule rule = new Rule(1,p,o);
