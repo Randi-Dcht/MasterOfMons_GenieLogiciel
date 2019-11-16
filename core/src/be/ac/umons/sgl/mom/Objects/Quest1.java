@@ -48,7 +48,7 @@ public class Quest1 extends MasterQuest
       }
       public void evenActivity()
       {
-        System.out.println("UnderQuest FollowLesson");
+        //System.out.println("UnderQuest FollowLesson");
       }
       public Quest[] getSubQuests()
       {
@@ -68,7 +68,7 @@ public class Quest1 extends MasterQuest
       }
       public void evenActivity()
       {
-        System.out.println("UnderQuest GoToTest");
+        //System.out.println("UnderQuest GoToTest");
       }
       public Quest[] getSubQuests()
       {
@@ -88,7 +88,7 @@ public class Quest1 extends MasterQuest
       }
       public void evenActivity()
       {
-        System.out.println("UnderQuest MeetManyPeople");
+        //System.out.println("UnderQuest MeetManyPeople");
       }
       public Quest[] getSubQuests()
       {
@@ -109,7 +109,7 @@ public class Quest1 extends MasterQuest
 
       public void evenActivity()
       {
-        System.out.println("UnderQuest BattleForPlace");
+        //System.out.println("UnderQuest BattleForPlace");
       }
 
       public Quest[] getSubQuests()
