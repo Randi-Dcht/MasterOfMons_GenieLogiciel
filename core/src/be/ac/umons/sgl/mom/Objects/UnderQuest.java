@@ -1,7 +1,11 @@
 package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
+
 /**
-*Cette classe définit ce qu'est une quête de bachelier 1
+*La UnderQuest est une sous classe d'une MasterQuest ou d'elle-même.
+*Chaque underQuest est un objectif que le joueur doit faire.
+*Le joueur ne doit pas forcément réussir à 100% une underQuest pour réussir la MasterQuest
+*Chaque underQuest sont indépendant et existe en même temps dans la MasterQuest.
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
@@ -57,7 +61,7 @@ public abstract class UnderQuest implements Quest
     return finish;
   }
 
-  public abstract void evenMap();
+  public abstract void evenActivity();
   public abstract Quest[] getSubQuests();
   public String getName()
   {

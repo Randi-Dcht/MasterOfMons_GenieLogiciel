@@ -2,12 +2,16 @@ package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
 
 /**
-*Cette classe abstraite permet de définir des méthodes générales pour toute les quetes et certaines varaibles communes
+*La MasterQuest est une classe abstraite qui contient elle même des underQuest.
+*Chaque joueur peut jouer sur un seul MasterQuest à la fois.
+*Pour réusir une MasterQuest, on doit réusir un maximun de underQuest qui font augmenter le % de réussite.
+*Chaque MasterQuest possède un parent et/ou un enfant.
 *@param before qui est la quête avant
 *@param id qui le numéro de la quête (1 à 5)
 *@param course qui est la liste des cours que le personnage doit suivre pour cette quête
-*@author Randy Dauchot & Guillaume Cardoen (étudiant en Sciences informatique)
+*@author Randy Dauchot (étudiant en Sciences informatique)
 */
+
 public abstract class MasterQuest implements Quest
 {
 /*nombre de quête qui sont chainées*/
@@ -28,8 +32,8 @@ public abstract class MasterQuest implements Quest
   protected Lesson[] course; //cours que le personnage doit prendre pour cette quête
 /*quête qui suit celle-ci qui est la quete fils*/
   protected MasterQuest after = null; //la quête qui suit
-/*liste des objectifs de cette quete (sous quete)*/
-  protected Quest[] underQuest;
+/*liste des objectifs de cette quete (sous quete et sous sous quete)*/
+  protected UnderQuest[] underQuest;
 /*est ce que la quete est terminée*/
   protected boolean finished = false;
 
@@ -55,7 +59,10 @@ public abstract class MasterQuest implements Quest
     }
   }
 
-  public void addUnderQuest(Quest[] q)
+/**
+*Cette méthode permet d'ajouter des sous quete à la MasterQuest
+*/
+  public void addUnderQuest(UnderQuest[] q)
   {
     underQuest = q;
   }
@@ -127,6 +134,7 @@ public abstract class MasterQuest implements Quest
   {
     return underQuest.length;
   }
+
 /**
 *Cette méthode permet d'ajouter à la liste d'interrogation les cours qui ont été raté dans la quête précédent
 *@param list qui est une ArrayList des cours que le personnage suit.
@@ -152,15 +160,21 @@ public void location(Place place)
 
 /**
 *Cette méthode permet de dire au sous quete qu'il y a eu un évènement et qu'il faut vérifier l'avancement
-*//*
+*/
 public void eventMaps()
 {
-  for(GoalsQuest gq : goalsQuest)
+  for(UnderQuest uq : underQuest)
   {
-    gq.evenActivity();
+    uq.evenActivity();
   }
 }
-*/
+
+/*public void checkEvent(UnderQuest quest)
+{
+  quest.evenActivity();
+  if(quest.getTotalSubQuestsNumber > 0)
+}*/
+
 /**
 *Cette méthode permet de voir si la quête est terminée pour changer de quête ou continuer
 *@param many ajoute du pourcentage de terminer quand le personnage a fait quelque chose
@@ -214,6 +228,24 @@ public void eventMaps()
   {
     return availableObject;
   }
+
+/**
+*Permet de retourner les sous quete
+*@return underQuest qui sont lrs sousquete
+*/
+  public UnderQuest[] getunderQuest()
+  {
+    return underQuest;
+  }
+
+/**
+*Cette méthode permet de retourner les sous quêtes (objectif) de cette quête
+*@return Quest qui est une liste de sous quêtes.
+*/
+  public Quest[] getSubQuests()
+  {
+     return underQuest;
+  }
 /*------------------------------------------------------------------------------------------------------------*/
 
 /**
@@ -221,11 +253,6 @@ public void eventMaps()
 *@param other qui le PNJ que le joueur va rencontrés
 */
   public abstract void meetOther(PNJ other);
-
-/**
-* Retourne une liste ses sous-quêtes de cette quête.
-*/
-  public abstract Quest[] getSubQuests();
 
 /**
 *Cette méthode permet d'énoner l'objectif de la quête

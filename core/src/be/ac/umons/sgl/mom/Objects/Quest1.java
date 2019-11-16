@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
+
 /**
 *Cette classe définit ce qu'est une quête de bachelier 1
 *@author Randy Dauchot (étudiant en Sciences informatique)
@@ -9,15 +10,15 @@ public class Quest1 extends MasterQuest
 {
   /*lesson que le personnage va suivre lors de ce bachelier*/
 
-  /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
-  public final Quest[] underQuest = {new FollowLesson(this),new GoToTest(this),new MeetManyPeople(this),new BattleForPlace(this)};
+/*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
+  public final UnderQuest[] underQuest = {new FollowLesson(this),new GoToTest(this),new MeetManyPeople(this),new BattleForPlace(this)};
 
   public Quest1(People people)
   {
     super(null,people);
     Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
     ObligationLesson(lesson);
-    addUnderQuest(underQuest());
+    addUnderQuest(underQuest);
   }
 
   /**
@@ -26,22 +27,9 @@ public class Quest1 extends MasterQuest
   */
     public void meetOther(PNJ other)
     {
-      //eventMaps();
     }
 
-    public Quest[] underQuest()
-    {
-      return underQuest;
-    }
 
-/**
-*Cette méthode permet de retourner les sous quêtes (objectif) de cette quête
-*@return goalsQuest qui sont les sous quêtes.
-*/
-    public Quest[] getSubQuests()
-    {
-       return underQuest;
-    }
 
   /**
   *Cette méthode renvoie l'object de la quête
@@ -52,14 +40,16 @@ public class Quest1 extends MasterQuest
     }
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    public class FollowLesson extends UnderQuest
+    private class FollowLesson extends UnderQuest
     {
       public FollowLesson(Quest q)
       {
         super("FollowLesson",25,q);
       }
-      public void evenMap()
-      {}
+      public void evenActivity()
+      {
+        System.out.println("UnderQuest FollowLesson");
+      }
       public Quest[] getSubQuests()
       {
         Quest[] q = {};
@@ -70,14 +60,16 @@ public class Quest1 extends MasterQuest
         return getSubQuests().length;
       }
     };
-    public class GoToTest extends UnderQuest
+    private class GoToTest extends UnderQuest
     {
       public GoToTest(Quest q)
       {
         super("GoToTest",25,q);
       }
-      public void evenMap()
-      {}
+      public void evenActivity()
+      {
+        System.out.println("UnderQuest GoToTest");
+      }
       public Quest[] getSubQuests()
       {
         Quest[] q = {};
@@ -88,14 +80,16 @@ public class Quest1 extends MasterQuest
         return getSubQuests().length;
       }
     };
-    public class MeetManyPeople extends UnderQuest
+    private class MeetManyPeople extends UnderQuest
     {
       public MeetManyPeople(Quest q)
       {
         super("MeetManyPeople",25,q);
       }
-      public void evenMap()
-      {}
+      public void evenActivity()
+      {
+        System.out.println("UnderQuest MeetManyPeople");
+      }
       public Quest[] getSubQuests()
       {
         Quest[] q = {};
@@ -106,19 +100,24 @@ public class Quest1 extends MasterQuest
         return getSubQuests().length;
       }
     };
-    public class BattleForPlace extends UnderQuest
+    private class BattleForPlace extends UnderQuest
     {
       public BattleForPlace(Quest q)
       {
         super("BattleForPlace",25,q);
       }
-      public void evenMap()
-      {}
+
+      public void evenActivity()
+      {
+        System.out.println("UnderQuest BattleForPlace");
+      }
+
       public Quest[] getSubQuests()
       {
         Quest[] q = {};
         return q;
       }
+
       public int getTotalSubQuestsNumber()
       {
         return getSubQuests().length;
