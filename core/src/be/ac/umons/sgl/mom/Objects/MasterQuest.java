@@ -50,7 +50,7 @@ public abstract class MasterQuest implements Quest
 *@param people qui est le personnage qui va réalisé la quête.
 *@param after qui est la quête suiavnte celle-ci (liste chainée).
 */
-  public void newQuest(People people,MasterQuest after)
+  public void newQuest(MasterQuest after)
   {
     if(finished)
     {
@@ -58,6 +58,8 @@ public abstract class MasterQuest implements Quest
       people.newQuest(after);
     }
   }
+
+  public abstract void nextQuest();
 
 /**
 *Cette méthode permet d'ajouter des sous quete à la MasterQuest

@@ -6,19 +6,23 @@ import java.util.*;
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-public class Quest1 extends MasterQuest
+public class Bachelor2 extends MasterQuest
 {
   /*lesson que le personnage va suivre lors de ce bachelier*/
-
+  final Lesson[] lesson = {};
 /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
-  public final UnderQuest[] underQuest = {new FollowLesson(this),new GoToTest(this),new MeetManyPeople(this),new BattleForPlace(this)};
+  final UnderQuest[] underQuest = {};
 
-  public Quest1(People people)
+  public Bachelor2(People people,MasterQuest before)
   {
-    super(null,people);
-    Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
+    super(before,people);
     ObligationLesson(lesson);
     addUnderQuest(underQuest);
+  }
+
+  public void nextQuest()
+  {
+    newQuest(new Bachelor3(people,this));
   }
 
   /**
