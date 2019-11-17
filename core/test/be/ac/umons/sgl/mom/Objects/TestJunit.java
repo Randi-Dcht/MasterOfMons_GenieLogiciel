@@ -78,7 +78,7 @@ public class TestJunit
     double second = p[0].getEnergy();
     assumeTrue(first > second,"depency energy");
 
-    p[0].changedState(1);
+    p[0].changedState(State.sleep);
     try
     {
       TimeUnit.SECONDS.sleep(1);
