@@ -192,6 +192,11 @@ public void eventMaps()
   public void addProgress(double many)
   {
     percent = percent + many;
+    if(percent >= 100)
+    {
+      finished = true;
+      nextQuest();
+    }
   }
 
 /**
