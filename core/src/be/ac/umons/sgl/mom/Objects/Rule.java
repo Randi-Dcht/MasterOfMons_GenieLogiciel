@@ -3,53 +3,78 @@ import java.util.*;
 
 /**
 *Cette classe permet de surveiller le jeu en temps réelle et gère en fonction des règles.
-*@param nombre : combien de joeur joue actuellement.
-*@param people : liste des joeurs actuelles.
+*@param name : comment s'appelle la partie jouée
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
 public class Rule extends TimerTask
 {
-  private People[] people;
-  private Objet[] objet;
-  private int numberPlayer;
-  private ArrayList<PNJ> listPNJ;
-  /* prochaine mise à jour :
-    ------------------------
-  private ArrayList<People> people;
-  private ArrayList<Objet> objet;
-  private int numberPlayer;
-  private ArrayList<PNJ> listPNJ;
-  private Place actual;
-  private State state;
-  */
+/*joueur dans cette partie*/
+  private People people;
+/*liste des objets présent sur toutes les maps*/
+  private ArrayList<Objet> objet = new ArrayList<Objet>();
+/*liste des personnages ordinateur*/
+  private ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
+/*nom de la partie en cours*/
+  final String name;
 
-  public Rule(int number, People[] people,Objet[] objet)
+  public Rule(String name)
   {
-    this.people = people;
-    this.numberPlayer  = number;
-    this.objet = objet;
+    this.name = name;
+  }
+
+  public People getPeople()
+  {
+    return people;
+  }
+
+  public ArrayList<PNJ> getPNJ()
+  {
+    return listPNJ;
+  }
+
+  public ArrayList<Objet> getObjet()
+  {
+    return objet;
+  }
+
+  public void add(PNJ ... lst)
+  {
+    for(PNJ p : lst)
+      listPNJ.add(p);
+  }
+
+  public void add(Objet ... lst)
+  {
+    for(Objet o : lst)
+      objet.add(o);
+  }
+
+  public void newParty(String name, Type type)
+  {
+    people = new People(name,type);
+    MasterQuest mQ = new Bachelor1(people,null);
+    people.newQuest(mQ);
   }
 
   public void attack(People attaquant, People attaque)
   {}
+
   public void attack(People attaquant, PNJ attaque)
   {}
 
   public void run()
   {
     /*supprimer =>*/ //people[0].getQuest().eventMaps();
-    /*supprimer =>*/for(Quest q : people[0].getQuest().getSubQuests())
+    /*supprimer =>*/for(Quest q : people.getQuest().getSubQuests())
     /*supprimer =>*/{
     /*supprimer =>*/  q.addProgress(0.05);
     /*supprimer =>*/}
     if(people != null)
     {
-      for (People p : people)
-      {
-        p.energy();
+        people.energy();
 //        /*supprimer =>*/System.out.println("Energie:" + p.getEnergy());
-      }
+
     }
     if(objet != null)
     {
