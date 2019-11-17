@@ -19,7 +19,7 @@ public class People
 	private int defence;
 	private int agility;
 	private double energy = 100;
-	private int state = 0;
+	private State state = State.normal;
 /*caracteristique autre du personnage*/
 	private double life;
 	private double experience = 0;
@@ -177,18 +177,7 @@ public class People
 */
 	public void energy()
 	{
-		if(state == 0) //rien mais éveiller
-		  this.energy = this.energy - 0.000772;
-		else if (state == 1) //dormir ou reposer
-		  this.energy = this.energy + 0.0028;
-		else if (state == 2) //étudier cours
-		  this.energy = this.energy - 0.002313;
-		else if (state == 3) //aller au cours
-		  this.energy = this.energy - 0.001544;
-		else if (state == 4) //micro sieste
-		  this.energy = this.energy + 0.0014;
-		else if (state == 5) //Sport - courir - xxx
-		  this.energy = this.energy - 0.003088;
+		this.energy = energy + this.state.getEnergy();
 	}
 
 	public double getEnergy()
@@ -200,9 +189,9 @@ public class People
 *Cette méthode permet de changer l'état du joueur pour son énergie
 *@param state qui est l'état  entre 0 et 5
 */
-	public void changedState(int state)
+	public void changedState(State state)
 	{
-		this.state = (state%6);
+		this.state = state;
 	}
 
 /**

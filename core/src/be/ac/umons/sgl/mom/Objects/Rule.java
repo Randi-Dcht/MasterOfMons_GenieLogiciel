@@ -14,6 +14,15 @@ public class Rule extends TimerTask
   private Objet[] objet;
   private int numberPlayer;
   private ArrayList<PNJ> listPNJ;
+  /* prochaine mise à jour :
+    ------------------------
+  private ArrayList<People> people;
+  private ArrayList<Objet> objet;
+  private int numberPlayer;
+  private ArrayList<PNJ> listPNJ;
+  private Place actual;
+  private State state;
+  */
 
   public Rule(int number, People[] people,Objet[] objet)
   {

@@ -160,7 +160,7 @@ public abstract class MasterQuest implements Quest
 public void location(Place place)
 {
   if(place.equals(Place.GrandAmphi) || place.equals(Place.Waroque))
-   people.changedState(2);/*
+   people.changedState(State.listen);/*
   else if(place.equals(Place.kot))
    //gérer car étudie ou dort
   else
