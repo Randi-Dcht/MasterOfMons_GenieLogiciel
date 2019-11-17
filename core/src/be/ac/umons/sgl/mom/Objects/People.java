@@ -32,12 +32,12 @@ public class People
 	private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
 
-	public People(String name, int strength, int defence, int agility)
+	public People(String name, Type type)
 	{
 		this.name     = name;
-		this.strength = strength;
-		this.defence  = defence;
-		this.agility  = agility;
+		this.strength = type.getStrength();
+		this.defence  = type.getDefence();
+		this.agility  = type.getAgility();
 		this.life     = lifemax();
 	}
 

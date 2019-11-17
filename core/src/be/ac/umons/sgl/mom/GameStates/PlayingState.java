@@ -155,16 +155,15 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         //Quest q3 = new Quest1(null);
         //Quest q4 = new Quest1(null);
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        /*supprimer =>*/People[] p = {new People("MasterOfMons",5,5,5)};
-        /*supprimer =>*/MasterQuest q = new Bachelor1(p[0],null);
-        /*supprimer =>*/p[0].newQuest(q);
-        /*supprimer =>*/Objet[] o ={new Energizing(0,0)};
-        /*supprimer =>*/Rule rule = new Rule(1,p,o);
+        /*supprimer =>*/Rule rule = new Rule("TestRule");
+        /*supprimer =>*/rule.newParty("GuiRndMaxi",Type.normal);
+        /*supprimer =>*/Objet o =new Energizing(0,0);
+        /*supprimer =>*/rule.add(o);
         /*supprimer =>*/Timer timer = new Timer();
         /*supprimer =>*/timer.schedule(rule,0,100);
 
-        questShower.setQuest(q);
-        q.addProgress(50);
+        questShower.setQuest(rule.getPeople().getQuest());
+        //q.addProgress(50);
 
         lifeBar = new ProgressBar();
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
