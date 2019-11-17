@@ -16,7 +16,7 @@ public abstract class UnderQuest implements Quest
 /*pourcentage maximal que peut avoir cette sous quête*/
   final double percentMax;
 /*état de la quête pour le moments*/
-  protected double progress;
+  protected double progress = 0;
 /*pour savoir si cette sous quête est terminer*/
   protected boolean finish = false;
 /*pour savoir */
