@@ -1,17 +1,14 @@
-import be.ac.umons.sgl.mom.Objects.*;
-/*
-import org.junit.*;
-import java.util.*;
-import static org.junit.Assert.*;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
-*/
-import org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+package be.ac.umons.sgl.mom.Objects;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.util.concurrent.TimeUnit;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,11 +33,11 @@ public class TestJunit
     Lesson l3 = Lesson.statistique;
     int levelPlayer = 2;
 
-    assumeTrue(l1.take(levelPlayer),"take the lesson of level player");
-    assumeTrue(l2.take(levelPlayer),"take the lesson of level player");
-    assumeFalse(l3.take(levelPlayer),"take the lesson of level player");
-    assumeTrue(l1.obligatoryCourse(),"Obligatory of lesson");
-    //assertSame(l1.location(),Place.Nimy,"same place"); /*<= prob*/
+    assertTrue(l1.take(levelPlayer),"take the lesson of level player");
+    assertTrue(l2.take(levelPlayer),"take the lesson of level player");
+    assertFalse(l3.take(levelPlayer),"take the lesson of level player");
+    assertTrue(l1.obligatoryCourse(),"Obligatory of lesson");
+    assertSame(l1.location(),Place.Nimy,"same place"); /*<= prob*/
   }
 
   /**
@@ -54,11 +51,11 @@ public class TestJunit
     Energizing e = new Energizing(0,0);
     for (int i = 0; i < 5 ; i++)
     {
-      assumeTrue(people.pushObject(b[i]),"add not over full");
+      assertTrue(people.pushObject(b[i]),"add not over full");
     }
-    assumeFalse(people.pushObject(b[5]),"add over full");
-    assumeTrue(people.removeObject(b[0]),"remove true object");
-    assumeFalse(people.removeObject(e),"remove false object");
+    assertFalse(people.pushObject(b[5]),"add over full");
+    assertTrue(people.removeObject(b[0]),"remove true object");
+    assertFalse(people.removeObject(e),"remove false object");
   }
 
   @Test
@@ -75,7 +72,7 @@ public class TestJunit
     catch (Exception e) {
     }
     double second = rule.getPeople().getEnergy();
-    assumeTrue(first > second,"depency energy");
+    assertTrue(first > second,"depency energy");
 
     rule.getPeople().changedState(State.sleep);
     try
@@ -85,6 +82,20 @@ public class TestJunit
     catch (Exception e) {
     }
     first = rule.getPeople().getEnergy();
-    assumeTrue(second < first,"add energy");
+    assertTrue(second < first,"add energy");
+  }
+
+  @Test
+  public void TestnextQuest()
+  {
+    People p = new People("Tesst",Type.normal);
+    MasterQuest mq = new Bachelor1(p,null);
+    mq.nextQuest();
+    assertNull(mq.getChildren(),"quest after is null");
+    assertNull(mq.getParent(),"quest before is null");
+    mq.addProgress(100);
+    assertNotNull(mq.getChildren(),"quest1 after isn't null");
+    assertNotNull(p.getQuest().getParent(),"quest2 before isn't null");
+    assertNull(p.getQuest().getChildren(),"quest2 after is null");
   }
 }
