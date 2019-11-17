@@ -4,7 +4,7 @@ package be.ac.umons.sgl.mom.Objects;
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-enum Place
+public enum Place
 {
   Nimy,
   Waroque,
