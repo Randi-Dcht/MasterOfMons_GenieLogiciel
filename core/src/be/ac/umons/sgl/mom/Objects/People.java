@@ -95,7 +95,7 @@ public class People
 *@param defence qui est sa capacité à se defendre
 *@param agility qui est sa capacité à éviter des coups de l'adversaire
 */
-	public void caracteristique(int strength, int defence, int agility)
+	public void updateType(int strength, int defence, int agility)
 	{
 		this.strength = strength;
 		this.defence = defence;

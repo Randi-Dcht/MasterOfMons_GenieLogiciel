@@ -23,9 +23,7 @@ import java.util.*;
 
 public class TestJunit
 {
-  private People[] p = {new People("MasterOfMons",5,5,5)};
-  private Objet[] o ={new Energizing(0,0)};
-  private Rule rule = new Rule(1,p,o);
+  private Rule rule = new Rule("TestJunit");
 
  /**
  *Cette méthode permet de tester les méthodes de la classe Lesson
@@ -51,7 +49,7 @@ public class TestJunit
   @Test
   public void PeopleObjectTest()
   {
-    People people = new People("MasterOfMons",5,5,5);
+    People people = new People("MasterOfMons",Type.normal);
     Battery[] b = {new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0)};
     Energizing e = new Energizing(0,0);
     for (int i = 0; i < 5 ; i++)
@@ -66,7 +64,8 @@ public class TestJunit
   @Test
   public void energyPeopleTest()
   {
-    double first = p[0].getEnergy();
+    rule.newParty("Test",Type.normal);
+    double first = rule.getPeople().getEnergy();
     Timer timer = new Timer();
     timer.schedule(rule,0,100);
     try
@@ -75,17 +74,17 @@ public class TestJunit
     }
     catch (Exception e) {
     }
-    double second = p[0].getEnergy();
+    double second = rule.getPeople().getEnergy();
     assumeTrue(first > second,"depency energy");
 
-    p[0].changedState(State.sleep);
+    rule.getPeople().changedState(State.sleep);
     try
     {
       TimeUnit.SECONDS.sleep(1);
     }
     catch (Exception e) {
     }
-    first = p[0].getEnergy();
+    first = rule.getPeople().getEnergy();
     assumeTrue(second < first,"add energy");
   }
 }
