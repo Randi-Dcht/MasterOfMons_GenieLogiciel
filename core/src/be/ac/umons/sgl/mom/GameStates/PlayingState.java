@@ -155,14 +155,14 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         //Quest q3 = new Quest1(null);
         //Quest q4 = new Quest1(null);
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        /*supprimer =>*/Rule rule = new Rule("TestRule");
+        /*supprimer =>*/Rule rule = new Rule("TestRule",questShower);
         /*supprimer =>*/rule.newParty("GuiRndMaxi",Type.normal);
         /*supprimer =>*/Objet o =new Energizing(0,0);
         /*supprimer =>*/rule.add(o);
         /*supprimer =>*/Timer timer = new Timer();
         /*supprimer =>*/timer.schedule(rule,0,100);
 
-        questShower.setQuest(rule.getPeople().getQuest());
+        /*déplacer rule =>*/ //questShower.setQuest(rule.getPeople().getQuest());
         //q.addProgress(50);
 
         lifeBar = new ProgressBar();

@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
+import be.ac.umons.sgl.mom.GraphicalObjects.*;
 
 /**
 *Cette classe permet de surveiller le jeu en temps réelle et gère en fonction des règles.
@@ -17,10 +18,13 @@ public class Rule extends TimerTask
   private ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
 /*nom de la partie en cours*/
   final String name;
+  final QuestShower questShower;
+  private int memoire; /*changer prochaine mise à jour*/
 
-  public Rule(String name)
+  public Rule(String name,QuestShower qs)
   {
     this.name = name;
+    questShower = qs;
   }
 
   public People getPeople()
@@ -55,6 +59,8 @@ public class Rule extends TimerTask
     people = new People(name,type);
     MasterQuest mQ = new Bachelor1(people,null);
     people.newQuest(mQ);
+    memoire = mQ.id;
+    questShower.setQuest(mQ);
   }
 
   public void attack(People attaquant, People attaque)
@@ -65,6 +71,10 @@ public class Rule extends TimerTask
 
   public void run()
   {
+    /*supprimer =>*/if(memoire != people.getQuest().id)
+    /*supprimer =>*/{
+    /*supprimer =>*/  questShower.setQuest(people.getQuest());
+    /*supprimer =>*/}
     /*supprimer =>*/ //people[0].getQuest().eventMaps();
     /*supprimer =>*/for(Quest q : people.getQuest().getSubQuests())
     /*supprimer =>*/{
