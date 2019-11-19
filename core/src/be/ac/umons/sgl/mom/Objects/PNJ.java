@@ -1,4 +1,13 @@
 package be.ac.umons.sgl.mom.Objects;
+
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Quests.Master.*;
+import be.ac.umons.sgl.mom.Quests.Quest;
+
 /**
 *Cette classe permet de définir un personnage qui est piloté par l'ordianteur
 *@author Randy Dauchot (étudiant en Sciences informatique)

@@ -1,5 +1,13 @@
-package be.ac.umons.sgl.mom.Objects;
+package be.ac.umons.sgl.mom.Quests.Master;
+
 import java.util.*;
+import be.ac.umons.sgl.mom.Objects.*;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Quests.Quest;
 
 /**
 *Cette classe définit ce qu'est une quête de bachelier 1

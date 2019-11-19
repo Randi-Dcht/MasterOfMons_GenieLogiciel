@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom.Objects;
+package be.ac.umons.sgl.mom.Enums;
 /**
 *Ensemble des lieux stratégique sur la maps
 *@author Randy Dauchot (étudiant en Sciences informatique)

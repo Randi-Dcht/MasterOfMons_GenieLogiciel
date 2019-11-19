@@ -1,6 +1,14 @@
 package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
 
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Quests.Master.*;
+import be.ac.umons.sgl.mom.Quests.Quest;
+
 /**
 *Cette classe permet de définir le perso du joeur humain
 *@param name : le nom du personnage

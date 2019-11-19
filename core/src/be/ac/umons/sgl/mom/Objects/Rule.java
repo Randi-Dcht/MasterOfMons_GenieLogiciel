@@ -1,6 +1,14 @@
 package be.ac.umons.sgl.mom.Objects;
+
 import java.util.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Quests.Master.*;
+import be.ac.umons.sgl.mom.Quests.Quest;
 
 /**
 *Cette classe permet de surveiller le jeu en temps réelle et gère en fonction des règles.
@@ -59,7 +67,7 @@ public class Rule extends TimerTask
     people = new People(name,type);
     MasterQuest mQ = new Bachelor1(people,null);
     people.newQuest(mQ);
-    memoire = mQ.id;
+    memoire = mQ.id();
     questShower.setQuest(mQ);
   }
 
@@ -71,7 +79,7 @@ public class Rule extends TimerTask
 
   public void run()
   {
-    /*supprimer =>*/if(memoire != people.getQuest().id)
+    /*supprimer =>*/if(memoire != people.getQuest().id())
     /*supprimer =>*/{
     /*supprimer =>*/  questShower.setQuest(people.getQuest());
     /*supprimer =>*/}
