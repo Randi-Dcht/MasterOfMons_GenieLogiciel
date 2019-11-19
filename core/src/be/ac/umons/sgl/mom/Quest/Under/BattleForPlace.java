@@ -10,9 +10,9 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class BattleForPlace extends UnderQuest
     {
-      public BattleForPlace(Quest q)
+      public BattleForPlace(Quest q,int nb)
       {
-        super("BattleForPlace",25,q);
+        super("BattleForPlace",nb,q);
       }
 
       public void evenActivity()

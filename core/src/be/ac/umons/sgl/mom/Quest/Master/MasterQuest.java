@@ -30,6 +30,7 @@ public abstract class MasterQuest implements Quest
   protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
 /*avancement de la quete en %*/
   protected double percent = 0; //avanacement de la quête
+/*pourcentage maximun de la MasterQuest*/
   protected double maxPercent = 95;
 /*la quete parent de celle-ci*/
   final MasterQuest before; //quête qui se trouve juste avant
@@ -271,6 +272,10 @@ public void eventMaps()
      return underQuest;
   }
 
+/**
+*Cette méthode permet de retourner la position dans la liste chainée
+*@return id qui est propre et unique à chaque MasterQuest et position dans la liste
+*/
   public int id()
   {
     return id;

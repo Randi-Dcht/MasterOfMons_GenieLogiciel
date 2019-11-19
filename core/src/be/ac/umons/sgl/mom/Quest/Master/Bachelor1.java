@@ -19,7 +19,7 @@ public class Bachelor1 extends MasterQuest
   /*lesson que le personnage va suivre lors de ce bachelier*/
   final Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
 /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
-  final UnderQuest[] underQuest = {new FollowLesson(this),new GoToTest(this),new MeetManyPeople(this),new BattleForPlace(this)};
+  final UnderQuest[] underQuest = {new FollowLesson(this,25),new GoToTest(this,25),new MeetManyPeople(this,25),new BattleForPlace(this,25)};
 
   public Bachelor1(People people,MasterQuest before)
   {

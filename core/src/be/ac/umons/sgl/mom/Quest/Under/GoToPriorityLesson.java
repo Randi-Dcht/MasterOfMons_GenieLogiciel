@@ -8,21 +8,24 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
-public class GoToTest extends UnderQuest
+public class GoToPriorityLesson extends UnderQuest
     {
-      public GoToTest(Quest q,int nb)
+      public GoToPriorityLesson(Quest q,int nb)
       {
-        super("GoToTest",nb,q);
+        super("GoToPriorityLesson",nb,q);
       }
+
       public void evenActivity()
       {
-        //System.out.println("UnderQuest GoToTest");
+        //System.out.println("UnderQuest BattleForPlace");
       }
+
       public Quest[] getSubQuests()
       {
         Quest[] q = {};
         return q;
       }
+
       public int getTotalSubQuestsNumber()
       {
         return getSubQuests().length;
