@@ -30,6 +30,7 @@ public abstract class MasterQuest implements Quest
   protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
 /*avancement de la quete en %*/
   protected double percent = 0; //avanacement de la quête
+  protected double maxPercent = 95;
 /*la quete parent de celle-ci*/
   final MasterQuest before; //quête qui se trouve juste avant
 /*numéro de la quête pour savoir si elle peut être débuté*/
@@ -106,11 +107,11 @@ public abstract class MasterQuest implements Quest
 */
   public double getProgress()
   {
-      return (percent/100);
+      return (percent/maxPercent);
   }
 
 /**
-*Cette méthode permet de retourner l'avancement entre 0 et 100 %
+*Cette méthode permet de retourner l'avancement entre 0 et max %
 *@return percent qui est l'avancement
 */
   public double getAdvancement()
@@ -200,7 +201,7 @@ public void eventMaps()
   public void addProgress(double many)
   {
     percent = percent + many;
-    if(percent >= 100)
+    if(percent >= maxPercent)
     {
       finished = true;
       nextQuest();
