@@ -13,6 +13,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.*;
+import be.ac.umons.sgl.mom.GraphicalObjects.*;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Quests.Master.*;
+import be.ac.umons.sgl.mom.Quests.Quest;
+import java.util.*;
 /**
 *Cette classe permet de créer les tets junit pour tester le code source du jeu
 *@author Randy Dauchot (étudiant en Sciences informatique)
@@ -20,7 +29,7 @@ import java.util.*;
 
 public class TestJunit
 {
-  private Rule rule = new Rule("TestJunit");
+  private Rule rule = new Rule("TestJunit",null);
 
  /**
  *Cette méthode permet de tester les méthodes de la classe Lesson
