@@ -30,6 +30,11 @@ public class GameStateManager {
     protected GraphicalSettings gs;
 
     /**
+     * Le gestionnaire de cartes du jeu.
+     */
+    protected GameMapManager gmm;
+
+    /**
      * Crée un nouveau gestionnaire d'état du jeu.
      * @param gim Le GameInputManager du jeu.
      * @param gs Les paramètres graphiques du jeu.
@@ -38,6 +43,7 @@ public class GameStateManager {
         gameStateStack = new Stack<>();
         this.gim = gim;
         this.gs = gs;
+        gmm = new GameMapManager();
         setState(GameStates.MainMenu);
     }
 
@@ -112,5 +118,9 @@ public class GameStateManager {
         for (GameState gs: gameStateStack) {
             gs.dispose();
         }
+    }
+
+    public GameMapManager getGameMapManager() {
+        return gmm;
     }
 }

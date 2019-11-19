@@ -11,6 +11,7 @@ import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
+import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -72,14 +73,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      */
     protected SpriteBatch sb;
     /**
-     * La carte du jeu.
-     */
-    protected TiledMap map;
-    /**
-     * Le "renderer" de la carte du jeu.
-     */
-    protected IsometricTiledMapRenderer itmr;
-    /**
      * Les objets empêchant le joueur d'aller plus loin.
      */
     protected MapObjects collisionObjects;
@@ -117,6 +110,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      */
     protected ProgressBar energyBar;
 
+    protected GameMapManager gmm;
+
     /**
      * Crée un nouvel état de jeu.
      * @param gsm Le GameStateManager du jeu.
@@ -132,20 +127,22 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         super.init();
         sb = new SpriteBatch();
         am = new AnimationManager();
+        gmm = gsm.getGameMapManager();
 
-        map = new TmxMapLoader().load("Map/isoTest.tmx");
-        tileWidth = (int)map.getProperties().get("tilewidth");
-        tileHeight = (int)map.getProperties().get("tileheight");
-        mapWidth = (int)map.getProperties().get("width");
-        mapHeight = (int)map.getProperties().get("height");
+        gmm.setMap("isoTest.tmx");
 
-        itmr = new IsometricTiledMapRenderer(map);
-        collisionObjects = map.getLayers().get("Interdit").getObjects();
+
+        tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
+        tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
+        mapWidth = (int)gmm.getActualMap().getProperties().get("width");
+        mapHeight = (int)gmm.getActualMap().getProperties().get("height");
+        collisionObjects = gmm.getActualMap().getLayers().get("Interdit").getObjects();
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
         cam.position.y = SHOWED_MAP_HEIGHT * tileHeight;
         cam.update();
+        gmm.setView(cam);
 
         questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
@@ -267,8 +264,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         int topBarWidth = (int)((MasterOfMonsGame.WIDTH - 4 * leftMargin) / 3);
         int topBarHeight = 10;
 
-        itmr.setView(cam);
-        itmr.render();
+        gmm.render();
         player.draw(sb);
 
         // Dessine le HUD.
@@ -288,8 +284,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     @Override
     public void dispose() {
-        map.dispose();
-        itmr.dispose();
+        gmm.dispose();
         sb.dispose();
     }
 

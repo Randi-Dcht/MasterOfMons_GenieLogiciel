@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
+import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -39,11 +40,20 @@ public class LoadingState extends GameState {
      * Défini si tout les fichiers nécéssaires au jeu ont été chargés.
      */
     protected boolean assetsLoaded = false;
+    /**
+     * Défini si toutes les cartes nécéssaires au jeu ont été chargées.
+     */
+    protected boolean mapsLoaded = false;
 
     /**
      * L'angle actuel des cercles.
      */
     protected double actualAngle = 0;
+
+    /**
+     * Le gestionnaire de carte du jeu.
+     */
+    protected GameMapManager gmm;
 
     /**
      * Initialise un nouvel état de chargement.
@@ -60,6 +70,7 @@ public class LoadingState extends GameState {
         super.init();
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
+        gmm = gsm.getGameMapManager();
     }
 
     @Override
@@ -77,11 +88,15 @@ public class LoadingState extends GameState {
         int fromCenterX = (int)((gs.getTitleFont().getXHeight() * txt.length() / 2 + CIRCLE_MARGIN_X) * Math.cos(actualAngle));
         int fromCenterY = (int)((gs.getTitleFont().getLineHeight() / 2 + CIRCLE_MARGIN_Y) * Math.sin(actualAngle));
 
-        assetsLoaded = gs.getAssetManager().update();
-        if (assetsLoaded)
-            gsm.setState(GameStates.Play);
+        float progress = (float)((gs.getAssetManager().getProgress() + gmm.getProgress()) / 2);
 
-        float progress = gs.getAssetManager().getProgress();
+        if (assetsLoaded) {
+            mapsLoaded = gmm.loadNextMap();
+            if (mapsLoaded)
+                gsm.setState(GameStates.Play);
+        } else
+            assetsLoaded = gs.getAssetManager().update();
+
         sr.setColor(1 - 217f / 255 * progress, 1 - 113f / 255 * progress, 1 - 195f / 255 * progress, 1);
 
         sr.begin(ShapeRenderer.ShapeType.Filled);

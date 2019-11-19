@@ -41,6 +41,7 @@ public class MainMenuState extends MenuState {
     protected void executeSelectedItem() {
         switch (selectedItem) {
             case 1:
+                gsm.getGameMapManager().addMapsToLoad("Map/isoTest.tmx");
                 gsm.setState(GameStates.Loading);
                 break;
             case 2:
