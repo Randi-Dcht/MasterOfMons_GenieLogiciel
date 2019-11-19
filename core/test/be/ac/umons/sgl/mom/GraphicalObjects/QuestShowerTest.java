@@ -1,8 +1,8 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
-import be.ac.umons.sgl.mom.Objects.Quest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import be.ac.umons.sgl.mom.Quests.Quest;
 
 /**
  * Cette classe représente les tests de la classe QuestShower.

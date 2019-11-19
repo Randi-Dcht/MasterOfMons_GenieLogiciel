@@ -60,7 +60,8 @@ public class GameMapManager {
      * @param mapName Le nom de la carte a dessiner.
      */
     public void setMap(String mapName) {
-        actualItmr = tiledMapsRenderer.get(mapName);
+        if (tiledMapsRenderer.containsKey(mapName))
+            actualItmr = tiledMapsRenderer.get(mapName);
     }
 
     /**
@@ -88,15 +89,16 @@ public class GameMapManager {
     public boolean loadNextMap() {
         if (loadIterator == null)
             loadIterator = mapsToLoad.iterator();
-        if ( ! loadIterator.hasNext())
+        if (! loadIterator.hasNext())
             return true;
         String path = loadIterator.next();
+        boolean lastOne = ! loadIterator.hasNext();
         String name = new File(path).getName();
         TiledMap map = mapLoader.load(path);
         maps.put(name, map);
         tiledMapsRenderer.put(name, new IsometricTiledMapRenderer(map));
         mapsLoaded++;
-        return ! loadIterator.hasNext();
+        return lastOne;
     }
 
     /**
