@@ -71,7 +71,7 @@ public abstract class GameState {
     public abstract void handleInput();
 
     /**
-     * Libère les ressources alloué lors de l'utilisation de l'état.
+     * Libère les ressources allouées lors de l'utilisation de l'état.
      */
     public abstract void dispose();
 }
