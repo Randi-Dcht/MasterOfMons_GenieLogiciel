@@ -10,9 +10,9 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class FollowLesson extends UnderQuest
     {
-      public FollowLesson(Quest q)
+      public FollowLesson(Quest q,int nb)
       {
-        super("FollowLesson",25,q);
+        super("FollowLesson",nb,q);
       }
       public void evenActivity()
       {

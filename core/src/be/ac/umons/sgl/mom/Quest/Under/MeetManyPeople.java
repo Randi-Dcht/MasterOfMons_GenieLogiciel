@@ -10,9 +10,9 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class MeetManyPeople extends UnderQuest
     {
-      public MeetManyPeople(Quest q)
+      public MeetManyPeople(Quest q,int nb)
       {
-        super("MeetManyPeople",25,q);
+        super("MeetManyPeople",nb,q);
       }
       public void evenActivity()
       {
