@@ -64,7 +64,8 @@ public class Supervisor
 
   public static void changedQuest()
   {
-    questShower.setQuest(people.getQuest());
+    if(questShower != null)
+      questShower.setQuest(people.getQuest());
   }
 
   public static void attack(People attaquant, PNJ attaque)

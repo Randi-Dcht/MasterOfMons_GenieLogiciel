@@ -9,9 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import java.util.concurrent.TimeUnit;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Enums.Lesson;
@@ -21,7 +18,7 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
-import java.util.*;
+
 /**
 *Cette classe permet de créer les tets junit pour tester le code source du jeu
 *@author Randy Dauchot (étudiant en Sciences informatique)
@@ -71,18 +68,12 @@ public class TestJunit
   {
     People people = new People("Junit",Type.normal);
     double first = people.getEnergy();
-    for (int i = 0; i < 100 ; i++ )
-    {
-      people.energy();
-    }
+    for (int i = 0; i < 100 ; i++ ){people.energy();}
     double second = people.getEnergy();
     assertTrue(first > second,"depency energy");
 
     people.changedState(State.sleep);
-    for (int i = 0; i < 100 ; i++ )
-    {
-      people.energy();
-    }
+    for (int i = 0; i < 100 ; i++ ){people.energy();}
     first = people.getEnergy();
     assertTrue(second < first,"add energy");
   }
