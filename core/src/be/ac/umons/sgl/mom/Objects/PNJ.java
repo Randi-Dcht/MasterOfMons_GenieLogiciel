@@ -12,7 +12,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *Cette classe permet de définir un personnage qui est piloté par l'ordianteur
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public class PNJ
+public abstract class PNJ
 {
   final String name;
   private double x;
@@ -39,5 +39,7 @@ public class PNJ
     this.defence  = defence;
     this.strength = strength;
   }
+
+  public abstract void meet(People people);
 
 }
