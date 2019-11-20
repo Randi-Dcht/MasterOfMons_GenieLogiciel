@@ -12,7 +12,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *Cette classe permet d'implémente les objet que le personnage pourra prendre lors de parcours
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public abstract class Objet
+public abstract class Items
 {
   protected double positionX;
   protected double positionY;

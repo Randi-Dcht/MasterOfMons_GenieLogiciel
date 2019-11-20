@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
-public class Energizing extends Objet
+public class Energizing extends Items
 {
   private int obsolete = 31536000;
 

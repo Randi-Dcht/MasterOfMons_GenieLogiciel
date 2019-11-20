@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
-public class Battery extends Objet
+public class Battery extends Items
 {
   public Battery(double x,double y)
   {
