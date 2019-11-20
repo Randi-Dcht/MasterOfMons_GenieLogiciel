@@ -29,7 +29,6 @@ import java.util.*;
 
 public class TestJunit
 {
-  private Rule rule = new Rule("TestJunit",null);
 
  /**
  *Cette méthode permet de tester les méthodes de la classe Lesson
@@ -70,27 +69,21 @@ public class TestJunit
   @Test
   public void energyPeopleTest()
   {
-    rule.newParty("Test",Type.normal);
-    double first = rule.getPeople().getEnergy();
-    Timer timer = new Timer();
-    timer.schedule(rule,0,100);
-    try
+    People people = new People("Junit",Type.normal);
+    double first = people.getEnergy();
+    for (int i = 0; i < 100 ; i++ )
     {
-      TimeUnit.SECONDS.sleep(1);
+      people.energy();
     }
-    catch (Exception e) {
-    }
-    double second = rule.getPeople().getEnergy();
+    double second = people.getEnergy();
     assertTrue(first > second,"depency energy");
 
-    rule.getPeople().changedState(State.sleep);
-    try
+    people.changedState(State.sleep);
+    for (int i = 0; i < 100 ; i++ )
     {
-      TimeUnit.SECONDS.sleep(1);
+      people.energy();
     }
-    catch (Exception e) {
-    }
-    first = rule.getPeople().getEnergy();
+    first = people.getEnergy();
     assertTrue(second < first,"add energy");
   }
 
