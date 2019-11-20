@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
-import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GameStates.LoadState;
+import be.ac.umons.sgl.mom.GameStates.SaveState;
+import be.ac.umons.sgl.mom.GameStates.SettingsState;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
@@ -74,10 +76,10 @@ public class InGameMenuState extends MenuState {
                 gsm.removeFirstState();
                 break;
             case 2:
-                gsm.setState(GameStates.Save);
+                gsm.setState(SaveState.class);
                 break;
             case 3:
-                gsm.setState(GameStates.Load);
+                gsm.setState(LoadState.class);
                 break;
             case 4:
                 // TODO : Call save system with default name.
@@ -86,7 +88,7 @@ public class InGameMenuState extends MenuState {
                 // TODO : Call load system with last save (automatic or not).
                 break;
             case 6:
-                gsm.setState(GameStates.Settings);
+                gsm.setState(SettingsState.class);
                 break;
             case 7:
                 Gdx.app.exit();

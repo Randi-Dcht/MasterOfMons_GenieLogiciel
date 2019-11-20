@@ -1,10 +1,10 @@
 package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
-import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
@@ -24,9 +24,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -92,6 +89,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      * Le joueur de la partie.
      */
     protected Player player;
+    protected People playerCharacteristics;
     /**
      * L'objet responsable des animations.
      */
@@ -147,6 +145,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gs, sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth, player);
+        playerCharacteristics = new People("Test", Type.athletic);
 
 
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
@@ -175,11 +174,17 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     @Override
     public void update(float dt) {
         handleInput();
-
         am.update(dt);
-
         makePlayerMove(dt);
         cam.update();
+
+        lifeBar.setValue((int)playerCharacteristics.getLife());
+        lifeBar.setMaxValue((int)playerCharacteristics.lifemax());
+        expBar.setValue((int)playerCharacteristics.getExperience());
+//        expBar.setMaxValue((int)playerCharacteristics.maxExp());
+        energyBar.setValue((int)playerCharacteristics.getEnergy());
+        energyBar.setMaxValue(100);
+//        energyBar.setMaxValue((int)playerCharacteristics.getMaxEnergy());
     }
 
     /**
@@ -277,7 +282,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            gsm.setState(GameStates.InGameMenu);
+            gsm.setState(InGameMenuState.class);
         }
     }
 

@@ -1,18 +1,15 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
-import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
+import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
-import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Quests.Quest;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,8 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
 /**
  * Cette classe correspond à la classe de test de la classe PLayingState. Tout le code testé est équivalent, cependant, certaines parties jugées inutiles ont été retirées.
@@ -246,7 +241,7 @@ public class PlayingStateTest { // TODO : Put all disposes
 
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            gsm.setState(GameStates.InGameMenu);
+            gsm.setState(InGameMenuState.class);
         }
     }
 

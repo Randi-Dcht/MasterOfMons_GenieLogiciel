@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -93,7 +92,7 @@ public class LoadingState extends GameState {
         if (assetsLoaded) {
             mapsLoaded = gmm.loadNextMap();
             if (mapsLoaded)
-                gsm.setState(GameStates.Play);
+                gsm.setState(PlayingState.class, true);
         } else
             assetsLoaded = gs.getAssetManager().update();
 
