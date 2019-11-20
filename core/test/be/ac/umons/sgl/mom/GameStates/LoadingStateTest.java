@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Enums.GameStates;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.assets.AssetManager;
@@ -99,7 +98,7 @@ public class LoadingStateTest {
     public void draw() {
         assetsLoaded = gs.getAssetManager().update();
         if (assetsLoaded) {
-            gsm.setState(GameStates.Play);
+            gsm.setState(PlayingState.class);
             goneToPlay = true;
         }
 

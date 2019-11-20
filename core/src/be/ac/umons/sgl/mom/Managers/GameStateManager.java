@@ -1,12 +1,11 @@
 package be.ac.umons.sgl.mom.Managers;
 
-import be.ac.umons.sgl.mom.Enums.GameStates;
-import be.ac.umons.sgl.mom.Extensions.LAN.Objects.NetworkManager;
 import be.ac.umons.sgl.mom.GameStates.*;
-import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.MainMenuState;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Stack;
 
 
@@ -44,47 +43,29 @@ public class GameStateManager {
         this.gim = gim;
         this.gs = gs;
         gmm = new GameMapManager();
-        setState(GameStates.MainMenu);
+        setState(MainMenuState.class);
+    }
+
+    public void setState(Class<? extends GameState> gst) {
+        setState(gst, false);
     }
 
     /**
      * Change l'état actuelle du jeu et enlève le précédent en fonction du nouvel état.
      * @param gst Le nouvel état à ajouter.
      */
-    public void setState(GameStates gst) {
-        switch (gst) {
-            case MainMenu:
-                gameStateStack.push(new MainMenuState(this, gim, gs));
-                break;
-            case Play:
-                gameStateStack.pop(); // Can be done because Menu would already be there...
-                gameStateStack.push(new PlayingState(this, gim, gs));
-                break;
-            case InGameMenu:
-                gameStateStack.push(new InGameMenuState(this, gim, gs));
-                break;
-            case Loading:
-                gameStateStack.pop();
-                gameStateStack.push(new LoadingState(this, gim, gs));
-                break;
-            case Settings:
-                gameStateStack.pop();
-                gameStateStack.push(new SettingsState(this, gim, gs));
-                break;
-            case Save:
-                gameStateStack.push(new SaveState(this, gim, gs));
-                break;
-            case Load:
-                gameStateStack.pop();
-                gameStateStack.push(new LoadState(this, gim, gs));
-                break;
-            case LANPlayingState:
-                gameStateStack.pop(); // Can be done because Menu would already be there...
-                gameStateStack.push(new be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState(this, gim, gs, new NetworkManager()));
-                break;
-            default:
-                break;
+    public void setState(Class<? extends GameState> gst, boolean popPreviousOne) {
+        GameState g;
+        try {
+            Constructor con = gst.getConstructor(GameStateManager.class, GameInputManager.class, GraphicalSettings.class);
+            g = (GameState) con.newInstance(this, gim, gs);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+            return;
         }
+        if (popPreviousOne)
+            gameStateStack.pop();
+        gameStateStack.push(g);
     }
 
     /**

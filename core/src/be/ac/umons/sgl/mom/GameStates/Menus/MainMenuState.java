@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
-import be.ac.umons.sgl.mom.Enums.GameStates;
+import be.ac.umons.sgl.mom.GameStates.LoadingState;
+import be.ac.umons.sgl.mom.GameStates.SettingsState;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -42,10 +43,10 @@ public class MainMenuState extends MenuState {
         switch (selectedItem) {
             case 1:
                 gsm.getGameMapManager().addMapsToLoad("Map/isoTest.tmx");
-                gsm.setState(GameStates.Loading);
+                gsm.setState(LoadingState.class, true);
                 break;
             case 2:
-                gsm.setState(GameStates.Settings);
+                gsm.setState(SettingsState.class);
                 break;
             case 3:
                 Gdx.app.exit();
