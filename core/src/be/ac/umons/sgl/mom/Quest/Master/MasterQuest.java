@@ -280,6 +280,11 @@ public void eventMaps()
   {
     return id;
   }
+
+  public double getMaximun()
+  {
+    return maxPercent;
+  }
 /*------------------------------------------------------------------------------------------------------------*/
 
 /**
