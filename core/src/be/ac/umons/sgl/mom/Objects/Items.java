@@ -19,7 +19,7 @@ public abstract class Items
   protected boolean visible = true;
   final String name;
 
-  public Objet(double x,double y,String name)
+  public Items(double x,double y,String name)
   {
     positionX = x;
     positionY = y;

@@ -10,7 +10,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class StudPNJ extends PNJ
 {
-  public FightPNJ()
+  public StudPNJ()
   {
     super("Bagarre");
   }

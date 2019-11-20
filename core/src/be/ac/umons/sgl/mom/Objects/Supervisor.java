@@ -27,7 +27,7 @@ public class Supervisor
 /*joueur dans cette partie*/
   private static People people;
 /*liste des objets présent sur toutes les maps*/
-  private static ArrayList<Objet> objet = new ArrayList<Objet>();
+  private static ArrayList<Items> objet = new ArrayList<Items>();
 /*liste des personnages ordinateur*/
   private static ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
 /*Interface graphique pour cette partie*/
@@ -46,9 +46,9 @@ public class Supervisor
       listPNJ.add(p);
   }
 
-  public static void add(Objet ... lst)
+  public static void add(Items ... lst)
   {
-    for(Objet o : lst)
+    for(Items o : lst)
       objet.add(o);
   }
 
@@ -81,7 +81,7 @@ public class Supervisor
   {
     if(objet != null)
     {
-      for (Objet o : objet){o.make();}
+      for (Items o : objet){o.make();}
     }
   }
 

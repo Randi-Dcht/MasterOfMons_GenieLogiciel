@@ -27,7 +27,7 @@ public abstract class MasterQuest implements Quest
 /*interrogation qui doit encore passer*/
   protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
 /*objet disponible dans son sac à dos*/
-  protected ArrayList<Objet> availableObject = new ArrayList<Objet>(); //objet disponible sur la maps pour lui prendre
+  protected ArrayList<Items> availableObject = new ArrayList<Items>(); //objet disponible sur la maps pour lui prendre
 /*avancement de la quete en %*/
   protected double percent = 0; //avanacement de la quête
 /*pourcentage maximun de la MasterQuest*/
@@ -250,7 +250,7 @@ public void eventMaps()
 *Cette méthode permet de retourner les objets que le personnages a dans son sac à dos
 *@return  availableObject qui est son sac à dos
 */
-  public ArrayList<Objet> getObjets()
+  public ArrayList<Items> getObjets()
   {
     return availableObject;
   }

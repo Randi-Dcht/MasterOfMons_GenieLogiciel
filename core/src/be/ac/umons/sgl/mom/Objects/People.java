@@ -36,7 +36,7 @@ public class People
 	private MasterQuest myQuest;
 	final String name;
 	final int maxObject = 5; //nombre d'objet que peut avoir le personnage
-	private ArrayList<Objet> myObject = new ArrayList<Objet>(); //objet dans son sac à dos
+	private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
 	private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
 
@@ -114,7 +114,7 @@ public class People
 *Permet de retirer un objet du sac à dos
 *@return boolean pour savoir s'il a été bien retirer
 */
-	public boolean removeObject(Objet objet)
+	public boolean removeObject(Items objet)
 	{
 		if(myObject.size()==0 || !myObject.contains(objet))
 			return false;
@@ -127,7 +127,7 @@ public class People
 *@param object qui est l'objet qui prend
 *@return true si l'objet est bien ajouté et false sinon
 */
-	public boolean pushObject(Objet object)
+	public boolean pushObject(Items object)
 	{
 		if(myObject.size() == maxObject)
 			return false;
