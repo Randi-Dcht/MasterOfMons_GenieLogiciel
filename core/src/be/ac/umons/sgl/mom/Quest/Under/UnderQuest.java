@@ -52,6 +52,7 @@ public abstract class UnderQuest implements Quest
   {
     progress = progress + many;
     master.addProgress(many);
+    finished();
   }
 
   public double getAdvancement()
