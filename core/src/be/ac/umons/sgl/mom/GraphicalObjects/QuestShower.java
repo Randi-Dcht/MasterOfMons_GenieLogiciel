@@ -141,6 +141,7 @@ public class QuestShower {
         for (Quest q2 : q.getSubQuests()) {
             questProgressCircleMap.put(q2, new QuestProgressCircle(gs, q2));
         }
+        animateQuestRectangle();
         animateQuestProgressCircle();
     }
 
@@ -305,6 +306,20 @@ public class QuestShower {
             am.addAnAnimation("QuestCircleRectangleAnimation" + qpc.toString(), da);
             da.setEndingAction(qpc::finishAnimation);
         }
+    }
 
+    /**
+     * Lance les animations de la partie "Quête" du HUD.
+     */
+    public void animateQuestRectangle() {
+        beginAnimation();
+        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
+        da.setRunningAction(() -> {
+            setDuringAnimationQuestShowerWidth((int)((double)getWidth() * da.getActual()));
+            setDuringAnimationQuestShowerHeight((int)((double)getHeight() * da.getActual()));
+            setDuringAnimationForegroundOpacity(da.getActual());
+        });
+        am.addAnAnimation("QuestRectangleAnimation", da);
+        da.setEndingAction(this::finishAnimation);
     }
 }

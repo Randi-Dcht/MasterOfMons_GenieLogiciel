@@ -144,7 +144,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
-        inventoryShower = new InventoryShower(gs, sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth, player);
+        inventoryShower = new InventoryShower(gs, am, player);
         playerCharacteristics = new People("Test", Type.athletic);
 
 
@@ -167,8 +167,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
         energyBar = new ProgressBar();
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
-
-        animateHUD();
     }
 
     @Override
@@ -273,7 +271,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         // Dessine le HUD.
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
-        inventoryShower.draw();
+        inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth);
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         expBar.draw((int)leftMargin * 2 + topBarWidth, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         energyBar.draw((int)leftMargin * 3 + topBarWidth * 2, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
@@ -290,52 +288,5 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void dispose() {
         gmm.dispose();
         sb.dispose();
-    }
-
-    /**
-     * Lance les animations du HUD.
-     */
-    protected void animateHUD() {
-        animateInventoryShower();
-        animateQuestRectangle();
-    }
-
-    /**
-     * Lance les animations de la partie "Quête" du HUD.
-     */
-    protected void animateQuestRectangle() {
-        questShower.beginAnimation();
-        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-        da.setRunningAction(() -> {
-            questShower.setDuringAnimationQuestShowerWidth((int)((double)questShower.getWidth() * da.getActual()));
-            questShower.setDuringAnimationQuestShowerHeight((int)((double)questShower.getHeight() * da.getActual()));
-            questShower.setDuringAnimationForegroundOpacity(da.getActual());
-        });
-        am.addAnAnimation("QuestRectangleAnimation", da);
-        da.setEndingAction(() -> {
-            questShower.finishAnimation();
-        });
-    }
-
-    /**
-     * Lance les animations de la partie "Inventaire" du HUD.
-     */
-    protected void animateInventoryShower() {
-        inventoryShower.beginAnimation();
-        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-        da.setRunningAction(() -> {
-            inventoryShower.setDuringAnimationWidth((int)((double)inventoryShower.getWidth() * da.getActual()));
-            inventoryShower.setDuringAnimationHeight((int)((double)inventoryShower.getHeight() * da.getActual()));
-            inventoryShower.setDuringAnimationBackgroundOpacity(da.getActual());
-        });
-        am.addAnAnimation("InventoryShowerAnimation", da);
-        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
-        da2.setEndingAction(() -> inventoryShower.finishAnimation());
-        da2.setRunningAction(() -> {
-            inventoryShower.setDuringAnimationForegroundOpacity(da2.getActual());
-        });
-        da.setEndingAction(() -> {
-            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
-        });
     }
 }
