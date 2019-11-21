@@ -24,7 +24,7 @@ import java.io.Serializable;
 public abstract class MasterQuest implements Quest,Serializable
 {
 /*nombre de quête qui sont chainées*/
-  protected static int numberQuest = 0;
+  protected static int numberQuest = 1;
 /*interrogation qui doit encore passer*/
   protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
 /*objet disponible dans son sac à dos*/
@@ -53,6 +53,7 @@ public abstract class MasterQuest implements Quest,Serializable
     this.before = before;
     this.id     = numberQuest;
     numberQuest++;
+    System.out.println(before);System.out.println(people);System.out.println("______");
     this.people = people;
   }
 
@@ -65,6 +66,7 @@ public abstract class MasterQuest implements Quest,Serializable
   {
     if(finished)
     {
+      System.out.println("newQuest-MasterQuest");
       this.after = after;
       people.newQuest(after);
     }
@@ -202,12 +204,15 @@ public void eventMaps()
 */
   public void addProgress(double many)
   {
-    percent = percent + many;
-    if(percent >= maxPercent)
+    if(!finished)
     {
-      finished = true;
-      nextQuest();
-      Supervisor.changedQuest();
+      percent = percent + many;
+      if(percent >= maxPercent)
+      {
+        finished = true;
+        nextQuest();
+        Supervisor.changedQuest();
+      }
     }
   }
 
