@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import java.io.Serializable;
 
 /**
 *La UnderQuest est une sous classe d'une MasterQuest ou d'elle-même.
@@ -17,7 +18,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-public abstract class UnderQuest implements Quest
+public abstract class UnderQuest implements Quest,Serializable
 {
 /*Nom de la sous quête*/
   final String name;

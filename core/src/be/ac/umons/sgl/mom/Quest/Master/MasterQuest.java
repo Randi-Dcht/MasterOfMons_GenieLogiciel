@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import java.io.Serializable;
 
 /**
 *La MasterQuest est une classe abstraite qui contient elle même des underQuest.
@@ -20,7 +21,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-public abstract class MasterQuest implements Quest
+public abstract class MasterQuest implements Quest,Serializable
 {
 /*nombre de quête qui sont chainées*/
   protected static int numberQuest = 0;
@@ -206,7 +207,7 @@ public void eventMaps()
     {
       finished = true;
       nextQuest();
-      Supervisor.changedQuest();
+      //Supervisor.changedQuest();
     }
   }
 
@@ -214,7 +215,7 @@ public void eventMaps()
 *Cette méthode permet dedonner la quete d'avant celle-ci
 *@return before qui est la quete juste avant
 */
-  public Quest getParent()
+  public MasterQuest getParent()
   {
     return before;
   }
@@ -223,7 +224,7 @@ public void eventMaps()
 *Cette méthode permet de voir les quêtes après celle-ci
 @return after qui est la quete d'après
 */
-  public Quest getChildren()
+  public MasterQuest getChildren()
   {
     return after;
   }

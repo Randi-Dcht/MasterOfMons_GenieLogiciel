@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import java.io.Serializable;
 
 /**
 *Cette classe permet de définir le perso du joeur humain
@@ -17,7 +18,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *@param strength : la strength pour battre un autre
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public class People
+public class People implements Serializable
 {
 /*savoir où est le personnage sur la carte*/
 	private double x;

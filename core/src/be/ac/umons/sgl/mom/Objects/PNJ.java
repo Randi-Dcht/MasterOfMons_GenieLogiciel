@@ -6,13 +6,14 @@ import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.*;
+import java.io.Serializable;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 /**
 *Cette classe permet de définir un personnage qui est piloté par l'ordianteur
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public abstract class PNJ
+public abstract class PNJ implements Serializable
 {
   final String name;
   private double x;
