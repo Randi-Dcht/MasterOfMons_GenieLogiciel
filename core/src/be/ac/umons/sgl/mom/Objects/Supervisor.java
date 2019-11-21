@@ -9,6 +9,7 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import com.badlogic.gdx.Gdx;
 
 /*------Commentaire à supprimer dans version final-------*/
 /*-------------------Randy-------------------------------*/
@@ -65,7 +66,7 @@ public class Supervisor
   public static void changedQuest()
   {
     if(questShower != null)
-      questShower.setQuest(people.getQuest());
+      Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
   }
 
   public static void attack(People attaquant, PNJ attaque)

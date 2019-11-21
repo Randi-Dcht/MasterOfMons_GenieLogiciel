@@ -207,7 +207,7 @@ public void eventMaps()
     {
       finished = true;
       nextQuest();
-      //Supervisor.changedQuest();
+      Supervisor.changedQuest();
     }
   }
 
