@@ -16,8 +16,7 @@ import java.io.Serializable;
 *Pour réusir une MasterQuest, on doit réusir un maximun de underQuest qui font augmenter le % de réussite.
 *Chaque MasterQuest possède un parent et/ou un enfant.
 *@param before qui est la quête avant
-*@param id qui le numéro de la quête (1 à 5)
-*@param course qui est la liste des cours que le personnage doit suivre pour cette quête
+*@param people qui est la liste des cours que le personnage doit suivre pour cette quête
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
