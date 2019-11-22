@@ -19,7 +19,6 @@ import com.badlogic.gdx.Gdx;
 
 /**
 *Cette classe permet de surveiller le jeu en temps réelle et gère en fonction des règles.
-*@param name : comment s'appelle la partie jouée
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
@@ -33,8 +32,6 @@ public class Supervisor
   private static ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
 /*Interface graphique pour cette partie*/
   private static QuestShower questShower;
-/*Mémoire pour savoir quelle MasterQuest est jouée en dernier*/
-  private static int memoire;
 
   public static People getPeople()
   {
@@ -43,14 +40,12 @@ public class Supervisor
 
   public static void add(PNJ ... lst)
   {
-    for(PNJ p : lst)
-      listPNJ.add(p);
+    listPNJ.addAll(Arrays.asList(lst));
   }
 
   public static void add(Items ... lst)
   {
-    for(Items o : lst)
-      objet.add(o);
+    objet.addAll(Arrays.asList(lst));
   }
 
   public static void newParty(String namePlayer, Type type, QuestShower graphical)
@@ -59,7 +54,6 @@ public class Supervisor
     people = new People(namePlayer,type);
     MasterQuest mQ = new Bachelor1(people,null);
     people.newQuest(mQ);
-    memoire = mQ.id();
     questShower.setQuest(mQ);
   }
 

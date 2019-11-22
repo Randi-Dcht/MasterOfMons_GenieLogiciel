@@ -53,20 +53,17 @@ public abstract class MasterQuest implements Quest,Serializable
     this.before = before;
     this.id     = numberQuest;
     numberQuest++;
-    System.out.println(before);System.out.println(people);System.out.println("______");
     this.people = people;
   }
 
 /**
 *Cette méthode permet de créer une nouvelle quête quand celle-ci est terminé
-*@param people qui est le personnage qui va réalisé la quête.
 *@param after qui est la quête suiavnte celle-ci (liste chainée).
 */
   public void newQuest(MasterQuest after)
   {
     if(finished)
     {
-      System.out.println("newQuest-MasterQuest");
       this.after = after;
       people.newQuest(after);
     }
