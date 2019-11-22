@@ -13,9 +13,7 @@ import java.io.Serializable;
 /**
 *Cette classe permet de définir le perso du joeur humain
 *@param name : le nom du personnage
-*@param agility : son agilité
-*@param defence : sa capacité à se défendre
-*@param strength : la strength pour battre un autre
+*@param type de personnage
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 public class People implements Serializable
@@ -87,10 +85,7 @@ public class People implements Serializable
 	{
 		myQuest = quest;
 		quest.retake(myCourse);
-		for(int i = 0 ; i < quest.getLesson().length ; i++)
-		{
-			myCourse.add(quest.getLesson()[i]);
-		}
+		myCourse.addAll(Arrays.asList(quest.getLesson()));
 	}
 
 	public MasterQuest getQuest()
@@ -208,9 +203,9 @@ public class People implements Serializable
 *@param x qui est son déplacement sur l'axe x
 *@param y qui est son déplacement sur l'axe y
 */
-	public void move(double x, double y)
+	public void move(Couple couple)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = couple.x;
+		this.y = couple.y;
 	}
 }

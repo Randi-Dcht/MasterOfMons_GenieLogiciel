@@ -124,10 +124,7 @@ public abstract class MasterQuest implements Quest,Serializable
 * Retourne le nom de la quête.
 * @return Le nom de la quête.
 */
-  public String getName()
-  {
-        return ("Quest"+id);
-  }
+  public abstract String getName();
 
 /**
 * Retourne si la quête est active ?
