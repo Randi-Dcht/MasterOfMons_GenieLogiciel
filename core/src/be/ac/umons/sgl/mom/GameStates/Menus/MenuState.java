@@ -133,7 +133,9 @@ public abstract class MenuState extends GameState {
     /***
      * Exécute l'action relié à un des éléments du menu en fonction de celui selectionné par l'utilisateur.
      */
-    protected abstract void executeSelectedItem();
+    protected void executeSelectedItem() {
+        menuItems[selectedItem].toDoIfExecuted.run();
+    }
 
     @Override
     public void dispose() {
@@ -144,32 +146,45 @@ public abstract class MenuState extends GameState {
      * Représente un élément du menu.
      */
     protected class MenuItem {
-        /***
+        /**
          * Le nom de l'élément.
          */
         private String header;
-        /***
+        /**
          * Le type de l'élément.
          */
         private MenuItemType mit;
-        /***
+        /**
          * L'élément est-il selectionnable ?
          */
         private boolean selectable;
-        /***
+        /**
          * Représente la position et la taille de l'élément (ATTENTION : En fonction des coordonnées de l'écran)
          */
         private Rectangle screenTextBound;
 
-        /***
+        /**
+         * L'action a faire si jamais l'on clique sur cet élément.
+         */
+        private Runnable toDoIfExecuted;
+
+        /**
          * Initialise un élément du menu.
          * @param header Le nom de l'élément.
          */
         public MenuItem(String header) {
-            this(header, MenuItemType.Normal);
+            this(header, MenuItemType.Normal, true);
+        }
+        /**
+         * Initialise un élément du menu.
+         * @param header Le nom de l'élément.
+         * @param toDoIfExecuted L'action a faire si jamais l'on clique sur cet élément.
+         */
+        public MenuItem(String header, Runnable toDoIfExecuted) {
+            this(header, MenuItemType.Normal, true, toDoIfExecuted);
         }
 
-        /***
+        /**
          * Initialise un élément du menu.
          * @param header Le nom de l'élément.
          * @param mit Le type de l'élement.
@@ -178,7 +193,7 @@ public abstract class MenuState extends GameState {
             this(header, mit, true);
         }
 
-        /***
+        /**
          * Initialise un élément du menu.
          * @param header Le nom de l'élément.
          * @param mit Le type de l'élement.
@@ -188,6 +203,17 @@ public abstract class MenuState extends GameState {
             this.header = header;
             this.mit = mit;
             this.selectable = selectable;
+        }
+        /**
+         * Initialise un élément du menu.
+         * @param header Le nom de l'élément.
+         * @param mit Le type de l'élement.
+         * @param selectable L'élément est-il selectionnable ?
+         * @param toDoIfExecuted L'action a faire si jamais l'on clique sur cet élément.
+         */
+        public MenuItem(String header, MenuItemType mit, boolean selectable, Runnable toDoIfExecuted) {
+            this (header, mit, selectable);
+            this.toDoIfExecuted = toDoIfExecuted;
         }
     }
 

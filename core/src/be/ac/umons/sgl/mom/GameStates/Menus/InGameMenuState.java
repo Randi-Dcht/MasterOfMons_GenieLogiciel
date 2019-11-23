@@ -43,13 +43,13 @@ public class InGameMenuState extends MenuState {
         topMargin = .1;
         betweenItemMargin = .01;
         menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
-                new MenuItem("Continue"),
-                new MenuItem("Save"),
-                new MenuItem("Load"),
-                new MenuItem("Quick Save"),
-                new MenuItem("Quick Load"),
-                new MenuItem("Settings"),
-                new MenuItem("Quit")};
+                new MenuItem("Continue", () -> gsm.removeFirstState()),
+                new MenuItem("Save", () -> gsm.setState(SaveState.class)),
+                new MenuItem("Load", () -> gsm.setState(LoadState.class)),
+                new MenuItem("Quick Save"), // TODO : Call save system with default name.
+                new MenuItem("Quick Load"), // TODO : Call load system with last save (automatic or not).
+                new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
+                new MenuItem("Quit", () -> Gdx.app.exit())};
     }
 
 
@@ -67,35 +67,6 @@ public class InGameMenuState extends MenuState {
         sr.end();
         super.draw();
         Gdx.gl.glDisable(GL30.GL_BLEND);
-    }
-
-    @Override
-    protected void executeSelectedItem() {
-        switch (selectedItem) {
-            case 1:
-                gsm.removeFirstState();
-                break;
-            case 2:
-                gsm.setState(SaveState.class);
-                break;
-            case 3:
-                gsm.setState(LoadState.class);
-                break;
-            case 4:
-                // TODO : Call save system with default name.
-                break;
-            case 5:
-                // TODO : Call load system with last save (automatic or not).
-                break;
-            case 6:
-                gsm.setState(SettingsState.class);
-                break;
-            case 7:
-                Gdx.app.exit();
-                break;
-            default:
-                break;
-        }
     }
 
     @Override

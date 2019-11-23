@@ -33,31 +33,12 @@ public class MainMenuState extends MenuState {
         topMargin = .1;
         betweenItemMargin = .01;
         menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
-                new MenuItem("Start a new game"),
-                new MenuItem("Load"),
-                new MenuItem("Settings"),
-                new MenuItem("Quit")};
-    }
-
-
-    @Override
-    protected void executeSelectedItem() {
-        switch (selectedItem) {
-            case 1:
-                gsm.getGameMapManager().addMapsToLoad("Map/isoTest.tmx");
-                gsm.setState(LoadingState.class, true);
-                break;
-            case 2:
-                gsm.setState(LoadState.class);
-                break;
-            case 3:
-                gsm.setState(SettingsState.class);
-                break;
-            case 4:
-                Gdx.app.exit();
-                break;
-            default:
-                break;
-        }
+                new MenuItem("Start a new game", () -> {
+                    gsm.getGameMapManager().addMapsToLoad("Map/isoTest.tmx");
+                    gsm.setState(LoadingState.class, true);
+                }),
+                new MenuItem("Load", () -> gsm.setState(LoadState.class)),
+                new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
+                new MenuItem("Quit", () -> Gdx.app.exit())};
     }
 }
