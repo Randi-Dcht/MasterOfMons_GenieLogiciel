@@ -51,13 +51,13 @@ public class DoubleAnimation extends Animation {
      * @param dt (Delta Time) le temps écoulé depuis le dernier appel.
      */
     public void update(double dt) {
-        if (actualState >= to)
+        if ((toAddBySecond > 0 && actualState >= to) || (toAddBySecond < 0 && actualState <= to))
             return;
 
         actualState = actualState + toAddBySecond * dt;
         if (runningAction != null)
             runningAction.run();
-        if (actualState >= to) {
+        if ((toAddBySecond > 0 && actualState >= to) || (toAddBySecond < 0 && actualState <= to)) {
             actualState = to;
             if (endingAction != null)
                 endingAction.run();
