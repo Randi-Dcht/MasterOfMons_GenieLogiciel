@@ -7,12 +7,13 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import java.io.Serializable;
 
 /**
 *Cette classe permet d'implémente les objet que le personnage pourra prendre lors de parcours
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public abstract class Items
+public abstract class Items implements Serializable
 {
   protected double positionX;
   protected double positionY;

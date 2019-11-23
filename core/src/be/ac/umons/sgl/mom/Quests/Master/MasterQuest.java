@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import java.io.Serializable;
 
 /**
 *La MasterQuest est une classe abstraite qui contient elle même des underQuest.
@@ -15,15 +16,14 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *Pour réusir une MasterQuest, on doit réusir un maximun de underQuest qui font augmenter le % de réussite.
 *Chaque MasterQuest possède un parent et/ou un enfant.
 *@param before qui est la quête avant
-*@param id qui le numéro de la quête (1 à 5)
-*@param course qui est la liste des cours que le personnage doit suivre pour cette quête
+*@param people qui est la liste des cours que le personnage doit suivre pour cette quête
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-public abstract class MasterQuest implements Quest
+public abstract class MasterQuest implements Quest,Serializable
 {
 /*nombre de quête qui sont chainées*/
-  protected static int numberQuest = 0;
+  protected static int numberQuest = 1;
 /*interrogation qui doit encore passer*/
   protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
 /*objet disponible dans son sac à dos*/
@@ -57,7 +57,6 @@ public abstract class MasterQuest implements Quest
 
 /**
 *Cette méthode permet de créer une nouvelle quête quand celle-ci est terminé
-*@param people qui est le personnage qui va réalisé la quête.
 *@param after qui est la quête suiavnte celle-ci (liste chainée).
 */
   public void newQuest(MasterQuest after)
@@ -124,10 +123,7 @@ public abstract class MasterQuest implements Quest
 * Retourne le nom de la quête.
 * @return Le nom de la quête.
 */
-  public String getName()
-  {
-        return ("Quest"+id);
-  }
+  public abstract String getName();
 
 /**
 * Retourne si la quête est active ?
@@ -201,12 +197,15 @@ public void eventMaps()
 */
   public void addProgress(double many)
   {
-    percent = percent + many;
-    if(percent >= maxPercent)
+    if(!finished)
     {
-      finished = true;
-      nextQuest();
-      Supervisor.changedQuest();
+      percent = percent + many;
+      if(percent >= maxPercent)
+      {
+        finished = true;
+        nextQuest();
+        Supervisor.changedQuest();
+      }
     }
   }
 
@@ -214,7 +213,7 @@ public void eventMaps()
 *Cette méthode permet dedonner la quete d'avant celle-ci
 *@return before qui est la quete juste avant
 */
-  public Quest getParent()
+  public MasterQuest getParent()
   {
     return before;
   }
@@ -223,7 +222,7 @@ public void eventMaps()
 *Cette méthode permet de voir les quêtes après celle-ci
 @return after qui est la quete d'après
 */
-  public Quest getChildren()
+  public MasterQuest getChildren()
   {
     return after;
   }

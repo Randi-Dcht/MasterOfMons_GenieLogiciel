@@ -1,37 +1,28 @@
 package be.ac.umons.sgl.mom.Objects;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import java.util.*;
-import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Quests.Under.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
-import be.ac.umons.sgl.mom.Quests.Quest;
+import be.ac.umons.sgl.mom.Quests.Master.Bachelor1;
+import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
 *Cette classe permet de créer les tets junit pour tester le code source du jeu
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-public class TestJunit
+class TestJunit
 {
 
  /**
  *Cette méthode permet de tester les méthodes de la classe Lesson
  */
   @Test
-  public void TestOfLesson()
+  void TestOfLesson()
   {
     Lesson l1 = Lesson.MI1;
     Lesson l2 = Lesson.ecopol;
@@ -49,7 +40,7 @@ public class TestJunit
   *Cette méthode permet de tester la classe personnage
   */
   @Test
-  public void PeopleObjectTest()
+  void PeopleObjectTest()
   {
     People people = new People("MasterOfMons",Type.normal);
     Battery[] b = {new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0),new Battery(0,0)};
@@ -64,7 +55,7 @@ public class TestJunit
   }
 
   @Test
-  public void energyPeopleTest()
+  void energyPeopleTest()
   {
     People people = new People("Junit",Type.normal);
     double first = people.getEnergy();
@@ -79,7 +70,7 @@ public class TestJunit
   }
 
   @Test
-  public void TestnextQuest()
+  void TestnextQuest()
   {
     People p = new People("Tesst",Type.normal);
     MasterQuest mq = new Bachelor1(p,null);
