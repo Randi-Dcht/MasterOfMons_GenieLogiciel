@@ -19,6 +19,7 @@ public class PlayingState extends be.ac.umons.sgl.mom.Extensions.Multiplayer.Gam
      * @param gsm Le GameStateManager du jeu.
      * @param gim Le GameInputManager du jeu.
      * @param gs  Les paramètres graphiques à utiliser.
+     * @param nm Le gestionnaire réseau du jeu.
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs, NetworkManager nm) {
         super(gsm, gim, gs);

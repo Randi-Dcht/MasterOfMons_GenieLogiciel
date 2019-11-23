@@ -78,6 +78,7 @@ public class QuestShower {
     /**
      * Crée un nouveau support de quête.
      * @param gs Les paramètres graphiques du jeu.
+     * @param am Un gestionnaire d'animation afin de mettre à jour les animations.
      */
     public QuestShower(GraphicalSettings gs, AnimationManager am) {
         this.gs = gs;

@@ -68,5 +68,8 @@ public abstract class Control {
      */
     public abstract void handleInput();
 
+    /**
+     * Libère les ressources allouées par ce contrôle.
+     */
     public abstract void dispose();
 }

@@ -53,6 +53,7 @@ public class GameStateManager {
     /**
      * Change l'état actuelle du jeu et enlève le précédent en fonction du nouvel état.
      * @param gst Le nouvel état à ajouter.
+     * @param popPreviousOne Doit-on enlever l'état précedent de la pile ?
      */
     public void setState(Class<? extends GameState> gst, boolean popPreviousOne) {
         GameState g;

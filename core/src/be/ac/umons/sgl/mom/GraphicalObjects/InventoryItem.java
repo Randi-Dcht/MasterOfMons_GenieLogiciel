@@ -69,6 +69,9 @@ public class InventoryItem {
         init();
     }
 
+    /**
+     * Initialise un nouvel élément d'inventaire.
+     */
     public void init() {
         sr = new ShapeRenderer();
         backgroundColor = new Color(21f / 255, 21f / 255, 21f / 255, BACKGROUND_RECTANGLE_OPACITY);
@@ -105,18 +108,25 @@ public class InventoryItem {
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
-
-
+    /**
+     * Sélectionne cet élément d'inventaire.
+     */
     public void select() {
         backgroundColorToUse = selectedBackgroundColor;
         isSelected = true;
     }
-
+    /**
+     * Ne sélectionne plus cet élément d'inventaire.
+     */
     public void unselect() {
         backgroundColorToUse = backgroundColor;
         isSelected = false;
     }
 
+    /**
+     * Retourne si cet élément d'inventaire est sélectionné.
+     * @return Si cet élément d'inventaire est sélectionné.
+     */
     public boolean isSelected() {
         return isSelected;
     }
@@ -151,9 +161,9 @@ public class InventoryItem {
         backgroundColor.a = BACKGROUND_RECTANGLE_OPACITY;
         isBeingAnimated = false;
     }
+
     /**
-     * Retourne la quête associée à ce cercle.
-     * @return La quête associée à ce cercle.
+     * Libère les ressources allouées par cet élément d'inventaire.
      */
     public void dispose() {
         sr.dispose();

@@ -84,6 +84,7 @@ public class InventoryShower extends Control {
      * Crée un nouveau support pour montrer l'inventaire d'un joueur.
      * @param gim Le gestionnaire d'entrée du jeu.
      * @param gs Les paramètres graphiques du jeu.
+     * @param am Un gestionnaire d'animation afin de mettre à jour les animations.
      * @param inventoryOf Le joueur dont l'inventaire doit être montré.
      */
     public InventoryShower(GameInputManager gim, GraphicalSettings gs, AnimationManager am, Player inventoryOf) {
