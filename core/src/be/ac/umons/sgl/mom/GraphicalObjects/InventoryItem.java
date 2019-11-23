@@ -18,7 +18,7 @@ public class InventoryItem {
     /**
      * L'opacité du rectangle sur laquelle l'image de l'élément d'inventaire sera déssinée.
      */
-    protected static float FOREGROUND_RECTANGLE_OPACITY = .8f;
+    protected static float BACKGROUND_RECTANGLE_OPACITY = .8f;
 
     /**
      * L'élément à montrer.
@@ -35,11 +35,28 @@ public class InventoryItem {
     /**
      * Doit-on utiliser les variables d'animations ?
      */
-    protected boolean isBeingAnimated;
+    private boolean isBeingAnimated;
     /**
      * L'opacité du du rectangle sur laquelle l'image de l'élément d'inventaire sera déssinée durant une animation.
      */
-    protected float duringAnimationForegroundOpacity;
+    private float duringAnimationForegroundOpacity;
+    /**
+     * Si cet élément d'inventaire a été sélectionné par l'utilisateur.
+     */
+    private boolean isSelected = false;
+    /**
+     * La couleur du rectangle en arrière-plan.
+     */
+    private Color backgroundColor;
+    /**
+     * La couleur du rectangle d'arrière-plan quand l'élément est sélectionné.
+     */
+    private Color selectedBackgroundColor;
+
+    /**
+     * La couleur d'arrière-plan qu'il faut utilisé à cet instant.
+     */
+    private Color backgroundColorToUse;
 
     /**
      * Crée un nouveau support pour montré l'élément d'inventaire.
@@ -49,7 +66,14 @@ public class InventoryItem {
     public InventoryItem(GraphicalSettings gs, GameObjects go) {
         this.go = go;
         this.gs = gs;
+        init();
+    }
+
+    public void init() {
         sr = new ShapeRenderer();
+        backgroundColor = new Color(21f / 255, 21f / 255, 21f / 255, BACKGROUND_RECTANGLE_OPACITY);
+        selectedBackgroundColor = new Color(69f / 255, 39f / 255, 160f / 255, BACKGROUND_RECTANGLE_OPACITY);
+        backgroundColorToUse = backgroundColor;
     }
 
     /**
@@ -65,9 +89,8 @@ public class InventoryItem {
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sr.begin(ShapeRenderer.ShapeType.Filled);
         if (isBeingAnimated)
-            sr.setColor(21f / 255, 21f / 255, 21f / 255, duringAnimationForegroundOpacity * FOREGROUND_RECTANGLE_OPACITY);
-        else
-            sr.setColor(21f / 255, 21f / 255, 21f / 255, FOREGROUND_RECTANGLE_OPACITY);
+            backgroundColorToUse.a = duringAnimationForegroundOpacity * BACKGROUND_RECTANGLE_OPACITY;
+        sr.setColor(backgroundColorToUse);
         sr.rect(x, y, width, height);
         sr.end();
 
@@ -80,6 +103,22 @@ public class InventoryItem {
             batch.end();
         }
         Gdx.gl.glDisable(GL30.GL_BLEND);
+    }
+
+
+
+    public void select() {
+        backgroundColorToUse = selectedBackgroundColor;
+        isSelected = true;
+    }
+
+    public void unselect() {
+        backgroundColorToUse = backgroundColor;
+        isSelected = false;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 
     /**
@@ -109,6 +148,7 @@ public class InventoryItem {
      * Arreter d'utiliser les variables d'animations.
      */
     public void finishAnimation() {
+        backgroundColor.a = BACKGROUND_RECTANGLE_OPACITY;
         isBeingAnimated = false;
     }
     /**

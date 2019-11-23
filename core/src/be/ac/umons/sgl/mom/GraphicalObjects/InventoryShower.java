@@ -2,13 +2,17 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.GameObjects;
+import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
+import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +20,7 @@ import java.util.List;
  * Support pour montrer l'inventaire d'un personnage.
  * @author Guillaume Cardoen
  */
-public class InventoryShower {
+public class InventoryShower extends Control {
     /**
      * La marge entre les différents éléments d'inventaire.
      */
@@ -43,10 +47,6 @@ public class InventoryShower {
      * Permet de dessiner les formes comme les rectangles.
      */
     private ShapeRenderer sr;
-    /**
-     * Les paramètres graphiques du jeu.
-     */
-    private GraphicalSettings gs;
     /**
      * L'inventaire à montrer.
      */
@@ -75,15 +75,20 @@ public class InventoryShower {
      * L'objet responsable des animations.
      */
     private AnimationManager am;
+    /**
+     * L'indice de l'élément d'inventaire selectionné par l'utilisateur.
+     */
+    private InventoryItem selectedItem;
 
     /**
      * Crée un nouveau support pour montrer l'inventaire d'un joueur.
+     * @param gim Le gestionnaire d'entrée du jeu.
      * @param gs Les paramètres graphiques du jeu.
      * @param inventoryOf Le joueur dont l'inventaire doit être montré.
      */
-    public InventoryShower(GraphicalSettings gs, AnimationManager am, Player inventoryOf) {
+    public InventoryShower(GameInputManager gim, GraphicalSettings gs, AnimationManager am, Player inventoryOf) {
+        super(gim, gs);
         inventory = inventoryOf.getInventory();
-        this.gs = gs;
         this.am = am;
         init();
     }
@@ -110,6 +115,7 @@ public class InventoryShower {
      */
     public void draw(Batch batch, int centerX, int height, int itemWidth, int itemHeight) {
         int beginX = centerX - (itemWidth * inventory.size() + BETWEEN_ITEM_MARGIN * (inventory.size() + 2)) / 2;
+        super.draw(batch, beginX, height, itemWidth, itemHeight);
         this.height = height;
         this.itemWidth = itemWidth;
         Gdx.gl.glEnable(GL30.GL_BLEND);
@@ -132,6 +138,49 @@ public class InventoryShower {
         }
 
         Gdx.gl.glDisable(GL30.GL_BLEND);
+    }
+
+
+    /**
+     * Lance les animations de la partie "Inventaire" du HUD.
+     */
+    public void animateInventoryShower() {
+        beginAnimation();
+        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
+        da.setRunningAction(() -> {
+            setDuringAnimationWidth((int)((double)getWidth() * da.getActual()));
+            setDuringAnimationHeight((int)((double)getHeight() * da.getActual()));
+            setDuringAnimationBackgroundOpacity(da.getActual());
+        });
+        am.addAnAnimation("InventoryShowerAnimation", da);
+        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
+        da2.setEndingAction(this::finishAnimation);
+        da2.setRunningAction(() -> {
+            setDuringAnimationForegroundOpacity(da2.getActual());
+        });
+        da.setEndingAction(() -> {
+            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
+        });
+    }
+
+    @Override
+    public void handleInput() {
+        for (int i = Input.Keys.NUM_1; i < Input.Keys.NUM_9; i++) {
+            if (gim.isKey(i, KeyStatus.Pressed)) {
+                int j = i - Input.Keys.NUM_1;
+                if (j >= inventoryItemList.size())
+                    return;
+                if (selectedItem != null)
+                    selectedItem.unselect();
+                selectedItem = inventoryItemList.get(j);
+                selectedItem.select();
+            }
+        }
+    }
+
+    @Override
+    public void dispose() {
+        sr.dispose();
     }
 
     /**
@@ -235,27 +284,5 @@ public class InventoryShower {
      */
     public void setDuringAnimationHeight(float duringAnimationHeight) {
         this.duringAnimationHeight = duringAnimationHeight;
-    }
-
-    /**
-     * Lance les animations de la partie "Inventaire" du HUD.
-     */
-    public void animateInventoryShower() {
-        beginAnimation();
-        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-        da.setRunningAction(() -> {
-            setDuringAnimationWidth((int)((double)getWidth() * da.getActual()));
-            setDuringAnimationHeight((int)((double)getHeight() * da.getActual()));
-            setDuringAnimationBackgroundOpacity(da.getActual());
-        });
-        am.addAnAnimation("InventoryShowerAnimation", da);
-        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
-        da2.setEndingAction(() -> finishAnimation());
-        da2.setRunningAction(() -> {
-            setDuringAnimationForegroundOpacity(da2.getActual());
-        });
-        da.setEndingAction(() -> {
-            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
-        });
     }
 }

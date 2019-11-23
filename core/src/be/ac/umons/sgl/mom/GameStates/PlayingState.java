@@ -144,7 +144,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
-        inventoryShower = new InventoryShower(gs, am, player);
+        inventoryShower = new InventoryShower(gim, gs, am, player);
         playerCharacteristics = new People("Test", Type.athletic);
 
 
@@ -282,6 +282,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
             gsm.setState(InGameMenuState.class);
         }
+        inventoryShower.handleInput();
     }
 
     @Override
