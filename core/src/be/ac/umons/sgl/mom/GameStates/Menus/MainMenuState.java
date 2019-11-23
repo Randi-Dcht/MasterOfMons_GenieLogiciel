@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
+import be.ac.umons.sgl.mom.GameStates.LoadState;
 import be.ac.umons.sgl.mom.GameStates.LoadingState;
 import be.ac.umons.sgl.mom.GameStates.SettingsState;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -32,7 +33,8 @@ public class MainMenuState extends MenuState {
         topMargin = .1;
         betweenItemMargin = .01;
         menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
-                new MenuItem("Play"),
+                new MenuItem("Start a new game"),
+                new MenuItem("Load"),
                 new MenuItem("Settings"),
                 new MenuItem("Quit")};
     }
@@ -46,9 +48,12 @@ public class MainMenuState extends MenuState {
                 gsm.setState(LoadingState.class, true);
                 break;
             case 2:
-                gsm.setState(SettingsState.class);
+                gsm.setState(LoadState.class);
                 break;
             case 3:
+                gsm.setState(SettingsState.class);
+                break;
+            case 4:
                 Gdx.app.exit();
                 break;
             default:

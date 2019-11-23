@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -43,6 +44,11 @@ public class LoadState extends GameState {
     private List<Button> buttonList;
 
     /**
+     * La couleur de fond.
+     */
+    private Color backgroundColor;
+
+    /**
      * Crée un nouvel état de chargement de sauvegarde.
      * @param gsm Le GameStateManager du jeu.
      * @param gim Le GameInputManager du jeu.
@@ -57,6 +63,7 @@ public class LoadState extends GameState {
         super.init();
         sr = new ShapeRenderer();
         sb = new SpriteBatch();
+        backgroundColor = new Color(0, 0, 0, .8f);
         buttonList = new ArrayList<>();
         File saveDir = new File(SAVE_PATH);
         if (! saveDir.exists())
@@ -79,7 +86,7 @@ public class LoadState extends GameState {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(21f / 255, 21f / 255, 21f / 255, .5f);
+        sr.setColor(backgroundColor);
         sr.rect(0, 0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
         sr.end();
         sb.begin();
