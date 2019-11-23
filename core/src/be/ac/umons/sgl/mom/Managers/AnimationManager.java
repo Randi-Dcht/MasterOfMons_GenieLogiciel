@@ -2,9 +2,7 @@ package be.ac.umons.sgl.mom.Managers;
 
 import be.ac.umons.sgl.mom.Animations.Animation;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Gère toutes les animations du jeu et les mets à jour.
@@ -46,8 +44,9 @@ public class AnimationManager {
      * @param dt Le temps entre l'appel précédent de cette fonction et cet appel-ci.
      */
     public void update(float dt) {
-        for (Animation a : animations.values())
-            a.update(dt);
+        Animation[] animationArray = animations.values().toArray(new Animation[0]);
+        for (Animation animation : animationArray)
+            animation.update(dt);
 
         for (Iterator<String> it = animations.keySet().iterator(); it.hasNext();) { // Done in 2 times because of ConcurrentModificationException
             String key = it.next();

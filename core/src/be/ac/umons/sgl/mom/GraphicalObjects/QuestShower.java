@@ -134,15 +134,23 @@ public class QuestShower {
      * @param q La quête principale.
      */
     public void setQuest(Quest q) {
-        questToShow = q;
-        questProgressCircleMap.put(q, new QuestProgressCircle(gs, q));
-        questShowerWidth = getMaximumQuestNameWidth(q, 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN) + 2 * TEXT_AND_RECTANGLE_MARGIN;
-        questShowerHeight = getMaximumQuestHeight(q) + TEXT_AND_RECTANGLE_MARGIN * 2;
-        for (Quest q2 : q.getSubQuests()) {
-            questProgressCircleMap.put(q2, new QuestProgressCircle(gs, q2));
+        if (questToShow == null) {
+            questToShow = q;
+            questProgressCircleMap.put(q, new QuestProgressCircle(gs, q));
+            questShowerWidth = getMaximumQuestNameWidth(q, 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN) + 2 * TEXT_AND_RECTANGLE_MARGIN;
+            questShowerHeight = getMaximumQuestHeight(q) + TEXT_AND_RECTANGLE_MARGIN * 2;
+            for (Quest q2 : q.getSubQuests()) {
+                questProgressCircleMap.put(q2, new QuestProgressCircle(gs, q2));
+            }
+            animateQuestRectangle(0, 1, 750);
+            animateQuestProgressCircle(0,1,1500);
+        } else {
+            animateQuestRectangle(1, 0, 1500, () -> {
+                questToShow = null;
+                setQuest(q);
+            });
+            animateQuestProgressCircle(1,0,1500);
         }
-        animateQuestRectangle();
-        animateQuestProgressCircle();
     }
 
 
@@ -180,6 +188,61 @@ public class QuestShower {
             drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
         }
     }
+
+    /**
+     * Anime tout les cercles de progression de quête.
+     * @param from Le pourcentage de début.
+     * @param to Le pourcentage de fin.
+     * @param time Le temps pour aller de <code>from</code> à <code>to</code>.
+     */
+    public void animateQuestProgressCircle(double from, double to, int time) {
+        for (QuestProgressCircle qpc : questProgressCircleMap.values()) {
+            qpc.beginAnimation();
+            DoubleAnimation da = new DoubleAnimation(from, to, time);
+            da.setRunningAction(() -> {
+                qpc.setDuringAnimationProgressPercent(da.getActual());
+                qpc.setDuringAnimationOpacity((float)da.getActual());
+            });
+            am.addAnAnimation("QuestCircleRectangleAnimation" + qpc.toString(), da); // Evite de remplacer les animations :)
+            da.setEndingAction(qpc::finishAnimation);
+        }
+    }
+
+    /**
+     * Lance les animations de la partie "Quête" du HUD.
+     * @param from Le pourcentage de début.
+     * @param to Le pourcentage de fin.
+     * @param time Le temps pour aller de <code>from</code> à <code>to</code>.
+     * @return L'animation générée
+     */
+    public DoubleAnimation animateQuestRectangle(double from, double to, int time) {
+        beginAnimation();
+        DoubleAnimation da = new DoubleAnimation(from, to, time);
+        da.setRunningAction(() -> {
+            setDuringAnimationQuestShowerWidth((int)((double)getWidth() * da.getActual()));
+            setDuringAnimationQuestShowerHeight((int)((double)getHeight() * da.getActual()));
+            setDuringAnimationForegroundOpacity(da.getActual());
+        });
+        am.addAnAnimation("QuestRectangleAnimation", da);
+        da.setEndingAction(this::finishAnimation);
+        return da;
+    }
+    /**
+     * Lance les animations de la partie "Quête" du HUD.
+     * @param from Le pourcentage de début.
+     * @param to Le pourcentage de fin.
+     * @param time Le temps pour aller de <code>from</code> à <code>to</code>.
+     * @param toDoAfter L'action à faire une fois l'animation terminée.
+     */
+    public void animateQuestRectangle(double from, double to, int time, Runnable toDoAfter) {
+        DoubleAnimation da = animateQuestRectangle(from, to, time);
+        Runnable run = da.getEndingAction();
+        da.setEndingAction(() ->  {
+            run.run();
+            toDoAfter.run();
+        });
+    }
+
 
     /**
      * Retourne la taille hozizontale maximale qui sera utilisée par l'affichage de la quête <code>mainQuest</code> et de ces sous-quêtes.
@@ -290,36 +353,5 @@ public class QuestShower {
      */
     public void finishAnimation() {
         isBeingAnimated = false;
-    }
-
-    /**
-     * Anime tout les cercles de progression de quête.
-     */
-    public void animateQuestProgressCircle() {
-        for (QuestProgressCircle qpc : questProgressCircleMap.values()) {
-            qpc.beginAnimation();
-            DoubleAnimation da = new DoubleAnimation(0, 1, 1500);
-            da.setRunningAction(() -> {
-                qpc.setDuringAnimationProgressPercent(da.getActual());
-                qpc.setDuringAnimationOpacity((float)da.getActual());
-            });
-            am.addAnAnimation("QuestCircleRectangleAnimation" + qpc.toString(), da);
-            da.setEndingAction(qpc::finishAnimation);
-        }
-    }
-
-    /**
-     * Lance les animations de la partie "Quête" du HUD.
-     */
-    public void animateQuestRectangle() {
-        beginAnimation();
-        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-        da.setRunningAction(() -> {
-            setDuringAnimationQuestShowerWidth((int)((double)getWidth() * da.getActual()));
-            setDuringAnimationQuestShowerHeight((int)((double)getHeight() * da.getActual()));
-            setDuringAnimationForegroundOpacity(da.getActual());
-        });
-        am.addAnAnimation("QuestRectangleAnimation", da);
-        da.setEndingAction(this::finishAnimation);
     }
 }
