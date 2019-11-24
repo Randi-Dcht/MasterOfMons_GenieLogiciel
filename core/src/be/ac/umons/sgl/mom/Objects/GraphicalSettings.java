@@ -128,7 +128,7 @@ public class GraphicalSettings {
     /**
      * Initialise les fichiers que le gestionnaire de ressources devra charger durant l'écran de chargement.
      */
-    protected void prepareAssetManagerForLoading() {
+    private void prepareAssetManagerForLoading() {
         for (File folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory))) {
             for (File f : Objects.requireNonNull(folder.listFiles(File::isFile))) {
                 assetManager.load(f.getPath(), Texture.class);

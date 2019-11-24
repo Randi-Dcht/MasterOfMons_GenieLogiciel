@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -289,5 +288,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void dispose() {
         gmm.dispose();
         sb.dispose();
+        questShower.dispose();
+        inventoryShower.dispose();
+        lifeBar.dispose();
+        energyBar.dispose();
+        expBar.dispose();
     }
 }

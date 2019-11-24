@@ -65,7 +65,7 @@ public class GameStateManager {
             return;
         }
         if (popPreviousOne)
-            gameStateStack.pop();
+            gameStateStack.pop().dispose();
         gameStateStack.push(g);
     }
 

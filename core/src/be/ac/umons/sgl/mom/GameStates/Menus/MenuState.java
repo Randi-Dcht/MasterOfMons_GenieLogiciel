@@ -133,8 +133,9 @@ public abstract class MenuState extends GameState {
     /***
      * Exécute l'action relié à un des éléments du menu en fonction de celui selectionné par l'utilisateur.
      */
-    protected void executeSelectedItem() {
-        menuItems[selectedItem].toDoIfExecuted.run();
+    private void executeSelectedItem() {
+        if (menuItems[selectedItem].toDoIfExecuted != null)
+            menuItems[selectedItem].toDoIfExecuted.run();
     }
 
     @Override
