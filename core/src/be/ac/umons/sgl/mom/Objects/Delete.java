@@ -17,12 +17,10 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 public class Delete extends TimerTask
 {
   final People p;
-  final Saving sv;
 
   public Delete(People a)
   {
     p = a;
-    sv = new Saving(a);
   }
   public void run()
   {
@@ -32,7 +30,7 @@ public class Delete extends TimerTask
     /*supprimer =>*/{
     /*supprimer =>*/  q.addProgress(0.05);
     /*supprimer =>*/}
-    /*supprimer =>*/sv.Signal();
+    /*supprimer =>*/
     /*supprimer =>*/
     /*supprimer =>*/
     /*supprimer =>*/

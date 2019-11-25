@@ -15,20 +15,36 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class Saving
 {
+  private String nameSave;
   private String oldSave;
   private People people;
-  private DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+  private DateFormat format = new SimpleDateFormat("dd-MM-yy-HH-mm-ss");//TODO : modifier en fct
+  final static String prefixe = ""; //TODO : à modifier
 
-  public Saving(People people)
+  public Saving(People people, String nameSave)
   {
     this.people = people;
+    this.nameSave = nameSave;
   }
 
-  public void Signal()
+  public Saving(String oldSave)
+  {
+    this.oldSave = oldSave;
+    nameSave = cleanName(oldSave,0);
+    playOldParty(oldSave);
+  }
+
+  private String cleanName(String name,int who)
+  {
+    String[] list = name.split("_");
+    return list[who];
+  }
+
+  public void Signal() //TODO : appeler toutes les 10 minutes ou fin
   {
     Date date = new Date();
-    System.out.println(date);
-    //newSave(people,oldSave+"_"+date);
+    oldSave =  nameSave+"_"+format.format(date);
+    newSave(people,oldSave);
   }
   
   private void newSave(People people, String fichier)
@@ -36,7 +52,7 @@ public class Saving
     try
     {
       ObjectOutputStream sortie;
-      sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File("save.save"))));
+      sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe + fichier+".save"))));
       sortie.writeObject(people);
       sortie.close();
     }
@@ -48,8 +64,8 @@ public class Saving
     try
     {
       ObjectInputStream entree;
-      entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("save.save"))));
-      People p = (People) entree.readObject();
+      entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + fichier+".save"))));
+      people = (People) entree.readObject();
     }
     catch(ClassNotFoundException  e){}
     catch (FileNotFoundException e){}
