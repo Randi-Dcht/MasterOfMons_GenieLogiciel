@@ -1,5 +1,7 @@
 package be.ac.umons.sgl.mom.Objects;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
@@ -14,8 +16,22 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 public class Saving
 {
   private String oldSave;
+  private People people;
+  private DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+  public Saving(People people)
+  {
+    this.people = people;
+  }
+
+  public void Signal()
+  {
+    Date date = new Date();
+    System.out.println(date);
+    //newSave(people,oldSave+"_"+date);
+  }
   
-  public void newSave(People people, String fichier)
+  private void newSave(People people, String fichier)
   {
     try
     {
@@ -27,7 +43,7 @@ public class Saving
     catch(IOException e){}
   }
 
-  public void playOldParty(String fichier)
+  private void playOldParty(String fichier)
   {
     try
     {
