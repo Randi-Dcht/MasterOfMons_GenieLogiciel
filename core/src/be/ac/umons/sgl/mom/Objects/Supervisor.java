@@ -32,6 +32,10 @@ public class Supervisor
   private static ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
 /*Interface graphique pour cette partie*/
   private static QuestShower questShower;
+  /*chaque 10 minutes*/
+  private static int minute = 600;
+  /*sauveguarde du jeux*/
+  private static Saving save;
 
   public static People getPeople()
   {
@@ -55,13 +59,14 @@ public class Supervisor
    * @param type qui est le type de personnage (fort,maigre,...)
    * @param graphical qui est l'affiche graphique du jeu
    * */
-  public static void newParty(String namePlayer, Type type, QuestShower graphical)
+  public static void newParty(String namePlayer, Type type, QuestShower graphical,GraphicalSettings gs)
   {
     questShower = graphical;
     people = new People(namePlayer,type);
     MasterQuest mQ = new Bachelor1(people,null);
     people.newQuest(mQ);
     questShower.setQuest(mQ);
+    save = new Saving(people,namePlayer,gs);
   }
 
   /**
@@ -84,21 +89,20 @@ public class Supervisor
   /**
    * Cette méthode permet d'appeler régulièrement la méthode énergie du joueur
    * */
-  public static void energyPeople()
+  public static void callMethod() /*doit être appeler chaque SECONDE !!!!*/
   {
     if(people != null)
-        people.energy();
-//        /*supprimer =>*/System.out.println("Energie:" + p.getEnergy());
-  }
+        people.energy(); //pour le joueur
 
-  /**
-   * Cette méthode permet d'appeler régulièrement la méthode qui gère la vie de l'objet
-   * */
-  public static void lifeObject()
-  {
     if(objet != null)//pour chaques objets
     {
       for (Items o : objet){o.make();}
+    }
+    minute--;
+    if(minute <= 0)
+    {
+      save.Signal();
+      minute = 600;
     }
   }
 

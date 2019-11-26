@@ -202,8 +202,7 @@ public class People implements Serializable
 
 /**
 *Cette méthode doit être appeler lorque le personnage bouge sur la maps
-*@param x qui est son déplacement sur l'axe x
-*@param y qui est son déplacement sur l'axe y
+*@param Couple qui est l'absice et ordonnée du personnage
 */
 	public void move(Couple couple)
 	{

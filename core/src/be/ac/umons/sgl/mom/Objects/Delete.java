@@ -24,11 +24,11 @@ public class Delete extends TimerTask
   }
   public void run()
   {
-    Supervisor.energyPeople();
+    Supervisor.callMethod();
     /*supprimer =>*/ //people[0].getQuest().eventMaps();
     /*supprimer =>*/for(Quest q : p.getQuest().getSubQuests())
     /*supprimer =>*/{
-    /*supprimer =>*/  q.addProgress(0.05);
+    /*supprimer =>*/  q.addProgress(0.9);
     /*supprimer =>*/}
     /*supprimer =>*/
     /*supprimer =>*/

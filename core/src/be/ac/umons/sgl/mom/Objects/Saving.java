@@ -21,6 +21,7 @@ public class Saving
     private String nameSave;
     private String oldSave;
     private People people;
+    private GraphicalSettings graSet;
     private DateFormat format = new SimpleDateFormat("dd/MM/yy_HH:mm:ss");//TODO : modifier en fct
     final static String prefixe = ""; //TODO : à modifier
 
@@ -28,11 +29,13 @@ public class Saving
      * Permet de créer une instance de sauveguarde
      * @param nameSave qui est le nom de la partie
      * @param people qui est le joueur à sauveguarder
+     * @param gs qui est les paramètres grapgiques à retenir
      * */
-    public Saving(People people, String nameSave)
+    public Saving(People people, String nameSave,GraphicalSettings gs)
     {
         this.people = people;
         this.nameSave = nameSave;
+        graSet = gs;
     }
 
     /**
@@ -64,7 +67,7 @@ public class Saving
     {
         Date date = new Date();
         oldSave =  nameSave+"_"+format.format(date);
-        newSave(people,oldSave);
+        /*newSave(people,graSet,oldSave);*/ System.out.println("False save automatic : "+ oldSave );
     }
 
     /**
@@ -72,12 +75,12 @@ public class Saving
      * @param fichier qui est le nom de fichier complet
      * @param people qui est l'objet a sauveguarder
      * */
-    private void newSave(People people, String fichier)
+    private void newSave(People people,GraphicalSettings gs, String fichier)
     {
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe + fichier+".save"))));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe + fichier+".mom"))));
             sortie.writeObject(people);
             sortie.close();
         }
@@ -93,8 +96,9 @@ public class Saving
         try
         {
             ObjectInputStream entree;
-            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + fichier+".save"))));
+            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + fichier+".mom"))));
             people = (People) entree.readObject();
+            graSet = (GraphicalSettings) entree.readObject();
         }
         catch(ClassNotFoundException  e){}
         catch (FileNotFoundException e){}
