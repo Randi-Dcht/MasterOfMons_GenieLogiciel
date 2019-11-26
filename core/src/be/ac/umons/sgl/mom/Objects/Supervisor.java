@@ -48,6 +48,13 @@ public class Supervisor
     objet.addAll(Arrays.asList(lst));
   }
 
+  /**
+   * Permet de créer une nouvelle partie du jeu.
+   * Elle permet d'instancier les classes nécessaire
+   * @param namePlayer qui est le pseudo du joueur
+   * @param type qui est le type de personnage (fort,maigre,...)
+   * @param graphical qui est l'affiche graphique du jeu
+   * */
   public static void newParty(String namePlayer, Type type, QuestShower graphical)
   {
     questShower = graphical;
@@ -57,15 +64,26 @@ public class Supervisor
     questShower.setQuest(mQ);
   }
 
+  /**
+   * Permet de dire que le joueur change de quêtes et appelle l'interface graphique
+   * */
   public static void changedQuest()
   {
-    if(questShower != null)
+    if(questShower != null) //permet lors des tests de ne pas intancier de classes graphique.
       Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
   }
 
+  /**
+   * Cette méthode permet de gérer l'attque entre un joueur et un PNj dans le jeu de base
+   * @param attaquant qui est le joeur humain
+   * @param attaque qui est le PNJ
+   * */
   public static void attack(People attaquant, PNJ attaque)
   {}
 
+  /**
+   * Cette méthode permet d'appeler régulièrement la méthode énergie du joueur
+   * */
   public static void energyPeople()
   {
     if(people != null)
@@ -73,9 +91,12 @@ public class Supervisor
 //        /*supprimer =>*/System.out.println("Energie:" + p.getEnergy());
   }
 
+  /**
+   * Cette méthode permet d'appeler régulièrement la méthode qui gère la vie de l'objet
+   * */
   public static void lifeObject()
   {
-    if(objet != null)
+    if(objet != null)//pour chaques objets
     {
       for (Items o : objet){o.make();}
     }

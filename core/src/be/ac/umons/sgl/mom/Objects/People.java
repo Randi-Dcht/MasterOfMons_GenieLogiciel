@@ -12,8 +12,6 @@ import java.io.Serializable;
 
 /**
 *Cette classe permet de définir le perso du joeur humain
-*@param name : le nom du personnage
-*@param type de personnage
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 public class People implements Serializable
@@ -38,7 +36,11 @@ public class People implements Serializable
 	private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
 	private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
-
+/**
+ * Permet d'instancier un personnage gérer par le joueur
+ * @param name qui est le nom du joueur
+ * @param type qui est la caractéristique du joueur
+ * */
 	public People(String name, Type type)
 	{
 		this.name     = name;

@@ -13,6 +13,9 @@ import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
+/**
+ * Cette classe permet de créer une sauveguarde automatique du jeu ou à la fin de la partie
+ * */
 public class Saving
 {
     private String nameSave;
@@ -21,12 +24,21 @@ public class Saving
     private DateFormat format = new SimpleDateFormat("dd/MM/yy_HH:mm:ss");//TODO : modifier en fct
     final static String prefixe = ""; //TODO : à modifier
 
+    /**
+     * Permet de créer une instance de sauveguarde
+     * @param nameSave qui est le nom de la partie
+     * @param people qui est le joueur à sauveguarder
+     * */
     public Saving(People people, String nameSave)
     {
         this.people = people;
         this.nameSave = nameSave;
     }
 
+    /**
+     * Permet d'appler quand on veut jouer une ancienne partie
+     * @param oldSave qui est le nom complet de la partie (avec date)
+     * */
     public Saving(String oldSave)
     {
         this.oldSave = oldSave;
@@ -34,12 +46,20 @@ public class Saving
         playOldParty(oldSave);
     }
 
+    /**
+     * Cette méthode permet de nettoyer le nom de la partie
+     * @param name qui est le nom a nettoyer
+     * @param who qui est la place du mot à récupérer
+     * @return mot(string) qui est celui voulu*/
     private String cleanName(String name,int who)
     {
         String[] list = name.split("_");
         return list[who];
     }
 
+    /**
+     * Cette méthode doit être appeler régulièrement pour créer une sauveguarde
+     * */
     public void Signal() //TODO : appeler toutes les 10 minutes ou fin
     {
         Date date = new Date();
@@ -47,6 +67,11 @@ public class Saving
         newSave(people,oldSave);
     }
 
+    /**
+     * Cette méthode permet de sauveguarder dans un fichier (.save) les objets utils
+     * @param fichier qui est le nom de fichier complet
+     * @param people qui est l'objet a sauveguarder
+     * */
     private void newSave(People people, String fichier)
     {
         try
@@ -59,6 +84,10 @@ public class Saving
         catch(IOException e){}
     }
 
+    /**
+     * Cette méthode permet de reprendre les objets sauvguarder dans un fichier et démarer une nouvelle partie
+     * @param fichier qui est le nom de fichier complet
+     * */
     private void playOldParty(String fichier)
     {
         try
