@@ -2,7 +2,7 @@ package be.ac.umons.sgl.mom.Objects;
 
 public class Energizing extends Items
 {
-  private int obsolete = 31536000;
+  private double obsolete = 31536000;
 
   public Energizing(double x,double y)
   {
@@ -15,10 +15,10 @@ public class Energizing extends Items
     visibly();
   }
 
-  public void make()
+  public void make(double time)
   {
-    obsolete--;
-    if(obsolete == 0)
+    obsolete = obsolete - time;
+    if(obsolete <= 0)
       visibly();
   }
 

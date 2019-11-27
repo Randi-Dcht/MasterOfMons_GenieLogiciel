@@ -172,7 +172,7 @@ public class People implements Serializable
 *Permet de modifier l'énergie du personnage
 *@param many qui est l'énergie perdu ou gagné
 */
-	public void energy(double many)
+	public void addEnergy(double many)
 	{
 		if(this.energy + many >= 0 || this.energy + many <= 100)
 		  this.energy = this.energy + many;
@@ -181,9 +181,9 @@ public class People implements Serializable
 /**
 *Permet de modifier l'énergie du personnage chaque seconde
 */
-	public void energy()
+	public void energy(double time)
 	{
-		this.energy = energy + this.state.getEnergy();
+		this.energy = energy + (this.state.getEnergy()*time);
 	}
 
 	public double getEnergy()

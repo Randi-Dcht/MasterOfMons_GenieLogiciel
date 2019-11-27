@@ -33,7 +33,7 @@ public class Supervisor
 /*Interface graphique pour cette partie*/
   private static QuestShower questShower;
   /*chaque 10 minutes*/
-  private static int minute = 600;
+  private static double minute = 600;
   /*sauveguarde du jeux*/
   private static Saving save;
 
@@ -75,7 +75,10 @@ public class Supervisor
   public static void changedQuest()
   {
     if(questShower != null) //permet lors des tests de ne pas intancier de classes graphique.
+    {
       Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
+      save.Signal();
+    }
   }
 
   /**
@@ -88,18 +91,18 @@ public class Supervisor
 
   /**
    * Cette méthode permet d'appeler régulièrement la méthode énergie du joueur
-   * */
-  public static void callMethod() /*doit être appeler chaque SECONDE !!!!*/
+   * */ //TODO: guillaume appeler cela
+  public static void callMethod(double dt)
   {
-    if(people != null)
-        people.energy(); //pour le joueur
+    if(people != null) /*cette méthode permet diminuer l'énergie du joueur*/
+        people.energy(dt); //pour le joueur
 
-    if(objet != null)//pour chaques objets
+    if(objet != null) /*cette méthode permet de diminuer la vie de l'objet*/
     {
-      for (Items o : objet){o.make();}
+      for (Items o : objet){o.make(dt);}//pour chaques objets
     }
-    minute--;
-    if(minute <= 0)
+    minute = minute - dt;
+    if(minute <= 0) /*permet de faire une sauvguarde de temps en temps automatiquement*/
     {
       save.Signal();
       minute = 600;

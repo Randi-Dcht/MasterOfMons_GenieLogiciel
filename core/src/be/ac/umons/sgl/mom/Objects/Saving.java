@@ -31,7 +31,7 @@ public class Saving
      * @param people qui est le joueur à sauveguarder
      * @param gs qui est les paramètres grapgiques à retenir
      * */
-    public Saving(People people, String nameSave,GraphicalSettings gs)
+    public Saving(People people, String nameSave,GraphicalSettings gs) //TODO: ajouter les maps en safe !
     {
         this.people = people;
         this.nameSave = nameSave;
@@ -63,7 +63,7 @@ public class Saving
     /**
      * Cette méthode doit être appeler régulièrement pour créer une sauveguarde
      * */
-    public void Signal() //TODO : appeler toutes les 10 minutes ou fin
+    public void Signal()
     {
         Date date = new Date();
         oldSave =  nameSave+"_"+format.format(date);

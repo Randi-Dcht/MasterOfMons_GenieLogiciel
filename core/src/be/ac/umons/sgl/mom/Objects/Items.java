@@ -33,7 +33,7 @@ public abstract class Items implements Serializable
   }
 
   public abstract void used(People pp);
-  public abstract void make();
+  public abstract void make(double time);
   public abstract double getObsolete();
 
 }
