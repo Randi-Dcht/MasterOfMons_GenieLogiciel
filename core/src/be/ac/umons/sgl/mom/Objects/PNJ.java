@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import java.io.Serializable;
@@ -41,6 +38,6 @@ public abstract class PNJ implements Serializable
     this.strength = strength;
   }
 
-  public abstract void meet(People people);
+  public abstract Actions meet(People people);
 
 }

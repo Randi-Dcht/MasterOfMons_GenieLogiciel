@@ -1,10 +1,7 @@
 package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
 
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Quest;
@@ -55,6 +52,11 @@ public class People implements Serializable
 */
 	public void regeneration()
 	{
+	}
+
+	public Actions meet(PNJ other)
+	{
+		return null;
 	}
 
 	public double getLife()
@@ -202,7 +204,7 @@ public class People implements Serializable
 
 /**
 *Cette méthode doit être appeler lorque le personnage bouge sur la maps
-*@param Couple qui est l'absice et ordonnée du personnage
+*@param couple qui est l'absice et ordonnée du personnage
 */
 	public void move(Couple couple)
 	{
