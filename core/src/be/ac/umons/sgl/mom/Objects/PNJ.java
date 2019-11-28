@@ -10,7 +10,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *Cette classe permet de définir un personnage qui est piloté par l'ordianteur
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public abstract class PNJ implements Serializable
+public abstract class PNJ implements Serializable,Attack
 {
   final String name;
   private double x;
@@ -40,4 +40,18 @@ public abstract class PNJ implements Serializable
 
   public abstract Actions meet(People people);
 
+  @Override
+  public double dodge() {
+    return 0;
+  }
+
+  @Override
+  public double recovery() {
+    return 0;
+  }
+
+  @Override
+  public void attack() {
+
+  }
 }

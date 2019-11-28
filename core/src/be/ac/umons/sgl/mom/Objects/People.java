@@ -11,7 +11,7 @@ import java.io.Serializable;
 *Cette classe permet de définir le perso du joeur humain
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public class People implements Serializable
+public class People implements Serializable,Attack
 {
 /*savoir où est le personnage sur la carte*/
 	private double x;
@@ -210,5 +210,28 @@ public class People implements Serializable
 	{
 		this.x = couple.x;
 		this.y = couple.y;
+	}
+
+	/**
+	*Cette méthode permet de dire le temps entre chaque attaque
+	 */
+	@Override
+	public double recovery() //TODO : continuer à implémenter
+	{
+		return 0;
+	}
+
+	@Override
+	public void attack() {
+
+	}
+
+	/**
+	 * Cette méthode permet de dire la probabilité d'esquiver l'attaque
+	 */
+	@Override
+	public double dodge() //TODO : continuer à implementer
+	{
+		return 0;
 	}
 }
