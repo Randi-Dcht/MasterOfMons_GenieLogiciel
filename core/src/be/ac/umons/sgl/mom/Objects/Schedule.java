@@ -46,8 +46,12 @@ public class Schedule
     }
 
     public boolean sameDate()
-    {}
+    {
+        return false;
+    }
 
     public boolean sameTime()
-    {}
+    {
+        return false;
+    }
 }

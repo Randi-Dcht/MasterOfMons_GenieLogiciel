@@ -1,11 +1,9 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
 import java.util.*;
+
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Objects.*;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;
@@ -71,7 +69,7 @@ public abstract class UnderQuest implements Quest,Serializable
     return finish;
   }
 
-  public abstract void evenActivity();
+  public abstract void evenActivity(Actions action);
   public abstract Quest[] getSubQuests();
   public String getName()
   {
