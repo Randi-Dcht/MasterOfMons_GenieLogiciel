@@ -164,7 +164,7 @@ public class InventoryShower extends Control {
 
     @Override
     public void handleInput() {
-        for (int i = Input.Keys.NUM_1; i < Input.Keys.NUM_9; i++) {
+        for (int i = Input.Keys.NUM_1; i <= Input.Keys.NUM_9; i++) {
             if (gim.isKey(i, KeyStatus.Pressed)) {
                 int j = i - Input.Keys.NUM_1;
                 if (j >= inventoryItemList.size())

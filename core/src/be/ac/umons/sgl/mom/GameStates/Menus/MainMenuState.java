@@ -3,16 +3,22 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 import be.ac.umons.sgl.mom.GameStates.LoadState;
 import be.ac.umons.sgl.mom.GameStates.LoadingState;
 import be.ac.umons.sgl.mom.GameStates.SettingsState;
+import be.ac.umons.sgl.mom.GraphicalObjects.ExtensionsSelector;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
+
+import java.awt.*;
 
 /***
  * Le menu qui s'affiche en premier lors du lancement du jeu. Il permettra, en autre, de lancer le jeu (via une sauvegarde ou non), d'activer/désactiver une extension, ainsi que de quitter le jeu.
  * @author Guillaume Cardoen
  */
 public class MainMenuState extends MenuState {
+
+    ExtensionsSelector extSel;
 
     /***
      * Initialise un nouveau menu.
@@ -40,5 +46,12 @@ public class MainMenuState extends MenuState {
                 new MenuItem("Load", () -> gsm.setState(LoadState.class)),
                 new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
                 new MenuItem("Quit", () -> Gdx.app.exit())};
+        extSel = new ExtensionsSelector(gim, gs);
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+        extSel.draw(sb, new Point(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT - (int)topMargin));
     }
 }
