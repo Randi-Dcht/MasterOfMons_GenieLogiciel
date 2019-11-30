@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import java.io.Serializable;
@@ -13,7 +10,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 *Cette classe permet de définir un personnage qui est piloté par l'ordianteur
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public abstract class PNJ implements Serializable
+public abstract class PNJ implements Serializable,Attack
 {
   final String name;
   private double x;
@@ -41,6 +38,20 @@ public abstract class PNJ implements Serializable
     this.strength = strength;
   }
 
-  public abstract void meet(People people);
+  public abstract Actions meet(People people);
 
+  @Override
+  public double dodge() {
+    return 0;
+  }
+
+  @Override
+  public double recovery() {
+    return 0;
+  }
+
+  @Override
+  public void attack() {
+
+  }
 }

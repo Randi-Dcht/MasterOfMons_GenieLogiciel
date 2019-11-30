@@ -17,6 +17,7 @@ public abstract class Items implements Serializable
 {
   protected double positionX;
   protected double positionY;
+  protected Place place; //TODO : ajout lors de la safe
   protected boolean visible = true;
   final String name;
 
@@ -33,7 +34,7 @@ public abstract class Items implements Serializable
   }
 
   public abstract void used(People pp);
-  public abstract void make();
+  public abstract void make(double time);
   public abstract double getObsolete();
 
 }

@@ -1,10 +1,7 @@
 package be.ac.umons.sgl.mom.Objects;
 import java.util.*;
 
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Quest;
@@ -12,11 +9,9 @@ import java.io.Serializable;
 
 /**
 *Cette classe permet de définir le perso du joeur humain
-*@param name : le nom du personnage
-*@param type de personnage
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public class People implements Serializable
+public class People implements Serializable,Attack
 {
 /*savoir où est le personnage sur la carte*/
 	private double x;
@@ -38,7 +33,11 @@ public class People implements Serializable
 	private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
 	private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
-
+/**
+ * Permet d'instancier un personnage gérer par le joueur
+ * @param name qui est le nom du joueur
+ * @param type qui est la caractéristique du joueur
+ * */
 	public People(String name, Type type)
 	{
 		this.name     = name;
@@ -53,6 +52,11 @@ public class People implements Serializable
 */
 	public void regeneration()
 	{
+	}
+
+	public Actions meet(PNJ other)
+	{
+		return null;
 	}
 
 	public double getLife()
@@ -170,7 +174,7 @@ public class People implements Serializable
 *Permet de modifier l'énergie du personnage
 *@param many qui est l'énergie perdu ou gagné
 */
-	public void energy(double many)
+	public void addEnergy(double many)
 	{
 		if(this.energy + many >= 0 || this.energy + many <= 100)
 		  this.energy = this.energy + many;
@@ -179,9 +183,9 @@ public class People implements Serializable
 /**
 *Permet de modifier l'énergie du personnage chaque seconde
 */
-	public void energy()
+	public void energy(double time)
 	{
-		this.energy = energy + this.state.getEnergy();
+		this.energy = energy + (this.state.getEnergy()*time);
 	}
 
 	public double getEnergy()
@@ -200,12 +204,34 @@ public class People implements Serializable
 
 /**
 *Cette méthode doit être appeler lorque le personnage bouge sur la maps
-*@param x qui est son déplacement sur l'axe x
-*@param y qui est son déplacement sur l'axe y
+*@param couple qui est l'absice et ordonnée du personnage
 */
 	public void move(Couple couple)
 	{
 		this.x = couple.x;
 		this.y = couple.y;
+	}
+
+	/**
+	*Cette méthode permet de dire le temps entre chaque attaque
+	 */
+	@Override
+	public double recovery() //TODO : continuer à implémenter
+	{
+		return 0;
+	}
+
+	@Override
+	public void attack() {
+
+	}
+
+	/**
+	 * Cette méthode permet de dire la probabilité d'esquiver l'attaque
+	 */
+	@Override
+	public double dodge() //TODO : continuer à implementer
+	{
+		return 0;
 	}
 }

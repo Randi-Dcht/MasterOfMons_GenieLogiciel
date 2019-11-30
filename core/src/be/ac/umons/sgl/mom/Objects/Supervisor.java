@@ -32,6 +32,10 @@ public class Supervisor
   private static ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
 /*Interface graphique pour cette partie*/
   private static QuestShower questShower;
+  /*chaque 10 minutes*/
+  private static double minute = 600;
+  /*sauveguarde du jeux*/
+  private static Saving save;
 
   public static People getPeople()
   {
@@ -48,36 +52,60 @@ public class Supervisor
     objet.addAll(Arrays.asList(lst));
   }
 
-  public static void newParty(String namePlayer, Type type, QuestShower graphical)
+  /**
+   * Permet de créer une nouvelle partie du jeu.
+   * Elle permet d'instancier les classes nécessaire
+   * @param namePlayer qui est le pseudo du joueur
+   * @param type qui est le type de personnage (fort,maigre,...)
+   * @param graphical qui est l'affiche graphique du jeu
+   * */
+  public static void newParty(String namePlayer, Type type, QuestShower graphical,GraphicalSettings gs)
   {
     questShower = graphical;
     people = new People(namePlayer,type);
     MasterQuest mQ = new Bachelor1(people,null);
     people.newQuest(mQ);
     questShower.setQuest(mQ);
+    save = new Saving(people,namePlayer,gs);
   }
 
+  /**
+   * Permet de dire que le joueur change de quêtes et appelle l'interface graphique
+   * */
   public static void changedQuest()
   {
-    if(questShower != null)
+    if(questShower != null) //permet lors des tests de ne pas intancier de classes graphique.
+    {
       Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
+      save.Signal();
+    }
   }
 
-  public static void attack(People attaquant, PNJ attaque)
+  /**
+   * Cette méthode permet de gérer l'attque entre un joueur et un PNj dans le jeu de base
+   * @param attaquant qui est le joeur humain
+   * @param attaque qui est le PNJ
+   * */
+  public static void attack(Attack attacker , Attack victim)
   {}
 
-  public static void energyPeople()
+  /**
+   * Cette méthode permet d'appeler régulièrement la méthode énergie du joueur
+   * */ //TODO: guillaume appeler cela
+  public static void callMethod(double dt)
   {
-    if(people != null)
-        people.energy();
-//        /*supprimer =>*/System.out.println("Energie:" + p.getEnergy());
-  }
+    if(people != null) /*cette méthode permet diminuer l'énergie du joueur*/
+        people.energy(dt); //pour le joueur
 
-  public static void lifeObject()
-  {
-    if(objet != null)
+    if(objet != null) /*cette méthode permet de diminuer la vie de l'objet*/
     {
-      for (Items o : objet){o.make();}
+      for (Items o : objet){o.make(dt);}//pour chaques objets
+    }
+    minute = minute - dt;
+    if(minute <= 0) /*permet de faire une sauvguarde de temps en temps automatiquement*/
+    {
+      save.Signal();
+      minute = 600;
     }
   }
 

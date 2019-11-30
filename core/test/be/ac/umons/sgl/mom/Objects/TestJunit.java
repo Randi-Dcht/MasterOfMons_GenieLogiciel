@@ -59,12 +59,12 @@ class TestJunit
   {
     People people = new People("Junit",Type.normal);
     double first = people.getEnergy();
-    for (int i = 0; i < 100 ; i++ ){people.energy();}
+    for (int i = 0; i < 100 ; i++ ){people.energy(1);}
     double second = people.getEnergy();
     assertTrue(first > second,"depency energy");
 
     people.changedState(State.sleep);
-    for (int i = 0; i < 100 ; i++ ){people.energy();}
+    for (int i = 0; i < 100 ; i++ ){people.energy(1);}
     first = people.getEnergy();
     assertTrue(second < first,"add energy");
   }
@@ -81,5 +81,12 @@ class TestJunit
     assertNotNull(mq.getChildren(),"quest1 after isn't null");
     assertNotNull(p.getQuest().getParent(),"quest2 before isn't null");
     assertNull(p.getQuest().getChildren(),"quest2 after is null");
+  }
+
+  @Test
+  void SavingClassTest() //TODO : a continuer cette méthode quand celle-ci sera finie.
+  {
+      People people = new People("TestJunit",Type.normal);
+      Saving save = new Saving(people,"TestSaving",null);
   }
 }

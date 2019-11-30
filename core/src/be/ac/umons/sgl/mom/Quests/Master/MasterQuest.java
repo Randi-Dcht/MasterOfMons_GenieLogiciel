@@ -1,11 +1,9 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import java.util.*;
+
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Objects.*;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;
@@ -177,11 +175,11 @@ public void location(Place place)
 /**
 *Cette méthode permet de dire au sous quete qu'il y a eu un évènement et qu'il faut vérifier l'avancement
 */
-public void eventMaps()
+public void eventMaps(Actions action)
 {
   for(UnderQuest uq : underQuest)
   {
-    uq.evenActivity();
+    uq.evenActivity(action);
   }
 }
 

@@ -12,7 +12,7 @@ public class Battery extends Items
 
   }
 
-  public void make()
+  public void make(double time)
   {
 
   }
