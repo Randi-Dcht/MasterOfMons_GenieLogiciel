@@ -11,6 +11,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +38,9 @@ public class InventoryShower extends Control {
      * La hauteur du support.
      */
     private int height;
+
     /**
-     * La taille d'un seul élément d'inventaire.
+     * La longueur d'un seul objet d'inventaire.
      */
     private int itemWidth;
 
@@ -109,14 +112,13 @@ public class InventoryShower extends Control {
      * @param batch Où le support doit être dessiné.
      * @param centerX La position horizontale du centre de la fenêtre.
      * @param height La taille verticale du support.
-     * @param itemWidth La taille horizontale d'un seul élément d'inventaire.
-     * @param itemHeight La taille verticale d'un seul élément d'inventaire.
+     * @param itemSize La taille d'un seul élément d'inventaire.
      */
-    public void draw(Batch batch, int centerX, int height, int itemWidth, int itemHeight) {
-        int beginX = centerX - (itemWidth * inventory.size() + BETWEEN_ITEM_MARGIN * (inventory.size() + 2)) / 2;
-        super.draw(batch, beginX, height, itemWidth, itemHeight);
+    public void draw(Batch batch, int centerX, int height, Point itemSize) {
+        int beginX = centerX - (itemSize.x * inventory.size() + BETWEEN_ITEM_MARGIN * (inventory.size() + 2)) / 2;
+        super.draw(batch, new Point(beginX, height), itemSize);
+        itemWidth = itemSize.x;
         this.height = height;
-        this.itemWidth = itemWidth;
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -132,8 +134,8 @@ public class InventoryShower extends Control {
         sr.end();
         int tmpBeginX = beginX + BETWEEN_ITEM_MARGIN;
         for (InventoryItem ii : inventoryItemList) {
-            ii.draw(batch, tmpBeginX, BOTTOM_MARGIN, itemWidth, itemHeight);
-            tmpBeginX += itemWidth + BETWEEN_ITEM_MARGIN;
+            ii.draw(batch, tmpBeginX, BOTTOM_MARGIN, itemSize.x, itemSize.y);
+            tmpBeginX += itemSize.x + BETWEEN_ITEM_MARGIN;
         }
 
         Gdx.gl.glDisable(GL30.GL_BLEND);

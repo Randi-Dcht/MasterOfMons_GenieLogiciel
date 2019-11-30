@@ -27,7 +27,8 @@ public class ExtensionsSelector extends Control {
         extensions = parseExtensionFile();
     }
 
-    public void draw(Batch batch, Point pos) {
+    @Override
+    public void draw(Batch batch, Point pos, Point size) {
 
     }
 

@@ -5,6 +5,8 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import java.awt.*;
+
 /**
  * Représente une partie d'interface utilisateur comme un bouton, une "boîte de texte", ... qui devra intéragir avec l'utilisateur.
  * @author Guillaume Cardoen
@@ -51,16 +53,14 @@ public abstract class Control {
     /**
      * Dessine le contrôle sur <code>batch</code> aux coordonées (<code>x</code>, <code>y</code>) avec la longueur <code>width</code> et la largeur <code>y</code>.
      * @param batch Où le contrôle sera déssiné.
-     * @param x La position horizontale.
-     * @param y La position verticale.
-     * @param width La longueur.
-     * @param height La largeur.
+     * @param pos La position
+     * @param size La taille.
      */
-    public void draw(Batch batch, int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+    protected void draw(Batch batch, Point pos, Point size) {
+        this.x = pos.x;
+        this.y = pos.y;
+        this.width = size.x;
+        this.height = size.y;
     }
 
     /**

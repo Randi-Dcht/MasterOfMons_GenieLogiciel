@@ -52,6 +52,6 @@ public class MainMenuState extends MenuState {
     @Override
     public void draw() {
         super.draw();
-        extSel.draw(sb, new Point(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT - (int)topMargin));
+        extSel.draw(sb, new Point(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT - (int)topMargin), new Point(MasterOfMonsGame.WIDTH / 2 - 2 * (int)leftMargin, MasterOfMonsGame.HEIGHT - 2 * (int)topMargin));
     }
 }
