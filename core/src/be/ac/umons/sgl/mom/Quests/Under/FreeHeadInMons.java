@@ -1,8 +1,5 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
-import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Objects.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class FreeHeadInMons extends UnderQuest
@@ -13,9 +10,12 @@ public class FreeHeadInMons extends UnderQuest
       }
 
       @Override
-      public void evenActivity(Actions action) {
-
+      public void evenActivity() {
       }
+
+      private void goToMons(){}
+      private void goToDrink(){}
+      private void friendPnj(){}
 
       public Quest[] getSubQuests()
       {

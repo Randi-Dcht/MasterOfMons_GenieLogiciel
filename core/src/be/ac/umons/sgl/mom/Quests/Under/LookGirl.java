@@ -1,8 +1,5 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
-import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Objects.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class LookGirl extends UnderQuest
@@ -14,9 +11,13 @@ public class LookGirl extends UnderQuest
 
 
       @Override
-      public void evenActivity(Actions action) {
-
+      public void evenActivity() {
       }
+
+      private void randomChooseGirl(){}
+      private void timeForCouple(){}
+      private void checkGirl(){}
+      private void goToHerMons(){}
 
       public Quest[] getSubQuests()
       {

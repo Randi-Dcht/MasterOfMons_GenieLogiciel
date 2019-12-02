@@ -1,8 +1,5 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
-import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Objects.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class GoToPriorityLesson extends UnderQuest
@@ -14,9 +11,12 @@ public class GoToPriorityLesson extends UnderQuest
 
 
       @Override
-      public void evenActivity(Actions action) {
-
+      public void evenActivity() {
       }
+
+      private void checkLesson(){}
+      private void studyAtKot(){}
+      private void checkGoToCourse(){}
 
       public Quest[] getSubQuests()
       {

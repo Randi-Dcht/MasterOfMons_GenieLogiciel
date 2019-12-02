@@ -1,8 +1,5 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
-import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Objects.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class SuccesfulYear extends UnderQuest
@@ -14,9 +11,12 @@ public class SuccesfulYear extends UnderQuest
 
 
       @Override
-      public void evenActivity(Actions action) {
-
+      public void evenActivity() {
       }
+
+      private void goToStudy(){}
+      private void goToLearn(){}
+      private void myCourse(){}
 
       public Quest[] getSubQuests()
       {
