@@ -65,7 +65,7 @@ public class GameStateManager {
             return;
         }
         if (popPreviousOne)
-            gameStateStack.pop();
+            gameStateStack.pop().dispose();
         gameStateStack.push(g);
     }
 
@@ -97,9 +97,9 @@ public class GameStateManager {
      * S'éxécute quand l'application se détruit.
      */
     public void dispose() {
-        for (GameState gs: gameStateStack) {
+        for (GameState gs: gameStateStack)
             gs.dispose();
-        }
+        gmm.dispose();
     }
 
     public GameMapManager getGameMapManager() {

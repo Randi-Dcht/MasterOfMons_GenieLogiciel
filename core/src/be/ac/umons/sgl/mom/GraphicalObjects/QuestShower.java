@@ -355,4 +355,8 @@ public class QuestShower {
     public void finishAnimation() {
         isBeingAnimated = false;
     }
+
+    public void dispose() {
+        sr.dispose();
+    }
 }

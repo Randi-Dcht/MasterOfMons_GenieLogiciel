@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -17,6 +16,8 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.*;
 import com.badlogic.gdx.Input;
+
+import java.awt.*;
 import java.util.Timer;
 
 import com.badlogic.gdx.graphics.Color;
@@ -271,7 +272,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         // Dessine le HUD.
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
-        inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, tileWidth, tileWidth);
+        inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         expBar.draw((int)leftMargin * 2 + topBarWidth, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         energyBar.draw((int)leftMargin * 3 + topBarWidth * 2, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
@@ -289,5 +290,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void dispose() {
         gmm.dispose();
         sb.dispose();
+        questShower.dispose();
+        inventoryShower.dispose();
+        lifeBar.dispose();
+        energyBar.dispose();
+        expBar.dispose();
     }
 }

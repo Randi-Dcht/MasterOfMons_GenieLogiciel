@@ -49,8 +49,8 @@ public class TextBox extends Control {
     }
 
     @Override
-    public void draw(Batch batch, int x, int y, int width, int height) {
-        super.draw(batch, x, y, width, height);
+    public void draw(Batch batch, Point pos, Point size) {
+        super.draw(batch, pos, size);
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         if (isSelected)

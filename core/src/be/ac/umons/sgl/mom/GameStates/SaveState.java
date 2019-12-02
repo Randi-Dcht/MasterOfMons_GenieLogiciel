@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -94,8 +95,8 @@ public class SaveState extends GameState {
         int nameBoxY = (int)(halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin);
         int controlHeight = (int)(fontLineHeight + 2 * topMargin);
         int controlWidth = (int)(halfWidth - 2 * leftMargin);
-        nameBox.draw(sb, (int)(quartWidth + leftMargin), nameBoxY, controlWidth, controlHeight);
-        saveButton.draw(sb, (int)(quartWidth + leftMargin), (int)(nameBoxY - controlHeight - topMargin), controlWidth, controlHeight);
+        nameBox.draw(sb, new Point((int)(quartWidth + leftMargin), nameBoxY), new Point(controlWidth, controlHeight));
+        saveButton.draw(sb, new Point((int)(quartWidth + leftMargin), (int)(nameBoxY - controlHeight - topMargin)), new Point(controlWidth, controlHeight));
     }
 
     @Override

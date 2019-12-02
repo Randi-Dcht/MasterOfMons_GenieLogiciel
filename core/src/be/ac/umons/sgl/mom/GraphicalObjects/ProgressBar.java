@@ -128,4 +128,8 @@ public class ProgressBar {
     public double getPercent() {
         return percent;
     }
+
+    public void dispose() {
+        sr.dispose();
+    }
 }

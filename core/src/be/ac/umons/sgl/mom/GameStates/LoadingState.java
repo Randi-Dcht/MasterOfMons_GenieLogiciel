@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -53,6 +54,10 @@ public class LoadingState extends GameState {
      * Le gestionnaire de carte du jeu.
      */
     protected GameMapManager gmm;
+    /**
+     * Le gestionnaire de ressources du jeu.
+     */
+    protected AssetManager am;
 
     /**
      * Initialise un nouvel état de chargement.
@@ -70,6 +75,7 @@ public class LoadingState extends GameState {
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
         gmm = gsm.getGameMapManager();
+        am = gs.getAssetManager();
     }
 
     @Override
@@ -87,14 +93,17 @@ public class LoadingState extends GameState {
         int fromCenterX = (int)((gs.getTitleFont().getXHeight() * txt.length() / 2 + CIRCLE_MARGIN_X) * Math.cos(actualAngle));
         int fromCenterY = (int)((gs.getTitleFont().getLineHeight() / 2 + CIRCLE_MARGIN_Y) * Math.sin(actualAngle));
 
-        float progress = (float)((gs.getAssetManager().getProgress() + gmm.getProgress()) / 2);
+        float progress = (float)((am.getProgress() + gmm.getProgress()) / 2);
 
         if (assetsLoaded) {
             mapsLoaded = gmm.loadNextMap();
-            if (mapsLoaded)
+            if (mapsLoaded) {
+                sr.end();
                 gsm.setState(PlayingState.class, true);
+                return;
+            }
         } else
-            assetsLoaded = gs.getAssetManager().update();
+            assetsLoaded = am.update();
 
         sr.setColor(1 - 217f / 255 * progress, 1 - 113f / 255 * progress, 1 - 195f / 255 * progress, 1);
 

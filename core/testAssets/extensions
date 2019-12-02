@@ -1,0 +1,10 @@
+Test
+.mainClass "TestClass"
+.load "File1"
+.load "File2"
+.map "Maps/Map1"
+.map "Maps/Map2"
+Test2
+.mainClass "Test2Class"
+.load "File3"
+.map "Maps/Map1"

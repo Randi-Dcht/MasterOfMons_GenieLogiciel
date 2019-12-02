@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,7 @@ public class LoadState extends GameState {
             mouseWheeled = (int)maxDown;
         for (Button b : buttonList) {
             if (mouseWheeled < alreadyUsed - buttonHeight)
-                b.draw(sb, (int)leftMargin, (int)(MasterOfMonsGame.HEIGHT - alreadyUsed - buttonHeight + mouseWheeled), (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin), buttonHeight);
+                b.draw(sb, new Point((int)leftMargin, (int)(MasterOfMonsGame.HEIGHT - alreadyUsed - buttonHeight + mouseWheeled)), new Point((int)(MasterOfMonsGame.WIDTH - 2 * leftMargin), buttonHeight));
             alreadyUsed += topMargin + buttonHeight;
         }
         Gdx.gl.glDisable(GL30.GL_BLEND);
