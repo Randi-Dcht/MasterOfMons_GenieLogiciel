@@ -166,6 +166,7 @@ public class ButtonTest {
         Assertions.assertFalse(clicked);
     }
 
+    @Test
     public void isMouseOverTest() {
         x = 1; y = 1;
         width = 10; height = 10;
@@ -173,12 +174,13 @@ public class ButtonTest {
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>()); // Sans importance ici.
         Assertions.assertFalse(isMouseOver);
         Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(5,45)); // Dedans (y inversé)
+        handleInput();
         Assertions.assertTrue(isMouseOver);
         Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(15,45)); // Dehors
+        handleInput();
         Assertions.assertFalse(isMouseOver);
         Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(5,5)); // Dehors
+        handleInput();
         Assertions.assertFalse(isMouseOver);
-
-
     }
 }
