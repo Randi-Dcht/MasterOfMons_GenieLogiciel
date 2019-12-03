@@ -10,13 +10,31 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
 
+/**
+ * Cette classe représente une case à cocher.
+ */
 public class CheckBox extends Control {
 
+    /**
+     * Permet de dessiner les formes comme les rectangles.
+     */
     private ShapeRenderer sr;
+    /**
+     * Si la case est cochée ou non.
+     */
     private boolean checked = false;
+    /**
+     * Le texte à afficher à côté de la case.
+     */
     private String text;
 
+    /**
+     * La couleur si la case est cochée.
+     */
     private Color checkedColor;
+    /**
+     * La couleur si la case n'est pas cochée.
+     */
     private Color uncheckedColor;
 
     /**
@@ -71,10 +89,18 @@ public class CheckBox extends Control {
         sr.dispose();
     }
 
+    /**
+     * Retourne si la case est cochée ou non.
+     * @return Si la case est cochée ou non.
+     */
     public boolean isChecked() {
         return checked;
     }
 
+    /**
+     * Défini le texte à afficher.
+     * @param text Le texte à afficher.
+     */
     public void setText(String text) {
         this.text = text;
     }

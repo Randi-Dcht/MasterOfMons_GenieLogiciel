@@ -12,9 +12,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Représente le sélectionneur d'extensions. La liste des extensions qu'il affiche se génére en fonction du fichier "extensions".
+ */
 public class ExtensionsSelector extends Control {
 
+    /**
+     * La liste des extensions à afficher.
+     */
     List<Extension> extensions;
+    /**
+     * La liste des cases à cocher.
+     */
     List<CheckBox> checkBoxList;
 
     /**
@@ -48,9 +57,14 @@ public class ExtensionsSelector extends Control {
 
     @Override
     public void dispose() {
-
+        for (CheckBox cb: checkBoxList)
+            cb.dispose();
     }
 
+    /**
+     * Lis le fichier "extensions" et retourne la liste d'<code>Extension</code> lu dans ce fichier. Retourne <code>null</code> si une erreur se produit.
+     * @return La liste d'<code>Extension</code> lu dans le fichier "extensions".
+     */
     public List<Extension> parseExtensionFile() {
         ArrayList<Extension> extensionList = new ArrayList<>();
         BufferedReader br;
@@ -105,16 +119,35 @@ public class ExtensionsSelector extends Control {
             return null;
         } catch (IOException e) {
             Gdx.app.log("ExtensionsSelector", "An error has occurred while reading the extension's file !", e);
+            return null;
         }
 
         return extensionList;
     }
 
+    /**
+     * Représente les caractéristiques d'extension.
+     */
     protected class Extension {
+        /**
+         * Le nom de l'extension.
+         */
         String extensionName;
+        /**
+         * Les fichiers/dossiers à charger pour cette extension.
+         */
         ArrayList<LoadFile> dirsFileToLoad = new ArrayList<>();
+        /**
+         * La classe à lancer pour l'extension.
+         */
         String mainClass;
+        /**
+         * Les cartes à charger pour cette extension.
+         */
         ArrayList<String> mapsToLoad = new ArrayList<>();
+        /**
+         * Si l'extension est activée ou non.
+         */
         boolean activated;
     }
 }
