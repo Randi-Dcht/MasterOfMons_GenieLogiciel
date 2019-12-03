@@ -1,9 +1,7 @@
-package be.ac.umons.sgl.mom.Objects;
+package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Quests.Under.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
-import be.ac.umons.sgl.mom.Quests.Quest;
+
 /**
  * Cette classe permet d'intancier un PNJ contolé par ordinateur qui a besoin d'aide pour étudier
  * @author Randy Dauchot (étudiant en Science Informatique)

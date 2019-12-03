@@ -2,13 +2,12 @@ package be.ac.umons.sgl.mom.Objects;
 
 import java.util.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Objects.Characters.Attack;
+import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.*;
-import be.ac.umons.sgl.mom.Quests.Quest;
 import com.badlogic.gdx.Gdx;
 
 /*------Commentaire à supprimer dans version final-------*/

@@ -1,4 +1,6 @@
-package be.ac.umons.sgl.mom.Objects;
+package be.ac.umons.sgl.mom.Objects.Items;
+
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 public class Battery extends Items
 {

@@ -3,13 +3,8 @@ package be.ac.umons.sgl.mom.Objects;
 /*Supprimer cette classe -- Supprimer cette classe*/
 
 import java.util.*;
-import be.ac.umons.sgl.mom.GraphicalObjects.*;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Quests.Under.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
+
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 /*Supprimer cette classe -- Supprimer cette classe*/

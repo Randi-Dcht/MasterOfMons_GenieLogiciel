@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom.Objects;
+package be.ac.umons.sgl.mom.Objects.Characters;
 
 public interface Speak {
     public void called(Speak other);
