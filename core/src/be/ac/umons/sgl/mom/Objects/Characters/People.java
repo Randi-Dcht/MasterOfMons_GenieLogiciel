@@ -1,17 +1,17 @@
-package be.ac.umons.sgl.mom.Objects;
-import java.util.*;
+package be.ac.umons.sgl.mom.Objects.Characters;
 
+import java.util.*;
 import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Objects.Couple;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
-import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;
 
 /**
 *Cette classe permet de définir le perso du joeur humain
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public class People implements Serializable,Attack
+public class People implements Serializable, Attack
 {
 /*savoir où est le personnage sur la carte*/
 	private double x;

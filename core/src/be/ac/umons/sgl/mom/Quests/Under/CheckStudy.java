@@ -15,6 +15,9 @@ public class CheckStudy extends UnderQuest
     public void evenActivity() {
     }
 
+    public void studyAtKot(){}
+    public void goToStudy(){}
+
     @Override
     public Quest[] getSubQuests()
     {

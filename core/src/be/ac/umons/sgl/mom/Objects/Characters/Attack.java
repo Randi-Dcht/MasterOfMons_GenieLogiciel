@@ -1,11 +1,11 @@
-package be.ac.umons.sgl.mom.Objects;
+package be.ac.umons.sgl.mom.Objects.Characters;
 
-interface Attack
+public interface Attack
 {
     /**Méthode pour voir la possibilité d'esquivé l'attaque*/
-    double dodge();
+    public double dodge();
     /**Méthode pour voir le temps de récupération*/
-    double recovery();
+    public double recovery();
     /**Méthode qui retire les points de vie lorsque l'esquive échoue*/
-    void attack();
+    public void attack();
 }

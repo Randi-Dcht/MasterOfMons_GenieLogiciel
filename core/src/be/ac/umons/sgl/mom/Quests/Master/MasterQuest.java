@@ -4,6 +4,9 @@ import java.util.*;
 
 import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Objects.*;
+import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;

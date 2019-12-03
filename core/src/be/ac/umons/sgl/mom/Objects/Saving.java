@@ -4,14 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.*;
-import be.ac.umons.sgl.mom.GraphicalObjects.*;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Quests.Under.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
-import be.ac.umons.sgl.mom.Quests.Quest;
+
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 /**
  * Cette classe permet de créer une sauveguarde automatique du jeu ou à la fin de la partie

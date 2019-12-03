@@ -1,12 +1,8 @@
-package be.ac.umons.sgl.mom.Objects;
+package be.ac.umons.sgl.mom.Objects.Items;
 
-import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Quests.Under.*;
-import be.ac.umons.sgl.mom.Quests.Master.*;
-import be.ac.umons.sgl.mom.Quests.Quest;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
+
 import java.io.Serializable;
 
 /**
@@ -31,6 +27,11 @@ public abstract class Items implements Serializable
   public void visibly()
   {
     visible = false;
+  }
+
+  public String getImagePath()
+  {
+    return null;
   }
 
   public abstract void used(People pp);
