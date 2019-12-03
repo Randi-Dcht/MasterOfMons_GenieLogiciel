@@ -1,0 +1,4 @@
+LAN
+.mainClass be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState
+Dual
+.mainClass be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState

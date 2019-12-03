@@ -15,6 +15,7 @@ import java.util.List;
 public class ExtensionsSelector extends Control {
 
     List<Extension> extensions;
+    List<CheckBox> checkBoxList;
 
     /**
      * Crée un nouveau selecteur d'extension.
@@ -25,16 +26,24 @@ public class ExtensionsSelector extends Control {
     public ExtensionsSelector(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         extensions = parseExtensionFile();
+        checkBoxList = new ArrayList<>();
+        for (Extension ext : extensions) {
+            checkBoxList.add(new CheckBox(gim, gs, ext.extensionName));
+        }
     }
 
     @Override
     public void draw(Batch batch, Point pos, Point size) {
-
+        for (CheckBox c : checkBoxList) {
+            c.draw(batch, pos, new Point(size.x, (int)gs.getSmallFont().getLineHeight()));
+            pos.y -= (int)gs.getSmallFont().getLineHeight() + topMargin;
+        }
     }
 
     @Override
     public void handleInput() {
-
+        for (CheckBox c : checkBoxList)
+            c.handleInput();
     }
 
     @Override
@@ -59,6 +68,7 @@ public class ExtensionsSelector extends Control {
                             Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClass needs a class", actualLine));
                         else
                             ext.mainClass = lineTab[1];
+                        break;
                     case ".load":
                         if (lineTab.length < 3)
                             Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClass needs a class", actualLine));
@@ -71,6 +81,7 @@ public class ExtensionsSelector extends Control {
                                 Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : file %s doesn't exist !", actualLine, lineTab[1]), e);
                             }
                         }
+                        break;
                     case ".map":
                         if (lineTab.length < 2)
                             Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .map needs a path to a tmx file !", actualLine));
@@ -80,6 +91,7 @@ public class ExtensionsSelector extends Control {
                             else
                                 Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : the given file (%s) doesn't exist !", actualLine, lineTab[1]));
                         }
+                        break;
                     default:
                         if (! line.startsWith(".")) {
                             ext = new Extension();
