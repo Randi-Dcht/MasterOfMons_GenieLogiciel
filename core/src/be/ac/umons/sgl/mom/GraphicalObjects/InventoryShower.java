@@ -61,6 +61,10 @@ public class InventoryShower extends Control {
      */
     private float duringAnimationHeight, duringAnimationWidth;
     /**
+     * La taille d'un seul élément d'inventaire durant une animation.
+     */
+    private float duringAnimationItemWidth;
+    /**
      * L'opacité du rectangle d'arrière-plan durant l'animation du support.
      */
     private double duringAnimationBackgroundOpacity;
@@ -104,7 +108,7 @@ public class InventoryShower extends Control {
             inventoryItemList.add(new InventoryItem(gs, go));
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        animateInventoryShower();
+        animate();
     }
 
     /**
@@ -115,10 +119,14 @@ public class InventoryShower extends Control {
      * @param itemSize La taille d'un seul élément d'inventaire.
      */
     public void draw(Batch batch, int centerX, int height, Point itemSize) {
+        itemWidth = itemSize.x;
+        if (isBeingAnimated)
+            itemSize.x = (int)duringAnimationItemWidth;
         int beginX = centerX - (itemSize.x * inventory.size() + BETWEEN_ITEM_MARGIN * (inventory.size() + 2)) / 2;
         super.draw(batch, new Point(beginX, height), itemSize);
-        itemWidth = itemSize.x;
         this.height = height;
+
+
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -142,26 +150,46 @@ public class InventoryShower extends Control {
     }
 
 
+//    /**
+////     * Lance les animations de la partie "Inventaire" du HUD.
+////     */
+////    public void animate() {
+////        beginAnimation();
+////        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
+////        da.setRunningAction(() -> {
+////            setDuringAnimationWidth((int)((double)getWidth() * da.getActual()));
+////            setDuringAnimationHeight((int)((double)getHeight() * da.getActual()));
+////            setDuringAnimationBackgroundOpacity(da.getActual());
+////        });
+////        am.addAnAnimation("InventoryShowerAnimation", da);
+////        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
+////        da2.setEndingAction(this::finishAnimation);
+////        da2.setRunningAction(() -> {
+////            setDuringAnimationForegroundOpacity(da2.getActual());
+////        });
+////        da.setEndingAction(() -> {
+////            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
+////        });
+////    }
+
     /**
-     * Lance les animations de la partie "Inventaire" du HUD.
-     */
-    public void animateInventoryShower() {
+     //     * Lance les animations de la partie "Inventaire" du HUD.
+     //     */
+    public void animate() {
         beginAnimation();
         DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-        da.setRunningAction(() -> {
-            setDuringAnimationWidth((int)((double)getWidth() * da.getActual()));
-            setDuringAnimationHeight((int)((double)getHeight() * da.getActual()));
-            setDuringAnimationBackgroundOpacity(da.getActual());
-        });
-        am.addAnAnimation("InventoryShowerAnimation", da);
+        setDuringAnimationWidth(getWidth() / 5);
+        setDuringAnimationBackgroundOpacity(1);
+        da.setRunningAction(() -> setDuringAnimationHeight((float)(getHeight() * da.getActual())));
+        am.addAnAnimation("InventoryShowerHeightAnimation", da);
         DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
         da2.setEndingAction(this::finishAnimation);
-        da2.setRunningAction(() -> {
+        da2.setRunningAction(() ->  {
+            setDuringAnimationWidth((float)(getWidth() * da2.getActual()));
+            setDuringAnimationItemWidth((float)(itemWidth * da2.getActual()));
             setDuringAnimationForegroundOpacity(da2.getActual());
         });
-        da.setEndingAction(() -> {
-            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
-        });
+        da.setEndingAction(() -> am.addAnAnimation("InventoryShowerWidthAnimation", da2));
     }
 
     @Override
@@ -285,5 +313,13 @@ public class InventoryShower extends Control {
      */
     public void setDuringAnimationHeight(float duringAnimationHeight) {
         this.duringAnimationHeight = duringAnimationHeight;
+    }
+
+    public float getDuringAnimationItemWidth() {
+        return duringAnimationItemWidth;
+    }
+
+    public void setDuringAnimationItemWidth(float duringAnimationItemWidth) {
+        this.duringAnimationItemWidth = duringAnimationItemWidth;
     }
 }
