@@ -6,7 +6,6 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
 
@@ -58,8 +57,8 @@ public class CheckBox extends Control {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
         this.text = text;
-        checkedColor = new Color(0xFF2E7D32);
-        uncheckedColor = new Color(0xFFC62828);
+        checkedColor = new Color(0x2E7D32FF);
+        uncheckedColor = new Color(0xC62828FF);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class CheckBox extends Control {
     @Override
     public void handleInput() {
         for (Point click : gim.getRecentClicks())
-            if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y - height, width, height).contains(click.x, click.y))
+            if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y, width, height).contains(click))
                 checked = !checked;
     }
 
