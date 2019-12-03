@@ -35,6 +35,8 @@ public class Supervisor
   private static double minute = 600;
   /*sauveguarde du jeux*/
   private static Saving save;
+  /*temps du jeu*/
+  private static  Schedule time;
 
   public static People getPeople()
   {
@@ -65,6 +67,7 @@ public class Supervisor
     MasterQuest mQ = new Bachelor1(people,null);
     people.newQuest(mQ);
     questShower.setQuest(mQ);
+    time = new Schedule(9,1,8,2019);
     save = new Saving(people,namePlayer,gs);
   }
 
@@ -82,8 +85,6 @@ public class Supervisor
 
   /**
    * Cette méthode permet de gérer l'attque entre un joueur et un PNj dans le jeu de base
-   * @param attaquant qui est le joeur humain
-   * @param attaque qui est le PNJ
    * */
   public static void meetTogether(PNJ pnj)
   {}
@@ -109,6 +110,9 @@ public class Supervisor
       save.Signal();
       minute = 600;
     }
+
+    time.updateSecond(0);
+    //System.out.println("Temps jeu: " + time);
   }
 
 }
