@@ -179,7 +179,7 @@ public void eventMaps(Actions action)
 {
   for(UnderQuest uq : underQuest)
   {
-    uq.evenActivity(action);
+    uq.evenActivity();
   }
 }
 

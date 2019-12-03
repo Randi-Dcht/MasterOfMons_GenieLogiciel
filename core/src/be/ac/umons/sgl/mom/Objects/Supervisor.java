@@ -86,6 +86,9 @@ public class Supervisor
    * @param attaquant qui est le joeur humain
    * @param attaque qui est le PNJ
    * */
+  public static void meetTogether(PNJ pnj)
+  {}
+
   public static void attack(Attack attacker , Attack victim)
   {}
 

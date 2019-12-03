@@ -44,6 +44,7 @@ public class InGameMenuState extends MenuState {
         betweenItemMargin = .01;
         menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
                 new MenuItem("Continue", () -> gsm.removeFirstState()),
+                new MenuItem("Player", () -> gsm.setState(PlayerMenuState.class)),
                 new MenuItem("Save", () -> gsm.setState(SaveState.class)),
                 new MenuItem("Load", () -> gsm.setState(LoadState.class)),
                 new MenuItem("Quick Save"), // TODO : Call save system with default name.
