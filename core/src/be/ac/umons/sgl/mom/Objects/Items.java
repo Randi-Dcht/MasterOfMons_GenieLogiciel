@@ -33,6 +33,11 @@ public abstract class Items implements Serializable
     visible = false;
   }
 
+  public String getImagePath()
+  {
+    return null;
+  }
+
   public abstract void used(People pp);
   public abstract void make(double time);
   public abstract double getObsolete();
