@@ -13,8 +13,10 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.*;
+import be.ac.umons.sgl.mom.Objects.Items.Energizing;
 import com.badlogic.gdx.Input;
 
 import java.awt.*;
@@ -152,7 +154,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*///Rule rule = new Rule("TestRule",questShower);
         /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
-        /*supprimer =>*/Energizing o =new Energizing(0,0);
+        /*supprimer =>*/
+        Energizing o =new Energizing(0,0);
         /*supprimer =>*/Supervisor.add(o);
         /*supprimer => -------------------------*/
         /*supprimer =>*/Timer timer = new Timer();
