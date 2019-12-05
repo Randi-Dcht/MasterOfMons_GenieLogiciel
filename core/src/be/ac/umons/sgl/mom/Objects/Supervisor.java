@@ -112,7 +112,7 @@ public class Supervisor
     }
 
     time.updateSecond(0);
-    //System.out.println("Temps jeu: " + time);
+    //System.out.println("Temps jeu: " + time); /*<= pour tester le temps du jeu*/
   }
 
 }

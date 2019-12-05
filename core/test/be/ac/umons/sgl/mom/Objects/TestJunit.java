@@ -11,6 +11,8 @@ import be.ac.umons.sgl.mom.Quests.Master.Bachelor1;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -92,4 +94,33 @@ class TestJunit
       People people = new People("TestJunit",Type.normal);
       Saving save = new Saving(people,"TestSaving",null);
   }
+
+    @Test
+    void ScheduleTest()
+    {
+        Schedule time = new Schedule(9,1,8,2019);
+        assertTrue(1==1);
+        try
+        {
+            Method mtd = time.getClass().getDeclaredMethod("?",null);
+            mtd.setAccessible(true);
+            Object rtr = mtd.invoke(time);
+        }
+        catch (Exception e)
+        {}
+
+        /*
+        MaClasse maClasse = new MaClasse();
+    try {
+      Method method = maClasse.getClass().getDeclaredMethod("maMethodePrivee", null);
+      method.setAccessible(true);
+      Object retour = method.invoke(maClasse);
+      Logger.getLogger(TestPrivateMethodInvoke.class.getName())
+        .log(Level.INFO, "Valeur de retour = " + retour);
+    } catch (Exception ex) {
+      Logger.getLogger(TestPrivateMethodInvoke.class.getName())
+        .log(Level.SEVERE, null, ex);
+    }
+        */
+    }
 }
