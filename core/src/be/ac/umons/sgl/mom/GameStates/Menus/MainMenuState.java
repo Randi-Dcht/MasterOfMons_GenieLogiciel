@@ -42,7 +42,7 @@ public class MainMenuState extends MenuState {
         menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
                 new MenuItem("Start a new game", () -> {
                     extSel.generateLoadLists();
-                    gsm.getGameMapManager().addMapsToLoad("Tmx/Nimy.tmx");
+                    gsm.getGameMapManager().addMapsToLoad("Tmx/NimyTest.tmx");
                     gsm.getGameMapManager().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     gsm.setState(LoadingState.class, true);

@@ -107,26 +107,27 @@ public class Player extends Character {
     public void move(int x, int y) {
         super.move(x, y);
 
-//        if (posX < 0)
-//            posX = 0;
-//        else if (posX > mapWidth * Math.cos(42.5f / 360 * 2 * Math.PI) - getWidth())
-//            posX = (int)(mapWidth * Math.cos(42.5f / 360 * 2 * Math.PI) - getWidth());
-//
-//        if (posY > SHOWED_MAP_HEIGHT * tileHeight - getHeight())
-//            posY = SHOWED_MAP_HEIGHT * tileHeight - getHeight();
-//        else if (posY < -mapHeight + getHeight())
-//            posY = -mapHeight + getHeight();
+        if (posX < 0)
+            posX = 0;
+        else if (posX > mapWidth - getWidth())
+            posX = mapWidth - getWidth();
+
+        int max = mapHeight / 2 - getHeight();
+        if (posY > max)
+            posY = max;
+        else if (posY < -max)
+            posY = -max;
 //
         if (posX < SHOWED_MAP_WIDTH * tileWidth / 2)
             xT = -(SHOWED_MAP_WIDTH * tileWidth / 2 - posX);
-        else if (posX > mapWidth - SHOWED_MAP_WIDTH * tileWidth - getWidth())
-            xT = posX - mapWidth + SHOWED_MAP_WIDTH * tileWidth + getWidth();
+        else if (posX > mapWidth - SHOWED_MAP_WIDTH * tileWidth / 2)
+            xT = posX - mapWidth + SHOWED_MAP_WIDTH * tileWidth / 2;
         else xT = 0;
 
-        if (posY > 0)
-            yT = posY;
-        else if (posY < -mapHeight + SHOWED_MAP_HEIGHT * tileHeight)
-            yT = posY + mapHeight - SHOWED_MAP_HEIGHT * tileHeight;
+        if (posY > mapHeight / 2 - SHOWED_MAP_HEIGHT * tileHeight / 2)
+            yT = posY - (mapHeight / 2 - SHOWED_MAP_HEIGHT * tileHeight / 2);
+        else if (posY < -mapHeight / 2 + SHOWED_MAP_HEIGHT * tileHeight / 2)
+            yT = posY + mapHeight / 2 - SHOWED_MAP_HEIGHT * tileHeight / 2;
         else yT = 0;
     }
 
@@ -171,13 +172,17 @@ public class Player extends Character {
 
     /**
      * Retourne un rectangle représentant la taille et la position (d'un point de vue isométrique où le (0,0) est l'extrémité au-dessus la carte) du personnage sur la carte.
-     * Une partie du code a été tiré de https://stackoverflow.com/a/13838164 par Tijgerd
+     * Une partie du code a été tiré de https://stackoverflow.com/a/34522439 par Ernst Albrigtsen
      * @return Un rectangle représentant la taille et la position (d'un point de vue isométrique où le (0,0) est l'extrémité au-dessus la carte) du personnage sur la carte.
      */
     public Rectangle getMapRectangle() {
-        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2;
-        int y = getPosX() - x;
-        return new Rectangle(x , y, getWidth(), getHeight());
+//        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2 + 4276;
+//        int y = getPosX() - x;
+        int x = (int)((double)(-getPosY() + mapHeight / 2) / tileHeight + (getPosX() - mapWidth / 2) / tileWidth);
+        int y = (int)((double)(-getPosY() + mapHeight / 2) / tileHeight - (getPosX() - mapWidth / 2) / tileWidth);
+
+        return new Rectangle(x , y, ((float)getWidth() / tileWidth), (float)getHeight() / tileHeight);
+
     }
 
 }

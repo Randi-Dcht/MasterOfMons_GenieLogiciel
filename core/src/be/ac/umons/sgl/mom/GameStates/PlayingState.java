@@ -29,6 +29,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -50,7 +51,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * La vitesse du joueur.
      */
-    protected final float VELOCITY = 500;
+    protected final float VELOCITY = 5000;
 
     /**
      * La taille horizontale (en nombre de tuile) de la carte entière.
@@ -130,7 +131,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         am = new AnimationManager();
         gmm = gsm.getGameMapManager();
 
-        gmm.setMap("Nimy.tmx");
+        gmm.setMap("NimyTest.tmx");
 
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
@@ -140,8 +141,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         collisionObjects = gmm.getActualMap().getLayers().get("Interdit").getObjects();
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
-        cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
-        cam.position.y = SHOWED_MAP_HEIGHT * tileHeight;
         cam.update();
         gmm.setView(cam);
 
@@ -219,35 +218,27 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             player.move(-toMoveX, -toMoveY);
             return;
         }
-        if ((toMoveX < 0 && player.getXT() > -toMoveX) || (toMoveX > 0 && player.getXT() < -toMoveX))
-            toMoveX = 0;
-        else if ((toMoveX < 0 && player.getXT() > 0) || (toMoveX > 0 && player.getXT() < 0))
-            toMoveX = player.getXT() + toMoveX;
 
-        if ((toMoveY < 0 && player.getYT() > -toMoveY) || (toMoveY > 0 && player.getYT() < -toMoveY))
-            toMoveY = 0;
-        else if ((toMoveY < 0 && player.getYT() > 0) || (toMoveY > 0 && player.getYT() < 0))
-            toMoveY = player.getYT() + toMoveY;
-
-        translateCamera(toMoveX, toMoveY);
+        translateCamera(player.getPosX(), player.getPosY());
     }
 
     /**
      * Bouge la caméra en fonction de la position du joueur.
-     * @param movedX Le mouvement horizontal du joueur.
-     * @param movedY La mouvement vertical du joueur.
+     * @param x La position horizontale du joueur.
+     * @param x La position verticale du joueur.
      */
-    protected void translateCamera(int movedX, int movedY) {
-        cam.translate(movedX, movedY);
+    protected void translateCamera(int x, int y) {
+        cam.position.x = x;
+        cam.position.y = y;
         if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
             cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
-        else if (cam.position.x > (mapWidth - SHOWED_MAP_WIDTH) * tileWidth)
-            cam.position.x = (mapWidth - SHOWED_MAP_WIDTH) * tileWidth;
+        else if (cam.position.x > (mapWidth - SHOWED_MAP_WIDTH / 2) * tileWidth)
+            cam.position.x = (mapWidth - SHOWED_MAP_WIDTH / 2) * tileWidth;
 
-        if (cam.position.y > 0)
-            cam.position.y = 0;
-        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight)
-            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight;
+        if (cam.position.y > (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2)
+            cam.position.y = (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2;
+        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2)
+            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2;
     }
 
     /**
@@ -259,8 +250,15 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = rectangleMapObject.getRectangle();
             Rectangle playerRect = player.getMapRectangle();
-            if (Intersector.overlaps(rect, playerRect))
+            Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
+            if (Intersector.overlaps(mapRect, playerRect)) {
+                System.out.println(rect.x + " | " + (mapHeight * tileHeight - rect.y - rect.height) + " | "  + rect.width + " | " + rect.height + " | ");
+                System.out.println(mapRect.x + " | " + mapRect.y + " | "  + mapRect.width + " | " + mapRect.height + " | ");
+                System.out.println("Player : " + player.getPosX() + " | " + player.getPosY());
+                System.out.println("PlayerRect : " + playerRect.x + " | " + playerRect.y);
+                System.out.println("Rect : " + rect.x + " | " + rect.y);
                 return true;
+            }
         }
         return false;
     }
