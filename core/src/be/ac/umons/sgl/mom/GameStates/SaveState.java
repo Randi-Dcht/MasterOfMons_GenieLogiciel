@@ -1,8 +1,8 @@
 package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
-import be.ac.umons.sgl.mom.GraphicalObjects.Button;
-import be.ac.umons.sgl.mom.GraphicalObjects.TextBox;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;

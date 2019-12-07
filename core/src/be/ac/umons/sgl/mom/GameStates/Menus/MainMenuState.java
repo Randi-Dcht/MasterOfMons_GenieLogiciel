@@ -3,7 +3,7 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 import be.ac.umons.sgl.mom.GameStates.LoadState;
 import be.ac.umons.sgl.mom.GameStates.LoadingState;
 import be.ac.umons.sgl.mom.GameStates.SettingsState;
-import be.ac.umons.sgl.mom.GraphicalObjects.ExtensionsSelector;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ExtensionsSelector;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
