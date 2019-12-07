@@ -8,5 +8,4 @@ public enum Actions
     Attack,
     Call,
     HelpMe,
-
 }
