@@ -1,4 +1,5 @@
 LAN
 .mainClass be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState
+.map Map/isoTest.tmx
 Dual
 .mainClass be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState

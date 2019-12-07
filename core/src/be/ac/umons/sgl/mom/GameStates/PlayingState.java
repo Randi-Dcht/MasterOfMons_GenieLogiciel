@@ -130,7 +130,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         am = new AnimationManager();
         gmm = gsm.getGameMapManager();
 
-        gmm.setMap("isoTest.tmx");
+        gmm.setMap("Nimy.tmx");
 
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");

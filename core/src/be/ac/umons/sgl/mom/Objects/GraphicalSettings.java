@@ -160,4 +160,10 @@ public class GraphicalSettings {
         if (assetManager != null)
             assetManager.dispose();
     }
+
+    public void addFilesToLoad(LoadFile... files) {
+        for (LoadFile f : files) {
+            assetManager.load(f.file.getPath(), f.typeOfFile);
+        }
+    }
 }

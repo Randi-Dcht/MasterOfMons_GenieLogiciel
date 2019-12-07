@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.LoadFile;
 import com.badlogic.gdx.Gdx;
 
 import java.awt.*;
@@ -40,7 +41,10 @@ public class MainMenuState extends MenuState {
         betweenItemMargin = .01;
         menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
                 new MenuItem("Start a new game", () -> {
-                    gsm.getGameMapManager().addMapsToLoad("Map/isoTest.tmx");
+                    extSel.generateLoadLists();
+                    gsm.getGameMapManager().addMapsToLoad("Tmx/Nimy.tmx");
+                    gsm.getGameMapManager().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
+                    gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     gsm.setState(LoadingState.class, true);
                 }),
                 new MenuItem("Load", () -> gsm.setState(LoadState.class)),

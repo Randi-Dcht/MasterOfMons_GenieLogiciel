@@ -1,7 +1,5 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.CheckBox;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Control;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.LoadFile;
@@ -27,6 +25,9 @@ public class ExtensionsSelector extends Control {
      * La liste des cases à cocher.
      */
     List<CheckBox> checkBoxList;
+
+    List<String> mapsToLoad;
+    List<LoadFile> filesToLoad;
 
     /**
      * Crée un nouveau selecteur d'extension.
@@ -125,6 +126,25 @@ public class ExtensionsSelector extends Control {
         }
 
         return extensionList;
+    }
+
+    public void generateLoadLists() {
+        mapsToLoad = new ArrayList<>();
+        filesToLoad = new ArrayList<>();
+        for (int i = 0; i < checkBoxList.size(); i++) {
+            if (checkBoxList.get(i).isChecked()) {
+                mapsToLoad.addAll(extensions.get(i).mapsToLoad);
+                filesToLoad.addAll(extensions.get(i).dirsFileToLoad);
+            }
+        }
+    }
+
+    public List<String> getMapsToLoad() {
+        return mapsToLoad;
+    }
+
+    public List<LoadFile> getFilesToLoad() {
+        return filesToLoad;
     }
 
     /**
