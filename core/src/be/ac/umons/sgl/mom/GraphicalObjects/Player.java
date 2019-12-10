@@ -94,7 +94,7 @@ public class Player extends Character {
      */
     public void draw(Batch batch) {
         batch.begin();
-        batch.draw(getTexture(), middleX + xT, middleY + yT, tileWidth, tileHeight);
+        batch.draw(getTexture(), middleX + xT, middleY + yT, tileWidth, 2 * tileHeight);
         batch.end();
     }
 

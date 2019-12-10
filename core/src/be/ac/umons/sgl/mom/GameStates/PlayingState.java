@@ -29,7 +29,6 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -252,11 +251,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             Rectangle playerRect = player.getMapRectangle();
             Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
             if (Intersector.overlaps(mapRect, playerRect)) {
-                System.out.println(rect.x + " | " + (mapHeight * tileHeight - rect.y - rect.height) + " | "  + rect.width + " | " + rect.height + " | ");
-                System.out.println(mapRect.x + " | " + mapRect.y + " | "  + mapRect.width + " | " + mapRect.height + " | ");
-                System.out.println("Player : " + player.getPosX() + " | " + player.getPosY());
-                System.out.println("PlayerRect : " + playerRect.x + " | " + playerRect.y);
-                System.out.println("Rect : " + rect.x + " | " + rect.y);
                 return true;
             }
         }
