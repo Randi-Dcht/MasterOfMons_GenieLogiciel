@@ -7,8 +7,8 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import java.io.Serializable;
 
 /**
-*Cette classe permet de définir un personnage qui est piloté par l'ordianteur
-*@author Randy Dauchot (étudiant en Sciences informatique)
+*This abstract class allows define a no player, it is a character pilot by computer.
+*@author Randy Dauchot (étudiant en Sciences informatique Umons)
 */
 public abstract class PNJ implements Serializable, Attack
 {
@@ -55,18 +55,29 @@ public abstract class PNJ implements Serializable, Attack
     return strength;
   }
 
+  /**
+   *This method allows to say the time between two attack of this people
+   * @return the time between two attack
+   */
   @Override
-  public double dodge() {
-    return 0;
-  }
-
-  @Override
-  public double recovery() {
-    return 0;
+  public double recovery()
+  {
+    return (0.5 + (agility/40));
   }
 
   @Override
   public void attack() {
 
   }
+
+  /**
+   * This method allows to say the probability of dodge the other attack
+   * @return the probability of dodge
+   */
+  @Override
+  public double dodge() /*esquive*/
+  {
+    return Math.min((agility/100),0.75);
+  }
+
 }

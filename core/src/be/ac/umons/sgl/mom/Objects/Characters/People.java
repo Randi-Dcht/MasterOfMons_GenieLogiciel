@@ -8,7 +8,7 @@ import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 
 /**
-*Cette classe permet de définir le perso du joeur humain
+*This class allows to define a people with all characteristic.
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 public class People implements Serializable, Attack
@@ -34,10 +34,10 @@ public class People implements Serializable, Attack
 	private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
 /**
- * Permet d'instancier un personnage gérer par le joueur
- * @param name qui est le nom du joueur
- * @param type qui est la caractéristique du joueur
- * */
+ * This constructor allows to create a new people who pilot by a player
+ * @param name who is the name of player
+ * @param type who is the characteristic of this people (Enums)
+ */
 	public People(String name, Type type)
 	{
 		this.name     = name;
@@ -48,7 +48,7 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Cette méthode permet de regénérer la vie du personnage quand il en a perdu
+*This method allows to increase the life
 */
 	public void regeneration()
 	{
@@ -82,8 +82,8 @@ public class People implements Serializable, Attack
 		return experience;
 	}
 /**
-*Permet de changer de quête pour monter dans tes quêtes supérieur
-*@param quest qui est la nouvelle quête
+*This method allows the change the actually MasterQuest
+*@param quest who is the new masterQuest
 */
 	public void newQuest(MasterQuest quest)
 	{
@@ -98,10 +98,10 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Permet de définir les caracteristique du personnage quand il gagne des points ou au début.
-*@param strength qui est sa force
-*@param defence qui est sa capacité à se defendre
-*@param agility qui est sa capacité à éviter des coups de l'adversaire
+*This method allows define the characteristic of a people.
+*@param strength who is strength of people.
+*@param defence who is defence of people.
+*@param agility who is the capacity of avoid the attack.
 */
 	public void updateType(int strength, int defence, int agility)
 	{
@@ -111,8 +111,8 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Permet de retirer un objet du sac à dos
-*@return boolean pour savoir s'il a été bien retirer
+*This method allows the remove a object in the bag of people.
+*@return true of the object is remove and false otherwise
 */
 	public boolean removeObject(Items objet)
 	{
@@ -123,9 +123,9 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Permet d'ajouter des objets dans son sac à dos
-*@param object qui est l'objet qui prend
-*@return true si l'objet est bien ajouté et false sinon
+*This method allows to push a object in the bag of people.
+*@param object who is the object taken.
+*@return true if the object is in the bag and false otherwise.
 */
 	public boolean pushObject(Items object)
 	{
@@ -136,8 +136,8 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Cette méthode permet de calculer la vie mawimal du personnage
-*@return vie maximun
+*This method allows to calculated the maximum of life people.
+*@return max life.
 */
 	public double lifemax()
 	{
@@ -145,7 +145,7 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Cette méthode permet de calculer ...
+*This method allows to calculated ...
 */
 	public double displacement()
 	{
@@ -153,8 +153,8 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Cette méthode retourne le nombre de cours qui a encore à passer
-*@return size de la liste de cours
+*This method allows to know the number of course to pass.
+*@return size of the list course
 */
 	public int numberCourse()
 	{
@@ -162,8 +162,8 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Cette méthode permet de retourner la liste de cours suivi et dont les examens ne sont pas encore réussi
-*@return myCourse qui est la liste de cours
+*This method allows to return the list of course where exams don't pass.
+*@return myCourse who is a list of course.
 */
 	public ArrayList<Lesson> myCourse()
 	{
@@ -171,8 +171,8 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Permet de modifier l'énergie du personnage
-*@param many qui est l'énergie perdu ou gagné
+*This method allows to redefine the energy of this people.
+*@param many who is the energy loss or win
 */
 	public void addEnergy(double many)
 	{
@@ -181,7 +181,8 @@ public class People implements Serializable, Attack
 	}
 
 /**
-*Permet de modifier l'énergie du personnage chaque seconde
+*This method allows to do exist energy of people.
+ * @param time is the time between two frame.
 */
 	public void energy(double time)
 	{
@@ -200,7 +201,7 @@ public class People implements Serializable, Attack
 	public void changedState(State state)
 	{
 		this.state = state;
-	}
+	} //TODO supprimer à verifier
 
 /**
 *Cette méthode doit être appeler lorque le personnage bouge sur la maps
