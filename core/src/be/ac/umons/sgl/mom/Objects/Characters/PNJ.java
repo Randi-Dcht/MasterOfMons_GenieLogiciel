@@ -38,7 +38,22 @@ public abstract class PNJ implements Serializable, Attack
     this.strength = strength;
   }
 
-  public abstract Actions meet(People people);
+  public abstract Actions meet(People people); //TODO à modier pour mettre un event
+
+  @Override
+  public int getAgility() {
+    return agility;
+  }
+
+  @Override
+  public int getDefence() {
+    return defence;
+  }
+
+  @Override
+  public int getStrength() {
+    return strength;
+  }
 
   @Override
   public double dodge() {

@@ -8,4 +8,10 @@ public interface Attack
     public double recovery();
     /**Méthode qui retire les points de vie lorsque l'esquive échoue*/
     public void attack();
+
+    public int getAgility();
+
+    public int getStrength();
+
+    public int getDefence();
 }

@@ -94,7 +94,7 @@ class TestJunit
       People people = new People("TestJunit",Type.normal);
       Saving save = new Saving(people,"TestSaving",null);
   }
-
+/*
     @Test
     void ScheduleTest()
     {
@@ -109,7 +109,7 @@ class TestJunit
         catch (Exception e)
         {}
 
-        /*
+
         MaClasse maClasse = new MaClasse();
     try {
       Method method = maClasse.getClass().getDeclaredMethod("maMethodePrivee", null);
@@ -121,6 +121,6 @@ class TestJunit
       Logger.getLogger(TestPrivateMethodInvoke.class.getName())
         .log(Level.SEVERE, null, ex);
     }
-        */
-    }
+
+    }*/
 }

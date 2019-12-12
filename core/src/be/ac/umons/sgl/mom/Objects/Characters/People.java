@@ -206,19 +206,20 @@ public class People implements Serializable, Attack
 *Cette méthode doit être appeler lorque le personnage bouge sur la maps
 *@param couple qui est l'absice et ordonnée du personnage
 */
-	public void move(Couple couple)
+	public void move(Couple couple) //TODO : vériifer si encore utile au mois de janvier
 	{
 		this.x = couple.x;
 		this.y = couple.y;
 	}
 
 	/**
-	*Cette méthode permet de dire le temps entre chaque attaque
+	*This method allows to say the time between two attack of this people
+	 * @return the time between two attack
 	 */
 	@Override
-	public double recovery() //TODO : continuer à implémenter
+	public double recovery()
 	{
-		return 0;
+		return (0.5 + (agility/40));
 	}
 
 	@Override
@@ -227,11 +228,12 @@ public class People implements Serializable, Attack
 	}
 
 	/**
-	 * Cette méthode permet de dire la probabilité d'esquiver l'attaque
+	 * This method allows to say the probability of dodge the other attack
+	 * @return the probability of dodge
 	 */
 	@Override
-	public double dodge() //TODO : continuer à implementer
+	public double dodge() /*esquive*/
 	{
-		return 0;
+		return Math.min((agility/100),0.75);
 	}
 }

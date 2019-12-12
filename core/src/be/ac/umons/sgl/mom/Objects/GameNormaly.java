@@ -102,6 +102,24 @@ public class GameNormaly
             }
 
             time.updateSecond(0);
-            //System.out.println("Temps jeu: " + time); /*<= pour tester le temps du jeu*/
         }
+
+    /**
+     *This method who call when two Attack want to fight
+     */
+    public void attackMethod(Attack attacker, Attack victim)
+    {
+        int gun=1; //TODO a dertimer dans les prochaines fois et regarder au bonus
+        double hit = ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
+    }
+
+    /**
+     * This method allows calculated a bonus for an attack in two players
+     * @return the bonus (double)
+     */
+    public double bonus(double p, double c)
+    {
+        return 1; //TODO continuer
+    }
+
     }
