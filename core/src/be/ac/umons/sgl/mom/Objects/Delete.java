@@ -3,7 +3,6 @@ package be.ac.umons.sgl.mom.Objects;
 /*Supprimer cette classe -- Supprimer cette classe*/
 
 import java.util.*;
-
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
