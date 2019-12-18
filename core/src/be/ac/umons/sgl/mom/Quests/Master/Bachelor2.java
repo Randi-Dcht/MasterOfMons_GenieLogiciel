@@ -1,12 +1,14 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Quests.Under.FreeHeadInMons;
+import be.ac.umons.sgl.mom.Quests.Under.HelpMe;
+import be.ac.umons.sgl.mom.Quests.Under.SuccesfulYear;
+import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
 /**
-*Cette classe définit ce qu'est une quête de bachelier 1
+*Cette classe définit ce qu'est une quête de bachelier 2
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
@@ -28,15 +30,6 @@ public class Bachelor2 extends MasterQuest
   {
     newQuest(new Bachelor3(people,this));
   }
-
-  /**
-  *Cette méthode permet de gérer les rencontres entres Persoonage1 et le personnage2
-  *@param other qui est l'autre personnages dans le jeu (aider - combat)
-  */
-    public void meetOther(PNJ other)
-    {
-    }
-
 
 
   /**

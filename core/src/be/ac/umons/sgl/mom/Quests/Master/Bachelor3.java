@@ -1,12 +1,13 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Quests.Under.*;
+import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
+import be.ac.umons.sgl.mom.Quests.Under.LookGirl;
+import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
 /**
-*Cette classe définit ce qu'est une quête de bachelier 1
+*Cette classe définit ce qu'est une quête de bachelier 3
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
@@ -26,18 +27,8 @@ public class Bachelor3 extends MasterQuest
 
   public void nextQuest()
   {
-    //compléter en fonction de maxime
+    //TODO voir les quetes master
   }
-
-  /**
-  *Cette méthode permet de gérer les rencontres entres Persoonage1 et le personnage2
-  *@param other qui est l'autre personnages dans le jeu (aider - combat)
-  */
-    public void meetOther(PNJ other)
-    {
-    }
-
-
 
   /**
   *Cette méthode renvoie l'object de la quête
