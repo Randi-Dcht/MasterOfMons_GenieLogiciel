@@ -2,7 +2,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Quests.Under.FreeHeadInMons;
+import be.ac.umons.sgl.mom.Quests.Under.FreeTimeMons;
 import be.ac.umons.sgl.mom.Quests.Under.HelpMe;
 import be.ac.umons.sgl.mom.Quests.Under.SuccesfulYear;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
@@ -17,7 +17,7 @@ public class Bachelor2 extends MasterQuest
   /*lesson que le personnage va suivre lors de ce bachelier*/
   final Lesson[] lesson = {};
 /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
-  final UnderQuest[] underQuest = {new HelpMe(this,34),new FreeHeadInMons(this,33)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33)};
+  final UnderQuest[] underQuest = {new HelpMe(this,34),new FreeTimeMons(this,33)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33)};
 
   public Bachelor2(People people, MasterQuest before)
   {

@@ -2,22 +2,20 @@ package be.ac.umons.sgl.mom.Quests.Under;
 
 import be.ac.umons.sgl.mom.Quests.Quest;
 
-public class LookGirl extends UnderQuest
+public class FreeTimeMons extends UnderQuest
     {
-      public LookGirl(Quest q,int nb)
+      public FreeTimeMons(Quest q, int nb)
       {
-        super("LookGirl",nb,q);
+        super("FreeTimeMons",nb,q);
       }
-
 
       @Override
       public void evenActivity() {
       }
 
-      private void randomChooseGirl(){}
-      private void timeForCouple(){}
-      private void checkGirl(){}
-      private void goToHerMons(){}
+      private void goToMons(){}
+      private void goToDrink(){}
+      private void friendPnj(){}
 
       public Quest[] getSubQuests()
       {
