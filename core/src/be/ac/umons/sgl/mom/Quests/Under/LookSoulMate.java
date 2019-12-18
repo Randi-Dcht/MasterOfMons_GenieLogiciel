@@ -14,8 +14,8 @@ public class LookSoulMate extends UnderQuest
       public void evenActivity() {
       }
 
-      private void randomChooseGirl(){}
-      private void timeForCouple(){}
+      private void randomChooseOther(){}
+      private void timeForSaoulMate(){}
       private void checkGirl(){}
       private void goToHerMons(){}
 
