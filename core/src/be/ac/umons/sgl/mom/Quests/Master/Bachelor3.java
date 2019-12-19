@@ -27,7 +27,7 @@ public class Bachelor3 extends MasterQuest
 
   public void nextQuest()
   {
-    //TODO voir les quetes master
+    newQuest(new Master1(people,this));
   }
 
   /**
