@@ -7,39 +7,42 @@ import be.ac.umons.sgl.mom.Quests.Under.LookSoulMate;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
 /**
-*Cette classe définit ce qu'est une quête de bachelier 3
-*@author Randy Dauchot (étudiant en Sciences informatique)
-*/
+ *This class define the masterQuest of the bachelor 3
+ *@author Randy Dauchot (étudiant en Sciences informatique Umons)
+ */
 
 public class Bachelor3 extends MasterQuest
 {
-  /*lesson que le personnage va suivre lors de ce bachelier*/
-  final Lesson[] lesson = {};
-/*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
-  final UnderQuest[] underQuest = {new LookSoulMate(this,50), new GoToPriorityLesson(this,50)};
+    /*This is the lessons to follow*/
+    final Lesson[] lesson = {};
+    /*this is the goals of this quest*/
+    final UnderQuest[] underQuest = {new LookSoulMate(this,50), new GoToPriorityLesson(this,50)};
 
-  public Bachelor3(People people, MasterQuest before)
-  {
-    super(before,people);
-    ObligationLesson(lesson);
-    addUnderQuest(underQuest);
-  }
-
-  public void nextQuest()
-  {
-    newQuest(new Master1(people,this));
-  }
-
-  /**
-  *Cette méthode renvoie l'object de la quête
-  */
-    public String question()
+    public Bachelor3(People people, MasterQuest before)
     {
-      return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
+        super(before,people);
+        ObligationLesson(lesson);
+        addUnderQuest(underQuest);
     }
 
-  public String getName()
-  {
-    return "Bachelier3";
-  }
+    /**
+     * This method allows to switch with the after masterQuest
+     */
+    public void nextQuest()
+    {
+        newQuest(new Master1(people,this));
+    }
+
+    /**
+     *This is a question of this quest
+     */
+    public String question()
+    {
+        return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
+    }
+
+    public String getName()
+    {
+        return "Bachelier3";
+    }
 }

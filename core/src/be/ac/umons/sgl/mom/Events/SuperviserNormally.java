@@ -37,7 +37,7 @@ public class SuperviserNormally
         private Saving save;
         /*temps du jeu*/
         private Schedule time;
-        //private ArrayList<Events> events = new ArrayList<Events>;
+        //private ArrayList<Event> events = new ArrayList<Event>;
 
         public  People getPeople()
         {
