@@ -14,30 +14,34 @@ import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
- *Cette classe permet de surveiller le jeu en temps réelle et gère en fonction des règles.
+ This class allows to monitor the game in the normally game without extension .
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
 
 public class SuperviserNormally
 {
-        /*joueur dans cette partie*/
+        /*The people who play this party*/
         private People people;
-        /*liste des objets présent sur toutes les maps*/
+        /*The all objects in all maps in this game*/
         private ArrayList<Items> objet = new ArrayList<Items>();
-        /*liste des personnages ordinateur*/
+        /*The all no people in thsi game*/
         private ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
-        /*Interface graphique pour cette partie*/
+        /*This is an interface graphic of this game (to display quest)*/
         private QuestShower questShower;
-        /*chaque 10 minutes*/
-        private double minute = 600;
-        /*sauveguarde du jeux*/
+        /**/
+        private double minute = 600; /*<= changer par un événement qui viendrer de la classe timer*/
+        /*This the class who save the game in real time*/
         private Saving save;
-        /*temps du jeu*/
+        /*This is the time in the game*/
         private Schedule time;
-        //private ArrayList<Event> events = new ArrayList<Event>;
+        /*This is a couple with a class associated to event*/
+        private Map<Events,List<Observer>> list = new HashMap<>();
 
         public  People getPeople()
         {
