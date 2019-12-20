@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 /**
  This class allows to monitor the game in the normally game without extension .
@@ -33,16 +31,19 @@ public class SuperviserNormally
         /*The all no people in thsi game*/
         private ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
         /*This is an interface graphic of this game (to display quest)*/
-        private QuestShower questShower;
+        //private QuestShower questShower;
         /**/
         private double minute = 600; /*<= changer par un événement qui viendrer de la classe timer*/
         /*This the class who save the game in real time*/
         private Saving save;
         /*This is the time in the game*/
         private Schedule time;
-        /*This is a couple with a class associated to event*/
-        private Map<Events,List<Observer>> list = new HashMap<>();
 
+
+        /**
+         * This methods allows to return the people of this game
+         * @return people of this game
+         */
         public  People getPeople()
         {
             return people;
@@ -59,55 +60,52 @@ public class SuperviserNormally
         }
 
         /**
-         * Permet de créer une nouvelle partie du jeu.
-         * Elle permet d'instancier les classes nécessaire
-         * @param namePlayer qui est le pseudo du joueur
-         * @param type qui est le type de personnage (fort,maigre,...)
-         * @param graphical qui est l'affiche graphique du jeu
-         * */
-        public void newParty(String namePlayer, Type type, QuestShower graphical, GraphicalSettings gs)
+         * This method to allows to create a new party of this game
+         * This class allows create all instance of the class for a game
+         * @param namePlayer who name of the player play game
+         * @param type who is type of the people as defence,agility
+         */
+        public void newParty(String namePlayer, Type type, GraphicalSettings gs)
         {
-            questShower = graphical;
             people = new People(namePlayer,type);
             MasterQuest mQ = new Bachelor1(people,null);
             people.newQuest(mQ);
-            questShower.setQuest(mQ);
+            //questShower.setQuest(mQ); /*=>*/ event.update(Events.changeQuest);
             time = new Schedule(9,1,8,2019);
             save = new Saving(people,namePlayer,gs);
         }
 
         /**
-         * Permet de dire que le joueur change de quêtes et appelle l'interface graphique
+         * voir pour mettre dans la classe de guillaume
          * */
-        public void changedQuest()
-        {
+        public void changedQuest() //TODO mettre dans la classe de guillaume
+        {/*
             if(questShower != null) //permet lors des tests de ne pas intancier de classes graphique.
             {
                 Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
                 save.Signal();
-            }
+            }*/
         }
 
         /**
-         * Cette méthode permet d'appeler régulièrement la méthode énergie du joueur
-         * */
+         * This method
+         * @param dt who is the time between two windows
+         */
         public void callMethod(double dt)
         {
-            if(people != null) /*cette méthode permet diminuer l'énergie du joueur*/
-                people.energy(dt); //pour le joueur
+            if(people != null)
+                people.energy(dt);
 
-            if(objet != null) /*cette méthode permet de diminuer la vie de l'objet*/
-            {
-                for (Items o : objet){o.make(dt);}//pour chaques objets
-            }
+            for (Items o : objet)
+                o.make(dt);
+
             minute = minute - dt;
-            if(minute <= 0) /*permet de faire une sauvguarde de temps en temps automatiquement*/
+            if(minute <= 0)
             {
                 save.Signal();
                 minute = 600;
             }
-
-            time.updateSecond(0);
+            time.updateSecond(dt);
         }
 
     /**

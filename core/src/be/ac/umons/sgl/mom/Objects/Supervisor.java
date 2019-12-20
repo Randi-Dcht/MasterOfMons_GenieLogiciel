@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Objects;
 
 import java.util.*;
+
+import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
@@ -54,6 +56,32 @@ public class Supervisor /*! va être supprimer !*/
     questShower.setQuest(mQ);
     time = new Schedule(9,1,8,2019);
     save = new Saving(people,namePlayer,gs);
+  }
+
+  public static void test() /*<= ceux-ci est implementer pour les events*/
+  {
+    HashMap<Events,ArrayList<String>> l = new HashMap<>();
+    ArrayList<String> aa = new ArrayList<>(); aa.add("a");aa.add("b");aa.add("c");
+    ArrayList<String> bb = new ArrayList<>(); bb.add("1");bb.add("2");bb.add("3");
+    l.put(Events.ChangeQuest,new ArrayList<String>(aa));
+    l.put(Events.HourTimer,new ArrayList<String>(bb));
+
+    for(String str : l.get(Events.ChangeQuest))
+    {
+      System.out.println("quoi1 : " + str);
+    }
+
+    for(String str : l.get(Events.HourTimer))
+    {
+      System.out.println("quoi2 : " + str);
+    }
+
+    l.get(Events.ChangeQuest).add("rajoute");
+
+    for(String str : l.get(Events.ChangeQuest))
+    {
+      System.out.println("quoi3 : " + str);
+    }
   }
 
   public static void changedQuest()

@@ -1,43 +1,34 @@
 package be.ac.umons.sgl.mom.Events;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * This abstract class allows define the eventAction in the game for a people or a PNJ.
  */
-public abstract class Event
+public class Event
 {
-    /*max number of this instance od this class*/
-    private static int num = 0;
-    /*for every instance, unique id */
-    final int id;
-    /*the name of this evens who is an enum (Action)*/
-    final Actions name;
-    /*To know if this instance used*/
-    protected boolean see = true;
+    /*This is a couple with a class associated to event*/
+    private HashMap<Events, List<Observer>> list;
 
-    /**
-     * The constructor of a Event
-     * @param name who is an Action enum
-     */
-    public Event(Actions name)
+    public Event()
     {
-        this.name = name;
-        this.id = num;
-        num++;
+        list = new HashMap<>();
     }
 
-    /**
-     * This method allows the launch a other method in People or PNJ
-     */
-    public abstract void run();
-
-    /**
-     * This method allows return an unique ID of Event
-     * @return  id who is integer
-     */
-    public int getID()
+    public void add(Events evt, Observer ... obs)
     {
-        return id;
+        if(!list.containsKey(evt))
+            list.put(evt,new ArrayList<>());
+        for(Observer ob : obs)
+            list.get(evt).add(ob);
+    }
+
+    public void update(Events evt)
+    {
+        if(list.containsKey(evt))
+          for(Observer obs : list.get(evt))
+              obs.notify(evt);
     }
 }
