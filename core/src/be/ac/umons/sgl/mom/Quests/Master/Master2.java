@@ -2,7 +2,9 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
+import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
 
 /**
  *This class define the five year in the University of Mons with the goals.
@@ -12,9 +14,9 @@ import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 public class Master2 extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
-    final Lesson[] lesson ={};
+    final Lesson[] lesson ={/*code ici*/};
     /*This is the goals of this MasterQuest*/
-    final UnderQuest[] underQuest = {};
+    final UnderQuest[] underQuest = {new GoToLastLesson(this),new WriteMemory(this)};
 
     /**
      * This contructor define a Bachelor 1 of Umons
@@ -33,6 +35,7 @@ public class Master2 extends MasterQuest
      */
     public void nextQuest()
     {
+        /*code ici*/
     }
 
 
@@ -42,7 +45,7 @@ public class Master2 extends MasterQuest
      */
     public String question()
     {
-        return "...";
+        return "...";/*code ici*/
     }
 
     /**

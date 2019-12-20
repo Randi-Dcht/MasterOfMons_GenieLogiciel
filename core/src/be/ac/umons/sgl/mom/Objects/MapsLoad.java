@@ -23,11 +23,11 @@ public class MapsLoad
                     {
                         System.out.println("Xml Maps Documents End");
                     }
-                    public void startElement(String uri, String localName, String name, Attributes attributes)
+                    public void startElement(String ur, String localName, String name, Attributes attributes)
                     {
                         System.out.println("Element: " + name);
                     }
-                    public void endElement(String uri, String localName, String name)
+                    public void endElement(String ur, String localName, String name)
                     {
                         System.out.println("Quit element");
                     }
