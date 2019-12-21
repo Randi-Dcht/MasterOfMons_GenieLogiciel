@@ -3,5 +3,5 @@ package be.ac.umons.sgl.mom.Events;
 
 public interface Observer
 {
-    public void notify(Events event);
+    public void update(Events event);
 }

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This abstract class allows define the eventAction in the game for a people or a PNJ.
  */
-public class Event
+public class Event implements Observable
 {
     /*This is a couple with a class associated to event*/
     private HashMap<Events, List<Observer>> list;
@@ -17,6 +17,7 @@ public class Event
         list = new HashMap<>();
     }
 
+    @Override
     public void add(Events evt, Observer ... obs)
     {
         if(!list.containsKey(evt))
@@ -25,10 +26,25 @@ public class Event
             list.get(evt).add(ob);
     }
 
-    public void update(Events evt)
+    @Override
+    public void remove(Events evt, Observer... obs)
+    {
+        if(list.containsKey(evt))
+            for(Observer ob : obs)
+                list.get(evt).remove(ob);
+    }
+
+    @Override
+    public void remove(Events evt)
+    {
+        list.remove(evt);
+    }
+
+    @Override
+    public void notify(Events evt)
     {
         if(list.containsKey(evt))
           for(Observer obs : list.get(evt))
-              obs.notify(evt);
+              obs.update(evt);
     }
 }

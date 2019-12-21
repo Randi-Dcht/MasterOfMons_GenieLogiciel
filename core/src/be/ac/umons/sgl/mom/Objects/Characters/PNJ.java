@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
@@ -10,7 +12,7 @@ import java.io.Serializable;
 *This abstract class allows define a no player, it is a character pilot by computer.
 *@author Randy Dauchot (étudiant en Sciences informatique Umons)
 */
-public abstract class PNJ implements Serializable, Attack
+public abstract class PNJ implements Serializable, Attack, Observer
 {
   final String name;
   private double x;
@@ -69,6 +71,8 @@ public abstract class PNJ implements Serializable, Attack
   public void attack() {
 
   }
+
+  public void update(Events evt){}
 
   /**
    * This method allows to say the probability of dodge the other attack

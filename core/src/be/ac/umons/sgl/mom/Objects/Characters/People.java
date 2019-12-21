@@ -2,6 +2,8 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 
 import java.util.*;
 import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Couple;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
@@ -11,7 +13,7 @@ import java.io.Serializable;
 *This class allows to define a people with all characteristic.
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public class People implements Serializable, Attack
+public class People implements Serializable, Attack, Observer
 {
 /*savoir où est le personnage sur la carte*/
 	private double x;
@@ -236,5 +238,10 @@ public class People implements Serializable, Attack
 	public double dodge() /*esquive*/
 	{
 		return Math.min((agility/100),0.75);
+	}
+
+	@Override
+	public void update(Events event) {
+
 	}
 }

@@ -7,7 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class MapsLoad
 {
-        public static void main(String[] args)
+        public void readXML(String file)
         {
             try
             {

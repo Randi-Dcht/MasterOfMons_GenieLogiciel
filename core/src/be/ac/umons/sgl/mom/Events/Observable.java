@@ -2,7 +2,8 @@ package be.ac.umons.sgl.mom.Events;
 
 public interface Observable
 {
-    public void add(Observer obs);
-    public void remove(Observer obs);
-    public void notif();
+    void notify(Events evt);
+    void add(Events evt,Observer ... obs);
+    void remove(Events evt, Observer ... obs);
+    void remove(Events evt);
 }

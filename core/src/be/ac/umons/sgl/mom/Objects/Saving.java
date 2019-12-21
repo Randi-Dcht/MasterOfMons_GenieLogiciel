@@ -5,12 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.*;
 
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 /**
  * Cette classe permet de créer une sauveguarde automatique du jeu ou à la fin de la partie
  * */
-public class Saving
+public class Saving implements Observer
 {
     private String nameSave;
     private String oldSave;
@@ -97,5 +99,10 @@ public class Saving
         catch(ClassNotFoundException  e){}
         catch (FileNotFoundException e){}
         catch (IOException e){}
+    }
+
+    @Override
+    public void update(Events event) {
+
     }
 }

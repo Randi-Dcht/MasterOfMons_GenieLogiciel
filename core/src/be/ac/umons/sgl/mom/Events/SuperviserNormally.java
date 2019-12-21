@@ -1,7 +1,6 @@
 package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -11,11 +10,9 @@ import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.Schedule;
 import be.ac.umons.sgl.mom.Quests.Master.Bachelor1;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
-import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+
 
 /**
  This class allows to monitor the game in the normally game without extension .
