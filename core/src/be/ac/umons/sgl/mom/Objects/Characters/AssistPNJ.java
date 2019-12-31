@@ -6,11 +6,17 @@ public class AssistPNJ extends PNJ
 {
   public AssistPNJ()
   {
-    super("Bagarre");
+    super("aider les autres");
   }
 
   public Actions meet(People people)
   {
     return null;
+  }
+
+  @Override
+  public Actions getAction()
+  {
+    return Actions.HelpOther;
   }
 }

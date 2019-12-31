@@ -13,7 +13,7 @@ import java.io.Serializable;
 *This class allows to define a people with all characteristic.
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
-public class People implements Serializable, Attack, Observer
+public class People implements Serializable, Attack, Observer, Social
 {
 /*savoir où est le personnage sur la carte*/
 	private double x;
@@ -243,5 +243,10 @@ public class People implements Serializable, Attack, Observer
 	@Override
 	public void update(Events event) {
 
+	}
+
+	@Override
+	public Actions getAction() {
+		return null; //TODO etre demander via l'interface graphique
 	}
 }

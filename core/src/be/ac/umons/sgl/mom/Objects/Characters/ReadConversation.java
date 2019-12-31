@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * This class allows to read the file with the speech of people and PNJ.
+ * This class is static
+ * @author Randy Dauchot (étudiant en sciences informatique Umons)
+ */
+
 public class ReadConversation
 {
     private static String url = "./core/assets/Conversation/";
@@ -40,6 +46,11 @@ public class ReadConversation
         return pnj.get(answer);
     }
 
+    /**
+     * This method allows to read the file with the speech of PNJ when the people speak.
+     * @param file who is the file with the speech
+     * @return Map with the key is the possibility answer of people and other is the response
+     */
     private HashMap<String,ArrayList<String>> getPeople(String file)
     {
         String vertical;
@@ -62,7 +73,12 @@ public class ReadConversation
         }
         return list;
     }
-
+    /**
+     * This static method read the file and create a tab with first column is speech of PNJ.
+     * And the second columns is a tab with three columns who are answers of question of PNJ
+     * @param file who is a file with speech
+     * @return table[speech PNJ][table[choose speech people]]
+     */
     private HashMap<String,String> getPnj(String file)
     {
         String vertical;

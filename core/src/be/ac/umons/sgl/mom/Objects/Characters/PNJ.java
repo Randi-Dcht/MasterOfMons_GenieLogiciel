@@ -12,7 +12,7 @@ import java.io.Serializable;
 *This abstract class allows define a no player, it is a character pilot by computer.
 *@author Randy Dauchot (étudiant en Sciences informatique Umons)
 */
-public abstract class PNJ implements Serializable, Attack, Observer
+public abstract class PNJ implements Serializable, Attack, Observer, Social
 {
   final String name;
   private double x;

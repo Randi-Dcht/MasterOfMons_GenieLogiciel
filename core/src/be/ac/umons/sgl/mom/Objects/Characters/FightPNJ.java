@@ -13,4 +13,10 @@ public class FightPNJ extends PNJ
   {
     return null;
   }
+
+  @Override
+  public Actions getAction()
+  {
+    return Actions.Attack;
+  }
 }
