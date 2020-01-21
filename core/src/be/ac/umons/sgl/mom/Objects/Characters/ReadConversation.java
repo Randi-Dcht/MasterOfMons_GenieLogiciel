@@ -6,9 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.badlogic.gdx.Gdx;
 
 /**
  * This class allows to read the file with the speech of people and PNJ.
@@ -19,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 public class ReadConversation
 {
     private static String url = "./core/assets/Conversation/";
-    private static final Logger log = LogManager.getLogger(ReadConversation.class); //TODO voir ou mettre logger ;)
 
     private HashMap<String,String> pnj;
     private HashMap<String, ArrayList<String>> people;
@@ -73,7 +70,7 @@ public class ReadConversation
         }
         catch (Exception e)
         {
-            log.debug("Error in the reading texte of people");
+            Gdx.app.error("Error in the reading texte of people", e.getMessage());
         }
         return list;
     }
@@ -101,7 +98,7 @@ public class ReadConversation
         }
         catch (Exception e)
         {
-            log.debug("Error in the read of pnj");
+            Gdx.app.error("Error in the read of pnj",e.getMessage());
         }
         return list;
     }
