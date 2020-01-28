@@ -47,6 +47,8 @@ public abstract class GameState {
         init();
     }
 
+    protected GameState(){}
+
     /**
      * Initialise les variables requises..
      */

@@ -10,6 +10,7 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.LoadFile;
 import com.badlogic.gdx.Gdx;
+import sun.applet.Main;
 
 import java.awt.*;
 
@@ -30,6 +31,7 @@ public class MainMenuState extends MenuState {
     public MainMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+    protected MainMenuState(){}
 
     /***
      * Initialise le menu.
