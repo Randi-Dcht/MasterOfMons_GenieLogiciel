@@ -9,15 +9,13 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 
-/**
-*This class allows to define a people with all characteristic.
-*@author Randy Dauchot (étudiant en Sciences informatique)
-*/
+ /**
+ *This class allows to define a people with all characteristic.
+ *This is a logic party of people.
+ *@author Randy Dauchot (étudiant en Sciences informatique)
+ */
 public class People implements Serializable, Attack, Observer, Social
 {
-/*savoir où est le personnage sur la carte*/
-	private double x;
-	private double y;
 /*caracteristique physique du personnage*/
 	private int strength;
 	private int defence;
@@ -204,16 +202,6 @@ public class People implements Serializable, Attack, Observer, Social
 	{
 		this.state = state;
 	} //TODO supprimer à verifier
-
-/**
-*Cette méthode doit être appeler lorque le personnage bouge sur la maps
-*@param couple qui est l'absice et ordonnée du personnage
-*/
-	public void move(Couple couple) //TODO : vériifer si encore utile au mois de janvier
-	{
-		this.x = couple.x;
-		this.y = couple.y;
-	}
 
 	/**
 	*This method allows to say the time between two attack of this people
