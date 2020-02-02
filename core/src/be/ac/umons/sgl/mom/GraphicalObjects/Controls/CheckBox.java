@@ -21,7 +21,7 @@ public class CheckBox extends Control {
     /**
      * Si la case est cochée ou non.
      */
-    private boolean checked = false;
+    protected boolean checked = false;
     /**
      * Le texte à afficher à côté de la case.
      */
@@ -45,6 +45,7 @@ public class CheckBox extends Control {
     protected CheckBox(GameInputManager gim, GraphicalSettings gs) {
         this(gim, gs, "");
     }
+    protected CheckBox() {}
     /**
      * Crée une nouvelle case à cocher .
      *
