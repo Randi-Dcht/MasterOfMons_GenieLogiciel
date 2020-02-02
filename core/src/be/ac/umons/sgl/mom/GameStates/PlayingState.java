@@ -50,7 +50,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * La vitesse du joueur.
      */
-    protected final float VELOCITY = 5000;
+    protected float VELOCITY = 5000;
 
     /**
      * La taille horizontale (en nombre de tuile) de la carte entière.
@@ -122,6 +122,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+    protected PlayingState() {}
 
     @Override
     public void init() {
