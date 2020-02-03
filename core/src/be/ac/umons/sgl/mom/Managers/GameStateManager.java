@@ -66,7 +66,10 @@ public class GameStateManager {
         }
         if (popPreviousOne)
             gameStateStack.pop().dispose();
+        else if (! gameStateStack.empty())
+            gameStateStack.peek().loseFocus();
         gameStateStack.push(g);
+        g.getFocus();
     }
 
     /**
@@ -74,6 +77,7 @@ public class GameStateManager {
      */
     public void removeFirstState() {
         gameStateStack.pop();
+        gameStateStack.peek().getFocus();
     }
 
     /**
