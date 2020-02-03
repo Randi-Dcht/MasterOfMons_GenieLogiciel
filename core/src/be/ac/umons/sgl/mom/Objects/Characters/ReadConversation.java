@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import com.badlogic.gdx.Gdx;
 
 /**
  * This class allows to read the file with the speech of people and PNJ.
@@ -69,7 +70,7 @@ public class ReadConversation
         }
         catch (Exception e)
         {
-            System.err.println(e);
+            Gdx.app.error("Error in the reading texte of people", e.getMessage());
         }
         return list;
     }
@@ -97,7 +98,7 @@ public class ReadConversation
         }
         catch (Exception e)
         {
-            System.err.println(e);
+            Gdx.app.error("Error in the read of pnj",e.getMessage());
         }
         return list;
     }
