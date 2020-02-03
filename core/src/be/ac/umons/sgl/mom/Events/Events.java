@@ -2,8 +2,15 @@ package be.ac.umons.sgl.mom.Events;
 
 public enum Events
 {
-    HourTimer("timer"),
-    ChangeQuest("quest");
+    HourTimer("timer"),                       /*...*/
+    ChangeQuest("quest"),                     /*...*/
+    PlaceGrandAmphi("placeNiGA"),             /*...*/
+    PlaceDeVinci("placeNiDV"),                /*...*/
+    PlaceHoudeng("placeHG"),                  /*...*/
+    PlaceCenterMons("placeMonsCenter"),       /*...*/
+    PlaceKot("kot"),                          /*...*/
+    MeetOther("meetOther"),                   /*...*/
+    AddFriend("meetFriend");                  /*...*/
 
     private String name;
 

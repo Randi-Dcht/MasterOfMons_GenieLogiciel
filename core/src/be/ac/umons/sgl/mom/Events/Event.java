@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This abstract class allows define the eventAction in the game for a people or a PNJ.
+ * This class allows to ... TODO continuer
  */
 public class Event implements Observable
 {

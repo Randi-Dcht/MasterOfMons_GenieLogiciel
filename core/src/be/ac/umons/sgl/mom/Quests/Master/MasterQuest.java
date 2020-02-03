@@ -4,6 +4,8 @@ import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
 
-public abstract class MasterQuest implements Quest,Serializable
+public abstract class MasterQuest implements Quest,Serializable,Observer
 {
     /*nombre de quête qui sont chainées*/
     protected static int numberQuest = 1;
@@ -308,4 +310,9 @@ public abstract class MasterQuest implements Quest,Serializable
      */
     public abstract String question();
 
+    @Override
+    public void update(Events event)
+    {
+        //TODO dire quoi faire quand reçoit une notification de changement
+    }
 }

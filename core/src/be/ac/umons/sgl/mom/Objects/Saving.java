@@ -8,6 +8,7 @@ import java.io.*;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import com.badlogic.gdx.Gdx;
 
 /**
  * This class allows to save this party, every end party or every time define.
@@ -68,37 +69,41 @@ public class Saving implements Observer
 
     /**
      * This method allows to create a file with the save of the game
-     * @param fichier
+     * @param file who is the file with the saving game.
      * @param people qui est l'objet a sauveguarder
      * */
-    private void newSave(People people,GraphicalSettings gs, String fichier)
+    private void newSave(People people,GraphicalSettings gs, String file)
     {
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe + fichier+".mom"))));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe + file+".mom"))));
             sortie.writeObject(people);
             sortie.close();
         }
-        catch(IOException e){}
+        catch(IOException e)
+        {
+            Gdx.app.error("Error in the saving the game (out)", e.getMessage());
+        }
     }
 
     /**
      * Cette méthode permet de reprendre les objets sauvguarder dans un fichier et démarer une nouvelle partie
-     * @param fichier qui est le nom de fichier complet
+     * @param file qui est le nom de fichier complet
      * */
-    private void playOldParty(String fichier)
+    private void playOldParty(String file)
     {
         try
         {
             ObjectInputStream entree;
-            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + fichier+".mom"))));
+            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + file+".mom"))));
             people = (People) entree.readObject();
             graSet = (GraphicalSettings) entree.readObject();
         }
-        catch(ClassNotFoundException  e){}
-        catch (FileNotFoundException e){}
-        catch (IOException e){}
+        catch(ClassNotFoundException | IOException e)
+        {
+            Gdx.app.error("Error in the replay the old game party (in)", e.getMessage());
+        }
     }
 
     @Override

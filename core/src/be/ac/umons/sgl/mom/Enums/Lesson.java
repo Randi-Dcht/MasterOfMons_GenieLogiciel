@@ -5,6 +5,17 @@ package be.ac.umons.sgl.mom.Enums;
 */
 public enum Lesson
 {
+	/*
+	* Note of type:
+	* -----
+	* O --> course is obligatory to pass a test
+	* F --> course isn't obligatory to pass a test
+	* ____________________________________________
+	* Note of number:
+	* ---------------
+	* This is the number of course for a period 1 year of University.
+	* This allows to calculated the number of hour for this course.
+    */
 	MI1('O',"math pour informatique 1",Place.Nimy,1,10),
 	MI2('O',"math pour informatique 2",Place.Nimy,1,10),
 	algo1('O',"algorithme python",Place.Nimy,1,10),
@@ -75,8 +86,6 @@ public enum Lesson
 */
 	public boolean take(int year)
 	{
-		if(this.year <= year)
-		  return true;
-		return false;
+		return this.year <= year;
 	}
 }
