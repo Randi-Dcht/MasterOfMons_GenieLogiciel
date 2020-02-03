@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
@@ -132,7 +133,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         gmm = gsm.getGameMapManager();
 
         gmm.setMap("NimyTest.tmx");
-
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
@@ -276,8 +276,11 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     @Override
     public void handleInput() {
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.setState(InGameMenuState.class);
+        else if (gim.isKey(Input.Keys.P, KeyStatus.Pressed)) {
+            inventoryShower.setHided(true);
+            gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
         }
         inventoryShower.handleInput();
     }
@@ -291,5 +294,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         lifeBar.dispose();
         energyBar.dispose();
         expBar.dispose();
+    }
+
+    @Override
+    public void getFocus() {
+        inventoryShower.setHided(false);
     }
 }

@@ -88,6 +88,8 @@ public class InventoryShower extends Control {
      */
     protected InventoryItem selectedItem;
 
+    protected boolean hided = false;
+
     /**
      * Crée un nouveau support pour montrer l'inventaire d'un joueur.
      * @param gim Le gestionnaire d'entrée du jeu.
@@ -124,6 +126,8 @@ public class InventoryShower extends Control {
      * @param itemSize La taille d'un seul élément d'inventaire.
      */
     public void draw(Batch batch, int centerX, int height, Point itemSize) {
+        if (hided)
+            return;
         itemWidth = itemSize.x;
         if (isBeingAnimated)
             itemSize.x = (int)duringAnimationItemWidth;
@@ -154,6 +158,10 @@ public class InventoryShower extends Control {
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
+    public void setHided(boolean hided) {
+        this.hided = hided;
+    }
+
 
 //    /**
 ////     * Lance les animations de la partie "Inventaire" du HUD.
@@ -178,8 +186,8 @@ public class InventoryShower extends Control {
 ////    }
 
     /**
-     //     * Lance les animations de la partie "Inventaire" du HUD.
-     //     */
+     * Lance les animations de la partie "Inventaire" du HUD.
+     */
     public void animate() {
         beginAnimation();
         DoubleAnimation da = new DoubleAnimation(0, 1, 750);
