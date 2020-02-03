@@ -5,42 +5,44 @@ package be.ac.umons.sgl.mom.Enums;
 */
 public enum Lesson
 {
-	MI1('O',"math pour informatique 1",Place.Nimy,1),
-	MI2('O',"math pour informatique 2",Place.Nimy,1),
-	algo1('O',"algorithme python",Place.Nimy,1),
-	algo2('F',"algorithme java",Place.Nimy,1),
-	ftOrdi('F',"fonctionnement des ordinateurs",Place.Nimy,1),
-	nbComplexe('F',"nombre complexe",Place.Nimy,2),
-	opti('O',"optimisation lineaire",Place.Nimy,2),
-	anglais('O',"english for sciences",Place.Nimy,2),
-	OS('O',"systeme exploitation",Place.Nimy,2),
-	projet1('F',"projet bachelier 1",Place.Nimy,1),
-	projet2('F',"projet bachelier 2",Place.Nimy,2),
-	calculus2('O',"algèbre partie B",Place.Nimy,2),
-	ecopol('F',"economie politique",Place.Nimy,2),
-	realTime('F',"real time computer",Place.Nimy,3),
-	reseau('O',"reseau",Place.Nimy,2),
-	calculProba('O',"calcul de probabilite",Place.Nimy,3),
-	intelligen('O',"intelligence artificielle",Place.Nimy,3),
-	compilation('F',"compilation",Place.Nimy,3),
-	grapheOpti('O',"graphe et optimisation",Place.Nimy,3),
-	baseDonnes('F',"base de données",Place.Nimy,3),
-	statistique('F',"statistique",Place.Nimy,3);
+	MI1('O',"math pour informatique 1",Place.Nimy,1,10),
+	MI2('O',"math pour informatique 2",Place.Nimy,1,10),
+	algo1('O',"algorithme python",Place.Nimy,1,10),
+	algo2('F',"algorithme java",Place.Nimy,1,10),
+	ftOrdi('F',"fonctionnement des ordinateurs",Place.Nimy,1,10),
+	nbComplexe('F',"nombre complexe",Place.Nimy,2,10),
+	opti('O',"optimisation lineaire",Place.Nimy,2,10),
+	anglais('O',"english for sciences",Place.Nimy,2,10),
+	OS('O',"systeme exploitation",Place.Nimy,2,10),
+	projet1('F',"projet bachelier 1",Place.Nimy,1,10),
+	projet2('F',"projet bachelier 2",Place.Nimy,2,10),
+	calculus2('O',"algèbre partie B",Place.Nimy,2,10),
+	ecopol('F',"economie politique",Place.Nimy,2,10),
+	realTime('F',"real time computer",Place.Nimy,3,10),
+	reseau('O',"reseau",Place.Nimy,2,10),
+	calculProba('O',"calcul de probabilite",Place.Nimy,3,10),
+	intelligen('O',"intelligence artificielle",Place.Nimy,3,10),
+	compilation('F',"compilation",Place.Nimy,3,10),
+	grapheOpti('O',"graphe et optimisation",Place.Nimy,3,10),
+	baseDonnes('F',"base de données",Place.Nimy,3,10),
+	statistique('F',"statistique",Place.Nimy,3,10);
 
 	final char type;
 	final String name;
 	final Place place;
 	final int year;
+	final int number;
 
 /**
 *Constrcuteur interne
 */
-	private Lesson(char type,String name, Place place,int year)
+	private Lesson(char type,String name, Place place,int year,int number)
 	{
 		this.type  = type;
 		this.name   = name;
 		this.place  = place;
 		this.year = year;
+		this.number = number;
 	}
 
 /**
@@ -49,9 +51,12 @@ public enum Lesson
 */
 	public boolean obligatoryCourse()
 	{
-		if(type == 'O')
-		  return true;
-		return false;
+		return type == 'O';
+	}
+
+	public int numberOfCourse()
+	{
+		return number;
 	}
 
 /**
