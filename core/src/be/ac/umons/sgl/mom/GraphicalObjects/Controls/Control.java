@@ -49,6 +49,7 @@ public abstract class Control {
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         topMargin = MasterOfMonsGame.HEIGHT / 100;
     }
+    protected Control() {}
 
     /**
      * Dessine le contrôle sur <code>batch</code> aux coordonées (<code>x</code>, <code>y</code>) avec la longueur <code>width</code> et la largeur <code>y</code>.

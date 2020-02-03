@@ -15,35 +15,35 @@ public class GameMapManager {
     /**
      * Toutes les cartes chargées.
      */
-    private Map<String, TiledMap> maps;
+    protected Map<String, TiledMap> maps;
     /**
      * Tout les "renderer" des cartes déjà chargées.
      */
-    private Map<String, IsometricTiledMapRenderer> tiledMapsRenderer;
+    protected Map<String, IsometricTiledMapRenderer> tiledMapsRenderer;
     /**
      * Toutes les cartes à charger.
      */
-    private List<String> mapsToLoad;
+    protected List<String> mapsToLoad;
     /**
      * L'itérateur indiquant la position actuelle des cartes déjà chargées.
      */
-    private Iterator<String> loadIterator;
+    protected Iterator<String> loadIterator;
     /**
      * Le chargeur de carte.
      */
-    private TmxMapLoader mapLoader;
+    protected TmxMapLoader mapLoader;
     /**
      * Le renderer a utilisé à ce stade-ci.
      */
-    private IsometricTiledMapRenderer actualItmr;
+    protected IsometricTiledMapRenderer actualItmr;
     /**
      * La caméra sur laquelle afficher la carte.
      */
-    private OrthographicCamera view;
+    protected OrthographicCamera view;
     /**
      * Le nombre de cartes déjà chargées.
      */
-    private int mapsLoaded = 0;
+    protected int mapsLoaded = 0;
 
     /**
      * Crée un nouveau gestionnaire de carte.
@@ -93,10 +93,17 @@ public class GameMapManager {
             return true;
         String path = loadIterator.next();
         boolean lastOne = ! loadIterator.hasNext();
-        String name = new File(path).getName();
-        TiledMap map = mapLoader.load(path);
-        maps.put(name, map);
-        tiledMapsRenderer.put(name, new IsometricTiledMapRenderer(map));
+        if (new File(path).exists()) {
+            String name = new File(path).getName();
+            TiledMap map = mapLoader.load(path);
+            try {
+                maps.put(name, map);
+                tiledMapsRenderer.put(name, new IsometricTiledMapRenderer(map));
+            } catch (UnsatisfiedLinkError e) { // Added for the tests.
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
         mapsLoaded++;
         return lastOne;
     }

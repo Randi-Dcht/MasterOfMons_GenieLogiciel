@@ -30,6 +30,7 @@ public class MainMenuState extends MenuState {
     public MainMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+    protected MainMenuState(){}
 
     /***
      * Initialise le menu.

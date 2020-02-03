@@ -12,7 +12,7 @@ public class AnimationManager {
     /**
      * Le lien entre le nom d'une animation et l'animation en elle-même.
      */
-    private Map<String, Animation> animations;
+    protected Map<String, Animation> animations;
 
     /**
      * Crée un nouveau gestionnaire d'animation.

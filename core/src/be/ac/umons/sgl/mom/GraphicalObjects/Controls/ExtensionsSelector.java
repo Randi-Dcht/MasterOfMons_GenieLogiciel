@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.LoadFile;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.awt.*;
@@ -20,14 +21,14 @@ public class ExtensionsSelector extends Control {
     /**
      * La liste des extensions à afficher.
      */
-    List<Extension> extensions;
+    protected List<Extension> extensions;
     /**
      * La liste des cases à cocher.
      */
-    List<CheckBox> checkBoxList;
+    protected List<CheckBox> checkBoxList;
 
-    List<String> mapsToLoad;
-    List<LoadFile> filesToLoad;
+    protected List<String> mapsToLoad;
+    protected List<LoadFile> filesToLoad;
 
     /**
      * Crée un nouveau selecteur d'extension.
@@ -43,6 +44,7 @@ public class ExtensionsSelector extends Control {
             checkBoxList.add(new CheckBox(gim, gs, ext.extensionName));
         }
     }
+    protected ExtensionsSelector() {}
 
     @Override
     public void draw(Batch batch, Point pos, Point size) {
@@ -72,7 +74,9 @@ public class ExtensionsSelector extends Control {
         ArrayList<Extension> extensionList = new ArrayList<>();
         BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader(Gdx.files.getFileHandle("extensions", Files.FileType.Internal).file()));
+            Files f = Gdx.files;
+            FileHandle ef = Gdx.files.getFileHandle("extensions", Files.FileType.Internal);
+            br = new BufferedReader(new FileReader(ef.file()));
             Extension ext = null;
             int actualLine = 0;
             String line;
@@ -154,22 +158,22 @@ public class ExtensionsSelector extends Control {
         /**
          * Le nom de l'extension.
          */
-        String extensionName;
+        public String extensionName;
         /**
          * Les fichiers/dossiers à charger pour cette extension.
          */
-        ArrayList<LoadFile> dirsFileToLoad = new ArrayList<>();
+        public ArrayList<LoadFile> dirsFileToLoad = new ArrayList<>();
         /**
          * La classe à lancer pour l'extension.
          */
-        String mainClass;
+        public String mainClass;
         /**
          * Les cartes à charger pour cette extension.
          */
-        ArrayList<String> mapsToLoad = new ArrayList<>();
+        public ArrayList<String> mapsToLoad = new ArrayList<>();
         /**
          * Si l'extension est activée ou non.
          */
-        boolean activated;
+        public boolean activated;
     }
 }

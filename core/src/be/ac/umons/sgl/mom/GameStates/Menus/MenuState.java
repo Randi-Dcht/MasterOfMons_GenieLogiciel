@@ -55,6 +55,7 @@ public abstract class MenuState extends GameState {
     protected MenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+    protected MenuState(){}
 
     @Override
     public void init() {
@@ -138,6 +139,10 @@ public abstract class MenuState extends GameState {
             menuItems[selectedItem].toDoIfExecuted.run();
     }
 
+    public int getSelectedItem() {
+        return selectedItem;
+    }
+
     @Override
     public void dispose() {
         sb.dispose();
@@ -146,7 +151,7 @@ public abstract class MenuState extends GameState {
     /***
      * Représente un élément du menu.
      */
-    protected class MenuItem {
+    public class MenuItem {
         /**
          * Le nom de l'élément.
          */
@@ -158,7 +163,7 @@ public abstract class MenuState extends GameState {
         /**
          * L'élément est-il selectionnable ?
          */
-        private boolean selectable;
+        public boolean selectable;
         /**
          * Représente la position et la taille de l'élément (ATTENTION : En fonction des coordonnées de l'écran)
          */

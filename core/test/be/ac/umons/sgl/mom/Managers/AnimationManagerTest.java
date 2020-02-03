@@ -1,43 +1,20 @@
 package be.ac.umons.sgl.mom.Managers;
 
-import be.ac.umons.sgl.mom.Animations.Animation;
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Test si AnimationManager se comporte comme il devrait.
  */
-public class AnimationManagerTest {
-    /**
-     * Le lien entre le nom d'une animation et l'animation en elle-même.
-     */
-    private Map<String, Animation> animations;
+public class AnimationManagerTest extends AnimationManager {
 
     @BeforeEach
     public void init() {
         animations = new HashMap<>();
-    }
-
-    /**
-     * Mets à jour toutes les animations en fonction de <code>dt</code>.
-     * @param dt Le temps entre l'appel précédent de cette fonction et cet appel-ci.
-     */
-    public void update(float dt) {
-        for (Animation a : animations.values())
-            a.update(dt);
-
-        for (Iterator<String> it = animations.keySet().iterator(); it.hasNext();) { // Done in 2 times because of ConcurrentModificationException
-            String key = it.next();
-            Animation a = animations.get(key);
-            if (a.isFinished())
-                it.remove();
-        }
     }
 
     @Test

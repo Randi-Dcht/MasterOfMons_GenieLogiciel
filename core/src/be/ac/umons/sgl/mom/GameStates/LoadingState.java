@@ -68,6 +68,7 @@ public class LoadingState extends GameState {
     public LoadingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+    protected LoadingState(){}
 
     @Override
     public void init() {

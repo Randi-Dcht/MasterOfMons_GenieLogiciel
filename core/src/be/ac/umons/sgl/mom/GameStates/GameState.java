@@ -48,6 +48,12 @@ public abstract class GameState {
     }
 
     /**
+     * Create a new GameState
+     * Used for test purposes.
+     */
+    protected GameState(){}
+
+    /**
      * Initialise les variables requises..
      */
     public void init() {
@@ -74,4 +80,8 @@ public abstract class GameState {
      * Libère les ressources allouées lors de l'utilisation de l'état.
      */
     public abstract void dispose();
+
+    public void getFocus() {}
+
+    public void loseFocus() {}
 }

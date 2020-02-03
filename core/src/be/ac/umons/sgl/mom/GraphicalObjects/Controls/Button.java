@@ -20,19 +20,19 @@ public class Button extends Control {
     /**
      * L'action a éffectué quand le bouton reçoit un clique.
      */
-    private Runnable onClick;
+    protected Runnable onClick;
     /**
      * Permet de dessiner les formes comme les rectangles.
      */
-    private ShapeRenderer sr;
+    protected ShapeRenderer sr;
     /**
      * Le texte affiché sur le bouton.
      */
-    private String textToShow = "";
+    protected String textToShow = "";
     /**
      * Si la souris est au dessus du bouton ou non.
      */
-    private boolean isMouseOver;
+    protected boolean isMouseOver;
 
     /**
      * Crée un nouveau bouton.
@@ -43,6 +43,7 @@ public class Button extends Control {
         super(gim, gs);
         sr = new ShapeRenderer();
     }
+    protected Button() {}
 
     @Override
     public void draw(Batch batch, Point pos, Point size) {
