@@ -19,7 +19,7 @@ public class Master2 extends MasterQuest
     final UnderQuest[] underQuest = {new GoToLastLesson(this),new WriteMemory(this)};
 
     /**
-     * This contructor define a Bachelor 1 of Umons
+     * This constructor define a Master 1 of Umons
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */

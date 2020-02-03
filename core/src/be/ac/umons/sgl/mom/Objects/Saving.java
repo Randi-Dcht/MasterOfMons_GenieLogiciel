@@ -10,8 +10,8 @@ import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 /**
- * Cette classe permet de créer une sauveguarde automatique du jeu ou à la fin de la partie
- * */
+ * This class allows to save this party, every end party or every time define.
+ */
 public class Saving implements Observer
 {
     private String nameSave;
@@ -22,11 +22,11 @@ public class Saving implements Observer
     final static String prefixe = ""; //TODO : à modifier
 
     /**
-     * Permet de créer une instance de sauveguarde
-     * @param nameSave qui est le nom de la partie
-     * @param people qui est le joueur à sauveguarder
-     * @param gs qui est les paramètres grapgiques à retenir
-     * */
+     * This constructor allows give the class who are saving.
+     * @param nameSave who is the name of the saving
+     * @param people who is the people who play this game with Quest
+     * @param gs who is the graphic param to save.
+     */
     public Saving(People people, String nameSave,GraphicalSettings gs) //TODO: ajouter les maps en safe !
     {
         this.people = people;
@@ -35,8 +35,8 @@ public class Saving implements Observer
     }
 
     /**
-     * Permet d'appler quand on veut jouer une ancienne partie
-     * @param oldSave qui est le nom complet de la partie (avec date)
+     * This method allows to play in the old game who is saving.
+     * @param oldSave who is the full name of the saving (with the timeDate).
      * */
     public Saving(String oldSave)
     {
@@ -57,7 +57,7 @@ public class Saving implements Observer
     }
 
     /**
-     * Cette méthode doit être appeler régulièrement pour créer une sauveguarde
+     * This method who is called to save this party
      * */
     public void Signal()
     {
@@ -67,8 +67,8 @@ public class Saving implements Observer
     }
 
     /**
-     * Cette méthode permet de sauveguarder dans un fichier (.save) les objets utils
-     * @param fichier qui est le nom de fichier complet
+     * This method allows to create a file with the save of the game
+     * @param fichier
      * @param people qui est l'objet a sauveguarder
      * */
     private void newSave(People people,GraphicalSettings gs, String fichier)

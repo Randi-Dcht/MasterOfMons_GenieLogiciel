@@ -3,7 +3,7 @@ package be.ac.umons.sgl.mom.Objects;
 import java.util.Objects;
 
 /**
- * Cette classe permet d'implementer le temps dans le jeu où le temps va plus vite
+ * This class is the time in the game who changed with the refresh frame.
  */
 public class Schedule
 {
@@ -15,13 +15,18 @@ public class Schedule
     private int NBmonth;
     private int NByear;
 
-    private int timePast =0;
     private int hour;
     private int min;
-    private double seconde;
     private int day;
     private int year;
 
+    /**
+     * This constructor allows to define a time of game
+     * @param month who is the month of start
+     * @param day who is the day of start
+     * @param hour who is the hour of start
+     * @param years who is year of start
+     */
     public Schedule(int month,int day,int hour,int years)
     {
         NBmonth = month-1;
@@ -32,11 +37,20 @@ public class Schedule
 
     }
 
+    /**
+     * This method allows to refresh the time of game
+     * @param time who is the time between two frames.
+     */
     public void updateSecond(double time)
     {
         changeMin();
     }
 
+    /**
+     * This method allows to know leap year
+     * @param years is the years (after 1900)
+     * @return 1 if leap else 0
+     */
     public int leap(int years)
     {
         if(years%4 == 0)
@@ -74,12 +88,6 @@ public class Schedule
             changeDay();
     }
 
-    public void peopleSleep(double many)
-    {}
-
-    private void updateDate()
-    {}
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,7 +96,6 @@ public class Schedule
         return NBmonth == schedule.NBmonth &&
                 hour == schedule.hour &&
                 min == schedule.min &&
-                Double.compare(schedule.seconde, seconde) == 0 &&
                 day == schedule.day &&
                 years == schedule.years;
     }
