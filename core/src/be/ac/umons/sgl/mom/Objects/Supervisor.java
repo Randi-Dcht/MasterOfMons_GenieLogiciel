@@ -11,7 +11,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
-import be.ac.umons.sgl.mom.Objects.Schedule;
+import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import com.badlogic.gdx.Gdx;
 
@@ -30,7 +30,7 @@ public class Supervisor /*! va être supprimer !*/
   private static QuestShower questShower;
   private static double minute = 600;
   private static Saving save;
-  private static Schedule time;
+  private static TimeGame time;
 
   public static People getPeople()
   {
@@ -54,7 +54,7 @@ public class Supervisor /*! va être supprimer !*/
     MasterQuest mQ = new Bachelor1(people,null);
     people.newQuest(mQ);
     questShower.setQuest(mQ);
-    time = new Schedule(9,1,8,2019);
+    time = new TimeGame(9,1,8,2019);
     save = new Saving(people,namePlayer,gs);
   }
 
