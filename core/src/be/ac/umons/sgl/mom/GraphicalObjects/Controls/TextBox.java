@@ -24,19 +24,19 @@ public class TextBox extends Control {
     /**
      * Permet de dessiner les formes comme les rectangles.
      */
-    private ShapeRenderer sr;
+    protected ShapeRenderer sr;
     /**
      * Le texte actuellement entré.
      */
-    private String actualText = "";
+    protected String actualText = "";
     /**
      * Le suffixe à placer en fin de texte.
      */
-    private String suffix = "";
+    protected String suffix = "";
     /**
      * Est-ce que le support est selectionné.
      */
-    private boolean isSelected = false;
+    protected boolean isSelected = false;
 
     /**
      * Crée un nouveau TextBox.
@@ -48,6 +48,8 @@ public class TextBox extends Control {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
     }
+
+    protected TextBox() {}
 
     @Override
     public void draw(Batch batch, Point pos, Point size) {
