@@ -6,13 +6,15 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.HashMap;
 
 public abstract class DialogState extends GameState {
-    protected String text;
+    protected String text = "";
     protected String selected = null;
     protected HashMap<String, Runnable> whenSelectedActions;
     protected ShapeRenderer sr;
@@ -66,5 +68,44 @@ public abstract class DialogState extends GameState {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String adaptTextToWidth(BitmapFont font, String text, int width) {
+        StringBuilder res = new StringBuilder();
+        StringBuilder tmp = new StringBuilder();
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(font, "A");
+        double charWidth = layout.width;
+        for (String s : text.split(" ")) {
+            layout.setText(font, s);
+            if (layout.width > width) {
+                while (s.length() > 0) {
+                    int charsNbr = (int)(width / charWidth) - 1 - tmp.length(); // -1 for -
+                    if (charsNbr > s.length())
+                        charsNbr = s.length();
+                    res.append(s, 0, charsNbr);
+                    res.append("-\n");
+                    tmp = new StringBuilder();
+                    s = s.substring(charsNbr);
+                }
+                continue;
+            }
+
+            tmp.append(s);
+            tmp.append(" ");
+            layout.setText(font, tmp.toString());
+            if (layout.width > width) {
+                res.append('\n');
+                res.append(s);
+                res.append(" ");
+                tmp = new StringBuilder();
+                tmp.append(s);
+                tmp.append(" ");
+            } else {
+                res.append(s);
+                res.append(" ");
+            }
+        }
+        return res.toString();
     }
 }

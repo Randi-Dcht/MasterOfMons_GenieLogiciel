@@ -33,7 +33,7 @@ public class InGameDialogState extends DialogState {
         sr.rect((float)leftMargin, rectY, (float)(MasterOfMonsGame.WIDTH - 2 * leftMargin), height);
         sr.end();
         sb.begin();
-        gs.getSmallFont().draw(sb, "Testtttttttttttttttttttttttttttttttttttttttttttttttttttt ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt", (float)(2 * leftMargin), (float)(rectY + height - topMargin));
+        gs.getSmallFont().draw(sb, text, (float)(2 * leftMargin), (float)(rectY + height - topMargin));
         sb.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
@@ -41,5 +41,10 @@ public class InGameDialogState extends DialogState {
     @Override
     public void handleInput() {
         super.handleInput();
+    }
+
+    @Override
+    public void setText(String text) {
+        super.setText(adaptTextToWidth(gs.getSmallFont(), text, (int)(MasterOfMonsGame.WIDTH - 4 * leftMargin)));
     }
 }
