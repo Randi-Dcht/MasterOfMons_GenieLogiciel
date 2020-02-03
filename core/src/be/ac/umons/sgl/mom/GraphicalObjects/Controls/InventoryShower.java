@@ -27,66 +27,66 @@ public class InventoryShower extends Control {
     /**
      * La marge entre les différents éléments d'inventaire.
      */
-    private static int BETWEEN_ITEM_MARGIN = 7;
+    protected static int BETWEEN_ITEM_MARGIN = 7;
     /**
      * La marge par rapport au bas de la fenêtre.
      */
-    private static int BOTTOM_MARGIN = 7;
+    protected static int BOTTOM_MARGIN = 7;
     /**
      * L'opacité du rectangle d'arrière-plan.
      */
-    private static float BACKGROUND_RECTANGLE_OPACITY = .5f;
+    protected static float BACKGROUND_RECTANGLE_OPACITY = .5f;
 
     /**
      * La hauteur du support.
      */
-    private int height;
+    protected int height;
 
     /**
      * La longueur d'un seul objet d'inventaire.
      */
-    private int itemWidth;
+    protected int itemWidth;
 
     /**
      * Permet de dessiner les formes comme les rectangles.
      */
-    private ShapeRenderer sr;
+    protected ShapeRenderer sr;
     /**
      * L'inventaire à montrer.
      */
-    private List<GameObjects> inventory;
+    protected List<GameObjects> inventory;
     /**
      * Doit-on utiliser les variables d'animations ?
      */
-    private boolean isBeingAnimated = false;
+    protected boolean isBeingAnimated = false;
     /**
      * La taille du support durant l'animation de celui-ci.
      */
-    private float duringAnimationHeight, duringAnimationWidth;
+    protected float duringAnimationHeight, duringAnimationWidth;
     /**
      * La taille d'un seul élément d'inventaire durant une animation.
      */
-    private float duringAnimationItemWidth;
+    protected float duringAnimationItemWidth;
     /**
      * L'opacité du rectangle d'arrière-plan durant l'animation du support.
      */
-    private double duringAnimationBackgroundOpacity;
+    protected double duringAnimationBackgroundOpacity;
     /**
      * L'opacité du rectangle d'avant-plan durant l'animation du support.
      */
-    private double duringAnimationForegroundOpacity;
+    protected double duringAnimationForegroundOpacity;
     /**
      * La liste de tout les éléments d'inventaire actuellement à montrer.
      */
-    private List<InventoryItem> inventoryItemList;
+    protected List<InventoryItem> inventoryItemList;
     /**
      * L'objet responsable des animations.
      */
-    private AnimationManager am;
+    protected AnimationManager am;
     /**
      * L'indice de l'élément d'inventaire selectionné par l'utilisateur.
      */
-    private InventoryItem selectedItem;
+    protected InventoryItem selectedItem;
 
     /**
      * Crée un nouveau support pour montrer l'inventaire d'un joueur.
@@ -101,6 +101,8 @@ public class InventoryShower extends Control {
         this.am = am;
         init();
     }
+
+    protected InventoryShower() {}
 
     /**
      * Initialise les variables du support.
