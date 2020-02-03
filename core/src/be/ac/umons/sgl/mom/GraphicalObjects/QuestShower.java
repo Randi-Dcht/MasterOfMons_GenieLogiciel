@@ -86,6 +86,8 @@ public class QuestShower {
         init();
     }
 
+    protected QuestShower() {}
+
     /**
      * Dessine le support.
      * Code inspiré de https://gamedev.stackexchange.com/a/115483 par NuttyBunny
