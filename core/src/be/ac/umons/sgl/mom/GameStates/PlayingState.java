@@ -279,6 +279,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             inventoryShower.setHided(true);
             GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
             ((InGameDialogState)g).setText("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+            ((InGameDialogState)g).addAnswer("YAY !", "yay...", "YAAAAAYYYY !!!");
         }
         inventoryShower.handleInput();
     }
