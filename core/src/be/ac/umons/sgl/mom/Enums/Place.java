@@ -7,10 +7,10 @@ package be.ac.umons.sgl.mom.Enums;
 public enum Place
 {
   Nimy("Umons_Nimy.tmx"),
-  Waroque("Umons_Warocque.tmx"),
+  Warocque("Umons_Warocque.tmx"),
   GrandAmphi("Umons_GrandAmphi.tmx"),
   DeVinci("Umons_DeVinci.tmx"),
-  PolyHoudaing("Umons_Polytech.tmx"),
+  Poly("Umons_Polytech.tmx"),
   Kot("kot.tmx");
 
   private  String maps;
