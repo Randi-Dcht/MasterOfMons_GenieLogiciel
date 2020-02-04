@@ -285,7 +285,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
     @Override
     public void dispose() {
-        gmm.dispose();
         sb.dispose();
         questShower.dispose();
         inventoryShower.dispose();
