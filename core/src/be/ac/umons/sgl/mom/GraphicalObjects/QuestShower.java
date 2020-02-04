@@ -204,7 +204,7 @@ public class QuestShower {
             DoubleAnimation da = new DoubleAnimation(from, to, time);
             da.setRunningAction(() -> {
                 qpc.setDuringAnimationProgressPercent(da.getActual());
-                qpc.setDuringAnimationOpacity((float)da.getActual());
+                qpc.setDuringAnimationOpacity((float)da.getActual().doubleValue());
             });
             am.addAnAnimation("QuestCircleRectangleAnimation" + qpc.toString(), da); // Evite de remplacer les animations :)
             da.setEndingAction(qpc::finishAnimation);
