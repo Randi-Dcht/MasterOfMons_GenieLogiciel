@@ -7,7 +7,10 @@ import java.util.Objects;
  */
 public class TimeGame
 {
-    static final int[][] years = {{31,28,31,30,31,30,31,31,30,31,30,31},{31,29,31,30,31,30,31,31,30,31,30,31}};
+    static final int[][] years = { {31,28,31,30,31,30,31,31,30,31,30,31},
+                                   {31,29,31,30,31,30,31,31,30,31,30,31}
+                                 };
+
     static final int   timeSec      = 60;
     static final int   timeHour     = 24;
     static final int   timeYr       = 12;
@@ -74,6 +77,19 @@ public class TimeGame
     {
         year = year + 1;
         NByear= leap(year);
+    }
+
+    /**
+     * This method allows to replay the time for a new year in the university
+     * This method changes the timeGame !!!
+     */
+    public void newYear()
+    {
+        this.hour = 8;
+        this.min  = 0;
+        this.day  = 16;
+        this.NBmonth = 8;
+        this.year++;
     }
 
     private void changeMin()
