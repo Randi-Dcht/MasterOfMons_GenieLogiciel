@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GameStates.Dialogs;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GameStates.GameState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class DialogState extends GameState {
     protected String text = "";
@@ -19,6 +21,8 @@ public abstract class DialogState extends GameState {
     protected HashMap<String, Runnable> whenSelectedActions;
     protected ShapeRenderer sr;
     protected SpriteBatch sb;
+
+    protected List<Button> buttons;
 
     public DialogState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -56,6 +60,11 @@ public abstract class DialogState extends GameState {
     }
     public void addAnswer(String answer, Runnable run) {
         whenSelectedActions.put(answer, run);
+        Button b = new Button(gim, gs);
+        b.setText(answer);
+        b.setOnClick(run);
+        b.setFont(gs.getSmallFont());
+        buttons.add(b);
     }
 
     public String getResult() {

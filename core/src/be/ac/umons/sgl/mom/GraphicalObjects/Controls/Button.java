@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
@@ -34,6 +35,8 @@ public class Button extends Control {
      */
     protected boolean isMouseOver;
 
+    protected BitmapFont font;
+
     /**
      * Crée un nouveau bouton.
      * @param gim Le GameInputManager du jeu.
@@ -42,6 +45,7 @@ public class Button extends Control {
     public Button(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         sr = new ShapeRenderer();
+        font = gs.getNormalFont();
     }
     protected Button() {}
 
@@ -58,7 +62,7 @@ public class Button extends Control {
         sr.rect(x, y, width, height);
         sr.end();
         batch.begin();
-        gs.getNormalFont().draw(batch, textToShow, x + leftMargin, y + gs.getNormalFont().getLineHeight());
+        font.draw(batch, textToShow, x + leftMargin, y + font.getLineHeight());
         batch.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
@@ -100,5 +104,9 @@ public class Button extends Control {
      */
     public void setOnClick(Runnable onClick) {
         this.onClick = onClick;
+    }
+
+    public void setFont(BitmapFont font) {
+        this.font = font;
     }
 }
