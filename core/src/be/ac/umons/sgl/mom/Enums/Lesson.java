@@ -16,27 +16,35 @@ public enum Lesson
 	* This is the number of course for a period 1 year of University.
 	* This allows to calculated the number of hour for this course.
     */
+
+	                          /*Lesson of Bachelor 1*/
 	MI1('O',"math pour informatique 1",Place.Nimy,1,10),
 	MI2('O',"math pour informatique 2",Place.Nimy,1,10),
 	algo1('O',"algorithme python",Place.Nimy,1,10),
-	algo2('F',"algorithme java",Place.Nimy,1,10),
+	algo2('F',"algorithme java",Place.DeVinci,1,10),
 	ftOrdi('F',"fonctionnement des ordinateurs",Place.Nimy,1,10),
+
+	                         /*Lesson of Bachelor 2*/
+	projet1('F',"projet bachelier 1",Place.DeVinci,1,10),
 	nbComplexe('F',"nombre complexe",Place.Nimy,2,10),
-	opti('O',"optimisation lineaire",Place.Nimy,2,10),
+	opti('O',"optimisation lineaire",Place.Poly,2,10),
 	anglais('O',"english for sciences",Place.Nimy,2,10),
 	OS('O',"systeme exploitation",Place.Nimy,2,10),
-	projet1('F',"projet bachelier 1",Place.Nimy,1,10),
 	projet2('F',"projet bachelier 2",Place.Nimy,2,10),
-	calculus2('O',"algèbre partie B",Place.Nimy,2,10),
-	ecopol('F',"economie politique",Place.Nimy,2,10),
-	realTime('F',"real time computer",Place.Nimy,3,10),
-	reseau('O',"reseau",Place.Nimy,2,10),
-	calculProba('O',"calcul de probabilite",Place.Nimy,3,10),
-	intelligen('O',"intelligence artificielle",Place.Nimy,3,10),
+	calculus2('O',"algèbre partie B",Place.Poly,2,10),
+	ecopol('F',"economie politique",Place.Warocque,2,10),
+	reseau('O',"reseau",Place.DeVinci,2,10),
+
+                              /*Lesson of Bachelor 3*/
+	calculProba('O',"calcul de probabilite",Place.Poly,3,10),
+	intelligen('O',"intelligence artificielle",Place.DeVinci,3,10),
 	compilation('F',"compilation",Place.Nimy,3,10),
-	grapheOpti('O',"graphe et optimisation",Place.Nimy,3,10),
+	grapheOpti('O',"graphe et optimisation",Place.Poly,3,10),
 	baseDonnes('F',"base de données",Place.Nimy,3,10),
 	statistique('F',"statistique",Place.Nimy,3,10);
+
+	                         /*Lesson of Master 1 & 2*/
+	/*code ici(TODO: #Maxime)*/
 
 	final char type;
 	final String name;

@@ -5,9 +5,12 @@ import java.util.Objects;
 /**
  * This class is the time in the game who changed with the refresh frame.
  */
-public class Schedule
+public class TimeGame
 {
-    static final int[][] years = {{31,28,31,30,31,30,31,31,30,31,30,31},{31,29,31,30,31,30,31,31,30,31,30,31}};
+    static final int[][] years = { {31,28,31,30,31,30,31,31,30,31,30,31},
+                                   {31,29,31,30,31,30,31,31,30,31,30,31}
+                                 };
+
     static final int   timeSec      = 60;
     static final int   timeHour     = 24;
     static final int   timeYr       = 12;
@@ -27,7 +30,7 @@ public class Schedule
      * @param hour who is the hour of start
      * @param years who is year of start
      */
-    public Schedule(int month,int day,int hour,int years)
+    public TimeGame(int month,int day,int hour,int years)
     {
         NBmonth = month-1;
         this.day = day-1;
@@ -76,6 +79,19 @@ public class Schedule
         NByear= leap(year);
     }
 
+    /**
+     * This method allows to replay the time for a new year in the university
+     * This method changes the timeGame !!!
+     */
+    public void newYear()
+    {
+        this.hour = 8;
+        this.min  = 0;
+        this.day  = 16;
+        this.NBmonth = 8;
+        this.year++;
+    }
+
     private void changeMin()
     {
         if((min =( min+1)%timeSec)==0)
@@ -92,7 +108,7 @@ public class Schedule
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Schedule schedule = (Schedule) o;
+        TimeGame schedule = (TimeGame) o;
         return NBmonth == schedule.NBmonth &&
                 hour == schedule.hour &&
                 min == schedule.min &&

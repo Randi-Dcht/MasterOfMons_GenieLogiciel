@@ -7,7 +7,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
-import be.ac.umons.sgl.mom.Objects.Schedule;
+import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.Bachelor1;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class SuperviserNormally
         /*This the class who save the game in real time*/
         private Saving save;
         /*This is the time in the game*/
-        private Schedule time;
+        private TimeGame time;
 
 
         /**
@@ -68,7 +68,7 @@ public class SuperviserNormally
             MasterQuest mQ = new Bachelor1(people,null);
             people.newQuest(mQ);
             //questShower.setQuest(mQ); /*=>*/ event.update(Events.changeQuest);
-            time = new Schedule(9,1,8,2019);
+            time = new TimeGame(9,1,8,2019);
             save = new Saving(people,namePlayer,gs);
         }
 

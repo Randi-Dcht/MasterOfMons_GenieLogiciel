@@ -6,12 +6,11 @@ package be.ac.umons.sgl.mom.Enums;
 
 public enum Place
 {
-  Nimy("nimy.tmx"),
-  Waroque("waroque.tmx"),
-  GrandAmphi("garmphi.tmx"),
-  DeVinci("devinci.tmx"),
-  PolyHoudaing("polytech.tmx"),
-  Bibliotheque("biblio.tmx"),
+  Nimy("Umons_Nimy.tmx"),
+  Warocque("Umons_Warocque.tmx"),
+  GrandAmphi("Umons_GrandAmphi.tmx"),
+  DeVinci("Umons_DeVinci.tmx"),
+  Poly("Umons_Polytech.tmx"),
   Kot("kot.tmx");
 
   private  String maps;

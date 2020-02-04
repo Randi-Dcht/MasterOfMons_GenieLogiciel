@@ -173,7 +173,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      */
     public void location(Place place)
     {
-        if(place.equals(Place.GrandAmphi) || place.equals(Place.Waroque))
+        if(place.equals(Place.GrandAmphi) || place.equals(Place.Warocque))
             people.changedState(State.listen);/*
   else if(place.equals(Place.kot))
    //gérer car étudie ou dort
