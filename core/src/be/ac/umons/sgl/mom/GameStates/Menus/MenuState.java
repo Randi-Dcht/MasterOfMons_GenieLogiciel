@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GameStates.GameState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static be.ac.umons.sgl.mom.MasterOfMonsGame.*;
 
@@ -35,12 +38,12 @@ public abstract class MenuState extends GameState {
     /**
      * Les différents éléments à montrer à l'écran.
      */
-    protected MenuItem[] menuItems;
-
+    private MenuItem[] menuItems;
     /**
-     * La marge entre les différents éléments.
+     * The selectable elements represented as Button.
      */
-    protected double betweenItemMargin;
+    protected List<Button> buttons;
+
     /**
      * La caméra permettant d'afficher le texte et de zoomer au besoin.
      */
@@ -60,6 +63,7 @@ public abstract class MenuState extends GameState {
     @Override
     public void init() {
         super.init();
+        buttons = new ArrayList<>();
         sb = new SpriteBatch();
 		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
 		cam.translate(WIDTH / 2, HEIGHT / 2);
@@ -77,30 +81,29 @@ public abstract class MenuState extends GameState {
 
         sb.setProjectionMatrix(cam.combined);
 
-        while (! menuItems[selectedItem].selectable)
-            selectedItem = (selectedItem + 1) % menuItems.length;
-
-        sb.begin();
-
         GlyphLayout layout;
         BitmapFont font;
-        for (int i = 0; i < menuItems.length; i++) {
+        for (MenuItem menuItem : menuItems) {
             layout = new GlyphLayout();
-            menuItems[i].screenTextBound = new Rectangle();
-            if (menuItems[i].mit.equals(MenuItemType.Normal))
+            sb.begin();
+            if (menuItem.mit.equals(MenuItemType.Normal))
                 font = gs.getNormalFont();
             else
                 font = gs.getTitleFont();
-            if (i == selectedItem)
-                font.setColor(Color.ORANGE);
-            layout.setText(font, menuItems[i].header);
-            menuItems[i].screenTextBound.setRect((int)(.05 * WIDTH), alreadyUsed, menuItems[i].header.length() * font.getXHeight(), font.getLineHeight());
-            font.draw(sb, layout, (int)(.05 * WIDTH), HEIGHT - alreadyUsed);
-            alreadyUsed += (int)(font.getLineHeight() + betweenItemMargin * HEIGHT);
             font.setColor(Color.WHITE);
+            layout.setText(font, menuItem.header);
+            if (menuItem.button == null)
+                font.draw(sb, layout, (int) (.05 * WIDTH), HEIGHT - alreadyUsed);
+            sb.end();
+            if (menuItem.button != null) {
+                menuItem.button.setFont(font);
+                menuItem.button.draw(sb, new Point((int) (.05 * WIDTH), (int)(HEIGHT - alreadyUsed - (font.getLineHeight() + 2 * topMargin))),
+                        new Point((int) (layout.width + 2 * leftMargin),
+                                (int) (font.getLineHeight() + 2 * topMargin)));
+            }
+            alreadyUsed += (int)(font.getLineHeight() + 2 * topMargin) + topMargin;
         }
 
-        sb.end();
     }
 
     @Override
@@ -108,27 +111,21 @@ public abstract class MenuState extends GameState {
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             executeSelectedItem();
         if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
-            do
-                selectedItem = (selectedItem + 1) % menuItems.length;
-            while ( ! menuItems[selectedItem].selectable);
+            buttons.get(selectedItem).setSelected(false);
+            selectedItem++;
+            if (selectedItem > buttons.size())
+                selectedItem = 0;
+            buttons.get(selectedItem).setSelected(true);
         }
         if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
-            do {
-                selectedItem = (selectedItem - 1) % menuItems.length;
-                if (selectedItem < 0)
-                    selectedItem += menuItems.length;
-            }
-            while ( ! menuItems[selectedItem].selectable);
+            buttons.get(selectedItem).setSelected(false);
+            selectedItem--;
+            if (selectedItem < 0)
+                selectedItem = buttons.size() - 1;
+            buttons.get(selectedItem).setSelected(true);
         }
-        for (Point click: gim.getRecentClicks()) {
-            for (int i = 0; i < menuItems.length; i++) {
-                if (menuItems[i].selectable && menuItems[i].screenTextBound.contains(click.x, click.y))
-                    if (selectedItem == i)
-                        executeSelectedItem();
-                    else
-                        selectedItem = i;
-            }
-        }
+        for (Button b : buttons)
+            b.handleInput();
     }
 
     /***
@@ -137,6 +134,21 @@ public abstract class MenuState extends GameState {
     private void executeSelectedItem() {
         if (menuItems[selectedItem].toDoIfExecuted != null)
             menuItems[selectedItem].toDoIfExecuted.run();
+    }
+
+    protected void setMenuItems(MenuItem[] menuItems) {
+        for (MenuItem mi : menuItems) {
+            if (mi.selectable) {
+                Button b = new Button(gim, gs);
+                b.setText(mi.header);
+                b.setOnClick(mi.toDoIfExecuted);
+                buttons.add(b);
+                mi.button = b;
+            }
+        }
+        if (! buttons.isEmpty())
+            buttons.get(0).setSelected(true);
+        this.menuItems = menuItems;
     }
 
     public int getSelectedItem() {
@@ -164,10 +176,11 @@ public abstract class MenuState extends GameState {
          * L'élément est-il selectionnable ?
          */
         public boolean selectable;
+
         /**
-         * Représente la position et la taille de l'élément (ATTENTION : En fonction des coordonnées de l'écran)
+         * The associated button for this item.
          */
-        private Rectangle screenTextBound;
+        private Button button;
 
         /**
          * L'action a faire si jamais l'on clique sur cet élément.

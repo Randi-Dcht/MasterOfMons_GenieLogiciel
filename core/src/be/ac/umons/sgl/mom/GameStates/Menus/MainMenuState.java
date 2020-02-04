@@ -39,8 +39,7 @@ public class MainMenuState extends MenuState {
     public void init() {
         super.init();
         topMargin = .1;
-        betweenItemMargin = .01;
-        menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
+        setMenuItems(new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
                 new MenuItem("Start a new game", () -> {
                     extSel.generateLoadLists();
                     gsm.getGameMapManager().addMapsToLoad("Tmx/NimyTest.tmx");
@@ -50,7 +49,7 @@ public class MainMenuState extends MenuState {
                 }),
                 new MenuItem("Load", () -> gsm.setState(LoadState.class)),
                 new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
-                new MenuItem("Quit", () -> Gdx.app.exit())};
+                new MenuItem("Quit", () -> Gdx.app.exit())});
         extSel = new ExtensionsSelector(gim, gs);
     }
 

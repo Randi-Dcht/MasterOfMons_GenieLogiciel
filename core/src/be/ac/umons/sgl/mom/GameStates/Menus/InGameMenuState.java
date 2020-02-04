@@ -41,8 +41,7 @@ public class InGameMenuState extends MenuState {
         sr.setProjectionMatrix(sb.getProjectionMatrix());
         sr.setAutoShapeType(true);
         topMargin = .1;
-        betweenItemMargin = .01;
-        menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
+        setMenuItems(new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
                 new MenuItem("Continue", () -> gsm.removeFirstState()),
                 new MenuItem("Player", () -> gsm.setState(PlayerMenuState.class)),
                 new MenuItem("Save", () -> gsm.setState(SaveState.class)),
@@ -50,7 +49,7 @@ public class InGameMenuState extends MenuState {
                 new MenuItem("Quick Save"), // TODO : Call save system with default name.
                 new MenuItem("Quick Load"), // TODO : Call load system with last save (automatic or not).
                 new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
-                new MenuItem("Quit", () -> Gdx.app.exit())};
+                new MenuItem("Quit", () -> Gdx.app.exit())});
     }
 
 

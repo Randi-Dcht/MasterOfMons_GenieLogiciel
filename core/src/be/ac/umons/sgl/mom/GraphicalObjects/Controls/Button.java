@@ -17,7 +17,7 @@ import java.awt.*;
  * @author Guillaume Cardoen
  */
 public class Button extends Control {
-    protected Color backgroundColor = new Color(0x21212121);
+    protected Color backgroundColor = new Color(0x21212163);
 
     protected Color isMouseOverBackgroundColor = new Color(0x21212142);
 
