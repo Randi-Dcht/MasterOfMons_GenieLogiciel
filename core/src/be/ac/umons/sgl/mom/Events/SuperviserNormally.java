@@ -51,9 +51,9 @@ public class SuperviserNormally implements Observer
         /*This is a timer for a saving the game at the regular period*/
         private double minute = 600;
         /*This the class who save the game in real time*/
-        private Saving save;
+        public /*private*/ Saving save;
         /*This is the time in the game*/
-        private TimeGame time;
+        public /*private*/ TimeGame time;
         /*This is the events variable*/
         private Event event;
 

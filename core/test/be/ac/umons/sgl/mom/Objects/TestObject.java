@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-class TestJunit
+class TestObject
 {
 
  /**
@@ -91,7 +91,7 @@ class TestJunit
   @Test
   void SavingClassTest() //TODO : a continuer cette méthode quand celle-ci sera finie.
   {
-      People people = new People("TestJunit",Type.normal);
+      People people = new People("TestObject",Type.normal);
       Saving save = new Saving(people,"TestSaving",null);
   }
 /*
