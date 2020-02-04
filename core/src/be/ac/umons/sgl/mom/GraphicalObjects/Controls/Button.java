@@ -17,6 +17,11 @@ import java.awt.*;
  * @author Guillaume Cardoen
  */
 public class Button extends Control {
+    protected Color backgroundColor = new Color(0x21212121);
+
+    protected Color isMouseOverBackgroundColor = new Color(0x21212142);
+
+    protected Color isSelectedBackgroundColor = new Color(0x512DA8FF);
 
     /**
      * L'action a éffectué quand le bouton reçoit un clique.
@@ -37,6 +42,8 @@ public class Button extends Control {
 
     protected BitmapFont font;
 
+    protected boolean selected;
+
     /**
      * Crée un nouveau bouton.
      * @param gim Le GameInputManager du jeu.
@@ -54,11 +61,14 @@ public class Button extends Control {
         super.draw(batch, pos, size);
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        if (isMouseOver)
-            sr.setColor(new Color(0x21212142));
+        if (selected)
+            sr.setColor(isSelectedBackgroundColor);
+        else if (isMouseOver)
+            sr.setColor(isMouseOverBackgroundColor);
         else
-            sr.setColor(new Color(0x21212121));
+            sr.setColor(backgroundColor);
         sr.rect(x, y, width, height);
         sr.end();
         batch.begin();
@@ -108,5 +118,9 @@ public class Button extends Control {
 
     public void setFont(BitmapFont font) {
         this.font = font;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

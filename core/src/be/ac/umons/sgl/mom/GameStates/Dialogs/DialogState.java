@@ -23,6 +23,7 @@ public abstract class DialogState extends GameState {
     protected SpriteBatch sb;
 
     protected List<Button> buttons;
+    protected int selectedButtonIndex = 0;
 
     public DialogState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -46,6 +47,8 @@ public abstract class DialogState extends GameState {
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.removeFirstState();
+        for (Button b: buttons)
+            b.handleInput();
     }
 
     @Override
@@ -65,6 +68,7 @@ public abstract class DialogState extends GameState {
         b.setOnClick(run);
         b.setFont(gs.getSmallFont());
         buttons.add(b);
+        buttons.get(0).setSelected(true);
     }
 
     public String getResult() {

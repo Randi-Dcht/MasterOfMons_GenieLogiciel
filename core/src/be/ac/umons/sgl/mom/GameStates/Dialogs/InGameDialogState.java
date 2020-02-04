@@ -2,7 +2,6 @@ package be.ac.umons.sgl.mom.GameStates.Dialogs;
 
 import be.ac.umons.sgl.mom.Animations.StringAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,7 +58,7 @@ public class InGameDialogState extends DialogState {
     public void draw() {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-        float height = (float)MasterOfMonsGame.HEIGHT / 4;
+        float height = (float)MasterOfMonsGame.HEIGHT / 6;
         float rectY = (float)topMargin;
         sr.setColor(backgroundColor);
         sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -72,7 +70,10 @@ public class InGameDialogState extends DialogState {
         gl.setText(gs.getSmallFont(), getMaximumTextLength(strings.toArray(new String[0])));
         double width = gl.width + 2 * leftMargin;
         for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - width - leftMargin), (int)(rectY + height + topMargin + i * (gl.height + 2 * topMargin))), new Point((int)width, (int)(gl.height + 2 * topMargin)));
+            buttons.get(i).draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - width - leftMargin), // pos.x
+                    (int)(rectY + height + topMargin + (buttons.size() - 1 - i) * (gl.height + 2 * topMargin))), new Point( //pos.y
+                    (int)width, //width
+                    (int)(gl.height + 2 * topMargin))); // height
         }
 
         sb.begin();
@@ -87,6 +88,23 @@ public class InGameDialogState extends DialogState {
         super.handleInput();
         if (gim.isKey(Input.Keys.SPACE, KeyStatus.Pressed) || gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             sa.finishNow();
+        if (!buttons.isEmpty()) {
+            if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
+                buttons.get(selectedButtonIndex).setSelected(false);
+                selectedButtonIndex--;
+                if (selectedButtonIndex < 0)
+                    selectedButtonIndex = buttons.size() - 1;
+                buttons.get(selectedButtonIndex).setSelected(true);
+            }
+            if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
+                buttons.get(selectedButtonIndex).setSelected(false);
+                selectedButtonIndex++;
+                if (selectedButtonIndex >= buttons.size())
+                    selectedButtonIndex = 0;
+                buttons.get(selectedButtonIndex).setSelected(true);
+            }
+        }
+
     }
 
     @Override
