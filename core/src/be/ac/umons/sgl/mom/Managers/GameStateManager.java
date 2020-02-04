@@ -46,8 +46,8 @@ public class GameStateManager {
         setState(MainMenuState.class);
     }
 
-    public void setState(Class<? extends GameState> gst) {
-        setState(gst, false);
+    public GameState setState(Class<? extends GameState> gst) {
+        return setState(gst, false);
     }
 
     /**
@@ -55,14 +55,14 @@ public class GameStateManager {
      * @param gst Le nouvel état à ajouter.
      * @param popPreviousOne Doit-on enlever l'état précedent de la pile ?
      */
-    public void setState(Class<? extends GameState> gst, boolean popPreviousOne) {
+    public GameState setState(Class<? extends GameState> gst, boolean popPreviousOne) {
         GameState g;
         try {
             Constructor con = gst.getConstructor(GameStateManager.class, GameInputManager.class, GraphicalSettings.class);
             g = (GameState) con.newInstance(this, gim, gs);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
-            return;
+            return null;
         }
         if (popPreviousOne)
             gameStateStack.pop().dispose();
@@ -70,6 +70,7 @@ public class GameStateManager {
             gameStateStack.peek().loseFocus();
         gameStateStack.push(g);
         g.getFocus();
+        return g;
     }
 
     /**
