@@ -104,4 +104,8 @@ public abstract class Animation<T> {
     public Runnable getEndingAction() {
         return endingAction;
     }
+
+    public void finishNow() {
+        actual = to;
+    }
 }

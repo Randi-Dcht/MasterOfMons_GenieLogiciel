@@ -277,7 +277,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             gsm.setState(InGameMenuState.class);
         else if (gim.isKey(Input.Keys.P, KeyStatus.Pressed)) {
             inventoryShower.setHided(true);
-            gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
+            GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
+            ((InGameDialogState)g).setText("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
         }
         inventoryShower.handleInput();
     }

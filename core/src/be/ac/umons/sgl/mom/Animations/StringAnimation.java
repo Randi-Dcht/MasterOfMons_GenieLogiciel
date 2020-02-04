@@ -20,6 +20,8 @@ public class StringAnimation extends Animation<String> {
             return;
 
         actualNbr += dt * toAddBySecond;
+        if (actualNbr > to.length())
+            actualNbr = to.length();
         actual = to.substring(0, (int)actualNbr);
         if (runningAction != null)
             runningAction.run();
