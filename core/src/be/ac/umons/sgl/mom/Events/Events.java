@@ -11,7 +11,8 @@ public enum Events
     PlaceCenterMons("placeMonsCenter"),       /*...*/
     PlaceKot("kot"),                          /*...*/
     MeetOther("meetOther"),                   /*...*/
-    AddFriend("meetFriend");                  /*...*/
+    AddFriend("meetFriend"),                  /*...*/
+    Answer("answerQuestion");                 /*...*/
 
     private String name;
 

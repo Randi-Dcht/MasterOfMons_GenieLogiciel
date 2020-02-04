@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Enums;
 /**
-*Cette classe permet de définir les cours pour tout son cursus scolaire
+*This class allows to define the lesson on the bachelor and master in the Sciences Computer (Umons course).
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 public enum Lesson
@@ -15,6 +15,14 @@ public enum Lesson
 	* ---------------
 	* This is the number of course for a period 1 year of University.
 	* This allows to calculated the number of hour for this course.
+	* ____________________________________________
+	* Note of year:
+	* -------------
+	* Bachelor1 == 1
+	* Bachelor2 == 2
+	* Bachelor3 == 3
+	* Master1   == 4
+	* Master2   == 5
     */
 
 	                          /*Lesson of Bachelor 1*/
@@ -53,7 +61,12 @@ public enum Lesson
 	final int number;
 
 /**
-*Constrcuteur interne
+*This constructor define the lesson with:
+ * @param type who is obligatory (O) lesson or not (F).
+ * @param name who is the full name of the lesson.
+ * @param place of the lesson (see Tmx map).
+ * @param year who is the year of the Lesson
+ * @param number who is the number of this course for a year.
 */
 	private Lesson(char type,String name, Place place,int year,int number)
 	{
@@ -65,8 +78,8 @@ public enum Lesson
 	}
 
 /**
-*Cette méthode permey de savoir si le personnage doit aller au cours pour réussir
-*@return true si c'est obliagtoire sinon false
+*This method allows to say if the course is obligatory to succeed
+*@return true if the course is obligatory else false
 */
 	public boolean obligatoryCourse()
 	{
@@ -79,8 +92,8 @@ public enum Lesson
 	}
 
 /**
-*Cette méthode permet de dire la localisation du cours sur le campus
-*@return place où se déroule le cours
+*This method return the place where the teacher give the course
+*@return place (Tmx map)
 */
 	public Place location()
 	{
@@ -88,9 +101,9 @@ public enum Lesson
 	}
 
 /**
-*Cette méthode permet de savoir si on peut prendre le cours
-*@param year qui est l'année du personnage
-*@return true s'il peut prendre le cours et false sinon
+*This method allows to say if the people can take the lesson.
+*@param year is the year of the people
+*@return true if the people can take this course else false
 */
 	public boolean take(int year)
 	{
