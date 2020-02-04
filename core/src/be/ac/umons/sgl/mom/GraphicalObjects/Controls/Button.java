@@ -72,7 +72,7 @@ public class Button extends Control {
         sr.rect(x, y, width, height);
         sr.end();
         batch.begin();
-        font.draw(batch, textToShow, x + leftMargin, y + font.getLineHeight());
+        font.draw(batch, textToShow, x + leftMargin, y + font.getLineHeight() - topMargin);
         batch.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
@@ -114,6 +114,14 @@ public class Button extends Control {
      */
     public void setOnClick(Runnable onClick) {
         this.onClick = onClick;
+    }
+
+    /**
+     * Return the runnable to execute if a click is detected.
+     * @return The runnable to execute if a click is detected.
+     */
+    public Runnable getOnClick() {
+        return onClick;
     }
 
     public void setFont(BitmapFont font) {

@@ -113,7 +113,7 @@ public abstract class MenuState extends GameState {
         if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
             buttons.get(selectedItem).setSelected(false);
             selectedItem++;
-            if (selectedItem > buttons.size())
+            if (selectedItem >= buttons.size())
                 selectedItem = 0;
             buttons.get(selectedItem).setSelected(true);
         }
@@ -132,8 +132,7 @@ public abstract class MenuState extends GameState {
      * Exécute l'action relié à un des éléments du menu en fonction de celui selectionné par l'utilisateur.
      */
     private void executeSelectedItem() {
-        if (menuItems[selectedItem].toDoIfExecuted != null)
-            menuItems[selectedItem].toDoIfExecuted.run();
+        buttons.get(selectedItem).getOnClick().run();
     }
 
     protected void setMenuItems(MenuItem[] menuItems) {
