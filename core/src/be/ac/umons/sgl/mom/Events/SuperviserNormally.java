@@ -19,14 +19,27 @@ import java.util.Arrays;
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
 
-public class SuperviserNormally
+public class SuperviserNormally implements Observer
 {
        public static SuperviserNormally instance;
+
+       /**
+        * This method to give the only instance of <code>SuperviserNormaly</code>
+        */
        public static SuperviserNormally getSupervisor()
        {
            if(instance == null)
                instance = new SuperviserNormally();
            return instance;
+       }
+
+       /**
+        * This constructor allows to define the class who monitor the game
+        */
+       private SuperviserNormally()
+       {
+           event = new Event();
+           event.add(Events.ChangeFrame,this);
        }
 
         /*The people who play this party*/
@@ -35,10 +48,8 @@ public class SuperviserNormally
         private ArrayList<Items> objet = new ArrayList<Items>();
         /*The all no people in thsi game*/
         private ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
-        /*This is an interface graphic of this game (to display quest)*/
-        //private QuestShower questShower;
-        /**/
-        private double minute = 600; /*<= changer par un événement qui viendrer de la classe timer*/
+        /*This is a timer for a saving the game at the regular period*/
+        private double minute = 600;
         /*This the class who save the game in real time*/
         private Saving save;
         /*This is the time in the game*/
@@ -55,11 +66,19 @@ public class SuperviserNormally
             return people;
         }
 
+        /**
+         * This method allows to add the new PNJ to the party.
+         * @param lst is a list of the new PNJ
+         */
         public void add(PNJ ... lst)
         {
             listPNJ.addAll(Arrays.asList(lst));
         }
 
+        /**
+         * This method allows to add the new items.
+         * @param lst is a list of the new items
+         */
         public void add(Items ... lst)
         {
             objet.addAll(Arrays.asList(lst));
@@ -70,18 +89,28 @@ public class SuperviserNormally
          * This class allows create all instance of the class for a game
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
+         * @param gs who is the class with the param to safe.
          */
-        public void newParty(String namePlayer, Type type, GraphicalSettings gs)
+        public void newParty(String namePlayer, Type type, GraphicalSettings gs) //TODO regarder pour events mais pas sûre
         {
             people = new People(namePlayer,type);
+            //add
             MasterQuest mQ = new Bachelor1(people,null);
             people.newQuest(mQ);
-            //questShower.setQuest(mQ); /*=>*/ event.update(Events.changeQuest);
             time = new TimeGame(9,1,8,2019);
+            //add
             save = new Saving(people,namePlayer,gs);
+            //add
         }
 
-        /**
+        @Override
+        public void update(Events event)
+        {
+            if (event.equals(Events.ChangeFrame))
+                callMethod(0.3);
+        }
+
+    /**
          * This method
          * @param dt who is the time between two windows
          */
@@ -98,8 +127,18 @@ public class SuperviserNormally
             {
                 save.Signal();
                 minute = 600;
+                //remplacer par event
             }
             time.updateSecond(dt);
+        }
+
+        /**
+         * This method to give the event instance
+         * @return event
+         */
+        public Event getEvent()
+        {
+            return event;
         }
 
     /**

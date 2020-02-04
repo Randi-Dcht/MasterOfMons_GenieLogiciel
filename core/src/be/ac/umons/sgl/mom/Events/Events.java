@@ -4,6 +4,7 @@ public enum Events
 {
     HourTimer("timer"),                       /*...*/
     ChangeQuest("quest"),                     /*...*/
+    ChangeFrame("frame"),                     /*...*/
     PlaceGrandAmphi("placeNiGA"),             /*...*/
     PlaceDeVinci("placeNiDV"),                /*...*/
     PlaceHoudeng("placeHG"),                  /*...*/

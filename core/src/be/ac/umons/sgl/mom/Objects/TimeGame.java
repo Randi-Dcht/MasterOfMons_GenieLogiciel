@@ -1,11 +1,14 @@
 package be.ac.umons.sgl.mom.Objects;
 
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Observer;
+
 import java.util.Objects;
 
 /**
  * This class is the time in the game who changed with the refresh frame.
  */
-public class TimeGame
+public class TimeGame implements Observer
 {
     static final int[][] years = { {31,28,31,30,31,30,31,31,30,31,30,31},
                                    {31,29,31,30,31,30,31,31,30,31,30,31}
@@ -40,6 +43,13 @@ public class TimeGame
 
     }
 
+    @Override
+    public void update(Events event)
+    {
+        if (event.equals(Events.ChangeFrame))
+            updateSecond(0.3);
+    }
+
     /**
      * This method allows to refresh the time of game
      * @param time who is the time between two frames.
@@ -47,14 +57,14 @@ public class TimeGame
     public void updateSecond(double time)
     {
         changeMin();
-    }
+    }//TODO changer ici
 
     /**
      * This method allows to know leap year
      * @param years is the years (after 1900)
      * @return 1 if leap else 0
      */
-    public int leap(int years)
+    private int leap(int years)
     {
         if(years%4 == 0)
             return 1;
