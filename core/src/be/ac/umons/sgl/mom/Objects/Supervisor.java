@@ -1,17 +1,12 @@
 package be.ac.umons.sgl.mom.Objects;
 
 import java.util.*;
-
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Saving;
-import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.*;
 import com.badlogic.gdx.Gdx;
 
@@ -110,7 +105,6 @@ public class Supervisor /*! va être supprimer !*/
     }
 
     time.updateSecond(0);
-
   }
 
 }
