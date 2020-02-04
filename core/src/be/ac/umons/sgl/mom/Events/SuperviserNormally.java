@@ -21,6 +21,14 @@ import java.util.Arrays;
 
 public class SuperviserNormally
 {
+       public static SuperviserNormally instance;
+       public static SuperviserNormally getSupervisor()
+       {
+           if(instance == null)
+               instance = new SuperviserNormally();
+           return instance;
+       }
+
         /*The people who play this party*/
         private People people;
         /*The all objects in all maps in this game*/
@@ -35,7 +43,8 @@ public class SuperviserNormally
         private Saving save;
         /*This is the time in the game*/
         private TimeGame time;
-
+        /*This is the events variable*/
+        private Event event;
 
         /**
          * This methods allows to return the people of this game
@@ -70,18 +79,6 @@ public class SuperviserNormally
             //questShower.setQuest(mQ); /*=>*/ event.update(Events.changeQuest);
             time = new TimeGame(9,1,8,2019);
             save = new Saving(people,namePlayer,gs);
-        }
-
-        /**
-         * voir pour mettre dans la classe de guillaume
-         * */
-        public void changedQuest() //TODO mettre dans la classe de guillaume
-        {/*
-            if(questShower != null) //permet lors des tests de ne pas intancier de classes graphique.
-            {
-                Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
-                save.Signal();
-            }*/
         }
 
         /**

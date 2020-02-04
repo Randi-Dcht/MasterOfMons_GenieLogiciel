@@ -110,7 +110,6 @@ public class Supervisor /*! va être supprimer !*/
     }
 
     time.updateSecond(0);
-
   }
 
 }

@@ -44,7 +44,9 @@ public class Event implements Observable
     public void notify(Events evt)
     {
         if(list.containsKey(evt))
-          for(Observer obs : list.get(evt))
-              obs.update(evt);
+        {
+            for (Observer obs : list.get(evt))
+                obs.update(evt);
+        }
     }
 }
