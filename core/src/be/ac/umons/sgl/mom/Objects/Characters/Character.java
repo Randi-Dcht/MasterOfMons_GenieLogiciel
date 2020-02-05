@@ -12,7 +12,7 @@ public abstract class Character implements Attack, Observer, Social
     protected int agility;
     /*caracteristique autre du personnage*/
     protected double life;
-    protected int level = 1;
+    protected int level = 1; /*between 1 and 40*/
     /**
      * This constructor allows to create a new people who pilot by a player
      * @param type who is the characteristic of this people (Enums)
@@ -54,6 +54,7 @@ public abstract class Character implements Attack, Observer, Social
     {
         return agility;
     }
+    public int getLevel(){return level;}
 
     /**
      *This method allows define the characteristic of a people.
@@ -77,6 +78,11 @@ public abstract class Character implements Attack, Observer, Social
         return (strength*20);
     }
 
+    @Override
+    public void loseAttack(double lose)
+    {
+        life = life - lose;
+    }
     /**
      *This method allows to calculated ...
      */
@@ -94,11 +100,6 @@ public abstract class Character implements Attack, Observer, Social
     public double recovery()
     {
         return (0.5 + (agility/40));
-    }
-
-    @Override
-    public void attack() {
-
     }
 
     /**

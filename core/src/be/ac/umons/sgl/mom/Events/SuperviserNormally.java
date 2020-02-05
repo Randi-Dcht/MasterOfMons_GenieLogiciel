@@ -155,7 +155,7 @@ public class SuperviserNormally implements Observer
      */
     public void attackMethod(Attack attacker, Attack victim)
     {
-        int gun=1; //TODO a dertimer dans les prochaines fois et regarder au bonus
+        int gun=1; //TODO a dertimer dans les prochaines fois et regarder au bonus + chacaract loseAttack
         double hit = ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
     }
 

@@ -163,17 +163,12 @@ public class People extends Character implements Serializable
 		this.state = state;
 	} //TODO supprimer à verifier
 
-	@Override
-	public void attack() {
-
-	}
-
 	/**
 	 * This method allows to give the minimum of experience for have a level
 	 * @param nb is the level
 	 * @return the minium of experience for the level in param
 	 */
-	public double minExperience(int nb)
+	private double minExperience(int nb)
 	{
 		if(nb <= 1) //TODO tester
 			return 0;
@@ -192,6 +187,21 @@ public class People extends Character implements Serializable
 
 	@Override
 	public void update(Notification notify) {
+	}
+
+	public void winExperience(Attack victim)
+	{
+		experience = experience + calculateWin(victim);
+	}
+
+	/**
+	 * This method calculates the experience to win when the PNJ is dead
+	 * @param vtm is the other Attack who is dead
+	 * @return experience (double) who is win
+	 */
+	private double calculateWin(Attack vtm)
+	{
+		return (minExperience(level+1)-minExperience(level))/(3*Math.pow((level/vtm.getLevel()),2));
 	}
 
 	@Override

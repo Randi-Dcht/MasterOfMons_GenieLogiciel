@@ -7,11 +7,13 @@ public interface Attack
     /**Méthode pour voir le temps de récupération*/
     public double recovery();
     /**Méthode qui retire les points de vie lorsque l'esquive échoue*/
-    public void attack();
+    public void loseAttack(double lose);
 
     public int getAgility();
 
     public int getStrength();
 
     public int getDefence();
+
+    public int getLevel();
 }

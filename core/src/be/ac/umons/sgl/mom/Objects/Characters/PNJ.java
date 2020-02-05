@@ -25,11 +25,6 @@ public abstract class PNJ extends Character implements Serializable
   public abstract Actions meet(People people); //TODO à modier pour mettre un event
 
 
-  @Override
-  public void attack() {
-
-  }
-
   public void update(Notification notify){}
 
 }
