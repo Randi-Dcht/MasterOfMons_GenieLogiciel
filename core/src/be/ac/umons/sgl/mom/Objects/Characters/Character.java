@@ -1,16 +1,8 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Observer;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public abstract class Character implements Attack, Observer, Social
 {
@@ -20,7 +12,6 @@ public abstract class Character implements Attack, Observer, Social
     protected int agility;
     /*caracteristique autre du personnage*/
     protected double life;
-    protected double experience = 0;
     protected int level = 1;
     /**
      * This constructor allows to create a new people who pilot by a player
@@ -62,11 +53,6 @@ public abstract class Character implements Attack, Observer, Social
     public int getAgility()
     {
         return agility;
-    }
-
-    public double getExperience()
-    {
-        return experience;
     }
 
     /**

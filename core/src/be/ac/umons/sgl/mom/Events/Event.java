@@ -41,12 +41,12 @@ public class Event implements Observable
     }
 
     @Override
-    public void notify(Events evt)
+    public void notify(Notification notify)
     {
-        if(list.containsKey(evt))
+        if(list.containsKey(notify.getEvents()))
         {
-            for (Observer obs : list.get(evt))
-                obs.update(evt);
+            for (Observer obs : list.get(notify.getEvents()))
+                obs.update(notify);
         }
     }
 

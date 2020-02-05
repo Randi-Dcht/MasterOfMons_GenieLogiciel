@@ -6,6 +6,7 @@ import java.util.*;
 import java.io.*;
 
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import com.badlogic.gdx.Gdx;
@@ -107,7 +108,7 @@ public class Saving implements Observer
     }
 
     @Override
-    public void update(Events event) {
+    public void update(Notification notify) {
 
     }
 }

@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -311,7 +312,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     public abstract String question();
 
     @Override
-    public void update(Events event)
+    public void update(Notification notify)
     {
         //TODO dire quoi faire quand reçoit une notification de changement
     }

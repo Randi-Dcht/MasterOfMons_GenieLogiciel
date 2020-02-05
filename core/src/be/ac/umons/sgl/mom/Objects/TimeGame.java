@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Objects;
 
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import java.util.Objects;
 
@@ -45,9 +46,9 @@ public class TimeGame implements Observer
     }
 
     @Override
-    public void update(Events event)
+    public void update(Notification notify)
     {
-        if (event.equals(Events.ChangeFrame))
+        if (notify.getEvents().equals(Events.ChangeFrame))
             changeMin();
     }
 

@@ -104,9 +104,9 @@ public class SuperviserNormally implements Observer
         }
 
         @Override
-        public void update(Events event)
+        public void update(Notification notify)
         {
-            if (event.equals(Events.ChangeFrame))
+            if (Events.ChangeFrame.equals(notify.getEvents()))
                 callMethod(0.3);
         }
 
@@ -129,7 +129,7 @@ public class SuperviserNormally implements Observer
                 minute = 600;
                 //remplacer par event
             }
-            event.notify(Events.ChangeFrame); //pour le timerGame
+            //event.notify(Events.ChangeFrame); //pour le timerGame
         }
 
         /**

@@ -1,14 +1,18 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import java.util.*;
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Observer;
+import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
- /**
+/**
  *This class allows to define a people with all characteristic.
  *This is a logic party of people.
  *@author Randy Dauchot (étudiant en Sciences informatique)
@@ -20,7 +24,6 @@ public class People extends Character implements Serializable
 	private State state = State.normal;
 /*characteristic other of people*/
 	private double experience = 0;
-	//private Niveau annee;
 	private MasterQuest myQuest;
 	final String name;
 	final int maxObject = 5;
@@ -43,6 +46,11 @@ public class People extends Character implements Serializable
 */
 	public void regeneration()
 	{
+	}
+
+	public double getExperience()
+	{
+		return experience;
 	}
 
 	public Actions meet(PNJ other)
@@ -183,7 +191,7 @@ public class People extends Character implements Serializable
 
 
 	@Override
-	public void update(Events event) {
+	public void update(Notification notify) {
 	}
 
 	@Override

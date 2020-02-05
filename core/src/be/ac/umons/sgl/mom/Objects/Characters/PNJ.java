@@ -1,10 +1,9 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Observer;
-import be.ac.umons.sgl.mom.Objects.Characters.Attack;
-import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Events.Notification;
 
 import java.io.Serializable;
 
@@ -12,6 +11,7 @@ import java.io.Serializable;
 *This abstract class allows define a no player, it is a character pilot by computer.
 *@author Randy Dauchot (étudiant en Sciences informatique Umons)
 */
+
 public abstract class PNJ extends Character implements Serializable
 {
   final String name;
@@ -30,6 +30,6 @@ public abstract class PNJ extends Character implements Serializable
 
   }
 
-  public void update(Events evt){}
+  public void update(Notification notify){}
 
 }
