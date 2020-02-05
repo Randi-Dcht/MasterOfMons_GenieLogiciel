@@ -22,6 +22,7 @@ public abstract class PNJ extends Character implements Serializable, Attack, Obs
 
   public PNJ(String name)
   {
+    super(Type.beefy); //TODO changer
     this.name = name;
   }
 
