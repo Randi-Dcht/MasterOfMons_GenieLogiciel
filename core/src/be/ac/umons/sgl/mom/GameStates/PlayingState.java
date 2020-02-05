@@ -175,10 +175,9 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         lifeBar.setValue((int)player.getCharacteristics().getLife());
         lifeBar.setMaxValue((int)player.getCharacteristics().lifemax());
         expBar.setValue((int)player.getCharacteristics().getExperience());
-        //expBar.setMaxValue((int)player.getCharacteristics().maxExp());
+        expBar.setMaxValue((int)player.getCharacteristics().minExperience());
         energyBar.setValue((int)player.getCharacteristics().getEnergy());
         energyBar.setMaxValue(100);
-//        energyBar.setMaxValue((int)player.getCharacteristics().getMaxEnergy());
     }
 
     /**

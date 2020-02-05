@@ -231,6 +231,14 @@ public class People implements Serializable, Attack, Observer, Social
 	}/*note à moi même : pour avoir le niveau maximun prendre le nb+1 du niveau actuelle*/
 
 	/**
+	 * This method return the minimum number of experience to go to the next level.
+	 * @return the minimum number of experience to go to the next level.
+	 */
+	public double minExperience() {
+		return minExperience(level);
+	}
+
+	/**
 	 * This method allows to say the probability of dodge the other attack
 	 * @return the probability of dodge
 	 */
