@@ -48,20 +48,12 @@ public class TimeGame implements Observer
     public void update(Events event)
     {
         if (event.equals(Events.ChangeFrame))
-            updateSecond(0.3);
+            changeMin();
     }
 
-    /**
-     * This method allows to refresh the time of game
-     * @param time who is the time between two frames.
-     */
-    public void updateSecond(double time)
+    /*delete*/public void updateSecond(double time)
     {
-        if((second = second + time) >= 60)
-        {
-            changeMin();
-            second = second%60;
-        }
+       changeMin();
     }
 
     /**
