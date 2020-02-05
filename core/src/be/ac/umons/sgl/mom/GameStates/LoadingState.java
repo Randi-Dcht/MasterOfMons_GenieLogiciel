@@ -87,7 +87,7 @@ public class LoadingState extends GameState {
     @Override
     public void draw() {
         sb.begin();
-        String txt = "Loading...";
+        String txt = gs.getStringFromId("loading");
         gs.getTitleFont().draw(sb, txt, MasterOfMonsGame.WIDTH / 2 - gs.getTitleFont().getXHeight() * txt.length() / 2, MasterOfMonsGame.HEIGHT / 2 + gs.getTitleFont().getLineHeight() / 2);
         sb.end();
 

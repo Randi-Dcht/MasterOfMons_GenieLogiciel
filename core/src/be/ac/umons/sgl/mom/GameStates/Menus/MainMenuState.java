@@ -39,17 +39,17 @@ public class MainMenuState extends MenuState {
     public void init() {
         super.init();
         topMargin = .1;
-        setMenuItems(new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
-                new MenuItem("Start a new game", () -> {
+        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title, false),
+                new MenuItem(gs.getStringFromId("newGame"), () -> {
                     extSel.generateLoadLists();
                     gsm.getGameMapManager().addMapsToLoad("Tmx/NimyTest.tmx");
                     gsm.getGameMapManager().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     gsm.setState(LoadingState.class, true);
                 }),
-                new MenuItem("Load", () -> gsm.setState(LoadState.class)),
-                new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
-                new MenuItem("Quit", () -> Gdx.app.exit())});
+                new MenuItem(gs.getStringFromId("load"), () -> gsm.setState(LoadState.class)),
+                new MenuItem(gs.getStringFromId("settings"), () -> gsm.setState(SettingsState.class)),
+                new MenuItem(gs.getStringFromId("quit"), () -> Gdx.app.exit())});
         extSel = new ExtensionsSelector(gim, gs);
     }
 
