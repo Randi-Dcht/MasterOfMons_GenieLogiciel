@@ -115,11 +115,6 @@ public abstract class Character implements Attack, Observer, Social
 
     }
 
-    public int level()
-    {
-        return 0;
-    }
-
     /**
      * This method allows to say the probability of dodge the other attack
      * @return the probability of dodge

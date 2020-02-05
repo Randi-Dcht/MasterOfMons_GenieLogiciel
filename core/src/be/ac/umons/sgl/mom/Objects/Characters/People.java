@@ -218,6 +218,19 @@ public class People implements Serializable, Attack, Observer, Social
 	}
 
 	/**
+	 * This method allows to give the minimum of experience for have a level
+	 * @param nb is the level
+	 * @return the minium of experience for the level in param
+	 */
+	public double minExperience(int nb)
+	{
+		if(nb <= 1) //TODO tester
+			return 0;
+		else
+			return minExperience(nb-1) + 1000 * Math.pow(1.1,nb-1);
+	}
+
+	/**
 	 * This method allows to say the probability of dodge the other attack
 	 * @return the probability of dodge
 	 */
