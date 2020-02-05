@@ -7,16 +7,13 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Classe réprésente la classe MainMenuState. Cette classe de test a principalement pour but de tester la méthode handleInput, en évitant d'allouer trop de ressources.
