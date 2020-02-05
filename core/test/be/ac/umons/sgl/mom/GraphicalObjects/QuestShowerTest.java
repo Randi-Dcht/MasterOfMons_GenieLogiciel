@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
+import java.awt.*;
+
 /**
  * Cette classe représente les tests de la classe QuestShower.
  */
@@ -87,16 +89,24 @@ public class QuestShowerTest extends QuestShower {
             }
 
             @Override
-            public void addProgress(double many) {
-
-            }
+            public void addProgress(double many) {}
 
             @Override
             public boolean isFinished() {
                 return false;
             }
         };
-        Assertions.assertEquals(10, getMaximumQuestNameWidth(q1, 0));
+        Assertions.assertEquals(4 + 4 + BETWEEN_CIRCLE_AND_TEXT_MARGIN, getMaximumQuestNameWidth(q1, 0));
         Assertions.assertEquals(4, getMaximumQuestNameWidth(q2, 0));
+    }
+
+    /**
+     * Overrided to avoid an error during the test. It doesn't change anything for the test.
+     * @param text The text
+     * @return The length of the text.
+     */
+    @Override
+    protected Point getTextSize(String text) {
+        return new Point(text.length(), 10);
     }
 }

@@ -45,7 +45,12 @@ public class ProgressBar {
     /**
      * Initialise une nouvelle bar de progression.
      */
+
     public ProgressBar() {
+        init();
+    }
+
+    public void init() {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
     }
@@ -96,6 +101,7 @@ public class ProgressBar {
      */
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
+        this.percent = (double)value / maxValue;
     }
     /**
      * Retourne la valeur maximale de la barre.

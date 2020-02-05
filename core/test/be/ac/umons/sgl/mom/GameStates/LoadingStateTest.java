@@ -21,7 +21,8 @@ import static org.mockito.Mockito.when;
  */
 public class LoadingStateTest extends LoadingState {
 
-    private LoadingStateTest() {
+    @BeforeEach
+    public void init() {
         gim = Mockito.mock(GameInputManager.class);
         gsm = Mockito.mock(GameStateManager.class);
         gs = Mockito.mock(GraphicalSettings.class);
@@ -29,14 +30,11 @@ public class LoadingStateTest extends LoadingState {
         sb = Mockito.mock(SpriteBatch.class);
         gmm = Mockito.mock(GameMapManager.class);
         sr = Mockito.mock(ShapeRenderer.class);
-        when(gs.getTitleFont()).thenReturn(Mockito.mock(BitmapFont.class));
-    }
-
-    @BeforeEach
-    public void init() {
+        font = Mockito.mock(BitmapFont.class);
         MockitoAnnotations.initMocks(this);
         when(gs.getAssetManager()).thenReturn(am);
         when(am.update()).thenReturn(false);
+        when(gs.getStringFromId("loading")).thenReturn("Loading...");
 //        when(am.getProgress()).thenReturn(0f);
 //        when(gmm.getProgress()).thenReturn(0d);
     }
