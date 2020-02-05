@@ -49,9 +49,12 @@ public enum Lesson
 	compilation('F',"compilation",Place.Nimy,3,10),
 	grapheOpti('O',"graphe et optimisation",Place.Poly,3,10),
 	baseDonnes('F',"base de données",Place.Nimy,3,10),
-	statistique('F',"statistique",Place.Nimy,3,10);
+	statistique('F',"statistique",Place.Nimy,3,10),
 
 	                         /*Lesson of Master 1 & 2*/
+
+	res2('F',"reseaux 2",Place.Nimy,4,10);                         
+
 	/*code ici(TODO: #Maxime)*/
 
 	final char type;
