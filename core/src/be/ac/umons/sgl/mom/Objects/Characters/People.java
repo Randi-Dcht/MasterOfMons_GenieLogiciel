@@ -13,22 +13,17 @@ import java.io.Serializable;
  *This is a logic party of people.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-public class People implements Serializable, Attack, Observer, Social
+public class People extends Character implements Serializable
 {
-/*caracteristique physique du personnage*/
-	private int strength;
-	private int defence;
-	private int agility;
+/*characteristic physique of people*/
 	private double energy = 100;
 	private State state = State.normal;
-/*caracteristique autre du personnage*/
-	private double life;
+/*characteristic other of people*/
 	private double experience = 0;
-	private int level = 1;
 	//private Niveau annee;
 	private MasterQuest myQuest;
 	final String name;
-	final int maxObject = 5; //nombre d'objet que peut avoir le personnage
+	final int maxObject = 5;
 	private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
 	private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
@@ -39,11 +34,8 @@ public class People implements Serializable, Attack, Observer, Social
  */
 	public People(String name, Type type)
 	{
-		this.name     = name;
-		this.strength = type.getStrength();
-		this.defence  = type.getDefence();
-		this.agility  = type.getAgility();
-		this.life     = lifemax();
+		super(type);
+		this.name = name;
 	}
 
 /**
@@ -58,28 +50,6 @@ public class People implements Serializable, Attack, Observer, Social
 		return null;
 	}
 
-	public double getLife()
-	{
-		return life;
-	}
-
-	public int getStrength()
-	{
-		return strength;
-	}
-	public int getDefence()
-	{
-		return defence;
-	}
-	public int getAgility()
-	{
-		return agility;
-	}
-
-	public double getExperience()
-	{
-		return experience;
-	}
 /**
 *This method allows the change the actually MasterQuest
 *@param quest who is the new masterQuest
@@ -135,23 +105,6 @@ public class People implements Serializable, Attack, Observer, Social
 	}
 
 /**
-*This method allows to calculated the maximum of life people.
-*@return max life.
-*/
-	public double lifemax()
-	{
-		return (strength*20);
-	}
-
-/**
-*This method allows to calculated ...
-*/
-	public double displacement()
-	{
-		return (2 +(agility/20));
-	}
-
-/**
 *This method allows to know the number of course to pass.
 *@return size of the list course
 */
@@ -185,7 +138,7 @@ public class People implements Serializable, Attack, Observer, Social
 */
 	public void energy(double time)
 	{
-		this.energy = energy + (this.state.getEnergy()*time);
+		this.energy = energy + (this.state.getEnergy()*time); //TODO addenergie
 	}
 
 	public double getEnergy()
@@ -201,16 +154,6 @@ public class People implements Serializable, Attack, Observer, Social
 	{
 		this.state = state;
 	} //TODO supprimer à verifier
-
-	/**
-	*This method allows to say the time between two attack of this people
-	 * @return the time between two attack
-	 */
-	@Override
-	public double recovery()
-	{
-		return (0.5 + (agility/40));
-	}
 
 	@Override
 	public void attack() {
@@ -235,22 +178,12 @@ public class People implements Serializable, Attack, Observer, Social
 	 * @return the minimum number of experience to go to the next level.
 	 */
 	public double minExperience() {
-		return minExperience(level);
+		return minExperience(level+1);
 	}
 
-	/**
-	 * This method allows to say the probability of dodge the other attack
-	 * @return the probability of dodge
-	 */
-	@Override
-	public double dodge() /*esquive*/
-	{
-		return Math.min((agility/100),0.75);
-	}
 
 	@Override
 	public void update(Events event) {
-
 	}
 
 	@Override
