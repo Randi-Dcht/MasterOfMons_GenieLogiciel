@@ -159,6 +159,7 @@ public class SuperviserNormally implements Observer
         double hit = ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
     }
 
+
     /**
      * This method allows calculated a bonus for an attack in two players
      * @return the bonus (double)

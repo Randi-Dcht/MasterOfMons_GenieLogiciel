@@ -228,7 +228,7 @@ public class People implements Serializable, Attack, Observer, Social
 			return 0;
 		else
 			return minExperience(nb-1) + 1000 * Math.pow(1.1,nb-1);
-	}
+	}/*note à moi même : pour avoir le niveau maximun prendre le nb+1 du niveau actuelle*/
 
 	/**
 	 * This method allows to say the probability of dodge the other attack
