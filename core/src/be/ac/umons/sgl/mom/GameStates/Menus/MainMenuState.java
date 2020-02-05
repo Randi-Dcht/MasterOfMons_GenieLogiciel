@@ -10,6 +10,7 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.LoadFile;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 import java.awt.*;
 
@@ -42,7 +43,8 @@ public class MainMenuState extends MenuState {
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title, false),
                 new MenuItem(gs.getStringFromId("newGame"), () -> {
                     extSel.generateLoadLists();
-                    gsm.getGameMapManager().addMapsToLoad("Tmx/NimyTest.tmx");
+                    for (FileHandle f : Gdx.files.internal("Tmx/").list())
+                        gsm.getGameMapManager().addMapsToLoad(f.path());
                     gsm.getGameMapManager().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     gsm.setState(LoadingState.class, true);
