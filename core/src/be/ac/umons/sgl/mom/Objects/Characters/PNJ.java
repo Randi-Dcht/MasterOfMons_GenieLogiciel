@@ -12,11 +12,9 @@ import java.io.Serializable;
 *This abstract class allows define a no player, it is a character pilot by computer.
 *@author Randy Dauchot (étudiant en Sciences informatique Umons)
 */
-public abstract class PNJ implements Serializable, Attack, Observer, Social
+public abstract class PNJ extends Character implements Serializable, Attack, Observer, Social
 {
   final String name;
-  private double x;
-  private double y;
 
   private int agility;
   private int strength;
@@ -25,12 +23,6 @@ public abstract class PNJ implements Serializable, Attack, Observer, Social
   public PNJ(String name)
   {
     this.name = name;
-  }
-
-  public void move(double x, double y)
-  {
-    this.x = x;
-    this.y = y;
   }
 
   public void caracteristique(int strength, int defence, int agility)

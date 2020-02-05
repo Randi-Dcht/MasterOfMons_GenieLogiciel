@@ -2,7 +2,6 @@ package be.ac.umons.sgl.mom.Objects;
 
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Observer;
-
 import java.util.Objects;
 
 /**
@@ -21,6 +20,7 @@ public class TimeGame implements Observer
     private int NBmonth;
     private int NByear;
 
+    private double second;
     private int hour;
     private int min;
     private int day;
@@ -40,6 +40,7 @@ public class TimeGame implements Observer
         this.hour = hour;
         this.year = years;
         NByear = leap(years);
+        second = 0;
 
     }
 
@@ -47,17 +48,13 @@ public class TimeGame implements Observer
     public void update(Events event)
     {
         if (event.equals(Events.ChangeFrame))
-            updateSecond(0.3);
+            changeMin();
     }
 
-    /**
-     * This method allows to refresh the time of game
-     * @param time who is the time between two frames.
-     */
-    public void updateSecond(double time)
+    /*delete*/public void updateSecond(double time)
     {
-        changeMin();
-    }//TODO changer ici
+       changeMin();
+    }
 
     /**
      * This method allows to know leap year
@@ -134,5 +131,13 @@ public class TimeGame implements Observer
     public String toString()
     {
         return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;
+    }
+
+    /**
+     * This methods is only for the test of JunitTest
+     */
+    int[] getValueTest()
+    {
+        return new int[]{min,hour,day,year};
     }
 }

@@ -129,7 +129,7 @@ public class SuperviserNormally implements Observer
                 minute = 600;
                 //remplacer par event
             }
-            time.updateSecond(dt);
+            event.notify(Events.ChangeFrame); //pour le timerGame
         }
 
         /**

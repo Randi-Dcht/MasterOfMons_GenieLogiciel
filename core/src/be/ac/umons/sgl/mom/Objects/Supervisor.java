@@ -65,8 +65,8 @@ public class Supervisor /*! va être supprimer !*/
       save.Signal();
       minute = 600;
     }
-
-    time.updateSecond(0);
+    System.out.println(time);
+    time.updateSecond(0.3);
   }
 
 }

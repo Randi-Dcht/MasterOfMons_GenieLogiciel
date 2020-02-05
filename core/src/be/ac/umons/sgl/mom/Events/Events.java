@@ -12,7 +12,8 @@ public enum Events
     PlaceKot("kot"),                          /*...*/
     MeetOther("meetOther"),                   /*...*/
     AddFriend("meetFriend"),                  /*...*/
-    Answer("answerQuestion");                 /*...*/
+    Answer("answerQuestion"),                 /*...*/
+    Attack("attack");
 
     private String name;
 
