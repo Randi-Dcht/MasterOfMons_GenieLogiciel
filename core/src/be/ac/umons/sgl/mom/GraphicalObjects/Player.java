@@ -1,7 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.GameObjects;
-import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -32,6 +31,7 @@ public class Player extends Character {
      * La taille de la carte (en pixel).
      */
     private int mapWidth, mapHeight;
+
 
 
     /**
@@ -182,7 +182,6 @@ public class Player extends Character {
         int y = (int)((double)(-getPosY() + mapHeight / 2) / tileHeight - (getPosX() - mapWidth / 2) / tileWidth);
 
         return new Rectangle(x , y, ((float)getWidth() / tileWidth), (float)getHeight() / tileHeight);
-
     }
 
 }

@@ -49,12 +49,16 @@ public class GraphicalSettings {
      * Crée de nouveaux paramètres graphiques.
      */
     public GraphicalSettings() {
+        init();
+    }
+
+    public void init() {
         assetManager = new AssetManager();
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
-        loc = new Locale("en");
-        bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), Locale.ROOT);
+        loc = Locale.ROOT;
+        bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc); // TODO : Gdx.files NULL ???
     }
 
     /**
@@ -137,6 +141,8 @@ public class GraphicalSettings {
      * Initialise les fichiers que le gestionnaire de ressources devra charger durant l'écran de chargement.
      */
     private void prepareAssetManagerForLoading() {
+        if (Gdx.files == null)
+            return;
         for (File folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory))) {
             for (File f : Objects.requireNonNull(folder.listFiles(File::isFile))) {
                 assetManager.load(f.getPath(), Texture.class);
@@ -177,5 +183,10 @@ public class GraphicalSettings {
 
     public String getStringFromId(String id) {
         return bundle.get(id);
+    }
+
+    public void setLocale(Locale loc) {
+        this.loc = loc;
+        bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc);
     }
 }

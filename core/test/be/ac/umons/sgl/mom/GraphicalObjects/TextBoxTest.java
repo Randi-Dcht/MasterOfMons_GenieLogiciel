@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import com.badlogic.gdx.Input;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,10 @@ public class TextBoxTest extends TextBox {
     public void init() {
         gim = Mockito.mock(GameInputManager.class);
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        width = 20;
+        height = 20;
+        MasterOfMonsGame.WIDTH = 50;
+        MasterOfMonsGame.HEIGHT = 50;
     }
 
     /**

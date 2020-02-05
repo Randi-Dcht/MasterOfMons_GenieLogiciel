@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -59,6 +60,8 @@ public class LoadingState extends GameState {
      */
     protected AssetManager am;
 
+    protected BitmapFont font;
+
     /**
      * Initialise un nouvel état de chargement.
      * @param gsm Le GameStateManager du jeu.
@@ -77,6 +80,7 @@ public class LoadingState extends GameState {
         sr = new ShapeRenderer();
         gmm = gsm.getGameMapManager();
         am = gs.getAssetManager();
+        font = gs.getTitleFont();
     }
 
     @Override
@@ -88,11 +92,11 @@ public class LoadingState extends GameState {
     public void draw() {
         sb.begin();
         String txt = gs.getStringFromId("loading");
-        gs.getTitleFont().draw(sb, txt, MasterOfMonsGame.WIDTH / 2 - gs.getTitleFont().getXHeight() * txt.length() / 2, MasterOfMonsGame.HEIGHT / 2 + gs.getTitleFont().getLineHeight() / 2);
+        font.draw(sb, txt, MasterOfMonsGame.WIDTH / 2 - font.getXHeight() * txt.length() / 2, MasterOfMonsGame.HEIGHT / 2 + font.getLineHeight() / 2);
         sb.end();
 
-        int fromCenterX = (int)((gs.getTitleFont().getXHeight() * txt.length() / 2 + CIRCLE_MARGIN_X) * Math.cos(actualAngle));
-        int fromCenterY = (int)((gs.getTitleFont().getLineHeight() / 2 + CIRCLE_MARGIN_Y) * Math.sin(actualAngle));
+        int fromCenterX = (int)((font.getXHeight() * txt.length() / 2 + CIRCLE_MARGIN_X) * Math.cos(actualAngle));
+        int fromCenterY = (int)((font.getLineHeight() / 2 + CIRCLE_MARGIN_Y) * Math.sin(actualAngle));
 
         float progress = (float)((am.getProgress() + gmm.getProgress()) / 2);
 
