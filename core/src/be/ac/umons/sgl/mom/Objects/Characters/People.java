@@ -22,6 +22,7 @@ public class People extends Character implements Serializable
 /*characteristic physique of people*/
 	private double energy = 100;
 	private State state = State.normal;
+	private double threshold; /*seuil experience niveau à devoir atteindre*/
 /*characteristic other of people*/
 	private double experience = 0;
 	private MasterQuest myQuest;
@@ -39,6 +40,7 @@ public class People extends Character implements Serializable
 	{
 		super(type);
 		this.name = name;
+		this.threshold = minExperience(level+1);
 	}
 
 /**
@@ -134,7 +136,7 @@ public class People extends Character implements Serializable
 *This method allows to redefine the energy of this people.
 *@param many who is the energy loss or win
 */
-	public void addEnergy(double many)
+	public void addEnergy(double many)//TODO mort
 	{
 		if(this.energy + many >= 0 || this.energy + many <= 100)
 		  this.energy = this.energy + many;
@@ -181,7 +183,7 @@ public class People extends Character implements Serializable
 	 * @return the minimum number of experience to go to the next level.
 	 */
 	public double minExperience() {
-		return minExperience(level+1);
+		return threshold;
 	}
 
 
@@ -189,7 +191,7 @@ public class People extends Character implements Serializable
 	public void update(Notification notify) {
 	}
 
-	public void winExperience(Attack victim)
+	public void winExperience(Attack victim)//TODO add level
 	{
 		experience = experience + calculateWin(victim);
 	}
