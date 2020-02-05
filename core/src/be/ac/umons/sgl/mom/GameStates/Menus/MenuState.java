@@ -38,7 +38,7 @@ public abstract class MenuState extends GameState {
     /**
      * Les différents éléments à montrer à l'écran.
      */
-    private MenuItem[] menuItems;
+    protected MenuItem[] menuItems;
     /**
      * The selectable elements represented as Button.
      */
