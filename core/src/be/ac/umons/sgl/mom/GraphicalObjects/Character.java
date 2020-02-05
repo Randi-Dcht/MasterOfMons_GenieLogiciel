@@ -2,6 +2,8 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
+import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -34,9 +36,14 @@ public class Character {
      */
     protected List<GameObjects> inventory;
 
+    private People characteristics;
+
+    private double timeBeforeAttack;
+
     public Character(GraphicalSettings gs) {
         this.gs = gs;
         assetManager = gs.getAssetManager();
+        characteristics = new People("Test", Type.athletic); // TODO
     }
 
     public void draw(Batch batch, int x, int y, int width, int height) {
@@ -46,11 +53,16 @@ public class Character {
 
     }
 
+    public void update(float dt) {
+        if (timeBeforeAttack > 0)
+            timeBeforeAttack -= dt;
+    }
+
     /**
      * Retourne la texture à utiliser pour le personnage en fonction de l'orientation du personnage.
      * @return La texture à utiliser pour le personnage.
      */
-    protected Texture getTexture() {
+    public Texture getTexture() {
         switch (orientation) {
             case Top:
                 return ((posY < 0 ? -posY : posY) / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/hautbh.png") : assetManager.get("Pictures/Characters/hautbh2.png");
@@ -113,4 +125,17 @@ public class Character {
         return new ArrayList<>(inventory);
     }
 
+
+    public People getCharacteristics() {
+        return characteristics;
+    }
+
+
+    public boolean canAttack() {
+        return timeBeforeAttack <= 0;
+    }
+
+    public void setTimeBeforeAttack(double timeBeforeAttack) {
+        this.timeBeforeAttack = timeBeforeAttack;
+    }
 }

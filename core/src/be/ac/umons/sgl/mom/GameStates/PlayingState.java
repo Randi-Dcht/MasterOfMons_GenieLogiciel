@@ -94,7 +94,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
      * Le joueur de la partie.
      */
     protected Player player;
-    protected People playerCharacteristics;
     /**
      * L'objet responsable des animations.
      */
@@ -148,7 +147,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gim, gs, am, player);
-        playerCharacteristics = new People("Test", Type.athletic);
 
 
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
@@ -174,13 +172,13 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         makePlayerMove(dt);
         cam.update();
 
-        lifeBar.setValue((int)playerCharacteristics.getLife());
-        lifeBar.setMaxValue((int)playerCharacteristics.lifemax());
-        expBar.setValue((int)playerCharacteristics.getExperience());
-//        expBar.setMaxValue((int)playerCharacteristics.maxExp());
-        energyBar.setValue((int)playerCharacteristics.getEnergy());
+        lifeBar.setValue((int)player.getCharacteristics().getLife());
+        lifeBar.setMaxValue((int)player.getCharacteristics().lifemax());
+        expBar.setValue((int)player.getCharacteristics().getExperience());
+        //expBar.setMaxValue((int)player.getCharacteristics().maxExp());
+        energyBar.setValue((int)player.getCharacteristics().getEnergy());
         energyBar.setMaxValue(100);
-//        energyBar.setMaxValue((int)playerCharacteristics.getMaxEnergy());
+//        energyBar.setMaxValue((int)player.getCharacteristics().getMaxEnergy());
     }
 
     /**
@@ -278,6 +276,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
             GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
             ((InGameDialogState)g).setText("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
             ((InGameDialogState)g).addAnswer("YAY !", "yay...", "YAAAAAYYYY !!!");
+        } else if (gim.isKey(Input.Keys.C, KeyStatus.Pressed)) {
+            CombatState g = (CombatState) gsm.setState(CombatState.class);
+            g.setPlayer1(player);
+            g.setPlayer2(player);
         }
         inventoryShower.handleInput();
     }

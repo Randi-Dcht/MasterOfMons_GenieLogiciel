@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
@@ -71,8 +72,10 @@ public class Button extends Control {
             sr.setColor(backgroundColor);
         sr.rect(x, y, width, height);
         sr.end();
+        GlyphLayout gl = new GlyphLayout();
+        gl.setText(font, textToShow);
         batch.begin();
-        font.draw(batch, textToShow, x + leftMargin, y + font.getLineHeight() - topMargin);
+        font.draw(batch, textToShow, (int)(x + (double)width / 2 - gl.width / 2), (int)(y + (double)height / 2 + gl.height / 2));
         batch.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
