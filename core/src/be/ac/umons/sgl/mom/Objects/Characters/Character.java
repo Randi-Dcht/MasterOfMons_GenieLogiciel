@@ -15,13 +15,13 @@ import java.util.Arrays;
 public abstract class Character implements Attack, Observer, Social
 {
     /*caracteristique physique du personnage*/
-    private int strength;
-    private int defence;
-    private int agility;
+    protected int strength;
+    protected int defence;
+    protected int agility;
     /*caracteristique autre du personnage*/
-    private double life;
-    private double experience = 0;
-    private int level = 1;
+    protected double life;
+    protected double experience = 0;
+    protected int level = 1;
     /**
      * This constructor allows to create a new people who pilot by a player
      * @param type who is the characteristic of this people (Enums)
@@ -123,15 +123,5 @@ public abstract class Character implements Attack, Observer, Social
     public double dodge() /*esquive*/
     {
         return Math.min((agility/100),0.75);
-    }
-
-    @Override
-    public void update(Events event) {
-
-    }
-
-    @Override
-    public Actions getAction() {
-        return null; //TODO etre demander via l'interface graphique
     }
 }
