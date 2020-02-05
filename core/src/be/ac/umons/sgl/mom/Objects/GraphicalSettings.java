@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.utils.I18NBundle;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -39,6 +41,10 @@ public class GraphicalSettings {
      */
     private FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
 
+    private Locale loc;
+
+    private I18NBundle bundle;
+
     /**
      * Crée de nouveaux paramètres graphiques.
      */
@@ -47,6 +53,8 @@ public class GraphicalSettings {
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
+        loc = new Locale("en");
+        bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), Locale.ROOT);
     }
 
     /**
@@ -165,5 +173,9 @@ public class GraphicalSettings {
         for (LoadFile f : files) {
             assetManager.load(f.file.getPath(), f.typeOfFile);
         }
+    }
+
+    public String getStringFromId(String id) {
+        return bundle.get(id);
     }
 }

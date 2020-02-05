@@ -49,9 +49,26 @@ public enum Lesson
 	compilation('F',"compilation",Place.Nimy,3,10),
 	grapheOpti('O',"graphe et optimisation",Place.Poly,3,10),
 	baseDonnes('F',"base de données",Place.Nimy,3,10),
-	statistique('F',"statistique",Place.Nimy,3,10);
+	statistique('F',"statistique",Place.Nimy,3,10),
 
 	                         /*Lesson of Master 1 & 2*/
+
+	res2('F',"reseaux 2",Place.Nimy,4,10),
+	lecred('0',"lecture et redaction scientifiques",Place.Nimy,4,10),
+	proglog('F',"programmation logique",Place.Nimy,4,10),
+	bda('F',"Big data analytics",Place.Nimy,4,10),
+	comp('F',"compilation",Place.Nimy,4,10),
+	algbio('F',"algorithme et bioinformatique",Place.Nimy,4,10),
+	sofev('F',"software evolution",Place.Nimy,4,10),
+	angl('F',"English for scientific communication",Place.Nimy,4,10),
+
+	mem('O',"Memoire",Place.Nimy,5,10),
+	stage('O',"Stage en entreprise",Place.Nimy,5,10),
+	ss('F',"Sciences et societe",Place.Nimy,5,10),
+	ps('F',"Philosophie des sciences",Place.Nimy,5,10),
+	mang('F',"Managment",Place.Nimy,5,10);
+
+
 	/*code ici(TODO: #Maxime)*/
 
 	final char type;
