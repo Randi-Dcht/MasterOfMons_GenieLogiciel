@@ -53,7 +53,7 @@ public class SuperviserNormally implements Observer
         /*This the class who save the game in real time*/
         public /*private*/ Saving save;
         /*This is the time in the game*/
-        public /*private*/ TimeGame time;
+        private TimeGame time;
         /*This is the events variable*/
         private Event event;
 
@@ -140,6 +140,15 @@ public class SuperviserNormally implements Observer
         {
             return event;
         }
+
+        /**
+         * This method to give the time of the game
+         * @return time of game
+         */
+    public TimeGame getTime()
+    {
+        return time;
+    }
 
     /**
      *This method who call when two Attack want to fight
