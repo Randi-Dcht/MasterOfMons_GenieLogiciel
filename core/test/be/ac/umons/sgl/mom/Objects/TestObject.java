@@ -5,9 +5,8 @@ import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
 *Cette classe permet de créer les tets junit pour tester le code source du jeu
@@ -18,7 +17,7 @@ class TestObject
 {
 
  /**
- *Cette méthode permet de tester les méthodes de la classe Lesson
+ *This method allows to test to method of the enum class Lesson
  */
   @Test
   void TestOfLesson()
@@ -41,33 +40,12 @@ class TestObject
       People people = new People("TestObject",Type.normal);
       Saving save = new Saving(people,"TestSaving",null);
   }
-/*
+
     @Test
-    void ScheduleTest()
+    void TimeGameTest()
     {
-        Schedule time = new Schedule(9,1,8,2019);
-        assertTrue(1==1);
-        try
-        {
-            Method mtd = time.getClass().getDeclaredMethod("?",null);
-            mtd.setAccessible(true);
-            Object rtr = mtd.invoke(time);
-        }
-        catch (Exception e)
-        {}
-
-
-        MaClasse maClasse = new MaClasse();
-    try {
-      Method method = maClasse.getClass().getDeclaredMethod("maMethodePrivee", null);
-      method.setAccessible(true);
-      Object retour = method.invoke(maClasse);
-      Logger.getLogger(TestPrivateMethodInvoke.class.getName())
-        .log(Level.INFO, "Valeur de retour = " + retour);
-    } catch (Exception ex) {
-      Logger.getLogger(TestPrivateMethodInvoke.class.getName())
-        .log(Level.SEVERE, null, ex);
+        TimeGame tg = new TimeGame(8,15,9,2019);
+        tg.updateSecond(0.4);
+        assertEquals(1, tg.getValueTest()[0]);
     }
-
-    }*/
 }

@@ -66,7 +66,7 @@ public class Supervisor /*! va être supprimer !*/
       minute = 600;
     }
 
-    time.updateSecond(0);
+    time.updateSecond(0.3);
   }
 
 }

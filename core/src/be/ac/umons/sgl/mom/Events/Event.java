@@ -49,4 +49,11 @@ public class Event implements Observable
                 obs.update(evt);
         }
     }
+
+
+    /*This method is only for the JunitTest*/
+    HashMap<Events, List<Observer>> getList()
+    {
+        return list;
+    }
 }

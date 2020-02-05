@@ -2,9 +2,8 @@ package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Type;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class allows to test the class:
@@ -19,6 +18,8 @@ public class TestEvents
     public void sameInstance()
     {
         assertSame(SuperviserNormally.getSupervisor(),SuperviserNormally.getSupervisor(),"check the design parrtern single/same instance");
+        assertTrue(Events.AddFriend.equals(Events.AddFriend));
+        assertFalse(Events.Answer.equals(Events.AddFriend));
     }
 
     @Test
@@ -30,5 +31,24 @@ public class TestEvents
         sp.newParty("Test", Type.beefy,null); /*doesn't test here the saving of graphic so gs == null*/
         assertNotNull(sp.getPeople(),"check if the people instance is create");
         assertNotNull(sp.getTime(),"check time is create ");
+    }
+
+    @Test
+    public void checkTheEvent()
+    {
+        Event evt = new Event();
+        assertEquals(0, evt.getList().size(),"check if the size of list is null");
+        TestObserver obs = new TestObserver("tets1");
+        TestObserver obs2 = new TestObserver("test2");
+        evt.add(Events.ChangeFrame,obs);
+        assertEquals(1, evt.getList().size(),"check if one events is create");
+        evt.add(Events.ChangeFrame,obs2);
+        assertEquals(1, evt.getList().size(),"check if the event isn't create");
+        assertEquals(2,evt.getList().get(Events.ChangeFrame).size(),"check if the second observer is add to same list");
+        evt.notify(Events.AddFriend);
+        assertFalse(obs.value,"the observer does't notify");
+        evt.notify(Events.ChangeFrame);
+        assertTrue(obs.value,"the observer is notify");
+        assertTrue(obs2.value,"the observer is notify");
     }
 }
