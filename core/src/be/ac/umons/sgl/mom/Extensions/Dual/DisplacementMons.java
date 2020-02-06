@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Extensions.Dual;
 
-import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
@@ -27,7 +27,7 @@ public class DisplacementMons extends MasterQuest
     }
 
     @Override
-    public void meetOther(PNJ other)
+    public void meetOther(Mobile other)
     {
 
     }

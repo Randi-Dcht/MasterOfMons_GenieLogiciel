@@ -12,11 +12,11 @@ import java.io.Serializable;
 *@author Randy Dauchot (étudiant en Sciences informatique Umons)
 */
 
-public abstract class PNJ extends Character implements Serializable
+public abstract class Mobile extends Character implements Serializable
 {
   final String name;
 
-  public PNJ(String name)
+  public Mobile(String name)
   {
     super(Type.beefy); //TODO changer
     this.name = name;

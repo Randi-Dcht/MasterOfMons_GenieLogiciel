@@ -2,7 +2,7 @@ package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
-import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -23,6 +23,7 @@ public class SuperviserNormally implements Observer
 {
        public static SuperviserNormally instance;
 
+
        /**
         * This method to give the only instance of <code>SuperviserNormaly</code>
         */
@@ -33,6 +34,7 @@ public class SuperviserNormally implements Observer
            return instance;
        }
 
+
        /**
         * This constructor allows to define the class who monitor the game
         */
@@ -42,12 +44,13 @@ public class SuperviserNormally implements Observer
            event.add(Events.ChangeFrame,this);
        }
 
+
         /*The people who play this party*/
         private People people;
         /*The all objects in all maps in this game*/
         private ArrayList<Items> objet = new ArrayList<Items>();
         /*The all no people in thsi game*/
-        private ArrayList<PNJ> listPNJ = new ArrayList<PNJ>();
+        private ArrayList<Mobile> listMobile = new ArrayList<Mobile>();
         /*This is a timer for a saving the game at the regular period*/
         private double minute = 600;
         /*This the class who save the game in real time*/
@@ -56,6 +59,7 @@ public class SuperviserNormally implements Observer
         private TimeGame time;
         /*This is the events variable*/
         private Event event;
+
 
         /**
          * This methods allows to return the people of this game
@@ -66,14 +70,16 @@ public class SuperviserNormally implements Observer
             return people;
         }
 
+
         /**
-         * This method allows to add the new PNJ to the party.
-         * @param lst is a list of the new PNJ
+         * This method allows to add the new Mobile to the party.
+         * @param lst is a list of the new Mobile
          */
-        public void add(PNJ ... lst)
+        public void add(Mobile... lst)
         {
-            listPNJ.addAll(Arrays.asList(lst));
+            listMobile.addAll(Arrays.asList(lst));
         }
+
 
         /**
          * This method allows to add the new items.
@@ -83,6 +89,7 @@ public class SuperviserNormally implements Observer
         {
             objet.addAll(Arrays.asList(lst));
         }
+
 
         /**
          * This method to allows to create a new party of this game
@@ -103,6 +110,7 @@ public class SuperviserNormally implements Observer
             //add
         }
 
+
         @Override
         public void update(Notification notify)
         {
@@ -110,7 +118,8 @@ public class SuperviserNormally implements Observer
                 callMethod(0.3);
         }
 
-    /**
+
+         /**
          * This method
          * @param dt who is the time between two windows
          */
@@ -132,6 +141,7 @@ public class SuperviserNormally implements Observer
             //event.notify(Events.ChangeFrame); //pour le timerGame
         }
 
+
         /**
          * This method to give the event instance
          * @return event
@@ -141,30 +151,32 @@ public class SuperviserNormally implements Observer
             return event;
         }
 
+
         /**
          * This method to give the time of the game
          * @return time of game
          */
-    public TimeGame getTime()
+        public TimeGame getTime()
     {
         return time;
     }
 
-    /**
-     *This method who call when two Attack want to fight
-     */
-    public void attackMethod(Attack attacker, Attack victim)
-    {
-        int gun=1; //TODO a dertimer dans les prochaines fois et regarder au bonus + chacaract loseAttack
-        double hit = ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
-    }
+
+       /**
+        *This method who call when two Attack want to fight
+        */
+       public void attackMethod(Attack attacker, Attack victim)
+       {
+          int gun=1; //TODO a dertimer dans les prochaines fois et regarder au bonus + chacaract loseAttack
+          double hit = ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
+       }
 
 
-    /**
-     * This method allows calculated a bonus for an attack in two players
-     * @return the bonus (double)
-     */
-    public double bonus(double p, double c)
+       /**
+        * This method allows calculated a bonus for an attack in two players
+        * @return the bonus (double)
+        */
+        public double bonus(double p, double c)
     {
         return 1; //TODO continuer
     }

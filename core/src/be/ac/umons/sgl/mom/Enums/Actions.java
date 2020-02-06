@@ -1,7 +1,7 @@
 package be.ac.umons.sgl.mom.Enums;
 
 /**
- * This class allows define an enum of Action for a people or a PNJ
+ * This class allows define an enum of Action for a people or a Mobile
  * @author : Randy Dauchot(étudiant en sciences Informatique Umons).
  */
 public enum Actions

@@ -4,10 +4,9 @@ import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
-import be.ac.umons.sgl.mom.Objects.Characters.PNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
@@ -300,7 +299,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *This method allows to meet between people and a pnj
      *@param other who is the pnj to meet
      */
-    public void meetOther(PNJ other)
+    public void meetOther(Mobile other)
     {
         //TODO a faire
     }

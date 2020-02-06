@@ -6,11 +6,10 @@ import be.ac.umons.sgl.mom.Events.Observer;
 
 public abstract class Character implements Attack, Observer, Social
 {
-    /*caracteristique physique du personnage*/
+    /*characteristic of the character*/
     protected int strength;
     protected int defence;
     protected int agility;
-    /*caracteristique autre du personnage*/
     protected double life;
     protected int level = 1; /*between 1 and 40*/
     /**
@@ -32,29 +31,38 @@ public abstract class Character implements Attack, Observer, Social
     {
     }
 
-    public Actions meet(PNJ other)
-    {
-        return null;
-    }
 
+    /***/
     public double getLife()
     {
         return life;
     }
 
+
+    /***/
     public int getStrength()
     {
         return strength;
     }
+
+
+    /***/
     public int getDefence()
     {
         return defence;
     }
+
+
+    /***/
     public int getAgility()
     {
         return agility;
     }
+
+
+    /***/
     public int getLevel(){return level;}
+
 
     /**
      *This method allows define the characteristic of a people.
@@ -69,6 +77,7 @@ public abstract class Character implements Attack, Observer, Social
         this.agility = agility;
     }
 
+
     /**
      *This method allows to calculated the maximum of life people.
      *@return max life.
@@ -78,11 +87,14 @@ public abstract class Character implements Attack, Observer, Social
         return (strength*20);
     }
 
+
     @Override
     public void loseAttack(double lose)
     {
         life = life - lose;
     }
+
+
     /**
      *This method allows to calculated ...
      */
@@ -101,6 +113,7 @@ public abstract class Character implements Attack, Observer, Social
     {
         return (0.5 + (agility/40));
     }
+
 
     /**
      * This method allows to say the probability of dodge the other attack

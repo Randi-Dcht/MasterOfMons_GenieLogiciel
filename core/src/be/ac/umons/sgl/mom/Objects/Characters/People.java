@@ -4,7 +4,6 @@ import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
@@ -19,11 +18,10 @@ import java.util.Arrays;
  */
 public class People extends Character implements Serializable
 {
-/*characteristic physique of people*/
+/*characteristic of people*/
 	private double energy = 100;
 	private State state = State.normal;
 	private double threshold; /*seuil experience niveau à devoir atteindre*/
-/*characteristic other of people*/
 	private double experience = 0;
 	private MasterQuest myQuest;
 	final String name;
@@ -43,22 +41,11 @@ public class People extends Character implements Serializable
 		this.threshold = minExperience(level+1);
 	}
 
-/**
-*This method allows to increase the life
-*/
-	public void regeneration()
-	{
-	}
-
 	public double getExperience()
 	{
 		return experience;
 	}
 
-	public Actions meet(PNJ other)
-	{
-		return null;
-	}
 
 /**
 *This method allows the change the actually MasterQuest
@@ -191,13 +178,32 @@ public class People extends Character implements Serializable
 	public void update(Notification notify) {
 	}
 
-	public void winExperience(Attack victim)//TODO add level
+	/**
+	 * After the win attack, the people win the experience.
+	 * This method calculate the experience with the level of victim
+	 * @param victim who is dead
+	 */
+	public void winExperience(Attack victim)
 	{
-		experience = experience + calculateWin(victim);
+		winExperience(calculateWin(victim));
 	}
 
 	/**
-	 * This method calculates the experience to win when the PNJ is dead
+	 * This method allows to the experience at this people and check the threshold
+	 * @param win who is the experience win
+	 */
+	public void winExperience(double win)
+	{
+		experience = experience + win;
+		if(experience >= threshold)
+		{
+			level++;
+			threshold = minExperience(level+1);
+		}
+	}
+
+	/**
+	 * This method calculates the experience to win when the Mobile is dead
 	 * @param vtm is the other Attack who is dead
 	 * @return experience (double) who is win
 	 */
