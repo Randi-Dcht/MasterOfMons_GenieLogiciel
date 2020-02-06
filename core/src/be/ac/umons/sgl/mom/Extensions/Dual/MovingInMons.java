@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Extensions.Dual;
 
+import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
@@ -10,7 +11,7 @@ public class MovingInMons extends MasterQuest
     final UnderQuest[] underQuests = {};
     public MovingInMons(People people, MasterQuest before)
     {
-        super(before,people);
+        super(before,people, Bloc.Extend);
         addUnderQuest(underQuest);
     }
 

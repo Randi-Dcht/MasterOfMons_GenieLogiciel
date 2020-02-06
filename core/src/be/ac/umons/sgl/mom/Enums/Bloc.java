@@ -6,7 +6,8 @@ public enum Bloc
     BA2(5,10,8,10),
     BA3(10,15,12,15),
     MA1(17,22,20,22),
-    MA2(27,35,25,28);
+    MA2(27,35,25,28),
+    Extend(0,0,0,0);
 
 
     private int minMob;
