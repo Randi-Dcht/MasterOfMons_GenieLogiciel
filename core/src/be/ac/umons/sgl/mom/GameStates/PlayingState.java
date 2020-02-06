@@ -15,10 +15,8 @@ import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
-import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.*;
-import be.ac.umons.sgl.mom.Objects.Items.Energizing;
 import com.badlogic.gdx.Input;
 
 import java.awt.*;
@@ -44,11 +42,11 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     /**
      * La taille horizontale de la carte montré à l'écran.
      */
-    public static final int SHOWED_MAP_WIDTH = 31;
+    public static int SHOWED_MAP_WIDTH = 31;
     /**
      * La taille verticale de la carte montré à l'écran.
      */
-    public static final int SHOWED_MAP_HEIGHT = 17;
+    public static int SHOWED_MAP_HEIGHT = 17;
     /**
      * La vitesse du joueur.
      */

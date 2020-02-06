@@ -9,7 +9,6 @@ import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
-import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -29,7 +28,6 @@ public class PlayingStateTest extends PlayingState {
 
     @BeforeEach
     public void init() {
-
         gsm = Mockito.mock(GameStateManager.class);
         gim = Mockito.mock(GameInputManager.class);
         gs = Mockito.mock(GraphicalSettings.class);
@@ -42,7 +40,6 @@ public class PlayingStateTest extends PlayingState {
         lifeBar = Mockito.mock(ProgressBar.class);
         expBar = Mockito.mock(ProgressBar.class);
         energyBar = Mockito.mock(ProgressBar.class);
-        playerCharacteristics = Mockito.mock(People.class);
 
 
         MockitoAnnotations.initMocks(this);
@@ -57,6 +54,8 @@ public class PlayingStateTest extends PlayingState {
         collisionObjects = new MapObjects();
 
         player = new Player(gs,25, 25, 5, 5, 50, 50); // TODO : BUG AVEC EN BAS ET A GAUCHE
+        SHOWED_MAP_WIDTH = 0;
+        SHOWED_MAP_HEIGHT = 0;
     }
 
     @Override
