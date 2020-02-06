@@ -147,7 +147,6 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gim, gs, am, player);
-        player.move(-player.getPosX(), -player.getPosY());
 
 
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
@@ -259,6 +258,10 @@ public class PlayingState extends GameState { // TODO : Put all disposes
 
         gmm.render();
         player.draw(sb);
+
+        sb.begin();
+        gs.getSmallFont().draw(sb, String.format("(%f, %f)", player.getMapRectangle().x, player.getMapRectangle().y), (int)leftMargin, (int)(10 * topMargin - topBarHeight));
+        sb.end();
 
         // Dessine le HUD.
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));

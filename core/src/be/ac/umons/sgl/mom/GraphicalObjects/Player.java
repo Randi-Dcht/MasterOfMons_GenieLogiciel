@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.GameObjects;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -178,8 +179,8 @@ public class Player extends Character {
     public Rectangle getMapRectangle() {
 //        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2 + 4276;
 //        int y = getPosX() - x;
-        int x = (int)((double)(-getPosY() + mapHeight / 2) / tileHeight + (getPosX() - mapWidth / 2) / tileWidth);
-        int y = (int)((double)(-getPosY() + mapHeight / 2) / tileHeight - (getPosX() - mapWidth / 2) / tileWidth);
+        int x = (int)((double)(-getPosY()) / tileHeight + (getPosX()) / tileWidth);
+        int y = (int)(mapHeight / tileHeight - ((double)(getPosY()) / tileHeight + (getPosX()) / tileWidth));
 
         return new Rectangle(x , y, ((float)getWidth() / tileWidth), (float)getHeight() / tileHeight);
     }
