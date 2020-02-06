@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
+import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
@@ -258,7 +259,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         player.draw(sb);
 
         sb.begin();
-        gs.getSmallFont().draw(sb, String.format("(%f, %f)", player.getMapRectangle().x, player.getMapRectangle().y), (int)leftMargin, (int)(10 * topMargin - topBarHeight));
+//        if (gs.mustShowMapCoordinates())
+            gs.getSmallFont().draw(sb, String.format("(%f, %f)", player.getMapRectangle().x, player.getMapRectangle().y), (int)leftMargin, (int)(10 * topMargin - topBarHeight));
         sb.end();
 
         // Dessine le HUD.
@@ -273,6 +275,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.setState(InGameMenuState.class);
+        else if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Down))
+            gsm.setState(DebugMenuState.class);
         else if (gim.isKey(Input.Keys.P, KeyStatus.Pressed)) {
             inventoryShower.setHided(true);
             GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
