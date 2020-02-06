@@ -1,5 +1,7 @@
 package be.ac.umons.sgl.mom.Managers;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.LocalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,17 +15,9 @@ import java.util.*;
  */
 public class GameMapManager {
     /**
-     * Toutes les cartes chargées.
-     */
-    protected Map<String, TiledMap> maps;
-    /**
      * Tout les "renderer" des cartes déjà chargées.
      */
     protected Map<String, IsometricTiledMapRenderer> tiledMapsRenderer;
-    /**
-     * Toutes les cartes à charger.
-     */
-    protected List<String> mapsToLoad;
     /**
      * L'itérateur indiquant la position actuelle des cartes déjà chargées.
      */
@@ -45,14 +39,16 @@ public class GameMapManager {
      */
     protected int mapsLoaded = 0;
 
+    protected AssetManager am;
+
     /**
      * Crée un nouveau gestionnaire de carte.
      */
     public GameMapManager() {
-        maps = new HashMap<>();
         tiledMapsRenderer = new HashMap<>();
-        mapsToLoad = new LinkedList<>();
-        mapLoader = new TmxMapLoader();
+        mapLoader = new TmxMapLoader(new LocalFileHandleResolver());
+        am = new AssetManager();
+        am.setLoader(TiledMap.class, mapLoader);
     }
 
     /**
@@ -87,25 +83,14 @@ public class GameMapManager {
      * @return Si toutes les cartes ont été chargées.
      */
     public boolean loadNextMap() {
-        if (loadIterator == null)
-            loadIterator = mapsToLoad.iterator();
-        if (! loadIterator.hasNext())
-            return true;
-        String path = loadIterator.next();
-        boolean lastOne = ! loadIterator.hasNext();
-        if (new File(path).exists()) {
-            String name = new File(path).getName();
-            TiledMap map = mapLoader.load(path);
-            try {
-                maps.put(name, map);
-                tiledMapsRenderer.put(name, new IsometricTiledMapRenderer(map));
-            } catch (UnsatisfiedLinkError e) { // Added for the tests.
-                System.err.println(e.getMessage());
-                e.printStackTrace();
+        boolean finish = am.update();
+        if (finish) {
+            for (String name : am.getAssetNames()) {
+                if (am.getAssetType(name).equals(TiledMap.class))
+                    tiledMapsRenderer.put(name, new IsometricTiledMapRenderer(am.get(name)));
             }
         }
-        mapsLoaded++;
-        return lastOne;
+        return finish;
     }
 
     /**
@@ -113,7 +98,8 @@ public class GameMapManager {
      * @param mapsPath Le lien vers les cartes à charger.
      */
     public void addMapsToLoad(String... mapsPath) {
-        Collections.addAll(mapsToLoad, mapsPath);
+        for (String map : mapsPath)
+            am.load(map, TiledMap.class);
     }
 
     /**
@@ -121,7 +107,7 @@ public class GameMapManager {
      * @return La progression du chargement des cartes.
      */
     public double getProgress() {
-        return (double)mapsLoaded / mapsToLoad.size();
+        return am.getProgress();
     }
 
     /**
@@ -138,7 +124,6 @@ public class GameMapManager {
     public void dispose() {
         for (IsometricTiledMapRenderer itmr : tiledMapsRenderer.values())
             itmr.dispose();
-        for (TiledMap map : maps.values())
-            map.dispose();
+        am.dispose();
     }
 }
