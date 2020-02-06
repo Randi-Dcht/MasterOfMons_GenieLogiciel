@@ -5,13 +5,17 @@ import be.ac.umons.sgl.mom.GameStates.GameState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -49,6 +53,13 @@ public abstract class MenuState extends GameState {
      */
     protected OrthographicCamera cam;
 
+    protected boolean transparentBackground;
+
+    /***
+     * Allow to draw shape.
+     */
+    protected ShapeRenderer sr;
+
     /**
      * Crée un nouveau menu.
      * @param gsm Le GameStateManager du jeu.
@@ -68,6 +79,8 @@ public abstract class MenuState extends GameState {
 		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
 		cam.translate(WIDTH / 2, HEIGHT / 2);
 		cam.update();
+		sr = new ShapeRenderer();
+		sr.setAutoShapeType(true);
     }
 
     @Override
@@ -77,6 +90,16 @@ public abstract class MenuState extends GameState {
 
     @Override
     public void draw() {
+        if (transparentBackground) {
+            Gdx.gl.glEnable(GL30.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+            sr.begin(ShapeRenderer.ShapeType.Filled);
+            sr.setColor(21f / 255, 21f / 255, 21f / 255, .5f);
+            sr.rect(0, 0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
+            sr.end();
+            Gdx.gl.glDisable(GL30.GL_BLEND);
+        }
+
         int alreadyUsed = (int)(topMargin * HEIGHT);
 
         sb.setProjectionMatrix(cam.combined);
@@ -240,6 +263,6 @@ public abstract class MenuState extends GameState {
      */
     public enum MenuItemType {
         Title,
-        Normal;
+        Normal
     }
 }

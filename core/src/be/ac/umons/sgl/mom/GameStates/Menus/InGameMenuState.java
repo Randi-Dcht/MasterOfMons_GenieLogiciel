@@ -41,6 +41,7 @@ public class InGameMenuState extends MenuState {
         sr.setProjectionMatrix(sb.getProjectionMatrix());
         sr.setAutoShapeType(true);
         topMargin = .1;
+        transparentBackground = true;
         setMenuItems(new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
                 new MenuItem("Continue", () -> gsm.removeFirstState()),
                 new MenuItem("Player", () -> gsm.setState(PlayerMenuState.class)),
@@ -50,23 +51,6 @@ public class InGameMenuState extends MenuState {
                 new MenuItem("Quick Load"), // TODO : Call load system with last save (automatic or not).
                 new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
                 new MenuItem("Quit", () -> Gdx.app.exit())});
-    }
-
-
-    /***
-     * Dessine les éléments du menu avec un fond transparent.
-     * Code was inspired by CNIAngel from gamedev.stackexchange.com (https://gamedev.stackexchange.com/a/67837)
-     */
-    @Override
-    public void draw() {
-        Gdx.gl.glEnable(GL30.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(21f / 255, 21f / 255, 21f / 255, .5f);
-        sr.rect(0, 0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
-        sr.end();
-        super.draw();
-        Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
     @Override
