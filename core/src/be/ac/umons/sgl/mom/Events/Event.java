@@ -1,5 +1,7 @@
 package be.ac.umons.sgl.mom.Events;
 
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

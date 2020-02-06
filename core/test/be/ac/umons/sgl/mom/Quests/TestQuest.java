@@ -2,7 +2,7 @@ package be.ac.umons.sgl.mom.Quests;
 
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Quests.Master.Bachelor1;
+import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,7 +14,7 @@ public class TestQuest
     void TestnextQuest()
     {
         People p = new People("Tesst", Type.normal);
-        MasterQuest mq = new Bachelor1(p,null);
+        MasterQuest mq = new MyFirstYear(p,null);
         mq.nextQuest();
         assertNull(mq.getChildren(),"quest after is null");
         assertNull(mq.getParent(),"quest before is null");

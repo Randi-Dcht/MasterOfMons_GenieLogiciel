@@ -18,9 +18,9 @@ public enum Lesson
 	* ____________________________________________
 	* Note of year:
 	* -------------
-	* Bachelor1 == 1
-	* Bachelor2 == 2
-	* Bachelor3 == 3
+	* MyFirstYear == 1
+	* SuccessfulYear == 2
+	* MeetAndLearn == 3
 	* Master1   == 4
 	* Master2   == 5
     */

@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -8,7 +9,7 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
-import be.ac.umons.sgl.mom.Quests.Master.Bachelor1;
+import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,7 +102,7 @@ public class SuperviserNormally implements Observer
         public void newParty(String namePlayer, Type type, GraphicalSettings gs) //TODO regarder pour events mais pas sûre
         {
             people = new People(namePlayer,type);
-            MasterQuest mQ = new Bachelor1(people,null);
+            MasterQuest mQ = new MyFirstYear(people,null);
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
             //add
