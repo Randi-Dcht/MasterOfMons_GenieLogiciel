@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -27,12 +27,6 @@ public class MovingInMons extends MasterQuest
         return "Displacement in the city of Mons";
     }
 
-    @Override
-    public void meetOther(Mobile other)
-    {
-
-    }
-
     public void meetOther(People people)
     {
 

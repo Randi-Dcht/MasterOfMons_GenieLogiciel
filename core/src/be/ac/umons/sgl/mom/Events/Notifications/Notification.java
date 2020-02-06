@@ -1,4 +1,6 @@
-package be.ac.umons.sgl.mom.Events;
+package be.ac.umons.sgl.mom.Events.Notifications;
+
+import be.ac.umons.sgl.mom.Events.Events;
 
 public class Notification
 {

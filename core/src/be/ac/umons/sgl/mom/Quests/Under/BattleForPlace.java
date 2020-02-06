@@ -20,8 +20,7 @@ public class BattleForPlace extends UnderQuest
 
       public Quest[] getSubQuests()
       {
-        Quest[] q = {};
-        return q;
+        return new Quest[]{};
       }
 
       private void check(){}

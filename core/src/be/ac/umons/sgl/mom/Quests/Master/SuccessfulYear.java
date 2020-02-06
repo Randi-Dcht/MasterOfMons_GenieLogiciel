@@ -13,14 +13,14 @@ import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 *@author Randy Dauchot (étudiant en Sciences informatique)
 */
 
-public class Bachelor2 extends MasterQuest
+public class SuccessfulYear extends MasterQuest
 {
   /*lesson que le personnage va suivre lors de ce bachelier*/
   final Lesson[] lesson = {};
 /*Les sous quêtes que doit réaliser le personnage pour réusir celle-ci*/
   final UnderQuest[] underQuest = {new HelpMe(this,34),new FreeTimeMons(this,33)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33)};
 
-  public Bachelor2(People people, MasterQuest before)
+  public SuccessfulYear(People people, MasterQuest before)
   {
     super(before,people,Bloc.BA2);
     ObligationLesson(lesson);
@@ -29,7 +29,7 @@ public class Bachelor2 extends MasterQuest
 
   public void nextQuest()
   {
-    newQuest(new Bachelor3(people,this));
+    newQuest(new MeetAndLearn(people,this));
   }
 
 

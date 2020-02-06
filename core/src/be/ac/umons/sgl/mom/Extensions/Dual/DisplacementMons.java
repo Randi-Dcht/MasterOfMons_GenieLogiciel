@@ -28,17 +28,6 @@ public class DisplacementMons extends MasterQuest
     }
 
     @Override
-    public void meetOther(Mobile other)
-    {
-
-    }
-
-    public void meetOther(People people)
-    {
-
-    }
-
-    @Override
     public String question()
     {
         return "Si tu accepte ta quête sera de parcourir la ville de Mons en défiant ton adversaire";

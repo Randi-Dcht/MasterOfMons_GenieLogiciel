@@ -12,14 +12,14 @@ import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
  *@author Randy Dauchot (étudiant en Sciences informatique Umons)
  */
 
-public class Bachelor3 extends MasterQuest
+public class MeetAndLearn extends MasterQuest
 {
     /*This is the lessons to follow*/
     final Lesson[] lesson = {};
     /*this is the goals of this quest*/
     final UnderQuest[] underQuest = {new LookSoulMate(this,50), new GoToPriorityLesson(this,50)};
 
-    public Bachelor3(People people, MasterQuest before)
+    public MeetAndLearn(People people, MasterQuest before)
     {
         super(before,people,Bloc.BA3);
         ObligationLesson(lesson);

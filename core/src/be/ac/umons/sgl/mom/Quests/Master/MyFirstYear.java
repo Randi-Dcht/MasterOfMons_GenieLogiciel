@@ -13,7 +13,7 @@ import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
 
-public class Bachelor1 extends MasterQuest
+public class MyFirstYear extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
     final Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
@@ -25,7 +25,7 @@ public class Bachelor1 extends MasterQuest
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */
-    public Bachelor1(People people, MasterQuest before)
+    public MyFirstYear(People people, MasterQuest before)
     {
         super(before,people, Bloc.BA1);
         ObligationLesson(lesson);
@@ -37,7 +37,7 @@ public class Bachelor1 extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new Bachelor2(people,this));
+        newQuest(new SuccessfulYear(people,this));
     }
 
 
@@ -56,6 +56,6 @@ public class Bachelor1 extends MasterQuest
      */
     public String getName()
     {
-        return "Bachelor1";
+        return "MyFirstYear";
     }
 }
