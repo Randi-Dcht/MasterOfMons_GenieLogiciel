@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
@@ -24,6 +21,7 @@ public class People extends Character implements Serializable
 	private double threshold; /*seuil experience niveau à devoir atteindre*/
 	private double experience = 0;
 	private MasterQuest myQuest;
+	private Bloc year;
 	final String name;
 	final int maxObject = 5;
 	private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
@@ -39,6 +37,7 @@ public class People extends Character implements Serializable
 		super(type);
 		this.name = name;
 		this.threshold = minExperience(level+1);
+		this.year = Bloc.BA1;
 	}
 
 	public double getExperience()

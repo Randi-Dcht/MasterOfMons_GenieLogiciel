@@ -22,7 +22,10 @@ public abstract class Mobile extends Character implements Serializable
     this.name = name;
   }
 
-  public abstract Actions meet(People people); //TODO à modier pour mettre un event
+  public Actions meet(People people)
+  {
+    return null;
+  }//TODO à modier pour mettre un event
 
 
   public void update(Notification notify){}

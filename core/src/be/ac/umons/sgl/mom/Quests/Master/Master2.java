@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
+import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
@@ -25,7 +26,7 @@ public class Master2 extends MasterQuest
      */
     public Master2(People people, MasterQuest before)
     {
-        super(before,people);
+        super(before,people,Bloc.MA2);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }

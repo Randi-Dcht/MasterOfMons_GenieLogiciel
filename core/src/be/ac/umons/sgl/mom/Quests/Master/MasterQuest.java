@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -49,18 +46,21 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     protected UnderQuest[] underQuest;
     /*est ce que la quete est terminée*/
     protected boolean finished = false;
+    /**/
+    protected Bloc bloc;
 
     /**
      * This constructor allows to define a masterQuest
      *@param before who is the before masterQuest
      *@param people who is the people who play this masterQuest
      */
-    public MasterQuest(MasterQuest before, People people)
+    public MasterQuest(MasterQuest before, People people,Bloc bloc)
     {
         this.before = before;
         this.id     = numberQuest;
         numberQuest++;
         this.people = people;
+        this.bloc = bloc;
     }
 
     /**

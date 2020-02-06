@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Observer;
 
@@ -12,6 +11,8 @@ public abstract class Character implements Attack, Observer, Social
     protected int agility;
     protected double life;
     protected int level = 1; /*between 1 and 40*/
+
+
     /**
      * This constructor allows to create a new people who pilot by a player
      * @param type who is the characteristic of this people (Enums)

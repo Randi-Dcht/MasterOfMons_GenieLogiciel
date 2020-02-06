@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
+import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Under.BattleForPlace;
@@ -26,7 +27,7 @@ public class Bachelor1 extends MasterQuest
      */
     public Bachelor1(People people, MasterQuest before)
     {
-        super(before,people);
+        super(before,people, Bloc.BA1);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }

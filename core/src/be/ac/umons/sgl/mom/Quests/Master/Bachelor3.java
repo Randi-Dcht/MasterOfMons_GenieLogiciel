@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
+import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
@@ -20,7 +21,7 @@ public class Bachelor3 extends MasterQuest
 
     public Bachelor3(People people, MasterQuest before)
     {
-        super(before,people);
+        super(before,people,Bloc.BA3);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
