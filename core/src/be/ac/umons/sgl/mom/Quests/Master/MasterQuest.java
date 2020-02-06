@@ -1,6 +1,10 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -185,7 +189,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /**
      *Cette méthode permet de dire au sous quete qu'il y a eu un évènement et qu'il faut vérifier l'avancement
      */
-    public void eventMaps(Actions action)
+    public void eventMaps(Notification notify)
     {
         for(UnderQuest uq : underQuest)
         {
@@ -292,16 +296,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     public double getMaximun()
     {
         return maxPercent;
-    }
-    /*------------------------------------------------------------------------------------------------------------*/
-
-    /**
-     *This method allows to meet between people and a pnj
-     *@param other who is the pnj to meet
-     */
-    public void meetOther(Mobile other)
-    {
-        //TODO a faire
     }
 
     /**
