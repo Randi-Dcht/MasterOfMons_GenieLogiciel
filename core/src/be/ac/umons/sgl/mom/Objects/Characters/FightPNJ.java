@@ -1,12 +1,14 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Type;
 
 public class FightPNJ extends Mobile
 {
-  public FightPNJ()
+  public FightPNJ(Bloc playerBloc, int playerLevel,Type playerType)
   {
-    super("Bagarre");
+    super("Bagarre",playerBloc,playerLevel,playerType);
   }
 
   public Actions meet(People people)

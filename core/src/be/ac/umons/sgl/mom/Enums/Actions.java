@@ -17,7 +17,8 @@ public enum Actions
     Play("play"),
     Listen("listen"),
     Drink("drink"),
-    Speak("speak");
+    Speak("speak"),
+    Never("staticObject");
 
     final String name;
 

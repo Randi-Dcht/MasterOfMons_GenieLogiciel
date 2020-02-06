@@ -173,10 +173,6 @@ public class People extends Character implements Serializable
 	}
 
 
-	@Override
-	public void update(Notification notify) {
-	}
-
 	/**
 	 * After the win attack, the people win the experience.
 	 * This method calculate the experience with the level of victim
