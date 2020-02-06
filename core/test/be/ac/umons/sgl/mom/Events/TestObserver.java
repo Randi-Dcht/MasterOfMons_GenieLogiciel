@@ -13,7 +13,7 @@ public class TestObserver implements Observer
     }
 
     @Override
-    public void update(Events event)
+    public void update(Notification notify)
     {
         value = true;
     }

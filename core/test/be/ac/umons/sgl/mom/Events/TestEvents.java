@@ -45,9 +45,9 @@ public class TestEvents
         evt.add(Events.ChangeFrame,obs2);
         assertEquals(1, evt.getList().size(),"check if the event isn't create");
         assertEquals(2,evt.getList().get(Events.ChangeFrame).size(),"check if the second observer is add to same list");
-        evt.notify(Events.AddFriend);
+        evt.notify(new Notification(Events.AddFriend));
         assertFalse(obs.value,"the observer does't notify");
-        evt.notify(Events.ChangeFrame);
+        evt.notify(new Notification(Events.ChangeFrame));
         assertTrue(obs.value,"the observer is notify");
         assertTrue(obs2.value,"the observer is notify");
     }
