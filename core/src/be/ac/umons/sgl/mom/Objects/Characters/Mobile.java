@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notification;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 
 import java.io.Serializable;
 
@@ -35,6 +36,10 @@ public abstract class Mobile extends Character implements Serializable
 
   public void update(Notification notify){}
 
-  public void nextAttack(Attack victim){}
+  public void nextAttack(Attack victim)
+  {
+    if(living)
+      SuperviserNormally.getSupervisor().attackMethod(this,victim);
+  }
 
 }

@@ -1,7 +1,10 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 
 public abstract class Character implements Attack, Observer, Social
 {
@@ -10,6 +13,7 @@ public abstract class Character implements Attack, Observer, Social
     protected int defence;
     protected int agility;
     protected double life;
+    protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
 
 
@@ -133,9 +137,11 @@ public abstract class Character implements Attack, Observer, Social
 
     /**
      * This method is call when the character is dead
+     * And this method warn the other class with the <code>Events.Dead</code>
      */
     public void dead()
     {
-        System.out.println("mort");
+        living = false;
+        SuperviserNormally.getSupervisor().getEvent().notify(new Notification(Events.Dead,this));
     }
 }
