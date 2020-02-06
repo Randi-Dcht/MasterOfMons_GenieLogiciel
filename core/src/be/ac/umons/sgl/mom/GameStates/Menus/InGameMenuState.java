@@ -42,15 +42,15 @@ public class InGameMenuState extends MenuState {
         sr.setAutoShapeType(true);
         topMargin = .1;
         transparentBackground = true;
-        setMenuItems(new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, false),
-                new MenuItem("Continue", () -> gsm.removeFirstState()),
-                new MenuItem("Player", () -> gsm.setState(PlayerMenuState.class)),
-                new MenuItem("Save", () -> gsm.setState(SaveState.class)),
-                new MenuItem("Load", () -> gsm.setState(LoadState.class)),
-                new MenuItem("Quick Save"), // TODO : Call save system with default name.
-                new MenuItem("Quick Load"), // TODO : Call load system with last save (automatic or not).
-                new MenuItem("Settings", () -> gsm.setState(SettingsState.class)),
-                new MenuItem("Quit", () -> Gdx.app.exit())});
+        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title, false),
+                new MenuItem(gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
+                new MenuItem(gs.getStringFromId("player"), () -> gsm.setState(PlayerMenuState.class)),
+                new MenuItem(gs.getStringFromId("save"), () -> gsm.setState(SaveState.class)),
+                new MenuItem(gs.getStringFromId("load"), () -> gsm.setState(LoadState.class)),
+                new MenuItem(gs.getStringFromId("quickSave")), // TODO : Call save system with default name.
+                new MenuItem(gs.getStringFromId("quickLoad")), // TODO : Call load system with last save (automatic or not).
+                new MenuItem(gs.getStringFromId("settings"), () -> gsm.setState(SettingsState.class)),
+                new MenuItem(gs.getStringFromId("quit"), () -> Gdx.app.exit())});
     }
 
     @Override
