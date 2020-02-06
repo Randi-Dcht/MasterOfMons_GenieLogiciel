@@ -27,9 +27,12 @@ public abstract class Character implements Attack, Observer, Social
 
     /**
      *This method allows to increase the life
+     * @param dt is the time between two frame
      */
-    public void regeneration()
+    public void regeneration(double dt)
     {
+        if((life+dt)<=lifemax())
+            life = life + dt;
     }
 
 
@@ -93,6 +96,8 @@ public abstract class Character implements Attack, Observer, Social
     public void loseAttack(double lose)
     {
         life = life - lose;
+        if(life <= 0)
+            dead();
     }
 
 
@@ -124,5 +129,13 @@ public abstract class Character implements Attack, Observer, Social
     public double dodge() /*esquive*/
     {
         return Math.min((agility/100),0.75);
+    }
+
+    /**
+     * This method is call when the character is dead
+     */
+    public void dead()
+    {
+        System.out.println("mort");
     }
 }

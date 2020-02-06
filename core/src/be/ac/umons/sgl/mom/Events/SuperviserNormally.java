@@ -164,11 +164,35 @@ public class SuperviserNormally implements Observer
 
        /**
         *This method who call when two Attack want to fight
+        *This method isn't adapt to fight between two mobile/PNJ
+        *This method can take two people (Human player)
+        *This method can take one people (Human player) and one one mobile/PNJ (Computer player)
+        * @param attacker is the character who attack
+        * @param victim is the character who give hits
         */
        public void attackMethod(Attack attacker, Attack victim)
        {
-          int gun=1; //TODO a dertimer dans les prochaines fois et regarder au bonus + chacaract loseAttack
-          double hit = ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
+           if(victim.dodge() < 0.6)
+           {
+               victim.loseAttack(calculateHits(attacker,victim,0));
+           }
+           if(attacker.getType() == 'C')
+           {
+               Mobile mb = (Mobile) attacker;
+               mb.nextAttack(victim);
+           }
+       }
+
+
+       /**
+        * This method calculates the hits for the victim of the attack
+        * @param attacker is the character who attack
+        * @param victim is the character who give hits
+        * @param gun is a param
+        */
+       public double calculateHits(Attack attacker, Attack victim,int gun) //TODO a dertimer dans les prochaines fois et regarder au bonus + chacaract loseAttack
+       {
+           return ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
        }
 
 

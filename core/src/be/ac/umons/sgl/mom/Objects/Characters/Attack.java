@@ -2,18 +2,53 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 
 public interface Attack
 {
-    /**Méthode pour voir la possibilité d'esquivé l'attaque*/
+    /**
+     * This method calculates the possibility to dodge the attacker.
+     */
     public double dodge();
-    /**Méthode pour voir le temps de récupération*/
+
+
+    /**
+     * This method calculates the time between two attack
+     */
     public double recovery();
-    /**Méthode qui retire les points de vie lorsque l'esquive échoue*/
+
+
+    /**
+     * This method took of the life of the victim
+     */
     public void loseAttack(double lose);
 
+
+    /**
+     * This method return the agility of character
+     */
     public int getAgility();
 
+
+    /**
+     * This method return the strength of character
+     */
     public int getStrength();
 
+
+    /**
+     * This method return the defence of character
+     */
     public int getDefence();
 
+
+    /**
+     * This method return the level of character
+     */
     public int getLevel();
+
+
+    /**
+     * This method return the type of character (Human or Computer)
+     * Human is equal 'H'
+     * Computer is equal 'C'
+     */
+    public char getType();
+
 }

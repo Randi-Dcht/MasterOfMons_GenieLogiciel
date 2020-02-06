@@ -2,7 +2,6 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notification;
 
 import java.io.Serializable;
@@ -22,6 +21,12 @@ public abstract class Mobile extends Character implements Serializable
     this.name = name;
   }
 
+  @Override
+  public char getType()
+  {
+    return 'C';
+  }
+
   public Actions meet(People people)
   {
     return null;
@@ -29,5 +34,7 @@ public abstract class Mobile extends Character implements Serializable
 
 
   public void update(Notification notify){}
+
+  public void nextAttack(Attack victim){}
 
 }

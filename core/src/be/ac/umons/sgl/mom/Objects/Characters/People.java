@@ -212,6 +212,12 @@ public class People extends Character implements Serializable
 	}
 
 	@Override
+	public char getType()
+	{
+		return 'H';
+	}
+
+	@Override
 	public Actions getAction() {
 		return null; //TODO etre demander via l'interface graphique
 	}
