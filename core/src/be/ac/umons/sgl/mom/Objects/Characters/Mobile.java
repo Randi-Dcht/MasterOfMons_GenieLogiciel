@@ -1,40 +1,77 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Events.Notification;
-
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
+import java.util.Random;
 
 /**
-*This abstract class allows define a no player, it is a character pilot by computer.
-*@author Randy Dauchot (étudiant en Sciences informatique Umons)
-*/
+ *This abstract class allows define a no player, it is a character pilot by computer.
+ *@author Randy Dauchot (étudiant en Sciences informatique Umons)
+ */
 
-public abstract class Mobile extends Character implements Serializable
+public class Mobile extends Character implements Serializable
 {
-  final String name;
-
-  public Mobile(String name)
-  {
-    super(Type.beefy); //TODO changer
-    this.name = name;
-  }
-
-  @Override
-  public char getType()
-  {
-    return 'C';
-  }
-
-  public Actions meet(People people)
-  {
-    return null;
-  }//TODO à modier pour mettre un event
+    /*name of this*/
+    final String name;
+    /*save the bloc of player*/
+    protected Bloc playerBloc;
 
 
-  public void update(Notification notify){}
+    /**
+     * This constructor allows define the mobile/PNJ
+     * @param name is the name of the mobile
+     * @param playerBloc is the bloc of the player
+     * @param playerType is the type of the player
+     */
+    public Mobile(String name, Bloc playerBloc,Type playerType)
+    {
+        super(playerType);
+        this.name        = name;
+        this.playerBloc  = playerBloc;
+        this.level = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1)+playerBloc.getMinMob());
+    }
 
-  public void nextAttack(Attack victim){}
 
+    /**
+     * Mobile is a player computer so the type is 'C'
+     */
+    @Override
+    public char getType()
+    {
+        return 'C';
+    }
+
+
+    /**
+     * When the player up in the level or the bloc, the mobile/PNJ must upgrade
+     * @param playerBloc is the bloc of the player
+     * @param playerType is the type of the player
+     */
+    public void upgrade(Bloc playerBloc,Type playerType)
+    {
+        this.playerBloc  = playerBloc;
+        this.strength    = playerType.getStrength();
+        this.defence     = playerType.getDefence();
+        this.agility     = playerType.getAgility();
+    }
+
+
+    /**
+     * This method allows to attack the other attacker automatic
+     * @param victim is the other character of the attack
+     */
+    public void nextAttack(Attack victim)
+    {//TODO ajouter un timer (voir avec Guillaume)
+        if(living)
+            SuperviserNormally.getSupervisor().attackMethod(this,victim);
+    }
+
+    @Override
+    public Actions getAction()
+    {
+        return Actions.Never;
+    }
 }
