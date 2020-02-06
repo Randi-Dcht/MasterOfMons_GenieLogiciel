@@ -101,7 +101,6 @@ public class SuperviserNormally implements Observer
         public void newParty(String namePlayer, Type type, GraphicalSettings gs) //TODO regarder pour events mais pas sûre
         {
             people = new People(namePlayer,type);
-            //add
             MasterQuest mQ = new Bachelor1(people,null);
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
@@ -201,8 +200,8 @@ public class SuperviserNormally implements Observer
         * @return the bonus (double)
         */
         public double bonus(double p, double c)
-    {
-        return 1; //TODO continuer
-    }
+        {
+            return 1; //TODO continuer
+        }
 
     }
