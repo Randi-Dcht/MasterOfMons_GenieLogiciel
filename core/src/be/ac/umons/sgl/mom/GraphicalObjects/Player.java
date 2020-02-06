@@ -107,27 +107,27 @@ public class Player extends Character {
     public void move(int x, int y) {
         super.move(x, y);
 
+        double maxX = mapHeight + mapWidth * tileHeight / tileWidth;
         if (posX < 0)
             posX = 0;
-        else if (posX > mapWidth - getWidth())
-            posX = mapWidth - getWidth();
+        else if (posX > maxX - getWidth() - SHOWED_MAP_WIDTH * tileWidth / 2)
+            posX = (int)maxX - getWidth() - SHOWED_MAP_WIDTH * tileWidth / 2;
 
-        int max = mapHeight / 2 - getHeight();
-        if (posY > max)
-            posY = max;
-        else if (posY < -max)
-            posY = -max;
-//
+        if (posY > mapHeight / 2 - getHeight())
+            posY = mapHeight / 2 - getHeight();
+        else if (posY < -mapHeight - getHeight())
+            posY = -mapHeight - getHeight();
+
         if (posX < SHOWED_MAP_WIDTH * tileWidth / 2)
             xT = -(SHOWED_MAP_WIDTH * tileWidth / 2 - posX);
-        else if (posX > mapWidth - SHOWED_MAP_WIDTH * tileWidth / 2)
-            xT = posX - mapWidth + SHOWED_MAP_WIDTH * tileWidth / 2;
+        else if (posX > maxX - SHOWED_MAP_WIDTH * tileWidth)
+            xT = posX - (int)maxX + SHOWED_MAP_WIDTH * tileWidth;
         else xT = 0;
 
         if (posY > mapHeight / 2 - SHOWED_MAP_HEIGHT * tileHeight / 2)
             yT = posY - (mapHeight / 2 - SHOWED_MAP_HEIGHT * tileHeight / 2);
-        else if (posY < -mapHeight / 2 + SHOWED_MAP_HEIGHT * tileHeight / 2)
-            yT = posY + mapHeight / 2 - SHOWED_MAP_HEIGHT * tileHeight / 2;
+        else if (posY < -mapHeight + SHOWED_MAP_HEIGHT * tileHeight / 2)
+            yT = posY + mapHeight - SHOWED_MAP_HEIGHT * tileHeight / 2;
         else yT = 0;
     }
 
