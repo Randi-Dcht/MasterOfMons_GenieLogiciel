@@ -6,9 +6,9 @@ import be.ac.umons.sgl.mom.Enums.Type;
 
 public class FightPNJ extends Mobile
 {
-  public FightPNJ(Bloc playerBloc, int playerLevel,Type playerType)
+  public FightPNJ(Bloc playerBloc,Type playerType)
   {
-    super("Bagarre",playerBloc,playerLevel,playerType);
+    super("Bagarre",playerBloc,playerType);
   }
 
   public Actions meet(People people)
