@@ -37,6 +37,8 @@ public class GameInputManager implements InputProcessor {
      */
     private KeyStatus[] keys;
 
+    private List<Character> lastChars;
+
     /**
      * Crée un nouveau gestionnaire d'entrée.
      */
@@ -44,6 +46,7 @@ public class GameInputManager implements InputProcessor {
         keys = new KeyStatus[AVAILABLE_INPUT_KEYS];
         lastMousePosition = new Point();
         recentClicks = new LinkedList<>();
+        lastChars = new LinkedList<>();
         Arrays.fill(keys, KeyStatus.Up);
     }
 
@@ -77,6 +80,7 @@ public class GameInputManager implements InputProcessor {
      */
     @Override
     public boolean keyTyped(char character) {
+        lastChars.add(character);
         return false;
     }
 
@@ -165,6 +169,7 @@ public class GameInputManager implements InputProcessor {
                 keys[i] = KeyStatus.Up;
         }
         recentClicks.clear();
+        lastChars.clear();
         scrolledAmount = 0;
     }
 
@@ -190,5 +195,9 @@ public class GameInputManager implements InputProcessor {
      */
     public int getScrolledAmount() {
         return scrolledAmount;
+    }
+
+    public List<Character> getLastChars() {
+        return lastChars;
     }
 }

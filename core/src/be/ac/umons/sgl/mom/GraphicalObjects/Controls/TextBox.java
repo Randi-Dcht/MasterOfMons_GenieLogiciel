@@ -38,6 +38,8 @@ public class TextBox extends Control {
      */
     protected boolean isSelected = false;
 
+    protected boolean acceptOnlyNumbers = false;
+
     /**
      * Crée un nouveau TextBox.
      * @param gim La GameInputManager du jeu.
@@ -75,12 +77,11 @@ public class TextBox extends Control {
         for (Point click : gim.getRecentClicks())
             isSelected = new Rectangle(x, MasterOfMonsGame.HEIGHT - y - height, width, height).contains(click);
         if (isSelected) {
-            boolean upper = false;
-            if (gim.isKey(Input.Keys.SHIFT_LEFT, KeyStatus.Pressed) || gim.isKey(Input.Keys.SHIFT_RIGHT, KeyStatus.Pressed))
-                upper = true;
-            for (int key : IntStream.rangeClosed(Input.Keys.A, Input.Keys.Z).toArray())
-                if (gim.isKey(key, KeyStatus.Pressed))
-                    actualText += upper ? Input.Keys.toString(key) : Input.Keys.toString(key).toLowerCase();
+            for (char c : gim.getLastChars()) {
+                if (acceptOnlyNumbers && (c < '0' || c > '9'))
+                    continue;
+                actualText += c;
+            }
             if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed))
                 actualText = actualText.substring(0, actualText.length() - 1);
         }
@@ -121,5 +122,9 @@ public class TextBox extends Control {
      */
     public void setSuffix(String suffix) {
         this.suffix = suffix;
+    }
+
+    public void setAcceptOnlyNumbers(boolean acceptOnlyNumbers) {
+        this.acceptOnlyNumbers = acceptOnlyNumbers;
     }
 }

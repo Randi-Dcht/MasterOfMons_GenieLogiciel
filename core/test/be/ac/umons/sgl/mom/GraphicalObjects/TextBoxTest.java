@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Cette classe représente les tests de la classe TextBox.
@@ -52,30 +53,30 @@ public class TextBoxTest extends TextBox {
      */
     @Test
     public void actualTextTest() {
+        LinkedList<java.lang.Character> ll = new LinkedList<>();
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(gim.getLastChars()).thenReturn(ll);
         suffix = ".txt";
         handleInput();
         isSelected = true;
         Assertions.assertEquals("", actualText);
-        Mockito.when(gim.isKey(Input.Keys.A, KeyStatus.Pressed)).thenReturn(true);
+        ll.add('a');
         handleInput();
         Assertions.assertEquals("a", actualText);
-        Mockito.when(gim.isKey(Input.Keys.SHIFT_LEFT, KeyStatus.Pressed)).thenReturn(true);
+        ll.clear();
+        ll.add('A');
         handleInput();
         Assertions.assertEquals("aA", actualText);
-        Mockito.when(gim.isKey(Input.Keys.A, KeyStatus.Pressed)).thenReturn(false);
         Mockito.when(gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed)).thenReturn(true);
+        ll.clear();
         handleInput();
         Assertions.assertEquals("a", actualText);
         isSelected = false;
         Assertions.assertEquals("a", actualText);
-        Mockito.when(gim.isKey(Input.Keys.A, KeyStatus.Pressed)).thenReturn(true);
+        ll.add('A');
         handleInput();
+        ll.clear();
         Assertions.assertEquals("a", actualText);
-        Mockito.when(gim.isKey(Input.Keys.SHIFT_LEFT, KeyStatus.Pressed)).thenReturn(true);
-        handleInput();
-        Assertions.assertEquals("a", actualText);
-        Mockito.when(gim.isKey(Input.Keys.A, KeyStatus.Pressed)).thenReturn(false);
         Mockito.when(gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed)).thenReturn(true);
         handleInput();
         Assertions.assertEquals("a", actualText);
