@@ -17,13 +17,13 @@ public class DebugMenuState extends MenuState {
         super.init();
         transparentBackground = true;
         topMargin = .1;
-        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title, false),
-                new MenuItem(gs.getStringFromId("debugMenu"), MenuItemType.Normal, false),
+        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
+                new MenuItem(gs.getStringFromId("debugMenu"), MenuItemType.Text),
                 new MenuItem(gs.getStringFromId(gs.mustShowMapCoordinates() ? "debugHidePlayerCoord" : "debugPlayerCoord"), () -> gs.setShowMapCoordinates(! gs.mustShowMapCoordinates())),
-                new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Normal),
-                new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Normal),
-                new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Normal),
-                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Normal)
+                new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Button),
+                new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Button),
+                new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Button),
+                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button)
         });
     }
 

@@ -63,7 +63,7 @@ public class CheckBox extends Control {
     }
 
     @Override
-    protected void draw(Batch batch, Point pos, Point size) {
+    public void draw(Batch batch, Point pos, Point size) {
         super.draw(batch, pos, size);
         if (checked)
             sr.setColor(checkedColor);

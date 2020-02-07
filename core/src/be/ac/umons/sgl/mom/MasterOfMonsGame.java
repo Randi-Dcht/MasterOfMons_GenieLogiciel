@@ -50,14 +50,14 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		HEIGHT = Gdx.graphics.getHeight();
 
 		gs = new GraphicalSettings();
-		gim = new GameInputManager();
-		gsm = new GameStateManager(gim, gs);
-
-		Gdx.input.setInputProcessor(gim);
 		gs.setSmallFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.02 * (float)HEIGHT));
 		gs.setNormalFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.05 * (float)HEIGHT));
 		gs.setTitleFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.1 * (float)HEIGHT));
 		gs.setQuestFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.015 * (float)HEIGHT));
+		gim = new GameInputManager();
+		gsm = new GameStateManager(gim, gs);
+
+		Gdx.input.setInputProcessor(gim);
 	}
 
 	/**

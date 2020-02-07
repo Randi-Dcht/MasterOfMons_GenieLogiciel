@@ -57,7 +57,7 @@ public abstract class Control {
      * @param pos La position
      * @param size La taille.
      */
-    protected void draw(Batch batch, Point pos, Point size) {
+    public void draw(Batch batch, Point pos, Point size) {
         this.x = pos.x;
         this.y = pos.y;
         this.width = size.x;

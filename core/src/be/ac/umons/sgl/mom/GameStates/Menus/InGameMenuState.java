@@ -42,7 +42,7 @@ public class InGameMenuState extends MenuState {
         sr.setAutoShapeType(true);
         topMargin = .1;
         transparentBackground = true;
-        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title, false),
+        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
                 new MenuItem(gs.getStringFromId("player"), () -> gsm.setState(PlayerMenuState.class)),
                 new MenuItem(gs.getStringFromId("save"), () -> gsm.setState(SaveState.class)),

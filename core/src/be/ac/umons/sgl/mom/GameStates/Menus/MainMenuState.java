@@ -40,7 +40,7 @@ public class MainMenuState extends MenuState {
     public void init() {
         super.init();
         topMargin = .1;
-        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title, false),
+        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("newGame"), () -> {
                     extSel.generateLoadLists();
                     for (FileHandle f : Gdx.files.internal("Tmx/").list())
