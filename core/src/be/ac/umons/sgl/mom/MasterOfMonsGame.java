@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Settings;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -40,6 +41,8 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	 * Les paramètres graphiques du jeu.
 	 */
 	protected GraphicalSettings gs;
+
+	public static Settings settings;
 
 	/**
 	 * S'éxécute quand l'application est crée.

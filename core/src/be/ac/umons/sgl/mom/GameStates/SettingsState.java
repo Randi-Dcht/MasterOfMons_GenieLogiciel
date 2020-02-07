@@ -1,30 +1,18 @@
 package be.ac.umons.sgl.mom.GameStates;
 
+import be.ac.umons.sgl.mom.GameStates.Menus.MenuState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import be.ac.umons.sgl.mom.Objects.Settings;
 
 /**
- * L'état où l'utilisateur peut choisir les différents paramètres du jeu.
+ * The state where the user can choose settings influencing the game.
  * @author Guillaume Cardoen
  */
-public class SettingsState extends GameState {
-
-    /**
-     * Utilisé afin de dessiner en autre le texte.
-     */
-    protected SpriteBatch sb;
-    /**
-     * Permet de dessiner les formes comme les rectangles.
-     */
-    protected ShapeRenderer sr;
-
-
+public class SettingsState extends MenuState {
 
     public SettingsState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -33,38 +21,41 @@ public class SettingsState extends GameState {
     @Override
     public void init() {
         super.init();
-        sb = new SpriteBatch();
-        sr = new ShapeRenderer();
-
+        topMargin = .1;
+        transparentBackground = false;
+        setMenuItems(new MenuItem[] {
+                new MenuItem(gs.getStringFromId("settings"), MenuItemType.Title),
+                new MenuItem(gs.getStringFromId("gameResolutionWidth"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Width"),
+                new MenuItem(gs.getStringFromId("gameResolutionHeight"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Height"),
+                new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
+        });
+        Settings settings = MasterOfMonsGame.settings;
+        for (MenuItem mi : menuItems) {
+            switch (mi.id) {
+                case "TXT_Game_Resolution_Width":
+                    ((TextBox)mi.control).setText("" + settings.getGameResolutionWidth());
+                    break;
+                case "TXT_Game_Resolution_Height":
+                    ((TextBox)mi.control).setText("" + settings.getGameResolutionHeight());
+                    break;
+            }
+        }
     }
 
-    @Override
-    public void update(float dt) {
-
-    }
-
-    @Override
-    public void draw() {
-        Gdx.gl.glEnable(GL30.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(21f / 255, 21f / 255, 21f / 255, .5f);
-        sr.rect(0, 0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
-        sr.end();
-        sb.begin();
-        gs.getTitleFont().draw(sb, "Settings", (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin);
-        sb.end();
-        Gdx.gl.glDisable(GL30.GL_BLEND);
-    }
-
-    @Override
-    public void handleInput() {
-
-    }
-
-    @Override
-    public void dispose() {
-        sr.dispose();
-        sb.dispose();
+    public void save() {
+        Settings settings = new Settings();
+        for (MenuItem mi : menuItems) {
+            switch (mi.id) {
+                case "TXT_Game_Resolution_Width":
+                    settings.setGameResolutionWidth(Integer.parseInt(((TextBox)mi.control).getText()));
+                    break;
+                case "TXT_Game_Resolution_Height":
+                    settings.setGameResolutionHeight(Integer.parseInt(((TextBox)mi.control).getText()));
+                    break;
+            }
+        }
+        // TODO : Save the settings object
+        MasterOfMonsGame.settings = settings;
+        gsm.removeFirstState();
     }
 }

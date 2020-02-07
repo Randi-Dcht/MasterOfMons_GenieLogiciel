@@ -123,7 +123,7 @@ public abstract class MenuState extends GameState {
             else
                 font = gs.getNormalFont();
             layout.setText(font, menuItem.header);
-            menuItem.draw(sb, new Point((int) (.05 * WIDTH), (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 2 * topMargin : 0))),
+            menuItem.draw(sb, new Point((int) (.05 * WIDTH), (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : 2 * topMargin))),
                     new Point((int) (layout.width + 2 * leftMargin),
                             (int) (font.getLineHeight() + 2 * topMargin)));
             alreadyUsed += (int)(font.getLineHeight() + 2 * topMargin) + topMargin;
@@ -233,7 +233,7 @@ public abstract class MenuState extends GameState {
          * @param header Le nom de l'élément.
          */
         public MenuItem(String header) {
-            this(header, MenuItemType.Text, null);
+            this(header, MenuItemType.Text, "", null);
         }
         /**
          * Initialise un élément du menu.
@@ -242,6 +242,15 @@ public abstract class MenuState extends GameState {
          */
         public MenuItem(String header, Runnable toDoIfExecuted) {
             this(header, MenuItemType.Button, "", toDoIfExecuted);
+        }
+        /**
+         * Initialise un élément du menu.
+         * @param header Le nom de l'élément.
+         * @param mit Le type de menu.
+         * @param toDoIfExecuted L'action a faire si jamais l'on clique sur cet élément.
+         */
+        public MenuItem(String header, MenuItemType mit, Runnable toDoIfExecuted) {
+            this(header, mit, "", toDoIfExecuted);
         }
 
         /**
@@ -286,6 +295,7 @@ public abstract class MenuState extends GameState {
                     gs.getNormalFont().draw(batch, header, pos.x, pos.y);
                     batch.end();
                     break;
+                case NumberTextBox:
                 case TextBox:
                     GlyphLayout gl = new GlyphLayout();
                     gl.setText(gs.getNormalFont(), header);
