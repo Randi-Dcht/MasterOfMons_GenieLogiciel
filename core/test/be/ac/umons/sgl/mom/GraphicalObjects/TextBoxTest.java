@@ -81,4 +81,19 @@ public class TextBoxTest extends TextBox {
         handleInput();
         Assertions.assertEquals("a", actualText);
     }
+
+    @Test
+    public void acceptOnlyNumberTest() {
+        isSelected = true;
+        acceptOnlyNumbers = true;
+        LinkedList<java.lang.Character> ll = new LinkedList<>();
+        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(gim.getLastChars()).thenReturn(ll);
+        ll.add('a');
+        handleInput();
+        Assertions.assertEquals("", actualText);
+        ll.add('2');
+        handleInput();
+        Assertions.assertEquals("2", actualText);
+    }
 }
