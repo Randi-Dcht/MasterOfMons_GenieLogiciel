@@ -29,18 +29,16 @@ public class MenuStateTest extends MainMenuState {
         buttons = new ArrayList<>();
         buttons.add(Mockito.mock(Button.class));
         buttons.add(Mockito.mock(Button.class));
+        textBoxes = new ArrayList<>();
     }
 
     @BeforeEach
     public void init() {
-        MockitoAnnotations.initMocks(this);
-        menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title, true),
-                new MenuItem("Play", MenuItemType.Title, false),
-                new MenuItem("Settings", MenuItemType.Title, true)};
+        menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title),
+                new MenuItem("Play", MenuItemType.Button),
+                new MenuItem("Settings", MenuItemType.Button)};
         //setMenuItems(menuItems);
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
-        while (! menuItems[selectedItem].selectable) // Simulate the one in draw.
-            selectedItem = (selectedItem + 1) % menuItems.length;
     }
 
     @Test

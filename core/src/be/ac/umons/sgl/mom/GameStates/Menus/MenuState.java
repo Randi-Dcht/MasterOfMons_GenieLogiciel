@@ -11,7 +11,6 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -221,7 +220,7 @@ public abstract class MenuState extends GameState {
         /**
          * Le type de l'élément.
          */
-        private MenuItemType mit;
+        protected MenuItemType mit;
 
         /**
          * The associated control for this item.
