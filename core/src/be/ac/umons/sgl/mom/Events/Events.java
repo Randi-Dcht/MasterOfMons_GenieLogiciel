@@ -5,11 +5,7 @@ public enum Events
     HourTimer("timer"),                       /*...*/
     ChangeQuest("quest"),                     /*...*/
     ChangeFrame("frame"),                     /*...*/
-    PlaceGrandAmphi("placeNiGA"),             /*...*/
-    PlaceDeVinci("placeNiDV"),                /*...*/
-    PlaceHoudeng("placeHG"),                  /*...*/
-    PlaceCenterMons("placeMonsCenter"),       /*...*/
-    PlaceKot("kot"),                          /*...*/
+    PlaceInMons("placeOfPeople"),             /*...*/
     MeetOther("meetOther"),                   /*...*/
     AddFriend("meetFriend"),                  /*...*/
     Answer("answerQuestion"),                 /*...*/

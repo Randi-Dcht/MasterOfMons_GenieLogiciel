@@ -18,7 +18,7 @@ public class Saving implements Observer
     private String nameSave;
     private String oldSave;
     private People people;
-    private GraphicalSettings graSet;
+    private Settings graSet;
     private DateFormat format = new SimpleDateFormat("dd/MM/yy_HH:mm:ss");//TODO : modifier en fct
     final static String prefixe = ""; //TODO : à modifier
 
@@ -28,11 +28,10 @@ public class Saving implements Observer
      * @param people who is the people who play this game with Quest
      * @param gs who is the graphic param to save.
      */
-    public Saving(People people, String nameSave,GraphicalSettings gs) //TODO: ajouter les maps en safe !
+    public Saving(People people, String nameSave) //TODO: ajouter les maps en safe !
     {
         this.people = people;
         this.nameSave = nameSave;
-        graSet = gs;
     }
 
     /**
@@ -72,7 +71,7 @@ public class Saving implements Observer
      * @param file who is the file with the saving game.
      * @param people qui est l'objet a sauveguarder
      * */
-    private void newSave(People people,GraphicalSettings gs, String file)
+    private void newSave(People people,String file)
     {
         try
         {
@@ -88,6 +87,12 @@ public class Saving implements Observer
     }
 
     /**
+     * This method allows to save the element of graphic param
+     */
+    private void savingGraphic()
+    {}
+
+    /**
      * Cette méthode permet de reprendre les objets sauvguarder dans un fichier et démarer une nouvelle partie
      * @param file qui est le nom de fichier complet
      * */
@@ -98,7 +103,7 @@ public class Saving implements Observer
             ObjectInputStream entree;
             entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + file+".mom"))));
             people = (People) entree.readObject();
-            graSet = (GraphicalSettings) entree.readObject();
+            //graSet = (GraphicalSettings) entree.readObject();
         }
         catch(ClassNotFoundException | IOException e)
         {

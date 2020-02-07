@@ -2,35 +2,12 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 
 import be.ac.umons.sgl.mom.Events.Events;
 
-public class Notification
+public interface Notification
 {
-    private Events evt;
-    private Object[] buffer;
 
-    public Notification(Events events, Object ... buffer)
-    {
-        evt = events;
-        this.buffer = buffer;
-    }
+    public Events getEvents();
 
-    public Notification(Events events)
-    {
-        evt = events;
-        buffer = null;
-    }
+    public Object getBuffer();
 
-    public Events getEvents()
-    {
-        return evt;
-    }
-
-    public Object[] getBuffer()
-    {
-        return buffer;
-    }
-
-    public boolean bufferEmpty()
-    {
-        return buffer == null;
-    }
+    public boolean bufferEmpty();
 }

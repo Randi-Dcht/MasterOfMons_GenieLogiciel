@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
+import be.ac.umons.sgl.mom.Objects.Settings;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
@@ -99,14 +100,14 @@ public class SuperviserNormally implements Observer
          * @param type who is type of the people as defence,agility
          * @param gs who is the class with the param to safe.
          */
-        public void newParty(String namePlayer, Type type, GraphicalSettings gs) //TODO regarder pour events mais pas sûre
+        public void newParty(String namePlayer, Type type) //TODO regarder pour events mais pas sûre
         {
             people = new People(namePlayer,type);
             MasterQuest mQ = new MyFirstYear(people,null);
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
             //add
-            save = new Saving(people,namePlayer,gs);
+            save = new Saving(people,namePlayer);
             //add
         }
 

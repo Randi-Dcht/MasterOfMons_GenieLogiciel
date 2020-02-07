@@ -48,8 +48,7 @@ public class TimeGame implements Observer
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.ChangeFrame))
-            changeMin();
+        changeMin();
     }
 
     /*delete*/public void updateSecond(double time)

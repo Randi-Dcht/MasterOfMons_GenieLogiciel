@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
+import be.ac.umons.sgl.mom.Events.Notifications.Dead;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import org.junit.jupiter.api.Test;
 
@@ -41,14 +43,14 @@ public class TestEvents
         assertEquals(0, evt.getList().size(),"check if the size of list is null");
         TestObserver obs = new TestObserver("tets1");
         TestObserver obs2 = new TestObserver("test2");
-        evt.add(Events.ChangeFrame,obs);
+        evt.add(Events.ChangeQuest,obs);
         assertEquals(1, evt.getList().size(),"check if one events is create");
-        evt.add(Events.ChangeFrame,obs2);
+        evt.add(Events.ChangeQuest,obs2);
         assertEquals(1, evt.getList().size(),"check if the event isn't create");
-        assertEquals(2,evt.getList().get(Events.ChangeFrame).size(),"check if the second observer is add to same list");
-        evt.notify(new Notification(Events.AddFriend));
+        assertEquals(2,evt.getList().get(Events.ChangeQuest).size(),"check if the second observer is add to same list");
+        evt.notify(new Dead());
         assertFalse(obs.value,"the observer does't notify");
-        evt.notify(new Notification(Events.ChangeFrame));
+        evt.notify(new ChangeQuest());
         assertTrue(obs.value,"the observer is notify");
         assertTrue(obs2.value,"the observer is notify");
     }

@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.Dead;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 
@@ -141,6 +142,6 @@ public abstract class Character implements Attack, Social
     public void dead()
     {
         living = false;
-        SuperviserNormally.getSupervisor().getEvent().notify(new Notification(Events.Dead,this));
+        SuperviserNormally.getSupervisor().getEvent().notify(new Dead(this));
     }
 }
