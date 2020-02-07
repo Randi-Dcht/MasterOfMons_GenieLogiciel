@@ -45,6 +45,8 @@ public class GraphicalSettings {
 
     private I18NBundle bundle;
 
+    private boolean showMapCoordinates = false;
+
     /**
      * Crée de nouveaux paramètres graphiques.
      */
@@ -188,5 +190,13 @@ public class GraphicalSettings {
     public void setLocale(Locale loc) {
         this.loc = loc;
         bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc);
+    }
+
+    public boolean mustShowMapCoordinates() {
+        return showMapCoordinates;
+    }
+
+    public void setShowMapCoordinates(boolean showMapCoordinates) {
+        this.showMapCoordinates = showMapCoordinates;
     }
 }

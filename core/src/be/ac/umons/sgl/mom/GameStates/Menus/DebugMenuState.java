@@ -19,11 +19,11 @@ public class DebugMenuState extends MenuState {
         topMargin = .1;
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title, false),
                 new MenuItem(gs.getStringFromId("debugMenu"), MenuItemType.Normal, false),
-                new MenuItem(gs.getStringFromId("debugPlayerCoord"), MenuItemType.Normal),
+                new MenuItem(gs.getStringFromId(gs.mustShowMapCoordinates() ? "debugHidePlayerCoord" : "debugPlayerCoord"), () -> gs.setShowMapCoordinates(! gs.mustShowMapCoordinates())),
                 new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Normal),
                 new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Normal),
                 new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Normal),
-                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Normal),
+                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Normal)
         });
     }
 
@@ -38,5 +38,6 @@ public class DebugMenuState extends MenuState {
         super.handleInput();
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.removeFirstState();
+        init(); // Refresh the text
     }
 }

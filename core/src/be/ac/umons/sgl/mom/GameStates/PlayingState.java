@@ -259,7 +259,7 @@ public class PlayingState extends GameState { // TODO : Put all disposes
         player.draw(sb);
 
         sb.begin();
-//        if (gs.mustShowMapCoordinates())
+        if (gs.mustShowMapCoordinates())
             gs.getSmallFont().draw(sb, String.format("(%f, %f)", player.getMapRectangle().x, player.getMapRectangle().y), (int)leftMargin, (int)(10 * topMargin - topBarHeight));
         sb.end();
 
