@@ -127,18 +127,6 @@ public abstract class MenuState extends GameState {
                     new Point((int) (layout.width + 2 * leftMargin),
                             (int) (font.getLineHeight() + 2 * topMargin)));
             alreadyUsed += (int)(font.getLineHeight() + 2 * topMargin) + topMargin;
-//            sb.begin();
-//            font.setColor(Color.WHITE);
-//            layout.setText(font, menuItem.header);
-//            if (menuItem.control == null)
-//                font.draw(sb, layout, (int) (.05 * WIDTH), HEIGHT - alreadyUsed);
-//            sb.end();
-//            if (menuItem.control != null) {
-//                menuItem.draw(sb, new Point((int) (.05 * WIDTH), (int)(HEIGHT - alreadyUsed - (font.getLineHeight() + 2 * topMargin))),
-//                        new Point((int) (layout.width + 2 * leftMargin),
-//                                (int) (font.getLineHeight() + 2 * topMargin)));
-//            }
-//            alreadyUsed += (int)(font.getLineHeight() + 2 * topMargin) + topMargin;
         }
 
     }
@@ -190,6 +178,12 @@ public abstract class MenuState extends GameState {
                     textBoxes.add(tb);
                     c = tb;
                     break;
+                case NumberTextBox:
+                    TextBox ntb = new TextBox(gim, gs);
+                    textBoxes.add(ntb);
+                    ntb.setAcceptOnlyNumbers(true);
+                    c = ntb;
+                    break;
                 default:
                     break;
             }
@@ -216,23 +210,23 @@ public abstract class MenuState extends GameState {
         /**
          * Le nom de l'élément.
          */
-        private String header;
+        public String header;
         /**
          * Le type de l'élément.
          */
-        protected MenuItemType mit;
+        public MenuItemType mit;
 
         /**
          * The associated control for this item.
          */
-        private Control control;
+        public Control control;
 
         /**
          * L'action a faire si jamais l'on clique sur cet élément.
          */
-        private Runnable toDoIfExecuted;
+        public Runnable toDoIfExecuted;
 
-        private String id;
+        public String id;
 
         /**
          * Initialise un élément du menu.
@@ -313,6 +307,7 @@ public abstract class MenuState extends GameState {
         Title,
         Text,
         Button,
-        TextBox
+        TextBox,
+        NumberTextBox
     }
 }
