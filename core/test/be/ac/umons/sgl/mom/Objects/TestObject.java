@@ -39,7 +39,7 @@ class TestObject
   void SavingClassTest() //TODO : a continuer cette méthode quand celle-ci sera finie.
   {
       People people = new People("TestObject",Type.normal);
-      Saving save = new Saving(people,"TestSaving",null);
+      Saving save = new Saving(people,"TestSaving");
   }
 
     @Test
