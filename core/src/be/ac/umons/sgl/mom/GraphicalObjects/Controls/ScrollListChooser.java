@@ -19,6 +19,7 @@ public class ScrollListChooser extends Control {
         super(gim, gs);
         buttons = new ArrayList<>();
     }
+    protected ScrollListChooser() {}
 
     @Override
     public void draw(Batch batch, Point pos, Point size) {
@@ -61,17 +62,22 @@ public class ScrollListChooser extends Control {
                 if (sli.onClick != null)
                     sli.onClick.run();
                 sli.isSelected = ! sli.isSelected;
-                if (sli.isSelected && ! canSelectMultipleItems) {
-                    for (Button b2 : buttons) {
-                        if (b != b2) {
-                            b2.setSelected(false);
-                            sli.isSelected = false;
-                        }
-                    }
-                }
+                checkSelected(sli);
             });
+            sli.button = b;
             b.setSelected(sli.isSelected);
             buttons.add(b);
+        }
+    }
+
+    public void checkSelected(ScrollListItem sli) {
+        if (sli.isSelected && ! canSelectMultipleItems) {
+            for (ScrollListItem sli2 : scrollListItems) {
+                if (sli != sli2) {
+                    sli2.button.setSelected(false);
+                    sli2.isSelected = false;
+                }
+            }
         }
     }
 
@@ -83,6 +89,7 @@ public class ScrollListChooser extends Control {
         public String header;
         public boolean isSelected;
         public Runnable onClick;
+        public Button button;
 
         public ScrollListItem(String header) {
             this(header, null);
