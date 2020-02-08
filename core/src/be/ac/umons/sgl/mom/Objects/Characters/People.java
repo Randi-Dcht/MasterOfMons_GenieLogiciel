@@ -25,6 +25,7 @@ public class People extends Character implements Serializable
     private double experience = 0;
     private MasterQuest myQuest;
     private Bloc year;
+    private boolean invincible = false;
     final String name;
     final int maxObject = 5;
     private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
@@ -44,9 +45,26 @@ public class People extends Character implements Serializable
         this.year = Bloc.BA1;
     }
 
+
+    /**
+     * This method return the experience of this people
+     * @return experience of this people
+     */
     public double getExperience()
     {
         return experience;
+    }
+
+
+    /**
+     * This method allows to decrease the life
+     * @param lose is the number of life
+     */
+    @Override
+    public void loseAttack(double lose)
+    {
+        if(!invincible)
+            super.loseAttack(lose);
     }
 
 
@@ -251,17 +269,22 @@ public class People extends Character implements Serializable
 
 
     /**
-     * This method allows to up level of this people
+     * This method allows to up level of this people (#debug#)
      */
     public void upLevel()
-    {}
+    {
+        level++;
+    }
 
 
     /**
-     * This method allows to invincible people (the life doesn't decrease
+     * This method allows to invincible people,the life doesn't decrease (#debug#)
+     * @param var is true if invincible else false
      */
-    public void invincible()
-    {}
+    public void invincible(boolean var)
+    {
+        invincible = var;
+    }
 
 
     /***/
