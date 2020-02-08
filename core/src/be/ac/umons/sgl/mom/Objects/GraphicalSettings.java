@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
+import be.ac.umons.sgl.mom.Enums.Languages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -190,6 +191,11 @@ public class GraphicalSettings {
     public void setLocale(Locale loc) {
         this.loc = loc;
         bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc);
+    }
+
+    public void setLanguage(Languages lang) {
+        String loc = lang.getLocale();
+        setLocale(new Locale(loc));
     }
 
     public boolean mustShowMapCoordinates() {

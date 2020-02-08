@@ -51,7 +51,11 @@ public class SettingsState extends MenuState {
                 case "SLC_Language":
                     List<ScrollListChooser.ScrollListItem> slil = new ArrayList<>();
                     for (Languages l : Languages.values())
-                        slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(l.toString())));
+                        slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(l.toString()), () -> {
+                            MasterOfMonsGame.settings.setLanguage(l);
+                            gs.setLanguage(l);
+                            init();
+                        }, l == MasterOfMonsGame.settings.getLanguage()));
                     ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
                     mi.size.y = (int)(3 * (gs.getNormalFont().getLineHeight() + 2 * topMargin));
                     break;

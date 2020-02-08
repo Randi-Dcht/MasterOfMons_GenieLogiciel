@@ -57,6 +57,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		gs.setNormalFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.05 * (float)HEIGHT));
 		gs.setTitleFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.1 * (float)HEIGHT));
 		gs.setQuestFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.015 * (float)HEIGHT));
+		gs.setLanguage(settings.getLanguage());
 		gim = new GameInputManager();
 		gsm = new GameStateManager(gim, gs);
 

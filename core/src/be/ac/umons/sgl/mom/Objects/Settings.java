@@ -20,7 +20,7 @@ public class Settings implements Serializable {
     /**
      * Game's language
      */
-    private Languages language;
+    private Languages language = Languages.English;
 
     /**
      * @return The resolution's height
