@@ -13,6 +13,7 @@ public class ScrollListChooser extends Control {
     protected ScrollListItem[] scrollListItems;
     protected List<Button> buttons;
     protected int mouseScrolled = 0;
+    protected boolean canSelectMultipleItems = false;
 
     public ScrollListChooser(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
@@ -60,10 +61,22 @@ public class ScrollListChooser extends Control {
                 if (sli.onClick != null)
                     sli.onClick.run();
                 sli.isSelected = ! sli.isSelected;
+                if (sli.isSelected && ! canSelectMultipleItems) {
+                    for (Button b2 : buttons) {
+                        if (b != b2) {
+                            b2.setSelected(false);
+                            sli.isSelected = false;
+                        }
+                    }
+                }
             });
             b.setSelected(sli.isSelected);
             buttons.add(b);
         }
+    }
+
+    public void setCanSelectMultipleItems(boolean canSelectMultipleItems) {
+        this.canSelectMultipleItems = canSelectMultipleItems;
     }
 
     public static class ScrollListItem {

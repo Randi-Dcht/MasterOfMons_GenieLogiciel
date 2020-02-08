@@ -1,5 +1,7 @@
 package be.ac.umons.sgl.mom.Objects;
 
+import be.ac.umons.sgl.mom.Enums.Languages;
+
 import java.io.Serializable;
 
 /**
@@ -14,6 +16,11 @@ public class Settings implements Serializable {
      * The maximum number of automatic saves to save in the folder.
      */
     private int maximumAutomaticSaves = 9;
+
+    /**
+     * Game's language
+     */
+    private Languages language;
 
     /**
      * @return The resolution's height
@@ -56,5 +63,19 @@ public class Settings implements Serializable {
      */
     public void setMaximumAutomaticSaves(int maximumAutomaticSaves) {
         this.maximumAutomaticSaves = maximumAutomaticSaves;
+    }
+
+    /**
+     * @return The game's language
+     */
+    public Languages getLanguage() {
+        return language;
+    }
+
+    /**
+     * @param language The game's language
+     */
+    public void setLanguage(Languages language) {
+        this.language = language;
     }
 }
