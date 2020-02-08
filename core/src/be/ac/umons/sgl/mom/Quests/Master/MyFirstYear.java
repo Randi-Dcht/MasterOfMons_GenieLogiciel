@@ -2,15 +2,18 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.BattleForPlace;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLesson;
 import be.ac.umons.sgl.mom.Quests.Under.MeetManyPeople;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
 /**
- *This class define the fist year in the University of Mons with the goals.
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ *This class define a MasterQuest who is 'My first Year' in the bachelor 1
+ *@author Randy Dauchot (étudiant en Sciences informatique Umons)
  */
 
 public class MyFirstYear extends MasterQuest
@@ -20,10 +23,11 @@ public class MyFirstYear extends MasterQuest
     /*This is the goals of this MasterQuest*/
     final UnderQuest[] underQuest = {new GoToLesson(this,33),new MeetManyPeople(this,34),new BattleForPlace(this,33)};
 
+
     /**
-     * This contructor define a Bachelor 1 of Umons
-     * @param people who is the people goes to course
-     * @param before who is the MasterQuest before them, (null or MasterQuest)
+     * This is a constructor of this Quest who define a quest in the bachelor 1
+     * @param people who is the people who play the game
+     * @param before who is the quest before this
      */
     public MyFirstYear(People people, MasterQuest before)
     {
@@ -31,6 +35,7 @@ public class MyFirstYear extends MasterQuest
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
+
 
     /**
      * This method allows to define to next Quest
@@ -50,6 +55,29 @@ public class MyFirstYear extends MasterQuest
         return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
     }
 
+
+    /**
+     * This method return the items for this quest
+     * @return list of items
+     */
+    @Override
+    public Items[] whatItem()
+    {
+        return new Items[0];
+    }
+
+
+    /**
+     * This method return the mobile for this quest
+     * @return list of mobile
+     */
+    @Override
+    public Mobile[] whatMobile()
+    {
+        return new Mobile[0];
+    }
+
+
     /**
      * This method allows to return the name of MasterQuest
      * @return name who is a string
@@ -57,5 +85,15 @@ public class MyFirstYear extends MasterQuest
     public String getName()
     {
         return "MyFirstYear";
+    }
+
+
+    /**
+     * This method analyse the notification who receive and notify underQuest
+     * @param notify who is a notification with events.
+     */
+    @Override
+    public void update(Notification notify)
+    {
     }
 }

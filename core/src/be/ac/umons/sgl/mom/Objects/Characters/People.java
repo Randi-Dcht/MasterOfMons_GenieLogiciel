@@ -279,7 +279,7 @@ public class People extends Character implements Serializable
 
     /**
      * This method allows to invincible people,the life doesn't decrease (#debug#)
-     * @param var is true if invincible else false
+     * @param var is true == invincible | false == doesn't invincible.
      */
     public void invincible(boolean var)
     {

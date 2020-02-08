@@ -15,6 +15,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *La MasterQuest est une classe abstraite qui contient elle même des underQuest.
@@ -303,10 +304,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *@return a goal (=question) of this quest
      */
     public abstract String question();
-
-    @Override
-    public void update(Notification notify)
-    {
-        //TODO dire quoi faire quand reçoit une notification de changement
-    }
+    public abstract Items[] whatItem();
+    public abstract Mobile[] whatMobile();
 }
