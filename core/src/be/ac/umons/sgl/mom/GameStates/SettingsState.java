@@ -27,6 +27,7 @@ public class SettingsState extends MenuState {
                 new MenuItem(gs.getStringFromId("settings"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("gameResolutionWidth"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Width"),
                 new MenuItem(gs.getStringFromId("gameResolutionHeight"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Height"),
+                new MenuItem(gs.getStringFromId("maximumAutomaticSaves"), MenuItemType.NumberTextBox, "TXT_Maximum_Automatic_Saves"),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
         });
         Settings settings = MasterOfMonsGame.settings;
@@ -37,6 +38,9 @@ public class SettingsState extends MenuState {
                     break;
                 case "TXT_Game_Resolution_Height":
                     ((TextBox)mi.control).setText("" + settings.getGameResolutionHeight());
+                    break;
+                case "TXT_Maximum_Automatic_Saves":
+                    ((TextBox)mi.control).setText("" + settings.getMaximumAutomaticSaves());
                     break;
             }
         }
@@ -51,6 +55,9 @@ public class SettingsState extends MenuState {
                     break;
                 case "TXT_Game_Resolution_Height":
                     settings.setGameResolutionHeight(Integer.parseInt(((TextBox)mi.control).getText()));
+                    break;
+                case "TXT_Maximum_Automatic_Saves":
+                    settings.setMaximumAutomaticSaves(Integer.parseInt(((TextBox)mi.control).getText()));
                     break;
             }
         }
