@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GameStates.GameState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Control;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -52,6 +53,8 @@ public abstract class MenuState extends GameState {
 
     protected List<TextBox> textBoxes;
 
+    protected List<ScrollListChooser> scrollListChoosers;
+
     /**
      * La caméra permettant d'afficher le texte et de zoomer au besoin.
      */
@@ -80,6 +83,7 @@ public abstract class MenuState extends GameState {
         super.init();
         buttons = new ArrayList<>();
         textBoxes = new ArrayList<>();
+        scrollListChoosers = new ArrayList<>();
         sb = new SpriteBatch();
 		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
 		cam.translate(WIDTH / 2, HEIGHT / 2);
@@ -123,10 +127,14 @@ public abstract class MenuState extends GameState {
             else
                 font = gs.getNormalFont();
             layout.setText(font, menuItem.header);
-            menuItem.draw(sb, new Point((int) (.05 * WIDTH), (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : 2 * topMargin))),
-                    new Point((int) (layout.width + 2 * leftMargin),
-                            (int) (font.getLineHeight() + 2 * topMargin)));
-            alreadyUsed += (int)(font.getLineHeight() + 2 * topMargin) + topMargin;
+            Point size = menuItem.size;
+            if (size.x == -1)
+                size.x = (int) (layout.width + 2 * leftMargin);
+            if (size.y == -1)
+                size.y = (int) (font.getLineHeight() + 2 * topMargin);
+
+            menuItem.draw(sb, new Point((int) (.05 * WIDTH), (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : 2 * topMargin))), size);
+            alreadyUsed += size.y + topMargin;
         }
 
     }
@@ -153,6 +161,8 @@ public abstract class MenuState extends GameState {
             b.handleInput();
         for (TextBox tb : textBoxes)
             tb.handleInput();
+        for (ScrollListChooser slc : scrollListChoosers)
+            slc.handleInput();
     }
 
     /***
@@ -183,6 +193,11 @@ public abstract class MenuState extends GameState {
                     textBoxes.add(ntb);
                     ntb.setAcceptOnlyNumbers(true);
                     c = ntb;
+                    break;
+                case ScrollListChooser:
+                    ScrollListChooser slc = new ScrollListChooser(gim, gs);
+                    scrollListChoosers.add(slc);
+                    c = slc;
                     break;
                 default:
                     break;
@@ -227,6 +242,8 @@ public abstract class MenuState extends GameState {
         public Runnable toDoIfExecuted;
 
         public String id;
+
+        public Point size = new Point(-1,-1);
 
         /**
          * Initialise un élément du menu.
@@ -297,6 +314,7 @@ public abstract class MenuState extends GameState {
                     break;
                 case NumberTextBox:
                 case TextBox:
+                case ScrollListChooser:
                     GlyphLayout gl = new GlyphLayout();
                     gl.setText(gs.getNormalFont(), header);
                     batch.begin();
@@ -318,6 +336,7 @@ public abstract class MenuState extends GameState {
         Text,
         Button,
         TextBox,
-        NumberTextBox
+        NumberTextBox,
+        ScrollListChooser
     }
 }

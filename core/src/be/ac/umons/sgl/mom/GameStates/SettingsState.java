@@ -1,12 +1,17 @@
 package be.ac.umons.sgl.mom.GameStates;
 
+import be.ac.umons.sgl.mom.Enums.Languages;
 import be.ac.umons.sgl.mom.GameStates.Menus.MenuState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Settings;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The state where the user can choose settings influencing the game.
@@ -28,6 +33,7 @@ public class SettingsState extends MenuState {
                 new MenuItem(gs.getStringFromId("gameResolutionWidth"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Width"),
                 new MenuItem(gs.getStringFromId("gameResolutionHeight"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Height"),
                 new MenuItem(gs.getStringFromId("maximumAutomaticSaves"), MenuItemType.NumberTextBox, "TXT_Maximum_Automatic_Saves"),
+                new MenuItem(gs.getStringFromId("language"), MenuItemType.ScrollListChooser, "SLC_Language"),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
         });
         Settings settings = MasterOfMonsGame.settings;
@@ -41,6 +47,13 @@ public class SettingsState extends MenuState {
                     break;
                 case "TXT_Maximum_Automatic_Saves":
                     ((TextBox)mi.control).setText("" + settings.getMaximumAutomaticSaves());
+                    break;
+                case "SLC_Language":
+                    List<ScrollListChooser.ScrollListItem> slil = new ArrayList<>();
+                    for (Languages l : Languages.values())
+                        slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(l.toString())));
+                    ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
+                    mi.size.y = (int)(3 * (gs.getNormalFont().getLineHeight() + 2 * topMargin));
                     break;
             }
         }
