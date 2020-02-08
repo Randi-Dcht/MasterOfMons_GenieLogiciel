@@ -5,10 +5,8 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
-import be.ac.umons.sgl.mom.Objects.Settings;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
@@ -135,12 +133,19 @@ public class SuperviserNormally implements Observer
             minute = minute - dt;
             if(minute <= 0)
             {
-                save.Signal();
+                save.signal();
                 minute = 600;
                 //remplacer par event
             }
             //event.notify(Events.ChangeFrame); //pour le timerGame
         }
+
+
+        /**
+         * This method allows to give an items to the people for this Quest
+         */
+        public void addItems(Items item)
+        {}
 
 
         /**

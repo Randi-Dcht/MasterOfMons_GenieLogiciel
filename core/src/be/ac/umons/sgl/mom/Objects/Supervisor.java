@@ -46,7 +46,7 @@ public class Supervisor /*! va être supprimer !*/
     if(questShower != null)
     {
       Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
-      save.Signal();
+      save.signal();
     }
   }
 
@@ -62,7 +62,7 @@ public class Supervisor /*! va être supprimer !*/
     minute = minute - dt;
     if(minute <= 0)
     {
-      save.Signal();
+      save.signal();
       minute = 600;
     }
     time.updateSecond(0.3);

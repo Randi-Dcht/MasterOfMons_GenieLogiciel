@@ -250,6 +250,20 @@ public class People extends Character implements Serializable
     }
 
 
+    /**
+     * This method allows to up level of this people
+     */
+    public void upLevel()
+    {}
+
+
+    /**
+     * This method allows to invincible people (the life doesn't decrease
+     */
+    public void invincible()
+    {}
+
+
     /***/
     @Override
     public Actions getAction() {
