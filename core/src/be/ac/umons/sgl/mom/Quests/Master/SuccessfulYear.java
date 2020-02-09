@@ -3,7 +3,6 @@ package be.ac.umons.sgl.mom.Quests.Master;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -21,7 +20,7 @@ import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 public class SuccessfulYear extends MasterQuest
 {
     /*This list is the lesson during this Quest*/
-    final Lesson[] lesson = {};
+    final Lesson[] lesson = {Lesson.nbComplexe,Lesson.calculus2,Lesson.reseau,Lesson.projet2,Lesson.OS,Lesson.anglais,Lesson.opti};
     /*This is the goals of this Quest*/
     final UnderQuest[] underQuest = {new HelpMe(this,34),new FreeTimeMons(this,33)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33)};
 

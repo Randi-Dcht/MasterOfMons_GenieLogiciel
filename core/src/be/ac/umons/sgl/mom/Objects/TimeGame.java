@@ -1,8 +1,9 @@
 package be.ac.umons.sgl.mom.Objects;
 
-import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeMonth;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.util.Objects;
 
 /**
@@ -51,7 +52,7 @@ public class TimeGame implements Observer
         changeMin();
     }
 
-    /*delete*/public void updateSecond(double time)
+    public void updateSecond(double time)
     {
        changeMin();
     }
@@ -76,6 +77,7 @@ public class TimeGame implements Observer
 
     private void changeMonth()
     {
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeMonth());
         if((NBmonth =(NBmonth+1)%timeYr) == 0)
             changeYear();
     }

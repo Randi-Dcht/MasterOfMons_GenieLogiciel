@@ -3,7 +3,6 @@ package be.ac.umons.sgl.mom.Quests.Master;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -20,7 +19,7 @@ import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 public class MeetAndLearn extends MasterQuest
 {
     /*This is the lessons to follow*/
-    final Lesson[] lesson = {};
+    final Lesson[] lesson = {Lesson.calculProba,Lesson.intelligen,Lesson.compilation,Lesson.grapheOpti,Lesson.baseDonnes};
     /*this is the goals of this quest*/
     final UnderQuest[] underQuest = {new LookSoulMate(this,50), new GoToPriorityLesson(this,50)};
 

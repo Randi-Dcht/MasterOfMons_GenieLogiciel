@@ -13,6 +13,8 @@ import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  *This class allows to define a people with all characteristic.
@@ -31,6 +33,7 @@ public class People extends Character implements Serializable
     private boolean invincible = false;
     final String name;
     final int maxObject = 5;
+    private HashMap<Date,Lesson> myPlanning;
     private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
@@ -81,11 +84,21 @@ public class People extends Character implements Serializable
         quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
         Supervisor.changedQuest();
+        //TODO ADD PLANING
     }
 
+
+    /***/
     public MasterQuest getQuest()
     {
         return myQuest;
+    }
+
+
+    /***/
+    public HashMap<Date,Lesson> getPlanning()
+    {
+        return myPlanning;
     }
 
 
