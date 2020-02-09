@@ -19,6 +19,11 @@ import java.util.List;
  */
 public class SettingsState extends MenuState {
 
+    /**
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
+     */
     public SettingsState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
@@ -63,6 +68,9 @@ public class SettingsState extends MenuState {
         }
     }
 
+    /**
+     * Save the settings and quit the state.
+     */
     public void save() {
         Settings settings = new Settings();
         for (MenuItem mi : menuItems) {

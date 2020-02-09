@@ -14,28 +14,31 @@ import com.badlogic.gdx.files.FileHandle;
 
 import java.awt.*;
 
-/***
- * Le menu qui s'affiche en premier lors du lancement du jeu. Il permettra, en autre, de lancer le jeu (via une sauvegarde ou non), d'activer/désactiver une extension, ainsi que de quitter le jeu.
+/**
+ * The first menu presented in the game. It allow to start a party in other things.
  * @author Guillaume Cardoen
  */
 public class MainMenuState extends MenuState {
 
+    /**
+     * Allows to activate/deactivate an extension.
+     */
     ExtensionsSelector extSel;
 
-    /***
-     * Initialise un nouveau menu.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+    /**
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings.
      */
     public MainMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+
+    /**
+     * The default constructor. USE IT ONLY FOR TESTS.
+     */
     protected MainMenuState(){}
 
-    /***
-     * Initialise le menu.
-     */
     @Override
     public void init() {
         super.init();

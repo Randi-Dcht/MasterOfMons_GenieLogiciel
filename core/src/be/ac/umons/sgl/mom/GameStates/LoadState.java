@@ -17,43 +17,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * L'état où l'utilisateur peut selectionner le fichier de sauvegarde à charger pour continuer une partie précedemment sauvegardé.
+ * The state where to user can choose which game to laod.
  * @author Guillaume Cardoen
  */
 public class LoadState extends GameState {
     /**
-     * Un chemin de sauvegarde temporaire afin de tester le jeu.
+     * An temporary save path.
      */
     protected final String SAVE_PATH = "D:\\Users\\Guillaume\\Documents\\Test\\MOM"; // TODO : Define it itself
 
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shape.
      */
     private ShapeRenderer sr;
     /**
-     * Utilisé afin de dessiner en autre le texte.
+     * Allow to draw
      */
     private SpriteBatch sb;
 
     /**
-     * Un entier indiquant à quel point l'utilisateur est descendu dans la liste.
+     * An int representing how much the user wants to go down.
      */
     private int mouseWheeled = 0;
     /**
-     * La liste de tout les boutons (représentant les noms de fichiers) affichés sur l'écran.
+     * A list representing all the <code>Button</code> for this state.
      */
     private List<Button> buttonList;
 
     /**
-     * La couleur de fond.
+     * The background's color.
      */
     private Color backgroundColor;
 
     /**
-     * Crée un nouvel état de chargement de sauvegarde.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
      */
     public LoadState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -125,17 +124,17 @@ public class LoadState extends GameState {
     }
 
     /**
-     * Retourne une liste des différents fichiers correspondant à "*.mom" contenu dans le repertoire <code>saveDirPath</code>. Retourne <code>null</code> si le repertoire n'existe pas.
-     * @param saveDirPath Le repertoire de sauvegarde.
-     * @return Une liste des différents fichiers correspondant à "*.mom" contenu dans <code>saveDirPath</code>
+     * Return a list of all files "*.mom" in the <code>saveDirPath</code> directory. <code>null</code> if the directory doesn't exists/
+     * @param saveDirPath The directory
+     * @return A list of all files "*.mom" in the <code>saveDirPath</code> directory.
      */
     private File[] listSaveFile(String saveDirPath) {
         return new File(saveDirPath).listFiles((dir, name) -> name.endsWith(".mom"));
     }
 
     /**
-     * Enclenche le chargement du fichier de sauvegarde <code>loadFilePath</code> et quitte l'état.
-     * @param loadFilePath Le lien vers le fichier de sauvegarde.
+     * Try to load the files and quit the state.
+     * @param loadFilePath The load file's path.
      */
     private void load(String loadFilePath) {
         // TODO : call the load system

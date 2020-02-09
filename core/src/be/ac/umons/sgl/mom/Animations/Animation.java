@@ -1,40 +1,40 @@
 package be.ac.umons.sgl.mom.Animations;
 
 /**
- * Classe asbtraite représentant la base d'une animation.
+ * Abstract class representing the base of an animation.
  * @author Guillaume Cardoen
  */
 public abstract class Animation<T> {
 
     /**
-     * Action à éxécuter à chaque mise à jour de la valeur.
+     * Action to execute each time the value is updated
      */
     protected Runnable runningAction;
     /**
-     * Action à éxécuter une fois l'animation terminée.
+     * Action to execute when the animation is finished.
      */
     protected Runnable endingAction;
 
     /**
-     * La valeur actuelle
+     * Actual value
      */
     protected T actual;
 
     /**
-     * La valeur finale.
+     * Ending value
      */
     protected T to;
 
     /**
-     * La durée de l'animation.
+     * Animation's duration
      */
     protected double time;
 
     /**
-     * Initialise une nouvelle animation.
-     * @param from La valeur de départ.
-     * @param to La valeur d'arrivée.
-     * @param time La durée (en ms) de l'animation.
+     * Create a new animation
+     * @param from Starting value
+     * @param to Ending value
+     * @param time Duration
      */
     public Animation(T from, T to, double time) {
         this.actual = from;
@@ -43,12 +43,12 @@ public abstract class Animation<T> {
     }
 
     /**
-     * Initialise une nouvelle animation.
-     * @param from La valeur de départ.
-     * @param to La valeur d'arrivée.
-     * @param time La durée (en ms) de l'animation.
-     * @param runningAction L'action à éxécuter à chaque mise à jour de la valeur.
-     * @param endCallback L'action à éxécuter une fois l'animation terminée.
+     * Create a new animation
+     * @param from Starting value
+     * @param to Ending value
+     * @param time Duration
+     * @param runningAction Action to execute each time the value is updated
+     * @param endCallback Action to execute when the animation is finished.
      */
     public Animation(T from, T to, double time, Runnable runningAction, Runnable endCallback) {
         this(from, to, time);
@@ -57,54 +57,55 @@ public abstract class Animation<T> {
     }
 
     /**
-     * Met à jour la valeur actuelle.
-     * @param dt (Delta Time) le temps écoulé depuis le dernier appel.
+     * Update the actual value.
+     * @param dt Delta Time
      */
     public abstract void update(double dt);
     /**
-     * Si l'animation est finie ou non.
-     * @return Si l'animation est finie ou non.
+     * Return if the animation is finished
+     * @return If the animation is finished
      */
     public abstract boolean isFinished();
     /**
-     * Retourne la valeur actuelle.
-     * @return La valeur actuelle.
+     * Return the actual value
+     * @return The actual value
      */
     public T getActual() {
         return actual;
     }
     /**
-     * Défini l'action à éxécuter à chaque mise à jour de la valeur.
-     * @param run L'action à éxécuter à chaque mise à jour de la valeur.
+     * Set the action to execute each time the value is updated
+     * @param run The action to execute each time the value is updated
      */
     public void setRunningAction(Runnable run) {
         this.runningAction = run;
     }
 
     /**
-     * Défini l'action à éxécuter une fois l'animation terminée.
-     * @param run L'action à éxécuter une fois l'animation terminée.
+     * Set the action to execute when the animation is finished.
+     * @param run The action to execute when the animation is finished.
      */
     public void setEndingAction(Runnable run) {
         this.endingAction = run;
     }
 
     /**
-     * Retourne l'action à éxécuter à chaque mise à jour de la valeur
-     * @return L'action à éxécuter à chaque mise à jour de la valeur
+     * @return The action to execute each time the value is updated
      */
     public Runnable getRunningAction() {
         return runningAction;
     }
 
     /**
-     * Retourne l'action à éxécuter une fois l'animation terminée.
-     * @return L'action à éxécuter une fois l'animation terminée.
+     * @return The action to execute each time the value is updated
      */
     public Runnable getEndingAction() {
         return endingAction;
     }
 
+    /**
+     * End the animation and set the actual value to the ending value.
+     */
     public void finishNow() {
         actual = to;
     }

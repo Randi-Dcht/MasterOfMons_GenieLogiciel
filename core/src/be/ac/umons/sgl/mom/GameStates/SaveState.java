@@ -18,44 +18,45 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * L'état où l'utilisateur peut sauvegarder la partie en cours. Elle permet de choisir le nom du fichier de sauvegarde (Un nom par défaut est proposé à l'utilisateur).
+ * The state where the user can choose to save the actual game.
  * @author Guillaume Cardoen
  */
 public class SaveState extends GameState {
-    protected final String SAVE_STR = "Save";
+    /**
+     * The extension used for saving in a file.
+     */
     protected final String SAVE_FILE_EXTENSION = ".mom";
 
     /**
-     * Utilisé afin de dessiner en autre le texte.
+     * Allow to draw.
      */
     protected SpriteBatch sb;
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
 
     /**
-     * La "boîte de texte" où l'utilisateur pourra choisir quel nom donner à sa sauvegarde.
+     * The <code>TextBox</code> corresponding of the save's name.
      */
     protected TextBox nameBox;
     /**
-     * Le bouton "Save"
+     * The save button.
      */
     protected Button saveButton;
 
     /**
-     * Crée un nouvel état de sauvegarde.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
      */
     public SaveState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
 
     /**
-     * Initialise les variables requises.
-     * Une partie de ce code a été fait par mkyong (https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/)
+     * Initialize the state.
+     * A part of this code is from (https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/)
      */
     @Override
     public void init() {
@@ -66,7 +67,7 @@ public class SaveState extends GameState {
         nameBox.setText(String.format("MOM - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())));
         nameBox.setSuffix(SAVE_FILE_EXTENSION);
         saveButton = new Button(gim, gs);
-        saveButton.setText(SAVE_STR);
+        saveButton.setText(gs.getStringFromId("save"));
         saveButton.setOnClick(this::save);
     }
 
@@ -89,7 +90,7 @@ public class SaveState extends GameState {
         sr.rect(quartWidth,  halfHeight - quartHeight / 2, halfWidth, quartHeight); // TODO : Variables would be great here and there
         sr.end();
         sb.begin();
-        gs.getNormalFont().draw(sb, SAVE_STR, (int)(halfWidth - SAVE_STR.length() * gs.getNormalFont().getXHeight() / 2), (int)(halfHeight + quartHeight / 2 - topMargin));
+        gs.getNormalFont().draw(sb, gs.getStringFromId("save"), (int)(halfWidth - gs.getStringFromId("save").length() * gs.getNormalFont().getXHeight() / 2), (int)(halfHeight + quartHeight / 2 - topMargin));
         sb.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
         int nameBoxY = (int)(halfHeight + quartHeight / 2 - 2 * fontLineHeight - 3 * topMargin);
@@ -116,7 +117,7 @@ public class SaveState extends GameState {
     }
 
     /**
-     * Déclenche la sauvegarde de la partie en cours et ferme cet état.
+     * Save the actual game and quit the state.
      */
     private void save() {
         // TODO : Call the save object and save the essential parts of the game. (nameBox.getText() will returns the choosed name + ".mom")

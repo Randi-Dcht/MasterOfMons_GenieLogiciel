@@ -13,21 +13,20 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /***
- * Un menu "in-game". Il permet entre autre de continuer le jeu, d'accéder aux paramètres, de sauvegarder, de charger une partie, ...
+ * A menu representing the pause in the game. It allows to change settings, save, ...
  * @author Guillaume Cardoen
  */
 public class InGameMenuState extends MenuState {
 
-    /***
-     * Permet de dessiner les formes comme les rectangles.
+    /**
+     * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
 
-    /***
-     * Initialise un menu "in-game".
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+    /**
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings.
      */
     public InGameMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);

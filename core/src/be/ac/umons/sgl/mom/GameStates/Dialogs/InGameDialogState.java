@@ -113,6 +113,11 @@ public class InGameDialogState extends DialogState {
         sa = new StringAnimation(text, 20 * text.length());
     }
 
+    /**
+     * Return the maximal length found in a list of String.
+     * @param strings The list of String.
+     * @return The maximal length found.
+     */
     public String getMaximumTextLength(String[] strings) {
         String max = "";
         for (String s : strings) {

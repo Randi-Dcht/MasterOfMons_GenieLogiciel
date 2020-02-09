@@ -1,21 +1,21 @@
 package be.ac.umons.sgl.mom.Animations;
 
 /**
- * Cette classe implémente Animation. Elle permet d'animer un Double dans un temps donné et entre 2 valeurs données.
+ * Animate a double in a given time.
  * @author Guillaume Cardoen
  */
 public class DoubleAnimation extends Animation<Double> {
     /**
-     * Valeur à ajouter à chaque seconde.
+     * Value to add each second
      */
     private double toAddBySecond;
 
 
     /**
-     * Initialise une nouvelle animation.
-     * @param from La valeur de départ.
-     * @param to La valeur d'arrivée.
-     * @param time La durée (en ms) de l'animation.
+     * Create a new animation
+     * @param from Starting value
+     * @param to Ending value
+     * @param time Duration
      */
     public DoubleAnimation(double from, double to, double time) {
         super(from, to, time);
@@ -24,12 +24,12 @@ public class DoubleAnimation extends Animation<Double> {
     }
 
     /**
-     * Initialise une nouvelle animation.
-     * @param from La valeur de départ.
-     * @param to La valeur d'arrivée.
-     * @param time La durée (en ms) de l'animation.
-     * @param runningAction L'action à éxécuter à chaque mise à jour de la valeur.
-     * @param endCallback L'action à éxécuter une fois l'animation terminée.
+     * Create a new animation
+     * @param from Starting value
+     * @param to Ending value
+     * @param time Duration
+     * @param runningAction Action to execute each time the value is updated
+     * @param endCallback Action to execute when the animation is finished.
      */
     public DoubleAnimation(double from, double to, double time, Runnable runningAction, Runnable endCallback) {
         this(from, to, time);
@@ -37,10 +37,7 @@ public class DoubleAnimation extends Animation<Double> {
         this.endingAction = endCallback;
     }
 
-    /**
-     * Met à jour la valeur actuelle.
-     * @param dt (Delta Time) le temps écoulé depuis le dernier appel.
-     */
+    @Override
     public void update(double dt) {
         if ((toAddBySecond > 0 && actual >= to) || (toAddBySecond < 0 && actual <= to))
             return;
@@ -55,10 +52,7 @@ public class DoubleAnimation extends Animation<Double> {
         }
     }
 
-    /**
-     * Si l'animation est finie ou non.
-     * @return Si l'animation est finie ou non.
-     */
+    @Override
     public boolean isFinished() {
         return Double.compare(actual, to) == 0;
     }

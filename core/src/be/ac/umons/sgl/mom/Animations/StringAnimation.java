@@ -1,15 +1,37 @@
 package be.ac.umons.sgl.mom.Animations;
 
+/**
+ * Animate a String in a given time.
+ * @author Guillaume Cardoen
+ */
 public class StringAnimation extends Animation<String> {
 
+    /**
+     * The number of chars to add each second.
+     */
     double toAddBySecond;
+    /**
+     * The number of char actually added.
+     */
     double actualNbr = 0;
 
+    /**
+     * Create a new animation.
+     * @param to The string to animate.
+     * @param time The duration
+     */
     public StringAnimation(String to, double time) {
         super("", to, time);
         toAddBySecond = (to.length()) / (time / 1000);
     }
 
+    /**
+     * Create a new animation.
+     * @param to The string to animate.
+     * @param time The duration
+     * @param runningAction Action to execute each time the value is updated
+     * @param endCallback Action to execute when the animation is finished.
+     */
     public StringAnimation(String to, double time, Runnable runningAction, Runnable endCallback) {
         super("", to, time, runningAction, endCallback);
     }

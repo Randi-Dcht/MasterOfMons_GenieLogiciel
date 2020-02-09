@@ -16,14 +16,37 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 
+/**
+ * The state where the user attack/is attacked by another user/PNJ.
+ */
 public class CombatState extends GameState {
 
+    /**
+     * The 2 characters attacking each other.
+     */
     Character player1, player2;
+    /**
+     * Allow to draw.
+     */
     SpriteBatch sb;
+    /**
+     * Allow to draw shape.
+     */
     ShapeRenderer sr;
+    /**
+     * The life's bar for each player.
+     */
     ProgressBar lifePlayer1, lifePlayer2;
+    /**
+     * The attack button.
+     */
     Button attackButton;
 
+    /**
+     * @param gsm Game's state manager
+     * @param gim Game's input manager
+     * @param gs Game's graphical settings
+     */
     public CombatState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
@@ -89,11 +112,19 @@ public class CombatState extends GameState {
         lifePlayer2.dispose();
     }
 
+    /**
+     * Set the first player (the user)
+     * @param player1 The fist player (user)
+     */
     public void setPlayer1(Character player1) {
         this.player1 = player1;
         lifePlayer1.setMaxValue((int)player1.getCharacteristics().lifemax());
     }
 
+    /**
+     * Set the second character.
+     * @param player2 The second character
+     */
     public void setPlayer2(Character player2) {
         this.player2 = player2;
         lifePlayer2.setMaxValue((int)player2.getCharacteristics().lifemax());

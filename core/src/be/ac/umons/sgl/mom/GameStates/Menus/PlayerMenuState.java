@@ -6,11 +6,9 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 
 public class PlayerMenuState extends MenuState {
     /**
-     * Crée un nouveau menu.
-     *
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs  Les paramètres graphiques à utiliser.
+     * @param gsm Game's state manager
+     * @param gim Game's input manager
+     * @param gs Game's graphical settings
      */
     protected PlayerMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);

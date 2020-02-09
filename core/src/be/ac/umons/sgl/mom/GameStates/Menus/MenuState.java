@@ -27,39 +27,48 @@ import java.util.List;
 import static be.ac.umons.sgl.mom.MasterOfMonsGame.*;
 
 /**
- * CLasse abstraite représentant un menu du jeu.
+ * Abstract class representing a menu.
  * @author Guillaume Cardoen
  */
 public abstract class MenuState extends GameState {
 
     /**
-     * Utilisé afin de dessiner en autre le texte.
+     * Allows to draw.
      */
     protected SpriteBatch sb;
 
     /**
-     * L'indice de l'élement selectionné.
+     * Index of the selected item.
      */
     protected int selectedItem = 0;
 
     /**
-     * Les différents éléments à montrer à l'écran.
+     * The items to show.
      */
     protected MenuItem[] menuItems;
     /**
-     * The selectable elements represented as Button.
+     * A list of all <code>Button</code> used in this state.
      */
     protected List<Button> buttons;
 
+    /**
+     * A list of all <code>TextBox</code> used in this state.
+     */
     protected List<TextBox> textBoxes;
 
+    /**
+     * A list of all <code>ScrollListChooser</code>
+     */
     protected List<ScrollListChooser> scrollListChoosers;
 
     /**
-     * La caméra permettant d'afficher le texte et de zoomer au besoin.
+     * The camera for this state.
      */
     protected OrthographicCamera cam;
 
+    /**
+     * If the background must be transparent or not.
+     */
     protected boolean transparentBackground;
 
     /***
@@ -68,14 +77,18 @@ public abstract class MenuState extends GameState {
     protected ShapeRenderer sr;
 
     /**
-     * Crée un nouveau menu.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * Create a new menu
+     * @param gsm Game's state manager
+     * @param gim Game's input manager
+     * @param gs Game's graphical settings
      */
     protected MenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+
+    /**
+     * The default constructor. USE IT ONLY FOR TEST
+     */
     protected MenuState(){}
 
     @Override
@@ -142,7 +155,7 @@ public abstract class MenuState extends GameState {
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
-            executeSelectedItem();
+            buttons.get(selectedItem).getOnClick().run();
         if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
             buttons.get(selectedItem).setSelected(false);
             selectedItem++;
@@ -165,13 +178,10 @@ public abstract class MenuState extends GameState {
             slc.handleInput();
     }
 
-    /***
-     * Exécute l'action relié à un des éléments du menu en fonction de celui selectionné par l'utilisateur.
+    /**
+     * Set the items to show and create the controls if necessary.
+     * @param menuItems The items to show
      */
-    private void executeSelectedItem() {
-        buttons.get(selectedItem).getOnClick().run();
-    }
-
     protected void setMenuItems(MenuItem[] menuItems) {
         for (MenuItem mi : menuItems) {
             Control c = null;
@@ -209,6 +219,9 @@ public abstract class MenuState extends GameState {
         this.menuItems = menuItems;
     }
 
+    /**
+     * @return The selected item's index.
+     */
     public int getSelectedItem() {
         return selectedItem;
     }
@@ -218,16 +231,16 @@ public abstract class MenuState extends GameState {
         sb.dispose();
     }
 
-    /***
-     * Représente un élément du menu.
+    /**
+     * An item.
      */
     public class MenuItem {
         /**
-         * Le nom de l'élément.
+         * The name of the item.
          */
         public String header;
         /**
-         * Le type de l'élément.
+         * The type of the item.
          */
         public MenuItemType mit;
 
@@ -237,61 +250,68 @@ public abstract class MenuState extends GameState {
         public Control control;
 
         /**
-         * L'action a faire si jamais l'on clique sur cet élément.
+         * The action to do if the item is selected.
          */
         public Runnable toDoIfExecuted;
 
+        /**
+         * The item's id.
+         */
         public String id;
 
+        /**
+         * The item's size. (-1 = automatic)
+         */
         public Point size = new Point(-1,-1);
 
         /**
-         * Initialise un élément du menu.
-         * @param header Le nom de l'élément.
+         * Construct a new item.
+         * @param header The item's name
          */
         public MenuItem(String header) {
             this(header, MenuItemType.Text, "", null);
         }
         /**
-         * Initialise un élément du menu.
-         * @param header Le nom de l'élément.
-         * @param toDoIfExecuted L'action a faire si jamais l'on clique sur cet élément.
+         * Construct a new item.
+         * @param header The item's name
+         * @param toDoIfExecuted The action to do if the item is selected.
          */
         public MenuItem(String header, Runnable toDoIfExecuted) {
             this(header, MenuItemType.Button, "", toDoIfExecuted);
         }
         /**
-         * Initialise un élément du menu.
-         * @param header Le nom de l'élément.
-         * @param mit Le type de menu.
-         * @param toDoIfExecuted L'action a faire si jamais l'on clique sur cet élément.
+         * Construct a new item.
+         * @param header The item's name
+         * @param mit The item's type.
+         * @param toDoIfExecuted The action to do if the item is selected.
          */
         public MenuItem(String header, MenuItemType mit, Runnable toDoIfExecuted) {
             this(header, mit, "", toDoIfExecuted);
         }
 
         /**
-         * Initialise un élément du menu.
-         * @param header Le nom de l'élément.
-         * @param mit Le type de l'élement.
-         * @param id The id of the item.
+         * Construct a new item.
+         * @param header The item's name
+         * @param mit The item's type.
+         * @param id The item's id.
          */
         public MenuItem(String header, MenuItemType mit, String id) {
             this(header, mit, id, null);
         }
         /**
-         * Initialise un élément du menu.
-         * @param header Le nom de l'élément.
-         * @param mit Le type de l'élement.
+         * Construct a new item.
+         * @param header The item's name
+         * @param mit The item's type.
          */
         public MenuItem(String header, MenuItemType mit) {
             this(header, mit, "", null);
         }
         /**
-         * Initialise un élément du menu.
-         * @param header Le nom de l'élément.
-         * @param mit Le type de l'élement.
-         * @param toDoIfExecuted L'action a faire si jamais l'on clique sur cet élément.
+         * Construct a new item.
+         * @param header The item's name
+         * @param mit The item's type.
+         * @param id The item's id
+         * @param toDoIfExecuted The action to do if the item is selected.
          */
         public MenuItem(String header, MenuItemType mit, String id, Runnable toDoIfExecuted) {
             this.header = header;
@@ -300,6 +320,12 @@ public abstract class MenuState extends GameState {
             this.id = id;
         }
 
+        /**
+         * Draw the control associated with this item with the given parameters.
+         * @param batch The batch where the control must be drawn.
+         * @param pos The control's position.
+         * @param size The control's size.
+         */
         public void draw(Batch batch, Point pos, Point size) {
             switch (mit) {
                 case Title:
@@ -328,8 +354,8 @@ public abstract class MenuState extends GameState {
         }
     }
 
-    /***
-     * Les différents types possibles des éléments d'un menu.
+    /**
+     * Enumerations of all possible type for an item.
      */
     public enum MenuItemType {
         Title,

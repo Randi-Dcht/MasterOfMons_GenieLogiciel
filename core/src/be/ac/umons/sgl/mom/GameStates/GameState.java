@@ -6,39 +6,39 @@ import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 
 /**
- * Un état du jeu.
- * Une partie du contenu a été tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * A game's state.
+ * A part of this code was found in https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike
  * @author Guillaume Cardoen
  */
 public abstract class GameState {
 
     /**
-     * Le GameInputManager du jeu.
+     * The game's input manager
      */
     protected GameInputManager gim;
     /**
-     * Le GameStateManager du jeu.
+     * The game's state manager
      */
     protected GameStateManager gsm;
     /**
-     * Les paramètres graphiques du jeu.
+     * The game's graphical settings
      */
     protected GraphicalSettings gs;
 
     /**
-     * La marge avec le dessus de la fenêtre
+     * The vertical margin
      */
     protected double topMargin;
     /**
-     * La marge avec le côté gauche de la fenêtre
+     * The horizontal margin
      */
     protected double leftMargin;
 
     /**
-     * Crée un nouvelle état de jeu.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * Create a new game's state
+     * @param gsm Game's state manager
+     * @param gim Game's input manager
+     * @param gs Game's graphical settings
      */
     protected GameState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         this.gim = gim;
@@ -54,7 +54,7 @@ public abstract class GameState {
     protected GameState(){}
 
     /**
-     * Initialise les variables requises..
+     * Initialize the state.
      */
     public void init() {
         topMargin = MasterOfMonsGame.HEIGHT / 100;
@@ -62,26 +62,31 @@ public abstract class GameState {
     }
 
     /**
-     * Met à jour l'état en fonction de temps écoulé entre la mise à jour précédente et celle-ci.
-     * @param dt Le temps écoulé entre la mise à jour précédente et celle-ci.
+     * Update the state.
+     * @param dt The delta time (in seconds).
      */
     public abstract void update(float dt);
     /**
-     * Dessine les éléments de l'état.
+     * Draw the state.
      */
     public abstract void draw();
 
     /**
-     * Genère une action en fonction des entrées (clavier ou souris) de l'utilisateur.
+     * Execute an action depending on which key was pressed.
      */
     public abstract void handleInput();
 
     /**
-     * Libère les ressources allouées lors de l'utilisation de l'état.
+     * Dispose all resources reserved by this state.
      */
     public abstract void dispose();
 
+    /**
+     * Action to do when the state get the focus (is in foreground)
+     */
     public void getFocus() {}
-
+    /**
+     * Action to do when the state loses the focus (is in background)
+     */
     public void loseFocus() {}
 }

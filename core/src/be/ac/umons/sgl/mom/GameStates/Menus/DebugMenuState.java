@@ -6,8 +6,16 @@ import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
 
+/**
+ * The menu used for the debug options.
+ */
 public class DebugMenuState extends MenuState {
 
+    /**
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The graphical settings
+     */
     public DebugMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }

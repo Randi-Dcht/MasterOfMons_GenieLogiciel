@@ -11,66 +11,72 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
- * L'état de chargement avant de lancer l'état de jeu. Il charge toutes les images nécessaires aux bon déroulement du jeu.
+ * The loading state where all resources are loaded for the further playing state.
  * @author Guillaume Cardoen
  */
 public class LoadingState extends GameState {
     /**
-     * La marge des cercles par rapport au bord gauche (et droit) de l'écran.
+     * The margin the circles needs to have horizontally.
      */
     protected static final int CIRCLE_MARGIN_X = MasterOfMonsGame.WIDTH / 15;
 
     /**
-     * La marge des cercles par rapport au haut (et bas) de l'écran.
+     * The margin the circles needs to have vertically.
      */
     protected static final int CIRCLE_MARGIN_Y = MasterOfMonsGame.HEIGHT / 10;
     /**
-     * La vitesse des cercles (en rad/s).
+     * The circle's rotation's speed.
      */
     protected static final double CIRCLE_SPEED_RAD_SEC = Math.PI;
 
     /**
-     * Utilisé afin de dessiner en autre le texte.
+     * Allow to draw
      */
     protected SpriteBatch sb;
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
     /**
-     * Défini si tout les fichiers nécéssaires au jeu ont été chargés.
+     * Represent if all the necessary resources have been loaded.
      */
     protected boolean assetsLoaded = false;
     /**
-     * Défini si toutes les cartes nécéssaires au jeu ont été chargées.
+     * Represent if all the necessary maps have been loaded.
      */
     protected boolean mapsLoaded = false;
 
     /**
-     * L'angle actuel des cercles.
+     * The actual circle's angle.
      */
     protected double actualAngle = 0;
 
     /**
-     * Le gestionnaire de carte du jeu.
+     * The game's map manager.
      */
     protected GameMapManager gmm;
     /**
-     * Le gestionnaire de ressources du jeu.
+     * Allow to load the resources.
      */
     protected AssetManager am;
 
+    /**
+     * The font to use.
+     */
     protected BitmapFont font;
 
     /**
-     * Initialise un nouvel état de chargement.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
      */
     public LoadingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
+
+    /**
+     * Default constructor. USE IT ONLY FOR TEST.
+     */
     protected LoadingState(){}
 
     @Override
