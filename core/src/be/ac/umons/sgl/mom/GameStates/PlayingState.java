@@ -129,7 +129,7 @@ public class PlayingState extends GameState {
     public void init() {
         super.init();
         sb = new SpriteBatch();
-        am = new AnimationManager();
+        am = AnimationManager.getInstance();
         gmm = gsm.getGameMapManager();
 
         gmm.setMap("Tmx/Umons_Nimy.tmx");
@@ -146,7 +146,7 @@ public class PlayingState extends GameState {
 
         questShower = new QuestShower(gs, am);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
-        inventoryShower = new InventoryShower(gim, gs, am, player);
+        inventoryShower = new InventoryShower(gim, gs, player);
 
 
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
