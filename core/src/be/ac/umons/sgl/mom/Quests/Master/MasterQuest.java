@@ -1,12 +1,13 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -15,7 +16,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 /**
  *La MasterQuest est une classe abstraite qui contient elle même des underQuest.
@@ -24,7 +25,6 @@ import java.util.HashMap;
  *Chaque MasterQuest possède un parent et/ou un enfant.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-
 public abstract class MasterQuest implements Quest,Serializable,Observer
 {
     /*nombre de quête qui sont chainées*/
@@ -53,6 +53,9 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     protected boolean finished = false;
     /**/
     protected Bloc bloc;
+    /**/
+    protected MasterQuest memory;
+
 
     /**
      * This constructor allows to define a masterQuest
@@ -68,6 +71,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         this.bloc = bloc;
     }
 
+
     /**
      *Cette méthode permet de créer une nouvelle quête quand celle-ci est terminé
      *@param after qui est la quête suiavnte celle-ci (liste chainée).
@@ -76,12 +80,23 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         if(finished)
         {
-            this.after = after;
-            people.newQuest(after);
+            if (after.bloc.getMinPeople() <= people.getLevel())
+            {
+                this.after = after;
+                people.newQuest(after);
+            }
+            else
+            {
+                SuperviserNormally.getSupervisor().getEvent().add(Events.UpLevel,this);
+                memory = after;
+            }
         }
     }
 
+
+    /***/
     public abstract void nextQuest();
+
 
     /**
      *Cette méthode permet d'ajouter des sous quete à la MasterQuest
@@ -90,6 +105,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         underQuest = q;
     }
+
 
     /**
      * Retourne si la quête est terminée.
@@ -100,6 +116,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return finished;
     }
 
+
     /**
      *Cette méthode permet de retourner les cours suivis.
      *@return couse qui retourne la liste des cours suivis pour cette quête.
@@ -109,10 +126,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return course;
     }
 
+
+    /***/
     protected void ObligationLesson(Lesson[] course)
     {
         this.course = course;
     }
+
 
     /**
      * Retourne le progrés de la quête compris dans l'interval [0,1].
@@ -123,6 +143,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return (percent/maxPercent);
     }
 
+
     /**
      *Cette méthode permet de retourner l'avancement entre 0 et max %
      *@return percent qui est l'avancement
@@ -132,11 +153,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return percent;
     }
 
+
     /**
      * Retourne le nom de la quête.
      * @return Le nom de la quête.
      */
     public abstract String getName();
+
 
     /**
      * Retourne si la quête est active ?
@@ -147,6 +170,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return !finished;
     }
 
+
     /**
      *Cette méthode permet de dire le nombre de quête qu'il y a déjà
      */
@@ -154,6 +178,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         return getTotalSubQuestsNumber(true);
     }
+
 
     /**
      *Cette méthode permet de dire le nombre de quête qu'il y a déjà
@@ -164,6 +189,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return underQuest.length + (main ? 1 : 0);
     }
 
+
     /**
      *Cette méthode permet d'ajouter à la liste d'interrogation les cours qui ont été raté dans la quête précédent
      *@param list qui est une ArrayList des cours que le personnage suit.
@@ -172,6 +198,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         interrogation.addAll(list);
     }
+
 
     /**
      *Cette méthod permet de dire où est le personnage et en fonction changer son état
@@ -186,6 +213,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
    //gérer soit courir ou rien*/
         //eventMaps();
     }
+
 
     /**
      *Cette méthode permet de dire au sous quete qu'il y a eu un évènement et qu'il faut vérifier l'avancement
@@ -203,6 +231,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
   quest.evenActivity();
   if(quest.getTotalSubQuestsNumber > 0)
 }*/
+
 
     /**
      *Cette méthode permet de voir si la quête est terminée pour changer de quête ou continuer
@@ -222,6 +251,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         }
     }
 
+
     /**
      *This method allows to give the before masterQuest
      *@return before who is a before masterQuest
@@ -230,6 +260,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         return before;
     }
+
 
     /**
      *This method allows to give the masterQuest after this
@@ -240,6 +271,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return after;
     }
 
+
     /**
      *This method allows to give a people who play this masterQuest
      *@return people who play
@@ -248,6 +280,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         return people;
     }
+
 
     /**
      *This method allows to give the interrogation of this masterQuest
@@ -258,6 +291,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return interrogation;
     }
 
+
     /**
      *Cette méthode permet de retourner les objets que le personnages a dans son sac à dos
      *@return  availableObject qui est son sac à dos
@@ -266,6 +300,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         return availableObject;
     } //TODO supprimer cette méthode
+
 
     /**
      *This method allows to give a tab with the underQuest of this masterQuest
@@ -276,6 +311,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return underQuest;
     }
 
+
     /**
      *Cette méthode permet de retourner les sous quêtes (objectif) de cette quête
      *@return Quest qui est une liste de sous quêtes.
@@ -284,6 +320,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         return underQuest;
     } //TODO supprimer avec ligne plus haut
+
 
     /**
      *This method allows to give an unique id of this masterQuest and same the place of the linkList
@@ -294,9 +331,26 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         return id;
     }
 
+
+    /**
+     * This method return the maximum percent of this Quest
+     * @return number of maximum percent
+     */
     public double getMaximun()
     {
         return maxPercent;
+    }
+
+    @Override
+    public void update(Notification notify)
+    {
+        if(notify.getEvents().equals(Events.UpLevel) && memory != null)
+        {
+            this.after = memory;
+            people.newQuest(memory);
+            memory = null;
+           // SuperviserNormally.getSupervisor().getEvent().remove(notify.getEvents(),this); //TODO error the current time action
+        }
     }
 
     /**
@@ -304,6 +358,12 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *@return a goal (=question) of this quest
      */
     public abstract String question();
+
+
+    /***/
     public abstract Items[] whatItem();
+
+
+    /***/
     public abstract Mobile[] whatMobile();
 }

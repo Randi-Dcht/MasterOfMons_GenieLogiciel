@@ -94,5 +94,6 @@ public class MeetAndLearn extends MasterQuest
     @Override
     public void update(Notification notify)
     {
+        super.update(notify);
     }
 }

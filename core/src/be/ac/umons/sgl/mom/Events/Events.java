@@ -9,7 +9,8 @@ public enum Events
     MeetOther("meetOther"),                   /*...*/
     AddFriend("meetFriend"),                  /*...*/
     Answer("answerQuestion"),                 /*...*/
-    Dead("characterDead");                    /*...*/
+    Dead("characterDead"),                    /*...*/
+    UpLevel("UpLevel");                       /*...*/
 
     private String name;
 

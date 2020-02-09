@@ -5,7 +5,10 @@ import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,6 +80,7 @@ public class People extends Character implements Serializable
         myQuest = quest;
         quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
+        Supervisor.changedQuest();
     }
 
     public MasterQuest getQuest()
@@ -230,7 +234,7 @@ public class People extends Character implements Serializable
         experience = experience + win;
         if(experience >= threshold)
         {
-            level++;
+            upLevel();
             threshold = minExperience(level+1);
         }
     }
@@ -274,6 +278,7 @@ public class People extends Character implements Serializable
     public void upLevel()
     {
         level++;
+        SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
     }
 
 

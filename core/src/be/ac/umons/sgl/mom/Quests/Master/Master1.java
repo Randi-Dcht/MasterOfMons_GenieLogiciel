@@ -75,6 +75,7 @@ public class Master1 extends MasterQuest
     @Override
     public void update(Notification notify)
     {
+        super.update(notify);
         /*code ici*/
     }
 }
