@@ -5,7 +5,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 public class WriteMemory extends UnderQuest
 {
     public WriteMemory(Quest master) {
-        super("writeMemory", 95, master);
+        super("WriteMemory", 95, master);
     }
 
     @Override

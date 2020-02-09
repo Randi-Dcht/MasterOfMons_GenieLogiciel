@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;
 
@@ -119,7 +120,7 @@ public abstract class UnderQuest implements Quest,Serializable
      */
     public String getName()
     {
-        return name;
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId(name);
     }
 
 
