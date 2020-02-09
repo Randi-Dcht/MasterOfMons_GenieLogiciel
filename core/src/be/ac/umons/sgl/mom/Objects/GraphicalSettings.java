@@ -60,8 +60,6 @@ public class GraphicalSettings {
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
-        loc = Locale.ROOT;
-        bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc); // TODO : Gdx.files NULL ???
     }
 
     /**
