@@ -5,7 +5,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 public class GoToLastLesson extends UnderQuest
 {
     public GoToLastLesson(Quest master) {
-        super("goToLastLesson", 95, master);
+        super("GoToLastLesson", 95, master);
     }
 
     @Override

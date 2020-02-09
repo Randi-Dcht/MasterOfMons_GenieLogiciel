@@ -7,7 +7,7 @@ public class Traineeship extends UnderQuest
 
     public Traineeship(Quest master)
     {
-        super("traineeship", 95, master);
+        super("Traineeship", 95, master);
     }
 
     @Override

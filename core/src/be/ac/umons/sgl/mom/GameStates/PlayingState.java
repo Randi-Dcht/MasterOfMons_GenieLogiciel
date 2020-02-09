@@ -151,7 +151,7 @@ public class PlayingState extends GameState {
 
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*///Rule rule = new Rule("TestRule",questShower);
-        /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower); //<= ajouter pour la save
+        /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
         /*supprimer => -------------------------*/
         /*supprimer =>*/Timer timer = new Timer();
         /*supprimer =>*/Delete tt = new Delete(Supervisor.getPeople());
