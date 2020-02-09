@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Events;
 
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
@@ -11,7 +12,7 @@ import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
 
 /**
@@ -35,22 +36,13 @@ public class SuperviserNormally implements Observer
        }
 
 
-       /**
-        * This constructor allows to define the class who monitor the game
-        */
-       private SuperviserNormally()
-       {
-           event = new Event();
-           event.add(Events.ChangeFrame,this);
-       }
-
 
         /*The people who play this party*/
         private People people;
         /*The all objects in all maps in this game*/
-        private ArrayList<Items> objet = new ArrayList<Items>();
-        /*The all no people in thsi game*/
-        private ArrayList<Mobile> listMobile = new ArrayList<Mobile>();
+        private HashMap<Place,ArrayList<Items>> listItems;
+        /*The all no people in this game*/
+        private HashMap<Place,ArrayList<Mobile>> listMobile;
         /*This is a timer for a saving the game at the regular period*/
         private double minute = 600;
         /*This the class who save the game in real time*/
@@ -59,7 +51,20 @@ public class SuperviserNormally implements Observer
         private TimeGame time;
         /*This is the events variable*/
         private Event event;
+        /**/
+        private HashMap<String,Place> listMap = new HashMap<>();
 
+
+       /**
+        * This constructor allows to define the class who monitor the game
+        */
+       private SuperviserNormally()
+       {
+           for (Place plt : Place.values())
+               listMap.put(plt.getMaps(),plt);
+           event = new Event();
+           event.add(Events.ChangeFrame,this);
+       }
 
         /**
          * This methods allows to return the people of this game
@@ -72,22 +77,24 @@ public class SuperviserNormally implements Observer
 
 
         /**
-         * This method allows to add the new Mobile to the party.
-         * @param lst is a list of the new Mobile
+         * This method return the items for a place.
+         * @param place is the map where there are items
+         * @return list of items
          */
-        public void add(Mobile... lst)
+        public ArrayList<Items> getItems(Place place)
         {
-            listMobile.addAll(Arrays.asList(lst));
+            return listItems.get(place);
         }
 
 
         /**
-         * This method allows to add the new items.
-         * @param lst is a list of the new items
+         * This method return the mobile for a maps
+         * @param place is the place (maps)
+         * @return list of the mobile for this maps.
          */
-        public void add(Items ... lst)
+        public ArrayList<Mobile> getMobile(Place place)
         {
-            objet.addAll(Arrays.asList(lst));
+            return listMobile.get(place);
         }
 
 
@@ -96,7 +103,6 @@ public class SuperviserNormally implements Observer
          * This class allows create all instance of the class for a game
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
-         * @param gs who is the class with the param to safe.
          */
         public void newParty(String namePlayer, Type type) //TODO regarder pour events mais pas sûre
         {
@@ -110,6 +116,37 @@ public class SuperviserNormally implements Observer
         }
 
 
+        /**
+         * This method return the enum of the maps with the name in String (.tmx)
+         * @param nameTmx is the name of the maps with the name .TMX
+         * @return the place (enum)
+         */
+        public Place getMaps(String nameTmx)
+        {
+            return listMap.get(nameTmx);
+        }
+
+
+        /**
+         * This method allows to create the Mobil on different maps for this Quest
+         * @param quest who is the actual Quest
+         */
+        private void createMobil(MasterQuest quest)
+        {}
+
+
+        /**
+         * This method allows to create the items on the different maps for this Quest
+         * @param quest who is the actual Quest
+         */
+        private void createItems(MasterQuest quest)
+        {}
+
+
+        /**
+         * This method allows to receive the notification of the other class
+         * @param notify is a notification
+         */
         @Override
         public void update(Notification notify)
         {
@@ -127,8 +164,8 @@ public class SuperviserNormally implements Observer
             if(people != null)
                 people.energy(dt);
 
-            for (Items o : objet)
-                o.make(dt);
+            //for (Items o : listPNJ)
+              //  o.make(dt);
 
             minute = minute - dt;
             if(minute <= 0)
@@ -142,7 +179,7 @@ public class SuperviserNormally implements Observer
 
 
         /**
-         * This method allows to give an items to the people for this Quest
+         * This method allows to give an items to the people for this Quest (#debug#)
          */
         public void addItems(Items item)
         {}
@@ -163,9 +200,9 @@ public class SuperviserNormally implements Observer
          * @return time of game
          */
         public TimeGame getTime()
-    {
-        return time;
-    }
+        {
+           return time;
+        }
 
 
        /**

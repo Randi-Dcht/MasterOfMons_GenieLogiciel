@@ -2,7 +2,10 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
@@ -49,6 +52,16 @@ public class Master2 extends MasterQuest
         return "...";/*code ici*/
     }
 
+    @Override
+    public Items[] whatItem() {
+        return new Items[0];/*code ici*/
+    }
+
+    @Override
+    public Mobile[] whatMobile() {
+        return new Mobile[0];/*code ici*/
+    }
+
     /**
      * This method allows to return the name of MasterQuest
      * @return name who is a string
@@ -56,5 +69,12 @@ public class Master2 extends MasterQuest
     public String getName()
     {
         return "Master2";
+    }
+
+    @Override
+    public void update(Notification notify)
+    {
+        super.update(notify);
+        /*code ici*/
     }
 }

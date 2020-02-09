@@ -5,7 +5,10 @@ import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class People extends Character implements Serializable
     private double experience = 0;
     private MasterQuest myQuest;
     private Bloc year;
+    private boolean invincible = false;
     final String name;
     final int maxObject = 5;
     private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
@@ -44,9 +48,26 @@ public class People extends Character implements Serializable
         this.year = Bloc.BA1;
     }
 
+
+    /**
+     * This method return the experience of this people
+     * @return experience of this people
+     */
     public double getExperience()
     {
         return experience;
+    }
+
+
+    /**
+     * This method allows to decrease the life
+     * @param lose is the number of life
+     */
+    @Override
+    public void loseAttack(double lose)
+    {
+        if(!invincible)
+            super.loseAttack(lose);
     }
 
 
@@ -59,6 +80,7 @@ public class People extends Character implements Serializable
         myQuest = quest;
         quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
+        Supervisor.changedQuest();
     }
 
     public MasterQuest getQuest()
@@ -134,6 +156,8 @@ public class People extends Character implements Serializable
      */
     public void addEnergy(double many)//TODO mort
     {
+        if (energy <= 0)
+            dead();
         if(this.energy + many >= 0 || this.energy + many <= 100)
             this.energy = this.energy + many;
     }
@@ -212,7 +236,7 @@ public class People extends Character implements Serializable
         experience = experience + win;
         if(experience >= threshold)
         {
-            level++;
+            upLevel();
             threshold = minExperience(level+1);
         }
     }
@@ -251,17 +275,23 @@ public class People extends Character implements Serializable
 
 
     /**
-     * This method allows to up level of this people
+     * This method allows to up level of this people (#debug#)
      */
     public void upLevel()
-    {}
+    {
+        level++;
+        SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
+    }
 
 
     /**
-     * This method allows to invincible people (the life doesn't decrease
+     * This method allows to invincible people,the life doesn't decrease (#debug#)
+     * @param var is true == invincible | false == doesn't invincible.
      */
-    public void invincible()
-    {}
+    public void invincible(boolean var)
+    {
+        invincible = var;
+    }
 
 
     /***/
