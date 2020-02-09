@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.sgl.mom.Quests.Under.LookSoulMate;
@@ -29,9 +30,9 @@ public class MeetAndLearn extends MasterQuest
      * @param people who is the people who play the game
      * @param before who is the quest before this
      */
-    public MeetAndLearn(People people, MasterQuest before)
+    public MeetAndLearn(People people, MasterQuest before, GraphicalSettings graphic)
     {
-        super(before,people,Bloc.BA3);
+        super(before,people,Bloc.BA3,graphic);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
@@ -42,7 +43,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new Master1(people,this));
+        newQuest(new Master1(people,this,graphic));
     }
 
 
@@ -52,7 +53,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public String question()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMeetLearn");
+        return graphic.getStringFromId("answerMeetLearn");
       //  return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
     }
 
@@ -85,7 +86,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMeetLearn");
+        return graphic.getStringFromId("nameMeetLearn");
     }
 
 

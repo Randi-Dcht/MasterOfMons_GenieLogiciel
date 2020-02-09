@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
@@ -28,9 +29,9 @@ public class Master2 extends MasterQuest
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */
-    public Master2(People people, MasterQuest before)
+    public Master2(People people, MasterQuest before, GraphicalSettings grahic)
     {
-        super(before,people,Bloc.MA2);
+        super(before,people,Bloc.MA2,grahic);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
@@ -50,7 +51,7 @@ public class Master2 extends MasterQuest
      */
     public String question()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMasterSecond");
+        return graphic.getStringFromId("answerMasterSecond");
     }
 
     @Override
@@ -69,7 +70,7 @@ public class Master2 extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMasterSecond");
+        return graphic.getStringFromId("nameMasterSecond");
     }
 
     @Override

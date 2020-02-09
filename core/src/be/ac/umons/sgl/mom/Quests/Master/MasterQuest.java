@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Quests.Quest;
@@ -51,6 +52,8 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     protected Bloc bloc;
     /*Memory the MasterQuest when the level isn't up*/
     protected MasterQuest memory;
+    /*this the instance of the graphic*/
+    protected GraphicalSettings graphic;
 
 
     /**
@@ -58,12 +61,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *@param before who is the before masterQuest
      *@param people who is the people who play this masterQuest
      */
-    public MasterQuest(MasterQuest before, People people,Bloc bloc)
+    public MasterQuest(MasterQuest before, People people,Bloc bloc,GraphicalSettings graphic)
     {
         this.before = before;
         numberQuest++;
         this.people = people;
         this.bloc = bloc;
+        this.graphic = graphic;
     }
 
 

@@ -111,7 +111,7 @@ public class SuperviserNormally implements Observer
         {
             people = new People(namePlayer,type);
             this.graphic = graphic;
-            MasterQuest mQ = new MyFirstYear(people,null);
+            MasterQuest mQ = new MyFirstYear(people,null,graphic);
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
             //add

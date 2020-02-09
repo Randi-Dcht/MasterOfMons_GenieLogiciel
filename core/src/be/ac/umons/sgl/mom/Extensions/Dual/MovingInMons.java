@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
@@ -11,9 +12,9 @@ import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 public class MovingInMons extends MasterQuest
 {
     final UnderQuest[] underQuests = {};
-    public MovingInMons(People people, MasterQuest before)
+    public MovingInMons(People people, MasterQuest before, GraphicalSettings graphic)
     {
-        super(before,people, Bloc.Extend);
+        super(before,people, Bloc.Extend,graphic);
         addUnderQuest(underQuest);
     }
 

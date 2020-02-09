@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
@@ -27,9 +28,9 @@ public class Master1 extends MasterQuest
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */
-    public Master1(People people, MasterQuest before)
+    public Master1(People people, MasterQuest before, GraphicalSettings graphic)
     {
-        super(before,people,Bloc.MA1);
+        super(before,people,Bloc.MA1,graphic);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
@@ -39,7 +40,7 @@ public class Master1 extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new Master2(people,this));
+        newQuest(new Master2(people,this,graphic));
     }
 
 
@@ -49,7 +50,7 @@ public class Master1 extends MasterQuest
      */
     public String question()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMasterOne");
+        return graphic.getStringFromId("answerMasterOne");
     }
 
     @Override
@@ -70,7 +71,7 @@ public class Master1 extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMasterOne");
+        return graphic.getStringFromId("nameMasterOne");
     }
 
     @Override

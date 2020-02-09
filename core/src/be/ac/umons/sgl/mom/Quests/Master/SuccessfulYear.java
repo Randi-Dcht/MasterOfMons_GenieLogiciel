@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.FreeTimeMons;
 import be.ac.umons.sgl.mom.Quests.Under.HelpMe;
@@ -30,9 +31,9 @@ public class SuccessfulYear extends MasterQuest
      * @param people who is the people who play the game
      * @param before who is the quest before this
      */
-    public SuccessfulYear(People people, MasterQuest before)
+    public SuccessfulYear(People people, MasterQuest before, GraphicalSettings graphic)
     {
-        super(before,people,Bloc.BA2);
+        super(before,people,Bloc.BA2,graphic);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
@@ -43,7 +44,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new MeetAndLearn(people,this));
+        newQuest(new MeetAndLearn(people,this,graphic));
     }
 
 
@@ -53,7 +54,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public String question()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerSuccessFulYear");
+        return graphic.getStringFromId("answerSuccessFulYear");
         //return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
     }
 
@@ -86,7 +87,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameSuccessFulYear");
+        return graphic.getStringFromId("nameSuccessFulYear");
     }
 
 
