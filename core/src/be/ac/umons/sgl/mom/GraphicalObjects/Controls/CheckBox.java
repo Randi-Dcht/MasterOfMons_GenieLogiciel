@@ -10,48 +10,48 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.awt.*;
 
 /**
- * Cette classe représente une case à cocher.
+ * A checkbox.
+ * @author Guillaume Cardoen
  */
 public class CheckBox extends Control {
 
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allows to draw shapes.
      */
     private ShapeRenderer sr;
     /**
-     * Si la case est cochée ou non.
+     * If the checkbox is checked or not.
      */
     protected boolean checked = false;
     /**
-     * Le texte à afficher à côté de la case.
+     * The text associated with the checkbox.
      */
     private String text;
 
     /**
-     * La couleur si la case est cochée.
+     * The color if the checkbox is checked.
      */
     private Color checkedColor;
     /**
-     * La couleur si la case n'est pas cochée.
+     * The color if the checkbox isn't checked.
      */
     private Color uncheckedColor;
 
     /**
-     * Crée une nouvelle case à cocher.
-     *
-     * @param gim Le GameInputManager du jeu.
-     * @param gs  Les paramètres graphiques du jeu.
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
      */
     protected CheckBox(GameInputManager gim, GraphicalSettings gs) {
         this(gim, gs, "");
     }
+    /**
+     * Default constructor. USE IT ONLY FOR TEST.
+     */
     protected CheckBox() {}
     /**
-     * Crée une nouvelle case à cocher .
-     *
-     * @param gim Le GameInputManager du jeu.
-     * @param gs  Les paramètres graphiques du jeu.
-     * @param text Le texte à afficher.
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
+     * @param text The text associated with the checkbox.
      */
     protected CheckBox(GameInputManager gim, GraphicalSettings gs, String text) {
         super(gim, gs);
@@ -90,16 +90,15 @@ public class CheckBox extends Control {
     }
 
     /**
-     * Retourne si la case est cochée ou non.
-     * @return Si la case est cochée ou non.
+     * @return If the checkbox is checked or not.
      */
     public boolean isChecked() {
         return checked;
     }
 
     /**
-     * Défini le texte à afficher.
-     * @param text Le texte à afficher.
+     * Set the text associated with this checkbox.
+     * @param text The text associated with this checkbox.
      */
     public void setText(String text) {
         this.text = text;

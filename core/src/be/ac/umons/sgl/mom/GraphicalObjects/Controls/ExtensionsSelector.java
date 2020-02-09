@@ -14,27 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Représente le sélectionneur d'extensions. La liste des extensions qu'il affiche se génére en fonction du fichier "extensions".
+ * The control where the user can choose which extensions is (de)activated.
+ * Extensions's list are generated from files "extensions".
  */
 public class ExtensionsSelector extends Control {
 
     /**
-     * La liste des extensions à afficher.
+     * The list of the extensions to show.
      */
     protected List<Extension> extensions;
     /**
-     * La liste des cases à cocher.
+     * The list of <code>CheckBox</code> reserved by this control.
      */
     protected List<CheckBox> checkBoxList;
 
+    /**
+     * A list of all the maps that need to be loaded.
+     */
     protected List<String> mapsToLoad;
+    /**
+     * The list of files that need to be loaded.
+     */
     protected List<LoadFile> filesToLoad;
 
     /**
-     * Crée un nouveau selecteur d'extension.
-     *
-     * @param gim Le GameInputManager du jeu.
-     * @param gs  Les paramètres graphiques du jeu.
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
      */
     public ExtensionsSelector(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
@@ -44,6 +49,10 @@ public class ExtensionsSelector extends Control {
             checkBoxList.add(new CheckBox(gim, gs, ext.extensionName));
         }
     }
+
+    /**
+     * Default constructor. USE ONLY FOR TEST.
+     */
     protected ExtensionsSelector() {}
 
     @Override
@@ -67,8 +76,8 @@ public class ExtensionsSelector extends Control {
     }
 
     /**
-     * Lis le fichier "extensions" et retourne la liste d'<code>Extension</code> lu dans ce fichier. Retourne <code>null</code> si une erreur se produit.
-     * @return La liste d'<code>Extension</code> lu dans le fichier "extensions".
+     * Return a list of all extensions present in file "extensions". Returns <code>null</code> if an error occurred.
+     * @return A list of all extensions present in file "extensions"
      */
     public List<Extension> parseExtensionFile() {
         ArrayList<Extension> extensionList = new ArrayList<>();
@@ -132,6 +141,9 @@ public class ExtensionsSelector extends Control {
         return extensionList;
     }
 
+    /**
+     * Generate the list of map and files to load in order of loading them later.
+     */
     public void generateLoadLists() {
         mapsToLoad = new ArrayList<>();
         filesToLoad = new ArrayList<>();
@@ -143,36 +155,42 @@ public class ExtensionsSelector extends Control {
         }
     }
 
+    /**
+     * @return The maps that need to be loaded.
+     */
     public List<String> getMapsToLoad() {
         return mapsToLoad;
     }
 
+    /**
+     * @return The files that need to be loaded.
+     */
     public List<LoadFile> getFilesToLoad() {
         return filesToLoad;
     }
 
     /**
-     * Représente les caractéristiques d'extension.
+     * Represent the characteristics of an extension.
      */
-    protected class Extension {
+    protected static class Extension {
         /**
-         * Le nom de l'extension.
+         * The extension's name.
          */
         public String extensionName;
         /**
-         * Les fichiers/dossiers à charger pour cette extension.
+         * The list of files/dirs to load for this extension.
          */
         public ArrayList<LoadFile> dirsFileToLoad = new ArrayList<>();
         /**
-         * La classe à lancer pour l'extension.
+         * The class to launch in first for this extension.
          */
         public String mainClass;
         /**
-         * Les cartes à charger pour cette extension.
+         * The maps to load for this extension.
          */
         public ArrayList<String> mapsToLoad = new ArrayList<>();
         /**
-         * Si l'extension est activée ou non.
+         * If the extension is activated or not.
          */
         public boolean activated;
     }

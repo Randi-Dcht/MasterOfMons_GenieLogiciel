@@ -14,47 +14,60 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.awt.*;
 
 /**
- * Un bouton avec du texte.
+ * A button.
  * @author Guillaume Cardoen
  */
 public class Button extends Control {
-    protected Color backgroundColor = new Color(0x21212163);
-
-    protected Color isMouseOverBackgroundColor = new Color(0x21212142);
-
-    protected Color isSelectedBackgroundColor = new Color(0x512DA8FF);
-
     /**
-     * L'action a éffectué quand le bouton reçoit un clique.
+     * The background's color.
+     */
+    protected Color backgroundColor = new Color(0x21212163);
+    /**
+     * The background's color when the mouse is over it.
+     */
+    protected Color isMouseOverBackgroundColor = new Color(0x21212142);
+    /**
+     * The background color when the button is selected.
+     */
+    protected Color isSelectedBackgroundColor = new Color(0x512DA8FF);
+    /**
+     * Action to do when the button is clicked.
      */
     protected Runnable onClick;
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
     /**
-     * Le texte affiché sur le bouton.
+     * The text showed in the button.
      */
     protected String textToShow = "";
     /**
-     * Si la souris est au dessus du bouton ou non.
+     * If the mouse is over the button.
      */
     protected boolean isMouseOver;
-
+    /**
+     * The font to use.
+     */
     protected BitmapFont font;
-
+    /**
+     * If the button is selected.
+     */
     protected boolean selected;
 
     /**
-     * Crée un nouveau bouton.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
      */
     public Button(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         sr = new ShapeRenderer();
         font = gs.getNormalFont();
     }
+
+    /**
+     * Default constructor. USE IT ONLY FOR TEST.
+     */
     protected Button() {}
 
     @Override
@@ -96,24 +109,22 @@ public class Button extends Control {
     }
 
     /**
-     * Retourne le texte affiché.
-     * @return Le texte affiché.
+     * @return The showed text.
      */
     public String getText() {
         return textToShow;
     }
 
     /**
-     * Défini le texte à afficher.
-     * @param text Le texte à afficher.
+     * @param text The text to show.
      */
     public void setText(String text) {
         this.textToShow = text;
     }
 
     /**
-     * Défini l'action à éxécuter si l'on clique sur le bouton.
-     * @param onClick L'action à éxécuter en cas de clique.
+     * Set the action to do when the button is clicked.
+     * @param onClick Action to do when the button is clicked.
      */
     public void setOnClick(Runnable onClick) {
         this.onClick = onClick;
@@ -127,14 +138,25 @@ public class Button extends Control {
         return onClick;
     }
 
+    /**
+     * Set the font to use.
+     * @param font The font to use.
+     */
     public void setFont(BitmapFont font) {
         this.font = font;
     }
 
+    /**
+     * Set if the button is selected or not.
+     * @param selected If the button is selected or not.
+     */
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
+    /**
+     * @return If the button is selected or not.
+     */
     public boolean isSelected() {
         return selected;
     }

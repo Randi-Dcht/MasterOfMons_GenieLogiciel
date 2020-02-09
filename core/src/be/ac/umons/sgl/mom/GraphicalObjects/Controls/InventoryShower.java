@@ -20,94 +20,88 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Support pour montrer l'inventaire d'un personnage.
+ * Show the player's inventory to the user.
  * @author Guillaume Cardoen
  */
 public class InventoryShower extends Control {
     /**
-     * La marge entre les différents éléments d'inventaire.
+     * The margin between 2 inventory's item.
      */
     protected static int BETWEEN_ITEM_MARGIN = 7;
     /**
-     * La marge par rapport au bas de la fenêtre.
-     */
-    protected static int BOTTOM_MARGIN = 7;
-    /**
-     * L'opacité du rectangle d'arrière-plan.
+     * Background's opacity.
      */
     protected static float BACKGROUND_RECTANGLE_OPACITY = .5f;
 
     /**
-     * La hauteur du support.
-     */
-    protected int height;
-
-    /**
-     * La longueur d'un seul objet d'inventaire.
+     * The width of an inventory item.
      */
     protected int itemWidth;
 
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
     /**
-     * L'inventaire à montrer.
+     * The inventory to show.
      */
     protected List<GameObjects> inventory;
     /**
-     * Doit-on utiliser les variables d'animations ?
+     * If the control is being animated.
      */
     protected boolean isBeingAnimated = false;
     /**
-     * La taille du support durant l'animation de celui-ci.
+     * The size when animating.
      */
     protected float duringAnimationHeight, duringAnimationWidth;
     /**
-     * La taille d'un seul élément d'inventaire durant une animation.
+     * The size of an item during animation.
      */
     protected float duringAnimationItemWidth;
     /**
-     * L'opacité du rectangle d'arrière-plan durant l'animation du support.
+     * The background's opacity when animating.
      */
     protected double duringAnimationBackgroundOpacity;
     /**
-     * L'opacité du rectangle d'avant-plan durant l'animation du support.
+     * The foreground's opacity when animating.
      */
     protected double duringAnimationForegroundOpacity;
     /**
-     * La liste de tout les éléments d'inventaire actuellement à montrer.
+     * List of all <code>InventoryItem</code> for this state.
      */
     protected List<InventoryItem> inventoryItemList;
     /**
-     * L'objet responsable des animations.
+     * The animation's manager.
      */
     protected AnimationManager am;
     /**
-     * L'indice de l'élément d'inventaire selectionné par l'utilisateur.
+     * The selected inventory's item.
      */
     protected InventoryItem selectedItem;
-
+    /**
+     * If the control is hided or not.
+     */
     protected boolean hided = false;
 
     /**
-     * Crée un nouveau support pour montrer l'inventaire d'un joueur.
-     * @param gim Le gestionnaire d'entrée du jeu.
-     * @param gs Les paramètres graphiques du jeu.
-     * @param am Un gestionnaire d'animation afin de mettre à jour les animations.
-     * @param inventoryOf Le joueur dont l'inventaire doit être montré.
+     * @param gim The game's input manager.
+     * @param gs The game's graphical settings.
+     * @param inventoryOf The player.
      */
-    public InventoryShower(GameInputManager gim, GraphicalSettings gs, AnimationManager am, Player inventoryOf) {
+    public InventoryShower(GameInputManager gim, GraphicalSettings gs, Player inventoryOf) {
         super(gim, gs);
         inventory = inventoryOf.getInventory();
-        this.am = am;
+        this.am = AnimationManager.getInstance();
         init();
     }
 
+    /**
+     * Default constructor. USE IT ONLY FOR TEST.
+     */
     protected InventoryShower() {}
 
     /**
-     * Initialise les variables du support.
+     * Initialize this control.
      */
     public void init() {
         inventoryItemList = new ArrayList<>();
@@ -119,11 +113,11 @@ public class InventoryShower extends Control {
     }
 
     /**
-     * Dessine le support en le centrant dans le bas de l'écran.
-     * @param batch Où le support doit être dessiné.
-     * @param centerX La position horizontale du centre de la fenêtre.
-     * @param height La taille verticale du support.
-     * @param itemSize La taille d'un seul élément d'inventaire.
+     * Draw this control in the bottom's center.
+     * @param batch Where the control needs to be draw
+     * @param centerX The horizontal position of the center of the window.
+     * @param height The control's vertical size.
+     * @param itemSize The size of an inventory's item.
      */
     public void draw(Batch batch, int centerX, int height, Point itemSize) {
         if (hided)
@@ -142,51 +136,32 @@ public class InventoryShower extends Control {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         if (isBeingAnimated) {
             sr.setColor(21f / 255, 21f / 255, 21f / 255, (float)duringAnimationBackgroundOpacity * BACKGROUND_RECTANGLE_OPACITY);
-            sr.rect(beginX, BOTTOM_MARGIN, duringAnimationWidth, duringAnimationHeight);
+            sr.rect(beginX, topMargin, duringAnimationWidth, duringAnimationHeight);
         }
         else {
             sr.setColor(21f / 255, 21f / 255, 21f / 255, BACKGROUND_RECTANGLE_OPACITY);
-            sr.rect(beginX, BOTTOM_MARGIN, getWidth(), height);
+            sr.rect(beginX, topMargin, getWidth(), height);
         }
         sr.end();
         int tmpBeginX = beginX + BETWEEN_ITEM_MARGIN;
         for (InventoryItem ii : inventoryItemList) {
-            ii.draw(batch, tmpBeginX, BOTTOM_MARGIN, itemSize.x, itemSize.y);
+            ii.draw(batch, tmpBeginX, topMargin, itemSize.x, itemSize.y);
             tmpBeginX += itemSize.x + BETWEEN_ITEM_MARGIN;
         }
 
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }
 
+    /**
+     * Set if the control is hided.
+     * @param hided If the control is hided.
+     */
     public void setHided(boolean hided) {
         this.hided = hided;
     }
 
-
-//    /**
-////     * Lance les animations de la partie "Inventaire" du HUD.
-////     */
-////    public void animate() {
-////        beginAnimation();
-////        DoubleAnimation da = new DoubleAnimation(0, 1, 750);
-////        da.setRunningAction(() -> {
-////            setDuringAnimationWidth((int)((double)getWidth() * da.getActual()));
-////            setDuringAnimationHeight((int)((double)getHeight() * da.getActual()));
-////            setDuringAnimationBackgroundOpacity(da.getActual());
-////        });
-////        am.addAnAnimation("InventoryShowerAnimation", da);
-////        DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
-////        da2.setEndingAction(this::finishAnimation);
-////        da2.setRunningAction(() -> {
-////            setDuringAnimationForegroundOpacity(da2.getActual());
-////        });
-////        da.setEndingAction(() -> {
-////            am.addAnAnimation("InventoryShowerForegroundAnimation", da2);
-////        });
-////    }
-
     /**
-     * Lance les animations de la partie "Inventaire" du HUD.
+     * Animate the control.
      */
     public void animate() {
         beginAnimation();
@@ -226,22 +201,20 @@ public class InventoryShower extends Control {
     }
 
     /**
-     * Retourne la taille horizontale du support.
-     * @return La taille horizontale du support.
+     * @return Control's horizontal size.
      */
     public int getWidth() {
         return itemWidth * inventory.size() + (inventory.size() + 1) * BETWEEN_ITEM_MARGIN;
     }
     /**
-     * Retourne la taille verticale du support.
-     * @return La taille verticale du support.
+     * @return Control's vertical size.
      */
     public int getHeight() {
         return height;
     }
 
     /**
-     * Commencer à utiliser les variables d'animations.
+     * Begin an animation.
      */
     public void beginAnimation() {
         isBeingAnimated = true;
@@ -251,7 +224,7 @@ public class InventoryShower extends Control {
     }
 
     /**
-     * Arrêter d'utiliser les variables d'animations.
+     * Stop the animation.
      */
     public void finishAnimation() {
         isBeingAnimated = false;
@@ -261,32 +234,16 @@ public class InventoryShower extends Control {
     }
 
     /**
-     * Retourne l'opacité du rectangle d'arrière-plan durant l'animation du support.
-     * @return L'opacité du rectangle d'arrière-plan durant l'animation du support.
-     */
-    public double getDuringAnimationBackgroundOpacity() {
-        return duringAnimationBackgroundOpacity;
-    }
-
-    /**
-     * Défini l'opacité du rectangle d'arrière-plan durant l'animation du support.
-     * @param duringAnimationBackgroundOpacity L'opacité du rectangle d'arrière-plan durant l'animation du support.
+     * Set background's opacity while animating.
+     * @param duringAnimationBackgroundOpacity Background's opacity while animating.
      */
     public void setDuringAnimationBackgroundOpacity(double duringAnimationBackgroundOpacity) {
         this.duringAnimationBackgroundOpacity = duringAnimationBackgroundOpacity;
     }
 
     /**
-     * Retourne l'opacité du rectangle d'avant-plan durant l'animation du support.
-     * @return L'opacité du rectangle d'avant-plan durant l'animation du support.
-     */
-    public double getDuringAnimationForegroundOpacity() {
-        return duringAnimationForegroundOpacity;
-    }
-
-    /**
-     * Défini l'opacité du rectangle d'avant-plan durant l'animation du support.
-     * @param duringAnimationForegroundOpacity L'opacité du rectangle d'avant-plan durant l'animation du support.
+     * Set foreground's opacity while animating.
+     * @param duringAnimationForegroundOpacity Foreground's opacity while animating.
      */
     public void setDuringAnimationForegroundOpacity(double duringAnimationForegroundOpacity) {
         this.duringAnimationForegroundOpacity = duringAnimationForegroundOpacity;
@@ -297,41 +254,25 @@ public class InventoryShower extends Control {
     }
 
     /**
-     * Retourne la taille horizontale du support durant l'animation.
-     * @return La taille horizontale du support durant l'animation.
-     */
-    public float getDuringAnimationWidth() {
-        return duringAnimationWidth;
-    }
-
-    /**
-     * Défini la taille horizontale du support durant l'animation.
-     * @param duringAnimationWidth La taille horizontale du support durant l'animation.
+     * Set the control's width while animating.
+     * @param duringAnimationWidth The control's width while animating.
      */
     public void setDuringAnimationWidth(float duringAnimationWidth) {
         this.duringAnimationWidth = duringAnimationWidth;
     }
 
     /**
-     * Retourne la taille verticale du support durant l'animation.
-     * @return La taille verticale du support durant l'animation.
-     */
-    public float getDuringAnimationHeight() {
-        return duringAnimationHeight;
-    }
-
-    /**
-     * Défini la taille verticale du support durant l'animation.
-     * @param duringAnimationHeight La taille verticale du support durant l'animation.
+     * Set the control's height while animating.
+     * @param duringAnimationHeight The control's height while animating.
      */
     public void setDuringAnimationHeight(float duringAnimationHeight) {
         this.duringAnimationHeight = duringAnimationHeight;
     }
 
-    public float getDuringAnimationItemWidth() {
-        return duringAnimationItemWidth;
-    }
-
+    /**
+     * Set the width of an inventory's item.
+     * @param duringAnimationItemWidth The width of an inventory's item.
+     */
     public void setDuringAnimationItemWidth(float duringAnimationItemWidth) {
         this.duringAnimationItemWidth = duringAnimationItemWidth;
     }

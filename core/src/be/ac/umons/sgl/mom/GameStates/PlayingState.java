@@ -34,90 +34,91 @@ import com.badlogic.gdx.math.Rectangle;
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
 /**
- * L'état de jeu du jeu. Il affiche la carte, un joueur ainsi qu'un HUD.
- * Une partie du contenu a été tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike.
- * L'affichage de la carte a été tiré de https://www.youtube.com/watch?v=P8jgD-V5jG8 par Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
+ * The playing state.
+ * A part of the code has been found in https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike.
+ * and https://www.youtube.com/watch?v=P8jgD-V5jG8 by Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
  * @author Guillaume Cardoen
  */
-public class PlayingState extends GameState { // TODO : Put all disposes
+public class PlayingState extends GameState {
     /**
-     * La taille horizontale de la carte montré à l'écran.
+     * The horizontal map's width to show.
      */
     public static int SHOWED_MAP_WIDTH = 31;
     /**
-     * La taille verticale de la carte montré à l'écran.
+     * The vertical map's width to show.
      */
     public static int SHOWED_MAP_HEIGHT = 17;
     /**
-     * La vitesse du joueur.
+     * The player's speed
      */
     protected float VELOCITY = 5000;
-
     /**
-     * La taille horizontale (en nombre de tuile) de la carte entière.
+     * The number of tile in the map (horizontally)
      */
     protected int mapWidth;
     /**
-     * La taille verticale (en nombre de tuile) de la carte entière.
+     * The number of tile in the map (vertically)
      */
     protected int mapHeight;
     /**
-     * La taille horizontale d'une tuile.
+     * A tile's width.
      */
     protected int tileWidth;
     /**
-     * La taille verticale d'une tuile.
+     * A tile's height.
      */
     protected int tileHeight;
     /**
-     * Utilisé afin de dessiner en autre le texte.
+     * Allow to draw
      */
     protected SpriteBatch sb;
     /**
-     * Les objets empêchant le joueur d'aller plus loin.
+     * The positions where the user can't go.
      */
     protected MapObjects collisionObjects;
     /**
-     * La caméra permettant de déplacer la partie de la carte montrée et ainsi le joueur. Elle permet aussi de montrer seulement une partie de carte en effectuant un zoom sur celle-ci.
+     * The camera.
      */
     protected OrthographicCamera cam;
     /**
-     * Une partie du HUD montrant la quête active.
+     * Part of the HUD showing active quest.
      */
     protected QuestShower questShower;
     /**
-     * Une partie du HUD montrant l'inventaire du joueur.
+     * Part of the HUD showing player's inventory.
      */
     protected InventoryShower inventoryShower;
     /**
-     * Le joueur de la partie.
+     * The player.
      */
     protected Player player;
     /**
-     * L'objet responsable des animations.
+     * The animation's manager.
      */
     protected AnimationManager am;
 
     /**
-     * La barre de vie du joueur.
+     * The player's life bar.
      */
     protected ProgressBar lifeBar;
     /**
-     * La barre d'expérience du joueur.
+     * The player's experience bar.
      */
     protected ProgressBar expBar;
     /**
-     * La barre d'énergie du joueur.
+     * The player's energy bar.
      */
     protected ProgressBar energyBar;
 
+    /**
+     * The game's map manager.
+     */
     protected GameMapManager gmm;
 
     /**
-     * Crée un nouvel état de jeu.
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques à utiliser.
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -180,8 +181,8 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     }
 
     /**
-     * Met à jour les coordonées du joueur en fonction du temps avec la précédente mise à jour. Elle évite aussi que le joueur sorte du cadre de la carte.
-     * @param dt Le temps avec la précédente mise à jour
+     * Make the player move and check that the position of the player is not out of the map.
+     * @param dt The delta time
      */
     protected void makePlayerMove(float dt) {
         int toMove = Math.round(VELOCITY * dt);
@@ -214,9 +215,9 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     }
 
     /**
-     * Bouge la caméra en fonction de la position du joueur.
-     * @param x La position horizontale du joueur.
-     * @param x La position verticale du joueur.
+     * Move the camera.
+     * @param x Horizontal position of the player.
+     * @param x Vertical position of the player.
      */
     protected void translateCamera(int x, int y) {
         cam.position.x = x;
@@ -234,9 +235,9 @@ public class PlayingState extends GameState { // TODO : Put all disposes
     }
 
     /**
-     * Vérifie si le joueur est en collision avec un des objets de la carte.
-     * @param player Le joueur.
-     * @return Si le joueur est en collision avec un des objets de la carte.
+     * Check if the player is in collision with one of the collision area on the map.
+     * @param player The player.
+     * @return If the player is in collision with one of the collision area on the map.
      */
     protected boolean checkForCollision(Player player) {
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {

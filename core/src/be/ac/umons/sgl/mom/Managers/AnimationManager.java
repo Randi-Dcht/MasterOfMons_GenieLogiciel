@@ -9,6 +9,15 @@ import java.util.*;
  * @author Guillaume Cardoen
  */
 public class AnimationManager {
+
+    public static AnimationManager instance;
+
+    public static AnimationManager getInstance() {
+        if (instance == null)
+            instance = new AnimationManager();
+        return instance;
+    }
+
     /**
      * Le lien entre le nom d'une animation et l'animation en elle-même.
      */
@@ -17,7 +26,7 @@ public class AnimationManager {
     /**
      * Crée un nouveau gestionnaire d'animation.
      */
-    public AnimationManager() {
+    protected AnimationManager() {
         animations = new HashMap<>();
     }
 
