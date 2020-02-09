@@ -156,6 +156,8 @@ public class People extends Character implements Serializable
      */
     public void addEnergy(double many)//TODO mort
     {
+        if (energy <= 0)
+            dead();
         if(this.energy + many >= 0 || this.energy + many <= 100)
             this.energy = this.energy + many;
     }
