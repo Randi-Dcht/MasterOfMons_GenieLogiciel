@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
@@ -47,6 +48,8 @@ public class SuperviserNormally implements Observer
         private double minute = 600;
         /*This the class who save the game in real time*/
         public /*private*/ Saving save;
+        /**/
+        private GraphicalSettings graphic;
         /*This is the time in the game*/
         private TimeGame time;
         /*This is the events variable*/
@@ -104,9 +107,10 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type) //TODO regarder pour events mais pas sûre
+        public void newParty(String namePlayer, Type type,GraphicalSettings graphic) //TODO regarder pour events mais pas sûre
         {
             people = new People(namePlayer,type);
+            this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null);
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
@@ -115,6 +119,11 @@ public class SuperviserNormally implements Observer
             //add
         }
 
+
+        public GraphicalSettings getGraphic()
+        {
+            return graphic;
+        }
 
         /**
          * This method return the enum of the maps with the name in String (.tmx)

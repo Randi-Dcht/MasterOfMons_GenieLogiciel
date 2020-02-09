@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -83,7 +84,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public String getName()
     {
-        return "Meet & Learn ";
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMeetLearn");
     }
 
 

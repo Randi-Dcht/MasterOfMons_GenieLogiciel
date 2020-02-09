@@ -29,10 +29,10 @@ public class Supervisor /*! va être supprimer !*/
     return people;
   }
 
-  public static void newParty(String namePlayer, Type type, QuestShower graphical) /*!va être supprimer!*/
+  public static void newParty(String namePlayer, Type type, QuestShower graphical,GraphicalSettings gs) /*!va être supprimer!*/
   {
     SuperviserNormally sp = SuperviserNormally.getSupervisor();
-    sp.newParty(namePlayer,type);
+    sp.newParty(namePlayer,type,gs);
     questShower = graphical;
     people = sp.getPeople();
     questShower.setQuest(people.getQuest()); /*<= problème ici voir pour le final TODO superviNor à changer*/
