@@ -50,7 +50,7 @@ public class Master2 extends MasterQuest
      */
     public String question()
     {
-        return "...";/*code ici*/
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMasterSecond");
     }
 
     @Override

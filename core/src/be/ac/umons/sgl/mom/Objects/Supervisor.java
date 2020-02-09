@@ -47,6 +47,7 @@ public class Supervisor /*! va être supprimer !*/
     {
       Gdx.app.postRunnable(() -> questShower.setQuest(people.getQuest()));
       save.signal();
+      System.out.println(people.getQuest().question());
     }
   }
 
