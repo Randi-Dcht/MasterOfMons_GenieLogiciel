@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
-import java.util.*;
+import java.util.ArrayList;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Enums.Type;

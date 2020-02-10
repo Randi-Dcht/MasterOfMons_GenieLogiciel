@@ -54,7 +54,12 @@ public class TimeGame implements Observer
 
     public void updateSecond(double time)
     {
-       changeMin();
+        second = second + time *10;
+        if(second>= 60)
+        {
+            changeMin();
+            second = second%60;
+        }
     }
 
     /**
