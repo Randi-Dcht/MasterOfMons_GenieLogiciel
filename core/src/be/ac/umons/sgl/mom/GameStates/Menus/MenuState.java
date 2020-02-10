@@ -21,6 +21,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public abstract class MenuState extends GameState {
     /**
      * Index of the selected item.
      */
-    protected int selectedItem = 0;
+    protected Point selectedItem = new Point(0,0);
 
     /**
      * The items to show.
@@ -49,17 +51,17 @@ public abstract class MenuState extends GameState {
     /**
      * A list of all <code>Button</code> used in this state.
      */
-    protected List<Button> buttons;
+    protected List<List<Button>> buttons;
 
     /**
      * A list of all <code>TextBox</code> used in this state.
      */
-    protected List<TextBox> textBoxes;
+    protected List<List<TextBox>> textBoxes;
 
     /**
      * A list of all <code>ScrollListChooser</code>
      */
-    protected List<ScrollListChooser> scrollListChoosers;
+    protected List<List<ScrollListChooser>> scrollListChoosers;
 
     /**
      * The camera for this state.
@@ -162,27 +164,41 @@ public abstract class MenuState extends GameState {
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
-            buttons.get(selectedItem).getOnClick().run();
-        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
-            buttons.get(selectedItem).setSelected(false);
-            selectedItem++;
-            if (selectedItem >= buttons.size())
-                selectedItem = 0;
-            buttons.get(selectedItem).setSelected(true);
-        }
-        if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
-            buttons.get(selectedItem).setSelected(false);
-            selectedItem--;
-            if (selectedItem < 0)
-                selectedItem = buttons.size() - 1;
-            buttons.get(selectedItem).setSelected(true);
-        }
-        for (Button b : buttons)
-            b.handleInput();
-        for (TextBox tb : textBoxes)
-            tb.handleInput();
-        for (ScrollListChooser slc : scrollListChoosers)
-            slc.handleInput();
+            buttons.get(selectedItem.x).get(selectedItem.y).getOnClick().run();
+
+        buttons.get(selectedItem.x).get(selectedItem.y).setSelected(false);
+        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed))
+            selectedItem.x++;
+        if (gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed))
+            selectedItem.y++;
+        if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed))
+            selectedItem.x--;
+        if (gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed))
+            selectedItem.y--;
+        checkSelectedItem();
+        buttons.get(selectedItem.x).get(selectedItem.y).setSelected(true);
+
+        for (List<Button> lb : buttons)
+            for (Button b : lb)
+                b.handleInput();
+        for (List<TextBox> ltb : textBoxes)
+            for (TextBox tb : ltb)
+                tb.handleInput();
+        for (List<ScrollListChooser> lslc : scrollListChoosers)
+            for (ScrollListChooser slc : lslc)
+                slc.handleInput();
+    }
+
+    public void checkSelectedItem() {
+        if (selectedItem.x >= buttons.size())
+            selectedItem.x = 0;
+        if (selectedItem.x < 0)
+            selectedItem.x = buttons.size() - 1;
+        if (selectedItem.y >= buttons.get(selectedItem.x).size())
+            selectedItem.y = 0;
+        if (selectedItem.y < 0)
+            selectedItem.y = buttons.get(selectedItem.x).size() - 1;
+
     }
 
     /**
@@ -194,27 +210,20 @@ public abstract class MenuState extends GameState {
             Control c = null;
             switch (mi.mit) {
                 case Button:
-                    Button b = new Button(gim, gs);
+                    Button b = createMenuItemControl(Button.class, mi, buttons);
                     b.setText(mi.header);
                     b.setOnClick(mi.toDoIfExecuted);
-                    buttons.add(b);
                     c = b;
                     break;
                 case TextBox:
-                    TextBox tb = new TextBox(gim, gs);
-                    textBoxes.add(tb);
+                case NumberTextBox:
+                    TextBox tb = createMenuItemControl(TextBox.class, mi, textBoxes);
+                    if (mi.mit.equals(MenuItemType.NumberTextBox))
+                        tb.setAcceptOnlyNumbers(true);
                     c = tb;
                     break;
-                case NumberTextBox:
-                    TextBox ntb = new TextBox(gim, gs);
-                    textBoxes.add(ntb);
-                    ntb.setAcceptOnlyNumbers(true);
-                    c = ntb;
-                    break;
                 case ScrollListChooser:
-                    ScrollListChooser slc = new ScrollListChooser(gim, gs);
-                    scrollListChoosers.add(slc);
-                    c = slc;
+                    c = createMenuItemControl(ScrollListChooser.class, mi, scrollListChoosers);
                     break;
                 default:
                     break;
@@ -222,15 +231,34 @@ public abstract class MenuState extends GameState {
             mi.control = c;
         }
         if (! buttons.isEmpty())
-            buttons.get(0).setSelected(true);
+            buttons.get(0).get(0).setSelected(true);
         this.menuItems = menuItems;
     }
 
     /**
-     * @return The selected item's index.
+     * Create a new control for the given menu's item.
+     * @param itemClass The class that the control must be.
+     * @param mi The menu's item.
+     * @param list The list in which the control must be put when created.
+     * @param <T> The type of class the control must be.
+     * @return The created control.
      */
-    public int getSelectedItem() {
-        return selectedItem;
+    protected<T extends Control> T createMenuItemControl(Class<T> itemClass, MenuItem mi, List<List<T>> list) {
+        T t;
+        try {
+            Constructor<T> con = itemClass.getConstructor(GameInputManager.class, GraphicalSettings.class);
+            t = (T) con.newInstance(gim, gs);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        }
+        if (mi.drawUnderPreviousOne) {
+            ArrayList<T> l = new ArrayList<>();
+            l.add(t);
+            list.add(l);
+        } else
+            list.get(list.size() - 1).add(t);
+        return t;
     }
 
     @Override
