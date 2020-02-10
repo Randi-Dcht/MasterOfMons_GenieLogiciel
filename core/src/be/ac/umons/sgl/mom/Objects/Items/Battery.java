@@ -1,12 +1,13 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 public class Battery extends Items
 {
-  public Battery(double x,double y)
+  public Battery(Place place)
   {
-    super(x,y,"Batterie");
+    super(place,"Battery");
   }
 
   public void used(People pp)

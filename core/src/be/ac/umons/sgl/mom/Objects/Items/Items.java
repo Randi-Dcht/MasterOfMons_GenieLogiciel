@@ -2,40 +2,69 @@ package be.ac.umons.sgl.mom.Objects.Items;
 
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-
 import java.io.Serializable;
 
 /**
-*Cette classe permet d'implémente les objet que le personnage pourra prendre lors de parcours
-*@author Randy Dauchot (étudiant en Sciences informatique)
-*/
+ * This class define the Item in the game, this items help the people in the Quest
+ * Every Item is associated to Place and a Quest (SupervisorNormally)
+ *@author Randy Dauchot (étudiant en Sciences informatique)
+ */
 public abstract class Items implements Serializable
 {
-  protected double positionX;
-  protected double positionY;
-  protected Place place; //TODO : ajout lors de la safe
-  protected boolean visible = true;
-  final String name;
+    /*the place of this items*/
+    protected Place place;
+    /*if the items isn't obsolete*/
+    protected boolean visible = true;
+    /*the name of this items*/
+    final String name;
 
-  public Items(double x,double y,String name)
-  {
-    positionX = x;
-    positionY = y;
-    this.name = name;
-  }
 
-  public void visibly()
-  {
-    visible = false;
-  }
+    /**
+     * this constructor define the items
+     * @param place is the place of this item
+     * @param name is the name of this items
+     */
+    public Items(Place place,String name)
+    {
+        this.place = place;
+        this.name = name;
+    }
 
-  public String getImagePath()
-  {
-    return null;
-  }
 
-  public abstract void used(People pp);
-  public abstract void make(double time);
-  public abstract double getObsolete();
+    /**
+     * This method allows to define the visibility to false
+     */
+    protected void visibly()
+    {
+        visible = false;
+    }
+
+
+    /***/
+    public String getImagePath()
+    {
+        return null;
+    }
+
+
+    /**
+     * This method allows to said when people takes the items
+     * @param pp is the people
+     */
+    public abstract void used(People pp);
+
+
+    /**
+     * This method allows to decrease the life of this items
+     * @param time is the time between two frames
+     */
+    public abstract void make(double time);
+
+
+    /**
+     * This method allows to said if the items is obsolete
+     * @return number
+     */
+    public abstract double getObsolete();
 
 }

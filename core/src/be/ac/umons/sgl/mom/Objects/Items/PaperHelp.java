@@ -1,12 +1,13 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 public class PaperHelp extends Items
 {
-    public PaperHelp(double x, double y)
+    public PaperHelp(Place place)
     {
-        super(x, y,"OldExam");
+        super(place, "Paper Help");
     }
 
     @Override

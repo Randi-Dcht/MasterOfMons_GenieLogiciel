@@ -1,13 +1,14 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 public class OldExam extends Items
 {
 
-    public OldExam(double x, double y)
+    public OldExam(Place place)
     {
-        super(x, y,"OldExam");
+        super(place, "Old Exam");
     }
 
     @Override
