@@ -8,17 +8,39 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Propose a list of item that the user can (un)select
+ */
 public class ScrollListChooser extends Control {
-
+    /**
+     * The items to show.
+     */
     protected ScrollListItem[] scrollListItems;
+    /**
+     * The list of buttons used in this state.
+     */
     protected List<Button> buttons;
+    /**
+     * At which point the user want to go down.
+     */
     protected int mouseScrolled = 0;
+    /**
+     * If the user can select multiple items.
+     */
     protected boolean canSelectMultipleItems = false;
 
+    /**
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings.
+     */
     public ScrollListChooser(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         buttons = new ArrayList<>();
     }
+
+    /**
+     * Default constructor. USE IT ONLY FOR TEST
+     */
     protected ScrollListChooser() {}
 
     @Override
@@ -52,6 +74,10 @@ public class ScrollListChooser extends Control {
             b.dispose();
     }
 
+    /**
+     * Set the items to show and create the needed resources.
+     * @param scrollListItems The items to show
+     */
     public void setScrollListItems(ScrollListItem[] scrollListItems) {
         this.scrollListItems = scrollListItems;
         for (ScrollListItem sli : scrollListItems) {
@@ -70,6 +96,10 @@ public class ScrollListChooser extends Control {
         }
     }
 
+    /**
+     * Check if multiple items are selected and unselect the precedent one if there are.
+     * @param sli The last item selected.
+     */
     public void checkSelected(ScrollListItem sli) {
         if (sli.isSelected && ! canSelectMultipleItems) {
             for (ScrollListItem sli2 : scrollListItems) {
@@ -81,25 +111,63 @@ public class ScrollListChooser extends Control {
         }
     }
 
+    /**
+     * Set if multiple items can be selected.
+     * @param canSelectMultipleItems If multiple items can be selected.
+     */
     public void setCanSelectMultipleItems(boolean canSelectMultipleItems) {
         this.canSelectMultipleItems = canSelectMultipleItems;
     }
 
+    /**
+     * Represent an item.
+     */
     public static class ScrollListItem {
+        /**
+         * The item's name
+         */
         public String header;
+        /**
+         * If the item is selected.
+         */
         public boolean isSelected;
+        /**
+         * What to do when a click is detected on this item.
+         */
         public Runnable onClick;
+        /**
+         * The button associated with this item.
+         */
         public Button button;
 
+        /**
+         * @param header The item name.
+         */
         public ScrollListItem(String header) {
             this(header, null);
         }
+
+        /**
+         * @param header The item's name
+         * @param onClick What to do when a click is detected on this item.
+         */
         public ScrollListItem(String header, Runnable onClick) {
             this(header, onClick, false);
         }
+
+        /**
+         * @param header The item's name
+         * @param isSelected If the item is selected
+         */
         public ScrollListItem(String header, boolean isSelected) {
             this(header, null, false);
         }
+
+        /**
+         * @param header The item's name
+         * @param onClick What to do when a click is detected on this item.
+         * @param isSelected If the item is selected
+         */
         public ScrollListItem(String header, Runnable onClick, boolean isSelected) {
             this.header = header;
             this.onClick = onClick;

@@ -13,39 +13,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Un mobile du jeu.
+ * Represent a character of the game.
  * @author Guillaume Cardoen
  */
 public class Character {
 
+    /**
+     * The game's graphical settings.
+     */
     protected GraphicalSettings gs;
     /**
-     * L'objet permettant de charger les textures nécessaires.
+     * An asset's manager.
      */
     protected AssetManager assetManager;
     /**
-     * L'orientation du personnage.
+     * The character's orientation
      */
     protected Orientation orientation = Orientation.Top;
     /**
-     * Les coordonnées du personnage.
+     * The character's position
      */
     protected int posX, posY;
     /**
-     * L'inventaire du personnage.
+     * The character's inventory
      */
     protected List<GameObjects> inventory;
-
+    /**
+     * The character's characteristics
+     */
     private People characteristics;
-
+    /**
+     * The time that the character needs to wait before his next attack
+     */
     private double timeBeforeAttack;
 
+    /**
+     * @param gs The game's graphical settings.
+     */
     public Character(GraphicalSettings gs) {
         this.gs = gs;
         assetManager = gs.getAssetManager();
         characteristics = new People("Test", Type.athletic); // TODO
     }
 
+    /**
+     * Draw the character with the given parameters.
+     * @param batch Where to draw the character
+     * @param x The horizontal position
+     * @param y The vertical position
+     * @param width The width of the character
+     * @param height The height of the character
+     */
     public void draw(Batch batch, int x, int y, int width, int height) {
         batch.begin();
         batch.draw(getTexture(),  x, y, width, height);
@@ -53,14 +71,17 @@ public class Character {
 
     }
 
+    /**
+     * Update the character (time before attack for example)
+     * @param dt The delta time
+     */
     public void update(float dt) {
         if (timeBeforeAttack > 0)
             timeBeforeAttack -= dt;
     }
 
     /**
-     * Retourne la texture à utiliser pour le personnage en fonction de l'orientation du personnage.
-     * @return La texture à utiliser pour le personnage.
+     * @return The texture to use when drawing the character
      */
     public Texture getTexture() {
         switch (orientation) {
@@ -77,9 +98,9 @@ public class Character {
     }
 
     /**
-     * Déplace le personnage de (<code>x</code>, <code>y</code>)
-     * @param x Le mouvement horizontale.
-     * @param y Le mouvement verticale.
+     * Add (<code>x</code>, <code>y</code>) to character's position
+     * @param x Horizontal movement
+     * @param y Vertical movement
      */
     public void move(int x, int y) {
         posX += x;
@@ -87,54 +108,58 @@ public class Character {
     }
 
     /**
-     * Retourne l'orientation du personnage.
-     * @return L'orientation du personnage.
+     * @return Character's orientation
      */
     public Orientation getOrientation() {
         return orientation;
     }
 
     /**
-     * Défini l'orientation du personnage.
-     * @param orientation L'orientation du personnage.
+     * Set character's orientation.
+     * @param orientation Character's orientation
      */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
     /**
-     * Retourne la position verticale du personnage sur la carte.
-     * @return La position verticale du personnage sur la carte.
+     * @return Character's vertical position.
      */
     public int getPosY() {
         return posY;
     }
     /**
-     * Retourne la position horizontale du personnage sur la carte.
-     * @return La position horizontale du personnage sur la carte.
+     * @return Character's horizontal position
      */
     public int getPosX() {
         return posX;
     }
 
     /**
-     * Retourne l'inventaire du personnage.
-     * @return L'inventaire du personnage.
+     * @return Character's inventory
      */
     public List<GameObjects> getInventory() {
         return new ArrayList<>(inventory);
     }
 
-
+    /**
+     * @return Character's characteristics
+     */
     public People getCharacteristics() {
         return characteristics;
     }
 
-
+    /**
+     * @return If the character can attack
+     */
     public boolean canAttack() {
         return timeBeforeAttack <= 0;
     }
 
+    /**
+     * Set the time before the character can attack.
+     * @param timeBeforeAttack The time before the character can attack
+     */
     public void setTimeBeforeAttack(double timeBeforeAttack) {
         this.timeBeforeAttack = timeBeforeAttack;
     }
