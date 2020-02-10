@@ -144,7 +144,7 @@ public class PlayingState extends GameState {
         cam.update();
         gmm.setView(cam);
 
-        questShower = new QuestShower(gs, am);
+        questShower = new QuestShower(gs);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gim, gs, player);
 
