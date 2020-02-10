@@ -37,24 +37,26 @@ public class LevelUpMenuState extends MenuState {
         menuItemList.add(new MenuItem(String.format("You are now level %d", player.getCharacteristics().getLevel()), MenuItemType.Title));
         menuItemList.add(new MenuItem(String.format("You have %d points", pointToUse)));
         for (Characteristics ch : Characteristics.values()) {
-            menuItemList.add(new MenuItem("+++", MenuItemType.Button, () -> addPoint(ch)));
+            menuItemList.add(new MenuItem("---", MenuItemType.Button, () -> removePoint(ch)));
             menuItemList.add(new MenuItem(String.format("Strength : %d (+%d)", getCharacteristics(ch), pointsAttributed[ch.ordinal()]), MenuItemType.Text, () -> {},false));
-            menuItemList.add(new MenuItem("---", MenuItemType.Button, () -> removePoint(ch), false));
+            menuItemList.add(new MenuItem("+++", MenuItemType.Button, () -> addPoint(ch), false));
         }
         menuItemList.add(new MenuItem("Confirm", MenuItemType.Button, this::confirm));
-        setMenuItems(menuItemList.toArray(new MenuItem[0]));
+        setMenuItems(menuItemList.toArray(new MenuItem[0]), false);
     }
 
     public void addPoint(Characteristics ch) {
         if (pointToUse > 0) {
             pointToUse--;
             pointsAttributed[ch.ordinal()]++;
+            init();
         }
     }
     public void removePoint(Characteristics ch) {
         if (pointsAttributed[ch.ordinal()] > 0){
             pointToUse++;
             pointsAttributed[ch.ordinal()]--;
+            init();
         }
     }
 

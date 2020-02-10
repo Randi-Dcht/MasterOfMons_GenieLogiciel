@@ -206,6 +206,15 @@ public abstract class MenuState extends GameState {
      * @param menuItems The items to show
      */
     protected void setMenuItems(MenuItem[] menuItems) {
+        setMenuItems(menuItems, true);
+    }
+
+    /**
+     * Set the items to show and create the controls if necessary.
+     * @param menuItems The items to show
+     * @param selectFirstOne If the first item needs to be selected.
+     */
+    protected void setMenuItems(MenuItem[] menuItems, boolean selectFirstOne) {
         for (MenuItem mi : menuItems) {
             Control c = null;
             switch (mi.mit) {
@@ -230,7 +239,7 @@ public abstract class MenuState extends GameState {
             }
             mi.control = c;
         }
-        if (! buttons.isEmpty())
+        if (! buttons.isEmpty() && selectFirstOne)
             buttons.get(0).get(0).setSelected(true);
         this.menuItems = menuItems;
     }
