@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
+import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
@@ -287,6 +288,9 @@ public class PlayingState extends GameState {
             CombatState g = (CombatState) gsm.setState(CombatState.class);
             g.setPlayer1(player);
             g.setPlayer2(player);
+        } else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
+            LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
+            lums.setPlayer(player);
         }
         inventoryShower.handleInput();
     }
