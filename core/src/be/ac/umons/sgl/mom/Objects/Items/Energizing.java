@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 public class Energizing extends Items
 {
     private double obsolete = 31536000;
+    private double reVisible = 0;
 
     public Energizing(Place place)
     {
@@ -20,7 +21,7 @@ public class Energizing extends Items
     }
 
     @Override
-    public void make(double time)
+    public void make(double time) //TODO adpater pour être revisible
     {
         obsolete = obsolete - time;
         if(obsolete <= 0)
