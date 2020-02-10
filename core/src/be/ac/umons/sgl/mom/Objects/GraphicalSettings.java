@@ -177,6 +177,7 @@ public class GraphicalSettings {
      * Add the given file to the AssetManager loading's list.
      * @param files The files to load.
      */
+    @SuppressWarnings("unchecked")
     public void addFilesToLoad(LoadFile... files) {
         for (LoadFile f : files) {
             assetManager.load(f.file.getPath(), f.typeOfFile);
