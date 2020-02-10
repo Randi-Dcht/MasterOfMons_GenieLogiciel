@@ -3,33 +3,26 @@ package be.ac.umons.sgl.mom.Objects.Items;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
-public class Energizing extends Items
+public class PaperHelp extends Items
 {
-    private double obsolete = 31536000;
-
-    public Energizing(Place place)
+    public PaperHelp(Place place)
     {
-        super(place, "Energizing Drink");
+        super(place, "Paper Help");
     }
 
     @Override
     public void used(People pp)
     {
-        pp.energy(0.23);
-        visibly();
     }
 
     @Override
     public void make(double time)
     {
-        obsolete = obsolete - time;
-        if(obsolete <= 0)
-            visibly();
     }
 
     @Override
     public double getObsolete()
     {
-        return obsolete;
+        return 0;
     }
 }

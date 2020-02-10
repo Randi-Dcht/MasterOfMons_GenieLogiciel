@@ -88,14 +88,20 @@ public class People extends Character implements Serializable
     }
 
 
-    /***/
+    /**
+     * This method return the MasterQuest actual for this people
+     * @return MasterQuest actual
+     */
     public MasterQuest getQuest()
     {
         return myQuest;
     }
 
 
-    /***/
+    /**
+     * This method return a dictionary with date and Lesson for this people
+     * @return planning is a dictionary
+     */
     public HashMap<Date,Lesson> getPlanning()
     {
         return myPlanning;
@@ -167,7 +173,7 @@ public class People extends Character implements Serializable
      *This method allows to redefine the energy of this people.
      *@param many who is the energy loss or win
      */
-    public void addEnergy(double many)//TODO mort
+    public void addEnergy(double many)
     {
         if (energy <= 0)
             dead();

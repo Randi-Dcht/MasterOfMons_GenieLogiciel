@@ -14,11 +14,12 @@ public class TestQuest
     void TestnextQuest()
     {
         People p = new People("Tesst", Type.normal);
-        MasterQuest mq = new MyFirstYear(p,null);
+        MasterQuest mq = new MyFirstYear(p,null,null);
         mq.nextQuest();
         assertNull(mq.getChildren(),"quest after is null");
         assertNull(mq.getParent(),"quest before is null");
         mq.addProgress(100);
+        for (int i = 0; i < 40; i++) {p.upLevel();}
         assertNotNull(mq.getChildren(),"quest1 after isn't null");
         assertNotNull(p.getQuest().getParent(),"quest2 before isn't null");
         assertNull(p.getQuest().getChildren(),"quest2 after is null");
