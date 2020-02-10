@@ -14,47 +14,49 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Représente les paramètres graphiques du jeu.
+ * Represent the graphical settings of the game.
  */
 public class GraphicalSettings {
     /**
-     * La police d'écriture utilisée pour les titres.
+     * The font used to draw titles.
      */
     private BitmapFont titleFont;
     /**
-     * La police d'écriture utilisée pour le texte normal.
+     * The font used to draw text in general.
      */
     private BitmapFont normalFont;
     /**
-     * La police d'écriture utilisée pour les quêtes.
+     * The font used to draw quest's name.
      */
     private BitmapFont questFont;
     /**
-     * La police d'écriture utilisée pour les textes plus petit.
+     * The font used to draw small text.
      */
     private BitmapFont smallFont;
     /**
-     * L'AssetManager (gestionnaire de ressources) du jeu.
+     * An asset manager to load assets.
      */
-    private AssetManager assetManager;
+    private AssetManager assetManager; // TODO : Why did I put that here ?
     /**
-     * Le générateur de BitmapFont afin d'éviter la pixelisation.
+     * A BitmapFont generator.
      */
     private FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
 
-    private Locale loc;
-
-    private I18NBundle bundle;
-
-    private boolean showMapCoordinates = false;
-
     /**
-     * Crée de nouveaux paramètres graphiques.
+     * The bundle containing all the strings to use in the game in the chosen language.
      */
+    private I18NBundle bundle;
+    /**
+     * If the map coordinates needs to be showed to the user.
+     */
+    private boolean showMapCoordinates = false;
     public GraphicalSettings() {
         init();
     }
 
+    /**
+     * Initialize the graphical settings.
+     */
     public void init() {
         assetManager = new AssetManager();
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -63,9 +65,9 @@ public class GraphicalSettings {
     }
 
     /**
-     * Défini la police d'écriture utilisée pour les textes plus petit.
-     * @param fontPath Le lien vers la police d'écriture utilisée pour les textes plus petit.
-     * @param size La taille de la police.
+     * Set the font used to draw small text.
+     * @param fontPath The font's path.
+     * @param size The size of the font.
      */
     public void setSmallFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
@@ -74,17 +76,16 @@ public class GraphicalSettings {
     }
 
     /**
-     * Retourne la police d'écriture utilisée pour les textes plus petit.
-     * @return La police d'écriture utilisée pour les textes plus petit.
+     * @return The font used to draw text smaller.
      */
     public BitmapFont getSmallFont() {
         return smallFont;
     }
 
     /**
-     * Défini la police d'écriture utilisée pour le texte normal.
-     * @param fontPath Le lien vers la police d'écriture utilisée pour le texte normal.
-     * @param size La taille de la police.
+     * Set the font used to draw text in general.
+     * @param fontPath The font's path.
+     * @param size The font's size.
      */
     public void setNormalFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
@@ -93,17 +94,16 @@ public class GraphicalSettings {
     }
 
     /**
-     * Retourne la police d'écriture utilisée pour le texte normal.
-     * @return La police d'écriture utilisée pour le texte normal.
+     * @return The font used to draw text in general.
      */
     public BitmapFont getNormalFont() {
         return normalFont;
     }
 
     /**
-     * Défini la police d'écriture utilisée pour les titres.
-     * @param fontPath Le lien vers la police d'écriture utilisée pour les titres.
-     * @param size La taille de la police.
+     * Set the font used to draw titles.
+     * @param fontPath The font's path.
+     * @param size The font's size.
      */
     public void setTitleFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
@@ -112,17 +112,16 @@ public class GraphicalSettings {
     }
 
     /**
-     * Retourne la police d'écriture utilisée pour les titres.
-     * @return La police d'écriture utilisée pour les titres.
+     * @return The font used to draw titles.
      */
     public BitmapFont getTitleFont() {
         return titleFont;
     }
 
     /**
-     * Défini la police d'écriture utilisée pour les quêtes.
-     * @param fontPath Le lien vers la police d'écriture utilisée pour les quêtes.
-     * @param size La taille de la police.
+     * Set the font used to draw quest's name.
+     * @param fontPath The font's path.
+     * @param size The font's size.
      */
     public void setQuestFont(String fontPath, int size) {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
@@ -131,15 +130,14 @@ public class GraphicalSettings {
     }
 
     /**
-     * Retourne la police d'écriture utilisée pour les quêtes.
-     * @return La police d'écriture utilisée pour les quêtes.
+     * @return The font used to draw quest's name.
      */
     public BitmapFont getQuestFont() {
         return questFont;
     }
 
     /**
-     * Initialise les fichiers que le gestionnaire de ressources devra charger durant l'écran de chargement.
+     * Prepare the asset managers to load every needed resources.
      */
     private void prepareAssetManagerForLoading() {
         if (Gdx.files == null)
@@ -155,15 +153,14 @@ public class GraphicalSettings {
     }
 
     /**
-     * Retourne le gestionnaire de ressources.
-     * @return Le gestionnaire de ressources.
+     * @return The asset manager.
      */
     public AssetManager getAssetManager() {
         return assetManager;
     }
 
     /**
-     * Libère les ressources alloué lors de l'utilisation de l'état.
+     * Dispose every resources for this object.
      */
     public void dispose() {
         if (titleFont != null)
@@ -176,30 +173,53 @@ public class GraphicalSettings {
             assetManager.dispose();
     }
 
+    /**
+     * Add the given file to the AssetManager loading's list.
+     * @param files The files to load.
+     */
     public void addFilesToLoad(LoadFile... files) {
         for (LoadFile f : files) {
             assetManager.load(f.file.getPath(), f.typeOfFile);
         }
     }
 
+    /**
+     * Return the string corresponding with the given id in the previously configured language (or the default one).
+     * @param id The string's id.
+     * @return The string corresponding with the given id in the previously configured language (or the default one).
+     */
     public String getStringFromId(String id) {
         return bundle.get(id);
     }
 
+    /**
+     * Set the locale that need to be used and load the corresponding bundle.
+     * @param loc The locale.
+     */
     public void setLocale(Locale loc) {
-        this.loc = loc;
         bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc);
     }
 
+    /**
+     * Set the language that need to be used and change the local.
+     * @param lang The language that need to be used.
+     */
     public void setLanguage(Languages lang) {
         String loc = lang.getLocale();
         setLocale(new Locale(loc));
     }
 
+    /**
+     * @return If the player's coordinates must be showed.
+     */
     public boolean mustShowMapCoordinates() {
         return showMapCoordinates;
     }
 
+    /**
+     * Set if the player's coordinate must be showed.
+     * @param showMapCoordinates If the player's coordinate must be showed.
+     */
     public void setShowMapCoordinates(boolean showMapCoordinates) {
         this.showMapCoordinates = showMapCoordinates;
     }

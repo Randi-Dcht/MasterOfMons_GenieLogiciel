@@ -10,50 +10,48 @@ import java.util.Stack;
 
 
 /**
- * Gère les différents états du jeu ainsi que le passage de l'un à l'autre.
- * Une partie du contenu est tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * Manage every state and the transition between one and another.
+ * A part of the code is from https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike
  * @author Guillaume Cardoen
  */
 public class GameStateManager {
     /**
-     * La pile des différents états du jeu.
+     * The stack containing every <code>GameState</code> to be drawn.
      */
     private Stack<GameState> gameStateStack;
     /**
-     * Le GameInputManager du jeu.
+     * The game's input manager.
      */
     private GameInputManager gim;
     /**
-     * Les paramètres graphiques du jeu.
+     * The game's graphical settings.
      */
     protected GraphicalSettings gs;
 
     /**
-     * Le gestionnaire de cartes du jeu.
-     */
-    protected GameMapManager gmm;
-
-    /**
-     * Crée un nouveau gestionnaire d'état du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs Les paramètres graphiques du jeu.
+     * @param gim The game's input manager.
+     * @param gs The game's graphical settings.
      */
     public GameStateManager(GameInputManager gim, GraphicalSettings gs) {
         gameStateStack = new Stack<>();
         this.gim = gim;
         this.gs = gs;
-        gmm = new GameMapManager();
         setState(MainMenuState.class);
     }
 
+    /**
+     * Add a new state to the game without removing the previous one.
+     * @param gst The state to add (class).
+     * @return The game's state added.
+     */
     public GameState setState(Class<? extends GameState> gst) {
         return setState(gst, false);
     }
 
     /**
-     * Change l'état actuelle du jeu et enlève le précédent en fonction du nouvel état.
-     * @param gst Le nouvel état à ajouter.
-     * @param popPreviousOne Doit-on enlever l'état précedent de la pile ?
+     * Add a new state to the game and remove the previous one if asked.
+     * @param gst The state to add (class).
+     * @param popPreviousOne If the previous state must be removed.
      */
     public GameState setState(Class<? extends GameState> gst, boolean popPreviousOne) {
         GameState g;
@@ -74,7 +72,7 @@ public class GameStateManager {
     }
 
     /**
-     * Retire l'état en cours et revient à l'état précédent.
+     * Remove the first state in the stack.
      */
     public void removeFirstState() {
         gameStateStack.pop();
@@ -82,32 +80,26 @@ public class GameStateManager {
     }
 
     /**
-     * Met à jour l'état en cours.
-     * @param dt Le temps entre l'appel précédent de cette fonction et l'appel actuel.
+     * Update the first state.
+     * @param dt The time between this call and the previous one (delta-time).
      */
     public void update(float dt) {
         gameStateStack.peek().update(dt);
     }
 
     /**
-     * Dessine tout les états présent dans la pile dans l'ordre de la pile.
+     * Draw all the state in the stack in the order in which there were added.
      */
     public void draw() {
-        for (GameState gs: gameStateStack) {
+        for (GameState gs: gameStateStack)
             gs.draw();
-        }
     }
 
     /**
-     * S'éxécute quand l'application se détruit.
+     * Dispose all the resources that this object has.
      */
     public void dispose() {
         for (GameState gs: gameStateStack)
             gs.dispose();
-        gmm.dispose();
-    }
-
-    public GameMapManager getGameMapManager() {
-        return gmm;
     }
 }

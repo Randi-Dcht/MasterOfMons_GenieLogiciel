@@ -9,53 +9,51 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class QuestProgressCircle {
     /**
-     * La couleur du cercle lorsque la quête est active.
+     * The circle's color when the quest is active.
      */
     protected static final Color ACTIVATED_QUEST_CIRCLE_COLOR = Color.valueOf("FF5722");
     /**
-     * La couleur du cercle lorsque la quête est finie.
+     * Circle's color when the quest is finished.
      */
     protected static final Color FINISHED_QUEST_CIRCLE_COLOR = Color.valueOf("00C853");
     /**
-     * La couleur du cercle lorsque la quête est inactive.
+     * The circle's color when the quest isn't active.
      */
     protected static final Color UNACTIVATED_QUEST_CIRCLE_COLOR = Color.valueOf("616161");
 
     /**
-     * Les paramètres graphiques du jeu.
+     * Game's graphical settings
      */
     protected GraphicalSettings gs;
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
     /**
-     * Doit-on utiliser les variables d'animations ?
+     * If the circle is being animated.
      */
     protected boolean isBeingAnimated;
     /**
-     * L'opacité du du rectangle sur laquelle l'image de l'élément d'inventaire sera déssinée durant une animation.
+     * Object's opacity when animating.
      */
     protected float duringAnimationOpacity;
     /**
-     * L'opacité du du rectangle sur laquelle l'image de l'élément d'inventaire sera déssinée durant une animation.
+     * Drawn degrees when animated.
      */
     protected float duringAnimationCircleDegrees;
-
     /**
-     * La quête associé avec ce cercle.
+     * The quest associated with this circle.
      */
     protected Quest quest;
 
     /**
-     * Le dernier radius donné lors du dessinage.
+     * The last radius given on the last drawing.
      */
     protected float lastRadius;
 
     /**
-     * Crée un nouveau cercle de progression de quête.
-     * @param gs Les paramètres graphique du jeu.
-     * @param quest La quête associée avec ce cercle.
+     * @param gs Game's graphical settings.
+     * @param quest The quest associated with this quest.
      */
     public QuestProgressCircle(GraphicalSettings gs, Quest quest) {
         this.gs = gs;
@@ -65,10 +63,10 @@ public class QuestProgressCircle {
     }
 
     /**
-     * Dessine aux coordonées (<code>x</code>, <code>y</code>) une cercle de rayon <code>radius</code>.
-     * @param x La position horizontale.
-     * @param y La position verticale.
-     * @param radius Le rayon du cercle.
+     * Draw the circle at (<code>x</code>, <code>y</code>) with the radius <code>radius</code>.
+     * @param x Horizontal position
+     * @param y Vertical position
+     * @param radius Radius of the circle.
      */
     public void draw(int x, int y, float radius) {
         float degrees;
@@ -108,76 +106,71 @@ public class QuestProgressCircle {
     }
 
     /**
-     * Libère les ressources alloués par cet élément.
+     * Dispose all resources allowed to this element.
      */
     public void dispose() {
         sr.dispose();
     }
 
-    /**
-     * Défini l'opacité durant une animation.
-     * @param duringAnimationOpacity L'opacité durant une animation.
+    /**Set the opacity during an animation.
+     * @param duringAnimationOpacity Opacity during animation.
      */
     public void setDuringAnimationOpacity(float duringAnimationOpacity) {
         this.duringAnimationOpacity = duringAnimationOpacity;
     }
 
     /**
-     * Retourne l'opacité durant une animation.
-     * @return L'opacité durant une animation.
+     * Set the drawn circle's degrees during an animation.
+     * @param duringAnimationCircleDegrees The drawn circle's degrees during an animation.
      */
-    public float getDuringAnimationOpacity() {
-        return duringAnimationOpacity;
-    }
-
     public void setDuringAnimationCircleDegrees(float duringAnimationCircleDegrees) {
         this.duringAnimationCircleDegrees = duringAnimationCircleDegrees;
     }
 
+    /**
+     * @return The drawn circle's degrees during an animation.
+     */
     public float getDuringAnimationCircleDegrees() {
         return duringAnimationCircleDegrees;
     }
 
     /**
-     * Commencer à utiliser les variables d'animations.
+     * Set this object as animated.
      */
     public void beginAnimation() {
         isBeingAnimated = true;
     }
 
     /**
-     * Arreter d'utiliser les variables d'animations.
+     * Set this object as non-animated.
      */
     public void finishAnimation() {
         isBeingAnimated = false;
     }
 
     /**
-     * Retourne la hauteur du cercle.
-     * @return La hauteur du cercle.
+     * @return Circle's height
      */
     public int getHeight() {
         return Math.round(lastRadius * 2);
     }
     /**
-     * Retourne la longueur du cercle.
-     * @return La longueur du cercle.
+     * @return Circle's width.
      */
     public int getWidth() {
         return Math.round(lastRadius * 2);
     }
 
     /**
-     * Défini le pourcentage du cercle qui doit être déssiné. Le degré final est (percent * (pourcentage de la quête) * 360).
-     * @param percent Le pourcentage du cercle qui doit être déssiné
+     * Set the percent of the drawn circle's degree.
+     * @param percent The percent of the drawn circle's degree.
      */
     public void setDuringAnimationProgressPercent(double percent) {
         setDuringAnimationCircleDegrees((float)(percent * (quest.getProgress() == 0 ? 1 : quest.getProgress()) * 360));
     }
 
     /**
-     * Retourne la quête associée à ce cercle.
-     * @return La quête associée à ce cercle.
+     * @return The quest associated with this circle.
      */
     public Quest getQuest() {
         return quest;

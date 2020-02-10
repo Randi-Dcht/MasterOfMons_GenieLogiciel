@@ -130,7 +130,7 @@ public class PlayingState extends GameState {
         super.init();
         sb = new SpriteBatch();
         am = AnimationManager.getInstance();
-        gmm = gsm.getGameMapManager();
+        gmm = GameMapManager.getInstance();
 
         gmm.setMap("Tmx/Umons_Nimy.tmx");
 

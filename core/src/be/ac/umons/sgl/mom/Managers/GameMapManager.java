@@ -11,40 +11,41 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Représente le gestionnaire de carte.
+ * Represent a game's map manager. It loads and render maps.
  */
 public class GameMapManager {
+
+    private static GameMapManager instance;
+
+    public static GameMapManager getInstance() {
+        if (instance == null)
+            instance = new GameMapManager();
+        return instance;
+    }
+
+
     /**
-     * Tout les "renderer" des cartes déjà chargées.
+     * Every map's renderer already loaded.
      */
     protected Map<String, IsometricTiledMapRenderer> tiledMapsRenderer;
     /**
-     * L'itérateur indiquant la position actuelle des cartes déjà chargées.
-     */
-    protected Iterator<String> loadIterator;
-    /**
-     * Le chargeur de carte.
+     * The map's loader.
      */
     protected TmxMapLoader mapLoader;
     /**
-     * Le renderer a utilisé à ce stade-ci.
+     * The renderer to use at this moment.
      */
     protected IsometricTiledMapRenderer actualItmr;
     /**
-     * La caméra sur laquelle afficher la carte.
+     * The camera which shows the map.
      */
     protected OrthographicCamera view;
     /**
-     * Le nombre de cartes déjà chargées.
+     * The asset's manager to allows the loading of the map asynchronously.
      */
-    protected int mapsLoaded = 0;
-
     protected AssetManager am;
 
-    /**
-     * Crée un nouveau gestionnaire de carte.
-     */
-    public GameMapManager() {
+    protected GameMapManager() {
         tiledMapsRenderer = new HashMap<>();
         mapLoader = new TmxMapLoader(new LocalFileHandleResolver());
         am = new AssetManager();
@@ -52,8 +53,8 @@ public class GameMapManager {
     }
 
     /**
-     * Défini la carte a dessiner.
-     * @param mapName Le nom de la carte a dessiner.
+     * Set the map to render.
+     * @param mapName The map's name
      */
     public void setMap(String mapName) {
         if (tiledMapsRenderer.containsKey(mapName))
@@ -61,7 +62,7 @@ public class GameMapManager {
     }
 
     /**
-     * Dessine la carte actuelle.
+     * Render the actual map.
      */
     public void render() {
         if (actualItmr != null) {
@@ -71,16 +72,16 @@ public class GameMapManager {
     }
 
     /**
-     * Défini la caméra sur laquelle afficher la carte.
-     * @param cam La caméra sur laquelle afficher la carte.
+     * Set the camera on which the map should be showed.
+     * @param cam The camera on which the map should be showed.
      */
     public void setView(OrthographicCamera cam) {
         view = cam;
     }
 
     /**
-     * Charge la carte suivante, sauf si toutes les cartes ont été chargées.
-     * @return Si toutes les cartes ont été chargées.
+     * Load the next map, except if all the map are already loaded.
+     * @return If every map was loaded.
      */
     public boolean loadNextMap() {
         boolean finish = am.update();
@@ -94,8 +95,8 @@ public class GameMapManager {
     }
 
     /**
-     * Ajoute les cartes <code>mapsPath</code> à la liste des cartes à charger.
-     * @param mapsPath Le lien vers les cartes à charger.
+     * Add the maps <code>mapsPath</code> on the loading list.
+     * @param mapsPath The path of the maps to load.
      */
     public void addMapsToLoad(String... mapsPath) {
         for (String map : mapsPath)
@@ -103,23 +104,21 @@ public class GameMapManager {
     }
 
     /**
-     * Retourne la progression du chargement des cartes.
-     * @return La progression du chargement des cartes.
+     * @return The progress of the loading.
      */
     public double getProgress() {
         return am.getProgress();
     }
 
     /**
-     * Retourne la carte actuelle.
-     * @return La carte actuelle.
+     * @return The map currently rendered.
      */
     public TiledMap getActualMap() {
         return actualItmr.getMap();
     }
 
     /**
-     * Libère les ressources allouées lors de l'utilisation du gestionnaire.
+     * Dispose all resources that this manager has.
      */
     public void dispose() {
         for (IsometricTiledMapRenderer itmr : tiledMapsRenderer.values())
