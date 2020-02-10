@@ -84,7 +84,7 @@ public class LoadingState extends GameState {
         super.init();
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
-        gmm = gsm.getGameMapManager();
+        gmm = GameMapManager.getInstance();
         am = gs.getAssetManager();
         font = gs.getTitleFont();
     }

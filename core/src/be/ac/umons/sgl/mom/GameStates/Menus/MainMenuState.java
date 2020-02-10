@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.GameStates.LoadingState;
 import be.ac.umons.sgl.mom.GameStates.SettingsState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ExtensionsSelector;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
+import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -48,8 +49,8 @@ public class MainMenuState extends MenuState {
                     extSel.generateLoadLists();
                     for (FileHandle f : Gdx.files.internal("Tmx/").list())
                         if (f.file().getName().equals("Umons_Nimy.tmx")) // TODO : Remove the cond.
-                            gsm.getGameMapManager().addMapsToLoad(f.path());
-                    gsm.getGameMapManager().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
+                            GameMapManager.getInstance().addMapsToLoad(f.path());
+                    GameMapManager.getInstance().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     gsm.setState(LoadingState.class, true);
                 }),

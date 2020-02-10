@@ -5,62 +5,64 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * Represent a progress bar.
+ */
 public class ProgressBar {
     /**
-     * La marge horizontale entre le rectangle d'avant plan et celui d'arrière-plan.
+     * The horizontal margin between the background and the foreground.
      */
     protected int BETWEEN_BACKGROUND_FOREGROUND_MARGIN_WIDTH = 7;
 
     /**
-     * La marge verticale entre le rectangle d'avant plan et celui d'arrière-plan.
+     * The vertical margin between the background and the foreground.
      */
     protected int BETWEEN_BACKGROUND_FOREGROUND_MARGIN_HEIGHT = 2;
 
     /**
-     * La couleur d'arrière-plan.
+     * The background's color
      */
     protected Color backgroundColor = new Color(21f / 255, 21f/255, 21f/255, .5f);
     /**
-     * La couleur d'avant-plan.
+     * The foreground's color
      */
     protected Color foregroundColor = new Color(42f / 255, 42f/255, 42f/255, .8f);
 
     /**
-     * La valeur actuelle de la barre.
+     * The actual value of the bar.
      */
-    protected int value = 50;
+    protected int value = 0;
     /**
-     * La valeur maximale actuelle de la barre.
+     * The maximum value of the bar.
      */
     protected int maxValue = 100;
     /**
-     * Le ratio entre la valeur et la valeur maximale de la barre.
+     * The ratio between the value and the maximum value/
      */
     protected double percent = .5f;
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
-
-    /**
-     * Initialise une nouvelle bar de progression.
-     */
 
     public ProgressBar() {
         init();
     }
 
+    /**
+     * Initialize a new progress bar.
+     */
     public void init() {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
     }
 
     /**
-     * Dessine la barre de progression aux coordonnées fournies avec la taille fournie..
-     * @param x La position horizontale.
-     * @param y La position verticale.
-     * @param width La longueur.
-     * @param height La largeur.
+     * Draw the progress bar with the given parameters.
+     * @param x Horizontal position
+     * @param y Vertical position
+     * @param width The width
+     * @param height The height.
      */
     public void draw(int x, int y, int width, int height) {
         Gdx.gl.glEnable(GL30.GL_BLEND);
@@ -80,8 +82,8 @@ public class ProgressBar {
     }
 
     /**
-     * Défini la valeur de la barre.
-     * @param value La valeur de la barre.
+     * Set the actual value of the bar.
+     * @param value The actual value of the bar.
      */
     public void setValue(int value) {
         this.value = value;
@@ -89,52 +91,40 @@ public class ProgressBar {
     }
 
     /**
-     * Retourne la valeur de la barre.
-     * @return La valeur de la barre.
-     */
-    public int getValue() {
-        return value;
-    }
-    /**
-     * Défini la valeur maximale de la barre.
-     * @param maxValue La valeur maximale de la barre.
+     * Set the maximum value of the bar.
+     * @param maxValue Bar's maximum value
      */
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
         this.percent = (double)value / maxValue;
     }
-    /**
-     * Retourne la valeur maximale de la barre.
-     * @return La valeur maximale de la barre.
-     */
-    public int getMaxValue() {
-        return maxValue;
-    }
 
     /**
-     * Défini la couleur d'arrière plan de la barre.
-     * @param backgroundColor La couleur d'arrière plan de la barre.
+     * Set bar's background color
+     * @param backgroundColor The bar's background color
      */
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
     /**
-     * Défini la couleur d'avant-plan de la barre.
-     * @param foregroundColor La couleur d'avant-plan de la barre.
+     * Set bar's foreground color.
+     * @param foregroundColor Bar's foreground color
      */
     public void setForegroundColor(Color foregroundColor) {
         this.foregroundColor = foregroundColor;
     }
 
     /**
-     * Retourne le ratio entre la valeur et la valeur maximum de la barre.
-     * @return Le ratio entre la valeur et la valeur maximum de la barre.
+     * @return The ration between the actual value and the maximum value.
      */
     public double getPercent() {
         return percent;
     }
 
+    /**
+     * Dispose all resources allowed by this bar.
+     */
     public void dispose() {
         sr.dispose();
     }

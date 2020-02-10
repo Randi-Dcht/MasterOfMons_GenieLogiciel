@@ -5,13 +5,19 @@ import be.ac.umons.sgl.mom.Animations.Animation;
 import java.util.*;
 
 /**
- * Gère toutes les animations du jeu et les mets à jour.
+ * Manage all animations in the game.
  * @author Guillaume Cardoen
  */
 public class AnimationManager {
 
+    /**
+     * The instance of AnimationManager.
+     */
     public static AnimationManager instance;
 
+    /**
+     * @return The instance of AnimationManager.
+     */
     public static AnimationManager getInstance() {
         if (instance == null)
             instance = new AnimationManager();
@@ -19,38 +25,26 @@ public class AnimationManager {
     }
 
     /**
-     * Le lien entre le nom d'une animation et l'animation en elle-même.
+     * The link between the animation's name and the Animation object.
      */
     protected Map<String, Animation> animations;
 
-    /**
-     * Crée un nouveau gestionnaire d'animation.
-     */
     protected AnimationManager() {
         animations = new HashMap<>();
     }
 
     /**
-     * Ajoute l'animation <code>anim</code> sous le nom <code>animName</code>
-     * @param animName Le nom de l'animation.
-     * @param anim L'animation à ajouter.
+     * Add the animation <code>anim</code> under the name <code>animName</code>
+     * @param animName Animation's name.
+     * @param anim Animation to add.
      */
     public void addAnAnimation(String animName, Animation anim) {
         animations.put(animName, anim);
     }
 
     /**
-     * Retourne l'animation avec le nom <code>animName</code>
-     * @param animName Le nom de l'animation.
-     * @return L'animation avec le nom <code>animName</code>
-     */
-    public Animation getAnAnimation(String animName) {
-        return animations.get(animName);
-    }
-
-    /**
-     * Mets à jour toutes les animations en fonction de <code>dt</code>.
-     * @param dt Le temps entre l'appel précédent de cette fonction et cet appel-ci.
+     * Update all the animations with the given delta-time.
+     * @param dt The delta-time.
      */
     public void update(float dt) {
         Animation[] animationArray = animations.values().toArray(new Animation[0]);

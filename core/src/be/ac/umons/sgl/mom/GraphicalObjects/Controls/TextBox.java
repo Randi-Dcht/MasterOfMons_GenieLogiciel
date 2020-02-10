@@ -16,34 +16,36 @@ import java.awt.*;
 import java.util.stream.IntStream;
 
 /**
- * Une classe fille de <code>Control</code> permettant à l'utilisateur d'entrer du texte lorsqu'elle est selectionnée.
+ * A personal text field adapted to the purpose of the game.
  * @author Guillaume Cardoen
  */
 public class TextBox extends Control {
 
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes
      */
     protected ShapeRenderer sr;
     /**
-     * Le texte actuellement entré.
+     * The actual text entered
      */
     protected String actualText = "";
     /**
-     * Le suffixe à placer en fin de texte.
+     * The suffix that will be placed at the end of the text
      */
     protected String suffix = "";
     /**
-     * Est-ce que le support est selectionné.
+     * Is the TextBox selected
      */
     protected boolean isSelected = false;
 
+    /**
+     * If the <code>TextBox</code> accepts ONLY numbers or not.
+     */
     protected boolean acceptOnlyNumbers = false;
 
     /**
-     * Crée un nouveau TextBox.
-     * @param gim La GameInputManager du jeu.
-     * @param gs Les paramètres graphiques du jeu.
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings.
      */
     public TextBox(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
@@ -51,6 +53,9 @@ public class TextBox extends Control {
         sr.setAutoShapeType(true);
     }
 
+    /**
+     * Default constructor. USE IT ONLY FOR TEST
+     */
     protected TextBox() {}
 
     @Override
@@ -93,37 +98,31 @@ public class TextBox extends Control {
     }
 
     /**
-     * Retourne le texte entré par l'utilisateur ainsi que le suffixe si celui-ci a été défini.
-     * @return Le texte entré par l'utilisateur ainsi que le suffixe si celui-ci a été défini.
+     * @return The text entered with the previously given suffix.
      */
     public String getText() {
         return actualText + suffix;
     }
 
     /**
-     * Défini le texte actuellement affiché à l'écran modifiable par l'utilisateur.
-     * @param text Le texte actuellement affiché à l'écran modifiable par l'utilisateur.
+     * Set the text showed in the <code>TextBox</code>
+     * @param text The text that will be showed in the <code>TextBox</code>
      */
     public void setText(String text) {
         this.actualText = text;
     }
 
     /**
-     * Retourne le suffixe à ajouter à la fin du texte ou "" si il n'a pas été défini.
-     * @return Le suffixe à ajouter à la fin du texte ou "" si il n'a pas été défini.
-     */
-    public String getSuffix() {
-        return suffix;
-    }
-
-    /**
-     * Défini le suffixe à ajouter à la fin du texte
-     * @param suffix Le suffixe à ajouter à la fin du texte
+     * @param suffix Set the suffix to add at the end of the actual text.
      */
     public void setSuffix(String suffix) {
         this.suffix = suffix;
     }
 
+    /**
+     * Define if the <code>TextBox</code> accepts only numbers.
+     * @param acceptOnlyNumbers
+     */
     public void setAcceptOnlyNumbers(boolean acceptOnlyNumbers) {
         this.acceptOnlyNumbers = acceptOnlyNumbers;
     }

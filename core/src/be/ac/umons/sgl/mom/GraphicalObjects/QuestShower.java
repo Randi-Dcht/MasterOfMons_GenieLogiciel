@@ -15,86 +15,100 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Support pour montrer les quêtes actuelles du jeu ainsi que leur avancement.
+ * Allow to show the current quest (and under-quests) and their progress.
  * @author Guillaume Cardoen
  */
 public class QuestShower {
     /**
-     * La marge entre le texte et le rectangle d'arrière-plan.
+     * The margin between the text and the background's rectangle.
      */
     public static final int TEXT_AND_RECTANGLE_MARGIN = 7;
     /**
-     * La marge verticale entre les quêtes.
+     * The vertical margin between two quests.
      */
     public static final int BETWEEN_QUEST_MARGIN_HEIGHT = 7;
     /**
-     * La marge de décalage horizontale entre une quête et sa sous-quête.
+     * The horizontal margin between one quest and its under-quest(s).
      */
     public static final int BETWEEN_QUEST_MARGIN_WIDTH = 7;
     /**
-     * La marge entre le cercle et le texte.
+     * The margin between the circle and the text.
      */
     public static final int BETWEEN_CIRCLE_AND_TEXT_MARGIN = 7;
     /**
-     * Permet de dessiner les formes comme les rectangles.
+     * Allow to draw shapes.
      */
     private ShapeRenderer sr;
     /**
-     * Les paramètres graphiques du jeu.
+     * The game's graphical settings.
      */
     protected GraphicalSettings gs;
     /**
-     * La taille du support durant une animation.
+     * The size while animating.
      */
     protected float duringAnimationQuestShowerHeight, duringAnimationQuestShowerWidth;
     /**
-     * L'opacité du texte durant une animation.
+     * Text's opacity while animating.
      */
     protected double duringAnimationForegroundOpacity;
     /**
-     * Le support est-il en train d'être animé ?
+     * Is the support being animated.
      */
     protected boolean isBeingAnimated;
     /**
-     * La taille du support.
+     * The size of the object.
      */
     protected int questShowerWidth, questShowerHeight;
     /**
-     * Le rayon d'un cercle d'avancement de quête.
+     * The progress circle's radius.
      */
     protected int circleRadius;
     /**
-     * La quête principale à montrer.
+     * The quest to show.
      */
     private Quest questToShow;
 
+    /**
+     * The progress circle mapped to their corresponding quest (under-quest).
+     */
     protected Map<Quest, QuestProgressCircle> questProgressCircleMap;
     /**
-     * L'objet responsable des animations.
+     * The game's animation manager.
      */
     protected AnimationManager am;
 
-
     /**
-     * Crée un nouveau support de quête.
-     * @param gs Les paramètres graphiques du jeu.
-     * @param am Un gestionnaire d'animation afin de mettre à jour les animations.
+     * @param gs Game's graphical settings.
      */
-    public QuestShower(GraphicalSettings gs, AnimationManager am) {
+    public QuestShower(GraphicalSettings gs) {
         this.gs = gs;
-        this.am = am;
+        this.am = AnimationManager.getInstance();
         init();
     }
 
+    /**
+     * Default constructor. USE IT ONLY FOR TEST
+     */
     protected QuestShower() {}
 
     /**
-     * Dessine le support.
-     * Code inspiré de https://gamedev.stackexchange.com/a/115483 par NuttyBunny
-     * et https://stackoverflow.com/a/14721570 par UVM
-     * @param batch Où le support doit être dessiné.
-     * @param x La position horizontale.
-     * @param y La position verticale.
+     * Initialize the QuestShower.
+     */
+    protected void init() {
+        circleRadius = (int)gs.getQuestFont().getLineHeight() / 2;
+        questProgressCircleMap = new HashMap<>();
+
+        sr = new ShapeRenderer();
+        sr.setAutoShapeType(true);
+    }
+
+    /**
+     * Draw the object with the given parameters.
+     * Code inspired from https://gamedev.stackexchange.com/a/115483 by NuttyBunny
+     * and https://stackoverflow.com/a/14721570 by UVM
+     * @param batch Where the object must be drawn.
+     * @param x Horizontal position.
+     * @param y Vertical position.
      */
     public void draw(Batch batch, int x, int y) {
         if (questToShow == null)
@@ -122,19 +136,8 @@ public class QuestShower {
     }
 
     /**
-     * Initialise les variables du support.
-     */
-    protected void init() {
-        circleRadius = (int)gs.getQuestFont().getLineHeight() / 2;
-        questProgressCircleMap = new HashMap<>();
-
-        sr = new ShapeRenderer();
-        sr.setAutoShapeType(true);
-    }
-
-    /**
-     * Défini la quête principale à afficher.
-     * @param q La quête principale.
+     * Set the quest to show.
+     * @param q Quest to show.
      */
     public void setQuest(Quest q) {
         if (questToShow == null) {
@@ -158,12 +161,12 @@ public class QuestShower {
 
 
     /**
-     * Affiche la ligne correspondante à la quête <code>q</code> et les lignes correspondantes à ces sous-quêtes à partir de la position(<code>beginningX</code>, <code>beginningY</code>) avec l'opacité de texte <code>textOpacity</code>.
-     * @param q La quête à afficher.
-     * @param batch Où l'on doit dessiner.
-     * @param beginningX La position horizontale de départ.
-     * @param beginningY La position verticale de départ.
-     * @param textOpacity L'opacité du texte.
+     * Show the quest <code>q</code> and its under-quests from position (<code>beginningX</code>, <code>beginningY</code>) with the opacity <code>textOpacity</code>.
+     * @param q The quest to show.
+     * @param batch Where its must be drawn
+     * @param beginningX The beginning horizontal position.
+     * @param beginningY The beginning vertical position.
+     * @param textOpacity The text's opacity.
      */
     protected void printQuest(Quest q, Batch batch, int beginningX, int beginningY, float textOpacity) {
         gs.getQuestFont().setColor(1, 1, 1, textOpacity);
@@ -176,11 +179,11 @@ public class QuestShower {
     }
 
     /**
-     * Dessine les cercles montrant l'avancement de la quête <code>q</code>.
-     * @param q La quête
-     * @param beginningX La position horizontale de départ.
-     * @param beginningY La position verticale de départ.
-     * @param radius Le rayon du cercle.
+     * Draw the circles corresponding the to given quest and under-quest.
+     * @param q The quest
+     * @param beginningX The beginning horizontal position.
+     * @param beginningY The beginning vertical position.
+     * @param radius The radius of the circle to draw.
      */
     protected void drawQuestCircles(Quest q, int beginningX, int beginningY, float radius) {
 //        sr.setColor(21f / 255, 21f / 255, 21f / 255, 1f);
@@ -193,10 +196,10 @@ public class QuestShower {
     }
 
     /**
-     * Anime tout les cercles de progression de quête.
-     * @param from Le pourcentage de début.
-     * @param to Le pourcentage de fin.
-     * @param time Le temps pour aller de <code>from</code> à <code>to</code>.
+     * Animate every circles.
+     * @param from The beginning percent.
+     * @param to The ending percent.
+     * @param time The duration of the animation.
      */
     public void animateQuestProgressCircle(double from, double to, int time) {
         for (QuestProgressCircle qpc : questProgressCircleMap.values()) {
@@ -212,11 +215,11 @@ public class QuestShower {
     }
 
     /**
-     * Lance les animations de la partie "Quête" du HUD.
-     * @param from Le pourcentage de début.
-     * @param to Le pourcentage de fin.
-     * @param time Le temps pour aller de <code>from</code> à <code>to</code>.
-     * @return L'animation générée
+     * Animate the background's rectangle.
+     * @param from The beginning percent.
+     * @param to The ending percent.
+     * @param time The duration of the animation.
+     * @return The generated animation.
      */
     public DoubleAnimation animateQuestRectangle(double from, double to, int time) {
         beginAnimation();
@@ -231,11 +234,11 @@ public class QuestShower {
         return da;
     }
     /**
-     * Lance les animations de la partie "Quête" du HUD.
-     * @param from Le pourcentage de début.
-     * @param to Le pourcentage de fin.
-     * @param time Le temps pour aller de <code>from</code> à <code>to</code>.
-     * @param toDoAfter L'action à faire une fois l'animation terminée.
+     * Animate the background's rectangle.
+     * @param from The beginning percent.
+     * @param to The ending percent.
+     * @param time The duration of the animation.
+     * @param toDoAfter The action to do when the animation is finished.
      */
     public void animateQuestRectangle(double from, double to, int time, Runnable toDoAfter) {
         DoubleAnimation da = animateQuestRectangle(from, to, time);
@@ -248,10 +251,10 @@ public class QuestShower {
 
 
     /**
-     * Retourne la taille hozizontale maximale qui sera utilisée par l'affichage de la quête <code>mainQuest</code> et de ces sous-quêtes.
-     * @param mainQuest La quête principale.
-     * @param defaultMargin La marge de départ.
-     * @return La taille hozizontale maximale qui sera utilisée par l'affichage d'une quête <code>mainQuest</code> et de ces sous-quêtes.
+     * Return the maximum size used by a quest and its under-quests.
+     * @param mainQuest The quest
+     * @param defaultMargin The default margin to use.
+     * @return The maximum size used by a quest and its under-quests.
      */
     protected int getMaximumQuestNameWidth(Quest mainQuest, int defaultMargin) {
         int max = getTextSize(mainQuest.getName()).x + defaultMargin;
@@ -264,19 +267,19 @@ public class QuestShower {
     }
 
     /**
-     * Retourne la taille verticale maximum du support pour la quête principale <code>mainQuest</code>.
-     * @param mainQuest La quête principale.
-     * @return La taille verticale maximum du support pour la quête principale <code>mainQuest</code>.
+     * Return the maximum height used by this object.
+     * @param mainQuest The quest to show.
+     * @return The maximum height used by this object.
      */
     protected int getMaximumQuestHeight(Quest mainQuest) {
         return (int)(mainQuest.getTotalSubQuestsNumber() * gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT * mainQuest.getTotalSubQuestsNumber());
     }
 
     /**
-     * Retourne la taille du texte <code>text</code> avec l'écriture utilisée pour les quêtes.
-     * Code inspiré de https://stackoverflow.com/a/16606599 par BennX
-     * @param text Le texte
-     * @return La taille du texte <code>text</code> avec l'écriture utilisée pour les quêtes.
+     * Return the size used by the text <code>text</code> with the quest's font.
+     * Code inspired from https://stackoverflow.com/a/16606599 by BennX
+     * @param text The text.
+     * @return The size used by the text <code>text</code> with the quest's font.
      */
     protected Point getTextSize(String text) {
         GlyphLayout layout = new GlyphLayout();
@@ -285,79 +288,59 @@ public class QuestShower {
     }
 
     /**
-     * Retourne la taille horizontale du support.
-     * @return La taille horizontale du support.
+     * @return The width.
      */
     public int getWidth() {
         return questShowerWidth;
     }
     /**
-     * Retourne la taille verticale du support.
-     * @return La taille verticale du support.
+     * @return The height.
      */
     public int getHeight() {
         return questShowerHeight;
     }
-    /**
-     * Retourne la taille verticale du support durant son animation.
-     * @return La taille verticale du support durant son animation.
-     */
-    public float getDuringAnimationQuestShowerHeight() {
-        return duringAnimationQuestShowerHeight;
-    }
-    /**
-     * Retourne la taille horizontale du support durant son animation.
-     * @return La taille horizontale du support durant son animation.
-     */
-    public float getDuringAnimationQuestShowerWidth() {
-        return duringAnimationQuestShowerWidth;
-    }
 
     /**
-     * Défini la taille verticale du support durant son animation.
-     * @param duringAnimationQuestShowerHeight La taille verticale du support durant son animation.
+     * Set the height while animating.
+     * @param duringAnimationQuestShowerHeight The height while animating.
      */
     public void setDuringAnimationQuestShowerHeight(float duringAnimationQuestShowerHeight) {
         this.duringAnimationQuestShowerHeight = duringAnimationQuestShowerHeight;
     }
 
     /**
-     * Défini la taille horizontale du support durant son animation.
-     * @param duringAnimationQuestShowerWidth La taille horizontale du support durant son animation.
+     * Set the width while animating.
+     * @param duringAnimationQuestShowerWidth The width while animating.
      */
     public void setDuringAnimationQuestShowerWidth(float duringAnimationQuestShowerWidth) {
         this.duringAnimationQuestShowerWidth = duringAnimationQuestShowerWidth;
     }
 
     /**
-     * Retourne l'opacité du texte durant l'animation du support.
-     * @return L'opacité du texte durant l'animation du support.
-     */
-    public double getDuringAnimationForegroundOpacity() {
-        return duringAnimationForegroundOpacity;
-    }
-    /**
-     * Défini l'opacité du texte durant l'animation du support.
-     * @param duringAnimationForegroundOpacity L'opacité du texte durant l'animation du support.
+     * Set the foreground's opacity while animating.
+     * @param duringAnimationForegroundOpacity The foreground's opacity while animating.
      */
     public void setDuringAnimationForegroundOpacity(double duringAnimationForegroundOpacity) {
         this.duringAnimationForegroundOpacity = duringAnimationForegroundOpacity;
     }
 
     /**
-     * Lance l'animation du support.
+     * Mark this object as being animating.
      */
     public void beginAnimation() {
         isBeingAnimated = true;
     }
 
     /**
-     * Termine l'animation du support.
+     * Mark this object as not being animated.
      */
     public void finishAnimation() {
         isBeingAnimated = false;
     }
 
+    /**
+     * Dispose resources that this object has.
+     */
     public void dispose() {
         sr.dispose();
     }
