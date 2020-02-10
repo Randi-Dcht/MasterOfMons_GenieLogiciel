@@ -133,7 +133,9 @@ public abstract class MenuState extends GameState {
 
         GlyphLayout layout;
         BitmapFont font;
-        for (MenuItem menuItem : menuItems) {
+        int width = (int) (.05 * WIDTH);
+        for (int i = 0; i < menuItems.length; i++) {
+            MenuItem menuItem = menuItems[i];
             layout = new GlyphLayout();
             if (menuItem.mit.equals(MenuItemType.Title))
                 font = gs.getTitleFont();
@@ -146,8 +148,13 @@ public abstract class MenuState extends GameState {
             if (size.y == -1)
                 size.y = (int) (font.getLineHeight() + 2 * topMargin);
 
-            menuItem.draw(sb, new Point((int) (.05 * WIDTH), (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : 2 * topMargin))), size);
-            alreadyUsed += size.y + topMargin;
+            menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : 2 * topMargin))), size);
+            if (menuItems.length > i + 1 && menuItems[i+1].drawUnderPreviousOne) {
+                alreadyUsed += size.y + topMargin;
+                width = (int) (.05 * WIDTH);
+            }
+            else
+                width += size.x + leftMargin;
         }
 
     }
@@ -263,6 +270,10 @@ public abstract class MenuState extends GameState {
          * The item's size. (-1 = automatic)
          */
         public Point size = new Point(-1,-1);
+        /**
+         * If this item must be drawn under the previous one (=true) or next to it (=false).
+         */
+        public boolean drawUnderPreviousOne = true;
 
         /**
          * Construct a new item.
@@ -287,6 +298,17 @@ public abstract class MenuState extends GameState {
          */
         public MenuItem(String header, MenuItemType mit, Runnable toDoIfExecuted) {
             this(header, mit, "", toDoIfExecuted);
+        }
+        /**
+         * Construct a new item.
+         * @param header The item's name
+         * @param mit The item's type.
+         * @param toDoIfExecuted The action to do if the item is selected.
+         * @param drawUnderPreviousOne If this item must be drawn under the previous one (=true) or next to it (=false).
+         */
+        public MenuItem(String header, MenuItemType mit, Runnable toDoIfExecuted, boolean drawUnderPreviousOne) {
+            this(header, mit, "", toDoIfExecuted);
+            this.drawUnderPreviousOne = drawUnderPreviousOne;
         }
 
         /**
