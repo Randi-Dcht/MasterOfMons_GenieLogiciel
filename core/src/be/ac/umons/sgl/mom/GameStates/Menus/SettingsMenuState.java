@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom.GameStates;
+package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.Languages;
 import be.ac.umons.sgl.mom.GameStates.Menus.MenuState;
@@ -17,14 +17,14 @@ import java.util.List;
  * The state where the user can choose settings influencing the game.
  * @author Guillaume Cardoen
  */
-public class SettingsState extends MenuState {
+public class SettingsMenuState extends MenuState {
 
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
-    public SettingsState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+    public SettingsMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
 

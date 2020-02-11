@@ -79,6 +79,11 @@ public abstract class MenuState extends GameState {
     protected ShapeRenderer sr;
 
     /**
+     * If the state must be removed when escape is pressed.
+     */
+    protected boolean handleEscape;
+
+    /**
      * Create a new menu
      * @param gsm Game's state manager
      * @param gim Game's input manager
@@ -105,6 +110,7 @@ public abstract class MenuState extends GameState {
 		cam.update();
 		sr = new ShapeRenderer();
 		sr.setAutoShapeType(true);
+		handleEscape = true;
     }
 
     @Override
@@ -147,6 +153,8 @@ public abstract class MenuState extends GameState {
             Point size = menuItem.size;
             if (size.x == -1)
                 size.x = (int) (layout.width + 2 * leftMargin);
+            else if (size.x == -2)
+                size.x = (int) (.9 * MasterOfMonsGame.WIDTH);
             if (size.y == -1)
                 size.y = (int) (font.getLineHeight() + 2 * topMargin);
 
@@ -163,6 +171,8 @@ public abstract class MenuState extends GameState {
 
     @Override
     public void handleInput() {
+        if (handleEscape && gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
+            gsm.removeFirstState();
         if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             buttons.get(selectedItem.x).get(selectedItem.y).getOnClick().run();
 
@@ -265,8 +275,11 @@ public abstract class MenuState extends GameState {
             ArrayList<T> l = new ArrayList<>();
             l.add(t);
             list.add(l);
-        } else
+        } else {
+            if (list.isEmpty())
+                list.add(new ArrayList<>());
             list.get(list.size() - 1).add(t);
+        }
         return t;
     }
 
@@ -304,7 +317,7 @@ public abstract class MenuState extends GameState {
         public String id;
 
         /**
-         * The item's size. (-1 = automatic)
+         * The item's size. (-1 = automatic) (For horizontal only : -2 = entire screen with margin)
          */
         public Point size = new Point(-1,-1);
         /**

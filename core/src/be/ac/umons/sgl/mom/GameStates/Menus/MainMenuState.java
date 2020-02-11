@@ -1,8 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
-import be.ac.umons.sgl.mom.GameStates.LoadState;
 import be.ac.umons.sgl.mom.GameStates.LoadingState;
-import be.ac.umons.sgl.mom.GameStates.SettingsState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ExtensionsSelector;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
@@ -44,6 +42,7 @@ public class MainMenuState extends MenuState {
     public void init() {
         super.init();
         topMargin = .1;
+        handleEscape = false;
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("newGame"), () -> {
                     extSel.generateLoadLists();
@@ -54,8 +53,8 @@ public class MainMenuState extends MenuState {
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     gsm.setState(LoadingState.class, true);
                 }),
-                new MenuItem(gs.getStringFromId("load"), () -> gsm.setState(LoadState.class)),
-                new MenuItem(gs.getStringFromId("settings"), () -> gsm.setState(SettingsState.class)),
+                new MenuItem(gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
+                new MenuItem(gs.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
                 new MenuItem(gs.getStringFromId("quit"), () -> Gdx.app.exit())});
         extSel = new ExtensionsSelector(gim, gs);
     }
