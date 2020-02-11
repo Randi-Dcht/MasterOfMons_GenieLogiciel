@@ -74,4 +74,11 @@ public class Mobile extends Character implements Serializable
     {
         return Actions.Never;
     }
+
+
+    /***/
+    public String getDialog(String answer)
+    {
+        return conversation.getDialogPNJ().get(answer);
+    }
 }

@@ -10,26 +10,33 @@ import com.badlogic.gdx.Gdx;
 
 /**
  * This class allows to read the file with the speech of people and PNJ.
- * This class is static
+ * This class follow the design pattern singleton.
  * @author Randy Dauchot (étudiant en sciences informatique Umons)
  */
 public class ReadConversation
 {
-    private static String url = "./core/assets/Conversation/";
-
+    /*This HashMap stock the dialog of the all PNJ in the game*/
     private HashMap<String,String> pnj;
+    /*This HashMap stock the dialog of the people in the game*/
     private HashMap<String, ArrayList<String>> people;
+    /*This is a single instance of the ReadConversation*/
+    private static ReadConversation instance = new ReadConversation();
 
 
-    /***/
-    public ReadConversation()
+    /**
+     * This method return the single instance of this class
+     * @return instance of this class
+     */
+    public static ReadConversation getInstance()
     {
-        initialize();
+        return instance;
     }
 
 
-    /***/
-    private void initialize()
+    /**
+     * This constructor define this class who read a file Id and stock them
+     */
+    private ReadConversation()
     {
         pnj = getPnj();
         people = getPeople();
@@ -47,6 +54,26 @@ public class ReadConversation
     public String getAnswer(String answer)
     {
         return pnj.get(answer);
+    }
+
+
+    /**
+     * This method return the dialog ID of the people
+     * @return hashMap of dialog
+     */
+    HashMap<String,ArrayList<String>> getDialogPeople()
+    {
+        return people;
+    }
+
+
+    /**
+     * This method return the dialog ID of the PNJ
+     * @return hashMap of dialog
+     */
+    HashMap<String,String> getDialogPNJ()
+    {
+        return pnj;
     }
 
 
@@ -74,7 +101,6 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the reading texte of people", e.getMessage());
         }
-        System.out.println(list);
         return list;
     }
 
@@ -90,7 +116,7 @@ public class ReadConversation
         String[] split;
         HashMap<String,String> list = new HashMap<>();
         try
-        {//
+        {
             BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/Conversation.pnj.id")))));
             while ((vertical = line.readLine()) != null)
             {
@@ -104,8 +130,6 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the read of pnj",e.getMessage());
         }
-        System.out.println(list);
         return list;
     }
-
 }

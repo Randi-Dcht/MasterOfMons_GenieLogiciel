@@ -15,6 +15,7 @@ public abstract class Character implements Attack, Social
     protected double life;
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
+    protected ReadConversation conversation;
 
 
     /**
@@ -27,6 +28,7 @@ public abstract class Character implements Attack, Social
         this.defence  = type.getDefence();
         this.agility  = type.getAgility();
         this.life     = lifemax();
+        conversation  = ReadConversation.getInstance();
     }
 
     /**

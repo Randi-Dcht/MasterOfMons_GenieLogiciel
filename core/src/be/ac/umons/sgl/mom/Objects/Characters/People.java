@@ -74,6 +74,13 @@ public class People extends Character implements Serializable
     }
 
 
+    /***/
+    public ArrayList<String> getDialog(String answer)
+    {
+        return conversation.getDialogPeople().get(answer);
+    }
+
+
     /**
      *This method allows the change the actually MasterQuest
      *@param quest who is the new masterQuest
