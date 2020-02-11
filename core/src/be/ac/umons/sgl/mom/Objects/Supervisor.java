@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Characters.ReadConversation;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 
@@ -38,6 +39,8 @@ public class Supervisor /*! va être supprimer !*/
     questShower.setQuest(people.getQuest()); /*<= problème ici voir pour le final TODO superviNor à changer*/
     save = sp.save;
     time = sp.getTime();
+
+    ReadConversation cvt = new ReadConversation();
   }
 
 

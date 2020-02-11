@@ -13,53 +13,55 @@ import com.badlogic.gdx.Gdx;
  * This class is static
  * @author Randy Dauchot (étudiant en sciences informatique Umons)
  */
-
 public class ReadConversation
 {
     private static String url = "./core/assets/Conversation/";
 
     private HashMap<String,String> pnj;
     private HashMap<String, ArrayList<String>> people;
-    private String language;
 
-    public ReadConversation(String language)
+
+    /***/
+    public ReadConversation()
     {
-        if(language.equals("fr")||language.equals("en"))
-            this.language = language;
-        else
-            this.language = "en";
         initialize();
     }
 
+
+    /***/
     private void initialize()
     {
-        pnj = getPnj("pnj."+language+".cvt");
-        people = getPeople("people."+language+".cvt");
+        pnj = getPnj();
+        people = getPeople();
     }
 
-    ArrayList<String> choosePeople(String answer)
+
+    /***/
+    public ArrayList<String> choosePeople(String answer)
     {
         return people.get(answer);
     }
 
-    String getAnswer(String answer)
+
+    /***/
+    public String getAnswer(String answer)
     {
         return pnj.get(answer);
     }
 
+
     /**
      * This method allows to read the file with the speech of PNJ when the people speak.
-     * @param file who is the file with the speech
      * @return Map with the key is the possibility answer of people and other is the response
      */
-    private HashMap<String,ArrayList<String>> getPeople(String file)
+    private HashMap<String,ArrayList<String>> getPeople()
     {
         String vertical;
         String[] split;
         HashMap<String,ArrayList<String>> list = new HashMap<>();
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/Conversation.people.id")))));
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
@@ -72,22 +74,24 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the reading texte of people", e.getMessage());
         }
+        System.out.println(list);
         return list;
     }
+
+
     /**
      * This static method read the file and create a tab with first column is speech of PNJ.
      * And the second columns is a tab with three columns who are answers of question of PNJ
-     * @param file who is a file with speech
      * @return table[speech PNJ][table[choose speech people]]
      */
-    private HashMap<String,String> getPnj(String file)
+    private HashMap<String,String> getPnj()
     {
         String vertical;
         String[] split;
         HashMap<String,String> list = new HashMap<>();
         try
-        {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        {//
+            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/Conversation.pnj.id")))));
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
@@ -100,6 +104,7 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the read of pnj",e.getMessage());
         }
+        System.out.println(list);
         return list;
     }
 
