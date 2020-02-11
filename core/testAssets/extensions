@@ -1,10 +1,10 @@
 Test
-.mainClass "TestClass"
-.load "File1"
-.load "File2"
-.map "Maps/Map1"
-.map "Maps/Map2"
+.mainClass TestClass
+.load testAssets/File1 com.badlogic.gdx.graphics.Texture
+.load File2 com.badlogic.gdx.graphics.Texture
+.map testAssets/Maps/Map1
+.map Maps/Map2
 Test2
-.mainClass "Test2Class"
-.load "File3"
-.map "Maps/Map1"
+.mainClass Test2Class
+.load testAssets/File3 com.badlogic.gdx.graphics.Texture
+.map testAssets/Maps/Map1

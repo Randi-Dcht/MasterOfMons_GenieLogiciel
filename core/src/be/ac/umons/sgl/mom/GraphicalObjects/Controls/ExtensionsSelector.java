@@ -101,7 +101,7 @@ public class ExtensionsSelector extends Control {
                         break;
                     case ".load":
                         if (lineTab.length < 3)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClass needs a class", actualLine));
+                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .load needs a file path and his type", actualLine));
                         else {
                             try {
                                 ext.dirsFileToLoad.add(new LoadFile(lineTab[1], lineTab[2]));
