@@ -28,7 +28,7 @@ public class LoadMenuState extends MenuState {
         super.init();
         topMargin = .1;
         transparentBackground = false;
-        chooseSaveSLC = new MenuItem("", MenuItemType.ScrollListChooser, "SLC_Choose_Save");
+        chooseSaveSLC = new MenuItem("", MenuItemType.ScrollListChooser);
         setMenuItems(new MenuItem[]{
                 new MenuItem("Load a game", MenuItemType.Title),
                 new MenuItem("Directory : " + SAVE_PATH, MenuItemType.Text),
@@ -58,7 +58,7 @@ public class LoadMenuState extends MenuState {
             slis.add(new ScrollListChooser.ScrollListItem(f.getName(), () -> load(f.getPath())));
         ((ScrollListChooser)chooseSaveSLC.control).setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
         chooseSaveSLC.size.x = -2;
-        chooseSaveSLC.size.y = (int)(slis.size() * gs.getNormalFont().getXHeight());
+        chooseSaveSLC.size.y = -2;
     }
 
     /**

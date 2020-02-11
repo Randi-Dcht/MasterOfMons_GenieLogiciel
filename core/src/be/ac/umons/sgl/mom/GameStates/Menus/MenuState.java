@@ -141,7 +141,7 @@ public abstract class MenuState extends GameState {
 
         GlyphLayout layout;
         BitmapFont font;
-        int width = (int) (.05 * WIDTH);
+        int width = (int) leftMargin;
         for (int i = 0; i < menuItems.length; i++) {
             MenuItem menuItem = menuItems[i];
             layout = new GlyphLayout();
@@ -154,14 +154,16 @@ public abstract class MenuState extends GameState {
             if (size.x == -1)
                 size.x = (int) (layout.width + 2 * leftMargin);
             else if (size.x == -2)
-                size.x = (int) (.9 * MasterOfMonsGame.WIDTH);
+                size.x = (int) (MasterOfMonsGame.WIDTH - 3 * leftMargin);
             if (size.y == -1)
                 size.y = (int) (font.getLineHeight() + 2 * topMargin);
+            else if (size.y == -2)
+                size.y = (int) (MasterOfMonsGame.HEIGHT - alreadyUsed + 2 * topMargin);
 
-            menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : 2 * topMargin))), size);
+            menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : topMargin))), size);
             if (menuItems.length > i + 1 && menuItems[i+1].drawUnderPreviousOne) {
                 alreadyUsed += size.y + topMargin;
-                width = (int) (.05 * WIDTH);
+                width = (int) leftMargin;
             }
             else
                 width += size.x + leftMargin;
@@ -317,7 +319,7 @@ public abstract class MenuState extends GameState {
         public String id;
 
         /**
-         * The item's size. (-1 = automatic) (For horizontal only : -2 = entire screen with margin)
+         * The item's size. (-1 = automatic) (-2 = all available space with margin)
          */
         public Point size = new Point(-1,-1);
         /**

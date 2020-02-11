@@ -48,22 +48,23 @@ public class ScrollListChooser extends Control {
         super.draw(batch, pos, size);
         int alreadyUsed = 0;
         int ySize = (int)Math.floor(gs.getNormalFont().getLineHeight()) + 2 * topMargin;
-        int maxScrolled = (ySize + 2 * topMargin) * buttons.size();
+        int maxScrolled = ySize * buttons.size() - size.y;
         if (mouseScrolled > maxScrolled)
             mouseScrolled = maxScrolled;
+        else if (mouseScrolled < 0)
+            mouseScrolled = 0;
         for (Button b : buttons) {
-            if (alreadyUsed + ySize - mouseScrolled < 0)
-                continue;
-            else if (alreadyUsed + ySize > size.y)
+            if (! (alreadyUsed - mouseScrolled < 0))
+                b.draw(batch, new Point(pos.x, pos.y - alreadyUsed - topMargin + mouseScrolled), new Point(size.x, ySize));
+            else if (alreadyUsed + ySize - mouseScrolled > size.y)
                 break;
-            b.draw(batch, new Point(pos.x, pos.y - alreadyUsed - topMargin), new Point(size.x, ySize));
             alreadyUsed += ySize;
         }
     }
 
     @Override
     public void handleInput() {
-        mouseScrolled += gim.getScrolledAmount();
+        mouseScrolled += gim.getScrolledAmount() * 10;
         for (Button b : buttons)
             b.handleInput();
     }
