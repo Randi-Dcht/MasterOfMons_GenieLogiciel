@@ -11,8 +11,9 @@ import java.util.List;
 
 public class LoadMenuState extends MenuState {
 
-    protected final String SAVE_PATH = "D:\\Users\\Guillaume\\Documents\\Test\\MOM"; // TODO : Define it itself
+    protected String savePath;
     protected MenuItem chooseSaveSLC;
+    protected MenuItem directoryMI;
 
     /**
      * @param gsm The game's state manager
@@ -28,19 +29,15 @@ public class LoadMenuState extends MenuState {
         super.init();
         topMargin = .1;
         transparentBackground = false;
+        directoryMI = new MenuItem("Directory : " + savePath, MenuItemType.Text);
         chooseSaveSLC = new MenuItem("", MenuItemType.ScrollListChooser);
         setMenuItems(new MenuItem[]{
                 new MenuItem("Load a game", MenuItemType.Title),
-                new MenuItem("Directory : " + SAVE_PATH, MenuItemType.Text),
-                new MenuItem("Choose", MenuItemType.Button, this::chooseFolder, false),
+                directoryMI,
                 chooseSaveSLC
         });
-        chooseFolder();
-    }
-
-    protected void chooseFolder() {
-        setFolder(SAVE_PATH);
-        //TODO
+        savePath = new File(".").getAbsoluteFile().getParent(); //getParent() to remove the \.
+        setFolder(savePath);
     }
 
     /**
@@ -48,17 +45,24 @@ public class LoadMenuState extends MenuState {
      * @param saveDirPath The directory
      * @return A list of all files "*.mom" in the <code>saveDirPath</code> directory.
      */
-    private File[] listSaveFile(String saveDirPath) {
-        return new File(saveDirPath).listFiles((dir, name) -> name.endsWith(".mom"));
+    private File[] listSaveFileAndFolder(String saveDirPath) {
+        return new File(saveDirPath).listFiles((dir, name) -> name.endsWith(".mom") | new File(dir, name).isDirectory());
     }
 
     private void setFolder(String saveDirPath) {
+        savePath = saveDirPath;
         List<ScrollListChooser.ScrollListItem> slis = new ArrayList<>();
-        for (File f : listSaveFile(saveDirPath))
-            slis.add(new ScrollListChooser.ScrollListItem(f.getName(), () -> load(f.getPath())));
+        slis.add(new ScrollListChooser.ScrollListItem("..", () -> setFolder(new File(saveDirPath).getAbsoluteFile().getParent())));
+        for (File f : listSaveFileAndFolder(saveDirPath)) {
+            if (f.isDirectory())
+                slis.add(new ScrollListChooser.ScrollListItem(f.getName(), () -> setFolder(f.getPath())));
+            else
+                slis.add(new ScrollListChooser.ScrollListItem(f.getName(), () -> load(f.getPath())));
+        }
         ((ScrollListChooser)chooseSaveSLC.control).setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
         chooseSaveSLC.size.x = -2;
         chooseSaveSLC.size.y = -2;
+        directoryMI.header = "Directory : " + savePath;
     }
 
     /**

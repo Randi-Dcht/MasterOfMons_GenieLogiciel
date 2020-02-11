@@ -30,6 +30,11 @@ public class ScrollListChooser extends Control {
     protected boolean canSelectMultipleItems = false;
 
     /**
+     * If the items haves changed since last update.
+     */
+    protected boolean newItems = false;
+
+    /**
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
@@ -49,6 +54,8 @@ public class ScrollListChooser extends Control {
         int alreadyUsed = 0;
         int ySize = (int)Math.floor(gs.getNormalFont().getLineHeight()) + 2 * topMargin;
         int maxScrolled = ySize * buttons.size() - size.y;
+        if (maxScrolled < 0)
+            maxScrolled = 0;
         if (mouseScrolled > maxScrolled)
             mouseScrolled = maxScrolled;
         else if (mouseScrolled < 0)
@@ -65,8 +72,13 @@ public class ScrollListChooser extends Control {
     @Override
     public void handleInput() {
         mouseScrolled += gim.getScrolledAmount() * 10;
-        for (Button b : buttons)
-            b.handleInput();
+        for (int i = 0; i < buttons.size(); i++) {
+            if (newItems) {
+                newItems = false;
+                break;
+            }
+            buttons.get(i).handleInput();
+        }
     }
 
     @Override
@@ -81,6 +93,7 @@ public class ScrollListChooser extends Control {
      */
     public void setScrollListItems(ScrollListItem[] scrollListItems) {
         this.scrollListItems = scrollListItems;
+        buttons.clear();
         for (ScrollListItem sli : scrollListItems) {
             Button b = new Button(gim, gs);
             b.setText(sli.header);
@@ -95,6 +108,7 @@ public class ScrollListChooser extends Control {
             b.setSelected(sli.isSelected);
             buttons.add(b);
         }
+        newItems = true;
     }
 
     /**

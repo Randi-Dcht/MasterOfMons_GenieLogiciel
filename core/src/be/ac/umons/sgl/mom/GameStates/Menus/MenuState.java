@@ -119,7 +119,7 @@ public abstract class MenuState extends GameState {
     }
 
     @Override
-    public void draw() {
+    public void draw() { // TODO : Clean this method a bit
         if (transparentBackground) {
             Gdx.gl.glEnable(GL30.GL_BLEND);
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
@@ -168,27 +168,28 @@ public abstract class MenuState extends GameState {
             else
                 width += size.x + leftMargin;
         }
-
     }
 
     @Override
     public void handleInput() {
         if (handleEscape && gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.removeFirstState();
-        if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
-            buttons.get(selectedItem.x).get(selectedItem.y).getOnClick().run();
+        if (! buttons.isEmpty()) {
+            if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
+                buttons.get(selectedItem.x).get(selectedItem.y).getOnClick().run();
 
-        buttons.get(selectedItem.x).get(selectedItem.y).setSelected(false);
-        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed))
-            selectedItem.x++;
-        if (gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed))
-            selectedItem.y++;
-        if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed))
-            selectedItem.x--;
-        if (gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed))
-            selectedItem.y--;
-        checkSelectedItem();
-        buttons.get(selectedItem.x).get(selectedItem.y).setSelected(true);
+            buttons.get(selectedItem.x).get(selectedItem.y).setSelected(false);
+            if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed))
+                selectedItem.x++;
+            if (gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed))
+                selectedItem.y++;
+            if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed))
+                selectedItem.x--;
+            if (gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed))
+                selectedItem.y--;
+            checkSelectedItem();
+            buttons.get(selectedItem.x).get(selectedItem.y).setSelected(true);
+        }
 
         for (List<Button> lb : buttons)
             for (Button b : lb)
