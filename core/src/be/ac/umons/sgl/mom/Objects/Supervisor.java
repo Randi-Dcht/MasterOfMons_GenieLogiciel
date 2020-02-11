@@ -39,8 +39,6 @@ public class Supervisor /*! va être supprimer !*/
     questShower.setQuest(people.getQuest()); /*<= problème ici voir pour le final TODO superviNor à changer*/
     save = sp.save;
     time = sp.getTime();
-
-    ReadConversation cvt = new ReadConversation();
   }
 
 
