@@ -15,7 +15,7 @@ public class LevelUpMenuState extends MenuState {
 
     Player player;
     int pointToUse = 3;
-    int[] pointsAttributed = new int[3]; // 0 = Strength
+    int[] pointsAttributed = new int[Characteristics.values().length]; // 0 = Strength
 
     /**
      * @param gsm The game's state manager

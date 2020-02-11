@@ -140,8 +140,7 @@ public class GraphicalSettings {
      * Prepare the asset managers to load every needed resources.
      */
     private void prepareAssetManagerForLoading() {
-        if (Gdx.files == null)
-            return;
+        File[] fi = Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory);
         for (File folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory))) {
             for (File f : Objects.requireNonNull(folder.listFiles(File::isFile))) {
                 assetManager.load(f.getPath(), Texture.class);

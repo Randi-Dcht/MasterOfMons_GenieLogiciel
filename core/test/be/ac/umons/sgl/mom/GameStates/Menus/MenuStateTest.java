@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -27,8 +27,11 @@ public class MenuStateTest extends MainMenuState {
         gs = Mockito.mock(GraphicalSettings.class);
         extSel = Mockito.mock(ExtensionsSelector.class);
         buttons = new ArrayList<>();
-        buttons.add(Mockito.mock(Button.class));
-        buttons.add(Mockito.mock(Button.class));
+        buttons.add(new ArrayList<>());
+        buttons.add(new ArrayList<>());
+        buttons.get(0).add(Mockito.mock(Button.class));
+        buttons.get(1).add(Mockito.mock(Button.class));
+        buttons.get(0).add(Mockito.mock(Button.class));
         textBoxes = new ArrayList<>();
         scrollListChoosers = new ArrayList<>();
     }
@@ -46,21 +49,47 @@ public class MenuStateTest extends MainMenuState {
     public void testDown() {
         Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(true);
         Mockito.when(gim.isKey(Input.Keys.UP, KeyStatus.Pressed)).thenReturn(false);
-        Assertions.assertEquals(0, selectedItem);
+        Assertions.assertEquals(new Point(0,0), selectedItem);
         handleInput();
-        Assertions.assertEquals(1, selectedItem);
+        Assertions.assertEquals(new Point(1,0), selectedItem);
         handleInput();
-        Assertions.assertEquals(0, selectedItem);
+        Assertions.assertEquals(new Point(0,0), selectedItem);
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed)).thenReturn(true);
+        handleInput();
+        Assertions.assertEquals(new Point(0,1), selectedItem);
+        handleInput();
+        Assertions.assertEquals(new Point(0,0), selectedItem);
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(true);
+        handleInput();
+        Assertions.assertEquals(new Point(1,0), selectedItem);
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed)).thenReturn(true);
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(false);
+        handleInput();
+        Assertions.assertEquals(new Point(1,0), selectedItem);
     }
 
     @Test
     public void testUp() {
         Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(false);
         Mockito.when(gim.isKey(Input.Keys.UP, KeyStatus.Pressed)).thenReturn(true);
-        Assertions.assertEquals(0, selectedItem);
+        Assertions.assertEquals(new Point(0,0), selectedItem);
         handleInput();
-        Assertions.assertEquals(1, selectedItem);
+        Assertions.assertEquals(new Point(1,0), selectedItem);
         handleInput();
-        Assertions.assertEquals(0, selectedItem);
+        Assertions.assertEquals(new Point(0,0), selectedItem);
+        Mockito.when(gim.isKey(Input.Keys.UP, KeyStatus.Pressed)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
+        handleInput();
+        Assertions.assertEquals(new Point(0,1), selectedItem);
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(true);
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(false);
+        handleInput();
+        Assertions.assertEquals(new Point(1,0), selectedItem);
+        Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
+        handleInput();
+        Assertions.assertEquals(new Point(1,0), selectedItem);
     }
 }
