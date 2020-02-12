@@ -322,7 +322,7 @@ public abstract class MenuState extends GameState {
         /**
          * The item's size. (-1 = automatic) (-2 = all available space with margin)
          */
-        public Point size = new Point(-1,-1);
+        public Point size = new Point(-2,-1);
         /**
          * If this item must be drawn under the previous one (=true) or next to it (=false).
          */

@@ -37,14 +37,14 @@ public class InGameMenuState extends MenuState {
         topMargin = .1;
         transparentBackground = true;
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
-                new MenuItem(gs.getStringFromId("player"), () -> gsm.setState(PlayerMenuState.class)),
-                new MenuItem(gs.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
-                new MenuItem(gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
-                new MenuItem(gs.getStringFromId("quickSave")), // TODO : Call save system with default name.
-                new MenuItem(gs.getStringFromId("quickLoad")), // TODO : Call load system with last save (automatic or not).
-                new MenuItem(gs.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
-                new MenuItem(gs.getStringFromId("quit"), () -> Gdx.app.exit())});
+                new MenuItem(gs.getStringFromId("continue"), MenuItemType.Button, () -> gsm.removeFirstState()),
+                new MenuItem(gs.getStringFromId("player"), MenuItemType.Button, () -> gsm.setState(PlayerMenuState.class)),
+                new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, () -> gsm.setState(SaveMenuState.class)),
+                new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
+                new MenuItem(gs.getStringFromId("quickSave"), MenuItemType.Button), // TODO : Call save system with default name.
+                new MenuItem(gs.getStringFromId("quickLoad"), MenuItemType.Button), // TODO : Call load system with last save (automatic or not).
+                new MenuItem(gs.getStringFromId("settings"), MenuItemType.Button, () -> gsm.setState(SettingsMenuState.class)),
+                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> Gdx.app.exit())});
     }
 
     @Override
