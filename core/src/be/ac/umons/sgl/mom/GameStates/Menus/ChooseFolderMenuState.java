@@ -56,7 +56,8 @@ public abstract class ChooseFolderMenuState extends MenuState {
         ((ScrollListChooser)chooseSaveSLC.control).setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
         chooseSaveSLC.size.x = -2;
         chooseSaveSLC.size.y = -2;
-        directoryMI.header = "Directory : " + savePath;
+        directoryMI.setHeader("Directory : " + savePath);
+        directoryMI.size.y = -1;
     }
 
     /**

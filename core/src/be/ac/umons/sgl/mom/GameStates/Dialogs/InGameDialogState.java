@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GameStates.Dialogs;
 
 import be.ac.umons.sgl.mom.Animations.StringAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
@@ -77,7 +78,11 @@ public class InGameDialogState extends DialogState {
         }
 
         sb.begin();
-        gs.getSmallFont().draw(sb, adaptTextToWidth(gs.getSmallFont(), sa.getActual(), (int)(MasterOfMonsGame.WIDTH - 4 * leftMargin)), (float)(2 * leftMargin), (float)(rectY + height - topMargin));
+        if (! sa.isFinished())
+            gs.getSmallFont().draw(sb, StringHelper.adaptTextToWidth(gs.getSmallFont(), sa.getActual(), (int)(MasterOfMonsGame.WIDTH - 4 * leftMargin)), (float)(2 * leftMargin), (float)(rectY + height - topMargin));
+        else
+            gs.getSmallFont().draw(sb, text, (float)(2 * leftMargin), (float)(rectY + height - topMargin));
+
 
         sb.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
@@ -109,7 +114,7 @@ public class InGameDialogState extends DialogState {
 
     @Override
     public void setText(String text) {
-        super.setText(adaptTextToWidth(gs.getSmallFont(), text, (int)(MasterOfMonsGame.WIDTH - 4 * leftMargin)));
+        super.setText(StringHelper.adaptTextToWidth(gs.getSmallFont(), text, (int)(MasterOfMonsGame.WIDTH - 4 * leftMargin)));
         sa = new StringAnimation(text, 20 * text.length());
     }
 

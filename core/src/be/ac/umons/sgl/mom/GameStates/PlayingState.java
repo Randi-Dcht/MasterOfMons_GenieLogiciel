@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
@@ -282,6 +283,11 @@ public class PlayingState extends GameState {
         } else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
+        } else if (gim.isKey(Input.Keys.W, KeyStatus.Pressed)) {
+            inventoryShower.setHided(true);
+            GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
+            ((InGameDialogState)g).setText("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+            ((InGameDialogState)g).addAnswer("YAY !", "yay...", "YAAAAAYYYY !!!");
         }
         inventoryShower.handleInput();
     }

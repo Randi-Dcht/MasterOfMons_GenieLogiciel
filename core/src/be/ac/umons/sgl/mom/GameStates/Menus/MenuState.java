@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Control;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
@@ -139,12 +140,11 @@ public abstract class MenuState extends GameState {
 
         sb.setProjectionMatrix(cam.combined);
 
-        GlyphLayout layout;
         BitmapFont font;
         int width = (int) leftMargin;
         for (int i = 0; i < menuItems.length; i++) {
             MenuItem menuItem = menuItems[i];
-            layout = new GlyphLayout();
+            GlyphLayout layout = new GlyphLayout();
             if (menuItem.mit.equals(MenuItemType.Title))
                 font = gs.getTitleFont();
             else
@@ -156,7 +156,7 @@ public abstract class MenuState extends GameState {
             else if (size.x == -2)
                 size.x = (int) (MasterOfMonsGame.WIDTH - 2 * leftMargin);
             if (size.y == -1)
-                size.y = (int) (font.getLineHeight() + 2 * topMargin);
+                size.y = (int) (font.getLineHeight() * menuItem.lineNumber + 2 * topMargin);
             else if (size.y == -2)
                 size.y = (int) (MasterOfMonsGame.HEIGHT - alreadyUsed + 2 * topMargin);
 
@@ -298,7 +298,8 @@ public abstract class MenuState extends GameState {
         /**
          * The name of the item.
          */
-        public String header;
+        private String header;
+        public int lineNumber;
         /**
          * The type of the item.
          */
@@ -318,6 +319,7 @@ public abstract class MenuState extends GameState {
          * The item's id.
          */
         public String id;
+
 
         /**
          * The item's size. (-1 = automatic) (-2 = all available space with margin)
@@ -389,8 +391,8 @@ public abstract class MenuState extends GameState {
          * @param toDoIfExecuted The action to do if the item is selected.
          */
         public MenuItem(String header, MenuItemType mit, String id, Runnable toDoIfExecuted) {
-            this.header = header;
             this.mit = mit;
+            setHeader(header);
             this.toDoIfExecuted = toDoIfExecuted;
             this.id = id;
         }
@@ -426,6 +428,11 @@ public abstract class MenuState extends GameState {
                     control.draw(batch, pos, size);
                     break;
             }
+        }
+
+        public void setHeader(String header) {
+            this.header = StringHelper.adaptTextToWidth(mit.equals(MenuItemType.Title) ? gs.getTitleFont() : gs.getNormalFont(), header, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
+            lineNumber = this.header.split("\n").length;
         }
     }
 
