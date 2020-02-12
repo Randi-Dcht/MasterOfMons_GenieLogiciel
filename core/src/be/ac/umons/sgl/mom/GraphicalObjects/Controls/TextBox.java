@@ -85,7 +85,8 @@ public class TextBox extends Control {
             for (char c : gim.getLastChars()) {
                 if (acceptOnlyNumbers && (c < '0' || c > '9'))
                     continue;
-                actualText += c;
+                if (Character.isLetterOrDigit(c))
+                    actualText += c;
             }
             if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed))
                 actualText = actualText.substring(0, actualText.length() - 1);
