@@ -3,12 +3,11 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
-import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
+import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
@@ -16,14 +15,9 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
-import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.*;
+import be.ac.umons.sgl.mom.Objects.Supervisor;
 import com.badlogic.gdx.Input;
-
-import java.awt.*;
-import java.util.Timer;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,6 +25,8 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+
+import java.awt.*;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -151,12 +147,7 @@ public class PlayingState extends GameState {
 
 
 /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        /*supprimer =>*/
         /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
-        /*supprimer => -------------------------*/
-        /*supprimer =>*/
-        /*supprimer =>*/
-        /*supprimer =>*/
 
         lifeBar = new ProgressBar();
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
@@ -218,7 +209,7 @@ public class PlayingState extends GameState {
     /**
      * Move the camera.
      * @param x Horizontal position of the player.
-     * @param x Vertical position of the player.
+     * @param y Vertical position of the player.
      */
     protected void translateCamera(int x, int y) {
         cam.position.x = x;
@@ -277,14 +268,14 @@ public class PlayingState extends GameState {
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.setState(InGameMenuState.class);
-        else if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Down))
-            gsm.setState(DebugMenuState.class);
-        else if (gim.isKey(Input.Keys.P, KeyStatus.Pressed)) {
-            inventoryShower.setHided(true);
-            GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
-            ((InGameDialogState)g).setText("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-            ((InGameDialogState)g).addAnswer("YAY !", "yay...", "YAAAAAYYYY !!!");
-        } else if (gim.isKey(Input.Keys.C, KeyStatus.Pressed)) {
+        else if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Down)) {
+            DebugMenuState dms = (DebugMenuState) gsm.setState(DebugMenuState.class);
+            dms.setPlayingState(this);
+        } else if (gim.isKey(Input.Keys.P, KeyStatus.Pressed))
+            debugLevelUp();
+        else if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
+            debugMakeInvincible();
+        else if (gim.isKey(Input.Keys.C, KeyStatus.Pressed)) {
             CombatState g = (CombatState) gsm.setState(CombatState.class);
             g.setPlayer1(player);
             g.setPlayer2(player);
@@ -293,6 +284,19 @@ public class PlayingState extends GameState {
             lums.setPlayer(player);
         }
         inventoryShower.handleInput();
+    }
+
+    public void debugLevelUp() {
+        player.getCharacteristics().upLevel();
+    }
+    public void debugMakeInvincible() {
+        if (player.getCharacteristics().isInvincible()) {
+            player.getCharacteristics().invincible(false);
+            lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
+        } else {
+            player.getCharacteristics().invincible(true);
+            lifeBar.setForegroundColor(new Color(0x212121AA));
+        }
     }
 
     @Override

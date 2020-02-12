@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GameStates.PlayingState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -10,6 +12,8 @@ import com.badlogic.gdx.Input;
  * The menu used for the debug options.
  */
 public class DebugMenuState extends MenuState {
+
+    private PlayingState ps;
 
     /**
      * @param gsm The game's state manager
@@ -28,11 +32,15 @@ public class DebugMenuState extends MenuState {
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("debugMenu"), MenuItemType.Text),
                 new MenuItem(gs.getStringFromId(gs.mustShowMapCoordinates() ? "debugHidePlayerCoord" : "debugPlayerCoord"), () -> gs.setShowMapCoordinates(! gs.mustShowMapCoordinates())),
-                new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Button),
-                new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Button),
+                new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Button, () -> ps.debugLevelUp()),
+                new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Button, () -> ps.debugMakeInvincible()),
                 new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Button),
                 new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button)
         });
+    }
+
+    public void setPlayingState(PlayingState ps) {
+        this.ps = ps;
     }
 
     @Override

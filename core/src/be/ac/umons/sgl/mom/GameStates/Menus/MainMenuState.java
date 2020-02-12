@@ -54,16 +54,16 @@ public class MainMenuState extends MenuState {
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     gsm.setState(LoadingState.class, true);
                 }),
-                new MenuItem(gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
-                new MenuItem(gs.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
-                new MenuItem(gs.getStringFromId("quit"), () -> Gdx.app.exit())});
+                new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
+                new MenuItem(gs.getStringFromId("settings"), MenuItemType.Button, () -> gsm.setState(SettingsMenuState.class)),
+                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> Gdx.app.exit())});
         extSel = new ExtensionsSelector(gim, gs);
     }
 
     @Override
     public void draw() {
         super.draw();
-        extSel.draw(sb, new Point(MasterOfMonsGame.WIDTH / 3 * 2, MasterOfMonsGame.HEIGHT / 3 * 2), new Point(MasterOfMonsGame.WIDTH / 3 - 2 * (int)leftMargin, MasterOfMonsGame.HEIGHT / 3 - 2 * (int)topMargin));
+        extSel.draw(sb, new Point(MasterOfMonsGame.WIDTH / 3 * 2, MasterOfMonsGame.HEIGHT / 3 - 2 * (int)topMargin), new Point(MasterOfMonsGame.WIDTH / 3 - 2 * (int)leftMargin, MasterOfMonsGame.HEIGHT / 3 - 2 * (int)topMargin));
     }
 
     @Override

@@ -154,7 +154,7 @@ public abstract class MenuState extends GameState {
             if (size.x == -1)
                 size.x = (int) (layout.width + 2 * leftMargin);
             else if (size.x == -2)
-                size.x = (int) (MasterOfMonsGame.WIDTH - 3 * leftMargin);
+                size.x = (int) (MasterOfMonsGame.WIDTH - 2 * leftMargin);
             if (size.y == -1)
                 size.y = (int) (font.getLineHeight() + 2 * topMargin);
             else if (size.y == -2)

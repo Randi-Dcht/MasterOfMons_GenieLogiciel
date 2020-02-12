@@ -319,6 +319,12 @@ public class People extends Character implements Serializable
         invincible = var;
     }
 
+    /**
+     * @return If the character is invincible.
+     */
+    public boolean isInvincible() {
+        return invincible;
+    }
 
     /***/
     @Override
