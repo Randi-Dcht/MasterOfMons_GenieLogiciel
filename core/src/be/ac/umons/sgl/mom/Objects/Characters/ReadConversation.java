@@ -88,7 +88,7 @@ public class ReadConversation
         HashMap<String,ArrayList<String>> list = new HashMap<>();
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/Conversation.people.id")))));
+            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/IdConversations/Conversation.people.id")))));
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
@@ -101,6 +101,7 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the reading texte of people", e.getMessage());
         }
+        System.out.println("Conversation People : " + list);
         return list;
     }
 
@@ -117,7 +118,7 @@ public class ReadConversation
         HashMap<String,String> list = new HashMap<>();
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/Conversation.pnj.id")))));
+            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/IdConversations/Conversation.pnj.id")))));
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
@@ -130,6 +131,7 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the read of pnj",e.getMessage());
         }
+        System.out.println("Conversation PNJ: " + list);
         return list;
     }
 }
