@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
-import be.ac.umons.sgl.mom.GameStates.SaveState;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -40,7 +39,7 @@ public class InGameMenuState extends MenuState {
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
                 new MenuItem(gs.getStringFromId("player"), () -> gsm.setState(PlayerMenuState.class)),
-                new MenuItem(gs.getStringFromId("save"), () -> gsm.setState(SaveState.class)),
+                new MenuItem(gs.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
                 new MenuItem(gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
                 new MenuItem(gs.getStringFromId("quickSave")), // TODO : Call save system with default name.
                 new MenuItem(gs.getStringFromId("quickLoad")), // TODO : Call load system with last save (automatic or not).
