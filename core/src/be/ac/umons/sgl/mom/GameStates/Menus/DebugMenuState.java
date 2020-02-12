@@ -2,11 +2,12 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GameStates.PlayingState;
-import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
+
+import java.awt.*;
 
 /**
  * The menu used for the debug options.
@@ -35,7 +36,8 @@ public class DebugMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Button, () -> ps.debugLevelUp()),
                 new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Button, () -> ps.debugMakeInvincible()),
                 new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Button),
-                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button)
+                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button),
+                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> gsm.removeFirstState())
         });
     }
 
@@ -52,8 +54,10 @@ public class DebugMenuState extends MenuState {
     @Override
     public void handleInput() {
         super.handleInput();
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
-            gsm.removeFirstState();
-        init(); // Refresh the text
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
+            Point selected = selectedItem;
+            init(); // Refresh the text
+            selectedItem = selected;
+        }
     }
 }

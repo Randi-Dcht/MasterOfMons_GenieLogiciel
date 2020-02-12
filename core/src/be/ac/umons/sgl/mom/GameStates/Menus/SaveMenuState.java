@@ -29,12 +29,12 @@ public class SaveMenuState extends ChooseFolderMenuState {
     @Override
     public void init() {
         super.init();
-        nameMI = new MenuItem("Name : ", MenuItemType.TextBox);
+        nameMI = new MenuItem(gs.getStringFromId("name"), MenuItemType.TextBox);
         setMenuItems(new MenuItem[]{
-                new MenuItem("Save the game", MenuItemType.Title),
+                new MenuItem(gs.getStringFromId("save"), MenuItemType.Title),
                 directoryMI,
                 nameMI,
-                new MenuItem("Save", MenuItemType.Button, this::save),
+                new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save),
                 chooseSaveSLC
         });
         setFolder(savePath);

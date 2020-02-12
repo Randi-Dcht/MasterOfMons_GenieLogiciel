@@ -21,7 +21,7 @@ public class LoadMenuState extends ChooseFolderMenuState {
     public void init() {
         super.init();
         setMenuItems(new MenuItem[] {
-                new MenuItem("Load a game", MenuItemType.Title),
+                new MenuItem(gs.getStringFromId("load"), MenuItemType.Title),
                 directoryMI,
                 chooseSaveSLC
         });
