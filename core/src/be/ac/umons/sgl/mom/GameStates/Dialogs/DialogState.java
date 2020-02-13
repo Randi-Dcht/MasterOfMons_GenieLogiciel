@@ -3,8 +3,10 @@ package be.ac.umons.sgl.mom.GameStates.Dialogs;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GameStates.GameState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -95,6 +97,10 @@ public abstract class DialogState extends GameState {
                     selectedButtonIndex = 0;
                 buttons.get(selectedButtonIndex).setSelected(true);
             }
+            if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
+                buttons.get(selectedButtonIndex).getOnClick().run();
+                gsm.removeFirstState();
+            }
         }
     }
 
@@ -149,6 +155,6 @@ public abstract class DialogState extends GameState {
      * @param text The text
      */
     public void setText(String text) {
-        this.text = text;
+        this.text = StringHelper.adaptTextToWidth(gs.getNormalFont(), text, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
     }
 }
