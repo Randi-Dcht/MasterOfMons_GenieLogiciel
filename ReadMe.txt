@@ -9,13 +9,13 @@ Pour pouvoir éxécuter les tests Junit : ./gradlew test        --> pour test.
 ____________________________________________________________________________
 
 Personne pouvant modifier ce projet : Randy D. ; Guillaume C. ; Maxime R.
-Implémentation de la GUI   : Guillaume C. (pour le 31-01-2020)
+Implémentation de la GUI   : Guillaume C. (pour le 29-02-2020)
 Implémentation code source : Randy D. (pour 28-12-2019)
-Implémentation quete bach  : Randy D. (pour le 28-12-2019)
-Implémentation quete master: Maxime R. (pour le 28-12-2019)
-Implémentation dual        : Randy D. (pour le 29-02-2020)
-Implémentation reseau      : Guillaume C. (pour le 29-02-2020)
-Implémentation enviro      : Maxime R. (pour le 29-02-2020)
+Implémentation quete bach  : Randy D. (pour le 18-02-2020)
+Implémentation quete master: Maxime R. (pour le 18-02-2020)
+Implémentation dual        : Randy D. (pour le 20-03-2020)
+Implémentation reseau      : Guillaume C. (pour le 20-03-2020)
+Implémentation enviro      : Maxime R. (pour le 20-03-2020)
 
 ____________________________________________________________________________
 
