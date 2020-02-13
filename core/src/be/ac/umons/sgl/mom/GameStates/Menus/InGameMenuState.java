@@ -1,5 +1,7 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.sgl.mom.GameStates.GameState;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -44,7 +46,7 @@ public class InGameMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("quickSave"), MenuItemType.Button), // TODO : Call save system with default name.
                 new MenuItem(gs.getStringFromId("quickLoad"), MenuItemType.Button), // TODO : Call load system with last save (automatic or not).
                 new MenuItem(gs.getStringFromId("settings"), MenuItemType.Button, () -> gsm.setState(SettingsMenuState.class)),
-                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> Gdx.app.exit())});
+                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, this::exit)});
     }
 
     @Override
@@ -58,5 +60,12 @@ public class InGameMenuState extends MenuState {
         super.handleInput();
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.removeFirstState();
+    }
+
+    public void exit() {
+        GameState g = gsm.setState(OutGameDialogState.class);
+        ((OutGameDialogState)g).setText("Are you sure you want to quit ? All non-saved progress will be lost !");
+        ((OutGameDialogState)g).addAnswer("Yes !", () -> Gdx.app.exit());
+        ((OutGameDialogState)g).addAnswer("No", () -> gsm.removeFirstState());
     }
 }
