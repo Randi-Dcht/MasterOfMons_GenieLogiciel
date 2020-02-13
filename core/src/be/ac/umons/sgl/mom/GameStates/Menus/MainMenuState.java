@@ -71,4 +71,9 @@ public class MainMenuState extends MenuState {
         super.handleInput();
         extSel.handleInput();
     }
+
+    @Override
+    public void getFocus() {
+        init();
+    }
 }
