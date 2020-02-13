@@ -7,11 +7,10 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public abstract class DialogState extends GameState {
      */
     protected String selected = null;
     /**
-     * What to do when a answer is selected by the user.
+     * What to do when an answer is selected by the user.
      */
     protected HashMap<String, Runnable> whenSelectedActions;
     /**
@@ -66,6 +65,7 @@ public abstract class DialogState extends GameState {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
         sb = new SpriteBatch();
+        buttons = new ArrayList<>();
     }
 
     @Override
@@ -79,6 +79,23 @@ public abstract class DialogState extends GameState {
             gsm.removeFirstState();
         for (Button b: buttons)
             b.handleInput();
+
+        if (!buttons.isEmpty()) {
+            if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
+                buttons.get(selectedButtonIndex).setSelected(false);
+                selectedButtonIndex--;
+                if (selectedButtonIndex < 0)
+                    selectedButtonIndex = buttons.size() - 1;
+                buttons.get(selectedButtonIndex).setSelected(true);
+            }
+            if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
+                buttons.get(selectedButtonIndex).setSelected(false);
+                selectedButtonIndex++;
+                if (selectedButtonIndex >= buttons.size())
+                    selectedButtonIndex = 0;
+                buttons.get(selectedButtonIndex).setSelected(true);
+            }
+        }
     }
 
     @Override

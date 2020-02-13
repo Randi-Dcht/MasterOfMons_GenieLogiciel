@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
+import be.ac.umons.sgl.mom.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
@@ -288,6 +289,10 @@ public class PlayingState extends GameState {
             GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
             ((InGameDialogState)g).setText("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
             ((InGameDialogState)g).addAnswer("YAY !", "yay...", "YAAAAAYYYY !!!");
+        } else if (gim.isKey(Input.Keys.X, KeyStatus.Pressed)) {
+            GameState g = gsm.setState(OutGameDialogState.class);
+            ((OutGameDialogState)g).setText("Are you sure ?");
+            ((OutGameDialogState)g).addAnswer("Yes !", "No");
         }
         inventoryShower.handleInput();
     }

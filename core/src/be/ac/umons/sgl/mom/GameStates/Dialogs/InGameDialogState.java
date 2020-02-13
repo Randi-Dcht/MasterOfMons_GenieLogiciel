@@ -44,12 +44,6 @@ public class InGameDialogState extends DialogState {
     }
 
     @Override
-    public void init() {
-        super.init();
-        buttons = new ArrayList<>();
-    }
-
-    @Override
     public void update(float dt) {
         super.update(dt);
         sa.update(dt);
@@ -93,23 +87,6 @@ public class InGameDialogState extends DialogState {
         super.handleInput();
         if (gim.isKey(Input.Keys.SPACE, KeyStatus.Pressed) || gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             sa.finishNow();
-        if (!buttons.isEmpty()) {
-            if (gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
-                buttons.get(selectedButtonIndex).setSelected(false);
-                selectedButtonIndex--;
-                if (selectedButtonIndex < 0)
-                    selectedButtonIndex = buttons.size() - 1;
-                buttons.get(selectedButtonIndex).setSelected(true);
-            }
-            if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)) {
-                buttons.get(selectedButtonIndex).setSelected(false);
-                selectedButtonIndex++;
-                if (selectedButtonIndex >= buttons.size())
-                    selectedButtonIndex = 0;
-                buttons.get(selectedButtonIndex).setSelected(true);
-            }
-        }
-
     }
 
     @Override
