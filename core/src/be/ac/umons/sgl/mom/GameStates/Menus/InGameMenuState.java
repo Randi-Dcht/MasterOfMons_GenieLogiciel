@@ -58,14 +58,12 @@ public class InGameMenuState extends MenuState {
     @Override
     public void handleInput() {
         super.handleInput();
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
-            gsm.removeFirstState();
     }
 
     public void exit() {
         GameState g = gsm.setState(OutGameDialogState.class);
-        ((OutGameDialogState)g).setText("Are you sure you want to quit ? All non-saved progress will be lost !");
-        ((OutGameDialogState)g).addAnswer("Yes !", () -> Gdx.app.exit());
-        ((OutGameDialogState)g).addAnswer("No", () -> gsm.removeFirstState());
+        ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));
+        ((OutGameDialogState)g).addAnswer(gs.getStringFromId("yes"), () -> Gdx.app.exit());
+        ((OutGameDialogState)g).addAnswer(gs.getStringFromId("no"), () -> gsm.removeFirstState());
     }
 }

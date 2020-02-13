@@ -95,8 +95,10 @@ public abstract class DialogState extends GameState {
                     selectedButtonIndex = 0;
                 buttons.get(selectedButtonIndex).setSelected(true);
             }
-            if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
+            if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
                 buttons.get(selectedButtonIndex).getOnClick().run();
+                gsm.removeFirstState();
+            }
         }
     }
 

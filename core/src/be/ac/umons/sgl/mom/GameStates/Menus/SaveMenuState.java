@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
+import be.ac.umons.sgl.mom.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -43,7 +44,6 @@ public class SaveMenuState extends ChooseFolderMenuState {
         nameMI.size.x = -2;
     }
 
-
     @Override
     protected void onFolderClick(File folder) {
         setFolder(folder.getAbsolutePath());
@@ -51,7 +51,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
 
     @Override
     protected void onFileClick(File file) {
-        save(file.getAbsolutePath()); // TODO : Ask for file overwrite.
+        save(file.getAbsolutePath());
     }
 
     protected void save() {
@@ -59,7 +59,19 @@ public class SaveMenuState extends ChooseFolderMenuState {
     }
 
     protected void save(String saveFilePath) {
-        // TODO : Call the save system
-        gsm.removeFirstState();
+        save(saveFilePath, false);
+    }
+
+    protected void save(String saveFilePath, boolean verified) {
+        File f = new File(saveFilePath);
+        if (f.exists() && ! verified) {
+            OutGameDialogState g = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+            g.setText(String.format(gs.getStringFromId("saveOverwriteQuestion"), f.getName()));
+            g.addAnswer(gs.getStringFromId("yes"), () -> save(saveFilePath, true));
+            g.addAnswer(gs.getStringFromId("no"));
+        } else {
+            // TODO : Call the save system
+            gsm.removeFirstState();
+        }
     }
 }
