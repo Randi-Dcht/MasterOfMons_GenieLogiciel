@@ -1,22 +1,23 @@
 package be.ac.umons.sgl.mom.Events.Notifications;
 
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class PlaceInMons implements Notification
 {
     private Events evt;
-    private String buffer;
+    private Place buffer;
 
-    public PlaceInMons(String buffer)
+    public PlaceInMons(Place buffer)
     {
-        evt = Events.ChangeQuest;
+        evt = Events.PlaceInMons;
         this.buffer = buffer;
     }
 
     public PlaceInMons()
     {
-        evt= Events.ChangeQuest;
+        evt= Events.PlaceInMons;
     }
 
     public Events getEvents()
@@ -24,7 +25,7 @@ public class PlaceInMons implements Notification
         return evt;
     }
 
-    public String getBuffer()
+    public Place getBuffer()
     {
         return buffer;
     }
