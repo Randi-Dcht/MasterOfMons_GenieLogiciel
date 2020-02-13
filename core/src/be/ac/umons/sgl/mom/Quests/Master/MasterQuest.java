@@ -336,4 +336,11 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * @return list of mobile
      */
     public abstract Mobile[] whatMobile();
+
+
+    /***/
+    public Bloc getBloc()
+    {
+        return bloc;
+    }
 }

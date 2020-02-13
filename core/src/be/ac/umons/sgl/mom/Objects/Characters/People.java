@@ -1,12 +1,18 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.Objects.HyperPlanning;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
@@ -33,9 +39,8 @@ public class People extends Character implements Serializable, Observer
     private Bloc year;
     private boolean invincible = false;
     final String name;
-    final int maxObject = 5;
+    private int maxObject = 5;
     private HashMap<Date,Lesson> myPlanning;
-    private ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
 
 
@@ -49,7 +54,6 @@ public class People extends Character implements Serializable, Observer
         super(type);
         this.name = name;
         this.threshold = minExperience(level+1);
-        this.year = Bloc.BA1;
     }
 
 
@@ -92,7 +96,8 @@ public class People extends Character implements Serializable, Observer
         quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
         Supervisor.changedQuest();
-        //TODO ADD PLANING
+        year = quest.getBloc() ;
+        myPlanning = HyperPlanning.createSchedule(quest);
     }
 
 
@@ -181,7 +186,7 @@ public class People extends Character implements Serializable, Observer
      *This method allows to redefine the energy of this people.
      *@param many who is the energy loss or win
      */
-    public void addEnergy(double many)
+    private void addEnergy(double many)
     {
         if (energy <= 0)
             dead();
@@ -196,7 +201,7 @@ public class People extends Character implements Serializable, Observer
      */
     public void energy(double time)
     {
-        this.energy = energy + (this.state.getEnergy()*time); //TODO addenergie
+        addEnergy(this.state.getEnergy()*time);
     }
 
 
@@ -208,16 +213,6 @@ public class People extends Character implements Serializable, Observer
     {
         return energy;
     }
-
-
-    /**
-     *This method allows to change the state of this people during the game.
-     *@param state who is an enum of State
-     */
-    public void changedState(State state)
-    {
-        this.state = state;
-    } //TODO supprimer à verifier
 
 
     /**
@@ -311,8 +306,10 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-
-    /***/
+    /**
+     * This method allows to change the place of this people
+     * @param place is the new place
+     */
     public void changePlace(Place place)
     {
         this.place = place;
@@ -329,12 +326,14 @@ public class People extends Character implements Serializable, Observer
         invincible = var;
     }
 
+
     /**
      * @return If the character is invincible.
      */
     public boolean isInvincible() {
         return invincible;
     }
+
 
     /***/
     @Override
@@ -347,7 +346,7 @@ public class People extends Character implements Serializable, Observer
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.PlaceInMons))
+        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty())
             changePlace(((PlaceInMons)notify).getBuffer());
     }
 }
