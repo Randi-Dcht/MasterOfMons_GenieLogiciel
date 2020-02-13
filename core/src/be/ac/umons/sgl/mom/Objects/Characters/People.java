@@ -1,11 +1,11 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
+import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
@@ -21,11 +21,12 @@ import java.util.HashMap;
  *This is a logic party of people.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-public class People extends Character implements Serializable
+public class People extends Character implements Serializable, Observer
 {
     /*characteristic of people*/
     private double energy = 100;
     private State state = State.normal;
+    private Place place; //TODO initialiser
     private double threshold; /*seuil experience niveau à devoir atteindre*/
     private double experience = 0;
     private MasterQuest myQuest;
@@ -310,6 +311,15 @@ public class People extends Character implements Serializable
     }
 
 
+
+    /***/
+    public void changePlace(Place place)
+    {
+        this.place = place;
+        state = place.getState();
+    }
+
+
     /**
      * This method allows to invincible people,the life doesn't decrease (#debug#)
      * @param var is true == invincible | false == doesn't invincible.
@@ -330,5 +340,14 @@ public class People extends Character implements Serializable
     @Override
     public Actions getAction() {
         return null; //TODO etre demander via l'interface graphique
+    }
+
+
+    /***/
+    @Override
+    public void update(Notification notify)
+    {
+        if (notify.getEvents().equals(Events.PlaceInMons))
+            changePlace(((PlaceInMons)notify).getBuffer());
     }
 }
