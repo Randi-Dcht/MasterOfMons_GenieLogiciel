@@ -36,10 +36,14 @@ public class LevelUpMenuState extends MenuState {
         List<MenuItem> menuItemList = new ArrayList<>();
         menuItemList.add(new MenuItem(String.format("You are now level %d", player.getCharacteristics().getLevel()), MenuItemType.Title));
         menuItemList.add(new MenuItem(String.format("You have %d points", pointToUse)));
+        MenuItem mi;
         for (Characteristics ch : Characteristics.values()) {
-            menuItemList.add(new MenuItem("---", MenuItemType.Button, () -> removePoint(ch)));
-            menuItemList.add(new MenuItem(String.format("Strength : %d (+%d)", getCharacteristics(ch), pointsAttributed[ch.ordinal()]), MenuItemType.Text, () -> {},false));
-            menuItemList.add(new MenuItem("+++", MenuItemType.Button, () -> addPoint(ch), false));
+            menuItemList.add(mi = new MenuItem("---", MenuItemType.Button, () -> removePoint(ch)));
+            mi.size.x = -1;
+            menuItemList.add(mi = new MenuItem(String.format("Strength : %d (+%d)", getCharacteristics(ch), pointsAttributed[ch.ordinal()]), MenuItemType.Text, () -> {},false));
+            mi.size.x = -1;
+            menuItemList.add(mi = new MenuItem("+++", MenuItemType.Button, () -> addPoint(ch), false));
+            mi.size.x = -1;
         }
         menuItemList.add(new MenuItem("Confirm", MenuItemType.Button, this::confirm));
         setMenuItems(menuItemList.toArray(new MenuItem[0]), false);
