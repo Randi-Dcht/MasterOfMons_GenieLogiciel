@@ -211,14 +211,14 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /**
-     *This method allows to notify the underQuest, there are changes in the people.
+     *This method allows to notify the underQuest, there are changes in the people or other in maps.
      * @param notify is a notification of change
      */
     public void eventMaps(Notification notify)
     {
         for(UnderQuest uq : underQuest)
         {
-            uq.evenActivity();
+            uq.evenActivity(notify);
         }
     }
 
@@ -309,6 +309,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     @Override
     public void update(Notification notify)
     {
+        eventMaps(notify);
         if(notify.getEvents().equals(Events.UpLevel) && memory != null)
         {
             this.after = memory;
@@ -340,7 +341,10 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     public abstract HashMap<Place,Mobile> whatMobile();
 
 
-    /***/
+    /**
+     * This method return the year of school of this people in the university
+     * @return bloc of people
+     */
     public Bloc getBloc()
     {
         return bloc;
