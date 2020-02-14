@@ -47,8 +47,19 @@ public class People extends Character implements Serializable, Observer
     public People(String name, Type type)
     {
         super(type);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         this.name = name;
         this.threshold = minExperience(level+1);
+    }
+
+
+    /**
+     * This method return the place of the people
+     * @return place in maps (TMX)
+     */
+    public Place getPlace()
+    {
+        return place;
     }
 
 

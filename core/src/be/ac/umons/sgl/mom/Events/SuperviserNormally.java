@@ -46,8 +46,6 @@ public class SuperviserNormally implements Observer
         private HashMap<Place,ArrayList<Items>> listItems;
         /*The all no people in this game*/
         private HashMap<Place,ArrayList<Mobile>> listMobile;
-        /*This is a timer for a saving the game at the regular period*/
-        private double minute = 600;
         /*This the class who save the game in real time*/
         public /*private*/ Saving save;
         /**/
@@ -177,14 +175,6 @@ public class SuperviserNormally implements Observer
 
             //for (Items o : listPNJ)
               //  o.make(dt);
-
-            minute = minute - dt;
-            if(minute <= 0)
-            {
-                save.signal();
-                minute = 600;
-                //remplacer par event
-            }
             //event.notify(Events.ChangeFrame); //pour le timerGame
         }
 
