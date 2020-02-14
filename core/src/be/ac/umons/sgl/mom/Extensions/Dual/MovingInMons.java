@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Extensions.Dual;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -8,6 +9,8 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
+
+import java.util.HashMap;
 
 public class MovingInMons extends MasterQuest
 {
@@ -42,13 +45,13 @@ public class MovingInMons extends MasterQuest
     }
 
     @Override
-    public Items[] whatItem() {
-        return new Items[0];
+    public HashMap<Place,Items> whatItem() {
+        return null;
     }
 
     @Override
-    public Mobile[] whatMobile() {
-        return new Mobile[0];
+    public HashMap<Place,Mobile> whatMobile() {
+        return null;
     }
 
     @Override
