@@ -66,7 +66,7 @@ public class SuperviserNormally implements Observer
            for (Place plt : Place.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
-           event.add(Events.ChangeFrame,this);
+           event.add(Events.ChangeFrame,this);//TODO voir si celle-ci va être continuer
        }
 
         /**
@@ -107,23 +107,26 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type,GraphicalSettings graphic) //TODO regarder pour events mais pas sûre
+        public void newParty(String namePlayer, Type type,GraphicalSettings graphic)
         {
             people = new People(namePlayer,type);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic);
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
-            //add
             save = new Saving(people,namePlayer);
-            //add
         }
 
 
+        /**
+         * This method allows to give the graphical instance of Graphic
+         * @return graphic instance
+         */
         public GraphicalSettings getGraphic()
         {
             return graphic;
         }
+
 
         /**
          * This method return the enum of the maps with the name in String (.tmx)

@@ -282,8 +282,8 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
-     * A people is a Human player so the type is 'H'
-     * @return H (char)
+     * A people is a Human player so the type is HumanPlayer
+     * @return playerType of this instance
      */
     @Override
     public PlayerType getType()
