@@ -80,6 +80,15 @@ public class GameStateManager {
     }
 
     /**
+     * Remove all the current states and add the given state to the stack.
+     * @param gst The type of state to add.
+     */
+    public void removeAllStateAndAdd(Class<? extends GameState> gst) {
+        gameStateStack.clear();
+        setState(gst);
+    }
+
+    /**
      * Update the first state.
      * @param dt The time between this call and the previous one (delta-time).
      */

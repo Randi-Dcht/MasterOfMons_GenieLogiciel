@@ -5,9 +5,11 @@ import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
@@ -23,12 +25,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -75,6 +80,8 @@ public class PlayingState extends GameState {
      * The positions where the user can't go.
      */
     protected MapObjects collisionObjects;
+
+    protected MapObjects changingMapObjects;
     /**
      * The camera.
      */
@@ -114,6 +121,13 @@ public class PlayingState extends GameState {
      */
     protected GameMapManager gmm;
 
+    protected List<Character> pnjs;
+
+    protected Character testPNJ; //TODO REMOVE
+
+    private int defaultCamXPos;
+    private int defaultCamYPos;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -132,19 +146,18 @@ public class PlayingState extends GameState {
         gmm = GameMapManager.getInstance();
 
         gmm.setMap("Tmx/Umons_Nimy.tmx");
+        pnjs = new ArrayList<>();
 
-        tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
-        tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
-        mapWidth = (int)gmm.getActualMap().getProperties().get("width");
-        mapHeight = (int)gmm.getActualMap().getProperties().get("height");
-        collisionObjects = gmm.getActualMap().getLayers().get("Interdit").getObjects();
+        testPNJ = new Character(gs);
+        pnjs.add(testPNJ);
+        player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
+        initMap();
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
         gmm.setView(cam);
 
         questShower = new QuestShower(gs);
-        player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gim, gs, player);
 
 
@@ -157,6 +170,29 @@ public class PlayingState extends GameState {
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
         energyBar = new ProgressBar();
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
+        defaultCamXPos = (int)cam.position.x;
+        defaultCamYPos = (int)cam.position.y;
+
+    }
+
+    public void initMap() {
+
+        tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
+        tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
+        mapWidth = (int)gmm.getActualMap().getProperties().get("width");
+        mapHeight = (int)gmm.getActualMap().getProperties().get("height");
+        MapLayer collLayer = gmm.getActualMap().getLayers().get("Interdit");
+        if (collLayer != null)
+            collisionObjects = collLayer.getObjects();
+        MapLayer changeLayer = gmm.getActualMap().getLayers().get("Changer");
+        if (changeLayer != null)
+            changingMapObjects = changeLayer.getObjects();
+        player.setMapWidth(mapWidth * tileWidth);
+        player.setMapHeight(mapHeight * tileHeight);
+        player.setTileWidth(tileWidth);
+        player.setTileHeight(tileHeight);
+        testPNJ.move(player.getPosX(), player.getPosY());
+
     }
 
     @Override
@@ -204,6 +240,8 @@ public class PlayingState extends GameState {
             player.move(-toMoveX, -toMoveY);
             return;
         }
+        checkForMapChanging(player);
+        checkForNearPNJ(player);
 
         translateCamera(player.getPosX(), player.getPosY());
     }
@@ -234,6 +272,8 @@ public class PlayingState extends GameState {
      * @return If the player is in collision with one of the collision area on the map.
      */
     protected boolean checkForCollision(Player player) {
+        if (collisionObjects == null)
+            return false;
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = rectangleMapObject.getRectangle();
             Rectangle playerRect = player.getMapRectangle();
@@ -245,6 +285,34 @@ public class PlayingState extends GameState {
         return false;
     }
 
+    protected void checkForMapChanging(Player player) {
+        if (changingMapObjects == null)
+            return;
+        for (RectangleMapObject rectangleMapObject : changingMapObjects.getByType(RectangleMapObject.class)) {
+            Rectangle rect = rectangleMapObject.getRectangle();
+            Rectangle playerRect = player.getMapRectangle();
+            Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
+            if (Intersector.overlaps(mapRect, playerRect)) {
+                gmm.setMap(rectangleMapObject.getName());
+                initMap();
+            }
+        }
+    }
+
+    protected void checkForNearPNJ(Player player) {
+        Character nearest = null;
+        double nearestDist = tileWidth * mapWidth;
+        for (Character pnj : pnjs) {
+            double dist = Math.pow(player.getPosX() - pnj.getPosX(), 2) + Math.pow(player.getPosY() - pnj.getPosY(), 2);
+            if (dist < nearestDist) {
+                nearest = pnj;
+                nearestDist = dist;
+            }
+        }
+        if (nearest != null)
+            nearest.setSelected(true);
+    }
+
     @Override
     public void draw() {
         int topBarWidth = (int)((MasterOfMonsGame.WIDTH - 4 * leftMargin) / 3);
@@ -252,6 +320,9 @@ public class PlayingState extends GameState {
 
         gmm.render();
         player.draw(sb);
+        for (Character pnj : pnjs) {
+            pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        }
 
         sb.begin();
         if (gs.mustShowMapCoordinates())
@@ -293,6 +364,8 @@ public class PlayingState extends GameState {
             GameState g = gsm.setState(OutGameDialogState.class);
             ((OutGameDialogState)g).setText("Are you sure ?");
             ((OutGameDialogState)g).addAnswer("Yes !", "No");
+        } else if (gim.isKey(Input.Keys.V, KeyStatus.Pressed)) {
+            gsm.setState(DeadMenuState.class);
         }
         inventoryShower.handleInput();
     }

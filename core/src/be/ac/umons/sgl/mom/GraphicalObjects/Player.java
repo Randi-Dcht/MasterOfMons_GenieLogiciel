@@ -37,21 +37,13 @@ public class Player extends Character {
      * @param gs The game's graphical settings.
      * @param middleX The screen's center horizontal position.
      * @param middleY The screen's center vertical position.
-     * @param tileWidth The width of a tile
-     * @param tileHeight The height of a tile
-     * @param mapWidth The map's width (in pixel)
-     * @param mapHeight The map's height (in pixel)
      */
-    public Player(GraphicalSettings gs, int middleX, int middleY, int tileWidth, int tileHeight, int mapWidth, int mapHeight) {
+    public Player(GraphicalSettings gs, int middleX, int middleY) {
         super(gs);
         this.middleX = middleX;
         this.middleY = middleY;
         posX = middleX;
         posY = 0;
-        this.tileWidth = tileWidth;
-        this.tileHeight = tileHeight;
-        this.mapHeight = mapHeight;
-        this.mapWidth = mapWidth;
         inventory = new ArrayList<>();
         inventory.add(GameObjects.Object1);
         inventory.add(GameObjects.Object2);
@@ -131,4 +123,19 @@ public class Player extends Character {
         return new Rectangle(x , y, ((float)getWidth() / tileWidth), (float)getHeight() / tileHeight);
     }
 
+    public void setMapWidth(int mapWidth) {
+        this.mapWidth = mapWidth;
+    }
+
+    public void setMapHeight(int mapHeight) {
+        this.mapHeight = mapHeight;
+    }
+
+    public void setTileWidth(int tileWidth) {
+        this.tileWidth = tileWidth;
+    }
+
+    public void setTileHeight(int tileHeight) {
+        this.tileHeight = tileHeight;
+    }
 }
