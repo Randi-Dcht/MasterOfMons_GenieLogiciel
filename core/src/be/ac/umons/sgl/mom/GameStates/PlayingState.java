@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
@@ -293,6 +294,8 @@ public class PlayingState extends GameState {
             GameState g = gsm.setState(OutGameDialogState.class);
             ((OutGameDialogState)g).setText("Are you sure ?");
             ((OutGameDialogState)g).addAnswer("Yes !", "No");
+        } else if (gim.isKey(Input.Keys.V, KeyStatus.Pressed)) {
+            gsm.setState(DeadMenuState.class);
         }
         inventoryShower.handleInput();
     }
