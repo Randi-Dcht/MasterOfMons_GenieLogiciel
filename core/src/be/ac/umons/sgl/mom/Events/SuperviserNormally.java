@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
@@ -226,9 +227,12 @@ public class SuperviserNormally implements Observer
        {
            if(victim.dodge() < 0.6)
            {
-               victim.loseAttack(calculateHits(attacker,victim,0));
+               if(attacker.howGun())
+                   victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
+               else
+                   victim.loseAttack(calculateHits(attacker,victim,0));
            }
-           if(attacker.getType() == 'C')
+           if(attacker.getType().equals(PlayerType.ComputerPlayer))
            {
                Mobile mb = (Mobile) attacker;
                mb.nextAttack(victim);
@@ -240,9 +244,9 @@ public class SuperviserNormally implements Observer
         * This method calculates the hits for the victim of the attack
         * @param attacker is the character who attack
         * @param victim is the character who give hits
-        * @param gun is a param
+        * @param gun is damage calculus
         */
-       public double calculateHits(Attack attacker, Attack victim,int gun) //TODO a dertimer dans les prochaines fois et regarder au bonus + chacaract loseAttack
+       public double calculateHits(Attack attacker, Attack victim,double gun)
        {
            return ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
        }

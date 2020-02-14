@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
@@ -39,9 +40,9 @@ public class Mobile extends Character implements Serializable
      * Mobile is a player computer so the type is 'C'
      */
     @Override
-    public char getType()
+    public PlayerType getType()
     {
-        return 'C';
+        return PlayerType.ComputerPlayer;
     }
 
 

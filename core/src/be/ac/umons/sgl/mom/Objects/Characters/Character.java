@@ -35,6 +35,7 @@ public abstract class Character implements Attack, Social
         conversation  = ReadConversation.getInstance();
     }
 
+
     /**
      *This method allows to increase the life
      * @param dt is the time between two frame
@@ -149,5 +150,21 @@ public abstract class Character implements Attack, Social
     {
         living = false;
         SuperviserNormally.getSupervisor().getEvent().notify(new Dead(this));
+    }
+
+
+    /***/
+    @Override
+    public double damageGun()
+    {
+        return 2*7+Math.max(5,level-3);
+    }
+
+
+    /***/
+    @Override
+    public boolean howGun()
+    {
+        return gun != null;
     }
 }

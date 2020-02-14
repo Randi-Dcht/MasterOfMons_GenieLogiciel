@@ -46,14 +46,4 @@ public class Gun extends Items implements Guns
         return 0;
     }
 
-    /**
-     * This method return the damage of this gun
-     *
-     * @return the damage (double)
-     */
-    @Override
-    public double damage()
-    {
-        return 0;
-    }
 }

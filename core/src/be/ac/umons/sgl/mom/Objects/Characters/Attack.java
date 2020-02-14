@@ -1,5 +1,7 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
+import be.ac.umons.sgl.mom.Enums.PlayerType;
+
 public interface Attack
 {
     /**
@@ -46,9 +48,17 @@ public interface Attack
 
     /**
      * This method return the type of character (Human or Computer)
-     * Human is equal 'H'
-     * Computer is equal 'C'
+     * Human is equal PlayerHuman
+     * Computer is equal PlayerComputer
      */
-    public char getType();
+    public PlayerType getType();
+
+
+    /***/
+    public boolean howGun();
+
+
+    /***/
+    public double damageGun();
 
 }

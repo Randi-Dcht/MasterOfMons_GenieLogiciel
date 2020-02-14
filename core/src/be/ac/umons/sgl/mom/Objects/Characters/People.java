@@ -1,11 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
@@ -280,9 +275,9 @@ public class People extends Character implements Serializable, Observer
      * @return H (char)
      */
     @Override
-    public char getType()
+    public PlayerType getType()
     {
-        return 'H';
+        return PlayerType.HumanPlayer;
     }
 
 
