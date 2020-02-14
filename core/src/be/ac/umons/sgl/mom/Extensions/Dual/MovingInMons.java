@@ -9,7 +9,6 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-
 import java.util.HashMap;
 
 public class MovingInMons extends MasterQuest

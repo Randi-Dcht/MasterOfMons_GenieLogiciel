@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class GoToPriorityLesson extends UnderQuest
@@ -11,7 +12,7 @@ public class GoToPriorityLesson extends UnderQuest
 
 
       @Override
-      public void evenActivity() {
+      public void evenActivity(Notification notify) {
       }
 
       private void checkLesson(){}

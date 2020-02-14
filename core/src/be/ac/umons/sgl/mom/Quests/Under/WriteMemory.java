@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class WriteMemory extends UnderQuest
@@ -9,7 +10,7 @@ public class WriteMemory extends UnderQuest
     }
 
     @Override
-    public void evenActivity()
+    public void evenActivity(Notification notify)
     {
         /*code ici*/
     }

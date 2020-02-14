@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class CheckStudy extends UnderQuest
@@ -12,7 +13,7 @@ public class CheckStudy extends UnderQuest
     }
 
     @Override
-    public void evenActivity() {
+    public void evenActivity(Notification notify) {
     }
 
     public void studyAtKot(){}

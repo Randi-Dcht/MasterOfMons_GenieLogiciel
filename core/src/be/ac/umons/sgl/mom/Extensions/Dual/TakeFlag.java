@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Extensions.Dual;
 
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
@@ -11,7 +12,7 @@ public class TakeFlag extends UnderQuest
     }
 
     @Override
-    public void evenActivity() {
+    public void evenActivity(Notification notify) {
 
     }
 

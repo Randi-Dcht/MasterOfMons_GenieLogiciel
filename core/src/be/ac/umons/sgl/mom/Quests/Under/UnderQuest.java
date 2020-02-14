@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;
@@ -103,8 +104,9 @@ public abstract class UnderQuest implements Quest,Serializable
 
     /**
      * This method is called when the action occurs
+     * @param notify
      */
-    public abstract void evenActivity();
+    public abstract void evenActivity(Notification notify);
 
 
     /**
