@@ -314,7 +314,7 @@ public class People extends Character implements Serializable, Observer
 
     /**
      * This method reduce the energizing once.
-     * @param state is the state of the people
+     * @param state is the state of the people²
      */
     public void reduceEnergizing(State state)
     {

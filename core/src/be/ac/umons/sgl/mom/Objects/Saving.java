@@ -34,7 +34,7 @@ public class Saving implements Observer
      * @param nameSave who is the name of the saving
      * @param people who is the people who play this game with Quest
      */
-    public Saving(People people, String nameSave) //TODO: ajouter les maps en safe !
+    public Saving(People people, String nameSave)
     {
         this.people = people;
         this.nameSave = nameSave;
@@ -129,7 +129,6 @@ public class Saving implements Observer
             ObjectInputStream entree;
             entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + file+".mom"))));
             people = (People) entree.readObject();
-            //graSet = (GraphicalSettings) entree.readObject();
         }
         catch(ClassNotFoundException | IOException e)
         {

@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.PlayerType;
+import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
@@ -225,6 +226,8 @@ public class SuperviserNormally implements Observer
         */
        public void attackMethod(Attack attacker, Attack victim)
        {
+           if (attacker.getType().equals(PlayerType.HumanPlayer))
+               ((People)attacker).reduceEnergizing(State.attack);
            if(victim.dodge() < 0.6)
            {
                if(attacker.howGun())
