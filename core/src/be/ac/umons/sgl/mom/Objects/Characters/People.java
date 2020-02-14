@@ -313,6 +313,16 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
+     * This method reduce the energizing once.
+     * @param state is the state of the people
+     */
+    public void reduceEnergizing(State state)
+    {
+        energy = energy - state.getEnergy();
+    }
+
+
+    /**
      * This method allows to invincible people,the life doesn't decrease (#debug#)
      * @param var is true == invincible | false == doesn't invincible.
      */

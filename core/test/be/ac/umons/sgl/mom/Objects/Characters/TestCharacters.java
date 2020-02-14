@@ -39,7 +39,7 @@ public class TestCharacters
         double second = people.getEnergy();
         assertTrue(first > second,"depency energy");
 
-        people.changedState(State.sleep);
+        people.changePlace(Place.Kot);
         for (int i = 0; i < 100 ; i++ ){people.energy(1);}
         first = people.getEnergy();
         assertTrue(second < first,"add energy");
