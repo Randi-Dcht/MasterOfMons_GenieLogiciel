@@ -24,6 +24,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
@@ -76,6 +77,8 @@ public class PlayingState extends GameState {
      * The positions where the user can't go.
      */
     protected MapObjects collisionObjects;
+
+    protected MapObjects changingMapObjects;
     /**
      * The camera.
      */
@@ -134,18 +137,14 @@ public class PlayingState extends GameState {
 
         gmm.setMap("Tmx/Umons_Nimy.tmx");
 
-        tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
-        tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
-        mapWidth = (int)gmm.getActualMap().getProperties().get("width");
-        mapHeight = (int)gmm.getActualMap().getProperties().get("height");
-        collisionObjects = gmm.getActualMap().getLayers().get("Interdit").getObjects();
+        player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
+        initMap();
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
         gmm.setView(cam);
 
         questShower = new QuestShower(gs);
-        player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight, mapWidth * tileWidth, mapHeight * tileHeight); // TODO : BUG AVEC EN BAS ET A GAUCHE
         inventoryShower = new InventoryShower(gim, gs, player);
 
 
@@ -158,6 +157,25 @@ public class PlayingState extends GameState {
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
         energyBar = new ProgressBar();
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
+    }
+
+    public void initMap() {
+
+        tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
+        tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
+        mapWidth = (int)gmm.getActualMap().getProperties().get("width");
+        mapHeight = (int)gmm.getActualMap().getProperties().get("height");
+        MapLayer collLayer = gmm.getActualMap().getLayers().get("Interdit");
+        if (collLayer != null)
+            collisionObjects = collLayer.getObjects();
+        MapLayer changeLayer = gmm.getActualMap().getLayers().get("Changer");
+        if (changeLayer != null)
+            changingMapObjects = changeLayer.getObjects();
+        player.setMapWidth(mapWidth * tileWidth);
+        player.setMapHeight(mapHeight * tileHeight);
+        player.setTileWidth(tileWidth);
+        player.setTileHeight(tileHeight);
+
     }
 
     @Override
@@ -205,6 +223,7 @@ public class PlayingState extends GameState {
             player.move(-toMoveX, -toMoveY);
             return;
         }
+        checkForMapChanging(player);
 
         translateCamera(player.getPosX(), player.getPosY());
     }
@@ -235,6 +254,8 @@ public class PlayingState extends GameState {
      * @return If the player is in collision with one of the collision area on the map.
      */
     protected boolean checkForCollision(Player player) {
+        if (collisionObjects == null)
+            return false;
         for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = rectangleMapObject.getRectangle();
             Rectangle playerRect = player.getMapRectangle();
@@ -244,6 +265,20 @@ public class PlayingState extends GameState {
             }
         }
         return false;
+    }
+
+    protected void checkForMapChanging(Player player) {
+        if (changingMapObjects == null)
+            return;
+        for (RectangleMapObject rectangleMapObject : changingMapObjects.getByType(RectangleMapObject.class)) {
+            Rectangle rect = rectangleMapObject.getRectangle();
+            Rectangle playerRect = player.getMapRectangle();
+            Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
+            if (Intersector.overlaps(mapRect, playerRect)) {
+                gmm.setMap(rectangleMapObject.getName());
+                initMap();
+            }
+        }
     }
 
     @Override

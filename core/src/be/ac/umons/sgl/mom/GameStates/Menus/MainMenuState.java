@@ -48,7 +48,7 @@ public class MainMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("newGame"), () -> {
                     extSel.generateLoadLists();
                     for (FileHandle f : Gdx.files.internal("Tmx/").list())
-                        if (f.file().getName().equals("Umons_Nimy.tmx")) // TODO : Remove the cond.
+//                        if (f.file().getName().equals("Umons_Nimy.tmx")) // TODO : Remove the cond.
                             GameMapManager.getInstance().addMapsToLoad(f.path());
                     GameMapManager.getInstance().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
