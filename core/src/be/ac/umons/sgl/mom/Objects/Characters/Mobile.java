@@ -37,7 +37,8 @@ public class Mobile extends Character implements Serializable
 
 
     /**
-     * Mobile is a player computer so the type is 'C'
+     * Mobile is a player computer so the type is computerPlayer
+     * @return playerType of this instance
      */
     @Override
     public PlayerType getType()
@@ -65,7 +66,7 @@ public class Mobile extends Character implements Serializable
      * @param victim is the other character of the attack
      */
     public void nextAttack(Attack victim)
-    {//TODO ajouter un timer (voir avec Guillaume)
+    {//TODO ajouter un timer avec le temps d'esquive pour refaire une attaque
         if(living)
             SuperviserNormally.getSupervisor().attackMethod(this,victim);
     }

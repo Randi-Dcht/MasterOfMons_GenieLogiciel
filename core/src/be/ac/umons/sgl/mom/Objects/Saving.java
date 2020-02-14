@@ -11,8 +11,11 @@ import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import com.badlogic.gdx.Gdx;
 
@@ -34,8 +37,10 @@ public class Saving implements Observer
      * @param nameSave who is the name of the saving
      * @param people who is the people who play this game with Quest
      */
-    public Saving(People people, String nameSave) //TODO: ajouter les maps en safe !
+    public Saving(People people, String nameSave)
     {
+        SuperviserNormally.getSupervisor().getEvent().add(Events.HourTimer,this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
         this.people = people;
         this.nameSave = nameSave;
     }
@@ -47,6 +52,8 @@ public class Saving implements Observer
      */
     public Saving(String oldSave)
     {
+        SuperviserNormally.getSupervisor().getEvent().add(Events.HourTimer,this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
         this.oldSave = oldSave;
         nameSave = cleanName(oldSave,0);
         playOldParty(oldSave);
@@ -129,7 +136,6 @@ public class Saving implements Observer
             ObjectInputStream entree;
             entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + file+".mom"))));
             people = (People) entree.readObject();
-            //graSet = (GraphicalSettings) entree.readObject();
         }
         catch(ClassNotFoundException | IOException e)
         {

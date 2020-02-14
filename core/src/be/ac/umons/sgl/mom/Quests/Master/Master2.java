@@ -2,8 +2,8 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -11,6 +11,7 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
+import java.util.HashMap;
 
 /**
  *This class define the five year in the University of Mons with the goals.
@@ -55,13 +56,13 @@ public class Master2 extends MasterQuest
     }
 
     @Override
-    public Items[] whatItem() {
-        return new Items[0];/*code ici*/
+    public HashMap<Place,Items> whatItem() {
+        return new HashMap<>();/*code ici*/
     }
 
     @Override
-    public Mobile[] whatMobile() {
-        return new Mobile[0];/*code ici*/
+    public HashMap<Place,Mobile> whatMobile() {
+        return new HashMap<>();/*code ici*/
     }
 
     /**

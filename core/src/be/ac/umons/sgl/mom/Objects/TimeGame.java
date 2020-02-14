@@ -35,7 +35,7 @@ public class TimeGame implements Observer
      * @param hour who is the hour of start
      * @param years who is year of start
      */
-    public TimeGame(int month,int day,int hour,int years)
+    public TimeGame(int month,int day,int hour,int years)//TODO voir pour passer une new Date directement -> uniquemebt save date alors
     {
         NBmonth = month-1;
         this.day = day-1;

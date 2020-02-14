@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
@@ -15,6 +16,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -328,14 +330,14 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method return the all items for this quest
      * @return list of items
      */
-    public abstract Items[] whatItem();
+    public abstract HashMap<Place,Items> whatItem();
 
 
     /**
      * This method return the all mobile and PNJ for this quest
      * @return list of mobile
      */
-    public abstract Mobile[] whatMobile();
+    public abstract HashMap<Place,Mobile> whatMobile();
 
 
     /***/

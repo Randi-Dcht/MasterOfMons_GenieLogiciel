@@ -47,8 +47,19 @@ public class People extends Character implements Serializable, Observer
     public People(String name, Type type)
     {
         super(type);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         this.name = name;
         this.threshold = minExperience(level+1);
+    }
+
+
+    /**
+     * This method return the place of the people
+     * @return place in maps (TMX)
+     */
+    public Place getPlace()
+    {
+        return place;
     }
 
 
@@ -271,8 +282,8 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
-     * A people is a Human player so the type is 'H'
-     * @return H (char)
+     * A people is a Human player so the type is HumanPlayer
+     * @return playerType of this instance
      */
     @Override
     public PlayerType getType()
@@ -314,7 +325,7 @@ public class People extends Character implements Serializable, Observer
 
     /**
      * This method reduce the energizing once.
-     * @param state is the state of the people
+     * @param state is the state of the people²
      */
     public void reduceEnergizing(State state)
     {

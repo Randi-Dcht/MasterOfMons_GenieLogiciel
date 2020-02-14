@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -11,6 +12,8 @@ import be.ac.umons.sgl.mom.Quests.Under.FreeTimeMons;
 import be.ac.umons.sgl.mom.Quests.Under.HelpMe;
 import be.ac.umons.sgl.mom.Quests.Under.SuccesfulYear;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
+
+import java.util.HashMap;
 
 /**
  *This class define a MasterQuest who is 'SuccessfulYear' in the bachelor 2
@@ -63,9 +66,9 @@ public class SuccessfulYear extends MasterQuest
      * @return list of items
      */
     @Override
-    public Items[] whatItem()
+    public HashMap<Place,Items> whatItem()
     {
-        return new Items[0];
+        return new HashMap<>();
     }
 
 
@@ -74,9 +77,9 @@ public class SuccessfulYear extends MasterQuest
      * @return list of mobile
      */
     @Override
-    public Mobile[] whatMobile()
+    public HashMap<Place,Mobile> whatMobile()
     {
-        return new Mobile[0];
+        return new HashMap<>();
     }
 
 
