@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -47,6 +48,8 @@ public class Character {
      */
     private double timeBeforeAttack;
 
+    protected boolean isSelected;
+
     /**
      * @param gs The game's graphical settings.
      */
@@ -67,6 +70,9 @@ public class Character {
     public void draw(Batch batch, int x, int y, int width, int height) {
         batch.begin();
         batch.draw(getTexture(),  x, y, width, height);
+        if (isSelected) {
+            gs.getSmallFont().draw(batch, String.format(gs.getStringFromId("pressToTalk"), "E"), x, y + height); //TODO Check for touch
+        }
         batch.end();
 
     }
@@ -162,5 +168,9 @@ public class Character {
      */
     public void setTimeBeforeAttack(double timeBeforeAttack) {
         this.timeBeforeAttack = timeBeforeAttack;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

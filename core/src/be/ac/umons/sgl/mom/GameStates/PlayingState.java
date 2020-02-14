@@ -9,6 +9,7 @@ import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
@@ -31,6 +32,8 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -118,6 +121,13 @@ public class PlayingState extends GameState {
      */
     protected GameMapManager gmm;
 
+    protected List<Character> pnjs;
+
+    protected Character testPNJ; //TODO REMOVE
+
+    private int defaultCamXPos;
+    private int defaultCamYPos;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -136,7 +146,10 @@ public class PlayingState extends GameState {
         gmm = GameMapManager.getInstance();
 
         gmm.setMap("Tmx/Umons_Nimy.tmx");
+        pnjs = new ArrayList<>();
 
+        testPNJ = new Character(gs);
+        pnjs.add(testPNJ);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap();
 
@@ -157,6 +170,9 @@ public class PlayingState extends GameState {
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
         energyBar = new ProgressBar();
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
+        defaultCamXPos = (int)cam.position.x;
+        defaultCamYPos = (int)cam.position.y;
+
     }
 
     public void initMap() {
@@ -175,6 +191,7 @@ public class PlayingState extends GameState {
         player.setMapHeight(mapHeight * tileHeight);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
+        testPNJ.move(player.getPosX(), player.getPosY());
 
     }
 
@@ -224,6 +241,7 @@ public class PlayingState extends GameState {
             return;
         }
         checkForMapChanging(player);
+        checkForNearPNJ(player);
 
         translateCamera(player.getPosX(), player.getPosY());
     }
@@ -281,6 +299,20 @@ public class PlayingState extends GameState {
         }
     }
 
+    protected void checkForNearPNJ(Player player) {
+        Character nearest = null;
+        double nearestDist = tileWidth * mapWidth;
+        for (Character pnj : pnjs) {
+            double dist = Math.pow(player.getPosX() - pnj.getPosX(), 2) + Math.pow(player.getPosY() - pnj.getPosY(), 2);
+            if (dist < nearestDist) {
+                nearest = pnj;
+                nearestDist = dist;
+            }
+        }
+        if (nearest != null)
+            nearest.setSelected(true);
+    }
+
     @Override
     public void draw() {
         int topBarWidth = (int)((MasterOfMonsGame.WIDTH - 4 * leftMargin) / 3);
@@ -288,6 +320,9 @@ public class PlayingState extends GameState {
 
         gmm.render();
         player.draw(sb);
+        for (Character pnj : pnjs) {
+            pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        }
 
         sb.begin();
         if (gs.mustShowMapCoordinates())
