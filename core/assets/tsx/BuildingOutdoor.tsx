@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="BuildingOutdoor" tilewidth="133" tileheight="127" tilecount="26" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
- <tile id="0">
+ <tile id="18">
   <image width="99" height="85" source="../Sprite/buildingTiles_008.png"/>
  </tile>
- <tile id="1">
+ <tile id="19">
   <image width="99" height="85" source="../Sprite/buildingTiles_016.png"/>
  </tile>
- <tile id="2">
+ <tile id="20">
   <image width="99" height="85" source="../Sprite/buildingTiles_050.png"/>
  </tile>
- <tile id="3">
+ <tile id="21">
   <image width="99" height="85" source="../Sprite/buildingTiles_052.png"/>
  </tile>
- <tile id="4">
+ <tile id="22">
   <image width="100" height="85" source="../Sprite/buildingTiles_053.png"/>
  </tile>
- <tile id="5">
+ <tile id="23">
   <image width="99" height="85" source="../Sprite/buildingTiles_055.png"/>
  </tile>
- <tile id="6">
+ <tile id="24">
   <image width="100" height="85" source="../Sprite/buildingTiles_056.png"/>
  </tile>
- <tile id="7">
+ <tile id="25">
   <image width="99" height="60" source="../Sprite/buildingTiles_057.png"/>
  </tile>
- <tile id="8">
+ <tile id="26">
   <image width="99" height="60" source="../Sprite/buildingTiles_058.png"/>
  </tile>
- <tile id="9">
+ <tile id="27">
   <image width="99" height="60" source="../Sprite/buildingTiles_059.png"/>
  </tile>
- <tile id="10">
+ <tile id="28">
   <image width="99" height="60" source="../Sprite/buildingTiles_060.png"/>
  </tile>
- <tile id="11">
+ <tile id="29">
   <image width="99" height="60" source="../Sprite/buildingTiles_061.png"/>
  </tile>
- <tile id="12">
+ <tile id="30">
   <image width="99" height="62" source="../Sprite/buildingTiles_077.png"/>
  </tile>
- <tile id="13">
+ <tile id="31">
   <image width="13" height="24" source="../Sprite/buildingTiles_078.png"/>
  </tile>
- <tile id="14">
+ <tile id="32">
   <image width="99" height="60" source="../Sprite/buildingTiles_081.png"/>
  </tile>
- <tile id="15">
+ <tile id="33">
   <image width="99" height="61" source="../Sprite/buildingTiles_082.png"/>
  </tile>
- <tile id="16">
+ <tile id="34">
   <image width="99" height="63" source="../Sprite/buildingTiles_084.png"/>
  </tile>
- <tile id="17">
+ <tile id="35">
   <image width="133" height="127" source="../Sprite/buildingTiles_085.png"/>
  </tile>
- <tile id="18">
+ <tile id="36">
   <image width="99" height="61" source="../Sprite/buildingTiles_088.png"/>
  </tile>
- <tile id="19">
+ <tile id="37">
   <image width="99" height="60" source="../Sprite/buildingTiles_089.png"/>
  </tile>
- <tile id="20">
+ <tile id="38">
   <image width="99" height="55" source="../Sprite/buildingTiles_103.png"/>
  </tile>
- <tile id="21">
+ <tile id="39">
   <image width="99" height="54" source="../Sprite/buildingTiles_118.png"/>
  </tile>
- <tile id="22">
+ <tile id="40">
   <image width="99" height="54" source="../Sprite/buildingTiles_119.png"/>
  </tile>
- <tile id="23">
+ <tile id="41">
   <image width="132" height="127" source="../Sprite/buildingTiles_123.png"/>
  </tile>
- <tile id="24">
+ <tile id="42">
   <image width="99" height="54" source="../Sprite/buildingTiles_126.png"/>
  </tile>
- <tile id="25">
+ <tile id="43">
   <image width="99" height="54" source="../Sprite/buildingTiles_127.png"/>
  </tile>
 </tileset>
