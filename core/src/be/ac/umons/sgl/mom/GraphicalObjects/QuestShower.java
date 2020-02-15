@@ -259,7 +259,7 @@ public class QuestShower {
     protected int getMaximumQuestNameWidth(Quest mainQuest, int defaultMargin) {
         int max = getTextSize(mainQuest.getName()).x + defaultMargin;
         for (Quest q: mainQuest.getSubQuests()) {
-            int i = getMaximumQuestNameWidth(q, max + BETWEEN_QUEST_MARGIN_WIDTH);
+            int i = getMaximumQuestNameWidth(q, defaultMargin + BETWEEN_QUEST_MARGIN_WIDTH);
             if (i > max)
                 max = i;
         }
