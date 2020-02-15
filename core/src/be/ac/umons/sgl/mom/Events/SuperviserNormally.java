@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Events;
 
+import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Enums.State;
@@ -8,6 +9,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Characters.Social;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
@@ -255,6 +257,17 @@ public class SuperviserNormally implements Observer
         public double bonus(double p, double c)
         {
             return 1; //TODO continuer
+        }
+
+
+        /***/
+        public void meetCharacter(Social player1, Social player2)
+        {
+            Actions action = player1.getAction().comparable(player2.getAction());
+            if (action.equals(Actions.Attack))
+                System.out.println("Attack"); //TODO modif
+            else if (action.equals(Actions.Dialog))
+                System.out.println("Dialog"); //TODO modif
         }
 
     }

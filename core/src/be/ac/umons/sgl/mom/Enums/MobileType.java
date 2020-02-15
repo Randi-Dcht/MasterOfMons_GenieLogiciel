@@ -5,25 +5,25 @@ package be.ac.umons.sgl.mom.Enums;
 public enum MobileType
 {
     /***/
-    Strong("Strong",70,10,20),
+    Strong("Strong",0.7,0.1,0.2),
     /***/
-    Athletic("Athletic",20,70,10),
+    Athletic("Athletic",0.2,0.7,0.1),
     /***/
-    Lambda("Lambda",33,33,34);
+    Lambda("Lambda",0.33,0.33,0.34);
 
 
     /***/
-    private int percentStrength;
+    private double percentStrength;
     /***/
-    private int percentAgility;
+    private double percentAgility;
     /***/
-    private int percentDefence;
+    private double percentDefence;
     /***/
     private String name;
 
 
     /***/
-    private MobileType(String name, int percentStrength, int percentAgility, int percentDefence)
+    private MobileType(String name, double percentStrength, double percentAgility, double percentDefence)
     {
         this.percentAgility  = percentAgility;
         this.percentDefence  = percentDefence;
@@ -40,21 +40,21 @@ public enum MobileType
 
 
     /***/
-    public int getAgility()
+    public double getAgility()
     {
         return percentAgility;
     }
 
 
     /***/
-    public int getDefence()
+    public double getDefence()
     {
         return percentDefence;
     }
 
 
     /***/
-    public int getStrength()
+    public double getStrength()
     {
         return percentStrength;
     }

@@ -22,7 +22,7 @@ public class Supervisor /*! va être supprimer !*/
   private static People people;
   private static QuestShower questShower;
   private static Saving save;
-  private static Mobile mobile = new Mobile("xxx", Bloc.BA1, MobileType.Athletic);
+  private static Mobile mobile = new Mobile("xxx", Bloc.BA2, MobileType.Athletic);
 
   public static People getPeople()
   {

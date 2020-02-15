@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.MobileType;
 
 /**
  * Cette classe permet d'intancier un Mobile contolé par ordinateur qui a besoin d'aide pour étudier
@@ -14,7 +16,8 @@ public class StudPNJ extends Mobile
   }
 
   @Override
-  public Actions getAction() {
-    return Actions.NeedHelp;
+  public Actions getAction()
+  {
+    return Actions.Dialog;
   }
 }

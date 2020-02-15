@@ -20,6 +20,6 @@ public class AssistPNJ extends Mobile
   @Override
   public Actions getAction()
   {
-    return Actions.HelpOther;
+    return Actions.Dialog;
   }
 }

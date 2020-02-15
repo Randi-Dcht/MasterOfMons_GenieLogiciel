@@ -17,10 +17,10 @@ public abstract class Character implements Attack, Social
     protected int agility;
     protected double life;
     protected Gun gun;
-    protected String name;
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
     protected ReadConversation conversation;
+    final String name;
 
 
     /**

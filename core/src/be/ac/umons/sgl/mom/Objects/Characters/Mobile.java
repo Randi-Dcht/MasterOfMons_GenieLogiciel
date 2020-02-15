@@ -27,16 +27,25 @@ public class Mobile extends Character implements Serializable
     public Mobile(String name, Bloc playerBloc, MobileType type)
     {
         super(name);
-        calculedPoint(type);
+        this.level = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1)+playerBloc.getMinMob()); //TODO tester
         this.playerBloc  = playerBloc;
-        this.level = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1)+playerBloc.getMinMob());
+        calculusPoint(type);
     }
 
 
     /***/
-    public void calculedPoint(MobileType type)
+    public void calculusPoint(MobileType type)
     {
-        updateType(5,5,5);
+        int number = (level-1)*3; int[] listN = new int[3]; int total;
+        listN[0] =(int)( number  * type.getStrength());
+        listN[1] =(int)( number  * type.getDefence());
+        listN[2] =(int)( number  * type.getAgility());
+        if((total  =listN[0]+listN[1]+listN[2]) != number && number > 0)
+        {
+            int random = new Random().nextInt(2);
+            listN[random] = listN[random] +  (number - total);
+        }
+        updateType(listN[0],listN[1],listN[2]);
     }
 
 
