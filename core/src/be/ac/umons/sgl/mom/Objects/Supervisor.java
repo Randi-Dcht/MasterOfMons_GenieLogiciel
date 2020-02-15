@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Objects;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -21,7 +22,7 @@ public class Supervisor /*! va être supprimer !*/
   private static People people;
   private static QuestShower questShower;
   private static Saving save;
-  private static Mobile mobile = new Mobile("xxx", Bloc.BA1,Type.athletic);
+  private static Mobile mobile = new Mobile("xxx", Bloc.BA1, MobileType.Athletic);
 
   public static People getPeople()
   {

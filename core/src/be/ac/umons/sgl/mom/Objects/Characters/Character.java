@@ -17,6 +17,7 @@ public abstract class Character implements Attack, Social
     protected int agility;
     protected double life;
     protected Gun gun;
+    protected String name;
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
     protected ReadConversation conversation;
@@ -24,13 +25,11 @@ public abstract class Character implements Attack, Social
 
     /**
      * This constructor allows to create a new people who pilot by a player
-     * @param type who is the characteristic of this people (Enums)
+     * @param name is the name of the character
      */
-    public Character(Type type)
+    public Character(String name)
     {
-        this.strength = type.getStrength();
-        this.defence  = type.getDefence();
-        this.agility  = type.getAgility();
+        this.name     = name;
         this.life     = lifemax();
         conversation  = ReadConversation.getInstance();
     }

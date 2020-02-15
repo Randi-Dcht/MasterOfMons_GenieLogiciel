@@ -8,9 +8,9 @@ import be.ac.umons.sgl.mom.Enums.*;
  * */
 public class StudPNJ extends Mobile
 {
-  public StudPNJ(Bloc playerBloc,Type playerType)
+  public StudPNJ(Bloc playerBloc,MobileType type)
   {
-    super("Bagarre",playerBloc,playerType);
+    super("Bagarre",playerBloc,type);
   }
 
   @Override
