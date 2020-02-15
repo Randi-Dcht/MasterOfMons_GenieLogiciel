@@ -312,10 +312,11 @@ public class PlayingState extends GameState {
         double nearestDist = tileWidth * mapWidth;
         for (Character pnj : pnjs) {
             double dist = Math.pow(player.getPosX() - pnj.getPosX(), 2) + Math.pow(player.getPosY() - pnj.getPosY(), 2);
-            if (dist < nearestDist) {
+            if (dist < nearestDist && dist < 30000) {
                 nearest = pnj;
                 nearestDist = dist;
             }
+            pnj.setSelected(false);
         }
         if (nearest != null)
             nearest.setSelected(true);
