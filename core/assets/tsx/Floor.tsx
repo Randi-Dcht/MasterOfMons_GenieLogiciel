@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Sol" tilewidth="133" tileheight="133" tilecount="18" columns="0">
+<tileset version="1.2" tiledversion="1.3.1" name="Sol" tilewidth="256" tileheight="512" tilecount="54" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="132" height="99" source="../Sprite/landscapeTiles_067.png"/>
@@ -132,5 +132,35 @@
  </tile>
  <tile id="43">
   <image width="99" height="54" source="../Sprite/buildingTiles_127.png"/>
+ </tile>
+ <tile id="44">
+  <image width="256" height="512" source="../Sprite/stoneWallAged_E.png"/>
+ </tile>
+ <tile id="45">
+  <image width="256" height="512" source="../Sprite/stoneWallColumnIn_E.png"/>
+ </tile>
+ <tile id="46">
+  <image width="256" height="512" source="../Sprite/stoneWallColumnIn_S.png"/>
+ </tile>
+ <tile id="47">
+  <image width="256" height="512" source="../Sprite/stoneWallCorner_E.png"/>
+ </tile>
+ <tile id="48">
+  <image width="256" height="512" source="../Sprite/stoneWallCorner_N.png"/>
+ </tile>
+ <tile id="49">
+  <image width="256" height="512" source="../Sprite/stoneWallCorner_S.png"/>
+ </tile>
+ <tile id="50">
+  <image width="256" height="512" source="../Sprite/stoneWallCorner_W.png"/>
+ </tile>
+ <tile id="51">
+  <image width="256" height="512" source="../Sprite/stoneWallRound_N.png"/>
+ </tile>
+ <tile id="52">
+  <image width="256" height="512" source="../Sprite/stoneWallRound_W.png"/>
+ </tile>
+ <tile id="53">
+  <image width="256" height="512" source="../Sprite/stoneUneven_E.png"/>
  </tile>
 </tileset>
