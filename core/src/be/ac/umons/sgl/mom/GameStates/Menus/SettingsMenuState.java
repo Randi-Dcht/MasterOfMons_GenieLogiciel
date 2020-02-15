@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Languages;
 import be.ac.umons.sgl.mom.GameStates.Menus.MenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
@@ -39,6 +40,7 @@ public class SettingsMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("gameResolutionHeight"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Height"),
                 new MenuItem(gs.getStringFromId("maximumAutomaticSaves"), MenuItemType.NumberTextBox, "TXT_Maximum_Automatic_Saves"),
                 new MenuItem(gs.getStringFromId("language"), MenuItemType.ScrollListChooser, "SLC_Language"),
+                new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser, "SLC_Difficulty"),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
         });
         Settings settings = MasterOfMonsGame.settings;
@@ -63,6 +65,14 @@ public class SettingsMenuState extends MenuState {
                         }, l == MasterOfMonsGame.settings.getLanguage()));
                     ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
                     mi.size.y = (int)(3 * (gs.getNormalFont().getLineHeight() + 2 * topMargin));
+                    break;
+                case "SLC_Difficulty":
+                    List<ScrollListChooser.ScrollListItem> l = new ArrayList<>();
+                    for (Difficulty d : Difficulty.values())
+                        l.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(d.toString()),
+                                () -> MasterOfMonsGame.settings.setDifficulty(d), d == MasterOfMonsGame.settings.getDifficulty()));
+                    ((ScrollListChooser)mi.control).setScrollListItems(l.toArray(new ScrollListChooser.ScrollListItem[0]));
+                    mi.size.y = (int)(4 * (gs.getNormalFont().getLineHeight() + 3 * topMargin));
                     break;
             }
         }

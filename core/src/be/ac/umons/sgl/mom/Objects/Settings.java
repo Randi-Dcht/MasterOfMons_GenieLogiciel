@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Languages;
 
 import java.io.Serializable;
@@ -21,6 +22,8 @@ public class Settings implements Serializable {
      * Game's language
      */
     private Languages language = Languages.English;
+
+    private Difficulty difficulty = Difficulty.Medium;
 
     /**
      * @return The resolution's height
@@ -77,5 +80,13 @@ public class Settings implements Serializable {
      */
     public void setLanguage(Languages language) {
         this.language = language;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 }
