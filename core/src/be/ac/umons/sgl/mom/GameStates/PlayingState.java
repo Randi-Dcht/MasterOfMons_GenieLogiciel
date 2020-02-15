@@ -125,9 +125,6 @@ public class PlayingState extends GameState {
 
     protected Character testPNJ; //TODO REMOVE
 
-    private int defaultCamXPos;
-    private int defaultCamYPos;
-
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -155,6 +152,7 @@ public class PlayingState extends GameState {
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
+        translateCamera(player.getPosX(),player.getPosY());
         gmm.setView(cam);
 
         questShower = new QuestShower(gs);
@@ -170,8 +168,6 @@ public class PlayingState extends GameState {
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
         energyBar = new ProgressBar();
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
-        defaultCamXPos = (int)cam.position.x;
-        defaultCamYPos = (int)cam.position.y;
 
     }
 
@@ -192,6 +188,16 @@ public class PlayingState extends GameState {
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
         testPNJ.move(player.getPosX(), player.getPosY());
+        player.move(-player.getPosX(), -player.getPosY());
+        int spawnX = MasterOfMonsGame.WIDTH / 2;
+        int spawnY = 0;
+        if (gmm.getActualMap().getProperties().containsKey("spawnX"))
+            spawnX = (int)gmm.getActualMap().getProperties().get("spawnX");
+        if (gmm.getActualMap().getProperties().containsKey("spawnY"))
+            spawnY = (int)gmm.getActualMap().getProperties().get("spawnY");
+        int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
+        int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
+        player.move(x,y);
 
     }
 
