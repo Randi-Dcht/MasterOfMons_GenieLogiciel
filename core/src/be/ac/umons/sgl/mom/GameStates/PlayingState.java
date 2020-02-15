@@ -3,9 +3,6 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
-import be.ac.umons.sgl.mom.GameStates.Dialogs.OutGameDialogState;
-import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
@@ -125,6 +122,8 @@ public class PlayingState extends GameState {
 
     protected Character testPNJ; //TODO REMOVE
 
+    protected Character selectedOne;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -159,7 +158,7 @@ public class PlayingState extends GameState {
         inventoryShower = new InventoryShower(gim, gs, player);
 
 
-/*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
+        /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
 
         lifeBar = new ProgressBar();
@@ -197,10 +196,6 @@ public class PlayingState extends GameState {
         int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
         int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
         player.move(x,y);
-    }
-
-    protected void transformTilePosInPixelPos(int tileX, int tileY) {
-
     }
 
     @Override
@@ -310,16 +305,19 @@ public class PlayingState extends GameState {
     protected void checkForNearPNJ(Player player) {
         Character nearest = null;
         double nearestDist = tileWidth * mapWidth;
+        if (selectedOne != null)
+            selectedOne.setSelected(false);
         for (Character pnj : pnjs) {
             double dist = Math.pow(player.getPosX() - pnj.getPosX(), 2) + Math.pow(player.getPosY() - pnj.getPosY(), 2);
             if (dist < nearestDist && dist < 30000) {
                 nearest = pnj;
                 nearestDist = dist;
             }
-            pnj.setSelected(false);
         }
-        if (nearest != null)
+        if (nearest != null) {
             nearest.setSelected(true);
+            selectedOne = nearest;
+        }
     }
 
     @Override
@@ -364,17 +362,8 @@ public class PlayingState extends GameState {
         } else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
-        } else if (gim.isKey(Input.Keys.W, KeyStatus.Pressed)) {
-            inventoryShower.setHided(true);
-            GameState g = gsm.setState(InGameDialogState.class); // TODO : Delete (used for test purposes)
-            ((InGameDialogState)g).setText("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-            ((InGameDialogState)g).addAnswer("YAY !", "yay...", "YAAAAAYYYY !!!");
-        } else if (gim.isKey(Input.Keys.X, KeyStatus.Pressed)) {
-            GameState g = gsm.setState(OutGameDialogState.class);
-            ((OutGameDialogState)g).setText("Are you sure ?");
-            ((OutGameDialogState)g).addAnswer("Yes !", "No");
-        } else if (gim.isKey(Input.Keys.V, KeyStatus.Pressed)) {
-            gsm.setState(DeadMenuState.class);
+        } else if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
+            // TODO interaction
         }
         inventoryShower.handleInput();
     }
