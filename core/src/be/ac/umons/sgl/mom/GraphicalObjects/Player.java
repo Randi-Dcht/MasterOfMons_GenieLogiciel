@@ -48,6 +48,7 @@ public class Player extends Character {
         inventory.add(GameObjects.Object1);
         inventory.add(GameObjects.Object2);
     }
+    public Player() {}
 
     /**
      * @param gs Game's graphical settings
@@ -138,4 +139,6 @@ public class Player extends Character {
     public void setTileHeight(int tileHeight) {
         this.tileHeight = tileHeight;
     }
+
+
 }

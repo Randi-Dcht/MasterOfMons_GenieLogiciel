@@ -431,8 +431,10 @@ public abstract class MenuState extends GameState {
         }
 
         public void setHeader(String header) {
-            this.header = StringHelper.adaptTextToWidth(mit.equals(MenuItemType.Title) ? gs.getTitleFont() : gs.getNormalFont(), header, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
-            lineNumber = this.header.split("\n").length;
+            if (gs.getNormalFont() != null) { // Test case
+                this.header = StringHelper.adaptTextToWidth(mit.equals(MenuItemType.Title) ? gs.getTitleFont() : gs.getNormalFont(), header, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
+                lineNumber = this.header.split("\n").length;
+            }
         }
     }
 

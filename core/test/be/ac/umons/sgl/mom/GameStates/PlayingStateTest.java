@@ -9,6 +9,7 @@ import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,6 +21,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
 
 /**
  * Cette classe correspond à la classe de test de la classe PLayingState.
@@ -40,6 +43,14 @@ public class PlayingStateTest extends PlayingState {
         lifeBar = Mockito.mock(ProgressBar.class);
         expBar = Mockito.mock(ProgressBar.class);
         energyBar = Mockito.mock(ProgressBar.class);
+        player = new Player();
+        pnjs = new ArrayList<>();
+
+        People characteristics = Mockito.mock(People.class);
+        Mockito.when(characteristics.getLife()).thenReturn(0d);
+        Mockito.when(characteristics.getEnergy()).thenReturn(0d);
+        Mockito.when(characteristics.getExperience()).thenReturn(0d);
+        player.setCharacteristics(characteristics);
 
 
         MockitoAnnotations.initMocks(this);
@@ -48,14 +59,16 @@ public class PlayingStateTest extends PlayingState {
         tileHeight = 5;
         mapWidth = 10;
         mapHeight = 10;
-
+        player.setMapHeight(mapHeight * tileHeight);
+        player.setMapWidth(mapWidth * tileWidth);
+        player.setTileWidth(tileWidth);
+        player.setTileHeight(tileHeight);
         VELOCITY = 5;
-
-        collisionObjects = new MapObjects();
-
-        player = new Player(gs,25, 25, 5, 5, 50, 50); // TODO : BUG AVEC EN BAS ET A GAUCHE
         SHOWED_MAP_WIDTH = 0;
         SHOWED_MAP_HEIGHT = 0;
+        player.move(25,0);
+
+        collisionObjects = new MapObjects();
     }
 
     @Override

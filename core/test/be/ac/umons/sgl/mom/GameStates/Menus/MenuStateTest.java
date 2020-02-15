@@ -38,7 +38,7 @@ public class MenuStateTest extends MainMenuState {
 
     @BeforeEach
     public void init() {
-        menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Title),
+        menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Text),
                 new MenuItem("Play", MenuItemType.Button),
                 new MenuItem("Settings", MenuItemType.Button)};
         //setMenuItems(menuItems);

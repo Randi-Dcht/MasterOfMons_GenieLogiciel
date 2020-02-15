@@ -59,6 +59,8 @@ public class Character {
         characteristics = new People("Test", Type.athletic); // TODO
     }
 
+    protected Character() {}
+
     /**
      * Draw the character with the given parameters.
      * @param batch Where to draw the character
@@ -154,6 +156,9 @@ public class Character {
     public People getCharacteristics() {
         return characteristics;
     }
+    public void setCharacteristics(People characteristics) {
+        this.characteristics = characteristics;
+    }
 
     /**
      * @return If the character can attack
@@ -173,4 +178,6 @@ public class Character {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+
 }

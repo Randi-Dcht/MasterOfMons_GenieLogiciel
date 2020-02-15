@@ -172,7 +172,6 @@ public class PlayingState extends GameState {
     }
 
     public void initMap() {
-
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
         mapWidth = (int)gmm.getActualMap().getProperties().get("width");
@@ -189,7 +188,7 @@ public class PlayingState extends GameState {
         player.setTileHeight(tileHeight);
         testPNJ.move(player.getPosX(), player.getPosY());
         player.move(-player.getPosX(), -player.getPosY());
-        int spawnX = MasterOfMonsGame.WIDTH / 2;
+        int spawnX = 0;
         int spawnY = 0;
         if (gmm.getActualMap().getProperties().containsKey("spawnX"))
             spawnX = (int)gmm.getActualMap().getProperties().get("spawnX");
@@ -198,6 +197,9 @@ public class PlayingState extends GameState {
         int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
         int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
         player.move(x,y);
+    }
+
+    protected void transformTilePosInPixelPos(int tileX, int tileY) {
 
     }
 
