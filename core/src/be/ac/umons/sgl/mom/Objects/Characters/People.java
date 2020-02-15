@@ -33,7 +33,6 @@ public class People extends Character implements Serializable, Observer
     private MasterQuest myQuest;
     private Bloc year;
     private boolean invincible = false;
-    final String name;
     private int maxObject = 5;
     private HashMap<Date,Lesson> myPlanning;
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
@@ -46,9 +45,9 @@ public class People extends Character implements Serializable, Observer
      */
     public People(String name, Type type)
     {
-        super(type);
+        super(name);
+        updateType(type.getStrength(),type.getDefence(),type.getAgility());
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
-        this.name = name;
         this.threshold = minExperience(level+1);
     }
 

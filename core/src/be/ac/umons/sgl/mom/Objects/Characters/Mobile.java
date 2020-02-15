@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
@@ -12,11 +13,8 @@ import java.util.Random;
  *This abstract class allows define a no player, it is a character pilot by computer.
  *@author Randy Dauchot (étudiant en Sciences informatique Umons)
  */
-
 public class Mobile extends Character implements Serializable
 {
-    /*name of this*/
-    final String name;
     /*save the bloc of player*/
     protected Bloc playerBloc;
 
@@ -25,14 +23,20 @@ public class Mobile extends Character implements Serializable
      * This constructor allows define the mobile/PNJ
      * @param name is the name of the mobile
      * @param playerBloc is the bloc of the player
-     * @param playerType is the type of the player
      */
-    public Mobile(String name, Bloc playerBloc,Type playerType)
+    public Mobile(String name, Bloc playerBloc, MobileType type)
     {
-        super(playerType);
-        this.name        = name;
+        super(name);
+        calculedPoint(type);
         this.playerBloc  = playerBloc;
         this.level = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1)+playerBloc.getMinMob());
+    }
+
+
+    /***/
+    public void calculedPoint(MobileType type)
+    {
+        updateType(5,5,5);
     }
 
 
