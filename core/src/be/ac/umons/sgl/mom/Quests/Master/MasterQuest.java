@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Events;
@@ -16,7 +17,6 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -37,7 +37,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /*the percent to advance this quest*/
     protected double percent = 0;
     /*the percent of maximum of this quest to succeed this*/
-    protected double maxPercent = 95;
+    protected double maxPercent;
     /*the masterQuest who is before this (parent MasterQuest)*/
     final MasterQuest before;
     /*the people who play this masterQuest*/
@@ -56,6 +56,8 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     protected MasterQuest memory;
     /*this the instance of the graphic*/
     protected GraphicalSettings graphic;
+    /***/
+    protected Difficulty difficulty;
 
 
     /**
@@ -63,13 +65,14 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *@param before who is the before masterQuest
      *@param people who is the people who play this masterQuest
      */
-    public MasterQuest(MasterQuest before, People people,Bloc bloc,GraphicalSettings graphic)
+    public MasterQuest(MasterQuest before, People people, Bloc bloc, GraphicalSettings graphic, Difficulty difficulty)
     {
         this.before = before;
         numberQuest++;
         this.people = people;
         this.bloc = bloc;
         this.graphic = graphic;
+        this.maxPercent = difficulty.getMaxPercent();
     }
 
 
@@ -331,14 +334,21 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method return the all items for this quest
      * @return list of items
      */
-    public abstract HashMap<Place,Items> whatItem();
+    public abstract Items[] whatItem();
 
 
     /**
      * This method return the all mobile and PNJ for this quest
      * @return list of mobile
      */
-    public abstract HashMap<Place,Mobile> whatMobile();
+    public abstract Mobile[] whatMobile();
+
+
+    /**
+     * This method return the place for this Quest
+     * @return list of the place
+     */
+    public abstract Place[] whatPlace();
 
 
     /**

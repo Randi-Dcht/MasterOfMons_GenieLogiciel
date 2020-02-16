@@ -1,10 +1,6 @@
 package be.ac.umons.sgl.mom.Events;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.PlayerType;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -109,11 +105,11 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type,GraphicalSettings graphic)
+        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Difficulty difficulty)
         {
-            people = new People(namePlayer,type);
+            people = new People(namePlayer,type,difficulty);
             this.graphic = graphic;
-            MasterQuest mQ = new MyFirstYear(people,null,graphic);
+            MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
             save = new Saving(people,namePlayer);
@@ -129,8 +125,7 @@ public class SuperviserNormally implements Observer
             return graphic;
         }
 
-
-        /**
+    /**
          * This method return the enum of the maps with the name in String (.tmx)
          * @param nameTmx is the name of the maps with the name .TMX
          * @return the place (enum)

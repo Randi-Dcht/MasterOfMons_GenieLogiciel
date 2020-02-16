@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -11,13 +12,11 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
-import java.util.HashMap;
 
 /**
  *This class define the five year in the University of Mons with the goals.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-
 public class Master2 extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
@@ -25,17 +24,19 @@ public class Master2 extends MasterQuest
     /*This is the goals of this MasterQuest*/
     final UnderQuest[] underQuest = {new GoToLastLesson(this),new WriteMemory(this)};
 
+
     /**
      * This constructor define a Master 1 of Umons
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */
-    public Master2(People people, MasterQuest before, GraphicalSettings grahic)
+    public Master2(People people, MasterQuest before, GraphicalSettings grahic, Difficulty difficulty)
     {
-        super(before,people,Bloc.MA2,grahic);
+        super(before,people,Bloc.MA2,grahic,difficulty);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
+
 
     /**
      * This method allows to define to next Quest
@@ -55,15 +56,29 @@ public class Master2 extends MasterQuest
         return graphic.getStringFromId("answerMasterSecond");
     }
 
+
+    /***/
     @Override
-    public HashMap<Place,Items> whatItem() {
-        return new HashMap<>();/*code ici*/
+    public Place[] whatPlace()
+    {
+        return null;
     }
 
+
+    /***/
     @Override
-    public HashMap<Place,Mobile> whatMobile() {
-        return new HashMap<>();/*code ici*/
+    public Items[] whatItem() {
+        return null;/*code ici*/
     }
+
+
+    /***/
+    @Override
+    public Mobile[] whatMobile()
+    {
+        return null;/*code ici*/
+    }
+
 
     /**
      * This method allows to return the name of MasterQuest
@@ -74,6 +89,8 @@ public class Master2 extends MasterQuest
         return graphic.getStringFromId("nameMasterSecond");
     }
 
+
+    /***/
     @Override
     public void update(Notification notify)
     {

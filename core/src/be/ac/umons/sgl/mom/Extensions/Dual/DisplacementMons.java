@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Extensions.Dual;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -10,14 +11,12 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
-import java.util.HashMap;
-
 public class DisplacementMons extends MasterQuest
 {
     final UnderQuest[] underQuests = {};
-    public DisplacementMons(People people, MasterQuest before, GraphicalSettings graphic)
+    public DisplacementMons(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
-        super(before,people, Bloc.Extend,graphic);
+        super(before,people, Bloc.Extend,graphic,difficulty);
         addUnderQuest(underQuest);
     }
 
@@ -40,13 +39,23 @@ public class DisplacementMons extends MasterQuest
     }
 
     @Override
-    public HashMap<Place,Items> whatItem() {
+    public Items[] whatItem() {
         return null;
     }
 
     @Override
-    public HashMap<Place,Mobile> whatMobile() {
+    public Mobile[] whatMobile() {
         return null;
+    }
+
+    /**
+     * This method return the place for this Quest
+     *
+     * @return list of the place
+     */
+    @Override
+    public Place[] whatPlace() {
+        return new Place[0];
     }
 
     @Override

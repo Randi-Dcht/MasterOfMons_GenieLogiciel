@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -63,7 +64,7 @@ public class Character {
     public Character(GraphicalSettings gs) {
         this.gs = gs;
         assetManager = gs.getAssetManager();
-        characteristics = new People("Test", Type.athletic); // TODO
+        characteristics = new People("Test", Type.athletic, Difficulty.Easy); // TODO
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
         sr.setColor(new Color(0x21212142));

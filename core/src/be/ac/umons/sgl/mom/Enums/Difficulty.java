@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Enums;
 
+/***/
 public enum Difficulty
 {
     Easy("Easy",4,85,5),

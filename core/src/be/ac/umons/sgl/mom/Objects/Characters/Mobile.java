@@ -4,7 +4,6 @@ import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.PlayerType;
-import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
 import java.util.Random;
@@ -17,6 +16,7 @@ public class Mobile extends Character implements Serializable
 {
     /*save the bloc of player*/
     protected Bloc playerBloc;
+    protected MobileType type;
 
 
     /**
@@ -29,11 +29,15 @@ public class Mobile extends Character implements Serializable
         super(name);
         this.level = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1)+playerBloc.getMinMob()); //TODO tester
         this.playerBloc  = playerBloc;
+        this.type = type;
         calculusPoint(type);
     }
 
 
-    /***/
+    /**
+     * This method calculate the point of the mobile in strength,defence,agility
+     * @param type is the type of mobile
+     */
     public void calculusPoint(MobileType type)
     {
         int number = (level-1)*3; int[] listN = new int[3]; int total;
@@ -63,14 +67,11 @@ public class Mobile extends Character implements Serializable
     /**
      * When the player up in the level or the bloc, the mobile/PNJ must upgrade
      * @param playerBloc is the bloc of the player
-     * @param playerType is the type of the player
      */
-    public void upgrade(Bloc playerBloc,Type playerType)
+    public void upgrade(Bloc playerBloc)
     {
         this.playerBloc  = playerBloc;
-        this.strength    = playerType.getStrength();
-        this.defence     = playerType.getDefence();
-        this.agility     = playerType.getAgility();
+        calculusPoint(type);
     }
 
 
@@ -79,11 +80,13 @@ public class Mobile extends Character implements Serializable
      * @param victim is the other character of the attack
      */
     public void nextAttack(Attack victim)
-    {//TODO ajouter un timer avec le temps d'esquive pour refaire une attaque
+    {//TODO relier avec le temps entre chaque attaque
         if(living)
             SuperviserNormally.getSupervisor().attackMethod(this,victim);
     }
 
+
+    /***/
     @Override
     public Actions getAction()
     {

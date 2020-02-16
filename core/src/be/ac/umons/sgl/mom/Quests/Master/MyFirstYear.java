@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -18,7 +19,6 @@ import java.util.HashMap;
  *This class define a MasterQuest who is 'My first Year' in the bachelor 1
  *@author Randy Dauchot (étudiant en Sciences informatique Umons)
  */
-
 public class MyFirstYear extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
@@ -32,9 +32,9 @@ public class MyFirstYear extends MasterQuest
      * @param people who is the people who play the game
      * @param before who is the quest before this
      */
-    public MyFirstYear(People people, MasterQuest before, GraphicalSettings graphic)
+    public MyFirstYear(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
-        super(before,people, Bloc.BA1,graphic);
+        super(before,people, Bloc.BA1,graphic,difficulty);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
@@ -45,7 +45,7 @@ public class MyFirstYear extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new SuccessfulYear(people,this,graphic));
+        newQuest(new SuccessfulYear(people,this,graphic,difficulty));
     }
 
 
@@ -65,9 +65,9 @@ public class MyFirstYear extends MasterQuest
      * @return list of items
      */
     @Override
-    public HashMap<Place,Items> whatItem()
+    public Items[] whatItem()
     {
-        return new HashMap<>();
+        return null;
     }
 
 
@@ -76,9 +76,17 @@ public class MyFirstYear extends MasterQuest
      * @return list of mobile
      */
     @Override
-    public HashMap<Place,Mobile> whatMobile()
+    public Mobile[] whatMobile()
     {
-        return new HashMap<>();
+        return null;
+    }
+
+
+    /***/
+    @Override
+    public Place[] whatPlace()
+    {
+        return null;
     }
 
 

@@ -1,12 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.PlayerType;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
@@ -39,9 +33,10 @@ public class People extends Character implements Serializable, Observer
     private MasterQuest myQuest;
     private Bloc year;
     private boolean invincible = false;
-    private int maxObject = 5;
+    private int maxObject;
     private HashMap<Date,Lesson> myPlanning;
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
+    private Difficulty difficulty;
 
 
     /**
@@ -49,12 +44,13 @@ public class People extends Character implements Serializable, Observer
      * @param name who is the name of player
      * @param type who is the characteristic of this people (Enums)
      */
-    public People(String name, Type type)
+    public People(String name, Type type, Difficulty difficulty)
     {
         super(name);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         this.threshold = minExperience(level+1);
+        maxObject = difficulty.getManyItem();
     }
 
 
@@ -106,7 +102,7 @@ public class People extends Character implements Serializable, Observer
         myQuest = quest;
         quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
-        Supervisor.changedQuest();
+        Supervisor.changedQuest(); //TODO changer cela avec la nouvelle classe
         year = quest.getBloc() ;
         myPlanning = HyperPlanning.createSchedule(quest);
     }

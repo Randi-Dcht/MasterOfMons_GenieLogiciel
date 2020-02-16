@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -33,9 +34,9 @@ public class SuccessfulYear extends MasterQuest
      * @param people who is the people who play the game
      * @param before who is the quest before this
      */
-    public SuccessfulYear(People people, MasterQuest before, GraphicalSettings graphic)
+    public SuccessfulYear(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
-        super(before,people,Bloc.BA2,graphic);
+        super(before,people,Bloc.BA2,graphic,difficulty);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
@@ -46,7 +47,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new MeetAndLearn(people,this,graphic));
+        newQuest(new MeetAndLearn(people,this,graphic,difficulty));
     }
 
 
@@ -66,9 +67,9 @@ public class SuccessfulYear extends MasterQuest
      * @return list of items
      */
     @Override
-    public HashMap<Place,Items> whatItem()
+    public Items[] whatItem()
     {
-        return new HashMap<>();
+        return null;
     }
 
 
@@ -77,9 +78,17 @@ public class SuccessfulYear extends MasterQuest
      * @return list of mobile
      */
     @Override
-    public HashMap<Place,Mobile> whatMobile()
+    public Mobile[] whatMobile()
     {
-        return new HashMap<>();
+        return null;
+    }
+
+
+    /***/
+    @Override
+    public Place[] whatPlace()
+    {
+        return null;
     }
 
 

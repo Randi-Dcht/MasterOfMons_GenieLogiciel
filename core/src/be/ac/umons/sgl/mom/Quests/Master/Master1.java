@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -10,13 +11,11 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-import java.util.HashMap;
 
 /**
  *This class define the four year in the University of Mons with the goals.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-
 public class Master1 extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
@@ -24,24 +23,34 @@ public class Master1 extends MasterQuest
     /*This is the goals of this MasterQuest*/
     final UnderQuest[] underQuest = {new Traineeship(this)};
 
+
     /**
      * This constructor define a Master 1 of Umons
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */
-    public Master1(People people, MasterQuest before, GraphicalSettings graphic)
+    public Master1(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
-        super(before,people,Bloc.MA1,graphic);
+        super(before,people,Bloc.MA1,graphic,difficulty);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
+
 
     /**
      * This method allows to define to next Quest
      */
     public void nextQuest()
     {
-        newQuest(new Master2(people,this,graphic));
+        newQuest(new Master2(people,this,graphic,difficulty));
+    }
+
+
+    /***/
+    @Override
+    public Place[] whatPlace()
+    {
+        return null;
     }
 
 
@@ -54,17 +63,22 @@ public class Master1 extends MasterQuest
         return graphic.getStringFromId("answerMasterOne");
     }
 
+
+    /***/
     @Override
-    public HashMap<Place,Items> whatItem()
+    public Items[] whatItem()
     {
-        return new HashMap<>();/*code ici*/
+        return null;/*code ici*/
     }
 
+
+    /***/
     @Override
-    public HashMap<Place,Mobile> whatMobile()
+    public Mobile[] whatMobile()
     {
-        return new HashMap<>();/*code ici*/
+        return null;/*code ici*/
     }
+
 
     /**
      * This method allows to return the name of MasterQuest
@@ -75,6 +89,8 @@ public class Master1 extends MasterQuest
         return graphic.getStringFromId("nameMasterOne");
     }
 
+
+    /***/
     @Override
     public void update(Notification notify)
     {
