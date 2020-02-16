@@ -2,7 +2,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.assets.AssetManager;
@@ -48,7 +48,7 @@ public class Character extends OnMapObject {
     public Character(GraphicalSettings gs) {
         super(gs);
         assetManager = gs.getAssetManager();
-        characteristics = new People("Test", Type.athletic); // TODO
+        characteristics = SuperviserNormally.getSupervisor().getPeople();
     }
 
     protected Character() {}

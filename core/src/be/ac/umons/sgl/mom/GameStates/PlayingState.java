@@ -139,6 +139,10 @@ public class PlayingState extends GameState {
         sb = new SpriteBatch();
         am = AnimationManager.getInstance();
         gmm = GameMapManager.getInstance();
+        questShower = new QuestShower(gs);
+
+        /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
+        /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
 
         gmm.setMap("Tmx/Umons_Nimy.tmx");
         pnjs = new ArrayList<>();
@@ -159,12 +163,7 @@ public class PlayingState extends GameState {
         translateCamera(player.getPosX(),player.getPosY());
         gmm.setView(cam);
 
-        questShower = new QuestShower(gs);
         inventoryShower = new InventoryShower(gim, gs, player);
-
-
-        /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
 
         lifeBar = new ProgressBar();
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));

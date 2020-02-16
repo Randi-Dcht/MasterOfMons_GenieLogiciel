@@ -71,7 +71,7 @@ public class Player extends Character {
     }
 
     @Override
-    public void move(int x, int y) {
+    public void move(int x, int y) { // TODO : Change the method
         super.move(x, y);
 
         double maxX = mapHeight + mapWidth * tileHeight / tileWidth;
