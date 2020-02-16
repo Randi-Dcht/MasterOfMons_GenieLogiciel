@@ -12,7 +12,8 @@ public enum Place
     GrandAmphi("Umons_GrandAmphi.tmx",State.listen),
     DeVinci("Umons_DeVinci.tmx",State.study),
     Poly("Umons_Polytech.tmx",State.listen),
-    Kot("kot.tmx",State.nap);
+    Kot("kot.tmx",State.nap),
+    Mons("CityMons",State.normal);
 
     private String maps;
     private State state;

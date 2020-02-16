@@ -86,7 +86,7 @@ public class MyFirstYear extends MasterQuest
     @Override
     public Place[] whatPlace()
     {
-        return null;
+        return new Place[]{Place.Nimy,Place.DeVinci,Place.Mons};
     }
 
 
