@@ -1,16 +1,15 @@
 package be.ac.umons.sgl.mom.GameStates;
 
+import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
+import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
-import be.ac.umons.sgl.mom.GraphicalObjects.Player;
-import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
-import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
@@ -120,9 +119,9 @@ public class PlayingState extends GameState {
 
     protected List<Character> pnjs;
 
-    protected Character testPNJ; //TODO REMOVE
+    protected OnMapObject selectedOne;
 
-    protected Character selectedOne;
+    protected List<MapObject> mapObjects;
 
     /**
      * @param gsm The game's state manager
@@ -143,11 +142,17 @@ public class PlayingState extends GameState {
 
         gmm.setMap("Tmx/Umons_Nimy.tmx");
         pnjs = new ArrayList<>();
+        mapObjects = new ArrayList<>();
 
-        testPNJ = new Character(gs);
+        Character testPNJ = new Character(gs);
         pnjs.add(testPNJ);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap();
+        testPNJ.move(player.getPosX(), player.getPosY());
+
+        MapObject mo = new MapObject(gs, GameObjects.Object1);
+        mapObjects.add(mo);
+        mo.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
@@ -185,7 +190,6 @@ public class PlayingState extends GameState {
         player.setMapHeight(mapHeight * tileHeight);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
-        testPNJ.move(player.getPosX(), player.getPosY());
         player.move(-player.getPosX(), -player.getPosY());
         int spawnX = 0;
         int spawnY = 0;
@@ -244,7 +248,7 @@ public class PlayingState extends GameState {
             return;
         }
         checkForMapChanging(player);
-        checkForNearPNJ(player);
+        checkForNearSelectable(player);
 
         translateCamera(player.getPosX(), player.getPosY());
     }
@@ -302,15 +306,16 @@ public class PlayingState extends GameState {
         }
     }
 
-    protected void checkForNearPNJ(Player player) {
-        Character nearest = null;
+    protected void checkForNearSelectable(Player player) {
+        OnMapObject nearest = null;
         double nearestDist = tileWidth * mapWidth;
         if (selectedOne != null)
             selectedOne.setSelected(false);
-        for (Character pnj : pnjs) {
-            double dist = Math.pow(player.getPosX() - pnj.getPosX(), 2) + Math.pow(player.getPosY() - pnj.getPosY(), 2);
+        for (int i = 0; i < pnjs.size() + mapObjects.size(); i++) {
+            OnMapObject omo = (i < pnjs.size() ? pnjs.get(i) : mapObjects.get(i - pnjs.size()));
+            double dist = Math.pow(player.getPosX() - omo.getPosX(), 2) + Math.pow(player.getPosY() - omo.getPosY(), 2);
             if (dist < nearestDist && dist < 30000) {
-                nearest = pnj;
+                nearest = omo;
                 nearestDist = dist;
             }
         }
@@ -327,9 +332,10 @@ public class PlayingState extends GameState {
 
         gmm.render();
         player.draw(sb);
-        for (Character pnj : pnjs) {
+        for (Character pnj : pnjs)
             pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
-        }
+        for (MapObject mo : mapObjects)
+            mo.draw(sb, mo.getPosX() - (int)cam.position.x + + MasterOfMonsGame.WIDTH / 2, mo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
 
         sb.begin();
         if (gs.mustShowMapCoordinates())
