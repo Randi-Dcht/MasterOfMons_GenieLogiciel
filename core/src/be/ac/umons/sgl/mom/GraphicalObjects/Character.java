@@ -1,20 +1,13 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
-import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +16,7 @@ import java.util.List;
  * Represent a character of the game.
  * @author Guillaume Cardoen
  */
-public class Character {
-
-    /**
-     * The game's graphical settings.
-     */
-    protected GraphicalSettings gs;
+public class Character extends OnMapObject {
     /**
      * An asset's manager.
      */
@@ -54,20 +42,13 @@ public class Character {
      */
     private double timeBeforeAttack;
 
-    protected boolean isSelected;
-
-    protected ShapeRenderer sr;
-
     /**
      * @param gs The game's graphical settings.
      */
     public Character(GraphicalSettings gs) {
-        this.gs = gs;
+        super(gs);
         assetManager = gs.getAssetManager();
-        characteristics = new People("Test", Type.athletic, Difficulty.Easy); // TODO
-        sr = new ShapeRenderer();
-        sr.setAutoShapeType(true);
-        sr.setColor(new Color(0x21212142));
+        characteristics = new People("Test", Type.athletic); // TODO
     }
 
     protected Character() {}
@@ -81,23 +62,10 @@ public class Character {
      * @param height The height of the character
      */
     public void draw(Batch batch, int x, int y, int width, int height) {
-        if (isSelected) {
-            Gdx.gl.glEnable(GL30.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-            GlyphLayout gl = new GlyphLayout();
-            gl.setText(gs.getSmallFont(), String.format(gs.getStringFromId("pressToTalk"), "E"));
-            sr.begin(ShapeRenderer.ShapeType.Filled);
-            sr.rect(x, y + height - gs.getSmallFont().getLineHeight(), gl.width, gs.getSmallFont().getLineHeight());
-            sr.end();
-            Gdx.gl.glDisable(GL30.GL_BLEND);
-        }
-
         batch.begin();
         batch.draw(getTexture(),  x, y, width, height);
-        if (isSelected) {
-            gs.getSmallFont().draw(batch, String.format(gs.getStringFromId("pressToTalk"), "E"), x, y + height); //TODO Check for touch
-        }
         batch.end();
+        super.draw(batch, x, y, width, height);
     }
 
     /**
@@ -194,10 +162,6 @@ public class Character {
      */
     public void setTimeBeforeAttack(double timeBeforeAttack) {
         this.timeBeforeAttack = timeBeforeAttack;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
     }
 
 
