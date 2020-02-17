@@ -145,9 +145,9 @@ public class CombatState extends GameState implements Observer {
 
     @Override
     public void update(Notification notify) {
-        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player1))
+        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player1.getCharacteristics()))
             gsm.setState(DeadMenuState.class);
-        else if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player2))
+        else if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player2.getCharacteristics()))
             gsm.removeFirstState();
     }
 }

@@ -3,19 +3,19 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
-import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
+import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
@@ -147,16 +147,8 @@ public class PlayingState extends GameState {
 
         /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
-
-        gmm.setMap("Tmx/Umons_Nimy.tmx");
-        pnjs = new ArrayList<>();
-        mapObjects = new ArrayList<>();
-
-        Character testPNJ = new Character(gs);
-        pnjs.add(testPNJ);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
-        initMap();
-        testPNJ.move(player.getPosX(), player.getPosY());
+        initMap("Tmx/Umons_Nimy.tmx");
 
         MapObject mo = new MapObject(gs, new Battery());
         mapObjects.add(mo);
@@ -183,7 +175,17 @@ public class PlayingState extends GameState {
         pauseButton.setFont(gs.getSmallFont());
     }
 
-    public void initMap() {
+    public void initMap(String mapPath) {
+        gmm.setMap(mapPath);
+//        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps("Tmx/Umons_Nimy.tmx")));
+        pnjs = new ArrayList<>();
+        mapObjects = new ArrayList<>();
+
+//        for (Items it : SuperviserNormally.getSupervisor().getItems(SuperviserNormally.getSupervisor().getMaps(mapPath)))
+//            mapObjects.add(new MapObject(gs, it));
+//
+//        for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(SuperviserNormally.getSupervisor().getMaps(mapPath)))
+//            pnjs.add(new Character(gs, mob));
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
         mapWidth = (int)gmm.getActualMap().getProperties().get("width");
@@ -219,9 +221,9 @@ public class PlayingState extends GameState {
 
         lifeBar.setValue((int)player.getCharacteristics().getLife());
         lifeBar.setMaxValue((int)player.getCharacteristics().lifemax());
-        expBar.setValue((int)player.getCharacteristics().getExperience());
-        expBar.setMaxValue((int)player.getCharacteristics().minExperience());
-        energyBar.setValue((int)player.getCharacteristics().getEnergy());
+        expBar.setValue((int)((People)player.getCharacteristics()).getExperience());
+        expBar.setMaxValue((int)((People)player.getCharacteristics()).minExperience());
+        energyBar.setValue((int)((People)player.getCharacteristics()).getEnergy());
         energyBar.setMaxValue(100);
     }
 
@@ -318,8 +320,7 @@ public class PlayingState extends GameState {
             Rectangle playerRect = player.getMapRectangle();
             Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
             if (Intersector.overlaps(mapRect, playerRect)) {
-                gmm.setMap(rectangleMapObject.getName());
-                initMap();
+                initMap(rectangleMapObject.getName());
             }
         }
     }
@@ -397,14 +398,14 @@ public class PlayingState extends GameState {
     }
 
     public void debugLevelUp() {
-        player.getCharacteristics().upLevel();
+        ((People)player.getCharacteristics()).upLevel();
     }
     public void debugMakeInvincible() {
-        if (player.getCharacteristics().isInvincible()) {
-            player.getCharacteristics().invincible(false);
+        if (((People)player.getCharacteristics()).isInvincible()) {
+            ((People)player.getCharacteristics()).invincible(false);
             lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
         } else {
-            player.getCharacteristics().invincible(true);
+            ((People)player.getCharacteristics()).invincible(true);
             lifeBar.setForegroundColor(new Color(0x212121AA));
         }
     }
