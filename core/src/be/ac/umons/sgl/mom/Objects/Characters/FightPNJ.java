@@ -9,7 +9,7 @@ public class FightPNJ extends Mobile
 {
   public FightPNJ(Bloc playerBloc, MobileType type)
   {
-    super("Bagarre",playerBloc,type);
+    super("Fight",playerBloc,type);
   }
 
   public Actions meet(People people)

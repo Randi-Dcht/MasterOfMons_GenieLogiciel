@@ -14,7 +14,7 @@ import be.ac.umons.sgl.mom.Quests.Under.HelpMe;
 import be.ac.umons.sgl.mom.Quests.Under.SuccesfulYear;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  *This class define a MasterQuest who is 'SuccessfulYear' in the bachelor 2
@@ -67,7 +67,7 @@ public class SuccessfulYear extends MasterQuest
      * @return list of items
      */
     @Override
-    public Items[] whatItem()
+    public ArrayList<Items> whatItem()
     {
         return null;
     }
@@ -78,7 +78,7 @@ public class SuccessfulYear extends MasterQuest
      * @return list of mobile
      */
     @Override
-    public Mobile[] whatMobile()
+    public ArrayList<Mobile> whatMobile()
     {
         return null;
     }

@@ -13,6 +13,8 @@ import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
 
+import java.util.ArrayList;
+
 /**
  *This class define the five year in the University of Mons with the goals.
  *@author Randy Dauchot (étudiant en Sciences informatique)
@@ -67,14 +69,14 @@ public class Master2 extends MasterQuest
 
     /***/
     @Override
-    public Items[] whatItem() {
+    public ArrayList<Items> whatItem() {
         return null;/*code ici*/
     }
 
 
     /***/
     @Override
-    public Mobile[] whatMobile()
+    public ArrayList<Mobile> whatMobile()
     {
         return null;/*code ici*/
     }

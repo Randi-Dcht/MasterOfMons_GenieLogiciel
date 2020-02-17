@@ -12,7 +12,8 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.sgl.mom.Quests.Under.LookSoulMate;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-import java.util.HashMap;
+
+import java.util.ArrayList;
 
 /**
  *This class define a MasterQuest who is 'Meet and Learn' in the bachelor 3
@@ -65,7 +66,7 @@ public class MeetAndLearn extends MasterQuest
      * @return list of items
      */
     @Override
-    public Items[] whatItem()
+    public ArrayList<Items> whatItem()
     {
         return null;
     }
@@ -76,7 +77,7 @@ public class MeetAndLearn extends MasterQuest
      * @return list of mobile
      */
     @Override
-    public Mobile[] whatMobile()
+    public ArrayList<Mobile> whatMobile()
     {
         return null;
     }

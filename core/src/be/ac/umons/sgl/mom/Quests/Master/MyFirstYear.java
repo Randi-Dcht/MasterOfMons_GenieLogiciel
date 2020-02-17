@@ -3,17 +3,25 @@ package be.ac.umons.sgl.mom.Quests.Master;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Characters.StudPNJ;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Energizing;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.OldExam;
+import be.ac.umons.sgl.mom.Objects.Items.TheKillBoot;
 import be.ac.umons.sgl.mom.Quests.Under.BattleForPlace;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLesson;
 import be.ac.umons.sgl.mom.Quests.Under.MeetManyPeople;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-import java.util.HashMap;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *This class define a MasterQuest who is 'My first Year' in the bachelor 1
@@ -56,7 +64,6 @@ public class MyFirstYear extends MasterQuest
     public String question()
     {
         return graphic.getStringFromId("answerMyFirstYear");
-       // return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
     }
 
 
@@ -65,9 +72,16 @@ public class MyFirstYear extends MasterQuest
      * @return list of items
      */
     @Override
-    public Items[] whatItem()
+    public ArrayList<Items> whatItem()
     {
-        return null;
+        ArrayList<Items> list = new ArrayList<>();
+        for (int i=0; i < 10; i++)
+            list.add(new Energizing(null));//TODO changer cela dans le futur
+        for (int i=0 ; i < 6; i++)
+            list.add(new OldExam(null));
+        list.add(new TheKillBoot(null));
+
+        return list;
     }
 
 
@@ -76,9 +90,15 @@ public class MyFirstYear extends MasterQuest
      * @return list of mobile
      */
     @Override
-    public Mobile[] whatMobile()
+    public ArrayList<Mobile> whatMobile()
     {
-        return null;
+        ArrayList<Mobile> list = new ArrayList<>();
+        for(int i=0; i < 30;i++)
+            list.add(new StudPNJ(getBloc(), MobileType.Lambda));//TODO rendre aléatoire
+        for(int i = 30; i < 40; i++)
+            list.add(new FightPNJ(getBloc(), MobileType.Athletic));
+
+        return list;
     }
 
 

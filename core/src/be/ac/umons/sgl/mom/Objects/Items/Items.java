@@ -67,4 +67,10 @@ public abstract class Items implements Serializable
      */
     public abstract double getObsolete();
 
+
+    @Override
+    public String toString()
+    {
+        return "Items:"+name;
+    }
 }
