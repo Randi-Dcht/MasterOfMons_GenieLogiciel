@@ -334,14 +334,14 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method return the all items for this quest
      * @return list of items
      */
-    public abstract Items[] whatItem();
+    public abstract ArrayList<Items> whatItem();
 
 
     /**
      * This method return the all mobile and PNJ for this quest
      * @return list of mobile
      */
-    public abstract Mobile[] whatMobile();
+    public abstract ArrayList<Mobile> whatMobile();
 
 
     /**

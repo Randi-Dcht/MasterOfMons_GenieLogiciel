@@ -11,6 +11,8 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
+import java.util.ArrayList;
+
 public class MovingInMons extends MasterQuest
 {
     final UnderQuest[] underQuests = {};
@@ -44,12 +46,12 @@ public class MovingInMons extends MasterQuest
     }
 
     @Override
-    public Items[] whatItem() {
+    public ArrayList<Items> whatItem() {
         return null;
     }
 
     @Override
-    public Mobile[] whatMobile() {
+    public ArrayList<Mobile> whatMobile() {
         return null;
     }
 

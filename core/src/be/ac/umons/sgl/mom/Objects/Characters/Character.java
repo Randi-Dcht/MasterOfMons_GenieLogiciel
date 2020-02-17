@@ -166,4 +166,10 @@ public abstract class Character implements Attack, Social
     {
         return gun != null;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Character:"+name;
+    }
 }

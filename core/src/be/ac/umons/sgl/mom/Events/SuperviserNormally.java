@@ -12,8 +12,10 @@ import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 /**
@@ -113,6 +115,8 @@ public class SuperviserNormally implements Observer
             people.newQuest(mQ);
             time = new TimeGame(9,1,8,2019);
             save = new Saving(people,namePlayer);
+            createMobil(mQ);
+            createItems(mQ);
         }
 
 
@@ -140,8 +144,18 @@ public class SuperviserNormally implements Observer
          * This method allows to create the Mobil on different maps for this Quest
          * @param quest who is the actual Quest
          */
-        private void createMobil(MasterQuest quest)
-        {}
+        private void createMobil(MasterQuest quest)//TODO mettre cela plus homogène
+        {
+            listMobile = new HashMap<>();
+            Place[] place = quest.whatPlace();
+            for (Place plc : quest.whatPlace())
+                listMobile.put(plc,new ArrayList<>());
+            for (Mobile mb : quest.whatMobile())
+            {
+                int random = new Random().nextInt(place.length);
+                listMobile.get(place[random]).add(mb);
+            }
+        }
 
 
         /**
@@ -149,7 +163,17 @@ public class SuperviserNormally implements Observer
          * @param quest who is the actual Quest
          */
         private void createItems(MasterQuest quest)
-        {}
+        {
+            listItems = new HashMap<>();
+            Place[] place = quest.whatPlace();
+            for (Place plc : place)
+                listItems.put(plc,new ArrayList<>());
+            for (Items mb : quest.whatItem())
+            {
+                int random = new Random().nextInt(place.length);
+                listItems.get(place[random]).add(mb);
+            }
+        }
 
 
         /**

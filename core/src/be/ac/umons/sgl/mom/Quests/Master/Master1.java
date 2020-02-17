@@ -12,6 +12,8 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
+import java.util.ArrayList;
+
 /**
  *This class define the four year in the University of Mons with the goals.
  *@author Randy Dauchot (étudiant en Sciences informatique)
@@ -66,7 +68,7 @@ public class Master1 extends MasterQuest
 
     /***/
     @Override
-    public Items[] whatItem()
+    public ArrayList<Items> whatItem()
     {
         return null;/*code ici*/
     }
@@ -74,7 +76,7 @@ public class Master1 extends MasterQuest
 
     /***/
     @Override
-    public Mobile[] whatMobile()
+    public ArrayList<Mobile> whatMobile()
     {
         return null;/*code ici*/
     }

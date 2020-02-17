@@ -12,7 +12,7 @@ public class StudPNJ extends Mobile
 {
   public StudPNJ(Bloc playerBloc,MobileType type)
   {
-    super("Bagarre",playerBloc,type);
+    super("Student",playerBloc,type);
   }
 
   @Override
