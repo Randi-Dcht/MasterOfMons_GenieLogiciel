@@ -51,7 +51,7 @@ public class Player extends Character {
         super(gs);
         inventory = new ArrayList<>();
         inventory.add(new Battery(null));
-        inventory.add(new Gun(null, "CoolName"));
+        inventory.add(new Gun(null));
     }
 
     /**
