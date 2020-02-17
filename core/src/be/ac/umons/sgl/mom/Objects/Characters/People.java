@@ -51,6 +51,7 @@ public class People extends Character implements Serializable, Observer
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         this.threshold = minExperience(level+1);
         maxObject = difficulty.getManyItem();
+        System.out.println(life + "out");
     }
 
 
@@ -125,20 +126,6 @@ public class People extends Character implements Serializable, Observer
     public HashMap<Date,Lesson> getPlanning()
     {
         return myPlanning;
-    }
-
-
-    /**
-     *This method allows define the characteristic of a people.
-     *@param strength who is strength of people.
-     *@param defence who is defence of people.
-     *@param agility who is the capacity of avoid the attack.
-     */
-    public void updateType(int strength, int defence, int agility)
-    {
-        this.strength = strength;
-        this.defence = defence;
-        this.agility = agility;
     }
 
 
