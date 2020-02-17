@@ -8,7 +8,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Under.FreeTimeMons;
 import be.ac.umons.sgl.mom.Quests.Under.HelpMe;
 import be.ac.umons.sgl.mom.Quests.Under.SuccesfulYear;
@@ -69,7 +69,17 @@ public class SuccessfulYear extends MasterQuest
     @Override
     public ArrayList<Items> whatItem()
     {
-        return null;
+        ArrayList<Items> list = new ArrayList<>();
+        for (int i=0; i < 6; i++)
+            list.add(new Energizing());
+        for (int i=0 ; i < 3; i++)
+            list.add(new OldExam());
+        for (int i=0 ; i < 3; i++)
+            list.add(new PaperHelp());
+        for (int i=0 ; i < 5; i++)
+            list.add(new TheKillBoot());
+
+        return list;
     }
 
 
@@ -88,7 +98,7 @@ public class SuccessfulYear extends MasterQuest
     @Override
     public Place[] whatPlace()
     {
-        return null;
+        return new Place[]{Place.Poly,Place.Mons,Place.Nimy};
     }
 
 

@@ -8,7 +8,9 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.Pen;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
@@ -43,10 +45,7 @@ public class Master2 extends MasterQuest
     /**
      * This method allows to define to next Quest
      */
-    public void nextQuest()
-    {
-        /*code ici*/
-    }
+    public void nextQuest(){/*END*/}
 
 
     /**
@@ -63,14 +62,21 @@ public class Master2 extends MasterQuest
     @Override
     public Place[] whatPlace()
     {
-        return null;
+        return new Place[]{Place.Nimy,Place.Mons};
     }
 
 
     /***/
     @Override
-    public ArrayList<Items> whatItem() {
-        return null;/*code ici*/
+    public ArrayList<Items> whatItem()
+    {
+        ArrayList<Items> list = new ArrayList<>();
+        for (int i=0 ; i < 7; i++)
+            list.add(new Pen());
+        for (int i=0 ; i < 2; i++)
+            list.add(new Gun());
+
+        return list;
     }
 
 

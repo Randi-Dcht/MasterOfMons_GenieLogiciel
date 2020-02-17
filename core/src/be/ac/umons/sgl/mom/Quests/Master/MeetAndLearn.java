@@ -8,7 +8,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.sgl.mom.Quests.Under.LookSoulMate;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
@@ -68,7 +68,15 @@ public class MeetAndLearn extends MasterQuest
     @Override
     public ArrayList<Items> whatItem()
     {
-        return null;
+        ArrayList<Items> list = new ArrayList<>();
+        for (int i=0; i < 4; i++)
+            list.add(new Flower());
+        for (int i=0 ; i < 6; i++)
+            list.add(new OldExam());
+        list.add(new Gun());
+        list.add(new TheKillBoot());
+
+        return list;
     }
 
 
@@ -87,7 +95,7 @@ public class MeetAndLearn extends MasterQuest
     @Override
     public Place[] whatPlace()
     {
-        return null;
+        return new Place[]{Place.Nimy,Place.Mons,Place.Poly};
     }
 
 

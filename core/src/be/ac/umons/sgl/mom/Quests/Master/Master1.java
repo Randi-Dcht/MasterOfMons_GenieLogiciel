@@ -8,7 +8,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
@@ -52,7 +52,7 @@ public class Master1 extends MasterQuest
     @Override
     public Place[] whatPlace()
     {
-        return null;
+        return new Place[]{Place.Mons,Place.Nimy};
     }
 
 
@@ -70,7 +70,13 @@ public class Master1 extends MasterQuest
     @Override
     public ArrayList<Items> whatItem()
     {
-        return null;/*code ici*/
+        ArrayList<Items> list = new ArrayList<>();
+        for (int i=0 ; i < 8; i++)
+            list.add(new Pen());
+        for (int i=0 ; i < 8; i++)
+            list.add(new Gun());
+
+        return list;
     }
 
 
