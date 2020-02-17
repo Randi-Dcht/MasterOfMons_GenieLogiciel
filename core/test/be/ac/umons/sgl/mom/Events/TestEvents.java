@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Events;
 
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Events.Notifications.Dead;
@@ -30,7 +31,7 @@ public class TestEvents
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
         assertNull(sp.getPeople(),"the people doesn't create");
         assertNotNull(sp.getEvent(),"the event doesn't create");
-        sp.newParty("Test", Type.beefy,null); /*doesn't test here the saving of graphic so gs == null*/
+        sp.newParty("Test", Type.beefy,null, Difficulty.Easy); /*doesn't test here the saving of graphic so gs == null*/
         assertNotNull(sp.getPeople(),"check if the people instance is create");
         assertNotNull(sp.getTime(),"check time is create ");
     }

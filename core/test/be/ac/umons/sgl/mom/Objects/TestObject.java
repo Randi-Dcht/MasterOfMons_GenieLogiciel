@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -38,7 +39,7 @@ class TestObject
   @Test
   void SavingClassTest() //TODO : a continuer cette méthode quand celle-ci sera finie.
   {
-      People people = new People("TestObject",Type.normal);
+      People people = new People("TestObject",Type.normal, Difficulty.Easy);
       Saving save = new Saving(people,"TestSaving");
   }
 

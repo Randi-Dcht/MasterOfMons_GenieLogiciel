@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Events.Notifications.Answer;
+import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -285,9 +287,9 @@ public class SuperviserNormally implements Observer
         {
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
-                System.out.println("Attack"); //TODO modif
+                event.notify(new LaunchAttack());
             else if (action.equals(Actions.Dialog))
-                System.out.println("Dialog"); //TODO modif
+                event.notify(new Answer());
         }
 
     }
