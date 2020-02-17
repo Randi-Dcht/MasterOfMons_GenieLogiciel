@@ -52,6 +52,7 @@ public class Supervisor /*! va être supprimer !*/
     }
   }
 
+
   private static void testingDialog()
   {//mettre sous forme langage humain !
     String memory = "Start";

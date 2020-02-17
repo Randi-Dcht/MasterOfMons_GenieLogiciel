@@ -7,6 +7,7 @@ public enum Events
     ChangeFrame("frame"),                     /*...*/
     PlaceInMons("placeOfPeople"),             /*...*/
     MeetOther("meetOther"),                   /*...*/
+    Attack("LaunchAttack"),
     AddFriend("meetFriend"),                  /*...*/
     Answer("answerQuestion"),                 /*...*/
     Dead("characterDead"),                    /*...*/

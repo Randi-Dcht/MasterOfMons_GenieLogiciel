@@ -51,7 +51,6 @@ public class People extends Character implements Serializable, Observer
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         this.threshold = minExperience(level+1);
         maxObject = difficulty.getManyItem();
-        System.out.println(life + "out");
     }
 
 
