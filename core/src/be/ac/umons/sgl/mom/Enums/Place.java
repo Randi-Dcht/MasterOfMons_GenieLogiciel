@@ -7,13 +7,13 @@ package be.ac.umons.sgl.mom.Enums;
  */
 public enum Place
 {
-    Nimy("Umons_Nimy.tmx",State.normal),
-    Warocque("Umons_Warocque.tmx",State.listen),
-    GrandAmphi("Umons_GrandAmphi.tmx",State.listen),
-    DeVinci("Umons_DeVinci.tmx",State.study),
-    Poly("Umons_Polytech.tmx",State.listen),
-    Kot("kot.tmx",State.nap),
-    Mons("CityMons",State.normal);
+    Nimy("Tmx/Umons_Nimy.tmx",State.normal),
+    Warocque("Tmx/Umons_Warocque.tmx",State.listen),
+    GrandAmphi("Tmx/Umons_GrandAmphi.tmx",State.listen),
+    DeVinci("Tmx/Umons_DeVinci.tmx",State.study),
+    Poly("Tmx/Umons_Polytech.tmx",State.listen),
+    Kot("Tmx/kot.tmx",State.nap),
+    Mons("Tmx/CityMons.tmx",State.normal);
 
     private String maps;
     private State state;
