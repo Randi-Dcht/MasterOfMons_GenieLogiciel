@@ -154,7 +154,7 @@ public class PlayingState extends GameState {
         initMap();
         testPNJ.move(player.getPosX(), player.getPosY());
 
-        MapObject mo = new MapObject(gs, new Battery(null));
+        MapObject mo = new MapObject(gs, new Battery());
         mapObjects.add(mo);
         mo.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
 
