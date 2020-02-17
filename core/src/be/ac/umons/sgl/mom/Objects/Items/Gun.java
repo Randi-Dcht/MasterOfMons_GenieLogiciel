@@ -12,8 +12,8 @@ public class Gun extends Items implements Guns
      * @param place is the place of this item
      * @param name  is the name of this items
      */
-    public Gun(Place place, String name) {
-        super(place, name);
+    public Gun(Place place) {
+        super(place,"Gun");
     }
 
     /**
