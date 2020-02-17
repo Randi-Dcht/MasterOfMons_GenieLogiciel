@@ -1,7 +1,11 @@
 package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
@@ -9,8 +13,10 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -19,7 +25,7 @@ import java.awt.*;
 /**
  * The state where the user attack/is attacked by another user/PNJ.
  */
-public class CombatState extends GameState {
+public class CombatState extends GameState implements Observer {
 
     /**
      * The 2 characters attacking each other.
@@ -66,6 +72,8 @@ public class CombatState extends GameState {
         lifePlayer2.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
         lifePlayer1.setBackgroundColor(new Color(0x636363AA));
         lifePlayer2.setBackgroundColor(new Color(0x636363AA));
+
+        SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
     }
 
     @Override
@@ -74,21 +82,26 @@ public class CombatState extends GameState {
         player1.update(dt);
         player2.update(dt);
         attackButton.setSelected(player1.canAttack());
+        lifePlayer1.setValue((int)player1.getCharacteristics().getLife());
+        lifePlayer2.setValue((int)player2.getCharacteristics().getLife());
     }
 
     @Override
     public void draw() {
+        Gdx.gl.glEnable(GL30.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(new Color(0x212121AA));
+        sr.setColor(new Color(0x21212142));
         sr.rect(0,0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
         sr.end();
+        Gdx.gl.glDisable(GL30.GL_BLEND);
         sb.begin();
         if (player1 != null)
-            sb.draw(player1.getTexture(), MasterOfMonsGame.WIDTH * 1/4, MasterOfMonsGame.HEIGHT / 3);
+            sb.draw(player1.getTexture(), MasterOfMonsGame.WIDTH / 6, MasterOfMonsGame.HEIGHT / 4, MasterOfMonsGame.HEIGHT / 3, MasterOfMonsGame.HEIGHT * 2 / 3);
         if (player2 != null)
-            sb.draw(player2.getTexture(), MasterOfMonsGame.WIDTH * 2/3, MasterOfMonsGame.HEIGHT * 2 / 3);
+            sb.draw(player2.getTexture(), MasterOfMonsGame.WIDTH * 4 / 7, MasterOfMonsGame.HEIGHT / 4, MasterOfMonsGame.HEIGHT / 3, MasterOfMonsGame.HEIGHT * 2 / 3);
         sb.end();
-        attackButton.draw(sb, new Point(MasterOfMonsGame.WIDTH * 1 / 2, MasterOfMonsGame.HEIGHT / 3),
+        attackButton.draw(sb, new Point(MasterOfMonsGame.WIDTH * 1 / 2, MasterOfMonsGame.HEIGHT / 6),
                 new Point(MasterOfMonsGame.WIDTH / 3, MasterOfMonsGame.HEIGHT / 8));
         lifePlayer1.draw(MasterOfMonsGame.WIDTH / 10, MasterOfMonsGame.HEIGHT / 6, MasterOfMonsGame.WIDTH / 3, MasterOfMonsGame.HEIGHT / 18);
         lifePlayer2.draw(MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT * 5 / 6, MasterOfMonsGame.WIDTH / 3, MasterOfMonsGame.HEIGHT / 18);
@@ -128,5 +141,13 @@ public class CombatState extends GameState {
     public void setPlayer2(Character player2) {
         this.player2 = player2;
         lifePlayer2.setMaxValue((int)player2.getCharacteristics().lifemax());
+    }
+
+    @Override
+    public void update(Notification notify) {
+        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player1))
+            gsm.setState(DeadMenuState.class);
+        else if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player2))
+            gsm.removeFirstState();
     }
 }
