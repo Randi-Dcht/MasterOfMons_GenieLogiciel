@@ -1,7 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Enums.Orientation;
-import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -36,7 +35,7 @@ public class Character extends OnMapObject {
     /**
      * The character's characteristics
      */
-    private People characteristics;
+    private be.ac.umons.sgl.mom.Objects.Characters.Character characteristics;
     /**
      * The time that the character needs to wait before his next attack
      */
@@ -45,10 +44,10 @@ public class Character extends OnMapObject {
     /**
      * @param gs The game's graphical settings.
      */
-    public Character(GraphicalSettings gs) {
+    public Character(GraphicalSettings gs, be.ac.umons.sgl.mom.Objects.Characters.Character characteristics) {
         super(gs);
         assetManager = gs.getAssetManager();
-        characteristics = SuperviserNormally.getSupervisor().getPeople();
+        this.characteristics = characteristics;
     }
 
     protected Character() {}
@@ -142,7 +141,7 @@ public class Character extends OnMapObject {
     /**
      * @return Character's characteristics
      */
-    public People getCharacteristics() {
+    public be.ac.umons.sgl.mom.Objects.Characters.Character getCharacteristics() {
         return characteristics;
     }
     public void setCharacteristics(People characteristics) {
@@ -164,5 +163,11 @@ public class Character extends OnMapObject {
         this.timeBeforeAttack = timeBeforeAttack;
     }
 
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
 
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
 }

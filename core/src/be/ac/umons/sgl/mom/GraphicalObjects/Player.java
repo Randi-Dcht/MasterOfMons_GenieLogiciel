@@ -1,13 +1,12 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.PlayingState;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-
 import java.util.ArrayList;
 
 /**
@@ -50,7 +49,7 @@ public class Player extends Character {
      * @param gs Game's graphical settings
      */
     public Player(GraphicalSettings gs) {
-        super(gs);
+        super(gs, SuperviserNormally.getSupervisor().getPeople());
         inventory = new ArrayList<>();
         inventory.add(new Battery());
         inventory.add(new Gun());
@@ -166,6 +165,4 @@ public class Player extends Character {
     public void setTileHeight(int tileHeight) {
         this.tileHeight = tileHeight;
     }
-
-
 }
