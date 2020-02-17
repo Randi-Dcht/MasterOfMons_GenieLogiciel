@@ -241,6 +241,8 @@ public class PlayingState extends GameState {
             toMoveX += toMove;
         }
 
+
+        translateCamera(player.getPosX() + toMoveX, player.getPosY() + toMoveY);
         player.move(toMoveX, toMoveY);
         if (checkForCollision(player)) {
             player.move(-toMoveX, -toMoveY);
@@ -249,7 +251,8 @@ public class PlayingState extends GameState {
         checkForMapChanging(player);
         checkForNearSelectable(player);
 
-        translateCamera(player.getPosX(), player.getPosY());
+        player.setxT((int)(player.getPosX() - cam.position.x));
+        player.setyT((int)(player.getPosY() - cam.position.y));
     }
 
     /**
@@ -258,18 +261,25 @@ public class PlayingState extends GameState {
      * @param y Vertical position of the player.
      */
     protected void translateCamera(int x, int y) {
+        double minX = (double)SHOWED_MAP_WIDTH / 2;
+        double minY = (double)SHOWED_MAP_HEIGHT / 2;
+
+        if (player.getMapRectangle().x < minX || player.getMapRectangle().getY() < minY) { // TODO : Bug when going on the border
+            return;
+        }
+
         cam.position.x = x;
         cam.position.y = y;
-        double maxX = (mapHeight + mapWidth) * tileHeight;
-        if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
-            cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
-        else if (cam.position.x > maxX)
-            cam.position.x = (float)maxX;
-
-        if (cam.position.y > (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2)
-            cam.position.y = (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2;
-        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT / 2) * tileHeight)
-            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT / 2) * tileHeight;
+//        double maxX = (mapHeight + mapWidth) * tileHeight;
+//        if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
+//            cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
+//        else if (cam.position.x > maxX)
+//            cam.position.x = (float)maxX;
+//
+//        if (cam.position.y > (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2)
+//            cam.position.y = (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2;
+//        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT / 2) * tileHeight)
+//            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT / 2) * tileHeight;
     }
 
     /**
