@@ -6,9 +6,9 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 public class OldExam extends Items
 {
 
-    public OldExam(Place place)
+    public OldExam()
     {
-        super(place, "Old Exam");
+        super("Old Exam");
     }
 
     @Override

@@ -31,6 +31,6 @@ public class Dead implements Notification
 
     public boolean bufferEmpty()
     {
-        return buffer == null;
+        return !(buffer == null);
     }
 }

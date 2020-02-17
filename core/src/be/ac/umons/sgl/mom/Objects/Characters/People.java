@@ -51,6 +51,7 @@ public class People extends Character implements Serializable, Observer
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         this.threshold = minExperience(level+1);
         maxObject = difficulty.getManyItem();
+        System.out.println(life + "out");
     }
 
 
@@ -129,20 +130,6 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
-     *This method allows define the characteristic of a people.
-     *@param strength who is strength of people.
-     *@param defence who is defence of people.
-     *@param agility who is the capacity of avoid the attack.
-     */
-    public void updateType(int strength, int defence, int agility)
-    {
-        this.strength = strength;
-        this.defence = defence;
-        this.agility = agility;
-    }
-
-
-    /**
      *This method allows the remove a object in the bag of people.
      *@return true of the object is remove and false otherwise
      */
@@ -195,8 +182,6 @@ public class People extends Character implements Serializable, Observer
      */
     private void addEnergy(double many)
     {
-        if (energy <= 0)
-            dead();
         if(this.energy + many >= 0 || this.energy + many <= 100)
             this.energy = this.energy + many;
     }

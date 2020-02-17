@@ -5,9 +5,9 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 public class PaperHelp extends Items
 {
-    public PaperHelp(Place place)
+    public PaperHelp()
     {
-        super(place, "Paper Help");
+        super("Paper Help");
     }
 
     @Override

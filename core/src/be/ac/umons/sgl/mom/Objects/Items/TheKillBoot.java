@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
 import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 
@@ -15,9 +17,9 @@ public class TheKillBoot extends Items implements Guns
      * this constructor define the items
      * @param place is the place of this item
      */
-    public TheKillBoot(Place place)
+    public TheKillBoot()
     {
-        super(place,"GunKillBoot");
+        super("GunKillBoot");
     }
 
 

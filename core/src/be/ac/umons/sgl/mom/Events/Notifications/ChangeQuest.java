@@ -31,6 +31,6 @@ public class ChangeQuest implements Notification
 
     public boolean bufferEmpty()
     {
-        return buffer == null;
+        return !(buffer == null);
     }
 }

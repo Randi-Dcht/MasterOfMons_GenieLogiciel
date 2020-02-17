@@ -24,9 +24,8 @@ public abstract class Items implements Serializable
      * @param place is the place of this item
      * @param name is the name of this items
      */
-    public Items(Place place,String name)
+    public Items(String name)
     {
-        this.place = place;
         this.name = name;
     }
 
@@ -41,9 +40,9 @@ public abstract class Items implements Serializable
 
 
     /***/
-    public String getImagePath()
+    public void setPlace(Place place)
     {
-        return null;
+        this.place = place;
     }
 
 
@@ -52,6 +51,13 @@ public abstract class Items implements Serializable
      * @param pp is the people
      */
     public abstract void used(People pp);
+
+
+    public void takeItem()
+    {
+        if(visible)
+            visible = false;
+    }
 
 
     /**
@@ -68,9 +74,10 @@ public abstract class Items implements Serializable
     public abstract double getObsolete();
 
 
+    /***/
     @Override
     public String toString()
     {
-        return "Items:"+name;
+        return name;
     }
 }

@@ -5,9 +5,9 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 public class Battery extends Items
 {
-  public Battery(Place place)
+  public Battery()
   {
-    super(place,"Battery");
+    super("Battery");
   }
 
   public void used(People pp)

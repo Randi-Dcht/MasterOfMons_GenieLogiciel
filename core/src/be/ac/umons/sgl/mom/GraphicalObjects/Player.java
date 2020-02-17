@@ -52,8 +52,8 @@ public class Player extends Character {
     public Player(GraphicalSettings gs) {
         super(gs);
         inventory = new ArrayList<>();
-        inventory.add(new Battery(null));
-        inventory.add(new Gun(null));
+        inventory.add(new Battery());
+        inventory.add(new Gun());
     }
 
     /**

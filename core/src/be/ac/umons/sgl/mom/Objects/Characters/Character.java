@@ -30,7 +30,6 @@ public abstract class Character implements Attack, Social
     public Character(String name)
     {
         this.name     = name;
-        this.life     = lifemax();
         conversation  = ReadConversation.getInstance();
     }
 
@@ -87,8 +86,10 @@ public abstract class Character implements Attack, Social
     public void updateType(int strength, int defence, int agility)
     {
         this.strength = strength;
-        this.defence = defence;
-        this.agility = agility;
+        this.defence  = defence;
+        this.agility  = agility;
+        this.life     = lifemax();
+        System.out.println(name+":"+life + "-->" + strength);
     }
 
 
@@ -105,7 +106,9 @@ public abstract class Character implements Attack, Social
     @Override
     public void loseAttack(double lose)
     {
+        System.out.println("BeforePeople :" + name + "  " +  life);
         life = life - lose;
+        System.out.println("People :" + name + "  " +  life);
         if(life <= 0)
             dead();
     }
@@ -148,6 +151,7 @@ public abstract class Character implements Attack, Social
     public void dead()
     {
         living = false;
+        System.out.println("MORT " + name );
         SuperviserNormally.getSupervisor().getEvent().notify(new Dead(this));
     }
 
@@ -170,6 +174,6 @@ public abstract class Character implements Attack, Social
     @Override
     public String toString()
     {
-        return "Character:"+name;
+        return name;
     }
 }
