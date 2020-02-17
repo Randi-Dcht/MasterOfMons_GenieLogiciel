@@ -47,7 +47,7 @@ public class Answer implements Notification
     @Override
     public boolean bufferEmpty()
     {
-        return buffer == null;
+        return !(buffer == null);
     }
 
 

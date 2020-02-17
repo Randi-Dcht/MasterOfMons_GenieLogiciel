@@ -30,7 +30,6 @@ public abstract class Character implements Attack, Social
     public Character(String name)
     {
         this.name     = name;
-        this.life     = lifemax();
         conversation  = ReadConversation.getInstance();
     }
 
@@ -87,8 +86,9 @@ public abstract class Character implements Attack, Social
     public void updateType(int strength, int defence, int agility)
     {
         this.strength = strength;
-        this.defence = defence;
-        this.agility = agility;
+        this.defence  = defence;
+        this.agility  = agility;
+        this.life     = lifemax();
     }
 
 
@@ -170,6 +170,6 @@ public abstract class Character implements Attack, Social
     @Override
     public String toString()
     {
-        return "Character:"+name;
+        return name;
     }
 }

@@ -30,6 +30,6 @@ public class UpLevel implements Notification
 
     public boolean bufferEmpty()
     {
-        return buffer == 0;
+        return !(buffer == 0);
     }
 }
