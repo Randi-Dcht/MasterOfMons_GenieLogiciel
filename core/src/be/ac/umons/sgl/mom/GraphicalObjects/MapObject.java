@@ -1,7 +1,7 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
-import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -9,11 +9,11 @@ import java.awt.*;
 
 public class MapObject extends OnMapObject {
 
-    GameObjects go;
+    Items go;
 
     Point mapPos;
 
-    public MapObject(GraphicalSettings gs, GameObjects go) {
+    public MapObject(GraphicalSettings gs, Items go) {
         super(gs);
         this.gs = gs;
         this.go = go;

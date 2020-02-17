@@ -1,16 +1,12 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
-import be.ac.umons.sgl.mom.Enums.GameObjects;
-import be.ac.umons.sgl.mom.GameStates.PlayingState;
-import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Battery;
+import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
-
-import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_HEIGHT;
-import static be.ac.umons.sgl.mom.GameStates.PlayingState.SHOWED_MAP_WIDTH;
 
 /**
  * Represent a real player of the game.
@@ -40,14 +36,11 @@ public class Player extends Character {
      * @param middleY The screen's center vertical position.
      */
     public Player(GraphicalSettings gs, int middleX, int middleY) {
-        super(gs);
+        this(gs);
         this.middleX = middleX;
         this.middleY = middleY;
         posX = middleX;
         posY = 0;
-        inventory = new ArrayList<>();
-        inventory.add(GameObjects.Object1);
-        inventory.add(GameObjects.Object2);
     }
     public Player() {}
 
@@ -57,8 +50,8 @@ public class Player extends Character {
     public Player(GraphicalSettings gs) {
         super(gs);
         inventory = new ArrayList<>();
-        inventory.add(GameObjects.Object1);
-        inventory.add(GameObjects.Object2);
+        inventory.add(new Battery(null));
+        inventory.add(new Gun(null, "CoolName"));
     }
 
     /**

@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -16,6 +15,7 @@ import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -154,7 +154,7 @@ public class PlayingState extends GameState {
         initMap();
         testPNJ.move(player.getPosX(), player.getPosY());
 
-        MapObject mo = new MapObject(gs, GameObjects.Object1);
+        MapObject mo = new MapObject(gs, new Battery(null));
         mapObjects.add(mo);
         mo.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
 

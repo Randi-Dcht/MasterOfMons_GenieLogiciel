@@ -1,10 +1,10 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
-import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -32,7 +32,7 @@ public class Character extends OnMapObject {
     /**
      * The character's inventory
      */
-    protected List<GameObjects> inventory;
+    protected List<Items> inventory;
     /**
      * The character's characteristics
      */
@@ -135,7 +135,7 @@ public class Character extends OnMapObject {
     /**
      * @return Character's inventory
      */
-    public List<GameObjects> getInventory() {
+    public List<Items> getInventory() {
         return new ArrayList<>(inventory);
     }
 

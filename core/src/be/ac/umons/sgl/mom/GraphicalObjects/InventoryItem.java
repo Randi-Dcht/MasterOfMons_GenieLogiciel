@@ -1,8 +1,7 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
-import be.ac.umons.sgl.mom.Enums.GameObjects;
-import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -23,7 +22,7 @@ public class InventoryItem {
     /**
      * The object to show.
      */
-    protected GameObjects go;
+    protected Items go;
     /**
      * The game's graphical settings.
      */
@@ -62,7 +61,7 @@ public class InventoryItem {
      * @param gs The game's graphical settings.
      * @param go The item to show.
      */
-    public InventoryItem(GraphicalSettings gs, GameObjects go) {
+    public InventoryItem(GraphicalSettings gs, Items go) {
         this.go = go;
         this.gs = gs;
         init();

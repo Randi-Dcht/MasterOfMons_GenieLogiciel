@@ -1,14 +1,13 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
-import be.ac.umons.sgl.mom.Enums.GameObjects;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Control;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryItem;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
@@ -45,7 +44,7 @@ public class InventoryShower extends Control {
     /**
      * The inventory to show.
      */
-    protected List<GameObjects> inventory;
+    protected List<Items> inventory;
     /**
      * If the control is being animated.
      */
@@ -105,7 +104,7 @@ public class InventoryShower extends Control {
      */
     public void init() {
         inventoryItemList = new ArrayList<>();
-        for (GameObjects go : inventory)
+        for (Items go : inventory)
             inventoryItemList.add(new InventoryItem(gs, go));
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
