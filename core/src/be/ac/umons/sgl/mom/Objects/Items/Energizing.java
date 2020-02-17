@@ -8,9 +8,9 @@ public class Energizing extends Items
     private double obsolete = 31536000;
     private double reVisible = 0;
 
-    public Energizing(Place place)
+    public Energizing()
     {
-        super(place, "Energizing Drink");
+        super("Energizing Drink");
     }
 
     @Override

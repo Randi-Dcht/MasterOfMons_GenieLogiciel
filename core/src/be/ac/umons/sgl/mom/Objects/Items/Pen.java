@@ -15,8 +15,8 @@ public class Pen extends Items
      * this constructor define the items
      * @param place is the place of this item
      */
-    public Pen(Place place) {
-        super(place,"PenToWrite");
+    public Pen() {
+        super("PenToWrite");
     }
 
 

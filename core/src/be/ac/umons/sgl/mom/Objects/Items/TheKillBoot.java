@@ -15,9 +15,9 @@ public class TheKillBoot extends Items implements Guns
      * this constructor define the items
      * @param place is the place of this item
      */
-    public TheKillBoot(Place place)
+    public TheKillBoot()
     {
-        super(place,"GunKillBoot");
+        super("GunKillBoot");
     }
 
 

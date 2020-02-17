@@ -76,10 +76,10 @@ public class MyFirstYear extends MasterQuest
     {
         ArrayList<Items> list = new ArrayList<>();
         for (int i=0; i < 10; i++)
-            list.add(new Energizing(null));//TODO changer cela dans le futur
+            list.add(new Energizing());
         for (int i=0 ; i < 6; i++)
-            list.add(new OldExam(null));
-        list.add(new TheKillBoot(null));
+            list.add(new OldExam());
+        list.add(new TheKillBoot());
 
         return list;
     }
