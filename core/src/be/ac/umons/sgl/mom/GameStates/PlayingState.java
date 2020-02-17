@@ -200,7 +200,6 @@ public class PlayingState extends GameState {
         player.setMapHeight(mapHeight * tileHeight);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
-        player.move(-player.getPosX(), -player.getPosY());
         int spawnX = 0;
         int spawnY = 0;
         if (gmm.getActualMap().getProperties().containsKey("spawnX"))
@@ -209,7 +208,12 @@ public class PlayingState extends GameState {
             spawnY = (int)gmm.getActualMap().getProperties().get("spawnY");
         int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
         int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
-        player.move(x,y);
+        player.setPosX(x);
+        player.setPosY(y);
+        if (cam != null) {
+            cam.position.x = x;
+            cam.position.y = y;
+        }
     }
 
     @Override
@@ -275,7 +279,10 @@ public class PlayingState extends GameState {
         double minX = (double)SHOWED_MAP_WIDTH / 2;
         double minY = (double)SHOWED_MAP_HEIGHT / 2;
 
-        if (player.getMapRectangle().x < minX || player.getMapRectangle().getY() < minY) { // TODO : Bug when going on the border
+        Rectangle pmr = player.getMapRectangle();
+
+        if (pmr.x < minX || pmr.getY() < minY ||
+                pmr.x > mapWidth - minX || pmr.getY() > mapHeight - minY) {
             return;
         }
 

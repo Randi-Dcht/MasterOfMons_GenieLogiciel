@@ -165,6 +165,4 @@ public class Player extends Character {
     public void setTileHeight(int tileHeight) {
         this.tileHeight = tileHeight;
     }
-
-
 }
