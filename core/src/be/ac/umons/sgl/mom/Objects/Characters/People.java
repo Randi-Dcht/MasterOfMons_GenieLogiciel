@@ -195,8 +195,6 @@ public class People extends Character implements Serializable, Observer
      */
     private void addEnergy(double many)
     {
-        if (energy <= 0)
-            dead();
         if(this.energy + many >= 0 || this.energy + many <= 100)
             this.energy = this.energy + many;
     }

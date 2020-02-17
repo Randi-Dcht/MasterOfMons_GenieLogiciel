@@ -152,8 +152,8 @@ public class SuperviserNormally implements Observer
                 listMobile.put(plc,new ArrayList<>());
             for (Mobile mb : quest.whatMobile())
             {
-                int random = new Random().nextInt(place.length);
-                listMobile.get(place[random]).add(mb);
+                listMobile.get(place[new Random().nextInt(place.length)]).add(mb);
+                //TODO ajouter s
             }
         }
 
@@ -170,8 +170,9 @@ public class SuperviserNormally implements Observer
                 listItems.put(plc,new ArrayList<>());
             for (Items mb : quest.whatItem())
             {
-                int random = new Random().nextInt(place.length);
-                listItems.get(place[random]).add(mb);
+                Place plce = place[new Random().nextInt(place.length)];
+                listItems.get(plce).add(mb);
+                mb.setPlace(plce);
             }
         }
 

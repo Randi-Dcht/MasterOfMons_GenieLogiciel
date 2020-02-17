@@ -93,8 +93,9 @@ public class MyFirstYear extends MasterQuest
     public ArrayList<Mobile> whatMobile()
     {
         ArrayList<Mobile> list = new ArrayList<>();
+        MobileType[] type = MobileType.values();
         for(int i=0; i < 30;i++)
-            list.add(new StudPNJ(getBloc(), MobileType.Lambda));//TODO rendre aléatoire
+            list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
         for(int i = 30; i < 40; i++)
             list.add(new FightPNJ(getBloc(), MobileType.Athletic));
 
