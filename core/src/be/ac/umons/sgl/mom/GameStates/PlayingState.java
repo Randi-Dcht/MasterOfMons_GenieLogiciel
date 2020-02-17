@@ -3,11 +3,13 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -123,6 +125,8 @@ public class PlayingState extends GameState {
 
     protected List<MapObject> mapObjects;
 
+    protected Button pauseButton;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -173,6 +177,10 @@ public class PlayingState extends GameState {
         energyBar = new ProgressBar();
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
 
+        pauseButton = new Button(gim, gs);
+        pauseButton.setText("||");
+        pauseButton.setOnClick(() -> gsm.setState(InGameMenuState.class));
+        pauseButton.setFont(gs.getSmallFont());
     }
 
     public void initMap() {
@@ -245,7 +253,7 @@ public class PlayingState extends GameState {
 
         translateCamera(player.getPosX() + toMoveX, player.getPosY() + toMoveY);
         player.move(toMoveX, toMoveY);
-        if (checkForCollision(player) && false) {
+        if (checkForCollision(player)) {
             player.move(-toMoveX, -toMoveY);
             return;
         }
@@ -358,6 +366,9 @@ public class PlayingState extends GameState {
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         expBar.draw((int)leftMargin * 2 + topBarWidth, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         energyBar.draw((int)leftMargin * 3 + topBarWidth * 2, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
+        Point pauseButtonSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
+        pauseButton.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - pauseButtonSize.x), (int)(MasterOfMonsGame.HEIGHT - pauseButtonSize.y - topBarHeight - 2 * topMargin)),
+                pauseButtonSize);
     }
 
     @Override
@@ -382,6 +393,7 @@ public class PlayingState extends GameState {
             // TODO interaction
         }
         inventoryShower.handleInput();
+        pauseButton.handleInput();
     }
 
     public void debugLevelUp() {
