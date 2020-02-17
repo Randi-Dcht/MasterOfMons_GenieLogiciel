@@ -2119,7 +2119,7 @@
   <object id="3" name="Tmx/Umons_Nimy.tmx" x="22076" y="6724" width="158" height="442"/>
  </objectgroup>
  <objectgroup name="Interdit">
-  <object id="5" x="4258.33" y="-258.333" width="2783.33" height="8150"/>
+  <object id="5" x="-166.667" y="-258.333" width="7208.33" height="8150"/>
   <object id="6" x="7016.67" y="-250" width="5750" height="2750"/>
   <object id="7" x="12766.7" y="-266.667" width="5858.33" height="1475"/>
   <object id="8" x="18166.7" y="-283.333" width="3783.33" height="3750"/>
@@ -2131,7 +2131,7 @@
   <object id="14" x="13775" y="9725" width="4041.67" height="3991.67"/>
   <object id="15" x="12550" y="7783.33" width="1425" height="2141.67"/>
   <object id="16" x="10883.3" y="7116.67" width="1858.33" height="4341.67"/>
-  <object id="17" x="4275" y="7625" width="7683.33" height="7216.67"/>
+  <object id="17" x="416.667" y="7625" width="11541.7" height="11041.7"/>
   <object id="19" x="10841.7" y="2491.67" width="1916.67" height="883.333"/>
   <object id="20" x="10858.3" y="3241.67" width="733.333" height="866.667"/>
  </objectgroup>
