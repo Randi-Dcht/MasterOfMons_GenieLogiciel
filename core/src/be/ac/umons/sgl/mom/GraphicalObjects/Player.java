@@ -1,10 +1,12 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
+import be.ac.umons.sgl.mom.GameStates.PlayingState;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import java.util.ArrayList;
 
@@ -72,6 +74,11 @@ public class Player extends Character {
 
         if (mr.getX() < 0 || mr.getX() > mapWidth / tileWidth || mr.getY() < 0 || mr.getY() > mapHeight / tileHeight) {
             super.move(-x,-y);
+            return;
+        }
+
+        if (Math.abs(xT + x) > PlayingState.SHOWED_MAP_WIDTH / 2 * tileWidth || Math.abs(yT + y) > PlayingState.SHOWED_MAP_HEIGHT * tileHeight) {
+            super.move(-x, -y);
             return;
         }
 

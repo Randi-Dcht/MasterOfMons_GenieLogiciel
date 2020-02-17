@@ -160,7 +160,8 @@ public class PlayingState extends GameState {
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
-        translateCamera(player.getPosX(),player.getPosY());
+        cam.position.x = player.getPosX();
+        cam.position.y = player.getPosY();
         gmm.setView(cam);
 
         inventoryShower = new InventoryShower(gim, gs, player);
@@ -244,7 +245,7 @@ public class PlayingState extends GameState {
 
         translateCamera(player.getPosX() + toMoveX, player.getPosY() + toMoveY);
         player.move(toMoveX, toMoveY);
-        if (checkForCollision(player)) {
+        if (checkForCollision(player) && false) {
             player.move(-toMoveX, -toMoveY);
             return;
         }
