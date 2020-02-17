@@ -175,7 +175,7 @@ public class PlayingState extends GameState {
         pauseButton.setFont(gs.getSmallFont());
     }
 
-    public void initMap(String mapPath) {
+    public void initMap(String mapPath, int x, int y) {
         gmm.setMap(mapPath);
 //        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps("Tmx/Umons_Nimy.tmx")));
         pnjs = new ArrayList<>();
@@ -200,20 +200,24 @@ public class PlayingState extends GameState {
         player.setMapHeight(mapHeight * tileHeight);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
-        int spawnX = 0;
-        int spawnY = 0;
-        if (gmm.getActualMap().getProperties().containsKey("spawnX"))
-            spawnX = (int)gmm.getActualMap().getProperties().get("spawnX");
-        if (gmm.getActualMap().getProperties().containsKey("spawnY"))
-            spawnY = (int)gmm.getActualMap().getProperties().get("spawnY");
-        int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
-        int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
         player.setPosX(x);
         player.setPosY(y);
         if (cam != null) {
             cam.position.x = x;
             cam.position.y = y;
         }
+    }
+
+    public void initMap(String mapPath) {
+        gmm.setMap(mapPath);
+        int spawnX = 0, spawnY = 0;
+        if (gmm.getActualMap().getProperties().containsKey("spawnX"))
+            spawnX = (int)gmm.getActualMap().getProperties().get("spawnX");
+        if (gmm.getActualMap().getProperties().containsKey("spawnY"))
+            spawnY = (int)gmm.getActualMap().getProperties().get("spawnY");
+        int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
+        int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
+        initMap(mapPath, x, y);
     }
 
     @Override
@@ -327,7 +331,14 @@ public class PlayingState extends GameState {
             Rectangle playerRect = player.getMapRectangle();
             Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
             if (Intersector.overlaps(mapRect, playerRect)) {
-                initMap(rectangleMapObject.getName());
+                int spawnX = 0, spawnY = 0;
+                if (rectangleMapObject.getProperties().containsKey("spawnX"))
+                    spawnX = (int)rectangleMapObject.getProperties().get("spawnX");
+                if (rectangleMapObject.getProperties().containsKey("spawnY"))
+                    spawnY = (int)rectangleMapObject.getProperties().get("spawnY");
+                int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
+                int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
+                initMap(rectangleMapObject.getName(), x, y);
             }
         }
     }
