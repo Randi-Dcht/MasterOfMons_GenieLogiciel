@@ -26,9 +26,6 @@ public class Course
 
     @Override
     public String toString() {
-        return "Course{" +
-                "lesson=" + lesson +
-                ", date=" + date +
-                '}';
+        return date.getHour() + "H" + date.getMin() + " : " + lesson.toString();
     }
 }
