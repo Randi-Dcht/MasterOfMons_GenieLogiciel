@@ -134,6 +134,8 @@ public class PlayingState extends GameState {
 
     protected AgendaShower agendaShower;
 
+    protected TimeShower timeShower;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -152,6 +154,7 @@ public class PlayingState extends GameState {
         gmm = GameMapManager.getInstance();
         questShower = new QuestShower(gs);
         agendaShower = new AgendaShower(gim, gs);
+        timeShower = new TimeShower(gs);
 
         /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
@@ -390,6 +393,8 @@ public class PlayingState extends GameState {
 
         // Dessine le HUD.
         agendaShower.draw(sb);
+        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth() - 2 * leftMargin), (int)topMargin),
+                new Point((int)(timeShower.getWidth() + 2 * leftMargin), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
