@@ -1,6 +1,7 @@
-package be.ac.umons.sgl.mom.GraphicalObjects;
+package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Enums.Orientation;
+import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -8,7 +9,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -44,10 +44,17 @@ public class Character extends OnMapObject {
      */
     private double timeBeforeAttack;
 
+    /**
+     * The life bar of this character.
+     */
     protected ProgressBar lifeBar;
-
+    /**
+     * The range in which the player can attack.
+     */
     protected int attackRange = 200;
-
+    /**
+     * If the character is in the attack range of the player.
+     */
     protected boolean isATarget = false;
 
     /**
@@ -189,23 +196,41 @@ public class Character extends OnMapObject {
         this.timeBeforeAttack = timeBeforeAttack;
     }
 
+    /**
+     * Set the horizontal position.
+     * @param posX The horizontal position.
+     */
     public void setPosX(int posX) {
         this.posX = posX;
     }
-
+    /**
+     * Set the vertical position.
+     * @param posY The vertical position.
+     */
     public void setPosY(int posY) {
         this.posY = posY;
     }
 
+    /**
+     * Set the position.
+     * @param pos The position
+     */
     public void setMapPos(Point pos) {
         this.posX = pos.x;
         this.posY = pos.y;
     }
 
+    /**
+     * Set if the character is in the player's attack range.
+     * @param isATarget If the character is in the player's attack range.
+     */
     public void setIsATarget(boolean isATarget) {
         this.isATarget = isATarget;
     }
 
+    /**
+     * @return The character's attack range.
+     */
     public int getAttackRange() {
         return attackRange;
     }

@@ -6,7 +6,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
-import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;

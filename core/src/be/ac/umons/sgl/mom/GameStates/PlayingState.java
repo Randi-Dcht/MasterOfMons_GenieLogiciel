@@ -10,11 +10,14 @@ import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
-import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.OnMapObject;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
@@ -24,9 +27,9 @@ import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -264,6 +267,7 @@ public class PlayingState extends GameState implements Observer {
         am.update(dt);
         makePlayerMove(dt);
         cam.update();
+
 
         SuperviserNormally.getSupervisor().callMethod(dt);
 
@@ -528,7 +532,8 @@ public class PlayingState extends GameState implements Observer {
                     break;
                 }
             }
-        }
+        } else if (notify.getEvents().equals(Events.ChangeQuest))
+            Gdx.app.postRunnable(() -> questShower.setQuest(((People)player.getCharacteristics()).getQuest()));
     }
 
     @Override

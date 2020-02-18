@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
-import be.ac.umons.sgl.mom.GraphicalObjects.Player;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;

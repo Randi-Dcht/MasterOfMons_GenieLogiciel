@@ -43,6 +43,8 @@ public class TextBox extends Control {
      */
     protected boolean acceptOnlyNumbers = false;
 
+    protected boolean acceptOnlyHexadecimal = false;
+
     /**
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
@@ -85,6 +87,8 @@ public class TextBox extends Control {
             for (char c : gim.getLastChars()) {
                 if (acceptOnlyNumbers && (c < '0' || c > '9'))
                     continue;
+                if (acceptOnlyHexadecimal && ((c < '0' || c > '9') && (c < 'a' || c > 'f') && (c < 'A' || c > 'F')))
+                    continue;
                 if (Character.isLetterOrDigit(c))
                     actualText += c;
             }
@@ -126,5 +130,9 @@ public class TextBox extends Control {
      */
     public void setAcceptOnlyNumbers(boolean acceptOnlyNumbers) {
         this.acceptOnlyNumbers = acceptOnlyNumbers;
+    }
+
+    public void setAcceptOnlyHexadecimal(boolean acceptOnlyHexadecimal) {
+        this.acceptOnlyHexadecimal = acceptOnlyHexadecimal;
     }
 }
