@@ -4,8 +4,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.ChangeMonth;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
-
-import java.util.Date;
+import be.ac.umons.sgl.mom.Other.Date;
 import java.util.Objects;
 
 /**
@@ -72,9 +71,9 @@ public class TimeGame implements Observer
     }
 
 
-    public int getDate()
+    public Date getDate()
     {
-        return  NBmonth+1;
+        return new Date(day,NBmonth+1,this.year);
     }
 
 
