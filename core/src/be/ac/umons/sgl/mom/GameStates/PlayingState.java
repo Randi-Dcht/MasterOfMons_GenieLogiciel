@@ -391,7 +391,7 @@ public class PlayingState extends GameState implements Observer {
     }
 
     protected void attack(Player player) {
-        for (Character c : getPlayerInRange(30000)) {
+        for (Character c : getPlayerInRange(player.getAttackRange() * player.getAttackRange())) {
             SuperviserNormally.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
         }

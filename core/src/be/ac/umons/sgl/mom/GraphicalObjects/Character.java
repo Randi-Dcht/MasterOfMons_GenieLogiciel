@@ -46,6 +46,10 @@ public class Character extends OnMapObject {
 
     protected ProgressBar lifeBar;
 
+    protected int attackRange = 200;
+
+    protected boolean isATarget = true;
+
     /**
      * @param gs The game's graphical settings.
      */
@@ -78,6 +82,12 @@ public class Character extends OnMapObject {
 //        if (lifeBar.getPercent() < 1) {
             lifeBar.draw(x, y + height, width, height / 5);
 //        }
+
+        if (isATarget) {
+            sr.begin();
+            sr.ellipse(x, y, width, height / 4);
+            sr.end();
+        }
 
         super.draw(batch, x, y, width, height);
     }
@@ -189,5 +199,13 @@ public class Character extends OnMapObject {
     public void setMapPos(Point pos) {
         this.posX = pos.x;
         this.posY = pos.y;
+    }
+
+    public void setIsATarget(boolean isATarget) {
+        this.isATarget = isATarget;
+    }
+
+    public int getAttackRange() {
+        return attackRange;
     }
 }
