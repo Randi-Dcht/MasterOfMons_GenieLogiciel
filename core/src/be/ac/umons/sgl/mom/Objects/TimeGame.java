@@ -72,9 +72,9 @@ public class TimeGame implements Observer
     }
 
 
-    public Date getDate()
+    public int getDate()
     {
-        return  new Date(year,NBmonth+1,day,hour,min);
+        return  NBmonth+1;
     }
 
 
