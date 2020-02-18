@@ -43,4 +43,17 @@ public class Date
     {
         return min;
     }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    @Override
+    public String toString() {
+        return "Date{" +
+                ", day=" + day +
+                ", month=" + month +
+                '}';
+    }
 }

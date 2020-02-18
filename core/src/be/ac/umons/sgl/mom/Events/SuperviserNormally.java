@@ -197,13 +197,15 @@ public class SuperviserNormally implements Observer
 
 
          /**
-         * This method
+         * This method allows to update the class
          * @param dt who is the time between two windows
          */
         public void callMethod(double dt)
         {
             if(people != null)
                 people.energy(dt);
+           // System.out.println(dt);
+            time.updateSecond(dt);
 
             //for (Items o : listPNJ)
               //  o.make(dt);

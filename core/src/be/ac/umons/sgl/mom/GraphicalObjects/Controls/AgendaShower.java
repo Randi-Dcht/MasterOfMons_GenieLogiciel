@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
+import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class AgendaShower extends Control {
 
-    protected ArrayList<Lesson> lessons;
+    protected ArrayList<Course> courses;
 
     protected DoubleAnimation da;
     protected boolean isBeingAnimated = false;
@@ -34,15 +35,13 @@ public class AgendaShower extends Control {
         sr.setAutoShapeType(true);
         sr.setColor(new Color(0x21212142));
 
-        lessons = new ArrayList<>();
-        lessons.add(Lesson.nbComplexe);
-        lessons.add(Lesson.statistique);
+        courses = new ArrayList<>();
     }
 
     public void draw(Batch batch) {
         if (! showed)
             return;
-        Point size = getMaximumSize(lessons);
+        Point size = getMaximumSize(courses);
         if (isBeingAnimated) {
             size.x = (int)(size.x * da.getActual());
             size.y = (int)(size.y * da.getActual());
@@ -61,18 +60,18 @@ public class AgendaShower extends Control {
         int alreadyUsed = topMargin;
 
         batch.begin();
-        for (Lesson l : lessons) {
-            gs.getQuestFont().draw(batch, l.toString(), pos.x + leftMargin, pos.y + size.y - alreadyUsed);
+        for (Course c : courses) {
+            gs.getQuestFont().draw(batch, c.toString(), pos.x + leftMargin, pos.y + size.y - alreadyUsed);
             alreadyUsed += gs.getQuestFont().getLineHeight() + topMargin;
         }
         batch.end();
     }
 
-    protected Point getMaximumSize(ArrayList<Lesson> lessons) {
+    protected Point getMaximumSize(ArrayList<Course> courses) {
         int maxX = 0, maxY = 2 * topMargin;
-        for (Lesson l : lessons) {
+        for (Course c : courses) {
             GlyphLayout gl = new GlyphLayout();
-            gl.setText(gs.getQuestFont(), l.toString());
+            gl.setText(gs.getQuestFont(), c.toString());
             if (gl.width + 2 * leftMargin > maxX)
                 maxX = (int)(gl.width + 2 * leftMargin);
             maxY += gs.getQuestFont().getLineHeight() + topMargin;
@@ -89,10 +88,10 @@ public class AgendaShower extends Control {
     }
 
     protected void show() {
-        lessons = SuperviserNormally.getSupervisor().getPeople().getPlanning().get(
+        courses = SuperviserNormally.getSupervisor().getPeople().getPlanning().get(
                 SuperviserNormally.getSupervisor().getTime().getDate().getDay()
         );
-        if (lessons == null)
+        if (courses == null)
             return;
         isBeingAnimated = true;
         da = new DoubleAnimation(0, 1, 500);

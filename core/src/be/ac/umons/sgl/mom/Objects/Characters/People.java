@@ -7,6 +7,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Other.HyperPlanning;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
@@ -33,7 +34,7 @@ public class People extends Character implements Serializable, Observer
     private Bloc year;
     private boolean invincible = false;
     private int maxObject;
-    private HashMap<Integer,ArrayList<Lesson>> myPlanning;
+    private HashMap<Integer,ArrayList<Course>> myPlanning;
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
     private Difficulty difficulty;
 
@@ -121,7 +122,7 @@ public class People extends Character implements Serializable, Observer
      * This method return a dictionary with date and Lesson for this people
      * @return planning is a dictionary
      */
-    public HashMap<Integer,ArrayList<Lesson>> getPlanning()
+    public HashMap<Integer,ArrayList<Course>> getPlanning()
     {
         return myPlanning;
     }
