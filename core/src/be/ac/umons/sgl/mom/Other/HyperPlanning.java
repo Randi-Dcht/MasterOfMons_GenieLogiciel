@@ -10,6 +10,7 @@ import java.util.Random;
 public class HyperPlanning
 {
     public static ArrayList<Lesson> monthL;
+    public static double average = 1;
 
     public static HashMap<Integer, ArrayList<Course>> createSchedule(ArrayList<Lesson> lesson, Date date)
     {
@@ -19,7 +20,7 @@ public class HyperPlanning
         while (monthL.size() != 0)
         {
             ArrayList<Course> ll = null;
-            for (int i=0; i< 3;i++) //new Random().nextInt(4)
+            for (int i=0; i< (int)average;i++) //new Random().nextInt(4)
             {
                 int random = new Random().nextInt(monthL.size());
                 ll = new ArrayList<>();
@@ -41,5 +42,6 @@ public class HyperPlanning
             for (int i =0; i < ls.numberOfCourse();i++)
                 monthL.add(ls);
         }
+        average= monthL.size()/31;
     }
 }
