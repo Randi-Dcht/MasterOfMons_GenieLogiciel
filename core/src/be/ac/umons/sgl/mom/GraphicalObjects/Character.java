@@ -48,7 +48,7 @@ public class Character extends OnMapObject {
 
     protected int attackRange = 200;
 
-    protected boolean isATarget = true;
+    protected boolean isATarget = false;
 
     /**
      * @param gs The game's graphical settings.
@@ -72,6 +72,13 @@ public class Character extends OnMapObject {
      * @param height The height of the character
      */
     public void draw(Batch batch, int x, int y, int width, int height) {
+        if (isATarget) {
+            sr.begin();
+            sr.setColor(new Color(0xB71C1CAA));
+            sr.ellipse(x, y, width, height / 4);
+            sr.end();
+        }
+
         batch.begin();
         batch.draw(getTexture(),  x, y, width, height);
         batch.end();
@@ -82,12 +89,6 @@ public class Character extends OnMapObject {
 //        if (lifeBar.getPercent() < 1) {
             lifeBar.draw(x, y + height, width, height / 5);
 //        }
-
-        if (isATarget) {
-            sr.begin();
-            sr.ellipse(x, y, width, height / 4);
-            sr.end();
-        }
 
         super.draw(batch, x, y, width, height);
     }
