@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
+import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -18,9 +19,9 @@ public class TestCharacters
     @Test
     void PeopleObjectTest()
     {
-        People people = new People("MasterOfMons", Type.normal);
-        Battery[] b = {new Battery(Place.Nimy),new Battery(Place.Nimy),new Battery(Place.Nimy),new Battery(Place.Nimy),new Battery(Place.Nimy),new Battery(Place.Nimy)};
-        Energizing e = new Energizing(Place.Nimy);
+        People people = new People("MasterOfMons", Type.normal, Difficulty.Easy);
+        Battery[] b = {new Battery(),new Battery(),new Battery(),new Battery(),new Battery(),new Battery()};
+        Energizing e = new Energizing();
         for (int i = 0; i < 5 ; i++)
         {
             assertTrue(people.pushObject(b[i]),"add not over full");
@@ -33,7 +34,7 @@ public class TestCharacters
     @Test
     void energyPeopleTest()
     {
-        People people = new People("Junit",Type.normal);
+        People people = new People("Junit",Type.normal,Difficulty.Easy);
         double first = people.getEnergy();
         for (int i = 0; i < 100 ; i++ ){people.energy(1);}
         double second = people.getEnergy();
