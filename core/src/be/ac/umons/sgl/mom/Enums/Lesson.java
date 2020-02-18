@@ -26,12 +26,12 @@ public enum Lesson
      */
 
     /*Lesson of Bachelor 1*/
-    MI1('O',"math pour informatique 1",Place.Nimy,Bloc.BA1,20),
+    MI1('O',"math pour informatique 1",Place.Nimy,Bloc.BA1,15),
     MI2('O',"math pour informatique 2",Place.Nimy,Bloc.BA1,10),
     algo1('O',"algorithme python",Place.Nimy,Bloc.BA1,20),
     algo2('F',"algorithme java",Place.DeVinci,Bloc.BA1,5),
-    ftOrdi('F',"fonctionnement des ordinateurs",Place.Nimy,Bloc.BA1,30),
-    projet1('F',"projet bachelier 1",Place.DeVinci,Bloc.BA1,2),
+    ftOrdi('F',"fonctionnement des ordinateurs",Place.Nimy,Bloc.BA1,5),
+    projet1('F',"projet bachelier 1",Place.DeVinci,Bloc.BA1,5),
 
     /*Lesson of Bachelor 2*/
     nbComplexe('F',"nombre complexe",Place.Nimy,Bloc.BA2,10),

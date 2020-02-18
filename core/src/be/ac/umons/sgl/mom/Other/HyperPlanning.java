@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Objects.Course;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -9,17 +11,25 @@ public class HyperPlanning
 {
     public static ArrayList<Lesson> monthL;
 
-    public static HashMap<Integer, ArrayList<Lesson>> createSchedule(ArrayList<Lesson> lesson, Date date) //TODO changer cela pour conrespondre à guillaume + gauillaume uniqyuement jour
+    public static HashMap<Integer, ArrayList<Course>> createSchedule(ArrayList<Lesson> lesson, Date date)
     {
-        HashMap<Integer,ArrayList<Lesson>> list = new HashMap<>();
+        HashMap<Integer,ArrayList<Course>> list = new HashMap<>();
         createMonthLesson(lesson);
+        int dayy = date.getDay();
         while (monthL.size() != 0)
         {
-            int random = new Random().nextInt(monthL.size());
-
+            ArrayList<Course> ll = null;
+            for (int i=0; i< 3;i++) //new Random().nextInt(4)
+            {
+                int random = new Random().nextInt(monthL.size());
+                ll = new ArrayList<>();
+                ll.add(new Course(monthL.get(random),new Date(dayy,date.getMonth(),date.getYear())));
+                monthL.remove(random);
+            }
+            list.put(dayy,ll);
+            dayy++;
         }
-        for (int i=0; i < 31 ; i++)
-            list.put(i,new ArrayList<Lesson>());
+
         return list;
     }
 
