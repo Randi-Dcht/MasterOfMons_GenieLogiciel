@@ -7,6 +7,7 @@ import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
@@ -127,6 +128,8 @@ public class PlayingState extends GameState {
 
     protected Button pauseButton;
 
+    protected AgendaShower agendaShower;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -144,6 +147,7 @@ public class PlayingState extends GameState {
         am = AnimationManager.getInstance();
         gmm = GameMapManager.getInstance();
         questShower = new QuestShower(gs);
+        agendaShower = new AgendaShower(gim, gs);
 
         /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
@@ -379,6 +383,7 @@ public class PlayingState extends GameState {
         sb.end();
 
         // Dessine le HUD.
+        agendaShower.draw(sb);
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
