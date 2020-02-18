@@ -1,26 +1,35 @@
 package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class HyperPlanning
 {
-    public static HashMap<Integer, ArrayList<Lesson>> encours(MasterQuest quest, Date date) //TODO changer cela pour conrespondre à guillaume + gauillaume uniqyuement jour
-    {
-        return new HashMap<>();
-    }
+    public static ArrayList<Lesson> monthL;
 
-    public static HashMap<Integer, ArrayList<Lesson>> createSchedule(MasterQuest quest, Date date) //TODO changer cela pour conrespondre à guillaume + gauillaume uniqyuement jour
+    public static HashMap<Integer, ArrayList<Lesson>> createSchedule(ArrayList<Lesson> lesson, Date date) //TODO changer cela pour conrespondre à guillaume + gauillaume uniqyuement jour
     {
         HashMap<Integer,ArrayList<Lesson>> list = new HashMap<>();
-        ArrayList<Lesson> ll = new ArrayList<>();
-        ll.add(Lesson.statistique);ll.add(Lesson.algbio);ll.add(Lesson.statistique);ll.add(Lesson.algbio);ll.add(Lesson.statistique);ll.add(Lesson.algbio);
-        list.put(1,ll);
-        list.put(2,ll);
-        list.put(3,ll);
-        list.put(4,ll);
+        createMonthLesson(lesson);
+        while (monthL.size() != 0)
+        {
+            int random = new Random().nextInt(monthL.size());
+
+        }
+        for (int i=0; i < 31 ; i++)
+            list.put(i,new ArrayList<Lesson>());
         return list;
+    }
+
+    private static void createMonthLesson(ArrayList<Lesson> list)
+    {
+        monthL = new ArrayList<>();
+        for (Lesson ls : list)
+        {
+            for (int i =0; i < ls.numberOfCourse();i++)
+                monthL.add(ls);
+        }
     }
 }
