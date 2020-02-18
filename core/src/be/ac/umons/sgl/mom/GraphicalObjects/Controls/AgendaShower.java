@@ -3,7 +3,6 @@ package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Control;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -24,6 +23,7 @@ public class AgendaShower extends Control {
 
     protected DoubleAnimation da;
     protected boolean isBeingAnimated = false;
+    protected boolean showed = false;
 
     protected ShapeRenderer sr;
 
@@ -39,7 +39,13 @@ public class AgendaShower extends Control {
     }
 
     public void draw(Batch batch) {
+        if (! showed)
+            return;
         Point size = getMaximumSize(lessons);
+        if (isBeingAnimated) {
+            size.x = (int)(size.x * da.getActual());
+            size.y = (int)(size.y * da.getActual());
+        }
         Point pos = new Point(leftMargin, topMargin);
         super.draw(batch, pos, size);
 
@@ -76,16 +82,28 @@ public class AgendaShower extends Control {
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.A, KeyStatus.Pressed))
-            beginShowing();
+            show();
+        else if (gim.isKey(Input.Keys.A, KeyStatus.UnPressed))
+            hide();
     }
 
-    protected void beginShowing() {
-//        da = new DoubleAnimation(0, 1, 2000);
-//        AnimationManager.getInstance().addAnAnimation("AgendaShowingAnim", da);
+    protected void show() {
+        isBeingAnimated = true;
+        da = new DoubleAnimation(0, 1, 500);
+        da.setEndingAction(() -> isBeingAnimated = false);
+        AnimationManager.getInstance().addAnAnimation("AgendaShowingAnim", da);
+        showed = true;
+    }
+
+    protected void hide() {
+        isBeingAnimated = true;
+        da = new DoubleAnimation(1, 0, 500);
+        da.setEndingAction(() -> { isBeingAnimated = false; showed = false; } );
+        AnimationManager.getInstance().addAnAnimation("AgendaHidingAnim", da);
     }
 
     @Override
     public void dispose() {
-
+        sr.dispose();
     }
 }

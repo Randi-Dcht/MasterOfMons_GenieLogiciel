@@ -417,6 +417,7 @@ public class PlayingState extends GameState {
         }
         inventoryShower.handleInput();
         pauseButton.handleInput();
+        agendaShower.handleInput();
     }
 
     public void debugLevelUp() {
@@ -440,6 +441,7 @@ public class PlayingState extends GameState {
         lifeBar.dispose();
         energyBar.dispose();
         expBar.dispose();
+        agendaShower.dispose();
     }
 
     @Override
