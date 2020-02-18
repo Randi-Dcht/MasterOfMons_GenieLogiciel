@@ -146,7 +146,7 @@ public class SuperviserNormally implements Observer
          * This method allows to create the Mobil on different maps for this Quest
          * @param quest who is the actual Quest
          */
-        private void createMobil(MasterQuest quest)//TODO mettre cela plus homogène
+        private void createMobil(MasterQuest quest)
         {
             listMobile = new HashMap<>();
             Place[] place = quest.whatPlace();
@@ -154,8 +154,9 @@ public class SuperviserNormally implements Observer
                 listMobile.put(plc,new ArrayList<>());
             for (Mobile mb : quest.whatMobile())
             {
-                listMobile.get(place[new Random().nextInt(place.length)]).add(mb);
-                //TODO ajouter s
+                if (mb.getPlace() == null)
+                    mb.setPlace(place[new Random().nextInt(place.length)]);
+                listMobile.get(mb.getPlace()).add(mb);
             }
         }
 
@@ -172,9 +173,9 @@ public class SuperviserNormally implements Observer
                 listItems.put(plc,new ArrayList<>());
             for (Items mb : quest.whatItem())
             {
-                Place plce = place[new Random().nextInt(place.length)];
-                listItems.get(plce).add(mb);
-                mb.setPlace(plce);
+                if (mb.getPlace() == null)
+                    mb.setPlace(place[new Random().nextInt(place.length)]);
+                listItems.get(mb.getPlace()).add(mb);
             }
         }
 

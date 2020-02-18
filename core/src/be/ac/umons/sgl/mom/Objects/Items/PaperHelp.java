@@ -7,7 +7,7 @@ public class PaperHelp extends Items
 {
     public PaperHelp()
     {
-        super("Paper Help");
+        super("ExamQuestion");
     }
 
     @Override

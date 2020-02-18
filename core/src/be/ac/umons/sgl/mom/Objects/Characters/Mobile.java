@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.MobileType;
-import be.ac.umons.sgl.mom.Enums.PlayerType;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
 import java.util.Random;
@@ -17,6 +14,7 @@ public class Mobile extends Character implements Serializable
     /*save the bloc of player*/
     protected Bloc playerBloc;
     protected MobileType type;
+    protected Place place; //TODO mettre dans character voir avec People
 
 
     /**
@@ -31,6 +29,27 @@ public class Mobile extends Character implements Serializable
         this.playerBloc  = playerBloc;
         this.type = type;
         calculusPoint(type);
+    }
+
+
+    /**
+     * This method allows to add the place to the mobile
+     * @param place is the place of the mobile
+     */
+    public void setPlace(Place place)
+    {
+        this.place = place;
+    }
+
+
+
+    /**
+     * This method return the place of this mobile
+     * @return  place of the mobile
+     */
+    public Place getPlace()
+    {
+        return place;
     }
 
 
