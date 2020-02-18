@@ -96,7 +96,7 @@ public class QuestShowerTest extends QuestShower {
                 return false;
             }
         };
-        Assertions.assertEquals(4 + 4 + BETWEEN_CIRCLE_AND_TEXT_MARGIN, getMaximumQuestNameWidth(q1, 0));
+        Assertions.assertEquals(4 + 4 + BETWEEN_CIRCLE_AND_TEXT_MARGIN, getMaximumQuestNameWidth(q1, 4));
         Assertions.assertEquals(4, getMaximumQuestNameWidth(q2, 0));
     }
 

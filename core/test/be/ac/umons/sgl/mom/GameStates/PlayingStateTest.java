@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.AgendaShower;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Vector3;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,8 +46,11 @@ public class PlayingStateTest extends PlayingState {
         lifeBar = Mockito.mock(ProgressBar.class);
         expBar = Mockito.mock(ProgressBar.class);
         energyBar = Mockito.mock(ProgressBar.class);
+        agendaShower = Mockito.mock(AgendaShower.class);
+        pauseButton = Mockito.mock(Button.class);
         player = new Player();
         pnjs = new ArrayList<>();
+        mapObjects = new ArrayList<>();
 
         People characteristics = Mockito.mock(People.class);
         Mockito.when(characteristics.getLife()).thenReturn(0d);
@@ -58,15 +64,15 @@ public class PlayingStateTest extends PlayingState {
         tileWidth = 5; // Re-défini pour le bien du test.
         tileHeight = 5;
         mapWidth = 10;
-        mapHeight = 10;
+        mapHeight = 15;
         player.setMapHeight(mapHeight * tileHeight);
         player.setMapWidth(mapWidth * tileWidth);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
         VELOCITY = 5;
-        SHOWED_MAP_WIDTH = 0;
-        SHOWED_MAP_HEIGHT = 0;
-        player.move(25,0);
+        SHOWED_MAP_WIDTH = 17;
+        SHOWED_MAP_HEIGHT = 31;
+        player.setPosX(25);
 
         collisionObjects = new MapObjects();
     }
@@ -129,6 +135,6 @@ public class PlayingStateTest extends PlayingState {
         Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Down)).thenReturn(true);
         update(1);
         Assertions.assertEquals(0, player.getPosX());
-        Assertions.assertEquals(-5, player.getPosY());
+        Assertions.assertEquals(0, player.getPosY());
     }
 }
