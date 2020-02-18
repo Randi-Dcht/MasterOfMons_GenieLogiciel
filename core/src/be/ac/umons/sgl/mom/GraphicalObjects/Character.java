@@ -75,9 +75,9 @@ public class Character extends OnMapObject {
         lifeBar.setValue((int)getCharacteristics().getLife());
         lifeBar.setMaxValue((int)getCharacteristics().lifemax());
 
-        if (lifeBar.getPercent() < 1) {
-            lifeBar.draw(x, y, width, height);
-        }
+//        if (lifeBar.getPercent() < 1) {
+            lifeBar.draw(x, y + height, width, height / 5);
+//        }
 
         super.draw(batch, x, y, width, height);
     }
