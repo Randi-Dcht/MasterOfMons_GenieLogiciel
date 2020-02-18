@@ -48,7 +48,7 @@ public class TimeGame implements Observer
     }
 
 
-
+    /***/
     @Override
     public void update(Notification notify)
     {
@@ -71,9 +71,13 @@ public class TimeGame implements Observer
     }
 
 
+    /**
+     * This method return a new instance of the date
+     * @return new instance the date
+     */
     public Date getDate()
     {
-        return new Date(day,NBmonth+1,this.year);
+        return new Date(day+1,NBmonth+1,this.year);
     }
 
 

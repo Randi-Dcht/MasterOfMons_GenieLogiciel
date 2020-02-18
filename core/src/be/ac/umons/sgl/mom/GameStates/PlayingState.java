@@ -3,6 +3,8 @@ package be.ac.umons.sgl.mom.GameStates;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
@@ -16,9 +18,11 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Battery;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -130,6 +134,8 @@ public class PlayingState extends GameState {
 
     protected AgendaShower agendaShower;
 
+    protected TimeShower timeShower;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -148,6 +154,7 @@ public class PlayingState extends GameState {
         gmm = GameMapManager.getInstance();
         questShower = new QuestShower(gs);
         agendaShower = new AgendaShower(gim, gs);
+        timeShower = new TimeShower(gs);
 
         /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
         /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
@@ -181,15 +188,15 @@ public class PlayingState extends GameState {
 
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
-//        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps("Tmx/Umons_Nimy.tmx")));
+        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps(mapPath)));
         pnjs = new ArrayList<>();
         mapObjects = new ArrayList<>();
 
-//        for (Items it : SuperviserNormally.getSupervisor().getItems(SuperviserNormally.getSupervisor().getMaps(mapPath)))
-//            mapObjects.add(new MapObject(gs, it));
-//
-//        for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(SuperviserNormally.getSupervisor().getMaps(mapPath)))
-//            pnjs.add(new Character(gs, mob));
+        for (Items it : SuperviserNormally.getSupervisor().getItems(SuperviserNormally.getSupervisor().getMaps(mapPath)))
+            mapObjects.add(new MapObject(gs, it));
+
+        for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(SuperviserNormally.getSupervisor().getMaps(mapPath)))
+            pnjs.add(new Character(gs, mob));
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
         mapWidth = (int)gmm.getActualMap().getProperties().get("width");
@@ -386,6 +393,8 @@ public class PlayingState extends GameState {
 
         // Dessine le HUD.
         agendaShower.draw(sb);
+        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth() - 2 * leftMargin), (int)topMargin),
+                new Point((int)(timeShower.getWidth() + 2 * leftMargin), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
