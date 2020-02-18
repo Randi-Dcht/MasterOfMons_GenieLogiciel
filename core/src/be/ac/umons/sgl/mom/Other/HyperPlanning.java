@@ -2,7 +2,6 @@ package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Objects.Course;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;

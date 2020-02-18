@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="700" height="700" tilewidth="64" tileheight="32" nextobjectid="21">
+ <properties>
+  <property name="spawnY" type="int" value="312"/>
+ </properties>
  <tileset firstgid="1" source="../tsx/Floor.tsx"/>
  <layer name="UnderFloor" width="700" height="700">
   <data encoding="csv">

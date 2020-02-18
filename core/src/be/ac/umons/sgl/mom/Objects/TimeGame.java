@@ -62,7 +62,7 @@ public class TimeGame implements Observer
      */
     public void updateSecond(double time)
     {
-        second = second + time *10;
+        second = second + time *30;
         if(second>= 60)
         {
             changeMin();
@@ -178,7 +178,7 @@ public class TimeGame implements Observer
 
 
     /***/
-    public String toString()
+    public String toString()//TODO mise en forma string date avec deux nombres
     {
         return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;
     }
