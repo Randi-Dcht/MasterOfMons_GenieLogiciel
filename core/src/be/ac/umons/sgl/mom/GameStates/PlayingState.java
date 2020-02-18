@@ -335,9 +335,7 @@ public class PlayingState extends GameState {
                     int spawnX, spawnY;
                     spawnX = (int)rectangleMapObject.getProperties().get("spawnX");
                     spawnY = (int)rectangleMapObject.getProperties().get("spawnY");
-                    int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
-                    int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
-                    initMap(rectangleMapObject.getName(), x, y);
+                    initMap(rectangleMapObject.getName(), spawnX, spawnY);
                 } else
                     initMap(rectangleMapObject.getName());
             }
