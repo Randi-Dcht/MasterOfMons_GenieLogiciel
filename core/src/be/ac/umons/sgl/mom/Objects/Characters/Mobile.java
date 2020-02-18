@@ -132,11 +132,4 @@ public class Mobile extends Character implements Serializable
     {
         return conversation.getDialogPNJ().get(answer);
     }
-
-
-    @Override
-    public String toString()
-    {
-        return name + ":" + life;
-    }
 }
