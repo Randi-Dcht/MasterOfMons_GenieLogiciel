@@ -26,6 +26,8 @@ public class HyperPlanning
                 ll = new ArrayList<>();
                 ll.add(new Course(monthL.get(random),new Date(dayy,date.getMonth(),date.getYear())));
                 monthL.remove(random);
+                if(monthL.size()==0)
+                    return list;
             }
             list.put(dayy,ll);
             dayy++;
