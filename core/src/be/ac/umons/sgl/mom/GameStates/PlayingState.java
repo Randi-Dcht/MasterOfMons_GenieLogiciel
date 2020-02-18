@@ -274,8 +274,10 @@ public class PlayingState extends GameState {
         checkForMapChanging(player);
         checkForNearSelectable(player);
 
-        player.setxT((int)(player.getPosX() - cam.position.x));
-        player.setyT((int)(player.getPosY() - cam.position.y));
+        if (cam.position != null) { // For testing purposes
+            player.setxT((int)(player.getPosX() - cam.position.x));
+            player.setyT((int)(player.getPosY() - cam.position.y));
+        }
     }
 
     /**
