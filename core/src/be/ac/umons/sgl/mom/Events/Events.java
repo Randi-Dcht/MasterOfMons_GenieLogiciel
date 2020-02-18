@@ -2,9 +2,9 @@ package be.ac.umons.sgl.mom.Events;
 
 public enum Events
 {
-    HourTimer("timer"),                       /*...*/
+    ChangeDay("changeDay"),                       /*...*/
     ChangeQuest("quest"),                     /*...*/
-    ChangeFrame("frame"),                     /*...*/
+    ChangeMonth("month"),                     /*...*/
     PlaceInMons("placeOfPeople"),             /*...*/
     MeetOther("meetOther"),                   /*...*/
     Attack("LaunchAttack"),

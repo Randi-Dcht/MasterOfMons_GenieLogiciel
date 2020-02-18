@@ -4,6 +4,8 @@ import be.ac.umons.sgl.mom.Events.Notifications.ChangeMonth;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -46,12 +48,19 @@ public class TimeGame implements Observer
 
     }
 
+
+
     @Override
     public void update(Notification notify)
     {
         changeMin();
     }
 
+
+    /**
+     * This method allows to refresh the time of the game
+     * @param time is the time between two frame
+     */
     public void updateSecond(double time)
     {
         second = second + time *10;
@@ -61,6 +70,13 @@ public class TimeGame implements Observer
             second = second%60;
         }
     }
+
+
+    public Date getDate()
+    {
+        return  new Date(year,NBmonth+1,day,hour,min);
+    }
+
 
     /**
      * This method allows to know leap year
@@ -74,12 +90,20 @@ public class TimeGame implements Observer
         return 0;
     }
 
+
+    /**
+     * This method allows change the day in the game
+     */
     private void changeDay()
     {
         if(( day = (day+1)%years[NByear][NBmonth] )== 0)
             changeMonth();
     }
 
+
+    /**
+     * This method allows to change month and create an event to change the month
+     */
     private void changeMonth()
     {
         SuperviserNormally.getSupervisor().getEvent().notify(new ChangeMonth());
@@ -87,11 +111,16 @@ public class TimeGame implements Observer
             changeYear();
     }
 
+
+    /**
+     * This method allows to change the month and re calculus the leap year
+     */
     private void changeYear()
     {
-        year = year + 1;
+        year++;
         NByear= leap(year);
     }
+
 
     /**
      * This method allows to replay the time for a new year in the university
@@ -106,18 +135,24 @@ public class TimeGame implements Observer
         this.year++;
     }
 
+
+    /***/
     private void changeMin()
     {
         if((min =( min+1)%timeSec)==0)
             changeHour();
     }
 
+
+    /***/
     private void changeHour()
     {
         if((hour = (hour+1)%timeHour)==0)
             changeDay();
     }
 
+
+    /***/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -130,11 +165,16 @@ public class TimeGame implements Observer
                 years == schedule.years;
     }
 
+
+    /***/
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(NBmonth, hour, min, day, years);
     }
 
+
+    /***/
     public String toString()
     {
         return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;

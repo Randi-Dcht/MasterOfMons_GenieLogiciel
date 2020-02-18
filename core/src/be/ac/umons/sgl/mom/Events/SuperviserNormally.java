@@ -19,8 +19,6 @@ import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
-import be.ac.umons.sgl.mom.Quests.Quest;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -65,7 +63,7 @@ public class SuperviserNormally implements Observer
         /**/
         private HashMap<String,Place> listMap = new HashMap<>();
         /**/
-        private MasterQuest actually; //TODO init
+        private Place place; //TODO init
 
 
        /**
@@ -76,7 +74,6 @@ public class SuperviserNormally implements Observer
            for (Place plt : Place.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
-           event.add(Events.ChangeFrame,this);//TODO voir si celle-ci va être continuer
        }
 
         /**
@@ -193,10 +190,9 @@ public class SuperviserNormally implements Observer
          * @param notify is a notification
          */
         @Override
-        public void update(Notification notify)
+        public void update(Notification notify) //TODO voir dans le futur
         {
-            if (Events.ChangeFrame.equals(notify.getEvents()))
-                callMethod(0.3);
+
         }
 
 
