@@ -2,10 +2,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
-import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
-import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Objects.Characters.StudPNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.*;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
@@ -52,7 +49,7 @@ public class PreparedCompany extends MasterQuest
     @Override
     public Place[] whatPlace()
     {
-        return new Place[]{Place.Mons,Place.Nimy};
+        return new Place[]{Place.Mons,Place.Nimy,Place.MicrosoftCompany};
     }
 
 
@@ -89,7 +86,7 @@ public class PreparedCompany extends MasterQuest
         for(int i=0; i < 30;i++)
             list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
         for(int i = 30; i < 40; i++)
-            list.add(new FightPNJ(getBloc(), MobileType.Athletic));
+            list.add(new TeacherPNJ(getBloc(), MobileType.Athletic));
 
         return list;
     }
