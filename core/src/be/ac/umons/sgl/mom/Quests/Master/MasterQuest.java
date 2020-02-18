@@ -73,6 +73,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         this.bloc = bloc;
         this.graphic = graphic;
         this.maxPercent = difficulty.getMaxPercent();
+        this.difficulty = difficulty;
     }
 
 

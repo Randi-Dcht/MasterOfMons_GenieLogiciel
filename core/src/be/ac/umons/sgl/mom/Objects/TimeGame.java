@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects;
 
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeDay;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeMonth;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
@@ -99,6 +100,7 @@ public class TimeGame implements Observer
      */
     private void changeDay()
     {
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeDay());
         if(( day = (day+1)%years[NByear][NBmonth] )== 0)
             changeMonth();
     }

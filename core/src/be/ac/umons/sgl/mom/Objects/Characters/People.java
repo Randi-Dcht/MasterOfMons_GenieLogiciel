@@ -56,6 +56,7 @@ public class People extends Character implements Serializable, Observer
         super(name);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
         this.threshold = minExperience(level+1);
         maxObject = difficulty.getManyItem();
     }
@@ -111,6 +112,13 @@ public class People extends Character implements Serializable, Observer
         myCourse.addAll(Arrays.asList(quest.getLesson()));
         Supervisor.changedQuest(); //TODO changer cela avec la nouvelle classe
         year = quest.getBloc() ;
+        createPlanning();
+    }
+
+
+    /***/
+    private void createPlanning()
+    {
         myPlanning = HyperPlanning.createSchedule(myCourse,SuperviserNormally.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
     }
 
@@ -356,5 +364,7 @@ public class People extends Character implements Serializable, Observer
     {
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty())
             changePlace(((PlaceInMons)notify).getBuffer());
+        if (notify.getEvents().equals(Events.ChangeMonth))
+            createPlanning();
     }
 }
