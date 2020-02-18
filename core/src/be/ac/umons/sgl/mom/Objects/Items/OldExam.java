@@ -8,7 +8,7 @@ public class OldExam extends Items
 
     public OldExam()
     {
-        super("Old Exam");
+        super("ExamAnswer");
     }
 
     @Override

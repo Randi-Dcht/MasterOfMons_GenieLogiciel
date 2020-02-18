@@ -10,7 +10,7 @@ public class Energizing extends Items
 
     public Energizing()
     {
-        super("Energizing Drink");
+        super("Drink");
     }
 
     @Override

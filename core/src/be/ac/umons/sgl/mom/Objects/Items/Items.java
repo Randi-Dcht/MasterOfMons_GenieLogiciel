@@ -21,7 +21,6 @@ public abstract class Items implements Serializable
 
     /**
      * this constructor define the items
-     * @param place is the place of this item
      * @param name is the name of this items
      */
     public Items(String name)
@@ -73,6 +72,11 @@ public abstract class Items implements Serializable
      */
     public abstract double getObsolete();
 
+
+    public Place getPlace()
+    {
+        return place;
+    }
 
     /***/
     @Override
