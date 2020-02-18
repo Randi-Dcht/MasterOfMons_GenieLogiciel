@@ -116,11 +116,11 @@ public class SuperviserNormally implements Observer
          */
         public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Difficulty difficulty)
         {
+            time = new TimeGame(9,1,8,2019);
             people = new People(namePlayer,type,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
-            time = new TimeGame(9,1,8,2019);
             save = new Saving(people,namePlayer);
             createMobil(mQ);
             createItems(mQ);
