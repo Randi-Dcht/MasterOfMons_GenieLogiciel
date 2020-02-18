@@ -29,6 +29,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Supervisor;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -266,6 +267,7 @@ public class PlayingState extends GameState implements Observer {
         am.update(dt);
         makePlayerMove(dt);
         cam.update();
+
 
         SuperviserNormally.getSupervisor().callMethod(dt);
 
@@ -530,7 +532,8 @@ public class PlayingState extends GameState implements Observer {
                     break;
                 }
             }
-        }
+        } else if (notify.getEvents().equals(Events.ChangeQuest))
+            Gdx.app.postRunnable(() -> questShower.setQuest(((People)player.getCharacteristics()).getQuest()));
     }
 
     @Override

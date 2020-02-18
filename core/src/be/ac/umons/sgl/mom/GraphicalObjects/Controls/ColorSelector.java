@@ -15,7 +15,7 @@ public class ColorSelector extends Control {
     protected ShapeRenderer sr;
     protected Color selectedColor;
 
-    public ColorSelector(GameInputManager gim, GraphicalSettings gs) {
+    public ColorSelector(GameInputManager gim, GraphicalSettings gs) { // TODO TESTS
         super(gim, gs);
         selectedColor = new Color(0x21212142);
         tb = new TextBox(gim, gs);
