@@ -2256,10 +2256,15 @@
   <object id="99" name="Tmx/CityMons.tmx" x="10109.3" y="9392" width="288.333" height="181">
    <properties>
     <property name="spawnX" type="int" value="777"/>
-    <property name="spawnY" type="int" value="0"/>
+    <property name="spawnY" type="int" value="313"/>
    </properties>
   </object>
-  <object id="100" name="Tmx/CityMons.tmx" x="14267.3" y="9399.33" width="220.333" height="126.333"/>
+  <object id="100" name="Tmx/CityMons.tmx" x="14267.3" y="9399.33" width="220.333" height="126.333">
+   <properties>
+    <property name="spawnX" type="int" value="777"/>
+    <property name="spawnY" type="int" value="313"/>
+   </properties>
+  </object>
   <object id="101" name="Tmx/CityMons.tmx" x="10361.5" y="124.5" width="201.5" height="130.5">
    <properties>
     <property name="spawnX" type="int" value="800"/>
