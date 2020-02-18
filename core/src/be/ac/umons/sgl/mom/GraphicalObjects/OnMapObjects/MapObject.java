@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom.GraphicalObjects;
+package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;

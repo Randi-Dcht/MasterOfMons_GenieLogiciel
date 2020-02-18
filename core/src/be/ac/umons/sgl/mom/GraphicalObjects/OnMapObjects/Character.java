@@ -1,6 +1,7 @@
-package be.ac.umons.sgl.mom.GraphicalObjects;
+package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Enums.Orientation;
+import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;

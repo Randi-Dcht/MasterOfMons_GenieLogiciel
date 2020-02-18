@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom.GraphicalObjects;
+package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
@@ -8,10 +8,18 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * Represent a object that must be draw on the map.
+ */
 public abstract class OnMapObject {
 
+    /**
+     * If the object is the nearest of the player.
+     */
     protected boolean isSelected;
-
+    /**
+     * Allow to draw shapes.
+     */
     protected ShapeRenderer sr;
 
     /**
@@ -19,6 +27,9 @@ public abstract class OnMapObject {
      */
     protected GraphicalSettings gs;
 
+    /**
+     * @param gs The game's graphical object.
+     */
     public OnMapObject(GraphicalSettings gs) {
         this.gs = gs;
         sr = new ShapeRenderer();
@@ -55,10 +66,21 @@ public abstract class OnMapObject {
         }
     }
 
+    /**
+     * Set if the object is the nearest of the player.
+     * @param selected If the object is the nearest of the player.
+     */
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
 
+    /**
+     * @return The horizontal position of the object.
+     */
     public abstract int getPosX();
+
+    /**
+     * @return The vertical position of the object.
+     */
     public abstract int getPosY();
 }

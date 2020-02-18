@@ -1,4 +1,4 @@
-package be.ac.umons.sgl.mom.GraphicalObjects;
+package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.PlayingState;
@@ -150,18 +150,31 @@ public class Player extends Character {
         return new Rectangle(x , y, ((float)getWidth() / tileWidth), (float)getHeight() / tileHeight);
     }
 
+    /**
+     * Set the map's width to use.
+     * @param mapWidth The map's width.
+     */
     public void setMapWidth(int mapWidth) {
         this.mapWidth = mapWidth;
     }
-
+    /**
+     * Set the map's height to use.
+     * @param mapHeight The map's height.
+     */
     public void setMapHeight(int mapHeight) {
         this.mapHeight = mapHeight;
     }
-
+    /**
+     * Set the tile's width to use.
+     * @param tileWidth The tile's width.
+     */
     public void setTileWidth(int tileWidth) {
         this.tileWidth = tileWidth;
     }
-
+    /**
+     * Set the tile's height to use.
+     * @param tileHeight The tile's height.
+     */
     public void setTileHeight(int tileHeight) {
         this.tileHeight = tileHeight;
     }

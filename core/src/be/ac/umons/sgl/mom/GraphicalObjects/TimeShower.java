@@ -13,9 +13,18 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 
+/**
+ * Represent a small clock in the game.
+ */
 public class TimeShower {
 
+    /**
+     * The game's graphical settings.
+     */
     protected GraphicalSettings gs;
+    /**
+     * Allow to draw shape.
+     */
     protected ShapeRenderer sr;
     /**
      * The horizontal margin
@@ -26,6 +35,9 @@ public class TimeShower {
      */
     protected int topMargin;
 
+    /**
+     * @param gs The game's graphical settings.
+     */
     public TimeShower(GraphicalSettings gs) {
         this.gs = gs;
         sr = new ShapeRenderer();
@@ -35,6 +47,12 @@ public class TimeShower {
         topMargin = MasterOfMonsGame.HEIGHT / 100;
     }
 
+    /**
+     * Draw the clock with the given parameters.
+     * @param batch Where to draw the character
+     * @param pos The position of the clock.
+     * @param size The size of the clock.
+     */
     public void draw(Batch batch, Point pos, Point size) {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
@@ -47,6 +65,9 @@ public class TimeShower {
         batch.end();
     }
 
+    /**
+     * @return The maximum width of this clock.
+     */
     public float getWidth() {
         String s = SuperviserNormally.getSupervisor().getTime().toString();
         GlyphLayout gl = new GlyphLayout();
