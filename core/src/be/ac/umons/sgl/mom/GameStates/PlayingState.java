@@ -128,14 +128,25 @@ public class PlayingState extends GameState implements Observer {
      */
     protected GameMapManager gmm;
 
+    /**
+     * The list of PNJ that will be on this map.
+     */
     protected List<Character> pnjs;
-
+    /**
+     * The selected object/character on the map if one is selected.
+     */
     protected OnMapObject selectedOne;
-
+    /**
+     * The objects that are on this map.
+     */
     protected List<MapObject> mapObjects;
-
+    /**
+     * The button pause.
+     */
     protected Button pauseButton;
-
+    /**
+     * The agenda's shower
+     */
     protected AgendaShower agendaShower;
 
     protected TimeShower timeShower;
@@ -192,6 +203,12 @@ public class PlayingState extends GameState implements Observer {
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
     }
 
+    /**
+     * Initialise all the variables for the given map.
+     * @param mapPath The map's path
+     * @param spawnX On which CASE the character will be horizontally.
+     * @param spawnY On which CASE the character will be vertically
+     */
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
         SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps(mapPath)));
@@ -227,6 +244,10 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Initialise all the variables for the given map.
+     * @param mapPath The map's path
+     */
     public void initMap(String mapPath) {
         gmm.setMap(mapPath);
         int spawnX = 0, spawnY = 0;
@@ -344,6 +365,10 @@ public class PlayingState extends GameState implements Observer {
         return false;
     }
 
+    /**
+     * Check if the player is on a case to change the map.
+     * @param player The player.
+     */
     protected void checkForMapChanging(Player player) {
         if (changingMapObjects == null)
             return;
@@ -363,6 +388,10 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Check if the player is near a selectable object and select it.
+     * @param player The player
+     */
     protected void checkForNearSelectable(Player player) {
         OnMapObject nearest = null;
         double nearestDist = tileWidth * mapWidth;
@@ -384,7 +413,12 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
-    protected List<Character> getPlayerInRange(double dist) {
+    /**
+     * @param player The player
+     * @param dist A distance (^2)
+     * @return Return all the PNJs near enough from the player.
+     */
+    protected List<Character> getPlayerInRange(Player player, double dist) {
         LinkedList<Character> res = new LinkedList<>();
         for (Character character : pnjs) {
             double d = Math.pow(player.getPosX() - character.getPosX(), 2) + Math.pow(player.getPosY() - character.getPosY(), 2);
@@ -394,8 +428,12 @@ public class PlayingState extends GameState implements Observer {
         return res;
     }
 
+    /**
+     * Executed when the player launch an attack.
+     * @param player The player.
+     */
     protected void attack(Player player) {
-        for (Character c : getPlayerInRange(player.getAttackRange() * player.getAttackRange())) {
+        for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange())) {
             SuperviserNormally.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
         }
@@ -459,9 +497,16 @@ public class PlayingState extends GameState implements Observer {
         agendaShower.handleInput();
     }
 
+    /**
+     * Make the player level up.
+     */
     public void debugLevelUp() {
         ((People)player.getCharacteristics()).upLevel();
     }
+
+    /**
+     * Make the player invincible (or vincible)
+     */
     public void debugMakeInvincible() {
         if (((People)player.getCharacteristics()).isInvincible()) {
             ((People)player.getCharacteristics()).invincible(false);
