@@ -5,9 +5,12 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,8 @@ public class Character extends OnMapObject {
      */
     private double timeBeforeAttack;
 
+    protected ProgressBar lifeBar;
+
     /**
      * @param gs The game's graphical settings.
      */
@@ -48,6 +53,8 @@ public class Character extends OnMapObject {
         super(gs);
         assetManager = gs.getAssetManager();
         this.characteristics = characteristics;
+        lifeBar = new ProgressBar();
+        lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
     }
 
     protected Character() {}
@@ -64,6 +71,14 @@ public class Character extends OnMapObject {
         batch.begin();
         batch.draw(getTexture(),  x, y, width, height);
         batch.end();
+
+        lifeBar.setValue((int)getCharacteristics().getLife());
+        lifeBar.setMaxValue((int)getCharacteristics().lifemax());
+
+        if (lifeBar.getPercent() < 1) {
+            lifeBar.draw(x, y, width, height);
+        }
+
         super.draw(batch, x, y, width, height);
     }
 
@@ -169,5 +184,10 @@ public class Character extends OnMapObject {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+
+    public void setMapPos(Point pos) {
+        this.posX = pos.x;
+        this.posY = pos.y;
     }
 }

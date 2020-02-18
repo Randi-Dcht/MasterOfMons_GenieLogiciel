@@ -1,10 +1,12 @@
 package be.ac.umons.sgl.mom.GameStates;
 
-import be.ac.umons.sgl.mom.Enums.KeyStatus;
-import be.ac.umons.sgl.mom.Enums.Orientation;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
+import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
@@ -18,6 +20,7 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
+import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -36,6 +39,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
@@ -46,7 +50,7 @@ import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGL
  * and https://www.youtube.com/watch?v=P8jgD-V5jG8 by Brent Aureli's - Code School (https://github.com/BrentAureli/SuperMario)
  * @author Guillaume Cardoen
  */
-public class PlayingState extends GameState {
+public class PlayingState extends GameState implements Observer {
     /**
      * The horizontal map's width to show.
      */
@@ -161,9 +165,9 @@ public class PlayingState extends GameState {
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap("Tmx/Umons_Nimy.tmx");
 
-        MapObject mo = new MapObject(gs, new Battery());
-        mapObjects.add(mo);
-        mo.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
+        Character testPNJ = new Character(gs, new FightPNJ(Bloc.BA1, MobileType.Lambda));
+        pnjs.add(testPNJ);
+        testPNJ.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
@@ -184,6 +188,8 @@ public class PlayingState extends GameState {
         pauseButton.setText("||");
         pauseButton.setOnClick(() -> gsm.setState(InGameMenuState.class));
         pauseButton.setFont(gs.getSmallFont());
+
+        SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
     }
 
     public void initMap(String mapPath, int spawnX, int spawnY) {
@@ -374,6 +380,23 @@ public class PlayingState extends GameState {
         }
     }
 
+    protected List<Character> getPlayerInRange(double dist) {
+        LinkedList<Character> res = new LinkedList<>();
+        for (Character character : pnjs) {
+            double d = Math.pow(player.getPosX() - character.getPosX(), 2) + Math.pow(player.getPosY() - character.getPosY(), 2);
+            if (d < dist)
+                res.add(character);
+        }
+        return res;
+    }
+
+    protected void attack(Player player) {
+        for (Character c : getPlayerInRange(30000)) {
+            SuperviserNormally.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
+            player.setTimeBeforeAttack(player.getCharacteristics().recovery());
+        }
+    }
+
     @Override
     public void draw() {
         int topBarWidth = (int)((MasterOfMonsGame.WIDTH - 4 * leftMargin) / 3);
@@ -417,9 +440,10 @@ public class PlayingState extends GameState {
         else if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
             debugMakeInvincible();
         else if (gim.isKey(Input.Keys.C, KeyStatus.Pressed)) {
-            CombatState g = (CombatState) gsm.setState(CombatState.class);
-            g.setPlayer1(player);
-            g.setPlayer2(player);
+//            CombatState g = (CombatState) gsm.setState(CombatState.class);
+//            g.setPlayer1(player);
+//            g.setPlayer2(player);
+            attack(player);
         } else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
@@ -441,6 +465,20 @@ public class PlayingState extends GameState {
         } else {
             ((People)player.getCharacteristics()).invincible(true);
             lifeBar.setForegroundColor(new Color(0x212121AA));
+        }
+    }
+
+    @Override
+    public void update(Notification notify) {
+        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player.getCharacteristics()))
+            gsm.setState(DeadMenuState.class);
+        else if (notify.getEvents().equals(Events.Dead)) {
+            for (int i = 0; i < pnjs.size(); i++) {
+                if (pnjs.get(i).getCharacteristics().equals(notify.getBuffer())) {
+                    pnjs.remove(i);
+                    break;
+                }
+            }
         }
     }
 
