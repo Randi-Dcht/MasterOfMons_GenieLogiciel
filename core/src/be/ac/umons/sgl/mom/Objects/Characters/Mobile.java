@@ -1,6 +1,10 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.MobileType;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
 import java.util.Random;
@@ -25,10 +29,20 @@ public class Mobile extends Character implements Serializable
     public Mobile(String name, Bloc playerBloc, MobileType type)
     {
         super(name);
-        this.level = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1)+playerBloc.getMinMob()); //TODO tester
+        this.level = calculus(playerBloc);
         this.playerBloc  = playerBloc;
         this.type = type;
         calculusPoint(type);
+    }
+
+
+    /***/
+    private int calculus(Bloc playerBloc)
+    {
+        int rd = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1))+playerBloc.getMinMob(); //TODO tester
+        if (rd >= playerBloc.getMinMob() && rd <= playerBloc.getMaxMob())
+            return rd;
+        return playerBloc.getMinMob();
     }
 
 
@@ -60,7 +74,7 @@ public class Mobile extends Character implements Serializable
     public void calculusPoint(MobileType type)
     {
         int number = (level-1)*3; int[] listN = new int[3]; int total;
-        listN[0] =(int)( number  * type.getStrength());
+        listN[0] =(int)( number  * type.getStrength())+1;
         listN[1] =(int)( number  * type.getDefence());
         listN[2] =(int)( number  * type.getAgility());
         if((total  =listN[0]+listN[1]+listN[2]) != number && number > 0)
@@ -117,5 +131,12 @@ public class Mobile extends Character implements Serializable
     public String getDialog(String answer)
     {
         return conversation.getDialogPNJ().get(answer);
+    }
+
+
+    @Override
+    public String toString()
+    {
+        return name + ":" + life;
     }
 }

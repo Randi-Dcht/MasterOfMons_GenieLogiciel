@@ -1,6 +1,13 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.PlayerType;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
@@ -49,6 +56,7 @@ public class People extends Character implements Serializable, Observer
         super(name);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
         this.threshold = minExperience(level+1);
         maxObject = difficulty.getManyItem();
     }
@@ -104,6 +112,13 @@ public class People extends Character implements Serializable, Observer
         myCourse.addAll(Arrays.asList(quest.getLesson()));
         Supervisor.changedQuest(); //TODO changer cela avec la nouvelle classe
         year = quest.getBloc() ;
+        createPlanning();
+    }
+
+
+    /***/
+    private void createPlanning()
+    {
         myPlanning = HyperPlanning.createSchedule(myCourse,SuperviserNormally.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
     }
 
@@ -349,5 +364,7 @@ public class People extends Character implements Serializable, Observer
     {
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty())
             changePlace(((PlaceInMons)notify).getBuffer());
+        if (notify.getEvents().equals(Events.ChangeMonth))
+            createPlanning();
     }
 }
