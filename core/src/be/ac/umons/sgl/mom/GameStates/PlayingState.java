@@ -375,6 +375,8 @@ public class PlayingState extends GameState implements Observer {
                 nearest = omo;
                 nearestDist = dist;
             }
+            if (i < pnjs.size())
+                pnjs.get(i).setIsATarget(dist < Math.pow(player.getAttackRange(), 2));
         }
         if (nearest != null) {
             nearest.setSelected(true);

@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 
+import be.ac.umons.sgl.mom.Animations.Animation;
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Lesson;
@@ -102,7 +103,10 @@ public class AgendaShower extends Control {
 
     protected void hide() {
         isBeingAnimated = true;
-        da = new DoubleAnimation(1, 0, 500);
+        Animation showAnim = AnimationManager.getInstance().get("AgendaShowingAnim");
+        double from = (showAnim == null ? 1 : (double)showAnim.getActual());
+        da = new DoubleAnimation(from, 0, 500 * from);
+        AnimationManager.getInstance().remove("AgendaShowingAnim");
         da.setEndingAction(() -> { isBeingAnimated = false; showed = false; } );
         AnimationManager.getInstance().addAnAnimation("AgendaHidingAnim", da);
     }
