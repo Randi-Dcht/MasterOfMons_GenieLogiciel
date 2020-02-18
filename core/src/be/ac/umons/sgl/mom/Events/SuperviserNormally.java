@@ -1,6 +1,11 @@
 package be.ac.umons.sgl.mom.Events;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.PlayerType;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Answer;
 import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -14,6 +19,7 @@ import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
+import be.ac.umons.sgl.mom.Quests.Quest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +64,8 @@ public class SuperviserNormally implements Observer
         private Event event;
         /**/
         private HashMap<String,Place> listMap = new HashMap<>();
+        /**/
+        private MasterQuest actually; //TODO init
 
 
        /**
@@ -210,8 +218,11 @@ public class SuperviserNormally implements Observer
         /**
          * This method allows to give an items to the people for this Quest (#debug#)
          */
-        public void addItems(Items item)
-        {}
+        public void addItems()
+        {
+            ArrayList<Items> list = listItems.get(people.getPlace());
+            people.pushObject(list.get(new Random().nextInt(list.size())));
+        }
 
 
         /**
