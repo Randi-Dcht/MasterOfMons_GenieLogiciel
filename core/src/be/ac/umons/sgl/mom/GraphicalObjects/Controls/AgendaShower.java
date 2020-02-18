@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -88,6 +89,11 @@ public class AgendaShower extends Control {
     }
 
     protected void show() {
+        lessons = SuperviserNormally.getSupervisor().getPeople().getPlanning().get(
+                SuperviserNormally.getSupervisor().getTime().getDate().getDay()
+        );
+        if (lessons == null)
+            return;
         isBeingAnimated = true;
         da = new DoubleAnimation(0, 1, 500);
         da.setEndingAction(() -> isBeingAnimated = false);
