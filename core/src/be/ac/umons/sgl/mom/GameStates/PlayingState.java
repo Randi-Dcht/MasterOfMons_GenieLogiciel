@@ -175,7 +175,7 @@ public class PlayingState extends GameState {
         pauseButton.setFont(gs.getSmallFont());
     }
 
-    public void initMap(String mapPath, int x, int y) {
+    public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
 //        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps("Tmx/Umons_Nimy.tmx")));
         pnjs = new ArrayList<>();
@@ -200,6 +200,8 @@ public class PlayingState extends GameState {
         player.setMapHeight(mapHeight * tileHeight);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
+        int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
+        int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
         player.setPosX(x);
         player.setPosY(y);
         if (cam != null) {
@@ -215,9 +217,7 @@ public class PlayingState extends GameState {
             spawnX = (int)gmm.getActualMap().getProperties().get("spawnX");
         if (gmm.getActualMap().getProperties().containsKey("spawnY"))
             spawnY = (int)gmm.getActualMap().getProperties().get("spawnY");
-        int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
-        int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
-        initMap(mapPath, x, y);
+        initMap(mapPath, spawnX, spawnY);
     }
 
     @Override
@@ -331,14 +331,15 @@ public class PlayingState extends GameState {
             Rectangle playerRect = player.getMapRectangle();
             Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
             if (Intersector.overlaps(mapRect, playerRect)) {
-                int spawnX = 0, spawnY = 0;
-                if (rectangleMapObject.getProperties().containsKey("spawnX"))
+                if (rectangleMapObject.getProperties().containsKey("spawnX") && rectangleMapObject.getProperties().containsKey("spawnY")) {
+                    int spawnX, spawnY;
                     spawnX = (int)rectangleMapObject.getProperties().get("spawnX");
-                if (rectangleMapObject.getProperties().containsKey("spawnY"))
                     spawnY = (int)rectangleMapObject.getProperties().get("spawnY");
-                int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
-                int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
-                initMap(rectangleMapObject.getName(), x, y);
+                    int x = (mapHeight - spawnY) * tileWidth / 2 + spawnX * tileHeight;
+                    int y = (mapHeight - spawnX - spawnY) * tileHeight / 2;
+                    initMap(rectangleMapObject.getName(), x, y);
+                } else
+                    initMap(rectangleMapObject.getName());
             }
         }
     }
