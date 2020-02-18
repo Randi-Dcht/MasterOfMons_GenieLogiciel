@@ -39,7 +39,6 @@ public class Saving implements Observer
      */
     public Saving(People people, String nameSave)
     {
-        SuperviserNormally.getSupervisor().getEvent().add(Events.HourTimer,this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
         this.people = people;
         this.nameSave = nameSave;
@@ -52,7 +51,6 @@ public class Saving implements Observer
      */
     public Saving(String oldSave)
     {
-        SuperviserNormally.getSupervisor().getEvent().add(Events.HourTimer,this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
         this.oldSave = oldSave;
         nameSave = cleanName(oldSave,0);

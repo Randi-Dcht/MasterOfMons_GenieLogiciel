@@ -3,20 +3,20 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
 
-public class ChangeMonth implements Notification
+public class ChangeDay implements Notification
 {
     private Events evt;
     private Character buffer;
 
-    public ChangeMonth(Character buffer)
+    public ChangeDay(Character buffer)
     {
-        evt = Events.ChangeMonth;
+        evt = Events.ChangeDay;
         this.buffer = buffer;
     }
 
-    public ChangeMonth()
+    public ChangeDay()
     {
-        evt= Events.ChangeMonth;
+        evt= Events.ChangeDay;
     }
 
     public Events getEvents()
