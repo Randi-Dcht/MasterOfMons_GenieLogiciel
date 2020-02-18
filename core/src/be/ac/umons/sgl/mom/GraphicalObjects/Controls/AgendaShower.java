@@ -89,9 +89,9 @@ public class AgendaShower extends Control {
     }
 
     protected void show() {
-    //    lessons = SuperviserNormally.getSupervisor().getPeople().getPlanning().get(
-     //           SuperviserNormally.getSupervisor().getTime().getDate().getDay()
-    //    );
+        lessons = SuperviserNormally.getSupervisor().getPeople().getPlanning().get(
+                SuperviserNormally.getSupervisor().getTime().getDate().getDay()
+        );
         if (lessons == null)
             return;
         isBeingAnimated = true;
