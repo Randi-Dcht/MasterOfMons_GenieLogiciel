@@ -1,19 +1,19 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Characters.StudPNJ;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.sgl.mom.Quests.Under.LookSoulMate;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *This class define a MasterQuest who is 'Meet and Learn' in the bachelor 3
@@ -46,7 +46,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new Master1(people,this,graphic,difficulty));
+        newQuest(new PreparedCompany(people,this,graphic,difficulty));
     }
 
 
@@ -68,7 +68,15 @@ public class MeetAndLearn extends MasterQuest
     @Override
     public ArrayList<Items> whatItem()
     {
-        return null;
+        ArrayList<Items> list = new ArrayList<>();
+        for (int i=0; i < 4; i++)
+            list.add(new Flower());
+        for (int i=0 ; i < 6; i++)
+            list.add(new OldExam());
+        list.add(new Gun());
+        list.add(new TheKillBoot());
+
+        return list;
     }
 
 
@@ -79,7 +87,14 @@ public class MeetAndLearn extends MasterQuest
     @Override
     public ArrayList<Mobile> whatMobile()
     {
-        return null;
+        ArrayList<Mobile> list = new ArrayList<>();
+        MobileType[] type = MobileType.values();
+        for(int i=0; i < 30;i++)
+            list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
+        for(int i = 30; i < 40; i++)
+            list.add(new FightPNJ(getBloc(), MobileType.Athletic));
+
+        return list;
     }
 
 
@@ -87,7 +102,7 @@ public class MeetAndLearn extends MasterQuest
     @Override
     public Place[] whatPlace()
     {
-        return null;
+        return new Place[]{Place.Nimy,Place.Mons,Place.Poly};
     }
 
 

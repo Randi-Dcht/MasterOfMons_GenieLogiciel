@@ -21,8 +21,8 @@ public enum Lesson
      * MyFirstYear == 1
      * SuccessfulYear == 2
      * MeetAndLearn == 3
-     * Master1   == 4
-     * Master2   == 5
+     * PreparedCompany   == 4
+     * FinishUniversity   == 5
      */
 
     /*Lesson of Bachelor 1*/
