@@ -204,6 +204,7 @@ public class SuperviserNormally implements Observer
         {
             if(people != null)
                 people.energy(dt);
+            System.out.println(dt);
 
             //for (Items o : listPNJ)
               //  o.make(dt);
