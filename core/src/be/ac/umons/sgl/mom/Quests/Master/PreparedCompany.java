@@ -8,25 +8,22 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Gun;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Items.Pen;
-import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
+import be.ac.umons.sgl.mom.Objects.Items.*;
+import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
 
 import java.util.ArrayList;
 
 /**
- *This class define the five year in the University of Mons with the goals.
+ *This class define the four year in the University of Mons with the goals.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-public class Master2 extends MasterQuest
+public class PreparedCompany extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
     final Lesson[] lesson ={/*code ici*/};
     /*This is the goals of this MasterQuest*/
-    final UnderQuest[] underQuest = {new GoToLastLesson(this),new WriteMemory(this)};
+    final UnderQuest[] underQuest = {new Traineeship(this)};
 
 
     /**
@@ -34,9 +31,9 @@ public class Master2 extends MasterQuest
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */
-    public Master2(People people, MasterQuest before, GraphicalSettings grahic, Difficulty difficulty)
+    public PreparedCompany(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
-        super(before,people,Bloc.MA2,grahic,difficulty);
+        super(before,people,Bloc.MA1,graphic,difficulty);
         ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
@@ -45,7 +42,18 @@ public class Master2 extends MasterQuest
     /**
      * This method allows to define to next Quest
      */
-    public void nextQuest(){/*END*/}
+    public void nextQuest()
+    {
+        newQuest(new FinishUniversity(people,this,graphic,difficulty));
+    }
+
+
+    /***/
+    @Override
+    public Place[] whatPlace()
+    {
+        return new Place[]{Place.Mons,Place.Nimy};
+    }
 
 
     /**
@@ -54,15 +62,7 @@ public class Master2 extends MasterQuest
      */
     public String question()
     {
-        return graphic.getStringFromId("answerMasterSecond");
-    }
-
-
-    /***/
-    @Override
-    public Place[] whatPlace()
-    {
-        return new Place[]{Place.Nimy,Place.Mons};
+        return graphic.getStringFromId("answerMasterOne");
     }
 
 
@@ -71,9 +71,9 @@ public class Master2 extends MasterQuest
     public ArrayList<Items> whatItem()
     {
         ArrayList<Items> list = new ArrayList<>();
-        for (int i=0 ; i < 7; i++)
+        for (int i=0 ; i < 8; i++)
             list.add(new Pen());
-        for (int i=0 ; i < 2; i++)
+        for (int i=0 ; i < 8; i++)
             list.add(new Gun());
 
         return list;
@@ -94,7 +94,7 @@ public class Master2 extends MasterQuest
      */
     public String getName()
     {
-        return graphic.getStringFromId("nameMasterSecond");
+        return graphic.getStringFromId("nameMasterOne");
     }
 
 
@@ -106,3 +106,4 @@ public class Master2 extends MasterQuest
         /*code ici*/
     }
 }
+

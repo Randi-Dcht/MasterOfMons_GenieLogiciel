@@ -46,7 +46,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new Master1(people,this,graphic,difficulty));
+        newQuest(new PreparedCompany(people,this,graphic,difficulty));
     }
 
 
