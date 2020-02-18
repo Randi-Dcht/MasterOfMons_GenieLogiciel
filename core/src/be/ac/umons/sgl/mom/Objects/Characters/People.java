@@ -103,7 +103,7 @@ public class People extends Character implements Serializable, Observer
         myCourse.addAll(Arrays.asList(quest.getLesson()));
         Supervisor.changedQuest(); //TODO changer cela avec la nouvelle classe
         year = quest.getBloc() ;
-        myPlanning = HyperPlanning.createSchedule(quest,null);
+        myPlanning = HyperPlanning.createSchedule(myCourse,SuperviserNormally.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
     }
 
 

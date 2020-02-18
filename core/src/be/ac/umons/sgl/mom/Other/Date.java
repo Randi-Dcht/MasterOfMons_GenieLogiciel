@@ -5,12 +5,23 @@ public class Date
     private int year;
     private int day;
     private int month;
+    private int hour;
+    private int min;
 
     public Date(int day, int month, int year)
     {
         this.day   = day;
         this.month = month;
         this.year  = year;
+    }
+
+    public Date(int day, int month, int year, int hour, int min)
+    {
+        this.day   = day;
+        this.month = month;
+        this.year  = year;
+        this.min   = min;
+        this.hour  = hour;
     }
 
     public int getMonth()
@@ -23,4 +34,13 @@ public class Date
         return day;
     }
 
+    public int getHour()
+    {
+        return hour;
+    }
+
+    public int getMin()
+    {
+        return min;
+    }
 }
