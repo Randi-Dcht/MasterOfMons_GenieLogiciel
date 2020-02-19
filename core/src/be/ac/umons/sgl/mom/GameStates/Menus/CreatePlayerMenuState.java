@@ -45,7 +45,7 @@ public class CreatePlayerMenuState extends MenuState {
                 difficultyMi,
                 new MenuItem("Start the game !", MenuItemType.Button, () -> {
                     SuperviserNormally.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
-                            characterType, gs, playerGender, difficulty, new QuestShower(gs)); // TODO : Put QuestShower later
+                            characterType, gs, playerGender, difficulty);
                     gsm.removeAllStateAndAdd(LoadingState.class);
                 })
         });
