@@ -3,12 +3,11 @@ package be.ac.umons.sgl.mom.Quests.Under;
 import be.ac.umons.sgl.mom.Enums.Subject;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Quests.Quest;
-import java.util.Scanner;
 
 public class ChooseSubject extends UnderQuest
 {
     public Subject subject;
-    public ChooseSubject(Quest q, int nb)
+    public ChooseSubject(Quest q, int nb, Subject subject)
     {
         super("ChooseSubject", nb, q);
     }
@@ -17,9 +16,18 @@ public class ChooseSubject extends UnderQuest
      *
      * @return choice is the choice of your subject
      */
-    public Subject makeChoice()
+    public String showSubject()
     {
-        System.out.println("It's the different subject that you can choice");
+        String res="";
+        for (Subject sub :Subject.values())
+        {
+            res=res+sub+", \n";
+        }
+        return res;
+    }
+    public void makeChoice(Subject sub)  //Quand tu cliques sur le sujet cette méthode est appelé !
+    {
+        /*System.out.println("It's the different subject that you can choice");
         for (Subject sub : Subject.values()) {
             System.out.println("-->" + sub.getSubjectName() + "\n");
             Scanner a = new Scanner(System.in);
@@ -34,7 +42,8 @@ public class ChooseSubject extends UnderQuest
         }
         System.out.println("You must do this subject because you didn't choose anything");
         subject=Subject.crepro;
-        return  Subject.crepro;
+        return  Subject.crepro;*/
+    subject=sub;
     }
 
     public Quest[] getSubQuests() {
