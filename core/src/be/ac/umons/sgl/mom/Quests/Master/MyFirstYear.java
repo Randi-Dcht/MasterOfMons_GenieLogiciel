@@ -19,7 +19,6 @@ import be.ac.umons.sgl.mom.Quests.Under.BattleForPlace;
 import be.ac.umons.sgl.mom.Quests.Under.GoToLesson;
 import be.ac.umons.sgl.mom.Quests.Under.MeetManyPeople;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-
 import java.util.ArrayList;
 import java.util.Random;
 

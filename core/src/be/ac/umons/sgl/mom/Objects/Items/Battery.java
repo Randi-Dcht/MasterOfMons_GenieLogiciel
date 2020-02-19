@@ -7,7 +7,7 @@ public class Battery extends Items
 {
   public Battery()
   {
-    super("Battery");
+    super("Charger");
   }
 
   public void used(People pp)
