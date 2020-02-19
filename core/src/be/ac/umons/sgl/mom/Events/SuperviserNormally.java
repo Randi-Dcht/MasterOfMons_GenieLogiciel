@@ -11,6 +11,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
+import be.ac.umons.sgl.mom.Objects.Characters.Character;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.Social;
@@ -57,7 +58,7 @@ public class SuperviserNormally implements Observer
         /**/
         private ArrayList<Mobile> deadMobile = new ArrayList<>();
         /*This the class who save the game in real time*/
-        public /*private*/ Saving save;
+        private Saving save;
         /**/
         private GraphicalSettings graphic;
         /*This is the time in the game*/
@@ -80,6 +81,7 @@ public class SuperviserNormally implements Observer
            for (Place plt : Place.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
+           event.add(Events.Dead,this);
        }
 
         /**
@@ -220,9 +222,10 @@ public class SuperviserNormally implements Observer
          * @param notify is a notification
          */
         @Override
-        public void update(Notification notify) //TODO voir dans le futur
+        public void update(Notification notify)
         {
-
+            if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(PlayerType.ComputerPlayer))
+                deadMobile.add(((Mobile)notify.getBuffer()));
         }
 
 
@@ -234,12 +237,7 @@ public class SuperviserNormally implements Observer
         {
             if(people != null)
                 people.energy(dt);
-           // System.out.println(dt);
             time.updateSecond(dt);
-
-            //for (Items o : listPNJ)
-              //  o.make(dt);
-            //event.notify(Events.ChangeFrame); //pour le timerGame
         }
 
 
