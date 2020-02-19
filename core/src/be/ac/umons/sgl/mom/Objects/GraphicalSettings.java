@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Objects;
 
 import be.ac.umons.sgl.mom.Enums.Languages;
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -50,6 +52,9 @@ public class GraphicalSettings {
      * If the map coordinates needs to be showed to the user.
      */
     private boolean showMapCoordinates = false;
+
+    protected Color backgroundColor;
+
     public GraphicalSettings() {
         init();
     }
@@ -62,6 +67,7 @@ public class GraphicalSettings {
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
+        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
     }
 
     /**

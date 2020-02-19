@@ -25,7 +25,7 @@ public class Settings implements Serializable {
 
     private Difficulty difficulty = Difficulty.Medium;
 
-    private String backgroundColor;
+    private String backgroundColor = "21212180";
 
     /**
      * @return The resolution's height

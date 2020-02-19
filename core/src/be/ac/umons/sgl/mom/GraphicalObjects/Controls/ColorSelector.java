@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
@@ -44,20 +45,12 @@ public class ColorSelector extends Control {
 
     protected void updateSelectedColor() {
         if (tb.getText().length() == 6 || tb.getText().length() == 8) {
-            byte[] b = DatatypeConverter.parseHexBinary(tb.getText());
-            float[] c = new float[b.length];
-            for (int i = 0; i < b.length; i++) {
-                if (b[i] < 0)
-                    c[i] = (256 + (int)b[i]) / 255f;
-                else
-                    c[i] = b[i] / 255f;
-            }
-            if (tb.getText().length() == 6) {
-                selectedColor = new Color(c[0], c[1], c[2], 1);
-            } else if (tb.getText().length() == 8) {
-                selectedColor = new Color(c[0], c[1], c[2], c[3]);
-            }
+            selectedColor = StringHelper.getColorFromString(tb.getText());
         }
+    }
+
+    public void setSelectedColor(Color selectedColor) {
+        this.selectedColor = selectedColor;
     }
 
     public Color getSelectedColor() {

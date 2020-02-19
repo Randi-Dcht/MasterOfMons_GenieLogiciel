@@ -6,6 +6,7 @@ import be.ac.umons.sgl.mom.GameStates.Menus.MenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ColorSelector;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
@@ -77,6 +78,8 @@ public class SettingsMenuState extends MenuState {
                     ((ScrollListChooser)mi.control).setScrollListItems(l.toArray(new ScrollListChooser.ScrollListItem[0]));
                     mi.size.y = (int)(4 * (gs.getNormalFont().getLineHeight() + 3 * topMargin));
                     break;
+                case "CS_Background":
+                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getBackgroundColor()));
             }
         }
     }
@@ -94,7 +97,7 @@ public class SettingsMenuState extends MenuState {
                 case "TXT_Game_Resolution_Height":
                     settings.setGameResolutionHeight(Integer.parseInt(((TextBox)mi.control).getText()));
                     break;
-                case "TXT_Maximum_Automatic_Saves":
+                case "TXT_Maximum_Automatic_Saves": // No need to add SCLs because done at each click !
                     settings.setMaximumAutomaticSaves(Integer.parseInt(((TextBox)mi.control).getText()));
                     break;
                 case "CS_Background":
