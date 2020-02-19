@@ -81,9 +81,11 @@ public class SettingsMenuState extends MenuState {
                     break;
                 case "CS_Background":
                     ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getBackgroundColor()));
+                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
                     break;
                 case "CS_Transparent_Background":
                     ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getTransparentBackgroundColor()));
+                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
                     break;
             }
         }

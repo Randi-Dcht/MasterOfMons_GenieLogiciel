@@ -92,7 +92,7 @@ public class TextBox extends Control {
                 if (Character.isLetterOrDigit(c))
                     actualText += c;
             }
-            if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed))
+            if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed) && actualText.length() > 0)
                 actualText = actualText.substring(0, actualText.length() - 1);
         }
     }
