@@ -21,7 +21,7 @@ public class Button extends Control {
     /**
      * The background's color.
      */
-    protected Color backgroundColor = new Color(0x21212163);
+    protected Color backgroundColor = gs.getTransparentBackgroundColor();
     /**
      * The background's color when the mouse is over it.
      */

@@ -54,6 +54,7 @@ public class GraphicalSettings {
     private boolean showMapCoordinates = false;
 
     protected Color backgroundColor;
+    protected Color transparentBackgroundColor;
 
     public GraphicalSettings() {
         init();
@@ -68,6 +69,7 @@ public class GraphicalSettings {
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
         backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
+        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
     }
 
     /**
@@ -228,5 +230,21 @@ public class GraphicalSettings {
      */
     public void setShowMapCoordinates(boolean showMapCoordinates) {
         this.showMapCoordinates = showMapCoordinates;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public Color getTransparentBackgroundColor() {
+        return transparentBackgroundColor;
+    }
+
+    public void setTransparentBackgroundColor(Color transparentBackgroundColor) {
+        this.transparentBackgroundColor = transparentBackgroundColor;
     }
 }

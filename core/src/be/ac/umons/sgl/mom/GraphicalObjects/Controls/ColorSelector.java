@@ -18,7 +18,7 @@ public class ColorSelector extends Control {
 
     public ColorSelector(GameInputManager gim, GraphicalSettings gs) { // TODO TESTS
         super(gim, gs);
-        selectedColor = new Color(0x21212142);
+        selectedColor = gs.getTransparentBackgroundColor();
         tb = new TextBox(gim, gs);
         tb.setAcceptOnlyHexadecimal(true);
         sr = new ShapeRenderer();

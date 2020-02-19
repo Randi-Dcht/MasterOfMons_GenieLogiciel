@@ -45,6 +45,7 @@ public class SettingsMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("language"), MenuItemType.ScrollListChooser, "SLC_Language"),
                 new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser, "SLC_Difficulty"),
                 new MenuItem(gs.getStringFromId("backgroundColor"), MenuItemType.ColorChooser, "CS_Background"),
+                new MenuItem(gs.getStringFromId("transparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Transparent_Background"),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
         });
         Settings settings = MasterOfMonsGame.settings;
@@ -80,6 +81,8 @@ public class SettingsMenuState extends MenuState {
                     break;
                 case "CS_Background":
                     ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getBackgroundColor()));
+                case "CS_Transparent_Background":
+                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getTransparentBackgroundColor()));
             }
         }
     }
@@ -101,8 +104,9 @@ public class SettingsMenuState extends MenuState {
                     settings.setMaximumAutomaticSaves(Integer.parseInt(((TextBox)mi.control).getText()));
                     break;
                 case "CS_Background":
-                    Color backgroundColor = ((ColorSelector)mi.control).getSelectedColor();
-                    settings.setBackgroundColor(backgroundColor.toString());
+                    settings.setBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                case "CS_Transparent_Background":
+                    settings.setTransparentBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
             }
         }
         // TODO : Save the settings object

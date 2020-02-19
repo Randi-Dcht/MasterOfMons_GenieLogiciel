@@ -53,7 +53,7 @@ public class AgendaShower extends Control {
         super(gim, gs);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        sr.setColor(new Color(0x21212142));
+        sr.setColor(gs.getTransparentBackgroundColor());
 
         courses = new ArrayList<>();
     }

@@ -54,7 +54,7 @@ public abstract class OnMapObject {
             GlyphLayout gl = new GlyphLayout();
             gl.setText(gs.getSmallFont(), String.format(gs.getStringFromId("pressToInteract"), "E"));
             sr.begin(ShapeRenderer.ShapeType.Filled);
-            sr.setColor(new Color(0x21212142));
+            sr.setColor(gs.getTransparentBackgroundColor());
             sr.rect(x, y + height - gs.getSmallFont().getLineHeight(), gl.width, gs.getSmallFont().getLineHeight());
             sr.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);

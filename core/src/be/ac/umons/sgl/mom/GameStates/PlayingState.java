@@ -191,11 +191,11 @@ public class PlayingState extends GameState implements Observer {
 
         inventoryShower = new InventoryShower(gim, gs, player);
 
-        lifeBar = new ProgressBar();
+        lifeBar = new ProgressBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
-        expBar = new ProgressBar();
+        expBar = new ProgressBar(gs);
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
-        energyBar = new ProgressBar();
+        energyBar = new ProgressBar(gs);
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
 
         pauseButton = new Button(gim, gs);

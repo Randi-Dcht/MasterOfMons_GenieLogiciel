@@ -47,7 +47,7 @@ public class TimeShower {
         this.gs = gs;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        sr.setColor(new Color(0x21212142));
+        sr.setColor(gs.getTransparentBackgroundColor());
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         beginAnimation();

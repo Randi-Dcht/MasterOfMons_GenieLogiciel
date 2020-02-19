@@ -72,7 +72,7 @@ public class InventoryItem {
      */
     public void init() {
         sr = new ShapeRenderer();
-        backgroundColor = new Color(21f / 255, 21f / 255, 21f / 255, BACKGROUND_RECTANGLE_OPACITY);
+        backgroundColor = new Color(gs.getBackgroundColor().r, gs.getBackgroundColor().g, gs.getBackgroundColor().b, BACKGROUND_RECTANGLE_OPACITY);
         selectedBackgroundColor = new Color(69f / 255, 39f / 255, 160f / 255, BACKGROUND_RECTANGLE_OPACITY);
         backgroundColorToUse = backgroundColor;
     }

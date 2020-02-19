@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -22,7 +23,7 @@ public class ProgressBar {
     /**
      * The background's color
      */
-    protected Color backgroundColor = new Color(21f / 255, 21f/255, 21f/255, .5f);
+    protected Color backgroundColor;
     /**
      * The foreground's color
      */
@@ -45,7 +46,10 @@ public class ProgressBar {
      */
     protected ShapeRenderer sr;
 
-    public ProgressBar() {
+    protected GraphicalSettings gs;
+
+    public ProgressBar(GraphicalSettings gs) {
+        this.gs = gs;
         init();
     }
 
@@ -55,6 +59,7 @@ public class ProgressBar {
     public void init() {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
+        backgroundColor = gs.getTransparentBackgroundColor();
     }
 
     /**
