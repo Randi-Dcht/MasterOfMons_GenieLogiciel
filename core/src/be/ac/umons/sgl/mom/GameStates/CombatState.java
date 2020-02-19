@@ -6,7 +6,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
-import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -63,15 +63,15 @@ public class CombatState extends GameState implements Observer {
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        lifePlayer1 = new ProgressBar();
-        lifePlayer2 = new ProgressBar();
+        lifePlayer1 = new ProgressBar(gs);
+        lifePlayer2 = new ProgressBar(gs);
         attackButton = new Button(gim, gs);
         attackButton.setText(gs.getStringFromId("attack"));
         attackButton.setSelected(true);
         lifePlayer1.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
         lifePlayer2.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
-        lifePlayer1.setBackgroundColor(new Color(0x636363AA));
-        lifePlayer2.setBackgroundColor(new Color(0x636363AA));
+        lifePlayer1.setBackgroundColor(gs.getTransparentBackgroundColor());
+        lifePlayer2.setBackgroundColor(gs.getTransparentBackgroundColor());
 
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
     }
@@ -91,7 +91,7 @@ public class CombatState extends GameState implements Observer {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(new Color(0x21212142));
+        sr.setColor(gs.getTransparentBackgroundColor());
         sr.rect(0,0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
         sr.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);

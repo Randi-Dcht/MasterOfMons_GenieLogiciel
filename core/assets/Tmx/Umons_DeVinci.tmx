@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="190" height="190" tilewidth="64" tileheight="32" nextobjectid="34">
  <properties>
-  <property name="spawnX" type="int" value="72"/>
+  <property name="spawnX" type="int" value="74"/>
   <property name="spawnY" type="int" value="176"/>
  </properties>
  <tileset firstgid="1" source="../tsx/Floor.tsx"/>

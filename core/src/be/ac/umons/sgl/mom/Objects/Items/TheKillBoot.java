@@ -15,11 +15,10 @@ public class TheKillBoot extends Items implements Guns
 
     /**
      * this constructor define the items
-     * @param place is the place of this item
      */
     public TheKillBoot()
     {
-        super("GunKillBoot");
+        super("Gun");
     }
 
 
@@ -28,7 +27,8 @@ public class TheKillBoot extends Items implements Guns
      * @param pp is the people
      */
     @Override
-    public void used(People pp) {
+    public void used(People pp)
+    {
 
     }
 

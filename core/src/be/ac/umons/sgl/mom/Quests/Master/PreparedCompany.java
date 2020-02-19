@@ -1,13 +1,21 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.MobileType;
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Objects.Characters.*;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Characters.StudPNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.TeacherPNJ;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.*;
+import be.ac.umons.sgl.mom.Objects.Items.Gun;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.Pen;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,7 +26,7 @@ import java.util.Random;
 public class PreparedCompany extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
-    final Lesson[] lesson ={/*code ici*/};
+    final Lesson[] lesson ={Lesson.res2,Lesson.lecred,Lesson.proglog,Lesson.bda,Lesson.comp,Lesson.algbio,Lesson.sofev,Lesson.angl};
     /*This is the goals of this MasterQuest*/
     final UnderQuest[] underQuest = {new Traineeship(this)};
 

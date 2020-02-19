@@ -25,6 +25,9 @@ public class Settings implements Serializable {
 
     private Difficulty difficulty = Difficulty.Medium;
 
+    private String backgroundColor = "212121";
+    private String transparentBackgroundColor = "21212180";
+
     /**
      * @return The resolution's height
      */
@@ -88,5 +91,21 @@ public class Settings implements Serializable {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public String getTransparentBackgroundColor() {
+        return transparentBackgroundColor;
+    }
+
+    public void setTransparentBackgroundColor(String transparentBackgroundColor) {
+        this.transparentBackgroundColor = transparentBackgroundColor;
     }
 }

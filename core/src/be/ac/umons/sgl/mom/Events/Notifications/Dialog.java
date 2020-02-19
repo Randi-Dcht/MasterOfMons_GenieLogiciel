@@ -1,31 +1,30 @@
 package be.ac.umons.sgl.mom.Events.Notifications;
 
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Objects.Characters.Character;
+import java.util.ArrayList;
 
-public class ChangeDay implements Notification
+public class Dialog implements Notification
 {
     private Events evt;
-    private Character buffer;
+    private ArrayList<String> buffer;
 
 
     /**
-     * This constructor define a notification when change day with buffer
-     * @param buffer is a buffer with character (specific to events)
+     * This constructor define a notification when start a dialog with buffer
+     * @param buffer is a buffer with ArrayList of string (specific to events)
      */
-    public ChangeDay(Character buffer)
+    public Dialog(ArrayList<String> buffer)
     {
-        evt = Events.ChangeDay;
+        evt = Events.Dialog;
         this.buffer = buffer;
     }
 
-
     /**
-     * This constructor define a notification when change day
+     *  This constructor define a notification when start a dialog
      */
-    public ChangeDay()
+    public Dialog()
     {
-        evt= Events.ChangeDay;
+        evt= Events.Dialog;
     }
 
 
@@ -42,10 +41,10 @@ public class ChangeDay implements Notification
 
     /**
      * This method return the buffer of this notification if it isn't empty
-     * @return character
+     * @return ArrayList<String>
      */
     @Override
-    public Character getBuffer()
+    public ArrayList<String> getBuffer()
     {
         return buffer;
     }

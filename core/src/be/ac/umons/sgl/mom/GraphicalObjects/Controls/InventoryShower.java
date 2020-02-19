@@ -3,7 +3,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GraphicalObjects.InventoryItem;
-import be.ac.umons.sgl.mom.GraphicalObjects.Player;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -134,11 +134,11 @@ public class InventoryShower extends Control {
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
         if (isBeingAnimated) {
-            sr.setColor(21f / 255, 21f / 255, 21f / 255, (float)duringAnimationBackgroundOpacity * BACKGROUND_RECTANGLE_OPACITY);
+            sr.setColor(gs.getTransparentBackgroundColor().r, gs.getTransparentBackgroundColor().g, gs.getTransparentBackgroundColor().b, (float)duringAnimationBackgroundOpacity * BACKGROUND_RECTANGLE_OPACITY);
             sr.rect(beginX, topMargin, duringAnimationWidth, duringAnimationHeight);
         }
         else {
-            sr.setColor(21f / 255, 21f / 255, 21f / 255, BACKGROUND_RECTANGLE_OPACITY);
+            sr.setColor(gs.getTransparentBackgroundColor().r, gs.getTransparentBackgroundColor().g, gs.getTransparentBackgroundColor().b, BACKGROUND_RECTANGLE_OPACITY);
             sr.rect(beginX, topMargin, getWidth(), height);
         }
         sr.end();

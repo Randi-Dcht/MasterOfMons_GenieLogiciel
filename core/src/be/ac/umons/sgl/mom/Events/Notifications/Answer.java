@@ -9,8 +9,8 @@ public class Answer implements Notification
 
 
     /**
-     * This constructor define an answer with buffer
-     * @param buffer is a buffer (specific to events)
+     * This constructor define a notification when give a answer with buffer
+     * @param buffer is a buffer with string(specific to events)
      */
     public Answer(String buffer)
     {
@@ -20,14 +20,18 @@ public class Answer implements Notification
 
 
     /**
-     * */
+     *This constructor define a notification when give a answer
+     */
     public Answer()
     {
         evt= Events.Answer;
     }
 
 
-    /***/
+    /**
+     * This method return the event of this notification
+     * @return event of notification
+     */
     @Override
     public Events getEvents()
     {
@@ -35,7 +39,10 @@ public class Answer implements Notification
     }
 
 
-    /***/
+    /**
+     * This method return the buffer of this notification if it isn't empty
+     * @return string
+     */
     @Override
     public String getBuffer()
     {
@@ -43,7 +50,10 @@ public class Answer implements Notification
     }
 
 
-    /***/
+    /**
+     * This method return if the buffer isn't empty
+     * @return true is the buffer isn't empty
+     */
     @Override
     public boolean bufferEmpty()
     {

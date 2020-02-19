@@ -1,8 +1,8 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 
+import be.ac.umons.sgl.mom.Animations.Animation;
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
-import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -19,25 +19,49 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * This represent the control the user can draw to check its agenda.
+ */
 public class AgendaShower extends Control {
 
+    /**
+     * The courses to list in this control.
+     */
     protected ArrayList<Course> courses;
-
+    /**
+     * A double animation used for showing and hiding.
+     */
     protected DoubleAnimation da;
+    /**
+     * If this control is being animated
+     */
     protected boolean isBeingAnimated = false;
+    /**
+     * If this control must be drawn to the screen.
+     */
     protected boolean showed = false;
-
+    /**
+     * Allow to draw shapes.
+     */
     protected ShapeRenderer sr;
 
+    /**
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings.
+     */
     public AgendaShower(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        sr.setColor(new Color(0x21212142));
+        sr.setColor(gs.getTransparentBackgroundColor());
 
         courses = new ArrayList<>();
     }
 
+    /**
+     * Draw this control.
+     * @param batch Where to draw this control.
+     */
     public void draw(Batch batch) {
         if (! showed)
             return;
@@ -67,6 +91,10 @@ public class AgendaShower extends Control {
         batch.end();
     }
 
+    /**
+     * @param courses The list of course that will be shown.
+     * @return The maximum size of this control with the given courses.
+     */
     protected Point getMaximumSize(ArrayList<Course> courses) {
         int maxX = 0, maxY = 2 * topMargin;
         for (Course c : courses) {
@@ -87,6 +115,9 @@ public class AgendaShower extends Control {
             hide();
     }
 
+    /**
+     * Begin the animation that will be showing the control.
+     */
     protected void show() {
         courses = SuperviserNormally.getSupervisor().getPeople().getPlanning().get(
                 SuperviserNormally.getSupervisor().getTime().getDate().getDay()
@@ -100,9 +131,15 @@ public class AgendaShower extends Control {
         showed = true;
     }
 
+    /**
+     * Begin the animation that will be hiding the control.
+     */
     protected void hide() {
         isBeingAnimated = true;
-        da = new DoubleAnimation(1, 0, 500);
+        Animation showAnim = AnimationManager.getInstance().get("AgendaShowingAnim");
+        double from = (showAnim == null ? 1 : (double)showAnim.getActual());
+        da = new DoubleAnimation(from, 0, 500 * from);
+        AnimationManager.getInstance().remove("AgendaShowingAnim");
         da.setEndingAction(() -> { isBeingAnimated = false; showed = false; } );
         AnimationManager.getInstance().addAnAnimation("AgendaHidingAnim", da);
     }

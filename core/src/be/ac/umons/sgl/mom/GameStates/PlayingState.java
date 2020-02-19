@@ -2,19 +2,24 @@ package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.Answer;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
-import be.ac.umons.sgl.mom.GraphicalObjects.Character;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.*;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.OnMapObject;
+import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
@@ -24,9 +29,9 @@ import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Supervisor;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -128,14 +133,25 @@ public class PlayingState extends GameState implements Observer {
      */
     protected GameMapManager gmm;
 
+    /**
+     * The list of PNJ that will be on this map.
+     */
     protected List<Character> pnjs;
-
+    /**
+     * The selected object/character on the map if one is selected.
+     */
     protected OnMapObject selectedOne;
-
+    /**
+     * The objects that are on this map.
+     */
     protected List<MapObject> mapObjects;
-
+    /**
+     * The button pause.
+     */
     protected Button pauseButton;
-
+    /**
+     * The agenda's shower
+     */
     protected AgendaShower agendaShower;
 
     protected TimeShower timeShower;
@@ -161,7 +177,7 @@ public class PlayingState extends GameState implements Observer {
         timeShower = new TimeShower(gs);
 
         /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
+        /*supprimer =>*/SuperviserNormally.getSupervisor().newParty("NamePlayer",Type.beefy,gs,Difficulty.Easy,questShower);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap("Tmx/Umons_Nimy.tmx");
 
@@ -177,11 +193,11 @@ public class PlayingState extends GameState implements Observer {
 
         inventoryShower = new InventoryShower(gim, gs, player);
 
-        lifeBar = new ProgressBar();
+        lifeBar = new ProgressBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
-        expBar = new ProgressBar();
+        expBar = new ProgressBar(gs);
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
-        energyBar = new ProgressBar();
+        energyBar = new ProgressBar(gs);
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
 
         pauseButton = new Button(gim, gs);
@@ -190,8 +206,15 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setFont(gs.getSmallFont());
 
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
     }
 
+    /**
+     * Initialise all the variables for the given map.
+     * @param mapPath The map's path
+     * @param spawnX On which CASE the character will be horizontally.
+     * @param spawnY On which CASE the character will be vertically
+     */
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
         SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps(mapPath)));
@@ -227,6 +250,10 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Initialise all the variables for the given map.
+     * @param mapPath The map's path
+     */
     public void initMap(String mapPath) {
         gmm.setMap(mapPath);
         int spawnX = 0, spawnY = 0;
@@ -243,6 +270,7 @@ public class PlayingState extends GameState implements Observer {
         am.update(dt);
         makePlayerMove(dt);
         cam.update();
+
 
         SuperviserNormally.getSupervisor().callMethod(dt);
 
@@ -344,6 +372,10 @@ public class PlayingState extends GameState implements Observer {
         return false;
     }
 
+    /**
+     * Check if the player is on a case to change the map.
+     * @param player The player.
+     */
     protected void checkForMapChanging(Player player) {
         if (changingMapObjects == null)
             return;
@@ -363,6 +395,10 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Check if the player is near a selectable object and select it.
+     * @param player The player
+     */
     protected void checkForNearSelectable(Player player) {
         OnMapObject nearest = null;
         double nearestDist = tileWidth * mapWidth;
@@ -384,7 +420,12 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
-    protected List<Character> getPlayerInRange(double dist) {
+    /**
+     * @param player The player
+     * @param dist A distance (^2)
+     * @return Return all the PNJs near enough from the player.
+     */
+    protected List<Character> getPlayerInRange(Player player, double dist) {
         LinkedList<Character> res = new LinkedList<>();
         for (Character character : pnjs) {
             double d = Math.pow(player.getPosX() - character.getPosX(), 2) + Math.pow(player.getPosY() - character.getPosY(), 2);
@@ -394,8 +435,12 @@ public class PlayingState extends GameState implements Observer {
         return res;
     }
 
+    /**
+     * Executed when the player launch an attack.
+     * @param player The player.
+     */
     protected void attack(Player player) {
-        for (Character c : getPlayerInRange(player.getAttackRange() * player.getAttackRange())) {
+        for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange())) {
             SuperviserNormally.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
         }
@@ -420,8 +465,8 @@ public class PlayingState extends GameState implements Observer {
 
         // Dessine le HUD.
         agendaShower.draw(sb);
-        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth() - 2 * leftMargin), (int)topMargin),
-                new Point((int)(timeShower.getWidth() + 2 * leftMargin), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
+        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth()), (int)topMargin),
+                new Point((int)(timeShower.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
@@ -459,9 +504,16 @@ public class PlayingState extends GameState implements Observer {
         agendaShower.handleInput();
     }
 
+    /**
+     * Make the player level up.
+     */
     public void debugLevelUp() {
         ((People)player.getCharacteristics()).upLevel();
     }
+
+    /**
+     * Make the player invincible (or vincible)
+     */
     public void debugMakeInvincible() {
         if (((People)player.getCharacteristics()).isInvincible()) {
             ((People)player.getCharacteristics()).invincible(false);
@@ -482,6 +534,18 @@ public class PlayingState extends GameState implements Observer {
                     pnjs.remove(i);
                     break;
                 }
+            }
+        } else if (notify.getEvents().equals(Events.ChangeQuest))
+            Gdx.app.postRunnable(() -> questShower.setQuest(((People)player.getCharacteristics()).getQuest()));
+        else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())
+        {
+            ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
+            InGameDialogState igds = (InGameDialogState) gsm.setState(InGameDialogState.class);
+            igds.setText(diag.get(0));
+            for (int i = 1; i < diag.size(); i++) {
+                String s = diag.get(i);
+                igds.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
+
             }
         }
     }

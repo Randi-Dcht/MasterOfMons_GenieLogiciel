@@ -1,6 +1,8 @@
 package be.ac.umons.sgl.mom.Objects;
 
 import be.ac.umons.sgl.mom.Enums.Languages;
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -50,6 +52,10 @@ public class GraphicalSettings {
      * If the map coordinates needs to be showed to the user.
      */
     private boolean showMapCoordinates = false;
+
+    protected Color backgroundColor;
+    protected Color transparentBackgroundColor;
+
     public GraphicalSettings() {
         init();
     }
@@ -62,6 +68,7 @@ public class GraphicalSettings {
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
+        refreshColors();
     }
 
     /**
@@ -222,5 +229,26 @@ public class GraphicalSettings {
      */
     public void setShowMapCoordinates(boolean showMapCoordinates) {
         this.showMapCoordinates = showMapCoordinates;
+    }
+
+    public void refreshColors() {
+        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
+        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public Color getTransparentBackgroundColor() {
+        return transparentBackgroundColor;
+    }
+
+    public void setTransparentBackgroundColor(Color transparentBackgroundColor) {
+        this.transparentBackgroundColor = transparentBackgroundColor;
     }
 }

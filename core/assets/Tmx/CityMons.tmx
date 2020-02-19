@@ -1810,8 +1810,18 @@
 </data>
  </layer>
  <objectgroup name="Changer">
-  <object id="23" name="Tmx/Umons_Nimy.tmx" x="25442.5" y="9729.5" width="448" height="290"/>
-  <object id="24" name="Tmx/Kot.tmx" x="7155.33" y="66" width="196.667" height="216.667"/>
+  <object id="23" name="Tmx/Umons_Nimy.tmx" x="25442.5" y="9729.5" width="448" height="290">
+   <properties>
+    <property name="spawnX" type="int" value="450"/>
+    <property name="spawnY" type="int" value="285"/>
+   </properties>
+  </object>
+  <object id="24" name="Tmx/Kot.tmx" x="7155.33" y="66" width="196.667" height="216.667">
+   <properties>
+    <property name="spawnX" type="int" value="40"/>
+    <property name="spawnY" type="int" value="25"/>
+   </properties>
+  </object>
   <object id="25" name="Tmx/Umons_Polytech.tmx" x="2344" y="15408" width="814" height="562"/>
   <object id="41" name="Tmx/Umons_Warocque.tmx" x="18580" y="281.333" width="248" height="234.667"/>
   <object id="43" name="Tmx/Dual_parkNimy" x="26188" y="1604" width="1796" height="2412"/>

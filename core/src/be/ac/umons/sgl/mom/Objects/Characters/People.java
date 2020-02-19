@@ -1,7 +1,16 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.PlayerType;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
@@ -10,7 +19,6 @@ import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Other.HyperPlanning;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,19 +32,23 @@ import java.util.HashMap;
  */
 public class People extends Character implements Serializable, Observer
 {
+    public enum Sexe {Women,Men};
     /*characteristic of people*/
     private double energy = 100;
     private State state = State.normal;
-    private Place place; //TODO initialiser
+    private Place place;
     private double threshold; /*seuil experience niveau à devoir atteindre*/
     private double experience = 0;
     private MasterQuest myQuest;
     private Bloc year;
     private boolean invincible = false;
-    private int maxObject;
-    private HashMap<Integer,ArrayList<Course>> myPlanning;
-    private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
     private Difficulty difficulty;
+    private Sexe sexe;
+    /*other thing*/
+    private HashMap<Integer,ArrayList<Course>> myPlanning;
+    private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
+    private ArrayList<Mobile> friend;
+    private Mobile saoulMate; //TODO check the type
 
 
     /**
@@ -49,8 +61,10 @@ public class People extends Character implements Serializable, Observer
         super(name);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
         this.threshold = minExperience(level+1);
-        maxObject = difficulty.getManyItem();
+        friend  = new ArrayList<>();
+        this.difficulty = difficulty;
     }
 
 
@@ -102,9 +116,28 @@ public class People extends Character implements Serializable, Observer
         myQuest = quest;
         quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
-        Supervisor.changedQuest(); //TODO changer cela avec la nouvelle classe
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeQuest(quest));
         year = quest.getBloc() ;
+        createPlanning();
+    }
+
+
+    /***/
+    private void createPlanning()
+    {
         myPlanning = HyperPlanning.createSchedule(myCourse,SuperviserNormally.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
+    }
+
+
+    /**
+     * */
+    public void addFriend(Mobile mobile)
+    {
+        if (!friend.contains(mobile))
+        {
+            friend.add(mobile);
+            SuperviserNormally.getSupervisor().getEvent().notify(new AddFriend());
+        }
     }
 
 
@@ -148,7 +181,7 @@ public class People extends Character implements Serializable, Observer
      */
     public boolean pushObject(Items object)
     {
-        if(myObject.size() == maxObject)
+        if(myObject.size() == difficulty.getManyItem())
             return false;
         myObject.add(object);
         return true;
@@ -336,10 +369,14 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-    /***/
+    /**
+     * This method return the type of the first action when he meet other character
+     * @return action
+     */
     @Override
-    public Actions getAction() {
-        return null; //TODO etre demander via l'interface graphique
+    public Actions getAction()
+    {
+        return Actions.Dialog;
     }
 
 
@@ -349,5 +386,7 @@ public class People extends Character implements Serializable, Observer
     {
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty())
             changePlace(((PlaceInMons)notify).getBuffer());
+        if (notify.getEvents().equals(Events.ChangeMonth))
+            createPlanning();
     }
 }

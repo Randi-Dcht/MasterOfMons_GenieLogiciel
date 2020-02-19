@@ -59,4 +59,20 @@ public class AnimationManager {
         }
     }
 
+    /**
+     * Remove the animation if it exists.
+     * @param animationName The name given when the animation was added.
+     */
+    public void remove(String animationName) {
+        animations.remove(animationName);
+    }
+
+    /**
+     * @param animationName The name given when the animation was added.
+     * @return The animation with the given name.
+     */
+    public Animation get(String animationName) {
+        return animations.get(animationName);
+    }
+
 }

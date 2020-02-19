@@ -9,7 +9,9 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Answer;
 import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
+import be.ac.umons.sgl.mom.Objects.Characters.Character;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.Social;
@@ -17,6 +19,7 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
+import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.util.ArrayList;
@@ -52,8 +55,10 @@ public class SuperviserNormally implements Observer
         private HashMap<Place,ArrayList<Items>> listItems;
         /*The all no people in this game*/
         private HashMap<Place,ArrayList<Mobile>> listMobile;
+        /**/
+        private ArrayList<Mobile> deadMobile = new ArrayList<>();
         /*This the class who save the game in real time*/
-        public /*private*/ Saving save;
+        private Saving save;
         /**/
         private GraphicalSettings graphic;
         /*This is the time in the game*/
@@ -64,6 +69,8 @@ public class SuperviserNormally implements Observer
         private HashMap<String,Place> listMap = new HashMap<>();
         /**/
         private Place place; //TODO init
+        /**/
+        private Mobile memoryMobile;
 
 
        /**
@@ -74,6 +81,7 @@ public class SuperviserNormally implements Observer
            for (Place plt : Place.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
+           event.add(Events.Dead,this);
        }
 
         /**
@@ -93,7 +101,9 @@ public class SuperviserNormally implements Observer
          */
         public ArrayList<Items> getItems(Place place)
         {
-            return listItems.get(place);
+            if (listItems.containsValue(place))
+                return listItems.get(place);
+            return new ArrayList<>();
         }
 
 
@@ -104,7 +114,9 @@ public class SuperviserNormally implements Observer
          */
         public ArrayList<Mobile> getMobile(Place place)
         {
-            return listMobile.get(place);
+            if(listMobile.containsValue(place))
+                return listMobile.get(place);
+            return new ArrayList<>();
         }
 
 
@@ -114,16 +126,35 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Difficulty difficulty)
+        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Difficulty difficulty, QuestShower qs)
         {
-            time = new TimeGame(9,1,8,2019);
+            time = new TimeGame(new Date(16,9,2020,8,15));
             people = new People(namePlayer,type,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
+            qs.setQuest(mQ);
             save = new Saving(people,namePlayer);
             createMobil(mQ);
             createItems(mQ);
+        }
+
+
+        /**
+         * This method allows to start an old game
+         * @param people is the people of the game
+         * @param  date is the actually date
+         * @param save  is the class of the saving
+         */
+        public void oldGame(People people, Date date,Saving save)
+        {
+            //time = new TimeGame();
+            this.people  = people;
+            this.graphic = graphic;
+            this.save    = save;
+
+            createItems(people.getQuest());
+            createMobil(people.getQuest());
         }
 
 
@@ -136,7 +167,8 @@ public class SuperviserNormally implements Observer
             return graphic;
         }
 
-    /**
+
+        /**
          * This method return the enum of the maps with the name in String (.tmx)
          * @param nameTmx is the name of the maps with the name .TMX
          * @return the place (enum)
@@ -190,9 +222,10 @@ public class SuperviserNormally implements Observer
          * @param notify is a notification
          */
         @Override
-        public void update(Notification notify) //TODO voir dans le futur
+        public void update(Notification notify)
         {
-
+            if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(PlayerType.ComputerPlayer))
+                deadMobile.add(((Mobile)notify.getBuffer()));
         }
 
 
@@ -204,12 +237,7 @@ public class SuperviserNormally implements Observer
         {
             if(people != null)
                 people.energy(dt);
-           // System.out.println(dt);
-            time.updateSecond(dt);
-
-            //for (Items o : listPNJ)
-              //  o.make(dt);
-            //event.notify(Events.ChangeFrame); //pour le timerGame
+            time.updateSecond(dt);people.getQuest().addProgress(0.2);
         }
 
 

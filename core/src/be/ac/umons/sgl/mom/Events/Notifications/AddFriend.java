@@ -1,31 +1,31 @@
 package be.ac.umons.sgl.mom.Events.Notifications;
 
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Objects.Characters.Character;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 
-public class ChangeDay implements Notification
+public class AddFriend implements Notification
 {
     private Events evt;
-    private Character buffer;
+    private Mobile buffer;
 
 
     /**
-     * This constructor define a notification when change day with buffer
-     * @param buffer is a buffer with character (specific to events)
+     * This constructor define a notification when add friend with buffer
+     * @param buffer is a buffer with mobile (specific to events)
      */
-    public ChangeDay(Character buffer)
+    public AddFriend(Mobile buffer)
     {
-        evt = Events.ChangeDay;
+        evt = Events.AddFriend;
         this.buffer = buffer;
     }
 
 
     /**
-     * This constructor define a notification when change day
+     * This constructor define a notification when add friend
      */
-    public ChangeDay()
+    public AddFriend()
     {
-        evt= Events.ChangeDay;
+        evt= Events.AddFriend;
     }
 
 
@@ -42,10 +42,10 @@ public class ChangeDay implements Notification
 
     /**
      * This method return the buffer of this notification if it isn't empty
-     * @return character
+     * @return mobile
      */
     @Override
-    public Character getBuffer()
+    public Mobile getBuffer()
     {
         return buffer;
     }
@@ -60,4 +60,6 @@ public class ChangeDay implements Notification
     {
         return !(buffer == null);
     }
+
+
 }

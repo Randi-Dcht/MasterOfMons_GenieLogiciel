@@ -237,6 +237,11 @@
   <object id="13" x="463.333" y="-614.848"/>
  </objectgroup>
  <objectgroup name="Changer">
-  <object id="14" name="Tmx/CityMons.tmx" x="1402" y="821.667" width="241.333" height="182"/>
+  <object id="14" name="Tmx/CityMons.tmx" x="1402" y="821.667" width="241.333" height="182">
+   <properties>
+    <property name="spawnX" type="int" value="231"/>
+    <property name="spawnY" type="int" value="21"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
