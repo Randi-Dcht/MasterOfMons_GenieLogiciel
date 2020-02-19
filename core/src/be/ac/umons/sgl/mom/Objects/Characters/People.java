@@ -32,20 +32,23 @@ import java.util.HashMap;
  */
 public class People extends Character implements Serializable, Observer
 {
+    public enum Sexe {Women,Men};
     /*characteristic of people*/
     private double energy = 100;
     private State state = State.normal;
-    private Place place; //TODO initialiser
+    private Place place;
     private double threshold; /*seuil experience niveau à devoir atteindre*/
     private double experience = 0;
     private MasterQuest myQuest;
     private Bloc year;
     private boolean invincible = false;
-    private int maxObject;
-    private HashMap<Integer,ArrayList<Course>> myPlanning;
-    private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
     private Difficulty difficulty;
+    private Sexe sexe;
+    /*other thing*/
+    private HashMap<Integer,ArrayList<Course>> myPlanning;
+    private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
     private ArrayList<Mobile> friend;
+    private Mobile saoulMate; //TODO check the type
 
 
     /**
@@ -60,8 +63,8 @@ public class People extends Character implements Serializable, Observer
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
         this.threshold = minExperience(level+1);
-        maxObject = difficulty.getManyItem();
         friend  = new ArrayList<>();
+        this.difficulty = difficulty;
     }
 
 
@@ -178,7 +181,7 @@ public class People extends Character implements Serializable, Observer
      */
     public boolean pushObject(Items object)
     {
-        if(myObject.size() == maxObject)
+        if(myObject.size() == difficulty.getManyItem())
             return false;
         myObject.add(object);
         return true;
@@ -366,10 +369,14 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-    /***/
+    /**
+     * This method return the type of the first action when he meet other character
+     * @return action
+     */
     @Override
-    public Actions getAction() {
-        return null; //TODO etre demander via l'interface graphique
+    public Actions getAction()
+    {
+        return Actions.Dialog;
     }
 
 

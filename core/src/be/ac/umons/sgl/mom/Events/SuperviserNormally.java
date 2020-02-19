@@ -237,7 +237,7 @@ public class SuperviserNormally implements Observer
         {
             if(people != null)
                 people.energy(dt);
-            time.updateSecond(dt);
+            time.updateSecond(dt);people.getQuest().addProgress(0.2);
         }
 
 
