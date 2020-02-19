@@ -2,7 +2,6 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Languages;
-import be.ac.umons.sgl.mom.GameStates.Menus.MenuState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ColorSelector;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
@@ -12,7 +11,6 @@ import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Settings;
-import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.List;

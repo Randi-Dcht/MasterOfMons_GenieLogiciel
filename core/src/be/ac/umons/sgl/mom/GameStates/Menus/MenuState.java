@@ -84,6 +84,8 @@ public abstract class MenuState extends GameState {
      */
     protected boolean handleEscape;
 
+    protected double topMargin = .1;
+
     /**
      * Create a new menu
      * @param gsm Game's state manager
@@ -431,6 +433,7 @@ public abstract class MenuState extends GameState {
                     gs.getNormalFont().draw(batch, header, pos.x, pos.y + (int)(gs.getNormalFont().getLineHeight() + 2 * topMargin));
                     batch.end();
                     pos.x += gl.width + leftMargin;
+                    size = new Point((int)(size.x - gl.width - leftMargin), size.y);
                 case Button:
                     control.draw(batch, pos, size);
                     break;
