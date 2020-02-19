@@ -27,6 +27,7 @@ public class Saving implements Observer
     private String nameSave;
     private String oldSave;
     private People people;
+    private be.ac.umons.sgl.mom.Other.Date date;
     private DateFormat format = new SimpleDateFormat("dd/MM/yy_HH:mm:ss");//TODO : modifier en fct
     final static String prefixe = ""; //TODO : à modifier
 
@@ -86,13 +87,14 @@ public class Saving implements Observer
      * @param file who is the file with the saving game.
      * @param people qui est l'objet a safeguarded
      */
-    private void newSave(People people,String file)
+    private void newSave(People people, String file, be.ac.umons.sgl.mom.Other.Date date)
     {
         try
         {
             ObjectOutputStream sortie;
             sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe + file+".mom"))));
             sortie.writeObject(people);
+            sortie.writeObject(date);
             sortie.close();
         }
         catch(IOException e)
@@ -133,6 +135,9 @@ public class Saving implements Observer
             ObjectInputStream entree;
             entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + file+".mom"))));
             people = (People) entree.readObject();
+            date   = (be.ac.umons.sgl.mom.Other.Date) entree.readObject();
+
+            SuperviserNormally.getSupervisor().oldGame(people,date,this);
         }
         catch(ClassNotFoundException | IOException e)
         {

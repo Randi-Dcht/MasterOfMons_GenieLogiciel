@@ -9,6 +9,7 @@ import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Answer;
 import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -17,6 +18,7 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Objects.TimeGame;
+import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.util.ArrayList;
@@ -122,16 +124,35 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Difficulty difficulty)
+        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Difficulty difficulty, QuestShower qs)
         {
-            time = new TimeGame(9,1,8,2019);
+            time = new TimeGame(new Date(16,9,2020,8,15));
             people = new People(namePlayer,type,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
+            qs.setQuest(mQ);
             save = new Saving(people,namePlayer);
             createMobil(mQ);
             createItems(mQ);
+        }
+
+
+        /**
+         * This method allows to start an old game
+         * @param people is the people of the game
+         * @param  date is the actually date
+         * @param save  is the class of the saving
+         */
+        public void oldGame(People people, Date date,Saving save)
+        {
+            //time = new TimeGame();
+            this.people  = people;
+            this.graphic = graphic;
+            this.save    = save;
+
+            createItems(people.getQuest());
+            createMobil(people.getQuest());
         }
 
 

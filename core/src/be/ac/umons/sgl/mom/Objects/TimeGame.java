@@ -30,22 +30,19 @@ public class TimeGame implements Observer
     private int day;
     private int year;
 
+
     /**
      * This constructor allows to define a time of game
-     * @param month who is the month of start
-     * @param day who is the day of start
-     * @param hour who is the hour of start
-     * @param years who is year of start
+     * @param date is the date of the start day in the university.
      */
-    public TimeGame(int month,int day,int hour,int years)//TODO voir pour passer une new Date directement -> uniquemebt save date alors
+    public TimeGame(Date date)//TODO voir pour passer une new Date directement -> uniquemebt save date alors
     {
-        NBmonth = month-1;
-        this.day = day-1;
-        this.hour = hour;
-        this.year = years;
-        NByear = leap(years);
+        NBmonth = date.getMonth()-1;
+        this.day = date.getDay()-1;
+        this.hour = date.getHour();
+        this.year = date.getYear();
+        NByear = leap(date.getYear());
         second = 0;
-
     }
 
 
@@ -184,6 +181,7 @@ public class TimeGame implements Observer
     {
         return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;
     }
+
 
     /**
      * This methods is only for the test of JunitTest

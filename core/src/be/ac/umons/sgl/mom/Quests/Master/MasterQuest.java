@@ -12,7 +12,6 @@ import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.io.Serializable;
@@ -240,7 +239,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             {
                 finished = true;
                 nextQuest();
-                Supervisor.changedQuest();
+                //Supervisor.changedQuest(); TODO revoir cela
             }
         }
     }
