@@ -204,6 +204,7 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setFont(gs.getSmallFont());
 
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
     }
 
     /**
@@ -462,8 +463,8 @@ public class PlayingState extends GameState implements Observer {
 
         // Dessine le HUD.
         agendaShower.draw(sb);
-        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth() - 2 * leftMargin), (int)topMargin),
-                new Point((int)(timeShower.getWidth() + 2 * leftMargin), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
+        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth()), (int)topMargin),
+                new Point((int)(timeShower.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
