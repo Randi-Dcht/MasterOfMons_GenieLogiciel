@@ -126,17 +126,23 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, People.Gender gender, Difficulty difficulty, QuestShower qs)
+        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, People.Gender gender, Difficulty difficulty)
         {
             time = new TimeGame(new Date(16,9,2020,8,15));
             people = new People(namePlayer,type, gender,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
-            qs.setQuest(mQ);
             save = new Saving(people,namePlayer);
             createMobil(mQ);
             createItems(mQ);
+        }
+
+
+
+        public void setQuest(QuestShower qs)
+        {
+            qs.setQuest(people.getQuest());
         }
 
 
