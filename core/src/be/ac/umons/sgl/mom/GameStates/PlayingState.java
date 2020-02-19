@@ -177,7 +177,7 @@ public class PlayingState extends GameState implements Observer {
         timeShower = new TimeShower(gs);
 
         /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        /*supprimer =>*/SuperviserNormally.getSupervisor().newParty("NamePlayer",Type.beefy, gs, People.Sexe.Men,Difficulty.Easy,questShower);
+        /*supprimer =>*/SuperviserNormally.getSupervisor().newParty("NamePlayer",Type.beefy, gs, People.Gender.Men,Difficulty.Easy,questShower);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap("Tmx/Umons_Nimy.tmx");
 
