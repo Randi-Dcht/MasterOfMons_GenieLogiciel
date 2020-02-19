@@ -24,6 +24,8 @@ public class ColorSelector extends Control {
         sr.setAutoShapeType(true);
     }
 
+    protected ColorSelector() {}
+
     @Override
     public void draw(Batch batch, Point pos, Point size) {
         super.draw(batch, pos, size);
@@ -37,16 +39,23 @@ public class ColorSelector extends Control {
     @Override
     public void handleInput() {
         tb.handleInput();
+        updateSelectedColor();
+    }
+
+    protected void updateSelectedColor() {
         if (tb.getText().length() == 6 || tb.getText().length() == 8) {
             byte[] b = DatatypeConverter.parseHexBinary(tb.getText());
+            float[] c = new float[b.length];
             for (int i = 0; i < b.length; i++) {
                 if (b[i] < 0)
-                    b[i] = (byte)(256 - b[i]);
+                    c[i] = (256 + (int)b[i]) / 255f;
+                else
+                    c[i] = b[i] / 255f;
             }
             if (tb.getText().length() == 6) {
-                selectedColor = new Color(b[0], b[1], b[2], 1);
+                selectedColor = new Color(c[0], c[1], c[2], 1);
             } else if (tb.getText().length() == 8) {
-                selectedColor = new Color(b[0], b[1], b[2], b[3]);
+                selectedColor = new Color(c[0], c[1], c[2], c[3]);
             }
         }
     }
