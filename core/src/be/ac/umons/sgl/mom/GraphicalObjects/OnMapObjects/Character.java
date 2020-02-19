@@ -64,7 +64,7 @@ public class Character extends OnMapObject {
         super(gs);
         assetManager = gs.getAssetManager();
         this.characteristics = characteristics;
-        lifeBar = new ProgressBar();
+        lifeBar = new ProgressBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
     }
 

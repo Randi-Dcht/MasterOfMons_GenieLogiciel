@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 
+import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
@@ -17,12 +18,14 @@ public class ColorSelector extends Control {
 
     public ColorSelector(GameInputManager gim, GraphicalSettings gs) { // TODO TESTS
         super(gim, gs);
-        selectedColor = new Color(0x21212142);
+        selectedColor = gs.getTransparentBackgroundColor();
         tb = new TextBox(gim, gs);
         tb.setAcceptOnlyHexadecimal(true);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
     }
+
+    protected ColorSelector() {}
 
     @Override
     public void draw(Batch batch, Point pos, Point size) {
@@ -37,18 +40,22 @@ public class ColorSelector extends Control {
     @Override
     public void handleInput() {
         tb.handleInput();
+        updateSelectedColor();
+    }
+
+    protected void updateSelectedColor() {
         if (tb.getText().length() == 6 || tb.getText().length() == 8) {
-            byte[] b = DatatypeConverter.parseHexBinary(tb.getText());
-            for (int i = 0; i < b.length; i++) {
-                if (b[i] < 0)
-                    b[i] = (byte)(256 - b[i]);
-            }
-            if (tb.getText().length() == 6) {
-                selectedColor = new Color(b[0], b[1], b[2], 1);
-            } else if (tb.getText().length() == 8) {
-                selectedColor = new Color(b[0], b[1], b[2], b[3]);
-            }
+            selectedColor = StringHelper.getColorFromString(tb.getText());
         }
+    }
+
+    public void setSelectedColor(Color selectedColor) {
+        this.selectedColor = selectedColor;
+        tb.setText(selectedColor.toString());
+    }
+
+    public Color getSelectedColor() {
+        return selectedColor;
     }
 
     @Override

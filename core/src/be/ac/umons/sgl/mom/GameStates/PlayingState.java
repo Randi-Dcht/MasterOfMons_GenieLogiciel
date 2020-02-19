@@ -191,11 +191,11 @@ public class PlayingState extends GameState implements Observer {
 
         inventoryShower = new InventoryShower(gim, gs, player);
 
-        lifeBar = new ProgressBar();
+        lifeBar = new ProgressBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
-        expBar = new ProgressBar();
+        expBar = new ProgressBar(gs);
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
-        energyBar = new ProgressBar();
+        energyBar = new ProgressBar(gs);
         energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
 
         pauseButton = new Button(gim, gs);
@@ -204,6 +204,7 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setFont(gs.getSmallFont());
 
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
     }
 
     /**
@@ -462,8 +463,8 @@ public class PlayingState extends GameState implements Observer {
 
         // Dessine le HUD.
         agendaShower.draw(sb);
-        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth() - 2 * leftMargin), (int)topMargin),
-                new Point((int)(timeShower.getWidth() + 2 * leftMargin), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
+        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth()), (int)topMargin),
+                new Point((int)(timeShower.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
         lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);

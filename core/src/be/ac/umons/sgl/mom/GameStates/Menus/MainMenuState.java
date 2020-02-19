@@ -44,6 +44,7 @@ public class MainMenuState extends MenuState {
         topMargin = .1;
         handleEscape = false;
         leftMargin = .05 * MasterOfMonsGame.WIDTH;
+        transparentBackground = false;
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("newGame"), () -> {
                     extSel.generateLoadLists();

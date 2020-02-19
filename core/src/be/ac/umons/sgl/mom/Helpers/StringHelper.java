@@ -1,7 +1,10 @@
 package be.ac.umons.sgl.mom.Helpers;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+
+import javax.xml.bind.DatatypeConverter;
 
 public class StringHelper {
     /**
@@ -48,5 +51,25 @@ public class StringHelper {
             }
         }
         return res.toString();
+    }
+
+    /**
+     * @param color The string representing the color (in RGBA)
+     * @return The color corresponding to the given string (RGBA)
+     */
+    public static Color getColorFromString(String color) {
+        byte[] b = DatatypeConverter.parseHexBinary(color);
+        float[] c = new float[b.length];
+        for (int i = 0; i < b.length; i++) {
+            if (b[i] < 0)
+                c[i] = (256 + (int)b[i]) / 255f;
+            else
+                c[i] = b[i] / 255f;
+        }
+        if (color.length() == 6)
+            return new Color(c[0], c[1], c[2], 1);
+        else if (color.length() == 8)
+            return new Color(c[0], c[1], c[2], c[3]);
+        return null;
     }
 }
