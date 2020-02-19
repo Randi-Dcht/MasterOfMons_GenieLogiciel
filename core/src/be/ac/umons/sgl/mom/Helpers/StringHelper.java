@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
-import javax.xml.bind.DatatypeConverter;
-
 public class StringHelper {
     /**
      * Add '-' or begins a new line when necessary. The returned String has a width of <code>width</code> with the font <code>font</code>.
@@ -58,18 +56,24 @@ public class StringHelper {
      * @return The color corresponding to the given string (RGBA)
      */
     public static Color getColorFromString(String color) {
-        byte[] b = DatatypeConverter.parseHexBinary(color);
-        float[] c = new float[b.length];
-        for (int i = 0; i < b.length; i++) {
-            if (b[i] < 0)
-                c[i] = (256 + (int)b[i]) / 255f;
-            else
-                c[i] = b[i] / 255f;
-        }
+        int[] c = decodeHexStringToInt(color);
         if (color.length() == 6)
-            return new Color(c[0], c[1], c[2], 1);
+            return new Color(c[0] / 255f, c[1] / 255f, c[2] / 255f, 1);
         else if (color.length() == 8)
-            return new Color(c[0], c[1], c[2], c[3]);
+            return new Color(c[0] / 255f, c[1] / 255f, c[2] / 255f, c[3] / 255f);
         return null;
+    }
+
+    /**
+     * Convert a string into an array of int. Each int represent two chars from the given string.
+     * @param hex The hex value (without 0x)
+     * @return An array of int representing the given string.
+     */
+    protected static int[] decodeHexStringToInt(String hex) {
+        int[] t = new int[hex.length() / 2];
+        for (int i = 0; i < hex.length() / 2; i++) {
+            t[i] = Integer.parseInt(hex.substring(i * 2, i * 2 + 2), 16);
+        }
+        return t;
     }
 }
