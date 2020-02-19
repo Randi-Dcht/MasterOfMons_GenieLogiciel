@@ -25,9 +25,14 @@ public enum Subject {
         this.place=place;
     }
 
+    public String getSubjectName()
+    {
+        return name;
+    }
+
     public int numberOfSubject()
     {
-        return number;
+        return 3;
     }
 
     /**
