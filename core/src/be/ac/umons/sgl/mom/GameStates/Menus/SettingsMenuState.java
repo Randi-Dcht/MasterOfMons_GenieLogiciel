@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Languages;
 import be.ac.umons.sgl.mom.GameStates.Menus.MenuState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ColorSelector;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -10,6 +11,7 @@ import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Settings;
+import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,7 @@ public class SettingsMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("maximumAutomaticSaves"), MenuItemType.NumberTextBox, "TXT_Maximum_Automatic_Saves"),
                 new MenuItem(gs.getStringFromId("language"), MenuItemType.ScrollListChooser, "SLC_Language"),
                 new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser, "SLC_Difficulty"),
+                new MenuItem(gs.getStringFromId("backgroundColor"), MenuItemType.ColorChooser, "CS_Background"),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
         });
         Settings settings = MasterOfMonsGame.settings;
@@ -94,6 +97,9 @@ public class SettingsMenuState extends MenuState {
                 case "TXT_Maximum_Automatic_Saves":
                     settings.setMaximumAutomaticSaves(Integer.parseInt(((TextBox)mi.control).getText()));
                     break;
+                case "CS_Background":
+                    Color backgroundColor = ((ColorSelector)mi.control).getSelectedColor();
+                    settings.setBackgroundColor(backgroundColor.toString());
             }
         }
         // TODO : Save the settings object

@@ -60,6 +60,10 @@ public class ColorSelector extends Control {
         }
     }
 
+    public Color getSelectedColor() {
+        return selectedColor;
+    }
+
     @Override
     public void dispose() {
         sr.dispose();

@@ -25,6 +25,8 @@ public class Settings implements Serializable {
 
     private Difficulty difficulty = Difficulty.Medium;
 
+    private String backgroundColor;
+
     /**
      * @return The resolution's height
      */
@@ -88,5 +90,13 @@ public class Settings implements Serializable {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
     }
 }

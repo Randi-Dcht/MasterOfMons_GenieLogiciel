@@ -2,10 +2,8 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GameStates.GameState;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Control;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -64,6 +62,8 @@ public abstract class MenuState extends GameState {
      */
     protected List<List<ScrollListChooser>> scrollListChoosers;
 
+    protected List<List<ColorSelector>> colorSelectors;
+
     /**
      * The camera for this state.
      */
@@ -105,6 +105,7 @@ public abstract class MenuState extends GameState {
         buttons = new ArrayList<>();
         textBoxes = new ArrayList<>();
         scrollListChoosers = new ArrayList<>();
+        colorSelectors = new ArrayList<>();
         sb = new SpriteBatch();
 		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
 		cam.translate(WIDTH / 2, HEIGHT / 2);
@@ -200,6 +201,9 @@ public abstract class MenuState extends GameState {
         for (List<ScrollListChooser> lslc : scrollListChoosers)
             for (ScrollListChooser slc : lslc)
                 slc.handleInput();
+        for (List<ColorSelector> csl : colorSelectors)
+            for (ColorSelector cs : csl)
+                cs.handleInput();
     }
 
     public void checkSelectedItem() {
@@ -247,6 +251,8 @@ public abstract class MenuState extends GameState {
                 case ScrollListChooser:
                     c = createMenuItemControl(ScrollListChooser.class, mi, scrollListChoosers);
                     break;
+                case ColorChooser:
+                    c = createMenuItemControl(ColorSelector.class, mi, colorSelectors);
                 default:
                     break;
             }
@@ -418,6 +424,7 @@ public abstract class MenuState extends GameState {
                 case NumberTextBox:
                 case TextBox:
                 case ScrollListChooser:
+                case ColorChooser:
                     GlyphLayout gl = new GlyphLayout();
                     gl.setText(gs.getNormalFont(), header);
                     batch.begin();
@@ -447,6 +454,7 @@ public abstract class MenuState extends GameState {
         Button,
         TextBox,
         NumberTextBox,
-        ScrollListChooser
+        ScrollListChooser,
+        ColorChooser
     }
 }
