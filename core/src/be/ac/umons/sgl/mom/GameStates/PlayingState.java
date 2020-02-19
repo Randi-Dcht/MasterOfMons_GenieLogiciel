@@ -2,10 +2,12 @@ package be.ac.umons.sgl.mom.GameStates;
 
 import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.Answer;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
 import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
@@ -535,6 +537,17 @@ public class PlayingState extends GameState implements Observer {
             }
         } else if (notify.getEvents().equals(Events.ChangeQuest))
             Gdx.app.postRunnable(() -> questShower.setQuest(((People)player.getCharacteristics()).getQuest()));
+        else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())
+        {
+            ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
+            InGameDialogState igds = (InGameDialogState) gsm.setState(InGameDialogState.class);
+            igds.setText(diag.get(0));
+            for (int i = 1; i < diag.size(); i++) {
+                String s = diag.get(i);
+                igds.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
+
+            }
+        }
     }
 
     @Override
