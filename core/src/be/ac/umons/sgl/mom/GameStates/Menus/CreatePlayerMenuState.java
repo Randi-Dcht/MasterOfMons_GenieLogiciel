@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CreatePlayerMenuState extends MenuState {
 
-    People.Sexe playerGender = People.Sexe.values()[0];
+    People.Gender playerGender = People.Gender.values()[0];
     Type characterType = Type.values()[0];
     Difficulty difficulty = Difficulty.values()[0];
 
@@ -50,7 +50,7 @@ public class CreatePlayerMenuState extends MenuState {
                 })
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
-        for (People.Sexe s : People.Sexe.values())
+        for (People.Gender s : People.Gender.values())
             slil.add(new ScrollListChooser.ScrollListItem(s.toString(), () -> playerGender = s, slil.isEmpty()));
         ((ScrollListChooser)genderMi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
         setScrollListProperties(genderMi, slil);
