@@ -41,7 +41,9 @@ public abstract class Character implements Attack, Social
     public void regeneration(double dt)
     {
         if((life+dt)<=lifemax())
-            life = life + dt;
+            life = life + dt+10;
+        if(!living && life > lifemax()*0.6)
+            living = true;
     }
 
 
@@ -171,5 +173,10 @@ public abstract class Character implements Attack, Social
     public String toString()
     {
         return name;
+    }
+
+
+    public boolean isLiving() {
+        return living;
     }
 }

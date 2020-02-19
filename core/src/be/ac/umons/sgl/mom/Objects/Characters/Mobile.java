@@ -35,6 +35,9 @@ public class Mobile extends Character implements Serializable
         calculusPoint(type);
     }
 
+    public void update(double dt)
+    {}
+
 
     /***/
     private int calculus(Bloc playerBloc)
