@@ -28,7 +28,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Supervisor;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -175,7 +175,7 @@ public class PlayingState extends GameState implements Observer {
         timeShower = new TimeShower(gs);
 
         /*/!\devra être mis mais pourra changer de place (Randy pour Guillaume)/!\*/
-        /*supprimer =>*/Supervisor.newParty("GuiRndMaxi",Type.normal,questShower,gs); //<= ajouter pour la save
+        /*supprimer =>*/SuperviserNormally.getSupervisor().newParty("NamePlayer",Type.beefy,gs,Difficulty.Easy,questShower);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap("Tmx/Umons_Nimy.tmx");
 

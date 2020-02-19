@@ -16,7 +16,7 @@ public class Pen extends Items
      * @param place is the place of this item
      */
     public Pen() {
-        super("PenToWrite");
+        super("Pen");
     }
 
 

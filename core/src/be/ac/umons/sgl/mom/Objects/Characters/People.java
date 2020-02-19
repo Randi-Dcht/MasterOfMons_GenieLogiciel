@@ -10,6 +10,7 @@ import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
@@ -18,7 +19,6 @@ import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Other.HyperPlanning;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Supervisor;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,6 +61,7 @@ public class People extends Character implements Serializable, Observer
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
         this.threshold = minExperience(level+1);
         maxObject = difficulty.getManyItem();
+        friend  = new ArrayList<>();
     }
 
 
@@ -112,7 +113,7 @@ public class People extends Character implements Serializable, Observer
         myQuest = quest;
         quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
-        Supervisor.changedQuest(); //TODO changer cela avec la nouvelle classe
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeQuest(quest));
         year = quest.getBloc() ;
         createPlanning();
     }
