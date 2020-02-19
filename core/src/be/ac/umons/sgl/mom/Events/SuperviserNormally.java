@@ -126,10 +126,10 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, People.Sexe sexe, Difficulty difficulty, QuestShower qs)
+        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, People.Gender gender, Difficulty difficulty, QuestShower qs)
         {
             time = new TimeGame(new Date(16,9,2020,8,15));
-            people = new People(namePlayer,type,sexe,difficulty);
+            people = new People(namePlayer,type, gender,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
@@ -148,9 +148,8 @@ public class SuperviserNormally implements Observer
          */
         public void oldGame(People people, Date date,Saving save)
         {
-            //time = new TimeGame();
+            time = new TimeGame(date);
             this.people  = people;
-            this.graphic = graphic;
             this.save    = save;
 
             createItems(people.getQuest());
@@ -225,7 +224,12 @@ public class SuperviserNormally implements Observer
         public void update(Notification notify)
         {
             if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(PlayerType.ComputerPlayer))
-                deadMobile.add(((Mobile)notify.getBuffer()));
+            {
+                Mobile mb = (Mobile)notify.getBuffer();
+                System.out.println(mb.getPlace() + "----" + mb);
+                listMobile.get(mb.getPlace()).remove(mb);
+                deadMobile.add(mb);
+            }
         }
 
 
@@ -237,6 +241,11 @@ public class SuperviserNormally implements Observer
         {
             if(people != null)
                 people.energy(dt);
+            if (memoryMobile != null)
+                memoryMobile.update(dt);
+            for (Mobile mb : deadMobile)
+                mobileLife(mb,dt);
+            deadMobile.removeIf(Character::isLiving);
             time.updateSecond(dt);people.getQuest().addProgress(0.2);
         }
 
@@ -248,6 +257,16 @@ public class SuperviserNormally implements Observer
         {
             ArrayList<Items> list = listItems.get(people.getPlace());
             people.pushObject(list.get(new Random().nextInt(list.size())));
+        }
+
+
+        private void mobileLife(Mobile mobile,double dt)
+        {
+            mobile.regeneration(dt);
+            if (mobile.isLiving())
+            {
+                listMobile.get(mobile.getPlace()).add(mobile);
+            }
         }
 
 

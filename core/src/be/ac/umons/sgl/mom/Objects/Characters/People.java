@@ -32,7 +32,7 @@ import java.util.HashMap;
  */
 public class People extends Character implements Serializable, Observer
 {
-    public enum Sexe {Women,Men};
+    public enum Gender {Women,Men};
     /*characteristic of people*/
     private double energy = 100;
     private State state = State.normal;
@@ -43,7 +43,7 @@ public class People extends Character implements Serializable, Observer
     private Bloc year;
     private boolean invincible = false;
     private Difficulty difficulty;
-    private Sexe sexe;
+    private Gender gender;
     /*other thing*/
     private HashMap<Integer,ArrayList<Course>> myPlanning;
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
@@ -56,7 +56,7 @@ public class People extends Character implements Serializable, Observer
      * @param name who is the name of player
      * @param type who is the characteristic of this people (Enums)
      */
-    public People(String name, Type type, Sexe sexe, Difficulty difficulty)
+    public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
         super(name);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
@@ -65,7 +65,7 @@ public class People extends Character implements Serializable, Observer
         this.threshold = minExperience(level+1);
         friend  = new ArrayList<>();
         this.difficulty = difficulty;
-        this.sexe= sexe;
+        this.gender = gender;
     }
 
 
@@ -86,6 +86,16 @@ public class People extends Character implements Serializable, Observer
     public double getExperience()
     {
         return experience;
+    }
+
+
+    /**
+     * This method return the gender of the people
+     * @return gender of people
+     */
+    public Gender getGender()
+    {
+        return gender;
     }
 
 
