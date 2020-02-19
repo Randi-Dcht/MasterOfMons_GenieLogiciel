@@ -52,7 +52,7 @@ public class MainMenuState extends MenuState {
                         GameMapManager.getInstance().addMapsToLoad(f.path());
                     GameMapManager.getInstance().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
-                    gsm.setState(LoadingState.class, true);
+                    gsm.setState(CreatePlayerMenuState.class, false);
                 }),
                 new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
                 new MenuItem(gs.getStringFromId("settings"), MenuItemType.Button, () -> gsm.setState(SettingsMenuState.class)),
