@@ -9,6 +9,7 @@ import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
@@ -44,6 +45,7 @@ public class People extends Character implements Serializable, Observer
     private HashMap<Integer,ArrayList<Course>> myPlanning;
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>(); //Ces cours qui l'a encore
     private Difficulty difficulty;
+    private ArrayList<Mobile> friend;
 
 
     /**
@@ -120,6 +122,18 @@ public class People extends Character implements Serializable, Observer
     private void createPlanning()
     {
         myPlanning = HyperPlanning.createSchedule(myCourse,SuperviserNormally.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
+    }
+
+
+    /**
+     * */
+    public void addFriend(Mobile mobile)
+    {
+        if (!friend.contains(mobile))
+        {
+            friend.add(mobile);
+            SuperviserNormally.getSupervisor().getEvent().notify(new AddFriend());
+        }
     }
 
 

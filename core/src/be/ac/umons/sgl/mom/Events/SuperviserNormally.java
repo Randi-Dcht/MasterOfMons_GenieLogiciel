@@ -52,6 +52,8 @@ public class SuperviserNormally implements Observer
         private HashMap<Place,ArrayList<Items>> listItems;
         /*The all no people in this game*/
         private HashMap<Place,ArrayList<Mobile>> listMobile;
+        /**/
+        private ArrayList<Mobile> deadMobile = new ArrayList<>();
         /*This the class who save the game in real time*/
         public /*private*/ Saving save;
         /**/
@@ -64,6 +66,8 @@ public class SuperviserNormally implements Observer
         private HashMap<String,Place> listMap = new HashMap<>();
         /**/
         private Place place; //TODO init
+        /**/
+        private Mobile memoryMobile;
 
 
        /**
@@ -140,7 +144,8 @@ public class SuperviserNormally implements Observer
             return graphic;
         }
 
-    /**
+
+        /**
          * This method return the enum of the maps with the name in String (.tmx)
          * @param nameTmx is the name of the maps with the name .TMX
          * @return the place (enum)
