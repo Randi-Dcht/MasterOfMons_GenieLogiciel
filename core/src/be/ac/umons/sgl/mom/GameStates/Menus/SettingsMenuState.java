@@ -81,8 +81,10 @@ public class SettingsMenuState extends MenuState {
                     break;
                 case "CS_Background":
                     ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getBackgroundColor()));
+                    break;
                 case "CS_Transparent_Background":
                     ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getTransparentBackgroundColor()));
+                    break;
             }
         }
     }
@@ -105,12 +107,15 @@ public class SettingsMenuState extends MenuState {
                     break;
                 case "CS_Background":
                     settings.setBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
                 case "CS_Transparent_Background":
                     settings.setTransparentBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
             }
         }
         // TODO : Save the settings object
         MasterOfMonsGame.settings = settings;
         gsm.removeFirstState();
+        gs.refreshColors();
     }
 }

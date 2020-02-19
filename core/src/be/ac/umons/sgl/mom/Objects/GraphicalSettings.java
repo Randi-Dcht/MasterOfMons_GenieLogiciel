@@ -68,8 +68,7 @@ public class GraphicalSettings {
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
-        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
-        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
+        refreshColors();
     }
 
     /**
@@ -230,6 +229,11 @@ public class GraphicalSettings {
      */
     public void setShowMapCoordinates(boolean showMapCoordinates) {
         this.showMapCoordinates = showMapCoordinates;
+    }
+
+    public void refreshColors() {
+        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
+        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
     }
 
     public Color getBackgroundColor() {

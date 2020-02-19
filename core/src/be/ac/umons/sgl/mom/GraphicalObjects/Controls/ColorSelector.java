@@ -51,6 +51,7 @@ public class ColorSelector extends Control {
 
     public void setSelectedColor(Color selectedColor) {
         this.selectedColor = selectedColor;
+        tb.setText(selectedColor.toString());
     }
 
     public Color getSelectedColor() {
