@@ -9,7 +9,11 @@ import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Notifications.*;
+import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
+import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Course;
@@ -57,6 +61,7 @@ public class People extends Character implements Serializable, Observer
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
         this.threshold = minExperience(level+1);
         maxObject = difficulty.getManyItem();
+        friend  = new ArrayList<>();
     }
 
 
