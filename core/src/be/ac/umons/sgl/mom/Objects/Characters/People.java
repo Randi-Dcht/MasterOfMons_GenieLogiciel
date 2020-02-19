@@ -56,7 +56,7 @@ public class People extends Character implements Serializable, Observer
      * @param name who is the name of player
      * @param type who is the characteristic of this people (Enums)
      */
-    public People(String name, Type type, Difficulty difficulty)
+    public People(String name, Type type, Sexe sexe, Difficulty difficulty)
     {
         super(name);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
@@ -65,6 +65,7 @@ public class People extends Character implements Serializable, Observer
         this.threshold = minExperience(level+1);
         friend  = new ArrayList<>();
         this.difficulty = difficulty;
+        this.sexe= sexe;
     }
 
 
