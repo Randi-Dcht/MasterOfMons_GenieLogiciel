@@ -2,10 +2,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
-import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
-import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Objects.Characters.StudPNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.*;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
@@ -57,7 +54,6 @@ public class MeetAndLearn extends MasterQuest
     public String question()
     {
         return graphic.getStringFromId("answerMeetLearn");
-      //  return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
     }
 
 
@@ -93,6 +89,7 @@ public class MeetAndLearn extends MasterQuest
             list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
         for(int i = 30; i < 40; i++)
             list.add(new FightPNJ(getBloc(), MobileType.Athletic));
+        list.add(new SaoulMatePNJ(getBloc(),MobileType.Lambda));
 
         return list;
     }

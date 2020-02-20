@@ -7,6 +7,7 @@ import be.ac.umons.sgl.mom.Enums.PlayerType;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Answer;
+import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
@@ -68,10 +69,7 @@ public class SuperviserNormally implements Observer
         /**/
         private HashMap<String,Place> listMap = new HashMap<>();
         /**/
-        private Place place; //TODO init
-        /**/
         private Mobile memoryMobile;
-
 
        /**
         * This constructor allows to define the class who monitor the game
@@ -232,9 +230,10 @@ public class SuperviserNormally implements Observer
             if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(PlayerType.ComputerPlayer))
             {
                 Mobile mb = (Mobile)notify.getBuffer();
-                System.out.println(mb.getPlace() + "----" + mb);
                 listMobile.get(mb.getPlace()).remove(mb);
                 deadMobile.add(mb);
+                if (mb.equals(memoryMobile))
+                    memoryMobile = null;
             }
         }
 
