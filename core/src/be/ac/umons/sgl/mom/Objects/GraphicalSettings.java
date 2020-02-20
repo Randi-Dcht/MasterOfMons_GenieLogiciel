@@ -55,6 +55,8 @@ public class GraphicalSettings {
 
     protected Color backgroundColor;
     protected Color transparentBackgroundColor;
+    protected Color attackRangeColor;
+    protected Color recoveringAttackRangeColor;
 
     public GraphicalSettings() {
         init();
@@ -69,6 +71,13 @@ public class GraphicalSettings {
         ftfp.color = Color.WHITE;
         prepareAssetManagerForLoading();
         refreshColors();
+    }
+
+    public void refreshColors() {
+        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
+        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
+        attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getAttackRangeColor());
+        recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.recoveringAttackRangeColor);
     }
 
     /**
@@ -231,11 +240,6 @@ public class GraphicalSettings {
         this.showMapCoordinates = showMapCoordinates;
     }
 
-    public void refreshColors() {
-        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
-        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
-    }
-
     public Color getBackgroundColor() {
         return backgroundColor;
     }
@@ -250,5 +254,13 @@ public class GraphicalSettings {
 
     public void setTransparentBackgroundColor(Color transparentBackgroundColor) {
         this.transparentBackgroundColor = transparentBackgroundColor;
+    }
+
+    public Color getAttackRangeColor() {
+        return attackRangeColor;
+    }
+
+    public Color getRecoveringAttackRangeColor() {
+        return recoveringAttackRangeColor;
     }
 }

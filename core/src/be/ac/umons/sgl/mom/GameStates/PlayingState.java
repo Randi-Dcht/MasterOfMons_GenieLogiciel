@@ -440,6 +440,9 @@ public class PlayingState extends GameState implements Observer {
      * @param player The player.
      */
     protected void attack(Player player) {
+        if (player.isRecovering())
+            return;
+        player.expandAttackCircle();
         for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange())) {
             SuperviserNormally.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
@@ -561,6 +564,9 @@ public class PlayingState extends GameState implements Observer {
         energyBar.dispose();
         expBar.dispose();
         agendaShower.dispose();
+        player.dispose();
+        for (Character pnj : pnjs)
+            pnj.dispose();
     }
 
     @Override
