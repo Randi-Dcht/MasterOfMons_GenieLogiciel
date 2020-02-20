@@ -19,6 +19,8 @@ public class Mobile extends Character implements Serializable
     protected Bloc playerBloc;
     protected MobileType type;
     protected Place place; //TODO mettre dans character voir avec People
+    protected double time;
+    protected Attack victim = null;
 
 
     /**
@@ -36,7 +38,22 @@ public class Mobile extends Character implements Serializable
     }
 
     public void update(double dt)
-    {}
+    {
+        time = time - dt;
+        if (time <= 0 && victim != null)
+        {
+            nextAttack(victim);
+            victim = null;
+        }
+    }
+
+
+    /***/
+    public void letsGo(Attack victim)
+    {
+        time = recovery();
+        this.victim = victim;
+    }
 
 
     /***/
@@ -116,7 +133,7 @@ public class Mobile extends Character implements Serializable
      * @param victim is the other character of the attack
      */
     public void nextAttack(Attack victim)
-    {//TODO relier avec le temps entre chaque attaque
+    {
         if(living)
             SuperviserNormally.getSupervisor().attackMethod(this,victim);
     }

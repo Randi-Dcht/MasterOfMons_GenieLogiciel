@@ -316,9 +316,10 @@ public class SuperviserNormally implements Observer
            }
            if(attacker.getType().equals(PlayerType.ComputerPlayer))
            {
-               Mobile mb = (Mobile) attacker;
-               mb.nextAttack(victim);
+               ((Mobile) attacker).letsGo(victim);
+               memoryMobile = (Mobile)attacker;
            }
+
        }
 
 
