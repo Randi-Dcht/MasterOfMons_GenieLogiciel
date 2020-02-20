@@ -7,10 +7,8 @@ import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.LoadingState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
-import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
-import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 
 import java.util.LinkedList;
