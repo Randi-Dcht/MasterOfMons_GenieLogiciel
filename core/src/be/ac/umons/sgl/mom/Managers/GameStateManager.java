@@ -94,6 +94,7 @@ public class GameStateManager {
      */
     public void update(float dt) {
         gameStateStack.peek().update(dt);
+        AnimationManager.getInstance().update(dt);
     }
 
     /**

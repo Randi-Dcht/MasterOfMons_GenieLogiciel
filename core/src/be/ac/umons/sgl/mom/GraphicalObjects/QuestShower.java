@@ -2,13 +2,14 @@ package be.ac.umons.sgl.mom.GraphicalObjects;
 
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
+import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Quests.Quest;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import be.ac.umons.sgl.mom.Quests.Quest;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -44,6 +45,10 @@ public class QuestShower {
      */
     protected GraphicalSettings gs;
     /**
+     * The game's state manager.
+     */
+    protected GameStateManager gsm;
+    /**
      * The size while animating.
      */
     protected float duringAnimationQuestShowerHeight, duringAnimationQuestShowerWidth;
@@ -78,10 +83,12 @@ public class QuestShower {
     protected AnimationManager am;
 
     /**
+     * @param gsm The game's state manager.
      * @param gs Game's graphical settings.
      */
-    public QuestShower(GraphicalSettings gs) {
+    public QuestShower(GameStateManager gsm, GraphicalSettings gs) {
         this.gs = gs;
+        this.gsm = gsm;
         this.am = AnimationManager.getInstance();
         init();
     }
@@ -343,5 +350,9 @@ public class QuestShower {
      */
     public void dispose() {
         sr.dispose();
+    }
+
+    public Quest getQuestToShow() { // TODO Remove
+        return questToShow;
     }
 }

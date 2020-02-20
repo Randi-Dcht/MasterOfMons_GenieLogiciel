@@ -8,10 +8,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.InGameDialogState;
-import be.ac.umons.sgl.mom.GameStates.Menus.DeadMenuState;
-import be.ac.umons.sgl.mom.GameStates.Menus.DebugMenuState;
-import be.ac.umons.sgl.mom.GameStates.Menus.InGameMenuState;
-import be.ac.umons.sgl.mom.GameStates.Menus.LevelUpMenuState;
+import be.ac.umons.sgl.mom.GameStates.Menus.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
@@ -172,7 +169,7 @@ public class PlayingState extends GameState implements Observer {
         sb = new SpriteBatch();
         am = AnimationManager.getInstance();
         gmm = GameMapManager.getInstance();
-        questShower = new QuestShower(gs);
+        questShower = new QuestShower(gsm, gs);
         agendaShower = new AgendaShower(gim, gs);
         timeShower = new TimeShower(gs);
 
@@ -267,7 +264,6 @@ public class PlayingState extends GameState implements Observer {
     @Override
     public void update(float dt) {
         handleInput();
-        am.update(dt);
         makePlayerMove(dt);
         cam.update();
 
@@ -499,6 +495,10 @@ public class PlayingState extends GameState implements Observer {
         } else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
+        } else if (gim.isKey(Input.Keys.M, KeyStatus.Pressed)) {
+            NewChapterMenuState ncms = (NewChapterMenuState) gsm.setState(NewChapterMenuState.class);
+            ncms.setNewChapterName(questShower.getQuestToShow().getName());
+            questShower.setQuest(questShower.getQuestToShow());
         } else if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
             if (selectedOne instanceof Character)
                 SuperviserNormally.getSupervisor().meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
@@ -540,8 +540,13 @@ public class PlayingState extends GameState implements Observer {
                     break;
                 }
             }
-        } else if (notify.getEvents().equals(Events.ChangeQuest))
-            Gdx.app.postRunnable(() -> questShower.setQuest(((People)player.getCharacteristics()).getQuest()));
+        } else if (notify.getEvents().equals(Events.ChangeQuest)) {
+            Gdx.app.postRunnable(() -> {
+                questShower.setQuest(((People)player.getCharacteristics()).getQuest());
+                NewChapterMenuState ncms = (NewChapterMenuState) gsm.setState(NewChapterMenuState.class);
+                ncms.setNewChapterName(questShower.getQuestToShow().getName());
+            });
+        }
         else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())
         {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
