@@ -206,6 +206,7 @@ public class PlayingState extends GameState implements Observer {
 
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.Dialog,this);
     }
 
     /**
@@ -496,7 +497,9 @@ public class PlayingState extends GameState implements Observer {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
         } else if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
-            // TODO interaction
+            if (selectedOne instanceof Character)
+                SuperviserNormally.getSupervisor().meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
+            // TODO interaction objects
         }
         inventoryShower.handleInput();
         pauseButton.handleInput();
