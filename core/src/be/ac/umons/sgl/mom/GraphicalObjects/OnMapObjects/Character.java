@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Enums.Orientation;
+import be.ac.umons.sgl.mom.GraphicalObjects.AttackRangeCircle;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -57,11 +58,15 @@ public class Character extends OnMapObject {
      */
     protected boolean isATarget = false;
 
+
+    protected AttackRangeCircle arc;
+
     /**
      * @param gs The game's graphical settings.
      */
     public Character(GraphicalSettings gs, be.ac.umons.sgl.mom.Objects.Characters.Character characteristics) {
         super(gs);
+        arc = new AttackRangeCircle(gs, this);
         assetManager = gs.getAssetManager();
         this.characteristics = characteristics;
         lifeBar = new ProgressBar(gs);
@@ -134,6 +139,15 @@ public class Character extends OnMapObject {
     public void move(int x, int y) {
         posX += x;
         posY += y;
+    }
+
+
+    public void expandAttackCircle() {
+        arc.expand();
+    }
+
+    public boolean isRecovering() {
+        return arc.isRecovering();
     }
 
     /**
@@ -233,5 +247,10 @@ public class Character extends OnMapObject {
      */
     public int getAttackRange() {
         return attackRange;
+    }
+
+    public void dispose() {
+        lifeBar.dispose();
+        arc.dispose();
     }
 }

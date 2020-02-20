@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Objects;
 
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Languages;
+import com.badlogic.gdx.graphics.Color;
 
 import java.io.Serializable;
 
@@ -27,6 +28,8 @@ public class Settings implements Serializable {
 
     private String backgroundColor = "212121";
     private String transparentBackgroundColor = "21212180";
+    protected String attackRangeColor = "FF212180";
+    protected String recoveringAttackRangeColor = "63636380";
 
     /**
      * @return The resolution's height
@@ -107,5 +110,21 @@ public class Settings implements Serializable {
 
     public void setTransparentBackgroundColor(String transparentBackgroundColor) {
         this.transparentBackgroundColor = transparentBackgroundColor;
+    }
+
+    public String getAttackRangeColor() {
+        return attackRangeColor;
+    }
+
+    public void setAttackRangeColor(String attackRangeColor) {
+        this.attackRangeColor = attackRangeColor;
+    }
+
+    public String getRecoveringAttackRangeColor() {
+        return recoveringAttackRangeColor;
+    }
+
+    public void setRecoveringAttackRangeColor(String recoveringAttackRangeColor) {
+        this.recoveringAttackRangeColor = recoveringAttackRangeColor;
     }
 }
