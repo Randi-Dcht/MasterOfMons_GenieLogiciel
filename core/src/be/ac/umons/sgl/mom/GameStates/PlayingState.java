@@ -25,7 +25,7 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
-import be.ac.umons.sgl.mom.Objects.Characters.FightPNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -180,7 +180,7 @@ public class PlayingState extends GameState implements Observer {
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap("Tmx/Umons_Nimy.tmx");
 
-        Character testPNJ = new Character(gs, new FightPNJ(Bloc.BA1, MobileType.Lambda));
+        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA1, MobileType.Lambda));
         pnjs.add(testPNJ);
         testPNJ.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
 

@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Answer;
+import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
@@ -69,6 +70,7 @@ public class SuperviserNormally implements Observer
         /*when the attack is the mobile*/
         private Mobile memoryMobile;
 
+
        /**
         * This constructor allows to define the class who monitor the game
         */
@@ -79,6 +81,7 @@ public class SuperviserNormally implements Observer
            event = new Event();
            event.add(Events.Dead,this);
        }
+
 
         /**
          * This methods allows to return the people of this game
@@ -355,11 +358,18 @@ public class SuperviserNormally implements Observer
          */
         public void meetCharacter(Social player1, Social player2)
         {
+            //TODO raccorder
+                ArrayList<String> l = new ArrayList<>();
+                l.add("bonjour comment cela va bien ?");
+                l.add("ESC");
+                l.add("ESC");
+                l.add("ESC");
+
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
                 event.notify(new LaunchAttack());
             else if (action.equals(Actions.Dialog))
-                event.notify(new Answer());
+                event.notify(new Dialog(l));
         }
 
     }

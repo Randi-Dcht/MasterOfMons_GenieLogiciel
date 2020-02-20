@@ -3,13 +3,10 @@ package be.ac.umons.sgl.mom.Quests.Master;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Objects.Characters.StudPNJ;
-import be.ac.umons.sgl.mom.Objects.Characters.TeacherPNJ;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -90,12 +87,6 @@ public class PreparedCompany extends MasterQuest
     public ArrayList<Mobile> whatMobile()
     {
         ArrayList<Mobile> list = new ArrayList<>();
-        MobileType[] type = MobileType.values();
-        for(int i=0; i < 30;i++)
-            list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
-        for(int i = 30; i < 40; i++)
-            list.add(new TeacherPNJ(getBloc(), MobileType.Athletic));
-
         return list;
     }
 
