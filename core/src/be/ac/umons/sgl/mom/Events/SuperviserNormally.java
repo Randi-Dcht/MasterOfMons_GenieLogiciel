@@ -1,13 +1,7 @@
 package be.ac.umons.sgl.mom.Events;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.PlayerType;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Answer;
-import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
@@ -35,6 +29,9 @@ import java.util.Random;
 
 public class SuperviserNormally implements Observer
 {
+
+
+       /***/
        public static SuperviserNormally instance;
 
 
@@ -48,6 +45,7 @@ public class SuperviserNormally implements Observer
            return instance;
        }
 
+       /*--------------------------------------------------------------------------------------------------------*/
 
 
         /*The people who play this party*/
@@ -56,19 +54,19 @@ public class SuperviserNormally implements Observer
         private HashMap<Place,ArrayList<Items>> listItems;
         /*The all no people in this game*/
         private HashMap<Place,ArrayList<Mobile>> listMobile;
-        /**/
+        /*This is a lst of the mobile dead */
         private ArrayList<Mobile> deadMobile = new ArrayList<>();
         /*This the class who save the game in real time*/
         private Saving save;
-        /**/
+        /*This is the instance of the Graphic*/
         private GraphicalSettings graphic;
         /*This is the time in the game*/
         private TimeGame time;
         /*This is the events variable*/
         private Event event;
-        /**/
+        /*Associate String to maps*/
         private HashMap<String,Place> listMap = new HashMap<>();
-        /**/
+        /*when the attack is the mobile*/
         private Mobile memoryMobile;
 
        /**
@@ -124,7 +122,7 @@ public class SuperviserNormally implements Observer
          * @param namePlayer who name of the player play game
          * @param type who is type of the people as defence,agility
          */
-        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, People.Gender gender, Difficulty difficulty)
+        public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
         {
             time = new TimeGame(new Date(16,9,2020,8,15));
             people = new People(namePlayer,type, gender,difficulty);
@@ -134,6 +132,7 @@ public class SuperviserNormally implements Observer
             save = new Saving(people,namePlayer);
             createMobil(mQ);
             createItems(mQ);
+            System.out.println(people);
         }
 
 
@@ -251,7 +250,6 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : deadMobile)
                 mobileLife(mb,dt);
             deadMobile.removeIf(Character::isLiving);
-            time.updateSecond(dt);people.getQuest().addProgress(0.2);
         }
 
 
@@ -265,6 +263,11 @@ public class SuperviserNormally implements Observer
         }
 
 
+        /**
+         * This method allows to get the life of the Mobile in the game
+         * @param dt is the time between two frame
+         * @param mobile is the mobile who check the life
+         */
         private void mobileLife(Mobile mobile,double dt)
         {
             mobile.regeneration(dt);
@@ -345,7 +348,11 @@ public class SuperviserNormally implements Observer
         }
 
 
-        /***/
+        /**
+         * This method is called when two character meet together
+         * @param player1 is the first character
+         * @param player2 is the second character
+         */
         public void meetCharacter(Social player1, Social player2)
         {
             Actions action = player1.getAction().comparable(player2.getAction());

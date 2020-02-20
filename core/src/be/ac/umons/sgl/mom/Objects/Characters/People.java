@@ -1,13 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.PlayerType;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
@@ -32,7 +25,6 @@ import java.util.HashMap;
  */
 public class People extends Character implements Serializable, Observer
 {
-    public enum Gender {Women,Men};
     /*characteristic of people*/
     private double energy = 100;
     private State state = State.normal;
@@ -399,5 +391,14 @@ public class People extends Character implements Serializable, Observer
             changePlace(((PlaceInMons)notify).getBuffer());
         if (notify.getEvents().equals(Events.ChangeMonth))
             createPlanning();
+    }
+
+
+    @Override
+    public String toString()
+    {
+        if(gun !=null)
+            return "bh_"+gender.getName()+"_aa_";
+        return "bh_"+gender.getName()+"_sa_";
     }
 }

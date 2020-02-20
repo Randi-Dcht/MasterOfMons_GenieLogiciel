@@ -6,8 +6,6 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
-import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
 
 public class ColorSelector extends Control {
