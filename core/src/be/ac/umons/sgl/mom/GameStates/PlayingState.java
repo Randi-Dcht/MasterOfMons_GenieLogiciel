@@ -26,7 +26,7 @@ import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
-import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
+
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;

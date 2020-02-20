@@ -57,6 +57,10 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     protected GraphicalSettings graphic;
     /***/
     protected Difficulty difficulty;
+    /***/
+    protected ArrayList<Mobile> listMobs;
+    /***/
+    protected ArrayList<Items> listItems;
 
 
     /**
@@ -97,6 +101,20 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             }
         }
     }
+
+    public ArrayList<Mobile> createNewClass(Mobile[] list, int[] number) throws ExceptionInInitializerError
+    {
+        if (list.length != number.length)
+            throw new ExceptionInInitializerError();
+        ArrayList<Mobile> mob = new ArrayList<>();
+        for (int j=0; j < list.length; j++)
+        {
+            for (int i=0; i < number[1];i++)
+                mob.add(null);
+        }
+        return mob;
+    }
+
 
 
     /**

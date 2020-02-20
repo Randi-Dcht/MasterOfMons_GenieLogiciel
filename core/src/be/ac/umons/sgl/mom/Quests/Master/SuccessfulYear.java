@@ -63,7 +63,6 @@ public class SuccessfulYear extends MasterQuest
     public String question()
     {
         return graphic.getStringFromId("answerSuccessFulYear");
-        //return "Ta quête si tu l'accepte sera de te faire quelques amis et de participer à un mininum de X cours. Tu devras aussi partciper à tous tes examnens";
     }
 
 

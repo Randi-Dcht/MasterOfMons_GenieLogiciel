@@ -85,10 +85,7 @@ public class MeetAndLearn extends MasterQuest
     {
         ArrayList<Mobile> list = new ArrayList<>();
         MobileType[] type = MobileType.values();
-        /*for(int i=0; i < 30;i++)
-            list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
-        for(int i = 30; i < 40; i++)
-            //list.add(new FightPNJ(getBloc(), MobileType.Athletic));*/
+
         list.add(new SaoulMatePNJ(getBloc(),MobileType.Lambda));
 
         return list;
