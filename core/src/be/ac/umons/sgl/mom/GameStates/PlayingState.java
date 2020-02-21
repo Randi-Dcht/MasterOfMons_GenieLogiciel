@@ -153,6 +153,8 @@ public class PlayingState extends GameState implements Observer {
 
     protected TimeShower timeShower;
 
+    protected InGameDialogState dialogState;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -550,14 +552,17 @@ public class PlayingState extends GameState implements Observer {
         else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())
         {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
-            InGameDialogState igds = (InGameDialogState) gsm.setState(InGameDialogState.class);
-            igds.setText(diag.get(0));
+            if (dialogState == null) {
+                dialogState = (InGameDialogState) gsm.setState(InGameDialogState.class);
+                dialogState.setMustQuitWhenAnswered(false);
+            }
+            dialogState.setText(diag.get(0));
             for (int i = 1; i < diag.size(); i++) {
                 String s = diag.get(i);
-                igds.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
-
+                dialogState.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
             }
         }
+        dialogState = null; // TODO : Put that in an event
     }
 
     @Override
