@@ -140,7 +140,6 @@ public class SuperviserNormally implements Observer
             save = new Saving(people,namePlayer);
             createMobil(mQ);
             createItems(mQ);
-            System.out.println(people);
         }
 
 
@@ -365,7 +364,7 @@ public class SuperviserNormally implements Observer
          * @param player1 is the first character
          * @param player2 is the second character
          */
-        public void meetCharacter(Social player1, Social player2)
+        public void meetCharacter(Social player1, Social player2)//TODO upgarde pour moins de clss
         {
             if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
                 memoryMobile = (Mobile)player1;
