@@ -22,9 +22,8 @@ import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+
+import java.util.*;
 
 
 /**
@@ -388,7 +387,12 @@ public class SuperviserNormally implements Observer
             System.out.println(answer + " == answer");
             if (answer.equals("Attack"))
                 attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));
-            if(!answer.equals("ESC"))
+            if(answer.equals("ESC"))
+            {
+                ArrayList<String> end = new ArrayList<>();end.add("ESC");
+                event.notify(new Dialog(end));
+            }
+            else
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
         }
 
