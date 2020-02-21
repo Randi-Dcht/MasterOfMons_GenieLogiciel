@@ -1,6 +1,13 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
@@ -28,7 +35,6 @@ public class People extends Character implements Serializable, Observer
     /*characteristic of people*/
     private double energy = 100;
     private State state = State.normal;
-    private Place place;
     private double threshold; /*seuil experience niveau à devoir atteindre*/
     private double experience = 0;
     private MasterQuest myQuest;
@@ -47,6 +53,8 @@ public class People extends Character implements Serializable, Observer
      * This constructor allows to create a new people who pilot by a player
      * @param name who is the name of player
      * @param type who is the characteristic of this people (Enums)
+     * @param difficulty is the difficulty of the game
+     * @param gender is the gender of the people
      */
     public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
@@ -58,16 +66,6 @@ public class People extends Character implements Serializable, Observer
         friend  = new ArrayList<>();
         this.difficulty = difficulty;
         this.gender = gender;
-    }
-
-
-    /**
-     * This method return the place of the people
-     * @return place in maps (TMX)
-     */
-    public Place getPlace()
-    {
-        return place;
     }
 
 
@@ -103,7 +101,10 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to give the arrayList of the Id dialog of this people
+     * @param answer is the answer of the other character
+     */
     public ArrayList<String> getDialog(String answer)
     {
         return conversation.getDialogPeople().get(answer);
@@ -134,10 +135,12 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
-     * */
+     * This method allows to add the friend Mobile at this people
+     * @param mobile is the friend
+     */
     public void addFriend(Mobile mobile)
     {
-        if (!friend.contains(mobile))
+        if (!friend.contains(mobile))//TODO deplacer cela dans la classe mobile
         {
             friend.add(mobile);
             SuperviserNormally.getSupervisor().getEvent().notify(new AddFriend());
@@ -254,14 +257,15 @@ public class People extends Character implements Serializable, Observer
             return 0;
         else
             return minExperience(nb-1) + 1000 * Math.pow(1.1,nb-1);
-    }/*note à moi même : pour avoir le niveau maximun prendre le nb+1 du niveau actuelle*/
+    }
 
 
     /**
      * This method return the minimum number of experience to go to the next level.
      * @return the minimum number of experience to go to the next level.
      */
-    public double minExperience() {
+    public double minExperience()
+    {
         return threshold;
     }
 
@@ -338,10 +342,11 @@ public class People extends Character implements Serializable, Observer
      * This method allows to change the place of this people
      * @param place is the new place
      */
-    public void changePlace(Place place)
+    @Override
+    public void setPlace(Place place)
     {
-        this.place = place;
         state = place.getState();
+        super.setPlace(place);
     }
 
 
@@ -366,9 +371,11 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
+     * This method allows to say if the people is invincible
      * @return If the character is invincible.
      */
-    public boolean isInvincible() {
+    public boolean isInvincible()
+    {
         return invincible;
     }
 
@@ -384,17 +391,24 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to see the notification in the game
+     * @param notify is the notification
+     */
     @Override
     public void update(Notification notify)
     {
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty())
-            changePlace(((PlaceInMons)notify).getBuffer());
+            setPlace(((PlaceInMons)notify).getBuffer());
         if (notify.getEvents().equals(Events.ChangeMonth))
             createPlanning();
     }
 
 
+    /**
+     * This method allows to say the picture of the people
+     * @return the start name of the picture
+     */
     @Override
     public String toString()
     {

@@ -3,7 +3,6 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.MobileType;
-import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
 import java.util.Random;
@@ -17,9 +16,10 @@ public class Mobile extends Character implements Serializable
     /*save the bloc of player*/
     protected Bloc playerBloc;
     protected MobileType type;
-    protected Place place; //TODO mettre dans character voir avec People
     protected double time;
     protected Attack victim = null;
+    protected Actions action; //TODO init
+    protected Boolean addFriend; //TODO change people
 
 
     /**
@@ -36,6 +36,11 @@ public class Mobile extends Character implements Serializable
         calculusPoint(type);
     }
 
+
+    /**
+     * This method allows to update the variable of the mobile with the time
+     * @param dt is the time between two frames
+     */
     public void update(double dt)
     {
         time = time - dt;
@@ -47,7 +52,9 @@ public class Mobile extends Character implements Serializable
     }
 
 
-    /***/
+    /**
+     * This method allows to launch a new attack automatic
+     */
     public void letsGo(Attack victim)
     {
         time = recovery();
@@ -55,34 +62,16 @@ public class Mobile extends Character implements Serializable
     }
 
 
-    /***/
+    /**
+     * This method calculus the level of the mobile in the game
+     * @param playerBloc  is the type of the mobile
+     */
     private int calculus(Bloc playerBloc)
     {
         int rd = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1))+playerBloc.getMinMob(); //TODO tester
         if (rd >= playerBloc.getMinMob() && rd <= playerBloc.getMaxMob())
             return rd;
         return playerBloc.getMinMob();
-    }
-
-
-    /**
-     * This method allows to add the place to the mobile
-     * @param place is the place of the mobile
-     */
-    public void setPlace(Place place)
-    {
-        this.place = place;
-    }
-
-
-
-    /**
-     * This method return the place of this mobile
-     * @return  place of the mobile
-     */
-    public Place getPlace()
-    {
-        return place;
     }
 
 
@@ -138,7 +127,9 @@ public class Mobile extends Character implements Serializable
     }
 
 
-    /***/
+    /**
+     * This method allows to give the action of the mobile
+     */
     @Override
     public Actions getAction()
     {
@@ -146,7 +137,10 @@ public class Mobile extends Character implements Serializable
     }
 
 
-    /***/
+    /**
+     * This method allows to give the dialog id of the mobile
+     * @param answer is the answer of the other character
+     */
     public String getDialog(String answer)
     {
         return conversation.getDialogPNJ().get(answer);

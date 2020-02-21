@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Dead;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 public abstract class Character implements Attack, Social
 {
-    /***/
+    /**The enum for the player of the character*/
     public enum TypePlayer{Computer,Human;};
 
 
@@ -18,6 +19,7 @@ public abstract class Character implements Attack, Social
     protected int defence;
     protected int agility;
     protected double life;
+    protected Place place;
     protected Gun gun;
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
@@ -78,7 +80,30 @@ public abstract class Character implements Attack, Social
 
 
     /***/
-    public int getLevel(){return level;}
+    public int getLevel()
+    {
+        return level;
+    }
+
+
+    /**
+     * This method return the place of the people
+     * @return place in maps (TMX)
+     */
+    public Place getPlace()
+    {
+        return place;
+    }
+
+
+    /**
+     * This method allows to add the place to the mobile
+     * @param place is the place of the mobile
+     */
+    public void setPlace(Place place)
+    {
+        this.place = place;
+    }
 
 
     /**
@@ -106,6 +131,10 @@ public abstract class Character implements Attack, Social
     }
 
 
+    /**
+     * This method allows to decrease the life of the character when he lose the dodge
+     * @param lose is the number of decrease the life
+     */
     @Override
     public void loseAttack(double lose)
     {
@@ -116,7 +145,7 @@ public abstract class Character implements Attack, Social
 
 
     /**
-     *This method allows to calculated ...
+     *This method allows to calculated speed the displacement of the character
      */
     public double displacement()
     {
@@ -145,6 +174,7 @@ public abstract class Character implements Attack, Social
         return Math.min((agility/100),0.75);
     }
 
+
     /**
      * This method is call when the character is dead
      * And this method warn the other class with the <code>Events.Dead</code>
@@ -156,7 +186,10 @@ public abstract class Character implements Attack, Social
     }
 
 
-    /***/
+    /**
+     * This method allows to calculus the damage of the gun
+     * @return the damage
+     */
     @Override
     public double damageGun()
     {
@@ -164,13 +197,21 @@ public abstract class Character implements Attack, Social
     }
 
 
-    /***/
+    /**
+     * This method allows to know if the people have a gun
+     * @return boolean if true else false
+     */
     @Override
     public boolean howGun()
     {
         return gun != null;
     }
 
+
+    /**
+     * This method allows to give the name of the people
+     * @return name of the character
+     */
     @Override
     public String toString()
     {
@@ -178,7 +219,12 @@ public abstract class Character implements Attack, Social
     }
 
 
-    public boolean isLiving() {
+    /**
+     * This method allows if the character live
+     * @return boolean if living true else false
+     */
+    public boolean isLiving()
+    {
         return living;
     }
 }

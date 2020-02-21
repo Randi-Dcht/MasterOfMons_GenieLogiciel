@@ -7,13 +7,12 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;
 
 /**
- *La UnderQuest est une sous classe d'une MasterQuest ou d'elle-même.
- *Chaque underQuest est un objectif que le joueur doit faire.
- *Le joueur ne doit pas forcément réussir à 100% une underQuest pour réussir la MasterQuest
- *Chaque underQuest sont indépendant et existe en même temps dans la MasterQuest.
+ * The UnderQuest is a subclass of a MasterQuest or of itself.
+ * Each underQuest is a goal that the player must do.
+ * The player does not necessarily have to pass 100% an underQuest to pass the MasterQuest
+ * Each underQuest are independent and exist at the same time in the MasterQuest.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-
 public abstract class UnderQuest implements Quest,Serializable
 {
     /**name of this UnderQuest*/
@@ -109,7 +108,7 @@ public abstract class UnderQuest implements Quest,Serializable
 
     /**
      * This method is called when the action occurs
-     * @param notify
+     * @param notify is the notification of the game
      */
     public abstract void evenActivity(Notification notify);
 

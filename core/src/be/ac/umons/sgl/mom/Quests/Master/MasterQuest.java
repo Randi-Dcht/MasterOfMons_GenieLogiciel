@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 
 /**
- *La MasterQuest est une classe abstraite qui contient elle même des underQuest.
- *Chaque joueur peut jouer sur un seul MasterQuest à la fois.
- *Pour réusir une MasterQuest, on doit réusir un maximun de underQuest qui font augmenter le % de réussite.
- *Chaque MasterQuest possède un parent et/ou un enfant.
+ * The MasterQuest is an abstract class which itself contains underQuest.
+ * Each player can play only one MasterQuest at a time.
+ * To pass a MasterQuest, you must pass a maximum of underQuest which increase the% of success.
+ * Each MasterQuest has a parent and / or a child.
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
 public abstract class MasterQuest implements Quest,Serializable,Observer
@@ -96,7 +96,9 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         }
     }
 
-    public ArrayList<Mobile> createNewClass(Mobile[] list, int[] number) throws ExceptionInInitializerError
+
+    /***/
+    public ArrayList<Mobile> createRdMobile(Mobile[] list, int[] number) throws ExceptionInInitializerError
     {
         if (list.length != number.length)
             throw new ExceptionInInitializerError();
@@ -313,14 +315,22 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method return the all items for this quest
      * @return list of items
      */
-    public abstract ArrayList<Items> whatItem();
+    public ArrayList<Items> whatItem()
+    {
+        return new ArrayList<>();
+        //return listItems;
+    }
 
 
     /**
      * This method return the all mobile and PNJ for this quest
      * @return list of mobile
      */
-    public abstract ArrayList<Mobile> whatMobile();
+    public ArrayList<Mobile> whatMobile()
+    {
+        return new ArrayList<>();
+        //return listMobs;
+    }
 
 
     /**
