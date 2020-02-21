@@ -552,6 +552,10 @@ public class PlayingState extends GameState implements Observer {
         else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())
         {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
+            if (diag.get(0).equals("ESC")) {
+                dialogState = null;
+                return;
+            }
             if (dialogState == null) {
                 dialogState = (InGameDialogState) gsm.setState(InGameDialogState.class);
                 dialogState.setMustQuitWhenAnswered(false);
@@ -562,7 +566,6 @@ public class PlayingState extends GameState implements Observer {
                 dialogState.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
             }
         }
-        dialogState = null; // TODO : Put that in an event
     }
 
     @Override
