@@ -125,3 +125,9 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
+/core/src/be/ac/umons/sgl/mom/Quests/Master/FinishUniversity.java
+/core/src/be/ac/umons/sgl/mom/Quests/Master/PreparedCompany.java
+/core/src/be/ac/umons/sgl/mom/Quests/Under/ChooseSubject.java
+/core/src/be/ac/umons/sgl/mom/Quests/Under/GoToLastLesson.java
+/core/src/be/ac/umons/sgl/mom/Quests/Under/Traineeship.java
+/core/src/be/ac/umons/sgl/mom/Quests/Under/WriteMemory.java
