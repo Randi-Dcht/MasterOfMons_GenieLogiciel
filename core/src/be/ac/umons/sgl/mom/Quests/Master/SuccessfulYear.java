@@ -31,7 +31,7 @@ public class SuccessfulYear extends MasterQuest
     /*This list is the lesson during this Quest*/
     final Lesson[] lesson = {Lesson.nbComplexe,Lesson.calculus2,Lesson.reseau,Lesson.projet2,Lesson.OS,Lesson.anglais,Lesson.opti};
     /*This is the goals of this Quest*/
-    final UnderQuest[] underQuest = {new HelpMe(this,34),new FreeTimeMons(this,33)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33)};
+    final UnderQuest[] underQuest = {new HelpMe(this,34,people),new FreeTimeMons(this,33,people)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33,people)};
 
 
     /**

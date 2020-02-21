@@ -1,14 +1,15 @@
 package be.ac.umons.sgl.mom.Extensions.Dual;
 
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 
 public class TakeFlag extends UnderQuest
 {
-    public TakeFlag(String name, double max, Quest master)
+    public TakeFlag(String name, double max, Quest master, People people)
     {
-        super(name, max, master);
+        super(name, max, master,people);
     }
 
     @Override

@@ -1,13 +1,14 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class SuccesfulYear extends UnderQuest
     {
-      public SuccesfulYear(Quest q,int nb)
+      public SuccesfulYear(Quest q, int nb, People people)
       {
-        super("SuccesfulYear",nb,q);
+        super("SuccesfulYear",nb,q, people);
       }
 
 

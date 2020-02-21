@@ -22,7 +22,7 @@ public class MeetAndLearn extends MasterQuest
     /*This is the lessons to follow*/
     final Lesson[] lesson = {Lesson.calculProba,Lesson.intelligen,Lesson.compilation,Lesson.grapheOpti,Lesson.baseDonnes};
     /*this is the goals of this quest*/
-    final UnderQuest[] underQuest = {new LookSoulMate(this,50), new GoToPriorityLesson(this,50)};
+    final UnderQuest[] underQuest = {new LookSoulMate(this,50,people), new GoToPriorityLesson(this,50,people)};
 
 
     /**

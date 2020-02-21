@@ -1,15 +1,16 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class FollowLesson extends UnderQuest
     {
       //final
 
-      public FollowLesson(Quest q,int nb)
+      public FollowLesson(Quest q, int nb, People people)
       {
-        super("FollowLesson",nb,q);
+        super("FollowLesson",nb,q,people);
       }
 
       @Override

@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Quests.Under;
 
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import java.io.Serializable;
 
@@ -15,16 +16,18 @@ import java.io.Serializable;
 
 public abstract class UnderQuest implements Quest,Serializable
 {
-    /*name of this UnderQuest*/
+    /**name of this UnderQuest*/
     final String name;
-    /*the percent maximum to succeed the quest */
+    /**the percent maximum to succeed the quest */
     final double percentMax;
-    /*the percent of progress of this Quest*/
+    /**the percent of progress of this Quest*/
     protected double progress = 0;
-    /*this variable allows to know if finish*/
+    /**this variable allows to know if finish*/
     protected boolean finish = false;
-    /*The Quest overhead */
+    /**The Quest overhead */
     protected Quest master;
+    /**The people who play this game*/
+    protected People people;
 
 
     /**
@@ -32,8 +35,9 @@ public abstract class UnderQuest implements Quest,Serializable
      * @param name is the name of this Quest
      * @param max is the maximum percent of progress
      * @param master is the quest who call this
+     * @param people is the people who play the game
      */
-    public UnderQuest(String name,double max,Quest master)
+    public UnderQuest(String name, double max, Quest master, People people)
     {
         this.name   = name;
         percentMax  = max;

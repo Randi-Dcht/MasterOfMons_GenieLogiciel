@@ -1,13 +1,14 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class LookSoulMate extends UnderQuest
     {
-      public LookSoulMate(Quest q, int nb)
+      public LookSoulMate(Quest q, int nb, People people)
       {
-        super("LookSoulMate",nb,q);
+        super("LookSoulMate",nb,q,people);
       }
 
 

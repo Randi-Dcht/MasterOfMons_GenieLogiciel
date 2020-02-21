@@ -1,13 +1,14 @@
 package be.ac.umons.sgl.mom.Quests.Under;
 
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
 public class HelpMe extends UnderQuest
     {
-      public HelpMe(Quest q,int nb)
+      public HelpMe(Quest q, int nb, People people)
       {
-        super("HelpMe",nb,q);
+        super("HelpMe",nb,q,people);
       }
 
 

@@ -29,7 +29,7 @@ public class MyFirstYear extends MasterQuest
     /*This tab is a list of the course of the people for this year*/
     final Lesson[] lesson ={Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
     /*This is the goals of this MasterQuest*/
-    final UnderQuest[] underQuest = {new GoToLesson(this,33),new MeetManyPeople(this,34),new BattleForPlace(this,33)};
+    final UnderQuest[] underQuest = {new GoToLesson(this,33,people),new MeetManyPeople(this,34,people),new BattleForPlace(this,33,people)};
 
 
     /**
