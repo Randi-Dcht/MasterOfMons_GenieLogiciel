@@ -554,11 +554,13 @@ public class PlayingState extends GameState implements Observer {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
             if (diag.get(0).equals("ESC")) {
                 dialogState = null;
+                inventoryShower.setHided(false);
                 return;
             }
             if (dialogState == null) {
                 dialogState = (InGameDialogState) gsm.setState(InGameDialogState.class);
                 dialogState.setMustQuitWhenAnswered(false);
+                inventoryShower.setHided(true);
             }
             dialogState.setText(diag.get(0));
             for (int i = 1; i < diag.size(); i++) {
