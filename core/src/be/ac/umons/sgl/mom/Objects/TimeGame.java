@@ -183,7 +183,8 @@ public class TimeGame implements Observer
     /***/
     public String toString()//TODO mise en forma string date avec deux nombres
     {
-        return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;
+        //return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;
+        return String.format("%2d / %2d / %s  %02d:%02d",day,NBmonth,year,hour,min);
     }
 
 

@@ -246,6 +246,7 @@ public class SuperviserNormally implements Observer
          */
         public void callMethod(double dt)
         {
+            time.updateSecond(dt);
             if(people != null)
                 people.energy(dt);
             if (memoryMobile != null)
