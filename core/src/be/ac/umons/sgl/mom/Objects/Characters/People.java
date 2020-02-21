@@ -117,7 +117,6 @@ public class People extends Character implements Serializable, Observer
     public void newQuest(MasterQuest quest)
     {
         myQuest = quest;
-        quest.retake(myCourse);
         myCourse.addAll(Arrays.asList(quest.getLesson()));
         SuperviserNormally.getSupervisor().getEvent().notify(new ChangeQuest(quest));
         year = quest.getBloc() ;
@@ -125,7 +124,9 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to create a new planning of the people
+     */
     private void createPlanning()
     {
         myPlanning = HyperPlanning.createSchedule(myCourse,SuperviserNormally.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
@@ -199,7 +200,7 @@ public class People extends Character implements Serializable, Observer
     {
         return myCourse.size();
     }
-
+//TODO remove quand celui reu
 
     /**
      *This method allows to return the list of course where exams don't pass.

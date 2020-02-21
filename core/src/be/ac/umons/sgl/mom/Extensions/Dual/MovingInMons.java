@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Extensions.Dual;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -26,6 +27,16 @@ public class MovingInMons extends MasterQuest
     public void nextQuest()
     {
 
+    }
+
+    /**
+     * this method return a list of course for this quest
+     *
+     * @return list of lesson
+     */
+    @Override
+    public Lesson[] getLesson() {
+        return new Lesson[0];
     }
 
     @Override

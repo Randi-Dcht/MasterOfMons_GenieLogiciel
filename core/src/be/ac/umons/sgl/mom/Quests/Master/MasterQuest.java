@@ -29,10 +29,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 {
     /*place in the list of MasterQuest*/
     protected static int numberQuest = 1;
-    /*interrogation qui doit encore passer*/
-    protected ArrayList<Lesson> interrogation = new ArrayList<Lesson>(); //les interrogations qui doit encore passer.
-    /*objet disponible dans son sac à dos*/
-    protected ArrayList<Items> availableObject = new ArrayList<Items>(); //objet disponible sur la maps pour lui prendre
     /*the percent to advance this quest*/
     protected double percent = 0;
     /*the percent of maximum of this quest to succeed this*/
@@ -41,8 +37,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     final MasterQuest before;
     /*the people who play this masterQuest*/
     final People people;
-    /*a list of lesson for this masterQuest*/
-    protected Lesson[] course; //cours que le personnage doit prendre pour cette quête
     /*the next masterQuest after this (son MasterQuest)*/
     protected MasterQuest after = null;
     /*it is a list of underquest of this quest (goal)*/
@@ -148,20 +142,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * this method return a list of course for this quest
      *@return list of lesson
      */
-    public Lesson[] getLesson()
-    {
-        return course;
-    }
-
-
-    /**
-     * This method allows to add the lesson in this Quest
-     * @param course is a list of the course
-     */
-    protected void ObligationLesson(Lesson[] course)
-    {
-        this.course = course;
-    }
+    public abstract Lesson[] getLesson();
 
 
     /**
@@ -218,16 +199,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     protected int getTotalSubQuestsNumber(boolean main)
     {
         return underQuest.length + (main ? 1 : 0);
-    }
-
-
-    /**
-     *This method allows to add the lesson who are missed.
-     *@param list is a list of the lesson who is missed
-     */
-    public void retake(ArrayList<Lesson> list)
-    {
-        interrogation.addAll(list);
     }
 
 
@@ -290,16 +261,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     public People getPlayer()
     {
         return people;
-    }
-
-
-    /**
-     *This method allows to give the interrogation of this masterQuest
-     *@return a list of the Lesson where there are the interrogations
-     */
-    public ArrayList<Lesson> getInterrogation()
-    {
-        return interrogation;
     }
 
 

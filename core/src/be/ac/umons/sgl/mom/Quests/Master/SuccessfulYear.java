@@ -28,8 +28,7 @@ import java.util.Random;
 
 public class SuccessfulYear extends MasterQuest
 {
-    /*This list is the lesson during this Quest*/
-    final Lesson[] lesson = {Lesson.nbComplexe,Lesson.calculus2,Lesson.reseau,Lesson.projet2,Lesson.OS,Lesson.anglais,Lesson.opti};
+
     /*This is the goals of this Quest*/
     final UnderQuest[] underQuest = {new HelpMe(this,34,people),new FreeTimeMons(this,33,people)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33,people)};
 
@@ -42,7 +41,6 @@ public class SuccessfulYear extends MasterQuest
     public SuccessfulYear(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
         super(before,people,Bloc.BA2,graphic,difficulty);
-        ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
 
@@ -53,6 +51,14 @@ public class SuccessfulYear extends MasterQuest
     public void nextQuest()
     {
         newQuest(new MeetAndLearn(people,this,graphic,difficulty));
+    }
+
+
+    /***/
+    @Override
+    public Lesson[] getLesson()
+    {
+        return new Lesson[]{Lesson.nbComplexe,Lesson.calculus2,Lesson.reseau,Lesson.projet2,Lesson.OS,Lesson.anglais,Lesson.opti};
     }
 
 

@@ -1,26 +1,33 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.MobileType;
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Objects.Characters.*;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.*;
+import be.ac.umons.sgl.mom.Objects.Items.Flower;
+import be.ac.umons.sgl.mom.Objects.Items.Gun;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.OldExam;
+import be.ac.umons.sgl.mom.Objects.Items.TheKillBoot;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.sgl.mom.Quests.Under.LookSoulMate;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
-
 import java.util.ArrayList;
-import java.util.Random;
+
 
 /**
  *This class define a MasterQuest who is 'Meet and Learn' in the bachelor 3
  *@author Randy Dauchot (étudiant en Sciences informatique Umons)
  */
-
 public class MeetAndLearn extends MasterQuest
 {
-    /*This is the lessons to follow*/
-    final Lesson[] lesson = {Lesson.calculProba,Lesson.intelligen,Lesson.compilation,Lesson.grapheOpti,Lesson.baseDonnes};
+
     /*this is the goals of this quest*/
     final UnderQuest[] underQuest = {new LookSoulMate(this,50,people), new GoToPriorityLesson(this,50,people)};
 
@@ -33,8 +40,16 @@ public class MeetAndLearn extends MasterQuest
     public MeetAndLearn(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
         super(before,people,Bloc.BA3,graphic,difficulty);
-        ObligationLesson(lesson);
+        //ObligationLesson(lesson);
         addUnderQuest(underQuest);
+    }
+
+
+    /***/
+    @Override
+    public Lesson[] getLesson()
+    {
+        return new Lesson[]{Lesson.calculProba,Lesson.intelligen,Lesson.compilation,Lesson.grapheOpti,Lesson.baseDonnes};
     }
 
 

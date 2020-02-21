@@ -42,6 +42,7 @@ public abstract class UnderQuest implements Quest,Serializable
         this.name   = name;
         percentMax  = max;
         this.master = master;
+        this.people = people;
     }
 
 
