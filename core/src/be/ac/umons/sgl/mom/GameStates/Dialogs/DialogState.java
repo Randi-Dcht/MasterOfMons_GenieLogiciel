@@ -50,6 +50,8 @@ public abstract class DialogState extends GameState {
      */
     protected int selectedButtonIndex = 0;
 
+    protected boolean mustQuitWhenAnswered = true;
+
     /**
      * Create a new dialog.
      * @param gsm Game's state manager
@@ -99,7 +101,8 @@ public abstract class DialogState extends GameState {
             }
             if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
                 buttons.get(selectedButtonIndex).getOnClick().run();
-                gsm.removeFirstState();
+                if (mustQuitWhenAnswered)
+                    gsm.removeFirstState();
             }
         }
     }
@@ -156,5 +159,9 @@ public abstract class DialogState extends GameState {
      */
     public void setText(String text) {
         this.text = StringHelper.adaptTextToWidth(gs.getNormalFont(), text, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
+    }
+
+    public void setMustQuitWhenAnswered(boolean mustQuitWhenAnswered) {
+        this.mustQuitWhenAnswered = mustQuitWhenAnswered;
     }
 }

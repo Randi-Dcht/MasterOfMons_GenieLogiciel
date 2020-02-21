@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -26,7 +27,7 @@ public class InGameDialogState extends DialogState {
     /**
      * Animation for the text.
      */
-    StringAnimation sa;
+    private StringAnimation sa;
 
     /**
      * Background's color
@@ -91,8 +92,11 @@ public class InGameDialogState extends DialogState {
 
     @Override
     public void setText(String text) {
-        super.setText(StringHelper.adaptTextToWidth(gs.getSmallFont(), text, (int)(MasterOfMonsGame.WIDTH - 4 * leftMargin)));
+        text = gs.getStringFromId(text);
+        this.text = StringHelper.adaptTextToWidth(gs.getSmallFont(), text, (int)(MasterOfMonsGame.WIDTH - 4 * leftMargin));
         sa = new StringAnimation(text, 20 * text.length());
+        whenSelectedActions = new HashMap<>();
+        buttons = new ArrayList<>();
     }
 
     /**
