@@ -307,9 +307,9 @@ public class People extends Character implements Serializable, Observer
      * @return playerType of this instance
      */
     @Override
-    public PlayerType getType()
+    public TypePlayer getType()
     {
-        return PlayerType.HumanPlayer;
+        return TypePlayer.Human;
     }
 
 

@@ -4,7 +4,7 @@ import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.PlayerType;
+import be.ac.umons.sgl.mom.Enums.Trait;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
 import java.util.Random;
@@ -111,9 +111,9 @@ public class Mobile extends Character implements Serializable
      * @return playerType of this instance
      */
     @Override
-    public PlayerType getType()
+    public TypePlayer getType()
     {
-        return PlayerType.ComputerPlayer;
+        return TypePlayer.Computer;
     }
 
 

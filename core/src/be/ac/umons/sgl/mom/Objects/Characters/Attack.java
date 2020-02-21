@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.PlayerType;
+import be.ac.umons.sgl.mom.Enums.Trait;
 
 public interface Attack
 {
@@ -51,7 +51,7 @@ public interface Attack
      * Human is equal PlayerHuman
      * Computer is equal PlayerComputer
      */
-    public PlayerType getType();
+    public Character.TypePlayer getType();
 
 
     /***/

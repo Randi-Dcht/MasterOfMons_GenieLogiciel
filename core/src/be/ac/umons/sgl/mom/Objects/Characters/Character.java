@@ -1,15 +1,17 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dead;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
-
 import java.util.ArrayList;
 
 public abstract class Character implements Attack, Social
 {
+    /***/
+    public enum TypePlayer{Computer,Human;};
+
+
     /*characteristic of the character*/
     protected int strength;
     protected ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos

@@ -1,7 +1,11 @@
 package be.ac.umons.sgl.mom.Events;
 
-import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Events.Notifications.Answer;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -80,6 +84,7 @@ public class SuperviserNormally implements Observer
                listMap.put(plt.getMaps(),plt);
            event = new Event();
            event.add(Events.Dead,this);
+           event.add(Events.Answer,this);//TODO changer pour mettre avec remove
        }
 
 
@@ -229,7 +234,7 @@ public class SuperviserNormally implements Observer
         @Override
         public void update(Notification notify)
         {
-            if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(PlayerType.ComputerPlayer))
+            if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(Character.TypePlayer.Computer))
             {
                 Mobile mb = (Mobile)notify.getBuffer();
                 listMobile.get(mb.getPlace()).remove(mb);
@@ -237,6 +242,9 @@ public class SuperviserNormally implements Observer
                 if (mb.equals(memoryMobile))
                     memoryMobile = null;
             }
+
+            if (notify.getEvents().equals(Events.Answer) && notify.bufferEmpty())
+                switchingDialog(((String)notify.getBuffer()));
         }
 
 
@@ -312,7 +320,7 @@ public class SuperviserNormally implements Observer
         */
        public void attackMethod(Attack attacker, Attack victim)
        {
-           if (attacker.getType().equals(PlayerType.HumanPlayer))
+           if (attacker.getType().equals(Character.TypePlayer.Human))
                ((People)attacker).reduceEnergizing(State.attack);
            if(victim.dodge() < 0.6)
            {
@@ -321,7 +329,7 @@ public class SuperviserNormally implements Observer
                else
                    victim.loseAttack(calculateHits(attacker,victim,0));
            }
-           if(attacker.getType().equals(PlayerType.ComputerPlayer))
+           if(attacker.getType().equals(Character.TypePlayer.Computer))
            {
                ((Mobile) attacker).letsGo(victim);
                memoryMobile = (Mobile)attacker;
@@ -359,18 +367,25 @@ public class SuperviserNormally implements Observer
          */
         public void meetCharacter(Social player1, Social player2)
         {
-            //TODO raccorder
-                ArrayList<String> l = new ArrayList<>();
-                l.add("bonjour comment cela va bien ?");
-                l.add("ESC");
-                l.add("ESC");
-                l.add("ESC");
-
+            if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
+                memoryMobile = (Mobile)player1;
+            if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
+                memoryMobile = (Mobile)player2;
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
                 event.notify(new LaunchAttack());
             else if (action.equals(Actions.Dialog))
-                event.notify(new Dialog(l));
+                event.notify(new Dialog(people.getDialog("Start")));
+        }
+
+
+        public void switchingDialog(String answer)
+        {
+            System.out.println(people.getDialog(memoryMobile.getDialog(answer)));
+            if (answer.equals("Attack"))
+                event.notify(new LaunchAttack());
+            if(!answer.equals("ESC"))
+                event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
         }
 
     }
