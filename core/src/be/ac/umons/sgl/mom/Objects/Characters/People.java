@@ -412,7 +412,7 @@ public class People extends Character implements Serializable, Observer
     @Override
     public String toString()
     {
-        if(gun !=null)
+        if(howGun())
             return "bh_"+gender.getName()+"_aa_";
         return "bh_"+gender.getName()+"_sa_";
     }

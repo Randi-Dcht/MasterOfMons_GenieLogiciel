@@ -131,7 +131,7 @@ public class CombatState extends GameState implements Observer {
      */
     public void setPlayer1(Character player1) {
         this.player1 = player1;
-        lifePlayer1.setMaxValue((int)player1.getCharacteristics().lifemax());
+        lifePlayer1.setMaxValue((int)player1.getCharacteristics().lifeMax());
     }
 
     /**
@@ -140,7 +140,7 @@ public class CombatState extends GameState implements Observer {
      */
     public void setPlayer2(Character player2) {
         this.player2 = player2;
-        lifePlayer2.setMaxValue((int)player2.getCharacteristics().lifemax());
+        lifePlayer2.setMaxValue((int)player2.getCharacteristics().lifeMax());
     }
 
     @Override

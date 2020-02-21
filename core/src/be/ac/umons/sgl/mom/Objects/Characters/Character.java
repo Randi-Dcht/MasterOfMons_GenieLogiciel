@@ -5,9 +5,10 @@ import be.ac.umons.sgl.mom.Events.Notifications.Dead;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Character implements Attack, Social
+public abstract class Character implements Attack, Social, Serializable
 {
     /**The enum for the player of the character*/
     public enum TypePlayer{Computer,Human;};
@@ -44,9 +45,9 @@ public abstract class Character implements Attack, Social
      */
     public void regeneration(double dt)
     {
-        if((life+dt)<=lifemax())
+        if((life+dt)<=lifeMax())
             life = life + dt+10;
-        if(!living && life > lifemax()*0.6)
+        if(!living && life > lifeMax()*0.6)
             living = true;
     }
 
@@ -117,7 +118,7 @@ public abstract class Character implements Attack, Social
         this.strength = strength;
         this.defence  = defence;
         this.agility  = agility;
-        this.life     = lifemax();
+        this.life     = lifeMax();
     }
 
 
@@ -125,7 +126,7 @@ public abstract class Character implements Attack, Social
      *This method allows to calculated the maximum of life people.
      *@return max life.
      */
-    public double lifemax()
+    public double lifeMax()
     {
         return (strength*20);
     }

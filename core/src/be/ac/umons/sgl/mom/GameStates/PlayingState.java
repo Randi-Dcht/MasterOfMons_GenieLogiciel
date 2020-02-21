@@ -273,7 +273,7 @@ public class PlayingState extends GameState implements Observer {
         SuperviserNormally.getSupervisor().callMethod(dt);
 
         lifeBar.setValue((int)player.getCharacteristics().getLife());
-        lifeBar.setMaxValue((int)player.getCharacteristics().lifemax());
+        lifeBar.setMaxValue((int)player.getCharacteristics().lifeMax());
         expBar.setValue((int)((People)player.getCharacteristics()).getExperience());
         expBar.setMaxValue((int)((People)player.getCharacteristics()).minExperience());
         energyBar.setValue((int)((People)player.getCharacteristics()).getEnergy());
