@@ -333,7 +333,8 @@ public class SuperviserNormally implements Observer
                ((Mobile) attacker).letsGo(victim);
                memoryMobile = (Mobile)attacker;
            }
-
+           if(victim.getType().equals(Character.TypePlayer.Computer))
+               attackMethod(victim,attacker);
        }
 
 
@@ -372,17 +373,21 @@ public class SuperviserNormally implements Observer
                 memoryMobile = (Mobile)player2;
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
-                event.notify(new LaunchAttack());
+                attackMethod(memoryMobile,people);//event.notify(new LaunchAttack());TODO donner à Guillaume
             else if (action.equals(Actions.Dialog))
                 event.notify(new Dialog(people.getDialog("Start")));
         }
 
 
+        /**
+         * This method allows to switch between people dialog and
+         * @param answer is the answer of the dialog between two characters
+         */
         public void switchingDialog(String answer)
         {
-            System.out.println(people.getDialog(memoryMobile.getDialog(answer)));
+            System.out.println(answer + " == answer");
             if (answer.equals("Attack"))
-                event.notify(new LaunchAttack());
+                attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));
             if(!answer.equals("ESC"))
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
         }

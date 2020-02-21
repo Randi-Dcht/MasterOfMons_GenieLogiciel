@@ -2,5 +2,5 @@
 %Every dialogs are four parties, one is the input and two,three,four is the output.
 %This file contains the Id of dialog, the true dialog is in Bundle file.
 %ESC equal the quit dialog and Start equal the first dialog
-Start/HelloEntry/HelpMe/ESC
+Start/HelloEntry/HelpMe/ESC/Attack
 HowHelpYou/GiveRepLesson/GivePaper/Other

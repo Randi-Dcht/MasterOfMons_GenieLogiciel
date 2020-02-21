@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Items.Energizing;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,7 @@ public class TestCharacters
     @Test
     void PeopleObjectTest()
     {
-        People people = new People("MasterOfMons", Type.normal, Difficulty.Easy);
+        People people = new People("MasterOfMons", Type.normal, Gender.Men, Difficulty.Easy);
         Battery[] b = {new Battery(),new Battery(),new Battery(),new Battery(),new Battery(),new Battery()};
         Energizing e = new Energizing();
         for (int i = 0; i < 5 ; i++)
@@ -34,7 +31,7 @@ public class TestCharacters
     @Test
     void energyPeopleTest()
     {
-        People people = new People("Junit",Type.normal,Difficulty.Easy);
+        People people = new People("Junit",Type.normal,Gender.Men,Difficulty.Easy);
         double first = people.getEnergy();
         for (int i = 0; i < 100 ; i++ ){people.energy(1);}
         double second = people.getEnergy();

@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Quests;
 
 import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
@@ -14,7 +15,7 @@ public class TestQuest
     @Test
     void TestnextQuest()
     {
-        People p = new People("Tesst", Type.normal, Difficulty.Easy);
+        People p = new People("Tesst", Type.normal, Gender.Men ,Difficulty.Easy);
         MasterQuest mq = new MyFirstYear(p,null,null,Difficulty.Easy);
         mq.nextQuest();
         assertNull(mq.getChildren(),"quest after is null");
