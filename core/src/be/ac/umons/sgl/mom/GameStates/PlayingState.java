@@ -179,7 +179,7 @@ public class PlayingState extends GameState implements Observer {
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap("Tmx/Umons_Nimy.tmx");
 
-        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA1, MobileType.Lambda));
+        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda)); testPNJ.getCharacteristics().setPlace(Place.Nimy);
         pnjs.add(testPNJ);
         testPNJ.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
 
