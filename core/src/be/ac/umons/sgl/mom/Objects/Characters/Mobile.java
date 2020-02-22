@@ -19,7 +19,7 @@ public class Mobile extends Character implements Serializable
     protected double time;
     protected Attack victim = null;
     protected Actions action; //TODO init
-    protected Boolean addFriend; //TODO change people
+    protected Boolean addFriend = true; //TODO change people
 
 
     /**
@@ -49,6 +49,17 @@ public class Mobile extends Character implements Serializable
             nextAttack(victim);
             victim = null;
         }
+    }
+
+
+    public boolean setFriend()
+    {
+        if(addFriend)
+        {
+            addFriend = false;
+            return true;
+        }
+        return false;
     }
 
 

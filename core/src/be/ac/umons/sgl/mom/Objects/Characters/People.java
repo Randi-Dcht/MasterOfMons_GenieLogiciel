@@ -45,7 +45,7 @@ public class People extends Character implements Serializable, Observer
     /*other thing*/
     private HashMap<Integer,ArrayList<Course>> myPlanning;
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
-    private ArrayList<Mobile> friend;
+    private int friend = 0;
     private Mobile saoulMate; //TODO check the type
 
 
@@ -59,11 +59,10 @@ public class People extends Character implements Serializable, Observer
     public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
         super(name);
-        updateType(type.getStrength(),type.getDefence(),type.getAgility());
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
+        updateType(type.getStrength(),type.getDefence(),type.getAgility());
         this.threshold = minExperience(level+1);
-        friend  = new ArrayList<>();
         this.difficulty = difficulty;
         this.gender = gender;
     }
@@ -140,11 +139,27 @@ public class People extends Character implements Serializable, Observer
      */
     public void addFriend(Mobile mobile)
     {
-        if (!friend.contains(mobile))//TODO deplacer cela dans la classe mobile
-        {
-            friend.add(mobile);
-            SuperviserNormally.getSupervisor().getEvent().notify(new AddFriend());
-        }
+        if (saoulMate == null && mobile.getClass().equals(SaoulMatePNJ.class))
+            saoulMate = mobile; //TODO check
+        if (mobile.addFriend)
+            friend++;
+    }
+
+
+    /***/
+    public void loseFriend()
+    {
+        friend--;
+    }
+
+
+    /**
+     * This method return the number of the friend
+     * @return number of friend
+     */
+    public int getFriend()
+    {
+        return friend;
     }
 
 
