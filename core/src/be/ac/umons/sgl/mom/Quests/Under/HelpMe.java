@@ -26,21 +26,7 @@ public class HelpMe extends UnderQuest
        * @param notify is the notification in the game
        */
       @Override
-      public void evenActivity(Notification notify)
-      {
-        if (notify.getEvents().equals(Events.MeetOther))
-          goToPnj(((Mobile)notify.getBuffer()));
-      }
-
-
-      /**
-       * This method check if the people go to speak with a PNJ who have help
-       * @param mobile is the mobile who have help
-       */
-      private void goToPnj(Mobile mobile)
-      {
-        if(mobile.getAction().equals(Actions.Dialog))
-          addProgress(5);
+      public void evenActivity(Notification notify) {
       }
 
 
