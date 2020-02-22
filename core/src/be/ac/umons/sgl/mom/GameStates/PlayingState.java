@@ -552,21 +552,30 @@ public class PlayingState extends GameState implements Observer {
         else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())
         {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
-            if (diag.get(0).equals("ESC")) {
-                dialogState = null;
-                inventoryShower.setHided(false);
-                return;
-            }
-            if (dialogState == null) {
-                dialogState = (InGameDialogState) gsm.setState(InGameDialogState.class);
-                dialogState.setMustQuitWhenAnswered(false);
-                inventoryShower.setHided(true);
-            }
-            dialogState.setText(diag.get(0));
-            for (int i = 1; i < diag.size(); i++) {
-                String s = diag.get(i);
-                dialogState.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
-            }
+            updateDialog(diag);
+        }
+    }
+
+    /**
+     * Update the dialog state with the given information.
+     * @param diag The text of the dialog (index 0) and the answers (index 1+).
+     */
+    public void updateDialog(ArrayList<String> diag) {
+        if (diag.get(0).equals("ESC")) {
+            dialogState = null;
+            inventoryShower.setHided(false);
+            gsm.removeFirstState();
+            return;
+        }
+        if (dialogState == null) {
+            dialogState = (InGameDialogState) gsm.setState(InGameDialogState.class);
+            dialogState.setMustQuitWhenAnswered(false);
+            inventoryShower.setHided(true);
+        }
+        dialogState.setText(diag.get(0));
+        for (int i = 1; i < diag.size(); i++) {
+            String s = diag.get(i);
+            dialogState.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
         }
     }
 
