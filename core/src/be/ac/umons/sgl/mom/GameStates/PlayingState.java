@@ -64,7 +64,7 @@ public class PlayingState extends GameState implements Observer {
     /**
      * The player's speed
      */
-    protected float VELOCITY = 5000;
+    protected double velocity;
     /**
      * The number of tile in the map (horizontally)
      */
@@ -206,6 +206,9 @@ public class PlayingState extends GameState implements Observer {
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dialog,this);
+
+        velocity = 50;
+//        velocity = SuperviserNormally.getSupervisor().getPeople().displacement(); // TODO
     }
 
     /**
@@ -285,7 +288,7 @@ public class PlayingState extends GameState implements Observer {
      * @param dt The delta time
      */
     protected void makePlayerMove(float dt) {
-        int toMove = Math.round(VELOCITY * dt);
+        int toMove = (int)Math.round(velocity * dt * tileWidth);
         int toMoveX = 0, toMoveY = 0;
 
         if (gim.isKey(Input.Keys.DOWN, KeyStatus.Down)) {
