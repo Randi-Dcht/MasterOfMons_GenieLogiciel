@@ -230,7 +230,7 @@ public class PlayingState extends GameState implements Observer {
         for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(SuperviserNormally.getSupervisor().getMaps(mapPath)))
             pnjs.add(new Character(gs, mob));
 
-        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda));
+        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda,Actions.Dialog));
         testPNJ.getCharacteristics().setPlace(Place.Nimy);
         pnjs.add(testPNJ);
 

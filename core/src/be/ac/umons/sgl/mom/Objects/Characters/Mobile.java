@@ -19,21 +19,24 @@ public class Mobile extends Character implements Serializable
     protected MobileType type;
     protected double time;
     protected Attack victim = null;
-    protected Actions action; //TODO init
-    protected Boolean addFriend = true; //TODO change people
+    protected Actions action;
+    protected Boolean addFriend = true;
 
 
     /**
      * This constructor allows define the mobile/PNJ
      * @param name is the name of the mobile
      * @param playerBloc is the bloc of the player
+     * @param type is the type of the mobile
+     * @param myAction is the action of this mobile
      */
-    public Mobile(String name, Bloc playerBloc, MobileType type)
+    public Mobile(String name, Bloc playerBloc, MobileType type,Actions myAction)
     {
         super(name);
         this.level = calculus(playerBloc);
         this.playerBloc  = playerBloc;
         this.type = type;
+        action = myAction;
         calculusPoint(type);
     }
 
@@ -142,11 +145,12 @@ public class Mobile extends Character implements Serializable
 
     /**
      * This method allows to give the action of the mobile
+     * @return the action of the mobile
      */
     @Override
     public Actions getAction()
     {
-        return Actions.Never;
+        return action;
     }
 
 

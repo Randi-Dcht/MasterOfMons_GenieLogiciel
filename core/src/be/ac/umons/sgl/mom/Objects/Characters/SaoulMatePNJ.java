@@ -4,7 +4,7 @@ import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 
-public class SaoulMatePNJ extends Mobile
+public class SaoulMatePNJ extends Mobile //TODO update this class
 {
 
     /**
@@ -14,12 +14,7 @@ public class SaoulMatePNJ extends Mobile
      */
     public SaoulMatePNJ(Bloc playerBloc, MobileType type)
     {
-        super("SaoulMate", playerBloc, type);
+        super("SaoulMate", playerBloc, type,Actions.Dialog);
     }
 
-    @Override
-    public Actions getAction()
-    {
-        return Actions.Dialog;
-    }
 }
