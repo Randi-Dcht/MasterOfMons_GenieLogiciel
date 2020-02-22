@@ -5,7 +5,6 @@ import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -156,6 +155,24 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         underQuest = list;
     }
+
+    /**
+     * This method return a list of the obligation lesson
+     * @param lesson it's all of the less
+     *     }on of the year
+     * @return a ArrayList of obligation lesson
+     */
+    public ArrayList ObligationLesson(Lesson[] lesson)
+    {
+        ArrayList olesson=new ArrayList();
+        for(Lesson l : lesson)
+        {
+            if (l.obligatoryCourse())
+            {
+                olesson.add(l);
+            }
+        }
+        return olesson;
 
 
     /**
@@ -403,4 +420,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         return bloc;
     }
+
+
 }
