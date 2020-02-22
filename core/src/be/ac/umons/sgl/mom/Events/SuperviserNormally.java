@@ -1,8 +1,10 @@
 package be.ac.umons.sgl.mom.Events;
 
 import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Gender;
+import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -71,6 +73,8 @@ public class SuperviserNormally implements Observer
         private Event event;
         /*Associate String to maps*/
         private HashMap<String,Place> listMap = new HashMap<>();
+        /*Associate Bloc to Lesson*/
+        private HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<Bloc, ArrayList<Lesson>>();
         /*when the attack is the mobile*/
         private Mobile memoryMobile;
 
@@ -85,6 +89,7 @@ public class SuperviserNormally implements Observer
            event = new Event();
            event.add(Events.Dead,this);
            event.add(Events.Answer,this);//TODO changer pour mettre avec remove
+           associateLesson();
        }
 
 
@@ -108,6 +113,23 @@ public class SuperviserNormally implements Observer
             if (listItems.containsValue(place))
                 return listItems.get(place);
             return new ArrayList<>();
+        }
+
+
+        /***/
+        public void associateLesson()
+        {
+            for (Bloc blc : Bloc.values())
+                listLesson.put(blc,new ArrayList<Lesson>());
+            for (Lesson ls : Lesson.values())
+                listLesson.get(ls.getBloc()).add(ls);
+        }
+
+
+        /***/
+        public ArrayList<Lesson> getLesson(Bloc blc)
+        {
+            return listLesson.get(blc);
         }
 
 

@@ -45,14 +45,6 @@ public class MeetAndLearn extends MasterQuest
     }
 
 
-    /***/
-    @Override
-    public Lesson[] getLesson()
-    {
-        return new Lesson[]{Lesson.calculProba,Lesson.intelligen,Lesson.compilation,Lesson.grapheOpti,Lesson.baseDonnes};
-    }
-
-
     /**
      * This method allows to switch with the after masterQuest
      */

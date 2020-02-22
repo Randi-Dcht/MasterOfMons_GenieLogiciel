@@ -16,6 +16,7 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -144,7 +145,10 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * this method return a list of course for this quest
      *@return list of lesson
      */
-    public abstract Lesson[] getLesson();
+    public ArrayList<Lesson> getLesson()
+    {
+        return SuperviserNormally.getSupervisor().getLesson(bloc);
+    }
 
 
     /**

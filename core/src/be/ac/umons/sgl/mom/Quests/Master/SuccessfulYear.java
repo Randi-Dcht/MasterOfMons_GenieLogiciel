@@ -54,14 +54,6 @@ public class SuccessfulYear extends MasterQuest
     }
 
 
-    /***/
-    @Override
-    public Lesson[] getLesson()
-    {
-        return new Lesson[]{Lesson.nbComplexe,Lesson.calculus2,Lesson.reseau,Lesson.projet2,Lesson.OS,Lesson.anglais,Lesson.opti};
-    }
-
-
     /**
      *This method return the question of this Quest
      * The people must succeed this question to up the Quest

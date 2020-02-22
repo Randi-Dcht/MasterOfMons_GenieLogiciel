@@ -29,15 +29,6 @@ public class DisplacementMons extends MasterQuest
 
     }
 
-    /**
-     * this method return a list of course for this quest
-     *
-     * @return list of lesson
-     */
-    @Override
-    public Lesson[] getLesson() {
-        return new Lesson[0];
-    }
 
     @Override
     public String getName()

@@ -1,6 +1,12 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
+import be.ac.umons.sgl.mom.Enums.MobileType;
+import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Items.Energizing;
@@ -55,11 +61,11 @@ public class TestCharacters
 
         double memory = p1.getLife();
         sp.attackMethod(p2,p1);
-        assertTrue(memory > p1.getLife());
+        assertTrue(memory > p1.getLife(),"Check the life after the attack (people)");
 
         memory = p2.getLife();
         sp.attackMethod(p1,p2);
-        assertTrue(memory > p2.getLife());
+        assertTrue(memory > p2.getLife(),"Chack the life after the attack (PNJ)");
     }
 
     @Test

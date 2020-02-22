@@ -52,14 +52,6 @@ public class MyFirstYear extends MasterQuest
     }
 
 
-    /***/
-    @Override
-    public Lesson[] getLesson()
-    {
-        return new Lesson[]{Lesson.MI1,Lesson.MI2,Lesson.algo1,Lesson.algo2,Lesson.ftOrdi,Lesson.projet1};
-    }
-
-
     /**
      *This method allows to say the ask of this MasterQuest
      * @return a question who is a string

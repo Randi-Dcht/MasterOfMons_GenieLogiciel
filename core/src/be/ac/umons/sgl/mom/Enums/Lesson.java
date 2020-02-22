@@ -26,10 +26,10 @@ public enum Lesson
      */
 
     /*Lesson of Bachelor 1*/
-    MI1('O',"math pour informatique 1",Place.Nimy,Bloc.BA1,15),
-    MI2('O',"math pour informatique 2",Place.Nimy,Bloc.BA1,10),
+    MI1('O',"math pour informatique 1",Place.Nimy,Bloc.BA1,20),
+    MI2('O',"math pour informatique 2",Place.Nimy,Bloc.BA1,15),
     algo1('O',"algorithme python",Place.Nimy,Bloc.BA1,20),
-    algo2('F',"algorithme java",Place.DeVinci,Bloc.BA1,5),
+    algo2('F',"algorithme java",Place.DeVinci,Bloc.BA1,10),
     ftOrdi('F',"fonctionnement des ordinateurs",Place.Nimy,Bloc.BA1,6),
     projet1('F',"projet bachelier 1",Place.DeVinci,Bloc.BA1,7),
 
@@ -122,12 +122,11 @@ public enum Lesson
 
 
     /**
-     *This method allows to say if the people can take the lesson.
-     *@param year is the year of the people
-     *@return true if the people can take this course else false
+     *This method return the bloc of the lesson
+     * @return bloc of the lesson
      */
-    public boolean take(int year)
+    public Bloc getBloc()
     {
-        return false;//this.year <= year;
+        return year;
     }
 }

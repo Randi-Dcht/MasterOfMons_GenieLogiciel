@@ -116,7 +116,7 @@ public class People extends Character implements Serializable, Observer
     public void newQuest(MasterQuest quest)
     {
         myQuest = quest;
-        myCourse.addAll(Arrays.asList(quest.getLesson()));
+        myCourse.addAll(quest.getLesson());
         SuperviserNormally.getSupervisor().getEvent().notify(new ChangeQuest(quest));
         year = quest.getBloc() ;
         createPlanning();
