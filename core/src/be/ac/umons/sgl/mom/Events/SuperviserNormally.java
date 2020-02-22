@@ -165,7 +165,7 @@ public class SuperviserNormally implements Observer
         }
 
 
-
+        /***/
         public void setQuest(QuestShower qs)
         {
             qs.setQuest(people.getQuest());
@@ -408,7 +408,7 @@ public class SuperviserNormally implements Observer
         public void switchingDialog(String answer)
         {
             if (answer.equals("Attack"))
-                attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));
+                attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));TODO donner à guillaume
             if(answer.equals("ESC"))
             {
                 ArrayList<String> end = new ArrayList<>();end.add("ESC");

@@ -18,11 +18,11 @@ public enum Lesson
      * ____________________________________________
      * Note of year:
      * -------------
-     * MyFirstYear == 1
-     * SuccessfulYear == 2
-     * MeetAndLearn == 3
-     * PreparedCompany   == 4
-     * FinishUniversity   == 5
+     * MyFirstYear       ==  1
+     * SuccessfulYear    ==  2
+     * MeetAndLearn      ==  3
+     * PreparedCompany   ==  4
+     * FinishUniversity  ==  5
      */
 
     /*Lesson of Bachelor 1*/
@@ -104,7 +104,10 @@ public enum Lesson
     }
 
 
-
+    /**
+     * This method allows to give the number of the course during the
+     * @return number of course
+     */
     public int numberOfCourse()
     {
         return number;

@@ -2,7 +2,6 @@ package be.ac.umons.sgl.mom.Quests.Master;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -67,7 +66,7 @@ public class MyFirstYear extends MasterQuest
      * @return list of items
      */
     @Override
-    public ArrayList<Items> whatItem()
+    public ArrayList<Items> whatItem() //TODO optimiser cela
     {
         ArrayList<Items> list = new ArrayList<>();
         for (int i=0; i < 10; i++)
@@ -85,7 +84,7 @@ public class MyFirstYear extends MasterQuest
      * @return list of mobile
      */
     @Override
-    public ArrayList<Mobile> whatMobile()
+    public ArrayList<Mobile> whatMobile() //TODO optimiser cela
     {
         ArrayList<Mobile> list = new ArrayList<>();
         MobileType[] type = MobileType.values();

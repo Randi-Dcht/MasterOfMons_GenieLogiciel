@@ -93,7 +93,7 @@ public class ReadConversation
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
                 {
-                    list.put(split[0],new ArrayList<>(Arrays.asList(split).subList(1, split.length)));
+                    list.put(split[0],new ArrayList<>(Arrays.asList(split).subList(0, split.length)));
                 }
             }
         }
