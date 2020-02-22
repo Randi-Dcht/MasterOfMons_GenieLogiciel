@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.MobileType;
+import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import java.io.Serializable;
 import java.util.Random;
@@ -56,6 +57,7 @@ public class Mobile extends Character implements Serializable
     {
         if(addFriend)
         {
+            SuperviserNormally.getSupervisor().getEvent().notify(new AddFriend(this));
             addFriend = false;
             return true;
         }

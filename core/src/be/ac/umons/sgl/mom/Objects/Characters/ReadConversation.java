@@ -101,7 +101,10 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the reading texte of people", e.getMessage());
         }
-        return list;
+        finally
+        {
+            return list;
+        }
     }
 
 
@@ -130,6 +133,9 @@ public class ReadConversation
         {
             Gdx.app.error("Error in the read of pnj",e.getMessage());
         }
-        return list;
+        finally
+        {
+            return list;
+        }
     }
 }

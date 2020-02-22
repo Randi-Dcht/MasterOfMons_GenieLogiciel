@@ -9,7 +9,6 @@ import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
@@ -140,7 +139,8 @@ public class People extends Character implements Serializable, Observer
     public void addFriend(Mobile mobile)
     {
         if (saoulMate == null && mobile.getClass().equals(SaoulMatePNJ.class))
-            saoulMate = mobile; //TODO check
+            saoulMate = mobile;
+
         if (mobile.addFriend)
             friend++;
     }
