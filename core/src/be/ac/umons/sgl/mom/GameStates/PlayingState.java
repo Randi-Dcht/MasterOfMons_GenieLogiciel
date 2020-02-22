@@ -38,11 +38,13 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -91,6 +93,8 @@ public class PlayingState extends GameState implements Observer {
     protected MapObjects collisionObjects;
 
     protected MapObjects changingMapObjects;
+
+    protected MapObjects randomPNJPositions;
     /**
      * The camera.
      */
@@ -179,9 +183,6 @@ public class PlayingState extends GameState implements Observer {
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         initMap("Tmx/Umons_Nimy.tmx");
 
-        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda)); testPNJ.getCharacteristics().setPlace(Place.Nimy);
-        pnjs.add(testPNJ);
-        testPNJ.setMapPos(new Point(player.getPosX() + tileWidth, player.getPosY() + tileHeight));
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
         cam.update();
@@ -228,6 +229,12 @@ public class PlayingState extends GameState implements Observer {
 
         for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(SuperviserNormally.getSupervisor().getMaps(mapPath)))
             pnjs.add(new Character(gs, mob));
+
+        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda));
+        testPNJ.getCharacteristics().setPlace(Place.Nimy);
+        pnjs.add(testPNJ);
+
+
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
         mapWidth = (int)gmm.getActualMap().getProperties().get("width");
@@ -238,6 +245,27 @@ public class PlayingState extends GameState implements Observer {
         MapLayer changeLayer = gmm.getActualMap().getLayers().get("Changer");
         if (changeLayer != null)
             changingMapObjects = changeLayer.getObjects();
+        MapLayer pnjLayer = gmm.getActualMap().getLayers().get("RandomPNJItem");
+        if (pnjLayer != null)
+            randomPNJPositions = pnjLayer.getObjects();
+
+        initPNJsPositions();
+        initPlayerPosition(spawnX, spawnY);
+    }
+
+    public void initPNJsPositions() {
+        for (Character c : pnjs) {
+            Random random = new Random();
+            Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
+            int posIndex = random.nextInt(rmos.size);
+            Rectangle mo = rmos.removeIndex(posIndex).getRectangle();
+            Rectangle mapRect = new Rectangle( mo.x * 2 / tileWidth, (mapHeight * tileHeight - mo.y - mo.height) / tileHeight, mo.width * 2 / tileWidth, mo.height / tileHeight);
+            c.setMapPos(new Point((int)(mapRect.x - mapRect.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
+                    mapHeight * tileHeight / 2 - (int)(mapRect.x + mapRect.y) * tileHeight / 2));
+        }
+    }
+
+    public void initPlayerPosition(int spawnX, int spawnY) {
         player.setMapWidth(mapWidth * tileWidth);
         player.setMapHeight(mapHeight * tileHeight);
         player.setTileWidth(tileWidth);
@@ -463,8 +491,10 @@ public class PlayingState extends GameState implements Observer {
             mo.draw(sb, mo.getPosX() - (int)cam.position.x + + MasterOfMonsGame.WIDTH / 2, mo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
 
         sb.begin();
-        if (gs.mustShowMapCoordinates())
+        if (gs.mustShowMapCoordinates()) {
             gs.getSmallFont().draw(sb, String.format("(%f, %f)", player.getMapRectangle().x, player.getMapRectangle().y), (int)leftMargin, (int)(10 * topMargin - topBarHeight));
+            gs.getSmallFont().draw(sb, String.format("(%d, %d)", player.getPosX(), player.getPosY()), (int)leftMargin, (int)(10 * topMargin - topBarHeight - gs.getSmallFont().getLineHeight()));
+        }
         sb.end();
 
         // Dessine le HUD.

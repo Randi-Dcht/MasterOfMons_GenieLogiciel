@@ -41,7 +41,7 @@ public class PlayingState extends be.ac.umons.sgl.mom.GameStates.PlayingState {
 
     @Override
     public void draw() {
-        int toMove = Math.round(VELOCITY * Gdx.graphics.getDeltaTime());
+        int toMove = (int)Math.round(velocity * Gdx.graphics.getDeltaTime() * tileWidth);
         int toMoveX = 0, toMoveY = 0;
         super.draw();
         if (gim.isKey(Input.Keys.S, KeyStatus.Down)) {
