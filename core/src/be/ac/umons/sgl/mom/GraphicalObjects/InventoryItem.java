@@ -144,6 +144,10 @@ public class InventoryItem {
         isBeingAnimated = false;
     }
 
+    public Items getItem() {
+        return go;
+    }
+
     /**
      * Dispose all resources allowed to this item.
      */

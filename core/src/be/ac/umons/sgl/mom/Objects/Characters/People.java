@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *This class allows to define a people with all characteristic.
@@ -207,6 +208,13 @@ public class People extends Character implements Serializable, Observer
             return false;
         myObject.add(object);
         return true;
+    }
+
+    /**
+     * @return The inventory of the player
+     */
+    public List<Items> getInventory() {
+        return myObject;
     }
 
 

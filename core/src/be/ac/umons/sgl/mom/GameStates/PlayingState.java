@@ -522,12 +522,11 @@ public class PlayingState extends GameState implements Observer {
             debugLevelUp();
         else if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
             debugMakeInvincible();
-        else if (gim.isKey(Input.Keys.C, KeyStatus.Pressed)) {
-//            CombatState g = (CombatState) gsm.setState(CombatState.class);
-//            g.setPlayer1(player);
-//            g.setPlayer2(player);
+        else if (gim.isKey(Input.Keys.C, KeyStatus.Pressed))
             attack(player);
-        } else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
+        else if (gim.isKey(Input.Keys.L, KeyStatus.Pressed))
+            dropSelectedObject();
+        else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
         } else if (gim.isKey(Input.Keys.M, KeyStatus.Pressed)) {
@@ -542,6 +541,17 @@ public class PlayingState extends GameState implements Observer {
         inventoryShower.handleInput();
         pauseButton.handleInput();
         agendaShower.handleInput();
+    }
+
+    public void dropSelectedObject() {
+        InventoryItem dropped = inventoryShower.dropSelectedItem();
+        if (dropped != null) {
+            MapObject mo = new MapObject(gs, dropped.getItem());
+            mo.setMapPos(new Point(player.getPosX(), player.getPosY()));
+            mapObjects.add(mo);
+            SuperviserNormally.getSupervisor().getPeople().removeObject(dropped.getItem());
+            dropped.getItem().setPlace(SuperviserNormally.getSupervisor().getMaps(gmm.getActualMapName()));
+        }
     }
 
     /**

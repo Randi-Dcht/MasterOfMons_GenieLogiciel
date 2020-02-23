@@ -45,6 +45,8 @@ public class GameMapManager {
      */
     protected AssetManager am;
 
+    protected String actualMapName;
+
     protected GameMapManager() {
         tiledMapsRenderer = new HashMap<>();
         mapLoader = new TmxMapLoader(new LocalFileHandleResolver());
@@ -57,6 +59,7 @@ public class GameMapManager {
      * @param mapName The map's name
      */
     public void setMap(String mapName) {
+        actualMapName = mapName;
         if (tiledMapsRenderer.containsKey(mapName))
             actualItmr = tiledMapsRenderer.get(mapName);
     }
@@ -115,6 +118,10 @@ public class GameMapManager {
      */
     public TiledMap getActualMap() {
         return actualItmr.getMap();
+    }
+
+    public String getActualMapName() {
+        return actualMapName;
     }
 
     /**

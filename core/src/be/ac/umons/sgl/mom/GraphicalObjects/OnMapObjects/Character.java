@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Enums.Orientation;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.AttackRangeCircle;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -32,10 +33,6 @@ public class Character extends OnMapObject {
      * The character's position
      */
     protected int posX, posY;
-    /**
-     * The character's inventory
-     */
-    protected List<Items> inventory;
     /**
      * The character's characteristics
      */
@@ -182,7 +179,7 @@ public class Character extends OnMapObject {
      * @return Character's inventory
      */
     public List<Items> getInventory() {
-        return new ArrayList<>(inventory);
+        return SuperviserNormally.getSupervisor().getPeople().getInventory();
     }
 
     /**

@@ -7,6 +7,7 @@ import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Items.Battery;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -90,6 +91,7 @@ public class InventoryShower extends Control {
     public InventoryShower(GameInputManager gim, GraphicalSettings gs, Player inventoryOf) {
         super(gim, gs);
         inventory = inventoryOf.getInventory();
+        inventory.add(new Battery());
         this.am = AnimationManager.getInstance();
         init();
     }
@@ -194,6 +196,15 @@ public class InventoryShower extends Control {
         }
     }
 
+    public InventoryItem dropSelectedItem() {
+        if (selectedItem != null) {
+            inventoryItemList.remove(selectedItem);
+            inventory.remove(selectedItem.getItem());
+        }
+        animate();
+        return selectedItem;
+    }
+
     @Override
     public void dispose() {
         sr.dispose();
@@ -218,6 +229,7 @@ public class InventoryShower extends Control {
     public void beginAnimation() {
         isBeingAnimated = true;
         for (InventoryItem ii : inventoryItemList) {
+            ii.setDuringAnimationForegroundOpacity(0);
             ii.beginAnimation();
         }
     }
