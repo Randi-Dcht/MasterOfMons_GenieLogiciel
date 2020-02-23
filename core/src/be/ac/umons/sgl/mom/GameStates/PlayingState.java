@@ -119,7 +119,7 @@ public class PlayingState extends GameState implements Observer {
     /**
      * The player's life bar.
      */
-    protected ProgressBar lifeBar;
+    protected LifeBar lifeBar;
     /**
      * The player's experience bar.
      */
@@ -192,7 +192,7 @@ public class PlayingState extends GameState implements Observer {
 
         inventoryShower = new InventoryShower(gim, gs, player);
 
-        lifeBar = new ProgressBar(gs);
+        lifeBar = new LifeBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
         expBar = new ProgressBar(gs);
         expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));

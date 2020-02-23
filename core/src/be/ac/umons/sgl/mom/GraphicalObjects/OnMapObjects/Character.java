@@ -3,7 +3,7 @@ package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 import be.ac.umons.sgl.mom.Enums.Orientation;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.AttackRangeCircle;
-import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
+import be.ac.umons.sgl.mom.GraphicalObjects.LifeBar;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ public class Character extends OnMapObject {
     /**
      * The life bar of this character.
      */
-    protected ProgressBar lifeBar;
+    protected LifeBar lifeBar;
     /**
      * The range in which the player can attack.
      */
@@ -66,7 +65,7 @@ public class Character extends OnMapObject {
         arc = new AttackRangeCircle(gs, this);
         assetManager = gs.getAssetManager();
         this.characteristics = characteristics;
-        lifeBar = new ProgressBar(gs);
+        lifeBar = new LifeBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
     }
 
