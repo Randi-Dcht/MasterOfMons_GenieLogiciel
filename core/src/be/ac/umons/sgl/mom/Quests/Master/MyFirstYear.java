@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
+import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.MobileType;
@@ -88,10 +89,10 @@ public class MyFirstYear extends MasterQuest
     {
         ArrayList<Mobile> list = new ArrayList<>();
         MobileType[] type = MobileType.values();
-        /*for(int i=0; i < 30;i++)
-            list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
+        for(int i=0; i < 30;i++)
+            list.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
         for(int i = 30; i < 40; i++)
-            list.add(new FightPNJ(getBloc(), MobileType.Athletic));*/
+            list.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
 
         return list;
     }

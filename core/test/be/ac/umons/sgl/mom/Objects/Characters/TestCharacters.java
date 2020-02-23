@@ -8,7 +8,7 @@ import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
-import be.ac.umons.sgl.mom.Objects.Items.Battery;
+import be.ac.umons.sgl.mom.Objects.Items.Phone;
 import be.ac.umons.sgl.mom.Objects.Items.Energizing;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -25,7 +25,7 @@ public class TestCharacters
     void PeopleObjectTest()
     {
         People people = new People("MasterOfMons", Type.normal, Gender.Men, Difficulty.Easy);
-        Battery[] b = {new Battery(),new Battery(),new Battery(),new Battery(),new Battery(),new Battery()};
+        Phone[] b = {new Phone(),new Phone(),new Phone(),new Phone(),new Phone(),new Phone()};
         Energizing e = new Energizing();
         for (int i = 0; i < 5 ; i++)
         {

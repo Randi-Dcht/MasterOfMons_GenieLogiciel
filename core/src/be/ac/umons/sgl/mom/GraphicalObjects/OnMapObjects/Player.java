@@ -2,15 +2,11 @@ package be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.PlayingState;
-import be.ac.umons.sgl.mom.GraphicalObjects.AttackRangeCircle;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Battery;
-import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Represent a real player of the game.

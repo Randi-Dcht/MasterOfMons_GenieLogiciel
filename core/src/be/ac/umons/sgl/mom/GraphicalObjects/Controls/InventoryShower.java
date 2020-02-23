@@ -7,7 +7,7 @@ import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.AnimationManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Battery;
+import be.ac.umons.sgl.mom.Objects.Items.Phone;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -91,7 +91,7 @@ public class InventoryShower extends Control {
     public InventoryShower(GameInputManager gim, GraphicalSettings gs, Player inventoryOf) {
         super(gim, gs);
         inventory = inventoryOf.getInventory();
-        inventory.add(new Battery());
+        inventory.add(new Phone());
         this.am = AnimationManager.getInstance();
         init();
     }

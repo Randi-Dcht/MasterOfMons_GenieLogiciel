@@ -210,14 +210,21 @@ public class People extends Character implements Serializable, Observer
         return true;
     }
 
+
     /**
+     * This method allows to give the all inventory of this people
      * @return The inventory of the player
      */
-    public List<Items> getInventory() {
+    public List<Items> getInventory()
+    {
         return myObject;
     }
 
 
+    /**
+     * This method allows to use the item who is in the bag
+     * @param object is the object to use
+     */
     public void useObject(Items object)
     {
         if (myObject.contains(object))
