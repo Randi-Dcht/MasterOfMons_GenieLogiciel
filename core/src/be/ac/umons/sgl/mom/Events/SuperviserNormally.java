@@ -30,8 +30,8 @@ import java.util.Random;
 
 
 /**
- This class allows to monitor the game in the normally game without extension .
- *@author Umons_Group_2_ComputerScience
+ * This class allows to monitor the game in the normally game without extension .
+ * @author Umons_Group_2_ComputerScience
  */
 public class SuperviserNormally implements Observer
 {
@@ -365,7 +365,7 @@ public class SuperviserNormally implements Observer
         * @param victim is the character who give hits
         * @param gun is damage calculus
         */
-       public double calculateHits(Attack attacker, Attack victim,double gun)
+       private double calculateHits(Attack attacker, Attack victim,double gun)
        {
            return ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
        }
@@ -375,9 +375,9 @@ public class SuperviserNormally implements Observer
         * This method allows calculated a bonus for an attack in two players
         * @return the bonus (double)
         */
-        public double bonus(double p, double c)
+        private double bonus(double p, double c)
         {
-            return 1; //TODO continuer
+            return Math.pow(Math.cbrt(1.3),c);
         }
 
 
@@ -386,7 +386,7 @@ public class SuperviserNormally implements Observer
          * @param player1 is the first character
          * @param player2 is the second character
          */
-        public void meetCharacter(Social player1, Social player2)//TODO upgarde pour moins de clss
+        public void meetCharacter(Social player1, Social player2)//TODO upgrade pour moins de clss
         {
             if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
                 memoryMobile = (Mobile)player1;
@@ -421,7 +421,7 @@ public class SuperviserNormally implements Observer
             {
                 ArrayList<String> end = new ArrayList<>();end.add("ESC");
                 event.notify(new Dialog(end));
-                //event.remove(Events.Answer,this);
+                //event.remove(Events.Answer,this);//TODO raccorder
             }
             else
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
