@@ -409,10 +409,6 @@ public class SuperviserNormally implements Observer
         }
 
 
-        public void meetItem(Items item)
-        {}
-
-
         /**
          * This method allows to switch between people dialog and
          * @param answer is the answer of the dialog between two characters

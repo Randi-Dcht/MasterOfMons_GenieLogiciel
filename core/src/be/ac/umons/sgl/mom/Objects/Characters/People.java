@@ -210,6 +210,13 @@ public class People extends Character implements Serializable, Observer
     }
 
 
+    public void useObject(Items object)
+    {
+        if (myObject.contains(object))
+            object.used(this);
+    }
+
+
     /**
      *This method allows to know the number of course to pass.
      *@return size of the list course
