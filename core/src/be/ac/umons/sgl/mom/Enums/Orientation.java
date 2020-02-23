@@ -5,5 +5,14 @@ package be.ac.umons.sgl.mom.Enums;
  * @author Guillaume Cardoen
  */
 public enum Orientation {
-    Top, Left, Bottom, Right
+    Top(0), Left(90), Bottom(180), Right(270);
+
+    public int degrees;
+    Orientation(int degrees) {
+        this.degrees = degrees;
+    }
+
+    public int getDegrees() {
+        return degrees;
+    }
 }

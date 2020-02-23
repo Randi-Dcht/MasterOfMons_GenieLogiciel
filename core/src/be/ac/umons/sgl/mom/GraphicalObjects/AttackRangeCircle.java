@@ -32,7 +32,8 @@ public class AttackRangeCircle {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.ellipse(pos.x - animatingAttackRange / 2, pos.y - animatingAttackRange / 2, animatingAttackRange, animatingAttackRange);
+//        sr.ellipse(pos.x - animatingAttackRange / 2, pos.y - animatingAttackRange / 2, animatingAttackRange, animatingAttackRange);
+        sr.arc(pos.x, pos.y, animatingAttackRange / 2,  character.getOrientation().getDegrees(), 180f);
         sr.end();
         Gdx.gl.glDisable(GL30.GL_BLEND);
     }

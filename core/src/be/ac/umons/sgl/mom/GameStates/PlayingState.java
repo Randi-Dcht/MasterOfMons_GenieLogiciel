@@ -251,6 +251,8 @@ public class PlayingState extends GameState implements Observer {
 
         initPNJsPositions();
         initPlayerPosition(spawnX, spawnY);
+
+        testPNJ.setMapPos(new Point(player.getPosX(), player.getPosY()));
     }
 
     public void initPNJsPositions() {
@@ -452,16 +454,33 @@ public class PlayingState extends GameState implements Observer {
     /**
      * @param player The player
      * @param dist A distance (^2)
+     * @param inFrontOf If the PNJ must be in front of the player.
      * @return Return all the PNJs near enough from the player.
      */
-    protected List<Character> getPlayerInRange(Player player, double dist) {
+    protected List<Character> getPlayerInRange(Player player, double dist, boolean inFrontOf) {
         LinkedList<Character> res = new LinkedList<>();
         for (Character character : pnjs) {
             double d = Math.pow(player.getPosX() - character.getPosX(), 2) + Math.pow(player.getPosY() - character.getPosY(), 2);
-            if (d < dist)
-                res.add(character);
+            if (d < dist) {
+                if (! inFrontOf || isInFrontOf(player, character))
+                    res.add(character);
+            }
         }
         return res;
+    }
+
+    protected boolean isInFrontOf(Character c1, Character c2) {
+        switch (c1.getOrientation()){
+            case Top:
+                return c2.getPosY() >= c1.getPosY();
+            case Left:
+                return c2.getPosX() <= c1.getPosX();
+            case Bottom:
+                return c2.getPosY() <= c1.getPosY();
+            case Right:
+                return c2.getPosX() >= c1.getPosX();
+        }
+        return false;
     }
 
     /**
@@ -472,7 +491,7 @@ public class PlayingState extends GameState implements Observer {
         if (player.isRecovering())
             return;
         player.expandAttackCircle();
-        for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange())) {
+        for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
             SuperviserNormally.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
         }
