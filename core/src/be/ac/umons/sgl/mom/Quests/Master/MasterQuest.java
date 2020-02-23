@@ -24,7 +24,7 @@ import java.util.HashMap;
  * Each player can play only one MasterQuest at a time.
  * To pass a MasterQuest, you must pass a maximum of underQuest which increase the% of success.
  * Each MasterQuest has a parent and / or a child.
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ * @author Umons_Group_2_ComputerScience
  */
 public abstract class MasterQuest implements Quest,Serializable,Observer
 {

@@ -27,7 +27,7 @@ import java.util.HashMap;
 /**
  *This class allows to define a people with all characteristic.
  *This is a logic party of people.
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ *@author Umons_Group_2_ComputerScience
  */
 public class People extends Character implements Serializable, Observer
 {

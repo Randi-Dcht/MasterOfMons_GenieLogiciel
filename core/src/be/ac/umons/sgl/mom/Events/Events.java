@@ -3,6 +3,7 @@ package be.ac.umons.sgl.mom.Events;
 /**
  * This class enum the events in this Game
  * Every event is associate to Notification
+ * @author Umons_Group_2_ComputerScience
  */
 public enum Events
 {

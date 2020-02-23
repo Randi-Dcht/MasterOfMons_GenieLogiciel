@@ -1,6 +1,9 @@
 package be.ac.umons.sgl.mom.Enums;
 
-/***/
+/**
+ * This class define the difficulty of the game
+ * @author Umons_Group_2_ComputerScience
+ */
 public enum Difficulty
 {
     Easy("Easy",4,85,5),

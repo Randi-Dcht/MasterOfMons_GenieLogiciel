@@ -2,6 +2,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 
 import be.ac.umons.sgl.mom.Events.Events;
 
+
+/**
+ * This method allows to give an answer during the dialog.
+ * @author Umons_Group_2_ComputerScience
+ */
 public class Answer implements Notification
 {
     private Events evt;

@@ -3,7 +3,7 @@ package be.ac.umons.sgl.mom.Enums;
 
 /**
  *This is a list of the Tmx place in this game (MasterOfMonsBAc2/core/Tmx)
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ *@author Umons_Group_2_ComputerScience
  */
 public enum Place
 {

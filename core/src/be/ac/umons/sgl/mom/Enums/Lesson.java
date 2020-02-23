@@ -1,7 +1,7 @@
 package be.ac.umons.sgl.mom.Enums;
 /**
  *This class allows to define the lesson on the bachelor and master in the Sciences Computer (Umons course).
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ *@author Umons_Group_2_ComputerScience
  */
 public enum Lesson
 {

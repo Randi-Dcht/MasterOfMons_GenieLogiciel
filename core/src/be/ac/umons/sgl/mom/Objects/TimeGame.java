@@ -1,19 +1,16 @@
 package be.ac.umons.sgl.mom.Objects;
 
-import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Notifications.Answer;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeDay;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeMonth;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Other.Date;
-
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * This class is the time in the game who changed with the refresh frame.
+ * @author Umons_Group_2_ComputerScience
  */
 public class TimeGame implements Observer
 {
@@ -50,7 +47,10 @@ public class TimeGame implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to notify the event at this class
+     * @param notify  is the notification with the event
+     */
     @Override
     public void update(Notification notify)
     {

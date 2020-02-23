@@ -8,6 +8,11 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+/**
+ * This class define a character who have life,strength,agility,defence and level in the game
+ * @author Umons_Group_2_ComputerScience
+ */
 public abstract class Character implements Attack, Social, Serializable
 {
     /**The enum for the player of the character*/

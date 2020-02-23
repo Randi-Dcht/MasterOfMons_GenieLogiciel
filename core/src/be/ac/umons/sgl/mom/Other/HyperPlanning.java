@@ -6,11 +6,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+
+/**
+ * This class define the planning of the people with the lesson associate with a date
+ * @author Umons_Group_2_ComputerScience
+ */
 public class HyperPlanning
 {
     public static ArrayList<Lesson> monthL;
     public static double average = 1;
 
+
+    /***/
     public static HashMap<Integer, ArrayList<Course>> createSchedule(ArrayList<Lesson> lesson, Date date)
     {
         HashMap<Integer,ArrayList<Course>> list = new HashMap<>();
@@ -35,6 +42,8 @@ public class HyperPlanning
         return list;
     }
 
+
+    /***/
     private static void createMonthLesson(ArrayList<Lesson> list)
     {
         monthL = new ArrayList<>();

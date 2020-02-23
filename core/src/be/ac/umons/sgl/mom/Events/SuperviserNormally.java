@@ -31,9 +31,8 @@ import java.util.Random;
 
 /**
  This class allows to monitor the game in the normally game without extension .
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ *@author Umons_Group_2_ComputerScience
  */
-
 public class SuperviserNormally implements Observer
 {
 
@@ -398,6 +397,15 @@ public class SuperviserNormally implements Observer
                 attackMethod(memoryMobile,people);//event.notify(new LaunchAttack());TODO donner à Guillaume
             else if (action.equals(Actions.Dialog))
                 event.notify(new Dialog(people.getDialog("Start")));
+        }
+
+
+        /**
+         * This method allows to quit the meet between two characters
+         */
+        public void quitCharacter()
+        {
+            memoryMobile = null;
         }
 
 

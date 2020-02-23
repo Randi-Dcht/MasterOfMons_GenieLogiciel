@@ -21,7 +21,7 @@ import java.util.Random;
 
 /**
  *This class define a MasterQuest who is 'My first Year' in the bachelor 1
- *@author Randy Dauchot (étudiant en Sciences informatique Umons)
+ *@author Umons_Group_2_ComputerScience
  */
 public class MyFirstYear extends MasterQuest
 {

@@ -3,6 +3,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
 
+
+/**
+ * This class define a notification of dead character
+ * @author Umons_Group_2_ComputerScience
+ */
 public class Dead implements Notification
 {
     private Events evt;

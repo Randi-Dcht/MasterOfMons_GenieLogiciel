@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Each underQuest is a goal that the player must do.
  * The player does not necessarily have to pass 100% an underQuest to pass the MasterQuest
  * Each underQuest are independent and exist at the same time in the MasterQuest.
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ * @author Umons_Group_2_ComputerScience
  */
 public abstract class UnderQuest implements Quest,Serializable
 {

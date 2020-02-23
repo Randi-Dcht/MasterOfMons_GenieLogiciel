@@ -21,6 +21,7 @@ import com.badlogic.gdx.Gdx;
 
 /**
  * This class allows to save this party, every end party or every time define.
+ * @author Umons_Group_2_ComputerScience
  */
 public class Saving implements Observer
 {
@@ -146,6 +147,10 @@ public class Saving implements Observer
     }
 
 
+    /**
+     * This method allows to receive the new notification with the event
+     * @param notify is the notification
+     */
     @Override
     public void update(Notification notify)
     {

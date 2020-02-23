@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Other;
 
 /**
  * This define a date with day-moth-year and hour-min
+ * @author Umons_Group_2_ComputerScience
  */
 public class Date
 {

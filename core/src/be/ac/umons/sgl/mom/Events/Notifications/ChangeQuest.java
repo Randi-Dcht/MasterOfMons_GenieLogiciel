@@ -3,6 +3,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
+
+/**
+ * This class define the notification of changed quest of the people
+ * @author Umons_Group_2_ComputerScience
+ */
 public class ChangeQuest implements Notification
 {
     private Events evt;

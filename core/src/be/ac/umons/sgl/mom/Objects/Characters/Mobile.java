@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  *This abstract class allows define a no player, it is a character pilot by computer.
- *@author Randy Dauchot (étudiant en Sciences informatique Umons)
+ *@author Umons_Group_2_ComputerScience
  */
 public class Mobile extends Character implements Serializable
 {

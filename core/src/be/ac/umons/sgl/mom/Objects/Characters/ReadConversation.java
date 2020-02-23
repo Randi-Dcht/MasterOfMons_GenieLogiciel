@@ -99,7 +99,7 @@ public class ReadConversation
         }
         catch (Exception e)
         {
-            Gdx.app.error("Error in the reading texte of people", e.getMessage());
+            Gdx.app.error("Error in the reading text of people", e.getMessage());
         }
         finally
         {
@@ -131,7 +131,7 @@ public class ReadConversation
         }
         catch (Exception e)
         {
-            Gdx.app.error("Error in the read of pnj",e.getMessage());
+            Gdx.app.error("Error in the read text of pnj",e.getMessage());
         }
         finally
         {

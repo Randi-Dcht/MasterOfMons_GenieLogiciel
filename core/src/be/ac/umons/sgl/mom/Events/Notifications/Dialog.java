@@ -3,6 +3,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Events.Events;
 import java.util.ArrayList;
 
+
+/**
+ * This class define the notification of the dialog choose
+ * @author Umons_Group_2_ComputerScience
+ */
 public class Dialog implements Notification
 {
     private Events evt;

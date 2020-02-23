@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 /**
  *This class define a MasterQuest who is 'Meet and Learn' in the bachelor 3
- *@author Randy Dauchot (étudiant en Sciences informatique Umons)
+ *@author Umons_Group_2_ComputerScience
  */
 public class MeetAndLearn extends MasterQuest
 {

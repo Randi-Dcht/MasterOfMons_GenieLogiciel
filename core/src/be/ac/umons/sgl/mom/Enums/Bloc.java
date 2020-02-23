@@ -7,6 +7,7 @@ package be.ac.umons.sgl.mom.Enums;
  * BA3 = bachelor 3
  * MA1 = master 1
  * MA2 = master 2
+ * @author Umons_Group_2_ComputerScience
  */
 public enum Bloc
 {

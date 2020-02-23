@@ -2,6 +2,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 
 import be.ac.umons.sgl.mom.Events.Events;
 
+
+/**
+ * This class define a notification
+ * @author Umons_Group_2_ComputerScience
+ */
 public interface Notification
 {
 

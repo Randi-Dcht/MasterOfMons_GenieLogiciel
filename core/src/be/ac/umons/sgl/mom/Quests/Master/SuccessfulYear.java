@@ -22,7 +22,7 @@ import java.util.Random;
 
 /**
  *This class define a MasterQuest who is 'SuccessfulYear' in the bachelor 2
- *@author Randy Dauchot (étudiant en Sciences informatique)
+ *@author Umons_Group_2_ComputerScience
  */
 
 public class SuccessfulYear extends MasterQuest

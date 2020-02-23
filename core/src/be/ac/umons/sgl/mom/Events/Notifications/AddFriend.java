@@ -3,6 +3,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 
+
+/**
+ * This class define the notification of the add friend to the people
+ * @author Umons_Group_2_ComputerScience
+ */
 public class AddFriend implements Notification
 {
     private Events evt;

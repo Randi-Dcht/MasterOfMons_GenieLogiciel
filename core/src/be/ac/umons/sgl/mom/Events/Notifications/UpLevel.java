@@ -2,6 +2,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 
 import be.ac.umons.sgl.mom.Events.Events;
 
+
+/**
+ * This class define the notification when people up level
+ * @author Umons_Group_2_ComputerScience
+ */
 public class UpLevel implements Notification
 {
     private Events evt;

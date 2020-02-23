@@ -3,6 +3,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
 
+
+/**
+ * This class define the changed day in the gale
+ * @author Umons_Group_2_ComputerScience
+ */
 public class ChangeDay implements Notification
 {
     private Events evt;

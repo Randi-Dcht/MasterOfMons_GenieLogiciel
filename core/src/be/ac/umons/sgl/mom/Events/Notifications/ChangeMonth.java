@@ -3,6 +3,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
 
+
+/**
+ * This class define the notification of changed month in the game
+ * @author Umons_Group_2_ComputerScience
+ */
 public class ChangeMonth implements Notification
 {
     private Events evt;

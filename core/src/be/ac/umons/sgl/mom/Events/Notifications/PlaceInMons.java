@@ -3,6 +3,11 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Events;
 
+
+/**
+ * This class define the notification when people displace the map
+ * @author Umons_Group_2_ComputerScience
+ */
 public class PlaceInMons implements Notification
 {
     private Events evt;

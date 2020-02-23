@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Enums;
 
 /**
  * This class allows to define the different state of the people for the energizing
+ * @author Umons_Group_2_ComputerScience
  */
 public enum State
 {
