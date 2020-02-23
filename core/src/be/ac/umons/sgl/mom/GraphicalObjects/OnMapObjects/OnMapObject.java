@@ -55,12 +55,12 @@ public abstract class OnMapObject {
             gl.setText(gs.getSmallFont(), String.format(gs.getStringFromId("pressToInteract"), "E"));
             sr.begin(ShapeRenderer.ShapeType.Filled);
             sr.setColor(gs.getTransparentBackgroundColor());
-            sr.rect(x, y + height - gs.getSmallFont().getLineHeight(), gl.width, gs.getSmallFont().getLineHeight());
+            sr.rect(x, y - gs.getSmallFont().getLineHeight(), gl.width, gs.getSmallFont().getLineHeight());
             sr.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);
             if (isSelected) {
                 batch.begin();
-                gs.getSmallFont().draw(batch, String.format(gs.getStringFromId("pressToInteract"), "E"), x, y + height); //TODO Check for touch
+                gs.getSmallFont().draw(batch, String.format(gs.getStringFromId("pressToInteract"), "E"), x, y); //TODO Check for touch
                 batch.end();
             }
         }
