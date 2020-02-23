@@ -338,13 +338,13 @@ public class SuperviserNormally implements Observer
         * @param attacker is the character who attack
         * @param victim is the character who give hits
         */
-       public void attackMethod(Attack attacker, Attack victim)
+       public void attackMethod(Attack attacker, Attack victim/*,boolean faceToFace*/) //TODO ajout
        {
            if (attacker.getType().equals(Character.TypePlayer.Human))
                ((People)attacker).reduceEnergizing(State.attack);
            if(victim.dodge() < 0.6)
            {
-               if(attacker.howGun())
+               if(attacker.howGun() /*&& faceToFace*/)
                    victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
                else
                    victim.loseAttack(calculateHits(attacker,victim,0));

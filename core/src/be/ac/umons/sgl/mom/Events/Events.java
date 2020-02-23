@@ -17,7 +17,8 @@ public enum Events
     Dialog("DialogArray"),                    /*...*/
     Answer("answerQuestion"),                 /*...*/
     Dead("characterDead"),                    /*...*/
-    UpLevel("UpLevel");                       /*...*/
+    UpLevel("UpLevel"),                       /*...*/
+    UseItems("PeopleUseItem");                /*...*/
 
 
     /**The name of the events*/
