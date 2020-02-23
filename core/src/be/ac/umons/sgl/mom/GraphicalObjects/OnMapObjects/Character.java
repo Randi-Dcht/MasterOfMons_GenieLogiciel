@@ -95,7 +95,7 @@ public class Character extends OnMapObject {
         lifeBar.setMaxValue((int)getCharacteristics().lifeMax());
 
 //        if (lifeBar.getPercent() < 1) {
-            lifeBar.draw(x, y + height, width, height / 5);
+            lifeBar.draw(batch, x, y + height, width, height / 5);
 //        }
 
         super.draw(batch, x, y, width, height);
@@ -108,6 +108,7 @@ public class Character extends OnMapObject {
     public void update(float dt) {
         if (timeBeforeAttack > 0)
             timeBeforeAttack -= dt;
+        lifeBar.update(dt);
     }
 
     /**

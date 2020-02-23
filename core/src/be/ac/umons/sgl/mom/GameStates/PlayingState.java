@@ -307,6 +307,7 @@ public class PlayingState extends GameState implements Observer {
 
         lifeBar.setValue((int)player.getCharacteristics().getLife());
         lifeBar.setMaxValue((int)player.getCharacteristics().lifeMax());
+        lifeBar.update(dt);
         expBar.setValue((int)((People)player.getCharacteristics()).getExperience());
         expBar.setMaxValue((int)((People)player.getCharacteristics()).minExperience());
         energyBar.setValue((int)((People)player.getCharacteristics()).getEnergy());
@@ -372,16 +373,6 @@ public class PlayingState extends GameState implements Observer {
 
         cam.position.x = x;
         cam.position.y = y;
-//        double maxX = (mapHeight + mapWidth) * tileHeight;
-//        if (cam.position.x < SHOWED_MAP_WIDTH * tileWidth / 2)
-//            cam.position.x = SHOWED_MAP_WIDTH * tileWidth / 2;
-//        else if (cam.position.x > maxX)
-//            cam.position.x = (float)maxX;
-//
-//        if (cam.position.y > (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2)
-//            cam.position.y = (mapHeight - SHOWED_MAP_HEIGHT) * tileHeight / 2;
-//        else if (cam.position.y < -(mapHeight - SHOWED_MAP_HEIGHT / 2) * tileHeight)
-//            cam.position.y = -(mapHeight - SHOWED_MAP_HEIGHT / 2) * tileHeight;
     }
 
     /**
@@ -522,7 +513,7 @@ public class PlayingState extends GameState implements Observer {
                 new Point((int)(timeShower.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
-        lifeBar.draw((int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
+        lifeBar.draw(sb, (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         expBar.draw((int)leftMargin * 2 + topBarWidth, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         energyBar.draw((int)leftMargin * 3 + topBarWidth * 2, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         Point pauseButtonSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
