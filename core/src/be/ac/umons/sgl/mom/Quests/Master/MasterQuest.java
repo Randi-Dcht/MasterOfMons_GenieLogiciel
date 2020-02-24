@@ -253,13 +253,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *This method allows to notify the underQuest, there are changes in the people or other in maps.
      * @param notify is a notification of change
      */
-    /*public void eventMaps(Notification notify)
+    public void eventMaps(Notification notify)
     {
         for(UnderQuest uq : underQuest)
         {
             uq.evenActivity(notify);
         }
-    }*/
+    }
 
 
     /**

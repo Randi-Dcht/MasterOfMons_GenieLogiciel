@@ -11,7 +11,7 @@ public class ChooseSubject extends UnderQuest
     public ChooseSubject(Quest q, People people)
     {
         super("ChooseSubject", 50, q,people);
-    } //TODO regarder si j egarde cette valeur là pour cette sous quete
+    } //TODO regarder si je garde cette valeur là pour cette sous quete
     /**
      * This method allows to choice the subject of the memory
      *

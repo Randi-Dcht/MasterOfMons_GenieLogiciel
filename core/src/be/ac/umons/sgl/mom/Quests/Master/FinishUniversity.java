@@ -23,7 +23,7 @@ public class FinishUniversity extends MasterQuest
     /*This tab is a list of the course of the people for this year*/
     final Lesson[] lesson ={Lesson.mang,Lesson.mem,Lesson.stage,Lesson.ss,Lesson.ps};
     /*This is the goals of this MasterQuest*/
-    final UnderQuest[] underQuest = {new GoToLastLesson(this),new WriteMemory(this,super.people)}; //il manquait le joueur
+    final UnderQuest[] underQuest = {new GoToLastLesson(this),new WriteMemory(this,people)}; //il manquait le joueur
 
 
     /**

@@ -80,11 +80,10 @@ public class PreparedCompany extends MasterQuest
     {
         //ajouter les items que je veux et le nombre de fois que je les veux durant cette quete
         ArrayList<Items> listofitems = new ArrayList<>();
-        for (int i=0 ; i < 8; i++)
+        for (int i=0 ; i < 8; i++) {
             listofitems.add(new Pen());
-        for (int i=0 ; i < 8; i++)
             listofitems.add(new Gun());
-
+        }
         return listofitems;
     }
 

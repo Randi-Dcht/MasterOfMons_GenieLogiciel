@@ -2,6 +2,8 @@ package be.ac.umons.sgl.mom.Objects.Items;
 
 import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+
 import be.ac.umons.sgl.mom.Objects.FrameTime;
 import java.io.Serializable;
 
@@ -24,6 +26,8 @@ public abstract class Items implements Serializable, FrameTime
      * The name of this items
      */
     final String name;
+    /*this is the instance of the graphic*/
+    protected GraphicalSettings graphic;
 
 
     /**
@@ -117,4 +121,10 @@ public abstract class Items implements Serializable, FrameTime
     {
         return name;
     }
+
+    /**
+     *This method allow to say what is this quest
+     *@return a goal (=question) of this quest
+     */
+    public abstract String question();
 }
