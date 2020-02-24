@@ -7,11 +7,21 @@ package be.ac.umons.sgl.mom.Enums;
 public enum Orientation {
     Top(0), Left(90), Bottom(180), Right(270);
 
+    /**
+     * The degrees represented by the orientation.
+     */
     public int degrees;
+
+    /**
+     * @param degrees The degrees represented by the orientation.
+     */
     Orientation(int degrees) {
         this.degrees = degrees;
     }
 
+    /**
+     * @return The degrees represented by the orientation.
+     */
     public int getDegrees() {
         return degrees;
     }

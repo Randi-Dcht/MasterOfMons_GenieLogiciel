@@ -8,13 +8,29 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.awt.*;
 
+/**
+ * A <code>TextBox</code> designed to select color.
+ */
 public class ColorSelector extends Control {
 
+    /**
+     * The <code>TextBox</code> for entering the code value.
+     */
     protected TextBox tb;
+    /**
+     * Allow to draw shapes.
+     */
     protected ShapeRenderer sr;
+    /**
+     * The selected color.
+     */
     protected Color selectedColor;
 
-    public ColorSelector(GameInputManager gim, GraphicalSettings gs) { // TODO TESTS
+    /**
+     * @param gim The game's input manager.
+     * @param gs The game's graphical settings.
+     */
+    public ColorSelector(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         selectedColor = gs.getTransparentBackgroundColor();
         tb = new TextBox(gim, gs);
@@ -23,6 +39,9 @@ public class ColorSelector extends Control {
         sr.setAutoShapeType(true);
     }
 
+    /**
+     * USES ONLY FOR TEST !
+     */
     protected ColorSelector() {}
 
     @Override
@@ -41,17 +60,27 @@ public class ColorSelector extends Control {
         updateSelectedColor();
     }
 
+    /**
+     * Update the selected color with the entered code value if it's valid.
+     */
     protected void updateSelectedColor() {
         if (tb.getText().length() == 6 || tb.getText().length() == 8) {
             selectedColor = StringHelper.getColorFromString(tb.getText());
         }
     }
 
+    /**
+     * Set the selected color.
+     * @param selectedColor The selected color.
+     */
     public void setSelectedColor(Color selectedColor) {
         this.selectedColor = selectedColor;
         tb.setText(selectedColor.toString());
     }
 
+    /**
+     * @return The selected color.
+     */
     public Color getSelectedColor() {
         return selectedColor;
     }

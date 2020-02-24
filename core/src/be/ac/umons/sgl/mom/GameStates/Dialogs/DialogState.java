@@ -49,7 +49,9 @@ public abstract class DialogState extends GameState {
      * An index of the selected item.
      */
     protected int selectedButtonIndex = 0;
-
+    /**
+     * If the state must be removed as soon as the answer was given (enter was pressed).
+     */
     protected boolean mustQuitWhenAnswered = true;
 
     /**
@@ -131,7 +133,11 @@ public abstract class DialogState extends GameState {
         whenSelectedActions.put(answer, run);
         Button b = new Button(gim, gs);
         b.setText(answer);
-        b.setOnClick(run);
+        b.setOnClick(() -> {
+            run.run();
+            if (mustQuitWhenAnswered && ! gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
+                gsm.removeFirstState();
+        });
         b.setFont(gs.getSmallFont());
         buttons.add(b);
         buttons.get(0).setSelected(true);
@@ -161,6 +167,9 @@ public abstract class DialogState extends GameState {
         this.text = StringHelper.adaptTextToWidth(gs.getNormalFont(), text, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
     }
 
+    /**
+     * @param mustQuitWhenAnswered If the state must be quit as soon as an answer was given.
+     */
     public void setMustQuitWhenAnswered(boolean mustQuitWhenAnswered) {
         this.mustQuitWhenAnswered = mustQuitWhenAnswered;
     }

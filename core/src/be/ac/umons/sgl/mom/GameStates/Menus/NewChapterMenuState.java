@@ -17,11 +17,28 @@ import java.util.concurrent.TimeUnit;
 
 public class NewChapterMenuState extends GameState {
 
+    /**
+     * The name of the new chapter.
+     */
     protected String newChapterName = "";
+    /**
+     * THe text that must be shown on the screen.
+     */
     protected String textToShow = "";
+    /**
+     * Where the text must be drawn.
+     */
     protected SpriteBatch sb;
+    /**
+     * The number of lines the text to show is.
+     */
     protected int numberOfLines = 1;
 
+    /**
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings.
+     */
     public NewChapterMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
         init();
@@ -76,6 +93,9 @@ public class NewChapterMenuState extends GameState {
         sb.dispose();
     }
 
+    /**
+     * @param newChapterName The new chapter's name.
+     */
     public void setNewChapterName(String newChapterName) {
         this.newChapterName = newChapterName;
     }

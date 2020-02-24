@@ -9,16 +9,30 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.Random;
 
+/**
+ * Represent a life bar.
+ */
 public class LifeBar extends ProgressBar {
-
+    /**
+     * The color to show when the life is changing.
+     */
     protected final Color changeColor = new Color(0xFB8C00FF);
-
+    /**
+     * The difference of life to show at this instant.
+     */
     protected double differenceToShow;
-
+    /**
+     * The text to show next to the life's bar.
+     */
     protected String textToShow;
+    /**
+     * The time that has gone since the last life's changing.
+     */
+    protected double timeGone;
 
-    protected double timePassed;
-
+    /**
+     * @param gs The graphical's settings.
+     */
     public LifeBar(GraphicalSettings gs) {
         super(gs);
     }
@@ -46,15 +60,19 @@ public class LifeBar extends ProgressBar {
                 height - 2 * BETWEEN_BACKGROUND_FOREGROUND_MARGIN_HEIGHT);
         sr.end();
 
-        if (differenceToShow > 0 || (textToShow != null && timePassed < 0.6)) {
+        if (differenceToShow > 0 || (textToShow != null && timeGone < 0.6)) {
             batch.begin();
             gs.getSmallFont().draw(batch, textToShow, changeX, changeY);
             batch.end();
         }
     }
 
+    /**
+     * Update the time that has gone since the last life's changing.
+     * @param dt The delta-time with the precedent call.
+     */
     public void update(float dt) {
-        timePassed += dt;
+        timeGone += dt;
     }
 
     @Override
@@ -64,6 +82,10 @@ public class LifeBar extends ProgressBar {
         startAnimatingDiff((double)diff / maxValue);
     }
 
+    /**
+     * Init the animation for showing the difference.
+     * @param diffPercent The percentage of the difference.
+     */
     protected void startAnimatingDiff(double diffPercent) {
         if (diffPercent > 0) {
             DoubleAnimation da = new DoubleAnimation(diffPercent, 0, 200);
@@ -73,7 +95,7 @@ public class LifeBar extends ProgressBar {
             });
             da.setEndingAction(() -> differenceToShow = 0);
             AnimationManager.getInstance().addAnAnimation("LifeBarAnim" + new Random().nextInt(), da); // random for multiple bar possibility
-            timePassed = 0;
+            timeGone = 0;
         }
     }
 }

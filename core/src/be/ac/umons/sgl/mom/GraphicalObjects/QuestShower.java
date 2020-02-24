@@ -351,8 +351,4 @@ public class QuestShower {
     public void dispose() {
         sr.dispose();
     }
-
-    public Quest getQuestToShow() { // TODO Remove
-        return questToShow;
-    }
 }

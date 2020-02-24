@@ -25,7 +25,7 @@ public class LoadMenuState extends ChooseFolderMenuState {
                 directoryMI,
                 chooseSaveSLC
         });
-        setFolder(savePath);
+        setFolder(path);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -13,8 +14,17 @@ import java.util.List;
  */
 public class LevelUpMenuState extends MenuState {
 
+    /**
+     * The human player.
+     */
     Player player;
+    /**
+     * The number of points that the user must attributes.
+     */
     int pointToUse = 3;
+    /**
+     * Where the points has been attributed.
+     */
     int[] pointsAttributed = new int[Characteristics.values().length];
 
     /**
@@ -49,6 +59,10 @@ public class LevelUpMenuState extends MenuState {
         setMenuItems(menuItemList.toArray(new MenuItem[0]), false);
     }
 
+    /**
+     * Add a point to the given characteristic.
+     * @param ch The characteristic to which a point must be added.
+     */
     public void addPoint(Characteristics ch) {
         if (pointToUse > 0) {
             pointToUse--;
@@ -56,6 +70,11 @@ public class LevelUpMenuState extends MenuState {
             init();
         }
     }
+
+    /**
+     * Remove a point to the given characteristic.
+     * @param ch The characteristic to which a point must be removed.
+     */
     public void removePoint(Characteristics ch) {
         if (pointsAttributed[ch.ordinal()] > 0){
             pointToUse++;
@@ -64,6 +83,10 @@ public class LevelUpMenuState extends MenuState {
         }
     }
 
+    /**
+     * @param ch The characteristic
+     * @return The number that the user has in a given characteristic.
+     */
     public int getCharacteristics(Characteristics ch) {
         switch (ch) {
             case Strength:
@@ -76,13 +99,16 @@ public class LevelUpMenuState extends MenuState {
         return -1;
     }
 
+    /**
+     * @param player The human player.
+     */
     public void setPlayer(Player player) {
         this.player = player;
         init();
     }
 
     public void confirm() {
-        //TODO
+        SuperviserNormally.getSupervisor().getPeople().updateType(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
     }
 
     public enum Characteristics {

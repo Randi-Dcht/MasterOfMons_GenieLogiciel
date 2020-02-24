@@ -46,8 +46,14 @@ public class ProgressBar {
      */
     protected ShapeRenderer sr;
 
+    /**
+     * The graphical settings.
+     */
     protected GraphicalSettings gs;
 
+    /**
+     * @param gs The graphical settings.
+     */
     public ProgressBar(GraphicalSettings gs) {
         this.gs = gs;
         init();

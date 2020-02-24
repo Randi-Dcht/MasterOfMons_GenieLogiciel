@@ -11,8 +11,17 @@ import java.util.List;
 
 public abstract class ChooseFolderMenuState extends MenuState {
 
-    protected String savePath;
+    /**
+     * The path represented by the state.
+     */
+    protected String path;
+    /**
+     * The <code>MenuItem</code> representing the <code>ScrollListChooser</code> that contains all the folder and files buttons.
+     */
     protected MenuItem chooseSaveSLC;
+    /**
+     * The <code>MenuItem</code> representing the <code>TextBox</code> with the directory.
+     */
     protected MenuItem directoryMI;
 
     /**
@@ -29,9 +38,9 @@ public abstract class ChooseFolderMenuState extends MenuState {
         super.init();
         topMargin = .1;
         transparentBackground = false;
-        directoryMI = new MenuItem("Directory : " + savePath, MenuItemType.Text);
+        directoryMI = new MenuItem("Directory : " + path, MenuItemType.Text);
         chooseSaveSLC = new MenuItem("", MenuItemType.ScrollListChooser);
-        savePath = new File(".").getAbsoluteFile().getParent(); //getParent() to remove the \.
+        path = new File(".").getAbsoluteFile().getParent(); //getParent() to remove the \.
     }
 
     /**
@@ -43,11 +52,15 @@ public abstract class ChooseFolderMenuState extends MenuState {
         return new File(saveDirPath).listFiles((dir, name) -> name.endsWith(".mom") | new File(dir, name).isDirectory());
     }
 
-    protected void setFolder(String saveDirPath) {
-        savePath = saveDirPath;
+    /**
+     * Set the folder to show, and initiate add all needed buttons to the state.
+     * @param dirPath The folder to show.
+     */
+    protected void setFolder(String dirPath) {
+        path = dirPath;
         List<ScrollListChooser.ScrollListItem> slis = new ArrayList<>();
-        slis.add(new ScrollListChooser.ScrollListItem("..", () -> setFolder(new File(saveDirPath).getAbsoluteFile().getParent())));
-        for (File f : listSaveFileAndFolder(saveDirPath)) {
+        slis.add(new ScrollListChooser.ScrollListItem("..", () -> setFolder(new File(dirPath).getAbsoluteFile().getParent())));
+        for (File f : listSaveFileAndFolder(dirPath)) {
             if (f.isDirectory())
                 slis.add(new ScrollListChooser.ScrollListItem(f.getName(), () -> onFolderClick(f)));
             else
@@ -56,7 +69,7 @@ public abstract class ChooseFolderMenuState extends MenuState {
         ((ScrollListChooser)chooseSaveSLC.control).setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
         chooseSaveSLC.size.x = -2;
         chooseSaveSLC.size.y = -2;
-        directoryMI.setHeader("Directory : " + savePath);
+        directoryMI.setHeader("Directory : " + path);
         directoryMI.size.y = -1;
     }
 

@@ -56,7 +56,7 @@ public class Player extends Character {
      * @param batch Where the player must be drawn.
      */
     public void draw(Batch batch) {
-        arc.draw(batch, new Point(middleX + xT + getWidth() / 2, middleY + yT + getHeight()));
+        arc.draw(new Point(middleX + xT + getWidth() / 2, middleY + yT + getHeight()));
         batch.begin();
         batch.draw(getTexture(), middleX + xT, middleY + yT, tileWidth, 2 * tileHeight);
         batch.end();
@@ -79,10 +79,17 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * Set the horizontal translation from the center.
+     * @param xT The horizontal translation.
+     */
     public void setxT(int xT) {
         this.xT = xT;
     }
-
+    /**
+     * Set the vertical translation from the center.
+     * @param yT The vertical translation.
+     */
     public void setyT(int yT) {
         this.yT = yT;
     }
