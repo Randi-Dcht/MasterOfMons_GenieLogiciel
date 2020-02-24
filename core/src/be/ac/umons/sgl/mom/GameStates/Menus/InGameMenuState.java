@@ -40,7 +40,7 @@ public class InGameMenuState extends MenuState {
         transparentBackground = true;
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("continue"), MenuItemType.Button, () -> gsm.removeFirstState()),
-                new MenuItem(gs.getStringFromId("player"), MenuItemType.Button, () -> gsm.setState(PlayerMenuState.class)),
+                new MenuItem(gs.getStringFromId("player"), MenuItemType.Button, () -> gsm.setState(LevelUpMenuState.class)),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, () -> gsm.setState(SaveMenuState.class)),
                 new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
                 new MenuItem(gs.getStringFromId("quickSave"), MenuItemType.Button), // TODO : Call save system with default name.

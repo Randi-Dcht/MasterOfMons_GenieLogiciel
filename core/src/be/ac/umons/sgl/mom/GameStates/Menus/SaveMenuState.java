@@ -12,6 +12,9 @@ import java.util.Date;
 
 public class SaveMenuState extends ChooseFolderMenuState {
 
+    /**
+     * The <code>MenuItem</code> showing the name.
+     */
     MenuItem nameMI;
 
     /**
@@ -38,7 +41,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save),
                 chooseSaveSLC
         });
-        setFolder(savePath);
+        setFolder(path);
         ((TextBox)nameMI.control).setSuffix(".mom");
         ((TextBox)nameMI.control).setText(String.format("MOM - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())));
         nameMI.size.x = -2;
@@ -54,14 +57,26 @@ public class SaveMenuState extends ChooseFolderMenuState {
         save(file.getAbsolutePath());
     }
 
+    /**
+     * Initiate the saving mechanism.
+     */
     protected void save() {
-        save(savePath + "/" + ((TextBox)nameMI.control).getText());
+        save(path + "/" + ((TextBox)nameMI.control).getText());
     }
 
+    /**
+     * Initiate the saving mechanism with the given file's path.
+     * @param saveFilePath The file's path where the game must be saved.
+     */
     protected void save(String saveFilePath) {
         save(saveFilePath, false);
     }
 
+    /**
+     * Check if the file exists, and is not, save the game.
+     * @param saveFilePath The file's path where the game must be saved.
+     * @param verified If the path has already been verified or not.
+     */
     protected void save(String saveFilePath, boolean verified) {
         File f = new File(saveFilePath);
         if (f.exists() && ! verified) {

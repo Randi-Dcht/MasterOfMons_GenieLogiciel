@@ -28,6 +28,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 
+import be.ac.umons.sgl.mom.Quests.Quest;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -91,9 +92,13 @@ public class PlayingState extends GameState implements Observer {
      * The positions where the user can't go.
      */
     protected MapObjects collisionObjects;
-
+    /**
+     * The positions of the map changing objects.
+     */
     protected MapObjects changingMapObjects;
-
+    /**
+     * The positions where PNJs can be spawned.
+     */
     protected MapObjects randomPNJPositions;
     /**
      * The camera.
@@ -154,9 +159,13 @@ public class PlayingState extends GameState implements Observer {
      * The agenda's shower
      */
     protected AgendaShower agendaShower;
-
+    /**
+     * The clock used in this state.
+     */
     protected TimeShower timeShower;
-
+    /**
+     * The state of dialog if one is active.
+     */
     protected InGameDialogState dialogState;
 
     /**
@@ -255,6 +264,9 @@ public class PlayingState extends GameState implements Observer {
         testPNJ.setMapPos(new Point(player.getPosX(), player.getPosY()));
     }
 
+    /**
+     * Spawn all the PNJs randomly.
+     */
     public void initPNJsPositions() {
         for (Character c : pnjs) {
             Random random = new Random();
@@ -267,6 +279,11 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Spawn the player and set all the needed information with the map.
+     * @param spawnX On which CASE the player must spawn horizontally.
+     * @param spawnY On which CASE the player must spawn vertically.
+     */
     public void initPlayerPosition(int spawnX, int spawnY) {
         player.setMapWidth(mapWidth * tileWidth);
         player.setMapHeight(mapHeight * tileHeight);
@@ -460,6 +477,12 @@ public class PlayingState extends GameState implements Observer {
         return res;
     }
 
+    /**
+     * Check if the second character is in front of the first one.
+     * @param c1 The first character.
+     * @param c2 The second character.
+     * @return If the second character is in front of the first one.
+     */
     protected boolean isInFrontOf(Character c1, Character c2) {
         switch (c1.getOrientation()){
             case Top:
@@ -554,6 +577,9 @@ public class PlayingState extends GameState implements Observer {
         agendaShower.handleInput();
     }
 
+    /**
+     * Drop the selected item from the inventory on the map.
+     */
     public void dropSelectedObject() {
         InventoryItem dropped = inventoryShower.dropSelectedItem();
         if (dropped != null) {
@@ -598,9 +624,10 @@ public class PlayingState extends GameState implements Observer {
             }
         } else if (notify.getEvents().equals(Events.ChangeQuest)) {
             Gdx.app.postRunnable(() -> {
-                questShower.setQuest(((People)player.getCharacteristics()).getQuest());
+                Quest q = ((People)player.getCharacteristics()).getQuest();
+                questShower.setQuest(q);
                 NewChapterMenuState ncms = (NewChapterMenuState) gsm.setState(NewChapterMenuState.class);
-                ncms.setNewChapterName(questShower.getQuestToShow().getName());
+                ncms.setNewChapterName(q.getName());
             });
         }
         else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())

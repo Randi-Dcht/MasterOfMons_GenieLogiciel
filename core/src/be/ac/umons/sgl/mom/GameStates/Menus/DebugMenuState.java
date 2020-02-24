@@ -14,6 +14,9 @@ import java.awt.*;
  */
 public class DebugMenuState extends MenuState {
 
+    /**
+     * The playing state in which the debug method must be called.
+     */
     private PlayingState ps;
 
     /**
@@ -41,6 +44,9 @@ public class DebugMenuState extends MenuState {
         });
     }
 
+    /**
+     * @param ps The playing state in which the debug method must be called.
+     */
     public void setPlayingState(PlayingState ps) {
         this.ps = ps;
     }

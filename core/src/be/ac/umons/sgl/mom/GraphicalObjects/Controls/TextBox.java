@@ -42,7 +42,9 @@ public class TextBox extends Control {
      * If the <code>TextBox</code> accepts ONLY numbers or not.
      */
     protected boolean acceptOnlyNumbers = false;
-
+    /**
+     * If the <code>TextBox</code> accepts ONLY characters corresponding the hexa-decimal encodage(1-9, A-F)
+     */
     protected boolean acceptOnlyHexadecimal = false;
 
     /**
@@ -126,12 +128,15 @@ public class TextBox extends Control {
 
     /**
      * Define if the <code>TextBox</code> accepts only numbers.
-     * @param acceptOnlyNumbers
+     * @param acceptOnlyNumbers If the <code>TextBox</code> accepts only numbers.
      */
     public void setAcceptOnlyNumbers(boolean acceptOnlyNumbers) {
         this.acceptOnlyNumbers = acceptOnlyNumbers;
     }
 
+    /**
+     * @param acceptOnlyHexadecimal If the <code>TextBox</code> accepts ONLY characters corresponding the hexa-decimal encodage(1-9, A-F)
+     */
     public void setAcceptOnlyHexadecimal(boolean acceptOnlyHexadecimal) {
         this.acceptOnlyHexadecimal = acceptOnlyHexadecimal;
     }

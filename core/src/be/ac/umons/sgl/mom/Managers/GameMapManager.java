@@ -15,8 +15,14 @@ import java.util.*;
  */
 public class GameMapManager {
 
+    /**
+     * The instance of the GameMapManager if already created.
+     */
     private static GameMapManager instance;
 
+    /**
+     * @return The instance of the GameMapManager if already created.
+     */
     public static GameMapManager getInstance() {
         if (instance == null)
             instance = new GameMapManager();
@@ -45,6 +51,9 @@ public class GameMapManager {
      */
     protected AssetManager am;
 
+    /**
+     * The actual map's name.
+     */
     protected String actualMapName;
 
     protected GameMapManager() {
@@ -120,6 +129,9 @@ public class GameMapManager {
         return actualItmr.getMap();
     }
 
+    /**
+     * @return The actual map's name.
+     */
     public String getActualMapName() {
         return actualMapName;
     }

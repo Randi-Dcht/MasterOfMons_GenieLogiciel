@@ -63,6 +63,11 @@ public class CreatePlayerMenuState extends MenuState {
         setScrollListProperties(difficultyMi, slil);
     }
 
+    /**
+     * Set the <code>ScrollListChooser</code> properties for this state.
+     * @param mi
+     * @param slil
+     */
     private void setScrollListProperties(MenuItem mi, List<ScrollListChooser.ScrollListItem> slil) {
         ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
         mi.size.y = (int)((slil.size() + 1) * (gs.getNormalFont().getLineHeight() + 2 * topMargin) + 2 * topMargin);

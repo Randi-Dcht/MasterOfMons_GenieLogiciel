@@ -48,10 +48,17 @@ public class MapObject extends OnMapObject {
         return mapPos.y;
     }
 
+    /**
+     * Set the position on the map (Pixel)
+     * @param mapPos The position on the map.
+     */
     public void setMapPos(Point mapPos) {
         this.mapPos = mapPos;
     }
 
+    /**
+     * @return The item represented by this object.
+     */
     public Items getItem() {
         return go;
     }
