@@ -7,18 +7,18 @@ package be.ac.umons.sgl.mom.Events;
  */
 public enum Events
 {
-    ChangeDay("changeDay"),                   /*...*/
-    ChangeQuest("quest"),                     /*...*/
-    ChangeMonth("month"),                     /*...*/
-    PlaceInMons("placeOfPeople"),             /*...*/
-    MeetOther("meetOther"),                   /*...*/
-    Attack("LaunchAttack"),                   /*...*/
-    AddFriend("meetFriend"),                  /*...*/
-    Dialog("DialogArray"),                    /*...*/
-    Answer("answerQuestion"),                 /*...*/
-    Dead("characterDead"),                    /*...*/
-    UpLevel("UpLevel"),                       /*...*/
-    UseItems("PeopleUseItem");                /*...*/
+    ChangeDay("changeDay"),                   /*This event notify when the day changes in the game*/
+    ChangeQuest("quest"),                     /*This event notify when the quest changes*/
+    ChangeMonth("month"),                     /*This event notify when the month change in the game*/
+    PlaceInMons("placeOfPeople"),             /*This event notify when the people change the place*/
+    MeetOther("meetOther"),                   /*This event notify when the character meet an other character*/
+    Attack("LaunchAttack"),                   /*This event notify when the character attack other character*/
+    AddFriend("meetFriend"),                  /*This event notify when the people add friend*/
+    Dialog("DialogArray"),                    /*This event notify when the class launch a dialog*/
+    Answer("answerQuestion"),                 /*This event notify when the player answer to the dialog*/
+    Dead("characterDead"),                    /*This event notify when the character is dead*/
+    UpLevel("UpLevel"),                       /*This event notify when the people up the level*/
+    UseItems("PeopleUseItem");                /*This event notify when the people uses an item*/
 
 
     /**The name of the events*/

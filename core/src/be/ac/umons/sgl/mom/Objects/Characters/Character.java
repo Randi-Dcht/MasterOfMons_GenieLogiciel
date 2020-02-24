@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dead;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
@@ -31,15 +32,17 @@ public abstract class Character implements Attack, Social, Serializable
     protected int level = 1; /*between 1 and 40*/
     protected ReadConversation conversation;
     final String name;
+    final Type type;
 
 
     /**
      * This constructor allows to create a new people who pilot by a player
      * @param name is the name of the character
      */
-    public Character(String name)
+    public Character(String name, Type type)
     {
         this.name     = name;
+        this.type     = type;
         conversation  = ReadConversation.getInstance();
     }
 
@@ -57,38 +60,64 @@ public abstract class Character implements Attack, Social, Serializable
     }
 
 
-    /***/
+    /**
+     * This method returns the number of the life of this character
+     * @return the life of character
+     */
     public double getLife()
     {
         return life;
     }
 
 
-    /***/
+    /**
+     * This method returns the number of the strength of this character
+     * @return the number of strength
+     */
     public int getStrength()
     {
         return strength;
     }
 
 
-    /***/
+    /**
+     * This method returns the number of the defence of this character
+     * @return number of the defence
+     */
     public int getDefence()
     {
         return defence;
     }
 
 
-    /***/
+    /**
+     * This method returns the number of the agility of this character
+     * @return number of agility
+     */
     public int getAgility()
     {
         return agility;
     }
 
 
-    /***/
+    /**
+     * This method return the number of the level of this character
+     * @return the number of level
+     */
     public int getLevel()
     {
         return level;
+    }
+
+
+    /**
+     * This method return the characteristic of the character
+     * @return the type of the character
+     */
+    @Override
+    public Type getCharacteristic()
+    {
+        return type;
     }
 
 
@@ -120,14 +149,14 @@ public abstract class Character implements Attack, Social, Serializable
      */
     public void updateType(int strength, int defence, int agility)
     {
-        this.strength = strength;
-        this.defence  = defence;
-        this.agility  = agility;
+        this.strength += strength;
+        this.defence  += defence;
+        this.agility  += agility;
         this.life     = lifeMax();
     }
 
 
-    public int getPointType(int level)
+    public int getPointType(int level)//TODO reprendre celui avec le mobile ou moving in people
     {
         return (level-1)*3;
     }
@@ -172,7 +201,7 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public double recovery()
     {
-        return (0.5 + (agility/40));
+        return (1.5-(agility/40));
     }
 
 

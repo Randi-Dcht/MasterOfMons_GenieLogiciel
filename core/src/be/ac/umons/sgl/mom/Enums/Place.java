@@ -13,8 +13,8 @@ public enum Place
     DeVinci("Tmx/Umons_DeVinci.tmx",State.study),
     Poly("Tmx/Umons_Polytech.tmx",State.listen),
     Kot("Tmx/kot.tmx",State.nap),
-    Mons("Tmx/CityMons.tmx",State.normal),
-    MicrosoftCompany("Tmx/MicrosoftCompany.tmx",State.normal);
+    Mons("Tmx/CityMons.tmx",State.normal);
+    /*MicrosoftCompany("Tmx/MicrosoftCompany.tmx",State.normal);*/ //TODO up to mx
 
     private String maps;
     private State state;

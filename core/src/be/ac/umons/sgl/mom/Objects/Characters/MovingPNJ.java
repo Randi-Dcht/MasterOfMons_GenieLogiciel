@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.MobileType;
-import be.ac.umons.sgl.mom.Enums.Orientation;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
@@ -29,16 +26,23 @@ public class MovingPNJ extends Mobile implements Observer
 public double time = 1;
     /**
      * This constructor define the moving PNJ in the maps
-     * @param bloc is the level of the player
-     * @param gs   is the graphic
-     * @param type is the type of the Mobile
+     * @param bloc  is the level of the player
+     * @param place is the place of this pnj
+     * @param type  is the type of the Mobile
      */
-    public MovingPNJ(GraphicalSettings gs, Bloc bloc, MobileType type,Player victim)
+    public MovingPNJ(Bloc bloc, MobileType type, Place place)
     {
         super("MovingPNJ",bloc,type,Actions.Attack);
+        setPlace(place);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
+    }
+
+
+    public Character initialisation(GraphicalSettings gs, Player victim)
+    {
         myGraphic = new Character(gs,this);
         setVictim(victim);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
+        return myGraphic;
     }
 
 
@@ -67,7 +71,40 @@ public double time = 1;
      */
     public void moving(double dt)
     {
+        int x,y;
+        calculusDistance();
+        time = time - dt;
+        if(time < 0)
+        {
+            time = 1;
+            if (tileXbetween < 0 && tileXbetween <= 32)
+            {
+                //myGraphic.setOrientation(Orientation.Right);
+                x =-32;//TODO remplacer
+            }
+            else if (tileXbetween >= 0 && tileXbetween <= 32)
+                x = 0;
+            else
+            {
+                //myGraphic.setOrientation(Orientation.Left);
+                x = 32;
+            }
 
+            if (tileYbetween < 0 && tileYbetween > 64)
+            {
+                //myGraphic.setOrientation(Orientation.Top);
+                y =-64;
+            }
+            else if (tileXbetween >= 0 && tileXbetween <= 64)
+                y = 0;
+            else
+            {
+                //myGraphic.setOrientation(Orientation.Bottom);
+                y = 64;
+            }
+
+            myGraphic.move(x,y); //TODO ici modif
+        }
     }
 
 

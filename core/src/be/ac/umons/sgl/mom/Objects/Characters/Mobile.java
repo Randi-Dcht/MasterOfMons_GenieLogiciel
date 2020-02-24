@@ -32,7 +32,7 @@ public class Mobile extends Character implements Serializable
      */
     public Mobile(String name, Bloc playerBloc, MobileType type,Actions myAction)
     {
-        super(name);
+        super(name,type.getType());
         this.level = calculus(playerBloc);
         this.playerBloc  = playerBloc;
         this.type = type;
@@ -162,4 +162,7 @@ public class Mobile extends Character implements Serializable
     {
         return conversation.getDialogPNJ().get(answer);
     }
+
+
+    //TODO mettre les tyepe pour les mobile
 }

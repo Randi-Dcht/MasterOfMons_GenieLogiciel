@@ -58,7 +58,7 @@ public class People extends Character implements Serializable, Observer
      */
     public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
-        super(name);
+        super(name,type);
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
@@ -378,10 +378,11 @@ public class People extends Character implements Serializable, Observer
     /**
      * This method allows to up level of this people (#debug#)
      */
-    public void upLevel()
+    public void upLevel()//TODO ajouter pour guillaume up level point
     {
         level++;
         SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
+        System.out.println(level + " <= level =>" + getPointType(level));
     }
 
 

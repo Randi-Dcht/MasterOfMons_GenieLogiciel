@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Gender;
 import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
@@ -15,6 +16,7 @@ import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
+import be.ac.umons.sgl.mom.Objects.Characters.MovingPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.Social;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -24,8 +26,6 @@ import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
-
-import java.security.DigestInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -60,8 +60,10 @@ public class SuperviserNormally implements Observer
         private People people;
         /**The all objects in all maps in this game*/
         private HashMap<Place,ArrayList<Items>> listItems;
-        /**The all no people in this game*/
+        /**The all mobile - PNJ (not moving) in this game*/
         private HashMap<Place,ArrayList<Mobile>> listMobile;
+        /**The all mobile who moves in this game*/
+        private HashMap<Place,ArrayList<MovingPNJ>> listMoving;
         /**This is a lst of the mobile dead */
         private ArrayList<Mobile> deadMobile = new ArrayList<>();
         /**This the class who save the game in real time*/
@@ -167,13 +169,36 @@ public class SuperviserNormally implements Observer
         }
 
 
+        /**
+         * This method create the hashMap with mobile and the place of this mobile
+         * @param difficulty is the difficulty of the game
+         */
         private void createMovingPnj(Difficulty difficulty)
         {
-
+            listMoving = new HashMap<>();
+            Place[] plc = Place.values();Place place;
+            for (Place pl : plc)
+                listMoving.put(pl,new ArrayList<>());
+            for (int i = 0 ; i <= difficulty.getNumberPNJ() ; i++)
+                listMoving.get((place = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic,place));
         }
 
 
-        /***/
+        /**
+         * This method return the list of the moving PNJ in the specific map TMX
+         * @param place is the place
+         * @return list of the moving pnj in the maps
+         */
+        public ArrayList<MovingPNJ> getMovingPnj(Place place)
+        {
+            return listMoving.get(place);
+        }
+
+
+        /**
+         * This method allows to give the actual quest to the graphic quest
+         * @param qs is the graphic instance to quest
+         */
         public void setQuest(QuestShower qs)
         {
             qs.setQuest(people.getQuest());
@@ -437,4 +462,4 @@ public class SuperviserNormally implements Observer
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
         }
 
-    }
+    }//TODO add the update of list item,mobiel,moving when up quest
