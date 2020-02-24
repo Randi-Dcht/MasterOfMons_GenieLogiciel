@@ -1,8 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
-import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-
 
 /**
  * This class define a pen whose use by a people during the Quest
@@ -30,15 +28,17 @@ public class Pen extends Items
 
     }
 
+
     /**
      * This method allows to decrease the life of this items
      * @param time is the time between two frames
      */
     @Override
-    public void make(double time)
+    public void update(double time)
     {
 
     }
+
 
     /**
      * This method allows to said if the items is obsolete

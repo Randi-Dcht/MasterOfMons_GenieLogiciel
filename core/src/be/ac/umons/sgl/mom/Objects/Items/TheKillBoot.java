@@ -1,8 +1,5 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
-import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 
@@ -38,7 +35,7 @@ public class TheKillBoot extends Items implements Guns
      * @param time is the time between two frames
      */
     @Override
-    public void make(double time)
+    public void update(double time)
     {
 
     }

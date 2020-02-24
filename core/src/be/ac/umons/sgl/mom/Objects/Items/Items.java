@@ -2,6 +2,8 @@ package be.ac.umons.sgl.mom.Objects.Items;
 
 import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.FrameTime;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * Every Item is associated to Place and a Quest (SupervisorNormally)
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-public abstract class Items implements Serializable
+public abstract class Items implements Serializable, FrameTime
 {
     /*the place of this items*/
     protected Place place;
@@ -60,23 +62,18 @@ public abstract class Items implements Serializable
 
 
     /**
-     * This method allows to decrease the life of this items
-     * @param time is the time between two frames
-     */
-    public abstract void make(double time);
-
-
-    /**
      * This method allows to said if the items is obsolete
      * @return number
      */
     public abstract double getObsolete();
 
 
+    /***/
     public Place getPlace()
     {
         return place;
     }
+
 
     /***/
     @Override

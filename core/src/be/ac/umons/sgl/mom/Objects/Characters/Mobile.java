@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.Objects.FrameTime;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import java.util.Random;
  *This abstract class allows define a no player, it is a character pilot by computer.
  *@author Umons_Group_2_ComputerScience
  */
-public class Mobile extends Character implements Serializable
+public class Mobile extends Character implements Serializable,FrameTime
 {
     /*save the bloc of player*/
     protected Bloc playerBloc;
@@ -45,6 +46,7 @@ public class Mobile extends Character implements Serializable
      * This method allows to update the variable of the mobile with the time
      * @param dt is the time between two frames
      */
+    @Override
     public void update(double dt)
     {
         time = time - dt;

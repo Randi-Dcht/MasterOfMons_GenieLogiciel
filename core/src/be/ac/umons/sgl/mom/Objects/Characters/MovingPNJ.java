@@ -23,7 +23,7 @@ public class MovingPNJ extends Mobile implements Observer
     private Character myGraphic;
     private boolean run = false;
 
-public double time = 1;
+public double time = 0.5;
     /**
      * This constructor define the moving PNJ in the maps
      * @param bloc  is the level of the player
@@ -61,9 +61,15 @@ public double time = 1;
      */
     public void calculusDistance()
     {
-        tileYbetween = myGraphic.getPosX() - victim.getPosX();
-        tileXbetween = myGraphic.getPosY() - victim.getPosY();
+        tileXbetween = myGraphic.getPosX() - victim.getPosX();
+        tileYbetween = myGraphic.getPosY() - victim.getPosY();
     }
+
+
+    /***/
+    @Override
+    public void update(double dt)
+    {}
 
 
     /**
