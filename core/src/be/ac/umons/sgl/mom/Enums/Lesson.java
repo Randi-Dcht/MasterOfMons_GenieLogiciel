@@ -26,22 +26,22 @@ public enum Lesson
      */
 
     /*Lesson of Bachelor 1*/
-    MI1('O',"math pour informatique 1",Place.Nimy,Bloc.BA1,20),
-    MI2('O',"math pour informatique 2",Place.Nimy,Bloc.BA1,15),
-    algo1('O',"algorithme python",Place.Nimy,Bloc.BA1,20),
-    algo2('F',"algorithme java",Place.DeVinci,Bloc.BA1,10),
-    ftOrdi('F',"fonctionnement des ordinateurs",Place.Nimy,Bloc.BA1,6),
-    projet1('F',"projet bachelier 1",Place.DeVinci,Bloc.BA1,7),
+    MI1(    'O',"math for computer 1",Place.GrandAmphi,Bloc.BA1,20),
+    MI2(    'O',"math for computer 2",Place.GrandAmphi,Bloc.BA1,15),
+    algo1(  'O',"algorithm python"   ,Place.DeVinci,Bloc.BA1,   20),
+    algo2(  'F',"algorithm java"     ,Place.DeVinci,Bloc.BA1,   10),
+    ftOrdi( 'F',"computer operation" ,Place.GrandAmphi,Bloc.BA1,6),
+    projet1('F',"bachelor project 1" ,Place.DeVinci,Bloc.BA1,   7),
 
     /*Lesson of Bachelor 2*/
-    nbComplexe('F',"nombre complexe",Place.Nimy,Bloc.BA2,10),
-    opti('O',"optimisation lineaire",Place.Poly,Bloc.BA2,10),
-    anglais('O',"english for sciences",Place.Nimy,Bloc.BA2,10),
-    OS('O',"systeme exploitation",Place.Nimy,Bloc.BA2,10),
-    projet2('F',"projet bachelier 2",Place.Nimy,Bloc.BA2,10),
-    calculus2('O',"algèbre partie B",Place.Poly,Bloc.BA2,10),
-    ecopol('F',"economie politique",Place.Warocque,Bloc.BA2,10),
-    reseau('O',"reseau",Place.DeVinci,Bloc.BA2,10),
+    nbComplexe('F',"complex number"       ,Place.GrandAmphi,Bloc.BA2,10),
+    opti(      'O',"linear optimization"  ,Place.Poly    ,Bloc.BA2,10),
+    anglais(   'O',"english for sciences" ,Place.Nimy    ,Bloc.BA2,10),
+    OS(        'O',"systeme exploitation" ,Place.Nimy    ,Bloc.BA2,10),
+    projet2(   'F',"projet bachelier 2"   ,Place.Nimy    ,Bloc.BA2,10),
+    calculus2( 'O',"algèbre partie B"     ,Place.Poly    ,Bloc.BA2,10),
+    ecopol(    'F',"economie politique"   ,Place.Warocque,Bloc.BA2,10),
+    reseau(    'O',"reseau"               ,Place.DeVinci ,Bloc.BA2,10),
 
     /*Lesson of Bachelor 3*/
     calculProba('O',"calcul de probabilite",Place.Poly,Bloc.BA3,10),
