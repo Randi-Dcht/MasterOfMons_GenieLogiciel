@@ -51,4 +51,8 @@ public class MapObject extends OnMapObject {
     public void setMapPos(Point mapPos) {
         this.mapPos = mapPos;
     }
+
+    public Items getItem() {
+        return go;
+    }
 }

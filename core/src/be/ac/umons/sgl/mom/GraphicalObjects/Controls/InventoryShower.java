@@ -199,10 +199,14 @@ public class InventoryShower extends Control {
     public InventoryItem dropSelectedItem() {
         if (selectedItem != null) {
             inventoryItemList.remove(selectedItem);
-            inventory.remove(selectedItem.getItem());
         }
         animate();
         return selectedItem;
+    }
+
+    public void addAnItem(Items item) {
+        inventoryItemList.add(new InventoryItem(gs, item));
+        animate();
     }
 
     @Override

@@ -539,14 +539,15 @@ public class PlayingState extends GameState implements Observer {
         else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
-        } else if (gim.isKey(Input.Keys.M, KeyStatus.Pressed)) {
-            NewChapterMenuState ncms = (NewChapterMenuState) gsm.setState(NewChapterMenuState.class);
-            ncms.setNewChapterName(questShower.getQuestToShow().getName());
-            questShower.setQuest(questShower.getQuestToShow());
         } else if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
             if (selectedOne instanceof Character)
                 SuperviserNormally.getSupervisor().meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
-            // TODO interaction objects
+            else {
+                if (SuperviserNormally.getSupervisor().getPeople().pushObject(((MapObject)selectedOne).getItem())) {
+                    inventoryShower.addAnItem(((MapObject)selectedOne).getItem());
+                    mapObjects.remove(selectedOne);
+                }
+            }
         }
         inventoryShower.handleInput();
         pauseButton.handleInput();
