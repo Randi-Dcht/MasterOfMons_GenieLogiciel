@@ -26,12 +26,12 @@ public enum Lesson
      */
 
     /*Lesson of Bachelor 1*/
-    MI1(    'O',"math for computer 1",Place.GrandAmphi,Bloc.BA1,20),
+    MI1(    'O',"math for computer 1",Place.GrandAmphi,Bloc.BA1,30),
     MI2(    'O',"math for computer 2",Place.GrandAmphi,Bloc.BA1,15),
     algo1(  'O',"algorithm python"   ,Place.DeVinci,Bloc.BA1,   20),
-    algo2(  'F',"algorithm java"     ,Place.DeVinci,Bloc.BA1,   10),
-    ftOrdi( 'F',"computer operation" ,Place.GrandAmphi,Bloc.BA1,6),
-    projet1('F',"bachelor project 1" ,Place.DeVinci,Bloc.BA1,   7),
+    algo2(  'F',"algorithm java"     ,Place.DeVinci,Bloc.BA1,   15),
+    ftOrdi( 'F',"computer operation" ,Place.GrandAmphi,Bloc.BA1,10),
+    projet1('F',"bachelor project 1" ,Place.DeVinci,Bloc.BA1,   10),
 
     /*Lesson of Bachelor 2*/
     nbComplexe('F',"complex number"       ,Place.GrandAmphi,Bloc.BA2,10),

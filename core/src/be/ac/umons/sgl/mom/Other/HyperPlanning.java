@@ -26,10 +26,10 @@ public class HyperPlanning
         while (monthL.size() != 0)
         {
             ArrayList<Course> ll = null;
-            for (int i=0; i< (int)average;i++) //new Random().nextInt(4)
+            ll = new ArrayList<>();
+            for (double i=0; i<average; i++) //new Random().nextInt(4)
             {
                 int random = new Random().nextInt(monthL.size());
-                ll = new ArrayList<>();
                 ll.add(new Course(monthL.get(random),new Date(dayy,date.getMonth(),date.getYear())));
                 monthL.remove(random);
                 if(monthL.size()==0)//TODO modifier cela pour éviter le bound of arraylist
@@ -38,7 +38,6 @@ public class HyperPlanning
             list.put(dayy,ll);
             dayy++;
         }
-
         return list;
     }
 

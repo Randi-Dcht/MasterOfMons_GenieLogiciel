@@ -71,40 +71,7 @@ public double time = 1;
      */
     public void moving(double dt)
     {
-        int x,y;
-        calculusDistance();
-        time = time - dt;
-        if(time < 0)
-        {
-            time = 1;
-            if (tileXbetween < 0 && tileXbetween <= 32)
-            {
-                //myGraphic.setOrientation(Orientation.Right);
-                x =-32;//TODO remplacer
-            }
-            else if (tileXbetween >= 0 && tileXbetween <= 32)
-                x = 0;
-            else
-            {
-                //myGraphic.setOrientation(Orientation.Left);
-                x = 32;
-            }
 
-            if (tileYbetween < 0 && tileYbetween > 64)
-            {
-                //myGraphic.setOrientation(Orientation.Top);
-                y =-64;
-            }
-            else if (tileXbetween >= 0 && tileXbetween <= 64)
-                y = 0;
-            else
-            {
-                //myGraphic.setOrientation(Orientation.Bottom);
-                y = 64;
-            }
-
-            myGraphic.move(x,y); //TODO ici modif
-        }
     }
 
 
