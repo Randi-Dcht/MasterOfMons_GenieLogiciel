@@ -11,6 +11,7 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Items.Pen;
+import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.util.ArrayList;
@@ -36,10 +37,9 @@ public class PreparedCompany extends MasterQuest
     public PreparedCompany(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
         super(before,people,Bloc.MA1,graphic,difficulty);
-        ObligationLesson(lesson);
+        obligationLesson(lesson);
         addUnderQuest(underQuest);
     }
-
 
     /**
      * This method allows to define to next Quest
@@ -53,8 +53,9 @@ public class PreparedCompany extends MasterQuest
      * This method returns the list of the lesson
      * @return list of lesson
      */
-    @Override
-    public Lesson[] getLesson() {
+
+    public Lesson[] getLesson()
+    {
         return lesson;
     }
 
@@ -63,7 +64,6 @@ public class PreparedCompany extends MasterQuest
     {
         return new Place[]{Place.Mons,Place.Nimy,Place.MicrosoftCompany};
     }
-
 
     /**
      *This method allows to say the ask of this MasterQuest
@@ -78,13 +78,14 @@ public class PreparedCompany extends MasterQuest
     /***/
     public ArrayList<Items> whatItem()
     {
-        ArrayList<Items> list = new ArrayList<>();
+        //ajouter les items que je veux et le nombre de fois que je les veux durant cette quete
+        ArrayList<Items> listofitems = new ArrayList<>();
         for (int i=0 ; i < 8; i++)
-            list.add(new Pen());
+            listofitems.add(new Pen());
         for (int i=0 ; i < 8; i++)
-            list.add(new Gun());
+            listofitems.add(new Gun());
 
-        return list;
+        return listofitems;
     }
 
 
@@ -96,6 +97,26 @@ public class PreparedCompany extends MasterQuest
     }
 
 
+    @Override
+    public double getProgress() {
+        return 0;
+    }
+
+    @Override
+    public double getAdvancement() {
+        return 0;
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
+    }
+
+    @Override
+    public Quest[] getSubQuests() {
+        return new Quest[0];
+    }
+
     /**
      * This method allows to return the name of MasterQuest
      * @return name who is a string
@@ -105,13 +126,33 @@ public class PreparedCompany extends MasterQuest
         return graphic.getStringFromId("nameMasterOne");
     }
 
+    @Override
+    public int getTotalSubQuestsNumber() {
+        return 0;
+    }
 
-    /***/
+    @Override
+    public void addProgress(double many) {
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public void update(Notification notify) {
+
+    }
+
+
+    /**
     @Override
     public void update(Notification notify)
     {
         super.update(notify);
-        /*code ici*/
-    }
+        /*code ici
+    }*/
 }
 
