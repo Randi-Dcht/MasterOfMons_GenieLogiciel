@@ -89,6 +89,16 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
+     * This method return the difficulty of this game for this player
+     * @return the difficulty
+     */
+    public Difficulty getDifficulty()
+    {
+        return difficulty;
+    }
+
+
+    /**
      * This method allows to decrease the life
      * @param lose is the number of life
      */

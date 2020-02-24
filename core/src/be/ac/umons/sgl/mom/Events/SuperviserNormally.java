@@ -24,6 +24,8 @@ import be.ac.umons.sgl.mom.Objects.TimeGame;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
+
+import java.security.DigestInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -54,27 +56,27 @@ public class SuperviserNormally implements Observer
        /*--------------------------------------------------------------------------------------------------------*/
 
 
-        /*The people who play this party*/
+        /**The people who play this party*/
         private People people;
-        /*The all objects in all maps in this game*/
+        /**The all objects in all maps in this game*/
         private HashMap<Place,ArrayList<Items>> listItems;
-        /*The all no people in this game*/
+        /**The all no people in this game*/
         private HashMap<Place,ArrayList<Mobile>> listMobile;
-        /*This is a lst of the mobile dead */
+        /**This is a lst of the mobile dead */
         private ArrayList<Mobile> deadMobile = new ArrayList<>();
-        /*This the class who save the game in real time*/
+        /**This the class who save the game in real time*/
         private Saving save;
-        /*This is the instance of the Graphic*/
+        /**This is the instance of the Graphic*/
         private GraphicalSettings graphic;
-        /*This is the time in the game*/
+        /**This is the time in the game*/
         private TimeGame time;
-        /*This is the events variable*/
+        /**This is the events variable*/
         private Event event;
-        /*Associate String to maps*/
+        /**Associate String to maps*/
         private HashMap<String,Place> listMap = new HashMap<>();
-        /*Associate Bloc to Lesson*/
+        /**Associate Bloc to Lesson*/
         private HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<Bloc, ArrayList<Lesson>>();
-        /*when the attack is the mobile*/
+        /**when the attack is the mobile*/
         private Mobile memoryMobile;
 
 
@@ -159,8 +161,15 @@ public class SuperviserNormally implements Observer
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
             save = new Saving(people,namePlayer);
+            createMovingPnj(difficulty);
             createMobil(mQ);
             createItems(mQ);
+        }
+
+
+        private void createMovingPnj(Difficulty difficulty)
+        {
+
         }
 
 
@@ -185,6 +194,7 @@ public class SuperviserNormally implements Observer
 
             createItems(people.getQuest());
             createMobil(people.getQuest());
+            createMovingPnj(people.getDifficulty());
         }
 
 

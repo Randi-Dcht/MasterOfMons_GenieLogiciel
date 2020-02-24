@@ -127,6 +127,12 @@ public abstract class Character implements Attack, Social, Serializable
     }
 
 
+    public int getPointType(int level)
+    {
+        return (level-1)*3;
+    }
+
+
     /**
      *This method allows to calculated the maximum of life people.
      *@return max life.
