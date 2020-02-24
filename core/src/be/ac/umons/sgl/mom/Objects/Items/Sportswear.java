@@ -2,19 +2,10 @@ package be.ac.umons.sgl.mom.Objects.Items;
 
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
-public class Synthesis extends Items {
+public class sportswear extends Items {
 
-    public Synthesis() {
-        super("Synthesis of lessons");
-    }
-
-    /**
-     * It help to know what do the item
-     * @return the utility of the item
-     */
-    public String question()
-    {
-        return graphic.getStringFromId("synthesis");
+    public sportswear() {
+        super("Sportswear");
     }
 
     @Override
@@ -30,5 +21,10 @@ public class Synthesis extends Items {
     @Override
     public double getObsolete() {
         return 0;
+    }
+
+    @Override
+    public String question() {
+        return graphic.getStringFromId("sportswear");
     }
 }
