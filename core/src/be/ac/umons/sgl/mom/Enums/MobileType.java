@@ -1,7 +1,9 @@
 package be.ac.umons.sgl.mom.Enums;
 
 
-/***/
+/**
+ * This class define the type of the mobile
+ */
 public enum MobileType
 {
     /***/

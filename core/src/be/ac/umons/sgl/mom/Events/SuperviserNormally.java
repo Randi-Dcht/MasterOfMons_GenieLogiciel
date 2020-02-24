@@ -119,7 +119,10 @@ public class SuperviserNormally implements Observer
         }
 
 
-        /***/
+        /**
+         * This method allows to associate the lesson with the bloc
+         * This method create the hashMap with the bloc associate with list of the lesson
+         */
         public void associateLesson()
         {
             for (Bloc blc : Bloc.values())
@@ -129,7 +132,10 @@ public class SuperviserNormally implements Observer
         }
 
 
-        /***/
+        /**
+         * This method allows to give the lesson associate to the param bloc
+         * @param blc is the bloc of the Quest
+         */
         public ArrayList<Lesson> getLesson(Bloc blc)
         {
             return listLesson.get(blc);
@@ -163,9 +169,7 @@ public class SuperviserNormally implements Observer
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
             save = new Saving(people,namePlayer);
-            createMovingPnj(difficulty);
-            createMobil(mQ);
-            createItems(mQ);
+            refreshQuest();
         }
 
 
@@ -216,10 +220,7 @@ public class SuperviserNormally implements Observer
             time = new TimeGame(date);
             this.people  = people;
             this.save    = save;
-
-            createItems(people.getQuest());
-            createMobil(people.getQuest());
-            createMovingPnj(people.getDifficulty());
+            refreshQuest();
         }
 
 
@@ -283,6 +284,17 @@ public class SuperviserNormally implements Observer
 
 
         /**
+         * This method is called when the quest is start
+         */
+        public void refreshQuest()
+        {
+            createItems(people.getQuest());
+            createMobil(people.getQuest());
+            createMovingPnj(people.getDifficulty());
+        }
+
+
+        /**
          * This method allows to receive the notification of the other class
          * @param notify is a notification
          */
@@ -300,6 +312,9 @@ public class SuperviserNormally implements Observer
 
             if (notify.getEvents().equals(Events.Answer) && notify.bufferEmpty())
                 switchingDialog(((String)notify.getBuffer()));
+
+            if (notify.getEvents().equals(Events.ChangeQuest))
+                refreshQuest();
         }
 
 
@@ -402,7 +417,7 @@ public class SuperviserNormally implements Observer
         */
        private double calculateHits(Attack attacker, Attack victim,double gun)
        {
-           return ( ( 2.5 * bonus(1,1) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(1,1) * victim.getDefence() + ((bonus(1,1) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
+           return ( ( 2.5 * bonus(attacker.getCharacteristic().getStrengthBonus()) * Math.pow(attacker.getStrength(),1.6 ) ) / ( bonus(victim.getCharacteristic().getDefenceBonus()) * victim.getDefence() + ((bonus(victim.getCharacteristic().getAgilityBonus()) * victim.getAgility() ) / 5) ) ) * ( ( gun + 40 )/40 );
        }
 
 
@@ -410,7 +425,7 @@ public class SuperviserNormally implements Observer
         * This method allows calculated a bonus for an attack in two players
         * @return the bonus (double)
         */
-        private double bonus(double p, double c)
+        private double bonus(double c)
         {
             return Math.pow(Math.cbrt(1.3),c);
         }
