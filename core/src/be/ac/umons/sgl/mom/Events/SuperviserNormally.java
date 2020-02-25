@@ -112,6 +112,7 @@ public class SuperviserNormally implements Observer
          */
         public ArrayList<Items> getItems(Place place)
         {
+            System.out.print("place: " + place + " --> " + listItems.get(place) + " // " + listMobile.get(place));
             if (listItems.containsValue(place))
                 return listItems.get(place);
             return new ArrayList<>();
@@ -257,7 +258,7 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : quest.whatMobile())
             {
                 if (mb.getPlace() == null)
-                    mb.setPlace(place[new Random().nextInt(place.length)]);
+                    mb.setPlace(/*place[new Random().nextInt(place.length)]*/ Place.Nimy); //TODO
                 listMobile.get(mb.getPlace()).add(mb);
             }
         }
@@ -276,7 +277,7 @@ public class SuperviserNormally implements Observer
             for (Items mb : quest.whatItem())
             {
                 if (mb.getPlace() == null)
-                    mb.setPlace(place[new Random().nextInt(place.length)]);
+                    mb.setPlace(/*place[new Random().nextInt(place.length)]*/Place.Nimy); //TODO
                 listItems.get(mb.getPlace()).add(mb);
             }
         }

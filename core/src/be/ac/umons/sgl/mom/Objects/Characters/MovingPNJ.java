@@ -20,13 +20,36 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 public class MovingPNJ extends Mobile implements Observer
 {
 
+    /**
+     * The constance of the time between two attacks
+     */
+    private static final double TIME = 0.7;
+    /**
+     * Distance between people and this PNJ on X
+     */
     private int tileXbetween;
+    /**
+     * Distance between people and this PNJ on Y
+     */
     private int tileYbetween;
+    /**
+     * The human player
+     */
     private Character victim;
+    /**
+     * The instance of this PNJ (graphic)
+     */
     private Character myGraphic;
-    private boolean run = false;
+    /**
+     * Size of the tile
+     */
+    private int tileSize;
+    /**
+     * The time to displacement on the maps
+     */
+    private double time;
 
-public double time = 0.5;
+
     /**
      * This constructor define the moving PNJ in the maps
      * @param bloc  is the level of the player
@@ -37,6 +60,7 @@ public double time = 0.5;
     {
         super("MovingPNJ",bloc,type,Actions.Attack);
         setPlace(place);
+        time = TIME;
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
     }
 
@@ -46,6 +70,16 @@ public double time = 0.5;
         myGraphic = new Character(gs,this);
         setVictim(victim);
         return myGraphic;
+    }
+
+
+    /**
+     * This method allows to give the size of the tiles
+     * @param size is the size of the tile
+     */
+    public void setSize(int size)
+    {
+        tileSize = size;
     }
 
 
@@ -62,25 +96,63 @@ public double time = 0.5;
     /**
      * This method calculus the distance between this and victim player
      */
-    public void calculusDistance()
+    private void calculusDistance()
     {
         tileXbetween = myGraphic.getPosX() - victim.getPosX();
         tileYbetween = myGraphic.getPosY() - victim.getPosY();
     }
 
 
-    /***/
+    /**
+     * This method give the time between two frames
+     * @param dt is the time between two frames
+     */
     @Override
     public void update(double dt)
-    {}
+    {
+        time = time - dt;
+        if (time < 0)
+            moving();
+    }
 
 
     /**
      * This method allows to move the people in the maps with refresh
      */
-    public void moving(double dt)
+    private void moving()//TODO optimiser cela
     {
+        int x=0,y=0;
+        boolean v1,v2;
+        calculusDistance();
 
+        if(tileXbetween > tileSize+5 || tileXbetween < 0)
+        {
+            if (tileXbetween < 0)
+            {
+                x = tileSize;
+            }
+            else
+            {
+                x = -tileSize;
+            }
+        }
+        else if (tileYbetween > tileSize+5 || tileYbetween < 0)
+        {
+            if (tileYbetween < 0)
+            {
+                y = tileSize;
+            }
+            else
+            {
+                y = -tileSize;
+            }
+        }
+        else
+        {
+            SuperviserNormally.getSupervisor().meetCharacter(this,victim.getCharacteristics());
+        }
+        myGraphic.move(x,y);
+        time = TIME;
     }
 
 
@@ -101,9 +173,6 @@ public double time = 0.5;
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty() && notify.getBuffer().equals(place))
-            run = true;
-        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty() && !notify.getBuffer().equals(place))
-            run = false;
+         //TODO delete if never use
     }
 }
