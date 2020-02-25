@@ -235,6 +235,10 @@ public class InventoryShower extends Control {
         return height;
     }
 
+    public InventoryItem getSelectedItem() {
+        return selectedItem;
+    }
+
     /**
      * Begin an animation.
      */

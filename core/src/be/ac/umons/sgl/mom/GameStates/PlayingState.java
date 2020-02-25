@@ -268,9 +268,9 @@ public class PlayingState extends GameState implements Observer {
      * Spawn all the PNJs randomly.
      */
     public void initPNJsPositions() {
+        Random random = new Random();
+        Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
         for (Character c : pnjs) {
-            Random random = new Random();
-            Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
             int posIndex = random.nextInt(rmos.size);
             Rectangle mo = rmos.removeIndex(posIndex).getRectangle();
             Rectangle mapRect = new Rectangle( mo.x * 2 / tileWidth, (mapHeight * tileHeight - mo.y - mo.height) / tileHeight, mo.width * 2 / tileWidth, mo.height / tileHeight);
@@ -559,6 +559,12 @@ public class PlayingState extends GameState implements Observer {
             attack(player);
         else if (gim.isKey(Input.Keys.L, KeyStatus.Pressed))
             dropSelectedObject();
+        else if (gim.isKey(Input.Keys.F, KeyStatus.Pressed)) {
+            InventoryItem ii = inventoryShower.getSelectedItem();
+            if (ii != null)
+                SuperviserNormally.getSupervisor().getPeople().useObject(ii.getItem());
+        }
+
         else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
