@@ -72,7 +72,6 @@ public class MovingPNJ extends Mobile implements Observer
         return myGraphic;
     }
 
-
     /**
      * This method allows to give the size of the tiles
      * @param size is the size of the tile
