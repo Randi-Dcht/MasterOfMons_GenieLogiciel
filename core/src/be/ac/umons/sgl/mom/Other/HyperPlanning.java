@@ -25,13 +25,15 @@ public class HyperPlanning
         int dayy = date.getDay();
         while (monthL.size() != 0)
         {
-            ArrayList<Course> ll = null;
-            ll = new ArrayList<>();
+            int rdh;
+            ArrayList<Course> ll = new ArrayList<>();
+            ArrayList<Integer> hour = new ArrayList<>();hour.add(8);hour.add(10);hour.add(13);hour.add(15);hour.add(17);
             for (double i=0; i<average; i++) //new Random().nextInt(4)
             {
                 int random = new Random().nextInt(monthL.size());
-                ll.add(new Course(monthL.get(random),new Date(dayy,date.getMonth(),date.getYear())));
+                ll.add(new Course(monthL.get(random),new Date(dayy,date.getMonth(),date.getYear(),hour.get(rdh=new Random().nextInt(hour.size())),0)));
                 monthL.remove(random);
+                hour.remove(rdh);
                 if(monthL.size()==0)//TODO modifier cela pour éviter le bound of arraylist
                     return list;
             }

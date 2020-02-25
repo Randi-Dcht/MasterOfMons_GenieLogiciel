@@ -61,7 +61,7 @@ public class ChangeMonth implements Notification
      * @return true is the buffer isn't empty
      */
     @Override
-    public boolean bufferEmpty()
+    public boolean bufferNotEmpty()
     {
         return !(buffer == null);
     }

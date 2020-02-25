@@ -10,7 +10,6 @@ import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
-import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
@@ -310,7 +309,7 @@ public class SuperviserNormally implements Observer
                     memoryMobile = null;
             }
 
-            if (notify.getEvents().equals(Events.Answer) && notify.bufferEmpty())
+            if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
                 switchingDialog(((String)notify.getBuffer()));
 
             if (notify.getEvents().equals(Events.ChangeQuest))

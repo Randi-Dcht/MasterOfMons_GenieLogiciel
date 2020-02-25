@@ -630,7 +630,7 @@ public class PlayingState extends GameState implements Observer {
                 ncms.setNewChapterName(q.getName());
             });
         }
-        else if (notify.getEvents().equals(Events.Dialog) && notify.bufferEmpty())
+        else if (notify.getEvents().equals(Events.Dialog) && notify.bufferNotEmpty())
         {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
             updateDialog(diag);

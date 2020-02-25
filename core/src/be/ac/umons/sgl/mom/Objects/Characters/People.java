@@ -21,7 +21,6 @@ import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -446,7 +445,7 @@ public class People extends Character implements Serializable, Observer
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty())
+        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
             setPlace(((PlaceInMons)notify).getBuffer());
         if (notify.getEvents().equals(Events.ChangeMonth))
             createPlanning();

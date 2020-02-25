@@ -60,7 +60,7 @@ public class PlaceInMons implements Notification
      * This method return if the buffer isn't empty
      * @return true is the buffer isn't empty
      */
-    public boolean bufferEmpty()
+    public boolean bufferNotEmpty()
     {
         return !(buffer == null);//TODO tester ce problème
     }

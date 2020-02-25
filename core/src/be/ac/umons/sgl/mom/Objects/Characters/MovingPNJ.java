@@ -1,6 +1,9 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.MobileType;
+import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
@@ -98,9 +101,9 @@ public double time = 0.5;
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty() && notify.getBuffer().equals(place))
+        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty() && notify.getBuffer().equals(place))
             run = true;
-        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferEmpty() && !notify.getBuffer().equals(place))
+        if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty() && !notify.getBuffer().equals(place))
             run = false;
     }
 }
