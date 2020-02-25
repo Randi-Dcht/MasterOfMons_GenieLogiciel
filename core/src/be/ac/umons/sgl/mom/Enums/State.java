@@ -7,17 +7,17 @@ package be.ac.umons.sgl.mom.Enums;
 public enum State
 {
   /*When the people on the map*/
-  normal("Normally",-0.000772),
+  normal("Normally",-0.00772),
   /*When the people attack other*/
-  attack("attack", 0.0028),
+  attack("attack", -1.5),
   /*When the people study lesson*/
-  study("Study",-0.002313),
+  study("Study",-0.02313),
   /*When the people nap in the kot*/
-  nap("Nap",0.0014),
+  nap("Nap",0.014),
   /*when the people running in the map*/
-  run("Running",-0.003088),
+  run("Running",-0.3088),
   /*When the people listen the course in the auditory*/
-  listen("ListenCourse",-0.001544);
+  listen("ListenCourse",-0.1544);
 
 
   final String state;

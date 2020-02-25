@@ -477,4 +477,4 @@ public class SuperviserNormally implements Observer
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
         }
 
-    }//TODO add the update of list item,mobiel,moving when up quest
+    }

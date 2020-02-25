@@ -236,6 +236,7 @@ public class People extends Character implements Serializable, Observer
      */
     public void useObject(Items object)
     {
+        System.out.println(object + "to use");
         if (myObject.contains(object))
             object.used(this);
     }
@@ -265,10 +266,12 @@ public class People extends Character implements Serializable, Observer
      *This method allows to redefine the energy of this people.
      *@param many who is the energy loss or win
      */
-    private void addEnergy(double many)
+    public void addEnergy(double many)//TODO low
     {
-        if(this.energy + many >= 0 || this.energy + many <= 100)
-            this.energy = this.energy + many;
+        if(this.energy + many <= 100)
+            this.energy += many;
+        else
+            this.energy = 100;
     }
 
 
@@ -321,7 +324,7 @@ public class People extends Character implements Serializable, Observer
      * This method calculate the experience with the level of victim
      * @param victim who is dead
      */
-    public void winExperience(Attack victim)
+    public void winExperience(Attack victim)//TODO check
     {
         winExperience(calculateWin(victim));
     }
@@ -403,7 +406,7 @@ public class People extends Character implements Serializable, Observer
      */
     public void reduceEnergizing(State state)
     {
-        energy = energy - state.getEnergy();
+        addEnergy(state.getEnergy());
     }
 
 
