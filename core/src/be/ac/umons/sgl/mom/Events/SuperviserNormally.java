@@ -196,7 +196,7 @@ public class SuperviserNormally implements Observer
             people.newQuest(mQ);
             save = new Saving(people,namePlayer);
             refreshQuest();
-            regule = new Regulator(people,time,this);
+            regule = new Regulator(people,time);
         }
 
 
@@ -290,7 +290,7 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : quest.whatMobile())
             {
                 if (mb.getPlace() == null)
-                    mb.setPlace(/*place[new Random().nextInt(place.length)]*/ Place.Nimy); //TODO
+                    mb.setPlace(place[new Random().nextInt(place.length)]);
                 listMobile.get(mb.getPlace()).add(mb);
             }
         }
@@ -309,7 +309,7 @@ public class SuperviserNormally implements Observer
             for (Items mb : quest.whatItem())
             {
                 if (mb.getPlace() == null)
-                    mb.setPlace(/*place[new Random().nextInt(place.length)]*/Place.Nimy); //TODO
+                    mb.setPlace(place[new Random().nextInt(place.length)]);
                 listItems.get(mb.getPlace()).add(mb);
             }
         }

@@ -18,7 +18,7 @@ public class MovingPNJ extends Mobile implements Observer
 {
 
     /**
-     * The constance of the time between two attacks
+     * The constance of the time between two displacements
      */
     private static final double TIME = 0.7;
     /**
@@ -40,7 +40,7 @@ public class MovingPNJ extends Mobile implements Observer
     /**
      * Size of the tile
      */
-    private int tileSize;
+    private int tileSize = 64;
     /**
      * The time to displacement on the maps
      */
@@ -62,12 +62,18 @@ public class MovingPNJ extends Mobile implements Observer
     }
 
 
+    /**
+     * This class allows to create the instance graphic of this PNJ
+     * @param gs is the graphic setting
+     * @param victim is the instance of graphic Player
+     */
     public Character initialisation(GraphicalSettings gs, Player victim)
     {
         myGraphic = new Character(gs,this);
         setVictim(victim);
         return myGraphic;
     }
+
 
     /**
      * This method allows to give the size of the tiles
@@ -118,8 +124,6 @@ public class MovingPNJ extends Mobile implements Observer
     private void moving()//TODO optimiser cela
     {
         int x=0,y=0;
-        System.out.println("passe " + tileXbetween + "  " + tileYbetween );
-        boolean v1,v2;
         calculusDistance();
 
         if(tileXbetween > tileSize+5 || tileXbetween < 0)
