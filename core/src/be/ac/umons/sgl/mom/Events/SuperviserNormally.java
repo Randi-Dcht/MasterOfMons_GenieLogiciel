@@ -141,10 +141,7 @@ public class SuperviserNormally implements Observer
          */
         public ArrayList<Items> getItems(Place place)
         {
-            System.out.print("place: " + place + " --> " + listItems.get(place) + " // " + listMobile.get(place));
-            if (listItems.containsValue(place))
-                return listItems.get(place);
-            return new ArrayList<>();
+             return listItems.get(place);
         }
 
 
@@ -178,9 +175,9 @@ public class SuperviserNormally implements Observer
          */
         public ArrayList<Mobile> getMobile(Place place)
         {
-            if(listMobile.containsValue(place))
-                return listMobile.get(place);
-            return new ArrayList<>();
+
+            return listMobile.get(place);
+
         }
 
 
