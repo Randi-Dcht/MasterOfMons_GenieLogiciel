@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.MobileType;
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
@@ -121,6 +118,7 @@ public class MovingPNJ extends Mobile implements Observer
     private void moving()//TODO optimiser cela
     {
         int x=0,y=0;
+        System.out.println("passe " + tileXbetween + "  " + tileYbetween );
         boolean v1,v2;
         calculusDistance();
 
@@ -129,10 +127,12 @@ public class MovingPNJ extends Mobile implements Observer
             if (tileXbetween < 0)
             {
                 x = tileSize;
+                myGraphic.setOrientation(Orientation.Right);
             }
             else
             {
                 x = -tileSize;
+                myGraphic.setOrientation(Orientation.Left);
             }
         }
         else if (tileYbetween > tileSize+5 || tileYbetween < 0)
@@ -140,10 +140,12 @@ public class MovingPNJ extends Mobile implements Observer
             if (tileYbetween < 0)
             {
                 y = tileSize;
+                myGraphic.setOrientation(Orientation.Top);
             }
             else
             {
                 y = -tileSize;
+                myGraphic.setOrientation(Orientation.Bottom);
             }
         }
         else

@@ -61,6 +61,12 @@ public abstract class Character implements Attack, Social, Serializable
     }
 
 
+
+    /**
+     * This method allows to change the speed of the people
+     * @param cmb if cmb equal 0 the speed is reinitialise
+     *            if cmb doesn't equal 0 the speed is multiply by cmb
+     */
     public void setSpeed(int cmb)
     {
         if (cmb != 0)
@@ -70,6 +76,10 @@ public abstract class Character implements Attack, Social, Serializable
     }
 
 
+    /**
+     * This method allows to give the speed of the people
+     * @return the speed
+     */
     public double getSpeed()
     {
         return speed;
@@ -173,6 +183,7 @@ public abstract class Character implements Attack, Social, Serializable
     }
 
 
+    /***/
     public int getPointType(int level)//TODO reprendre celui avec le mobile ou moving in people
     {
         return (level-1)*3;
