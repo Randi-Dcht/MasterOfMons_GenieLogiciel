@@ -3,13 +3,14 @@ package be.ac.umons.sgl.mom.Events;
 /**
  * This class enum the events in this Game
  * Every event is associate to Notification
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public enum Events
 {
     ChangeDay("changeDay"),                   /*This event notify when the day changes in the game*/
     ChangeQuest("quest"),                     /*This event notify when the quest changes*/
     ChangeMonth("month"),                     /*This event notify when the month change in the game*/
+    ChangeHour("hour"),                       /*This event notify when the hour change in the game*/
     PlaceInMons("placeOfPeople"),             /*This event notify when the people change the place*/
     MeetOther("meetOther"),                   /*This event notify when the character meet an other character*/
     Attack("LaunchAttack"),                   /*This event notify when the character attack other character*/

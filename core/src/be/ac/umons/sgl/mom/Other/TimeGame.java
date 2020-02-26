@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeDay;
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeHour;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeMonth;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
@@ -64,12 +65,12 @@ public class TimeGame implements Observer
      */
     public void updateSecond(double time)
     {
-        second = second + time *30;
+        /*second = second + time *90;
         if(second>= 60)
-        {
+        {*/
             changeMin();
-            second = second%60;
-        }
+            //second = second%60;
+        //}
     }
 
 
@@ -79,7 +80,7 @@ public class TimeGame implements Observer
      */
     public Date getDate()
     {
-        return new Date(day+1,NBmonth+1,this.year);
+        return new Date(day+1,NBmonth+1,this.year,hour,min);
     }
 
 
@@ -153,6 +154,7 @@ public class TimeGame implements Observer
     /***/
     private void changeHour()
     {
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
         if((hour = (hour+1)%timeHour)==0)
             changeDay();
     }
@@ -185,6 +187,20 @@ public class TimeGame implements Observer
     {
         //return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;
         return String.format("%2d / %2d / %s  %02d:%02d",day,NBmonth,year,hour,min);
+    }
+
+
+    /**
+     * This method to call when the people pass an period in the game
+     * @param addDay is the day to add
+     * @param addHour is the hour to add
+     * @param addMin is the minute to add
+     */
+    void refreshTime(int addDay, int addHour, int addMin)
+    {//TODO upgrade
+        day  += addDay;
+        hour += addHour;
+        min  += addMin;
     }
 
 

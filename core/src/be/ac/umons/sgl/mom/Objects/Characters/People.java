@@ -266,12 +266,17 @@ public class People extends Character implements Serializable, Observer
      *This method allows to redefine the energy of this people.
      *@param many who is the energy loss or win
      */
-    public void addEnergy(double many)//TODO low
+    public void addEnergy(double many)
     {
         if(this.energy + many <= 100)
             this.energy += many;
         else
             this.energy = 100;
+
+        if (energy <= 2)
+            this.energy = 2;
+
+        SuperviserNormally.getSupervisor().getRegule().lowEnergizing();//TODO upgrade
     }
 
 

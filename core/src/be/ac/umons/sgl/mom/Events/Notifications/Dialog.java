@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Events.Notifications;
 
 import be.ac.umons.sgl.mom.Events.Events;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -22,6 +23,15 @@ public class Dialog implements Notification
     {
         evt = Events.Dialog;
         this.buffer = buffer;
+    }
+
+    /**
+     * This constructor define a notification when start a dialog with buffer
+     * @param str is a buffer with ArrayList of string (specific to events)
+     */
+    public Dialog(String ... str)
+    {
+        this(new ArrayList<>(Arrays.asList(str)));
     }
 
     /**

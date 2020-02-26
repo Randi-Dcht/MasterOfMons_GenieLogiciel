@@ -21,6 +21,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.Social;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
+import be.ac.umons.sgl.mom.Other.Regulator;
 import be.ac.umons.sgl.mom.Other.TimeGame;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
@@ -55,30 +56,58 @@ public class SuperviserNormally implements Observer
        /*--------------------------------------------------------------------------------------------------------*/
 
 
-        /**The people who play this party*/
+        /**
+         * The people who play this party
+         */
         private People people;
-        /**The all objects in all maps in this game*/
+        /**
+         * The all objects in all maps in this game
+         */
         private HashMap<Place,ArrayList<Items>> listItems;
-        /**The all mobile - PNJ (not moving) in this game*/
+        /**
+         * The all mobile - PNJ (not moving) in this game
+         */
         private HashMap<Place,ArrayList<Mobile>> listMobile;
-        /**The all mobile who moves in this game*/
+        /**
+         * The all mobile who moves in this game
+         */
         private HashMap<Place,ArrayList<MovingPNJ>> listMoving;
-        /**This is a lst of the mobile dead */
+        /**
+         * This is a lst of the mobile dead
+         */
         private ArrayList<Mobile> deadMobile = new ArrayList<>();
-        /**This the class who save the game in real time*/
+        /**
+         * This the class who save the game in real time
+         */
         private Saving save;
-        /**This is the instance of the Graphic*/
+        /**
+         * This is the instance of the Graphic
+         */
         private GraphicalSettings graphic;
-        /**This is the time in the game*/
+        /**
+         * This is the time in the game
+         */
         private TimeGame time;
-        /**This is the events variable*/
+        /**
+         * This is the events variable
+         */
         private Event event;
-        /**Associate String to maps*/
+        /**
+         * Associate String to maps
+         */
         private HashMap<String,Place> listMap = new HashMap<>();
-        /**Associate Bloc to Lesson*/
+        /**
+         * Associate Bloc to Lesson
+         */
         private HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<Bloc, ArrayList<Lesson>>();
-        /**when the attack is the mobile*/
+        /**
+         * when the attack is the mobile
+         */
         private Mobile memoryMobile;
+        /**
+         * The instance of the regulator class*
+         */
+        private Regulator regule;
 
 
        /**
@@ -170,10 +199,16 @@ public class SuperviserNormally implements Observer
             people.newQuest(mQ);
             save = new Saving(people,namePlayer);
             refreshQuest();
+            regule = new Regulator(people,time,this);
         }
 
 
-        /**
+         public Regulator getRegule()
+         {
+             return regule;
+         }
+
+    /**
          * This method create the hashMap with mobile and the place of this mobile
          * @param difficulty is the difficulty of the game
          */
