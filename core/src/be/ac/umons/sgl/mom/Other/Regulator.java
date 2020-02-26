@@ -47,7 +47,7 @@ public class Regulator implements Observer
     public void lowEnergizing()
     {
         if (player.getEnergy() <= 10)
-            manager.getEvent().notify(new Dialog("Low10"));
+            manager.getEvent().notify(new Dialog("Low10","ESC"));
     }
 
 

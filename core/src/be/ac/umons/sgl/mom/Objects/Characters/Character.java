@@ -31,6 +31,7 @@ public abstract class Character implements Attack, Social, Serializable
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
     protected ReadConversation conversation;
+    protected double speed;
     final String name;
     final Type type;
 
@@ -57,6 +58,21 @@ public abstract class Character implements Attack, Social, Serializable
             life = life + dt+10;
         if(!living && life > lifeMax()*0.6)
             living = true;
+    }
+
+
+    public void setSpeed(int cmb)
+    {
+        if (cmb != 0)
+            speed *= cmb;
+        else
+            speed = displacement();
+    }
+
+
+    public double getSpeed()
+    {
+        return speed;
     }
 
 
@@ -153,6 +169,7 @@ public abstract class Character implements Attack, Social, Serializable
         this.defence  += defence;
         this.agility  += agility;
         this.life     = lifeMax();
+        this.speed    = displacement();
     }
 
 

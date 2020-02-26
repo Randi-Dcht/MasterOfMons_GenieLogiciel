@@ -6,19 +6,19 @@ import be.ac.umons.sgl.mom.Objects.Characters.Character;
 
 /**
  * This class define the changed day in the gale
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public class ChangeDay implements Notification
 {
     private Events evt;
-    private Character buffer;
+    private int buffer;
 
 
     /**
      * This constructor define a notification when change day with buffer
      * @param buffer is a buffer with character (specific to events)
      */
-    public ChangeDay(Character buffer)
+    public ChangeDay(int buffer)
     {
         evt = Events.ChangeDay;
         this.buffer = buffer;
@@ -50,7 +50,7 @@ public class ChangeDay implements Notification
      * @return character
      */
     @Override
-    public Character getBuffer()
+    public Integer getBuffer()
     {
         return buffer;
     }
@@ -63,6 +63,6 @@ public class ChangeDay implements Notification
     @Override
     public boolean bufferNotEmpty()
     {
-        return !(buffer == null);
+        return buffer != 0;
     }
 }
