@@ -24,6 +24,7 @@ import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 
+import be.ac.umons.sgl.mom.Objects.Characters.MovingPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
@@ -171,6 +172,8 @@ public class PlayingState extends GameState implements Observer {
      */
     protected InGameDialogState dialogState;
 
+    protected MovingPNJ testMove = new MovingPNJ(Bloc.BA3,MobileType.Lambda,Place.Nimy);
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -260,6 +263,7 @@ public class PlayingState extends GameState implements Observer {
         Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda,Actions.Dialog));
         testPNJ.getCharacteristics().setMaps(Maps.Nimy);
         pnjs.add(testPNJ);
+        pnjs.add(testMove.initialisation(gs,player));
 
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
