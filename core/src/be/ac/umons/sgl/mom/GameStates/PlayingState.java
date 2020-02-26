@@ -172,7 +172,7 @@ public class PlayingState extends GameState implements Observer {
      */
     protected InGameDialogState dialogState;
 
-    protected MovingPNJ testMove = new MovingPNJ(Bloc.BA3,MobileType.Lambda,Place.Nimy);
+    protected MovingPNJ pm;
 
     /**
      * @param gsm The game's state manager
@@ -263,7 +263,7 @@ public class PlayingState extends GameState implements Observer {
         Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda,Actions.Dialog));
         testPNJ.getCharacteristics().setMaps(Maps.Nimy);
         pnjs.add(testPNJ);
-        pnjs.add(testMove.initialisation(gs,player));
+        pnjs.add(pm.initialisation(gs,player));
 
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
@@ -283,10 +283,12 @@ public class PlayingState extends GameState implements Observer {
         if (aboutLayer != null)
             aboutObjects = aboutLayer.getObjects();
 
-        initPNJsPositions();
-        initPlayerPosition(spawnX, spawnY);
+                  initPNJsPositions();
+                  initPlayerPosition(spawnX, spawnY);
 
-        testPNJ.setMapPos(new Point(player.getPosX(), player.getPosY()));
+                  testPNJ.setMapPos(new Point(player.getPosX(), player.getPosY()));
+                  pm.getCharacter().setMapPos(new Point(player.getPosX()+30, player.getPosY()+40));pm.setSize(tileWidth);
+
     }
 
     /**
@@ -355,6 +357,7 @@ public class PlayingState extends GameState implements Observer {
         makePlayerMove(dt);
         cam.update();
 
+        pm.update(dt);
         SuperviserNormally.getSupervisor().callMethod(dt);
 
         lifeBar.setValue((int)player.getCharacteristics().getLife());
