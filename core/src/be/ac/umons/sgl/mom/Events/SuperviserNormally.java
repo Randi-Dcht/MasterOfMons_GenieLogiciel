@@ -504,8 +504,7 @@ public class SuperviserNormally implements Observer
                 attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));TODO donner à guillaume
             if(answer.equals("ESC"))
             {
-                ArrayList<String> end = new ArrayList<>();end.add("ESC");
-                event.notify(new Dialog(end));
+                event.notify(new Dialog("ESC"));
                 //event.remove(Events.Answer,this);//TODO raccorder
             }
             else
