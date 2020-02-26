@@ -233,8 +233,9 @@ public class PlayingState extends GameState implements Observer {
         pnjs = new ArrayList<>();
         mapObjects = new ArrayList<>();
 
-        for (Items it : SuperviserNormally.getSupervisor().getItems(SuperviserNormally.getSupervisor().getMaps(mapPath)))
-            mapObjects.add(new MapObject(gs, it));
+        for (Items it : SuperviserNormally.getSupervisor().getItems(SuperviserNormally.getSupervisor().getMaps(mapPath))) {
+            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO
+        }
 
         for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(SuperviserNormally.getSupervisor().getMaps(mapPath)))
             pnjs.add(new Character(gs, mob));
@@ -254,7 +255,7 @@ public class PlayingState extends GameState implements Observer {
         MapLayer changeLayer = gmm.getActualMap().getLayers().get("Changer");
         if (changeLayer != null)
             changingMapObjects = changeLayer.getObjects();
-        MapLayer pnjLayer = gmm.getActualMap().getLayers().get("RandomPNJItem");
+        MapLayer pnjLayer = gmm.getActualMap().getLayers().get("RandomPNJ");
         if (pnjLayer != null)
             randomPNJPositions = pnjLayer.getObjects();
 
@@ -277,6 +278,12 @@ public class PlayingState extends GameState implements Observer {
             c.setMapPos(new Point((int)(mapRect.x - mapRect.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
                     mapHeight * tileHeight / 2 - (int)(mapRect.x + mapRect.y) * tileHeight / 2));
         }
+    }
+
+    public void addItemToMap(Items item, Point pos) {
+        MapObject mo = new MapObject(gs, item);
+        mo.setMapPos(pos);
+        mapObjects.add(mo);
     }
 
     /**
