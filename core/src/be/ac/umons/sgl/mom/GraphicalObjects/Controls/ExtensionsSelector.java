@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The control where the user can choose which extensions is (de)activated.
@@ -26,7 +28,7 @@ public class ExtensionsSelector extends Control {
     /**
      * The list of <code>CheckBox</code> reserved by this control.
      */
-    protected List<CheckBox> checkBoxList;
+    protected Map<Extension, CheckBox> checkBoxList;
 
     /**
      * A list of all the maps that need to be loaded.
@@ -44,9 +46,31 @@ public class ExtensionsSelector extends Control {
     public ExtensionsSelector(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         extensions = parseExtensionFile();
-        checkBoxList = new ArrayList<>();
+        checkBoxList = new HashMap<>();
         for (Extension ext : extensions) {
-            checkBoxList.add(new CheckBox(gim, gs, ext.extensionName));
+            CheckBox cb = new CheckBox(gim, gs, ext.extensionName);
+            checkBoxList.put(ext, cb);
+            cb.setOnChecked(() -> {
+                for (Extension e : extensions) {
+                    if (! ext.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(ext.extensionName)) {
+                        e.activated = false;
+                        checkBoxList.get(e).setActivated(false);
+                        checkBoxList.get(e).setChecked(false);
+                    }
+                }
+            });
+            cb.setOnUnchecked(() -> {
+                for (Extension e : extensions) {
+                    boolean mustActivate = true;
+                    for (Extension e2 : extensions) {
+                        if (e2.activated && ! e2.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(e2.extensionName)) {
+                            mustActivate = false;
+                            break;
+                        }
+                    }
+                    checkBoxList.get(e).setActivated(mustActivate);
+                }
+            });
         }
     }
 
@@ -57,7 +81,7 @@ public class ExtensionsSelector extends Control {
 
     @Override
     public void draw(Batch batch, Point pos, Point size) {
-        for (CheckBox c : checkBoxList) {
+        for (CheckBox c : checkBoxList.values()) {
             c.draw(batch, pos, new Point(size.x, (int)gs.getSmallFont().getLineHeight()));
             pos.y -= (int)gs.getSmallFont().getLineHeight() + topMargin;
         }
@@ -65,13 +89,14 @@ public class ExtensionsSelector extends Control {
 
     @Override
     public void handleInput() {
-        for (CheckBox c : checkBoxList)
+        for (CheckBox c : checkBoxList.values()) {
             c.handleInput();
+        }
     }
 
     @Override
     public void dispose() {
-        for (CheckBox cb: checkBoxList)
+        for (CheckBox cb: checkBoxList.values())
             cb.dispose();
     }
 
@@ -122,11 +147,19 @@ public class ExtensionsSelector extends Control {
                                 Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : the given file (%s) doesn't exist !", actualLine, lineTab[1]));
                         }
                         break;
+                    case ".canActivateWith":
+                        if (lineTab.length < 2)
+                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .canActivateWith needs another extension's name !", actualLine));
+                        else {
+                            ext.canActivateWith.add(lineTab[1]);
+                        }
+                        break;
                     default:
                         if (! line.startsWith(".")) {
                             ext = new Extension();
                             extensionList.add(ext);
                             ext.extensionName = line;
+                            ext.canActivateWith.add(line);
                         }
                 }
             }
@@ -189,6 +222,9 @@ public class ExtensionsSelector extends Control {
          * The maps to load for this extension.
          */
         public ArrayList<String> mapsToLoad = new ArrayList<>();
+
+        public ArrayList<String> canActivateWith = new ArrayList<>();
+
         /**
          * If the extension is activated or not.
          */

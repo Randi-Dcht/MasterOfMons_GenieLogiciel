@@ -37,6 +37,14 @@ public class CheckBox extends Control {
      */
     private Color uncheckedColor;
 
+    private Color deactivatedColor;
+
+    private Runnable onChecked;
+
+    private Runnable onUnchecked;
+
+    private boolean isActivated = true;
+
     /**
      * @param gim The game's input manager
      * @param gs The game's graphical settings
@@ -60,6 +68,7 @@ public class CheckBox extends Control {
         this.text = text;
         checkedColor = new Color(0x2E7D32FF);
         uncheckedColor = new Color(0xC62828FF);
+        deactivatedColor = new Color(0x424242FF);
     }
 
     @Override
@@ -72,16 +81,31 @@ public class CheckBox extends Control {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.ellipse(pos.x, pos.y - gs.getSmallFont().getLineHeight(), size.y, size.y);
         sr.end();
+        Color oldFontColor = null;
+        if (! isActivated) {
+            oldFontColor = gs.getSmallFont().getColor().cpy();
+            gs.getSmallFont().setColor(deactivatedColor);
+        }
         batch.begin();
         gs.getSmallFont().draw(batch,text, pos.x + size.y + leftMargin, pos.y);
         batch.end();
+        if (oldFontColor != null)
+            gs.getSmallFont().setColor(oldFontColor);
     }
 
     @Override
     public void handleInput() {
-        for (Point click : gim.getRecentClicks())
-            if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y, width, height).contains(click))
+        if (! isActivated)
+            return;
+        for (Point click : gim.getRecentClicks()) {
+            if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y, width, height).contains(click)) {
                 checked = !checked;
+                if (checked)
+                    onChecked.run();
+                else
+                    onUnchecked.run();
+            }
+        }
     }
 
     @Override
@@ -96,11 +120,27 @@ public class CheckBox extends Control {
         return checked;
     }
 
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     /**
      * Set the text associated with this checkbox.
      * @param text The text associated with this checkbox.
      */
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
+    public void setOnChecked(Runnable onChecked) {
+        this.onChecked = onChecked;
+    }
+
+    public void setOnUnchecked(Runnable onUnchecked) {
+        this.onUnchecked = onUnchecked;
     }
 }
