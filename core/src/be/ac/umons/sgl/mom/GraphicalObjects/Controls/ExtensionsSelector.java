@@ -10,10 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The control where the user can choose which extensions is (de)activated.
@@ -40,6 +38,11 @@ public class ExtensionsSelector extends Control {
     protected List<LoadFile> filesToLoad;
 
     /**
+     * Represents the main extension (the one to launch)
+     */
+    protected Extension mainExtension;
+
+    /**
      * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
@@ -51,15 +54,31 @@ public class ExtensionsSelector extends Control {
             CheckBox cb = new CheckBox(gim, gs, ext.extensionName);
             checkBoxList.put(ext, cb);
             cb.setOnChecked(() -> {
+                boolean launch = true;
                 for (Extension e : extensions) {
+                    ext.activated = true;
                     if (! ext.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(ext.extensionName)) {
                         e.activated = false;
                         checkBoxList.get(e).setActivated(false);
                         checkBoxList.get(e).setChecked(false);
                     }
+
+                    if (e != ext && e.activated && e.canActivateWith.contains(ext.extensionName))
+                        launch = false;
+                }
+                if (launch) {
+                    if (mainExtension != null)
+                        checkBoxList.get(mainExtension).setSelected(false);
+                    mainExtension = ext;
+                    checkBoxList.get(ext).setSelected(true);
                 }
             });
             cb.setOnUnchecked(() -> {
+                checkBoxList.get(ext).setSelected(false);
+                ext.activated = false;
+                if (mainExtension == ext) {
+                    searchMainExtension();
+                }
                 for (Extension e : extensions) {
                     boolean mustActivate = true;
                     for (Extension e2 : extensions) {
@@ -98,6 +117,27 @@ public class ExtensionsSelector extends Control {
     public void dispose() {
         for (CheckBox cb: checkBoxList.values())
             cb.dispose();
+    }
+
+    protected void searchMainExtension() {
+        mainExtension = null;
+        for (Extension e1 : extensions) {
+            if (! e1.activated)
+                continue;
+            boolean mainOne = true;
+            for (Extension e2 : extensions) {
+                if (e2.activated && e2.canActivateWith.contains(e1)) {
+                    mainOne = false;
+                    break;
+                }
+            }
+            if (mainOne) {
+                mainExtension = e1;
+                break;
+            }
+        }
+        if (mainExtension != null)
+            checkBoxList.get(mainExtension).setSelected(true);
     }
 
     /**
