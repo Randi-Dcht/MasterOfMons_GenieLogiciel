@@ -3,21 +3,37 @@ package be.ac.umons.sgl.mom.Enums;
 
 /**
  * This class define the type of the player in the game
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public enum Type
 {
 
-  beefy(   "Costaud",   8,5,6,3,0,1),
-  athletic("Athlètique",6,8,5,1,3,0),
-  loser(   "Nul",       4,4,4,-1,-1,-1),
-  normal(  "lambda",    6,6,6,1,1,1);
+  /**
+   * The people is beefy when the strength up
+   */
+  beefy(   "Beefy",   8,5,6,3,0,1),
+  /**
+   * The people is athletic when the agility up
+   */
+  athletic("Athletic",6,8,5,1,3,0),
+  /**
+   * The people is loser when the three characteristic low
+   */
+  loser(   "Null",    4,4,4,-1,-1,-1),
+  /**
+   * This is the normally people
+   */
+  normal(  "Lambda",  6,6,6,1,1,1);
 
+
+  /**The characteristic of the type's people*/
   final String name;
   final int strength;
   final int defence;
   final int agility;
 
+
+  /**The characteristic of the type during the attack*/
   final int strengthBonus;
   final int agilityBonus;
   final int defenceBonus;

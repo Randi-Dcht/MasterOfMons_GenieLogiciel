@@ -3,28 +3,25 @@ package be.ac.umons.sgl.mom.Enums;
 
 /**
  * This class define the type of the mobile
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public enum MobileType
 {
     /***/
-    Strong("Strong",0.7,0.1,0.2,Type.beefy),
+    Strong(  "Strong",  0.7,0.1, 0.2, Type.beefy),
     /***/
-    Athletic("Athletic",0.2,0.7,0.1,Type.athletic),
+    Athletic("Athletic",0.2,0.7, 0.1, Type.athletic),
     /***/
-    Lambda("Lambda",0.33,0.33,0.34,Type.normal),
+    Lambda(  "Lambda", 0.33,0.33,0.34,Type.normal),
     /***/
-    Loser("Loser",0.33,0.33,0.34,Type.loser);
+    Loser(   "Loser",  0.33,0.33,0.34,Type.loser);
 
 
-    /***/
+    /**The characteristic of the mobile type*/
     final double percentStrength;
-    /***/
     final double percentAgility;
-    /***/
     final double percentDefence;
-    /***/
     final String name;
-    /***/
     final Type type;
 
 

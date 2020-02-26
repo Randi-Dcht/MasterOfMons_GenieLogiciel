@@ -21,7 +21,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.Social;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
-import be.ac.umons.sgl.mom.Objects.TimeGame;
+import be.ac.umons.sgl.mom.Other.TimeGame;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;

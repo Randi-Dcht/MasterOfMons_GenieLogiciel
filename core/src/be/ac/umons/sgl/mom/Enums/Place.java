@@ -3,19 +3,21 @@ package be.ac.umons.sgl.mom.Enums;
 
 /**
  *This is a list of the Tmx place in this game (MasterOfMonsBAc2/core/Tmx)
- *@author Umons_Group_2_ComputerScience
+ *@author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public enum Place
 {
-    Nimy("Tmx/Umons_Nimy.tmx",State.normal),
-    Warocque("Tmx/Umons_Warocque.tmx",State.listen),
+    Nimy(      "Tmx/Umons_Nimy.tmx",      State.normal),
+    Warocque(  "Tmx/Umons_Warocque.tmx",  State.listen),
     GrandAmphi("Tmx/Umons_GrandAmphi.tmx",State.listen),
-    DeVinci("Tmx/Umons_DeVinci.tmx",State.study),
-    Poly("Tmx/Umons_Polytech.tmx",State.listen),
-    Kot("Tmx/kot.tmx",State.nap),
-    Mons("Tmx/CityMons.tmx",State.normal);
+    DeVinci(   "Tmx/Umons_DeVinci.tmx",   State.study),
+    Poly(      "Tmx/Umons_Polytech.tmx",  State.listen),
+    Kot(       "Tmx/kot.tmx",             State.nap),
+    Mons(      "Tmx/CityMons.tmx",        State.normal);
     /*MicrosoftCompany("Tmx/MicrosoftCompany.tmx",State.normal);*/ //TODO up to mx
 
+
+    /**The characteristic of the maps*/
     private String maps;
     private State state;
 
