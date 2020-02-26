@@ -38,12 +38,15 @@ public class CheckBox extends Control {
     private Color uncheckedColor;
 
     private Color deactivatedColor;
+    private Color selectedColor;
 
     private Runnable onChecked;
 
     private Runnable onUnchecked;
 
     private boolean isActivated = true;
+
+    private boolean isSelected = false;
 
     /**
      * @param gim The game's input manager
@@ -69,6 +72,7 @@ public class CheckBox extends Control {
         checkedColor = new Color(0x2E7D32FF);
         uncheckedColor = new Color(0xC62828FF);
         deactivatedColor = new Color(0x424242FF);
+        selectedColor = new Color(0x388E3CFF);
     }
 
     @Override
@@ -82,6 +86,10 @@ public class CheckBox extends Control {
         sr.ellipse(pos.x, pos.y - gs.getSmallFont().getLineHeight(), size.y, size.y);
         sr.end();
         Color oldFontColor = null;
+        if (isSelected) {
+            oldFontColor = gs.getSmallFont().getColor().cpy();
+            gs.getSmallFont().setColor(selectedColor);
+        }
         if (! isActivated) {
             oldFontColor = gs.getSmallFont().getColor().cpy();
             gs.getSmallFont().setColor(deactivatedColor);
@@ -142,5 +150,9 @@ public class CheckBox extends Control {
 
     public void setOnUnchecked(Runnable onUnchecked) {
         this.onUnchecked = onUnchecked;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
