@@ -286,7 +286,7 @@ public class SuperviserNormally implements Observer
         {
             listMobile = new HashMap<>();
             Place[] place = quest.whatPlace();
-            for (Place plc : quest.whatPlace())
+            for (Place plc : Place.values())
                 listMobile.put(plc,new ArrayList<>());
             for (Mobile mb : quest.whatMobile())
             {
