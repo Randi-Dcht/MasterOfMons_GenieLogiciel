@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GraphicalObjects.Controls;
 
+import be.ac.umons.sgl.mom.GameStates.GameState;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.LoadFile;
@@ -164,6 +165,12 @@ public class ExtensionsSelector extends Control {
                         else
                             ext.mainClass = lineTab[1];
                         break;
+                    case ".mainClassBeforeLoading":
+                        if (lineTab.length < 2)
+                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClassBeforeLoading needs a class", actualLine));
+                        else
+                            ext.mainClassBeforeLoading = lineTab[1];
+                        break;
                     case ".load":
                         if (lineTab.length < 3)
                             Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .load needs a file path and his type", actualLine));
@@ -242,10 +249,14 @@ public class ExtensionsSelector extends Control {
         return filesToLoad;
     }
 
+    public Extension getMainExtension() {
+        return mainExtension;
+    }
+
     /**
      * Represent the characteristics of an extension.
      */
-    protected static class Extension {
+    public static class Extension {
         /**
          * The extension's name.
          */
@@ -259,6 +270,10 @@ public class ExtensionsSelector extends Control {
          */
         public String mainClass;
         /**
+         * The class to launch in first for this extension.
+         */
+        public String mainClassBeforeLoading;
+        /**
          * The maps to load for this extension.
          */
         public ArrayList<String> mapsToLoad = new ArrayList<>();
@@ -269,5 +284,13 @@ public class ExtensionsSelector extends Control {
          * If the extension is activated or not.
          */
         public boolean activated;
+
+        public Class<? extends GameState> getMainClass() throws ClassNotFoundException {
+            return mainClass == null ? null : (Class<? extends GameState>) Class.forName(mainClass);
+        }
+
+        public Class<? extends GameState> getMainClassBeforeLoading() throws ClassNotFoundException {
+            return mainClassBeforeLoading == null ? null : (Class<? extends GameState>) Class.forName(mainClassBeforeLoading);
+        }
     }
 }

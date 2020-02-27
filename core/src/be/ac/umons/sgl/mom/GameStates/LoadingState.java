@@ -67,6 +67,8 @@ public class LoadingState extends GameState {
      */
     protected BitmapFont font;
 
+    protected Class<? extends GameState> afterLoadingState;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -84,6 +86,7 @@ public class LoadingState extends GameState {
     @Override
     public void init() {
         super.init();
+        afterLoadingState = PlayingState.class;
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
         gmm = GameMapManager.getInstance();
@@ -114,7 +117,8 @@ public class LoadingState extends GameState {
             mapsLoaded = gmm.loadNextMap();
             if (mapsLoaded) {
                 sr.end();
-                gsm.setState(PlayingState.class, true);
+                Gdx.app.postRunnable(() ->
+                    gsm.removeAllStateAndAdd(afterLoadingState));
                 return;
             }
         } else
@@ -126,6 +130,10 @@ public class LoadingState extends GameState {
         sr.circle(MasterOfMonsGame.WIDTH / 2 + fromCenterX, MasterOfMonsGame.HEIGHT / 2 + fromCenterY, 10);
         sr.circle(MasterOfMonsGame.WIDTH / 2 - fromCenterX, MasterOfMonsGame.HEIGHT / 2 - fromCenterY, 10);
         sr.end();
+    }
+
+    public void setAfterLoadingState(Class<? extends GameState> state) {
+        this.afterLoadingState = state;
     }
 
     @Override

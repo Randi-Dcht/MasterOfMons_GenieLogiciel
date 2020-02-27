@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Gender;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
+import be.ac.umons.sgl.mom.GameStates.GameState;
 import be.ac.umons.sgl.mom.GameStates.LoadingState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
@@ -19,6 +20,8 @@ public class CreatePlayerMenuState extends MenuState {
     Gender playerGender = Gender.values()[0];
     Type characterType = Type.values()[0];
     Difficulty difficulty = Difficulty.values()[0];
+    protected Class<? extends GameState> afterCreationState = LoadingState.class;
+    protected Class<? extends GameState> afterLoadingState;
 
     /**
      * @param gsm The game's state manager
@@ -45,7 +48,9 @@ public class CreatePlayerMenuState extends MenuState {
                 new MenuItem("Start the game !", MenuItemType.Button, () -> {
                     SuperviserNormally.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
                             characterType, gs, playerGender, difficulty);
-                    gsm.removeAllStateAndAdd(LoadingState.class);
+                    GameState gs = gsm.setState(afterCreationState);
+                    if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
+                        ((LoadingState)gs).setAfterLoadingState(afterLoadingState);
                 })
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
@@ -71,5 +76,13 @@ public class CreatePlayerMenuState extends MenuState {
     private void setScrollListProperties(MenuItem mi, List<ScrollListChooser.ScrollListItem> slil) {
         ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
         mi.size.y = (int)((slil.size() + 1) * (gs.getNormalFont().getLineHeight() + 2 * topMargin) + 2 * topMargin);
+    }
+
+    public void setAfterCreationState(Class<? extends GameState> afterCreationState) {
+        this.afterCreationState = afterCreationState;
+    }
+
+    public void setAfterLoadingState(Class<? extends GameState> afterLoadingState) {
+        this.afterLoadingState = afterLoadingState;
     }
 }

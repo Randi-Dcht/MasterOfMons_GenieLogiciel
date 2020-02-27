@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
+import be.ac.umons.sgl.mom.GameStates.GameState;
 import be.ac.umons.sgl.mom.GameStates.LoadingState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ExtensionsSelector;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
@@ -52,7 +53,22 @@ public class MainMenuState extends MenuState {
                         GameMapManager.getInstance().addMapsToLoad(f.path());
                     GameMapManager.getInstance().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
-                    gsm.setState(CreatePlayerMenuState.class, false);
+                    CreatePlayerMenuState cpms = (CreatePlayerMenuState) gsm.setState(CreatePlayerMenuState.class, false);
+                    ExtensionsSelector.Extension mainExt = extSel.getMainExtension();
+                    try {
+                        if (mainExt != null) {
+                            Class<? extends GameState> gs = mainExt.getMainClassBeforeLoading();
+                            if (gs != null)
+                                cpms.setAfterCreationState(gs);
+                            gs = mainExt.getMainClass();
+                            if (gs != null)
+                                cpms.setAfterLoadingState(gs);
+
+                        }
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                        Gdx.app.error("Critical error", e.getMessage());
+                    }
                 }),
                 new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
                 new MenuItem(gs.getStringFromId("settings"), MenuItemType.Button, () -> gsm.setState(SettingsMenuState.class)),
