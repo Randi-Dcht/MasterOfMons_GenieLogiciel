@@ -42,6 +42,8 @@ public class Regulator implements Observer
 
     /**
      * This constructor define the regulator class during the game
+     * @param people is the player of the game
+     * @param time   is the instance of the calculus time game
      */
     public Regulator(People people, TimeGame time)
     {
@@ -53,7 +55,6 @@ public class Regulator implements Observer
         manager.getEvent().add(Events.MeetOther,this);
         places = new ArrayList<>();
         places.addAll(Arrays.asList(Place.values()));
-
     }
 
 

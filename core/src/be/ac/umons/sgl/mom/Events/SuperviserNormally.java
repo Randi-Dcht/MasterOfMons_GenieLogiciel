@@ -192,7 +192,7 @@ public class SuperviserNormally implements Observer
          */
         public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
         {
-            time = new TimeGame(new Date(16,9,2020,8,15));
+            time = new TimeGame(new Date(16,9,2020,8,15));//TODO check the month
             people = new People(namePlayer,type, gender,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
@@ -302,17 +302,17 @@ public class SuperviserNormally implements Observer
         /**
          * This method allows to analyse the id in the maps
          * @param id is the id of the object name
+         * @throws Exception is the exception if the the size of list is bad or the ill word
          */
         public void analyseIdMap(String id) throws Exception
         {
             String[] word = id.split("_");
             if (word[0].equals("Room") && word.length >= 2)
-                return;
+                return;//TODO prevenir UnderQuest
             else if (word[0].equals("Info") && word.length >= 2)
                 regule.placeQuestion(word[1]);
             else
                 throw new Exception();
-
         }
 
 

@@ -37,14 +37,15 @@ public class TimeGame implements Observer
      * This constructor allows to define a time of game
      * @param date is the date of the start day in the university.
      */
-    public TimeGame(Date date)//TODO voir pour passer une new Date directement -> uniquemebt save date alors
+    public TimeGame(Date date)
     {
-        NBmonth = date.getMonth()-1;
-        this.day = date.getDay()-1;
+        NBmonth   = date.getMonth()-1;
+        this.day  = date.getDay()-1;
         this.hour = date.getHour();
         this.year = date.getYear();
-        NByear = leap(date.getYear());
-        second = 0;
+        this.min  = date.getMin();
+        NByear    = leap(date.getYear());
+        second    = 0;
     }
 
 
@@ -111,7 +112,7 @@ public class TimeGame implements Observer
     /**
      * This method allows to change month and create an event to change the month
      */
-    private void changeMonth()
+    private void changeMonth()//TODO check month
     {
         SuperviserNormally.getSupervisor().getEvent().notify(new ChangeMonth());
         if((NBmonth =(NBmonth+1)%timeYr) == 0)
@@ -133,7 +134,7 @@ public class TimeGame implements Observer
      * This method allows to replay the time for a new year in the university
      * This method changes the timeGame !!!
      */
-    public void newYear()
+    public void newYear()//TODO new quest
     {
         this.hour = 8;
         this.min  = 0;
@@ -143,7 +144,9 @@ public class TimeGame implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to calculus the change of minute
+     */
     private void changeMin()
     {
         if((min =( min+1)%timeSec)==0)
@@ -151,7 +154,9 @@ public class TimeGame implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to calculus the change of hour
+     */
     private void changeHour()
     {
         SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
@@ -160,7 +165,9 @@ public class TimeGame implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to check if two object TimeGame is equals
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -174,7 +181,9 @@ public class TimeGame implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to hash the object
+     */
     @Override
     public int hashCode()
     {
@@ -182,11 +191,13 @@ public class TimeGame implements Observer
     }
 
 
-    /***/
-    public String toString()//TODO mise en forma string date avec deux nombres
+    /**
+     * This method returns the string of the actual date of the game
+     * @return the format of the date in the game
+     */
+    public String toString()
     {
-        //return (day+1)+"/"+(NBmonth+1)+"/"+year + "  " + hour + ":"+ min;
-        return String.format("%2d / %2d / %s  %02d:%02d",day,NBmonth,year,hour,min);
+        return String.format("%02d / %02d / %s  %02d:%02d",day,NBmonth+1,year,hour,min);
     }
 
 
@@ -196,11 +207,12 @@ public class TimeGame implements Observer
      * @param addHour is the hour to add
      * @param addMin is the minute to add
      */
-    void refreshTime(int addDay, int addHour, int addMin)
-    {//TODO upgrade
-        day  += addDay;
-        hour += addHour;
-        min  += addMin;
+    public void refreshTime(int addDay, int addHour, int addMin)
+    {
+        int memM,memH;
+        min  = (memM = min + addMin)%60;
+        hour = (memH = hour +(memM/60)+addHour)%24;
+        day  = (day+memH/24+addDay)%years[NByear][NBmonth];
     }
 
 
