@@ -101,6 +101,7 @@ public class InventoryItem {
             Color c = batch.getColor();
             batch.setColor(c.r, c.g, c.b, isBeingAnimated ? duringAnimationForegroundOpacity : 1);
             batch.draw(t, x, y, width, height);
+            batch.setColor(c.r, c.g, c.b, 1);
             batch.end();
         }
         Gdx.gl.glDisable(GL30.GL_BLEND);

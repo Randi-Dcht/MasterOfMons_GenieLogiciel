@@ -368,7 +368,6 @@ public class PlayingState extends GameState implements Observer {
             toMoveX += toMove;
         }
 
-
         translateCamera(player.getPosX() + toMoveX, player.getPosY() + toMoveY);
         player.move(toMoveX, toMoveY);
         if (checkForCollision(player)) {
