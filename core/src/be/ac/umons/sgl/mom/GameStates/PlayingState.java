@@ -150,7 +150,7 @@ public class PlayingState extends GameState implements Observer {
      */
     protected OnMapObject selectedOne;
     /**
-     * The objects that are on this map.
+     * The objects that are on this map (items).
      */
     protected List<MapObject> mapObjects;
     /**
@@ -304,6 +304,25 @@ public class PlayingState extends GameState implements Observer {
         MapObject mo = new MapObject(gs, item);
         mo.setMapPos(pos);
         mapObjects.add(mo);
+    }
+
+    /**
+     * Add the given items to the list of items to draw.
+     * @param items The items to add.
+     */
+    public void addItemsToMap(MapObject.OnMapItem[] items) {
+        for (MapObject.OnMapItem omi : items)
+            mapObjects.add(new MapObject(gs, omi));
+    }
+
+    /**
+     * @return An array representing all the items that are drawn on this map
+     */
+    public MapObject.OnMapItem[] getItemsOnMap() {
+        List<MapObject.OnMapItem> res = new ArrayList<>();
+        for (MapObject omo : mapObjects)
+            res.add(omo.getCharacteristics());
+        return res.toArray(new MapObject.OnMapItem[0]);
     }
 
     /**

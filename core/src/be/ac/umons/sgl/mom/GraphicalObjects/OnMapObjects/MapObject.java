@@ -6,18 +6,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.awt.*;
+import java.io.Serializable;
 
 public class MapObject extends OnMapObject {
 
-    Items go;
-
-    Point mapPos;
+    OnMapItem omi = new OnMapItem();
 
     public MapObject(GraphicalSettings gs, Items go) {
         super(gs);
         this.gs = gs;
-        this.go = go;
-        mapPos = new Point(0,0);
+        omi.item = go;
+        omi.mapPos = new Point(0,0);
+    }
+    public MapObject(GraphicalSettings gs, OnMapItem omi) {
+        super(gs);
+        this.gs = gs;
+        this.omi = omi;
     }
 
     /**
@@ -29,8 +33,8 @@ public class MapObject extends OnMapObject {
      * @param height The height of the character
      */
     public void draw(Batch batch, int x, int y, int width, int height) {
-        if (gs.getAssetManager().contains("Pictures/Objects/" + go.toString() + ".png")) {
-            Texture t = gs.getAssetManager().get("Pictures/Objects/" + go.toString() + ".png");
+        if (gs.getAssetManager().contains("Pictures/Objects/" + omi.item.toString() + ".png")) {
+            Texture t = gs.getAssetManager().get("Pictures/Objects/" + omi.item.toString() + ".png");
             batch.begin();
             batch.draw(t, x, y, width, height);
             batch.end();
@@ -40,12 +44,12 @@ public class MapObject extends OnMapObject {
 
     @Override
     public int getPosX() {
-        return mapPos.x;
+        return omi.mapPos.x;
     }
 
     @Override
     public int getPosY() {
-        return mapPos.y;
+        return omi.mapPos.y;
     }
 
     /**
@@ -53,13 +57,28 @@ public class MapObject extends OnMapObject {
      * @param mapPos The position on the map.
      */
     public void setMapPos(Point mapPos) {
-        this.mapPos = mapPos;
+        omi.mapPos = mapPos;
     }
 
     /**
      * @return The item represented by this object.
      */
     public Items getItem() {
-        return go;
+        return omi.item;
+    }
+
+    public OnMapItem getCharacteristics() {
+        return omi;
+    }
+
+    public static class OnMapItem implements Serializable {
+        /**
+         * The item represented by this object.
+         */
+        Items item;
+        /**
+         * The position if this object on the map.
+         */
+        Point mapPos;
     }
 }
