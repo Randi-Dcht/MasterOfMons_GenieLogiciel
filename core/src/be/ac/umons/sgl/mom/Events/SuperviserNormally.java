@@ -10,6 +10,7 @@ import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
+import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
@@ -304,7 +305,7 @@ public class SuperviserNormally implements Observer
         {
             listItems = new HashMap<>();
             Place[] place = quest.whatPlace();
-            for (Place plc : place)
+            for (Place plc : Place.values())
                 listItems.put(plc,new ArrayList<>());
             for (Items mb : quest.whatItem())
             {
@@ -420,13 +421,13 @@ public class SuperviserNormally implements Observer
         * @param attacker is the character who attack
         * @param victim is the character who give hits
         */
-       public void attackMethod(Attack attacker, Attack victim/*,boolean faceToFace*/) //TODO ajout
+       public void attackMethod(Attack attacker, Attack victim) //TODO ajout
        {
            if (attacker.getType().equals(Character.TypePlayer.Human))
                ((People)attacker).reduceEnergizing(State.attack);
            if(victim.dodge() < 0.6)
            {
-               if(attacker.howGun() /*&& faceToFace*/)
+               if(attacker.howGun())
                    victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
                else
                    victim.loseAttack(calculateHits(attacker,victim,0));
@@ -471,23 +472,14 @@ public class SuperviserNormally implements Observer
         public void meetCharacter(Social player1, Social player2)//TODO upgrade pour moins de clss
         {
             if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
-                memoryMobile = (Mobile)player1;
+                event.notify(new MeetOther(memoryMobile = (Mobile)player1));
             if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
-                memoryMobile = (Mobile)player2;
+                event.notify(new MeetOther(memoryMobile = (Mobile)player2));
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
                 attackMethod(memoryMobile,people);//event.notify(new LaunchAttack());TODO donner à Guillaume
             else if (action.equals(Actions.Dialog))
                 event.notify(new Dialog(people.getDialog("Start")));
-        }
-
-
-        /**
-         * This method allows to quit the meet between two characters
-         */
-        public void quitCharacter()
-        {
-            memoryMobile = null;
         }
 
 

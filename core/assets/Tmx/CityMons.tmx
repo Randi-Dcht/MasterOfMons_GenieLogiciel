@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="900" height="900" tilewidth="64" tileheight="32" nextobjectid="45">
+<map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="900" height="900" tilewidth="64" tileheight="32" nextobjectid="74">
  <tileset firstgid="1" source="../tsx/Floor.tsx"/>
  <layer name="UnderFloor" width="900" height="900">
   <data encoding="csv">
@@ -1825,6 +1825,36 @@
   <object id="25" name="Tmx/Umons_Polytech.tmx" x="2344" y="15408" width="814" height="562"/>
   <object id="41" name="Tmx/Umons_Warocque.tmx" x="18580" y="281.333" width="248" height="234.667"/>
   <object id="43" name="Tmx/Dual_parkNimy" x="26188" y="1604" width="1796" height="2412"/>
+ </objectgroup>
+ <objectgroup name="RandomPNJ">
+  <object id="46" x="12424" y="200" width="176" height="144"/>
+  <object id="47" x="15308" y="228" width="176" height="176"/>
+  <object id="48" x="7604" y="10940" width="156" height="100"/>
+  <object id="49" x="7752" y="11688" width="244" height="252"/>
+  <object id="50" x="8268" y="13220" width="156" height="100"/>
+  <object id="51" x="9556" y="11884" width="276" height="284"/>
+  <object id="52" x="9584" y="13904" width="220" height="100"/>
+  <object id="53" x="9704" y="15736" width="132" height="92"/>
+  <object id="54" x="8488" y="15304" width="188" height="212"/>
+  <object id="55" x="8016" y="14496" width="280" height="248"/>
+  <object id="56" x="8796" y="16916" width="292" height="172"/>
+  <object id="57" x="9708" y="15028" width="280" height="232"/>
+  <object id="58" x="3320" y="5176" width="140" height="132"/>
+  <object id="59" x="2048" y="14752" width="112" height="64"/>
+  <object id="60" x="2176" y="16272" width="180" height="108"/>
+  <object id="61" x="2712" y="16248" width="156" height="100"/>
+  <object id="62" x="2768" y="14864" width="144" height="80"/>
+  <object id="63" x="3400" y="19080" width="176" height="144"/>
+  <object id="64" x="140" y="22564" width="168" height="88"/>
+  <object id="65" x="164" y="22316" width="168" height="136"/>
+  <object id="66" x="1348" y="22364" width="168" height="88"/>
+  <object id="67" x="2012" y="22388" width="164" height="108"/>
+  <object id="68" x="3332" y="25276" width="212" height="172"/>
+  <object id="69" x="3420" y="25812" width="168" height="184"/>
+  <object id="70" x="18000" y="25856" width="120" height="184"/>
+  <object id="71" x="18324" y="25772" width="76" height="180"/>
+  <object id="72" x="18444" y="25460" width="124" height="132"/>
+  <object id="73" x="17756" y="25428" width="228" height="124"/>
  </objectgroup>
  <objectgroup name="Interdit">
   <object id="1" x="18807" y="529.858" width="5662.51" height="8975.68"/>

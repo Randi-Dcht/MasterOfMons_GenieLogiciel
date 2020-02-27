@@ -7,7 +7,7 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-
+import be.ac.umons.sgl.mom.Objects.Characters.SaoulMatePNJ;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -33,7 +33,7 @@ public class Regulator implements Observer
     /**
      * To warn the people if there are problems
      */
-    private boolean informEnergizing = true;
+    private boolean informEnergizing=true, informPlace=true;
     /**
      * The all place of the maps
      */
@@ -50,7 +50,8 @@ public class Regulator implements Observer
         this.manager= SuperviserNormally.getSupervisor();
         manager.getEvent().add(Events.ChangeHour,this);
         manager.getEvent().add(Events.PlaceInMons,this);
-        places = new ArrayList<Place>();
+        manager.getEvent().add(Events.MeetOther,this);
+        places = new ArrayList<>();
         places.addAll(Arrays.asList(Place.values()));
 
     }
@@ -72,15 +73,15 @@ public class Regulator implements Observer
     /**
      * This method allows to give the information about the actual Map
      */
-    public void questionPlace(Place place)
+    private void questionPlace(Place place)
     {
-        if (places.contains(place))
+        if (informPlace && places.contains(place))
         {
             manager.getEvent().notify(new Dialog(place.getInformation(),"ESC"));
             places.remove(place);
         }
         if (places.size()==0)
-            manager.getEvent().remove(Events.PlaceInMons,this);
+           informPlace = false;
     }
 
 
@@ -88,13 +89,33 @@ public class Regulator implements Observer
      * This method allows to regular the time of the game as pass the night
      * This method also allows to add the energizing of the people
      */
-    public void nightHour()
+    private void nightHour()
     {
         if (time.getDate().getHour() >= 22 && player.getPlace().equals(Place.Kot))
         {
             time.refreshTime(0,8,0);
             player.addEnergy(90); //TODO calculer difference
         }
+    }
+
+
+    /**
+     * This method allows to inform the player of this place and give also the information
+     * @param id of the place
+     */
+    public void placeQuestion(String id)
+    {
+        System.out.println("Oh je rencontre cette id : " + id);
+    }
+
+
+    /**
+     * This method allows to regulate the interact between people and a soul Mate Pnj in the game
+     * @param pnj is the mobile who is the soul mate
+     */
+    private void saoulMateMeet(SaoulMatePNJ pnj)
+    {
+        System.out.println("oh il y a une chance que je lui face l'amour à " + pnj );
     }
 
 
@@ -109,5 +130,7 @@ public class Regulator implements Observer
             nightHour();
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
             questionPlace((Place)notify.getBuffer());
+        if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
+            saoulMateMeet((SaoulMatePNJ) notify.getBuffer());
     }
 }

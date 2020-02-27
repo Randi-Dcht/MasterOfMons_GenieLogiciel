@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="190" height="190" tilewidth="64" tileheight="32" nextobjectid="34">
+<map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="190" height="190" tilewidth="64" tileheight="32" nextobjectid="58">
  <properties>
   <property name="spawnX" type="int" value="74"/>
   <property name="spawnY" type="int" value="176"/>
@@ -30,6 +30,32 @@
     <property name="spawnY" type="int" value="45"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup name="RandomPNJ">
+  <object id="34" x="4972" y="700" width="98" height="70"/>
+  <object id="35" x="2720" y="1432" width="74" height="46"/>
+  <object id="36" x="2800" y="1624" width="114" height="54"/>
+  <object id="37" x="2982" y="1530" width="86" height="66"/>
+  <object id="38" x="2740" y="964" width="62" height="42"/>
+  <object id="39" x="202" y="158" width="56" height="48"/>
+  <object id="40" x="226" y="430" width="102" height="66"/>
+  <object id="41" x="764" y="532" width="106" height="70"/>
+  <object id="42" x="646" y="298" width="146" height="62"/>
+  <object id="43" x="1014" y="298" width="70" height="74"/>
+  <object id="44" x="2868" y="2500" width="94" height="98"/>
+  <object id="45" x="2556" y="2668" width="124" height="84"/>
+  <object id="46" x="2100" y="2508" width="84" height="124"/>
+  <object id="47" x="2456" y="4024" width="142" height="74"/>
+  <object id="48" x="1924" y="3740" width="144" height="136"/>
+  <object id="49" x="1862" y="3322" width="124" height="148"/>
+  <object id="50" x="1774" y="4410" width="102" height="66"/>
+  <object id="51" x="1806" y="4690" width="152" height="80"/>
+  <object id="52" x="2072" y="5096" width="136" height="120"/>
+  <object id="53" x="3070" y="5370" width="106" height="70"/>
+  <object id="54" x="2558" y="4730" width="170" height="110"/>
+  <object id="55" x="2920" y="3544" width="210" height="134"/>
+  <object id="56" x="3036" y="4100" width="140" height="108"/>
+  <object id="57" x="1538" y="2286" width="98" height="54"/>
  </objectgroup>
  <objectgroup name="Interdit">
   <object id="3" x="3238.79" y="1246.06" width="1587.88" height="524.242"/>
