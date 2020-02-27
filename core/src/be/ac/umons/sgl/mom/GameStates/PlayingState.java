@@ -191,17 +191,21 @@ public class PlayingState extends GameState implements Observer {
         timeShower = new TimeShower(gs);
 
         SuperviserNormally.getSupervisor().setQuest(questShower);
+
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
+        inventoryShower = new InventoryShower(gim, gs, player);
+
+        SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.Dialog,this);
+
         initMap("Tmx/Umons_Nimy.tmx");
 
-
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
-        cam.update();
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();
         gmm.setView(cam);
-
-        inventoryShower = new InventoryShower(gim, gs, player);
+        cam.update();
 
         lifeBar = new LifeBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
@@ -214,10 +218,6 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setText("||");
         pauseButton.setOnClick(() -> gsm.setState(InGameMenuState.class));
         pauseButton.setFont(gs.getSmallFont());
-
-        SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.Dialog,this);
 
         velocity = 50;
 //        velocity = SuperviserNormally.getSupervisor().getPeople().getSpeed(); // TODO
@@ -331,7 +331,6 @@ public class PlayingState extends GameState implements Observer {
         handleInput();
         makePlayerMove(dt);
         cam.update();
-
 
         SuperviserNormally.getSupervisor().callMethod(dt);
 
@@ -672,7 +671,7 @@ public class PlayingState extends GameState implements Observer {
         else if (notify.getEvents().equals(Events.Dialog) && notify.bufferNotEmpty())
         {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
-            updateDialog(diag);
+            Gdx.app.postRunnable(() -> updateDialog(diag));
         }
     }
 
