@@ -10,6 +10,7 @@ import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
+import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
@@ -26,6 +27,8 @@ import be.ac.umons.sgl.mom.Other.TimeGame;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
+import com.sun.jdi.request.ExceptionRequest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -189,14 +192,14 @@ public class SuperviserNormally implements Observer
          */
         public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
         {
-            time = new TimeGame(new Date(16,9,2020,8,15));
+            time = new TimeGame(new Date(16,9,2020,8,15));//TODO check the month
             people = new People(namePlayer,type, gender,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
             save = new Saving(people,namePlayer);
             refreshQuest();
-            regule = new Regulator(people,time,this);
+            regule = new Regulator(people,time);
         }
 
 
@@ -285,14 +288,31 @@ public class SuperviserNormally implements Observer
         {
             listMobile = new HashMap<>();
             Place[] place = quest.whatPlace();
-            for (Place plc : quest.whatPlace())
+            for (Place plc : Place.values())
                 listMobile.put(plc,new ArrayList<>());
             for (Mobile mb : quest.whatMobile())
             {
                 if (mb.getPlace() == null)
-                    mb.setPlace(/*place[new Random().nextInt(place.length)]*/ Place.Nimy); //TODO
+                    mb.setPlace(place[new Random().nextInt(place.length)]);
                 listMobile.get(mb.getPlace()).add(mb);
             }
+        }
+
+
+        /**
+         * This method allows to analyse the id in the maps
+         * @param id is the id of the object name
+         * @throws Exception is the exception if the the size of list is bad or the ill word
+         */
+        public void analyseIdMap(String id) throws Exception
+        {
+            String[] word = id.split("_");
+            if (word[0].equals("Room") && word.length >= 2)
+                return;//TODO prevenir UnderQuest
+            else if (word[0].equals("Info") && word.length >= 2)
+                regule.placeQuestion(word[1]);
+            else
+                throw new Exception();
         }
 
 
@@ -304,12 +324,12 @@ public class SuperviserNormally implements Observer
         {
             listItems = new HashMap<>();
             Place[] place = quest.whatPlace();
-            for (Place plc : place)
+            for (Place plc : Place.values())
                 listItems.put(plc,new ArrayList<>());
             for (Items mb : quest.whatItem())
             {
                 if (mb.getPlace() == null)
-                    mb.setPlace(/*place[new Random().nextInt(place.length)]*/Place.Nimy); //TODO
+                    mb.setPlace(place[new Random().nextInt(place.length)]);
                 listItems.get(mb.getPlace()).add(mb);
             }
         }
@@ -420,13 +440,13 @@ public class SuperviserNormally implements Observer
         * @param attacker is the character who attack
         * @param victim is the character who give hits
         */
-       public void attackMethod(Attack attacker, Attack victim/*,boolean faceToFace*/) //TODO ajout
+       public void attackMethod(Attack attacker, Attack victim) //TODO ajout
        {
            if (attacker.getType().equals(Character.TypePlayer.Human))
                ((People)attacker).reduceEnergizing(State.attack);
            if(victim.dodge() < 0.6)
            {
-               if(attacker.howGun() /*&& faceToFace*/)
+               if(attacker.howGun())
                    victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
                else
                    victim.loseAttack(calculateHits(attacker,victim,0));
@@ -471,23 +491,14 @@ public class SuperviserNormally implements Observer
         public void meetCharacter(Social player1, Social player2)//TODO upgrade pour moins de clss
         {
             if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
-                memoryMobile = (Mobile)player1;
+                event.notify(new MeetOther(memoryMobile = (Mobile)player1));
             if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
-                memoryMobile = (Mobile)player2;
+                event.notify(new MeetOther(memoryMobile = (Mobile)player2));
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
                 attackMethod(memoryMobile,people);//event.notify(new LaunchAttack());TODO donner à Guillaume
             else if (action.equals(Actions.Dialog))
                 event.notify(new Dialog(people.getDialog("Start")));
-        }
-
-
-        /**
-         * This method allows to quit the meet between two characters
-         */
-        public void quitCharacter()
-        {
-            memoryMobile = null;
         }
 
 

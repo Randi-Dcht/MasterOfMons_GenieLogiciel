@@ -22,7 +22,7 @@ public abstract class Character implements Attack, Social, Serializable
 
     /*characteristic of the character*/
     protected int strength;
-    protected ArrayList<Items> myObject = new ArrayList<Items>(); //objet dans son sac à dos
+    protected ArrayList<Items> myObject = new ArrayList<>(); //objet dans son sac à dos
     protected int defence;
     protected int agility;
     protected double life;
@@ -52,7 +52,7 @@ public abstract class Character implements Attack, Social, Serializable
      *This method allows to increase the life
      * @param dt is the time between two frame
      */
-    public void regeneration(double dt)
+    public void regeneration(double dt)//TODO displace
     {
         if((life+dt)<=lifeMax())
             life = life + dt+10;
@@ -215,8 +215,9 @@ public abstract class Character implements Attack, Social, Serializable
 
     /**
      *This method allows to calculated speed the displacement of the character
+     * @return the speed of the character
      */
-    public double displacement()
+    private double displacement()
     {
         return (2 +(agility/20));
     }
