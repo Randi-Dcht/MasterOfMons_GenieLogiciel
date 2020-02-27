@@ -8,7 +8,7 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Items.Pen;
-import be.ac.umons.sgl.mom.Quests.Under.GoToLastLesson;
+import be.ac.umons.sgl.mom.Quests.Under.GoToLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ public class FinishUniversity extends MasterQuest
     /*This tab is a list of the course of the people for this year*/
     final Lesson[] lesson ={Lesson.mang,Lesson.mem,Lesson.stage,Lesson.ss,Lesson.ps};
     /*This is the goals of this MasterQuest*/
-    final UnderQuest[] underQuest = {new GoToLastLesson(this),new WriteMemory(this,people)}; //il manquait le joueur
-
+    final UnderQuest[] underQuest = {new GoToLesson(this,5,people),new WriteMemory(this,people)}; //il manquait le joueur
+    //TODO a quoi correspond le nb dans gotolesson ?
 
     /**
      * This constructor define a Master 1 of Umons
@@ -44,10 +44,10 @@ public class FinishUniversity extends MasterQuest
      */
     public void nextQuest(){/*END*/}
 
-    @Override
-    public Lesson[] getLesson() {
+
+    /*public Lesson[] getLesson() {
         return new Lesson[0];
-    }
+    }*/
 
 
     /**
@@ -100,12 +100,17 @@ public class FinishUniversity extends MasterQuest
         return graphic.getStringFromId("nameMasterSecond");
     }
 
+    @Override
+    public void update(Notification notify) {
+
+    }
+
 
     /***/
-    @Override
+    /*@Override
     public void update(Notification notify)
     {
         super.update(notify);
-        /*code ici*/
-    }
+        /*code ici
+    }*/
 }

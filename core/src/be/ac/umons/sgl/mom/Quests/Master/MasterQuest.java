@@ -5,6 +5,7 @@ import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Events.Events;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
@@ -253,13 +254,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *This method allows to notify the underQuest, there are changes in the people or other in maps.
      * @param notify is a notification of change
      */
-    public void eventMaps(Notification notify)
+    /*public void eventMaps(Notification notify)
     {
         for(UnderQuest uq : underQuest)
         {
             uq.evenActivity(notify);
         }
-    }
+    }*/
 
 
     /**
@@ -356,7 +357,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             people.newQuest(memory);
             memory = null;
         }
-    }
+    }*/
 
 
     /**

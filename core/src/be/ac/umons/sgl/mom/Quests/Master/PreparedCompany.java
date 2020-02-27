@@ -12,10 +12,8 @@ import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.ChooseSubject;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
-import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *This class define the four year in the University of Mons with the goals.
@@ -24,7 +22,7 @@ import java.util.Random;
 public class PreparedCompany extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
-    final Lesson[] lesson ={Lesson.res2,Lesson.lecred,Lesson.proglog,Lesson.bda,Lesson.comp,Lesson.algbio,Lesson.sofev,Lesson.angl};
+   final Lesson[] lesson ={Lesson.res2,Lesson.lecred,Lesson.proglog,Lesson.bda,Lesson.comp,Lesson.algbio,Lesson.sofev,Lesson.angl};
     /*This is the goals of this MasterQuest*/
     final UnderQuest[] underQuest = {/*new Traineeship(this),*/new GoToPriorityLesson(this,50,people),new ChooseSubject(this,people)};
 
@@ -54,15 +52,12 @@ public class PreparedCompany extends MasterQuest
      * @return list of lesson
      */
 
-    public Lesson[] getLesson()
-    {
-        return lesson;
-    }
+
 
     /***/
     public Place[] whatPlace()
     {
-        return new Place[]{Place.Mons,Place.Nimy,Place.MicrosoftCompany};
+        return new Place[]{Place.Mons,Place.Nimy};
     }
 
     /**

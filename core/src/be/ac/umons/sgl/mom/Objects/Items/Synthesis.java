@@ -22,7 +22,7 @@ public class Synthesis extends Items {
 
     }
 
-    @Override
+
     public void make(double time) {
 
     }
@@ -30,5 +30,10 @@ public class Synthesis extends Items {
     @Override
     public double getObsolete() {
         return 0;
+    }
+
+    @Override
+    public void update(double dt) {
+
     }
 }

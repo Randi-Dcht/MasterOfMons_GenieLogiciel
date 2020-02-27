@@ -9,11 +9,10 @@ public class Sportswear extends Items {
     }
 
     @Override
-    public void used(People pp) {
-
+    public void used(People pp){
+        //pp.setSpeed();
     }
 
-    @Override
     public void make(double time) {
 
     }
@@ -30,5 +29,10 @@ public class Sportswear extends Items {
     @Override
     public String question() {
         return graphic.getStringFromId("sportswear");
+    }
+
+    @Override
+    public void update(double dt) {
+
     }
 }

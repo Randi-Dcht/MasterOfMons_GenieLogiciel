@@ -32,4 +32,9 @@ public class OldExam extends Items
     {
         return 0;
     }
+
+    @Override
+    public String question() {
+        return null;
+    }
 }

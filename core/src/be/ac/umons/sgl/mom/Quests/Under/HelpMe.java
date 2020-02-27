@@ -44,6 +44,7 @@ public class HelpMe extends UnderQuest
       }
 
 
+
       /**
        * This method check if the people give a syntheses to help the PNJ in the game
        */

@@ -58,4 +58,9 @@ public class TheKillBoot extends Items implements Guns
     {
         return 0;
     }
+
+    @Override
+    public String question() {
+        return null;
+    }
 }

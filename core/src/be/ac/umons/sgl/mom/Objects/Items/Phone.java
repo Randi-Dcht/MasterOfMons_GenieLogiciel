@@ -47,4 +47,9 @@ public class Phone extends Items
   {
     return 0;
   }
+
+  @Override
+  public String question() {
+    return null;
+  }
 }
