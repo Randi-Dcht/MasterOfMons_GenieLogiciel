@@ -6,7 +6,6 @@ import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Gender;
 import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Maps;
-import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
@@ -80,6 +79,7 @@ public class People extends Character implements Serializable, Observer
     }
 
 
+    /***/
     @Override
     public void updateType(int strength, int defence, int agility)
     {
