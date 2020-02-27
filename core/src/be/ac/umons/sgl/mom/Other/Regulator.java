@@ -113,7 +113,7 @@ public class Regulator implements Observer
      * This method allows to regulate the interact between people and a soul Mate Pnj in the game
      * @param pnj is the mobile who is the soul mate
      */
-    private void saoulMateMeet(SaoulMatePNJ pnj)
+    private void soulMateMeet(SaoulMatePNJ pnj)
     {
         System.out.println("oh il y a une chance que je lui face l'amour à " + pnj );
     }
@@ -131,6 +131,6 @@ public class Regulator implements Observer
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
             questionPlace((Place)notify.getBuffer());
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
-            saoulMateMeet((SaoulMatePNJ) notify.getBuffer());
+            soulMateMeet((SaoulMatePNJ) notify.getBuffer());
     }
 }

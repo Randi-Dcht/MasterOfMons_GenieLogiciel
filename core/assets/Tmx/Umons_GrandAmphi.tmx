@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="700" height="700" tilewidth="64" tileheight="32" nextobjectid="104">
+<map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="700" height="700" tilewidth="64" tileheight="32" nextobjectid="106">
  <properties>
   <property name="spawnY" type="int" value="312"/>
  </properties>
@@ -2121,7 +2121,7 @@
   <object id="2" name="Tmx/Umons_Nimy.tmx" x="12963" y="7363" width="340" height="162"/>
   <object id="3" name="Tmx/Umons_Nimy.tmx" x="22076" y="6724" width="158" height="442"/>
  </objectgroup>
- <objectgroup name="RandomPNJ">
+ <objectgroup name="RandomPNJ" visible="0">
   <object id="21" x="12994" y="3190" width="76" height="36"/>
   <object id="22" x="12198" y="4090" width="94" height="106"/>
   <object id="23" x="7490" y="7030" width="76" height="52"/>
@@ -2206,7 +2206,7 @@
   <object id="102" x="16544" y="1688" width="112" height="96"/>
   <object id="103" x="17280" y="1696" width="100" height="132"/>
  </objectgroup>
- <objectgroup name="Interdit">
+ <objectgroup name="Interdit" visible="0">
   <object id="5" x="-166.667" y="-258.333" width="7208.33" height="8150"/>
   <object id="6" x="7016.67" y="-250" width="5750" height="2750"/>
   <object id="7" x="12766.7" y="-266.667" width="5858.33" height="1475"/>
@@ -2222,5 +2222,8 @@
   <object id="17" x="416.667" y="7625" width="11541.7" height="11041.7"/>
   <object id="19" x="10841.7" y="2491.67" width="1916.67" height="883.333"/>
   <object id="20" x="10858.3" y="3241.67" width="733.333" height="866.667"/>
+ </objectgroup>
+ <objectgroup name="About">
+  <object id="104" name="Course" x="12762" y="1134" width="5546" height="2438"/>
  </objectgroup>
 </map>
