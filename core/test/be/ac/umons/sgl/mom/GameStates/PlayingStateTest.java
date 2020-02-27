@@ -1,9 +1,14 @@
 package be.ac.umons.sgl.mom.GameStates;
 
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.InventoryShower;
+import be.ac.umons.sgl.mom.GraphicalObjects.LifeBar;
 import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.GraphicalObjects.ProgressBar;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
@@ -42,7 +47,7 @@ public class PlayingStateTest extends PlayingState {
         questShower = Mockito.mock(QuestShower.class);
         cam = Mockito.mock(OrthographicCamera.class);
         sb = Mockito.mock(SpriteBatch.class);
-        lifeBar = Mockito.mock(ProgressBar.class);
+        lifeBar = Mockito.mock(LifeBar.class);
         expBar = Mockito.mock(ProgressBar.class);
         energyBar = Mockito.mock(ProgressBar.class);
         agendaShower = Mockito.mock(AgendaShower.class);
@@ -68,10 +73,11 @@ public class PlayingStateTest extends PlayingState {
         player.setMapWidth(mapWidth * tileWidth);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
-        VELOCITY = 5;
+        velocity = 1;
         SHOWED_MAP_WIDTH = 17;
         SHOWED_MAP_HEIGHT = 31;
         player.setPosX(25);
+        SuperviserNormally.getSupervisor().newParty("Test", Type.normal, gs, Gender.Men, Difficulty.Easy);
 
         collisionObjects = new MapObjects();
     }

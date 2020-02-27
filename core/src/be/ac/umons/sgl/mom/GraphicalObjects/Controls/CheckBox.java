@@ -108,9 +108,9 @@ public class CheckBox extends Control {
         for (Point click : gim.getRecentClicks()) {
             if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y, width, height).contains(click)) {
                 checked = !checked;
-                if (checked)
+                if (checked && onChecked != null)
                     onChecked.run();
-                else
+                else if (! checked && onUnchecked != null)
                     onUnchecked.run();
             }
         }

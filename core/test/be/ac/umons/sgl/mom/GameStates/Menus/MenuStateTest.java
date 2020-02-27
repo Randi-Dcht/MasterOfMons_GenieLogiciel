@@ -34,6 +34,7 @@ public class MenuStateTest extends MainMenuState {
         buttons.get(0).add(Mockito.mock(Button.class));
         textBoxes = new ArrayList<>();
         scrollListChoosers = new ArrayList<>();
+        colorSelectors = new ArrayList<>();
     }
 
     @BeforeEach

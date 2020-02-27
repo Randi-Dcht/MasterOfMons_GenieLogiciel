@@ -226,6 +226,20 @@ public class PlayingState extends GameState implements Observer {
     /**
      * Initialise all the variables for the given map.
      * @param mapPath The map's path
+     */
+    public void initMap(String mapPath) {
+        gmm.setMap(mapPath);
+        int spawnX = 0, spawnY = 0;
+        if (gmm.getActualMap().getProperties().containsKey("spawnX"))
+            spawnX = (int)gmm.getActualMap().getProperties().get("spawnX");
+        if (gmm.getActualMap().getProperties().containsKey("spawnY"))
+            spawnY = (int)gmm.getActualMap().getProperties().get("spawnY");
+        initMap(mapPath, spawnX, spawnY);
+    }
+
+    /**
+     * Initialise all the variables for the given map.
+     * @param mapPath The map's path
      * @param spawnX On which CASE the character will be horizontally.
      * @param spawnY On which CASE the character will be vertically
      */
@@ -312,20 +326,6 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
-    /**
-     * Initialise all the variables for the given map.
-     * @param mapPath The map's path
-     */
-    public void initMap(String mapPath) {
-        gmm.setMap(mapPath);
-        int spawnX = 0, spawnY = 0;
-        if (gmm.getActualMap().getProperties().containsKey("spawnX"))
-            spawnX = (int)gmm.getActualMap().getProperties().get("spawnX");
-        if (gmm.getActualMap().getProperties().containsKey("spawnY"))
-            spawnY = (int)gmm.getActualMap().getProperties().get("spawnY");
-        initMap(mapPath, spawnX, spawnY);
-    }
-
     @Override
     public void update(float dt) {
         handleInput();
@@ -367,7 +367,6 @@ public class PlayingState extends GameState implements Observer {
             player.setOrientation(Orientation.Right);
             toMoveX += toMove;
         }
-
 
         translateCamera(player.getPosX() + toMoveX, player.getPosY() + toMoveY);
         player.move(toMoveX, toMoveY);

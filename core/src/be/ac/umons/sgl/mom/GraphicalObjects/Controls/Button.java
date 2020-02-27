@@ -21,7 +21,7 @@ public class Button extends Control {
     /**
      * The background's color.
      */
-    protected Color backgroundColor = gs.getTransparentBackgroundColor();
+    protected Color backgroundColor;
     /**
      * The background's color when the mouse is over it.
      */
@@ -63,6 +63,7 @@ public class Button extends Control {
         super(gim, gs);
         sr = new ShapeRenderer();
         font = gs.getNormalFont();
+        backgroundColor = gs.getTransparentBackgroundColor();
     }
 
     /**
