@@ -1,7 +1,14 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
+import be.ac.umons.sgl.mom.Enums.Lesson;
 import be.ac.umons.sgl.mom.Enums.Maps;
+import be.ac.umons.sgl.mom.Enums.Maps;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -40,6 +47,8 @@ public class People extends Character implements Serializable, Observer
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
     private int friend = 0;
     private Mobile saoulMate; //TODO check the type
+    /*The point of the level*/
+    private int actual = 0;
 
 
     /**
@@ -68,6 +77,24 @@ public class People extends Character implements Serializable, Observer
     public double getExperience()
     {
         return experience;
+    }
+
+
+    @Override
+    public void updateType(int strength, int defence, int agility)
+    {
+        super.updateType(strength, defence, agility);
+        actual += strength+defence+agility;
+    }
+
+
+    /***/
+    public int getPointLevel()
+    {
+        int mem;
+        if((mem = getPointType(level)-actual) > 0)
+            return mem;
+        return 0;
     }
 
 
