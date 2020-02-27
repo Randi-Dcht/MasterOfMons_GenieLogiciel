@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -62,10 +63,12 @@ public class NewChapterMenuState extends GameState {
             });
             anim.setEndingAction(() -> {
                 ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-                executorService.scheduleAtFixedRate(() -> gsm.removeFirstState(), 2, 1, TimeUnit.SECONDS);
+                executorService.schedule(() ->
+                                Gdx.app.postRunnable(() -> gsm.removeFirstState()),
+                        4, TimeUnit.SECONDS);
             });
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(() -> AnimationManager.getInstance().addAnAnimation("NewChapterStringAnim2", anim), 5, 1, TimeUnit.SECONDS);
+            executorService.schedule(() -> AnimationManager.getInstance().addAnAnimation("NewChapterStringAnim2", anim), 2, TimeUnit.SECONDS);
 
         });
         AnimationManager.getInstance().addAnAnimation("NewChapterStringAnim", sa);

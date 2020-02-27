@@ -75,6 +75,8 @@ public class GameStateManager {
      * Remove the first state in the stack.
      */
     public void removeFirstState() {
+        if (gameStateStack.size() == 1)
+            return;
         gameStateStack.pop();
         gameStateStack.peek().getFocus();
     }
