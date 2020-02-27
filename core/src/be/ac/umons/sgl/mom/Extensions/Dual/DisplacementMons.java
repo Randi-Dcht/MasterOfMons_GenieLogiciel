@@ -2,8 +2,7 @@ package be.ac.umons.sgl.mom.Extensions.Dual;
 
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -53,13 +52,13 @@ public class DisplacementMons extends MasterQuest
     }
 
     /**
-     * This method return the place for this Quest
+     * This method return the maps for this Quest
      *
-     * @return list of the place
+     * @return list of the maps
      */
     @Override
-    public Place[] whatPlace() {
-        return new Place[0];
+    public Maps[] whatPlace() {
+        return new Maps[0];
     }
 
     @Override

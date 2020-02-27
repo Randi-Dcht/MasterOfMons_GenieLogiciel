@@ -62,7 +62,7 @@ public class Saving implements Observer
     /**
      * This method allows to clean the String of the file.
      * @param name who is teh name to clean
-     * @param who who is place of word to return
+     * @param who who is maps of word to return
      * @return word of name, after clean.
      */
     private String cleanName(String name,int who)

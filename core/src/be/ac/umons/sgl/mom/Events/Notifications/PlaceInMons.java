@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Events.Notifications;
 
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Events.Events;
 
 
@@ -11,14 +11,14 @@ import be.ac.umons.sgl.mom.Events.Events;
 public class PlaceInMons implements Notification
 {
     private Events evt;
-    private Place buffer;
+    private Maps buffer;
 
 
     /**
-     * This constructor define a notification when people change place in maps with buffer
-     * @param buffer is a buffer with place (specific to events)
+     * This constructor define a notification when people change maps in maps with buffer
+     * @param buffer is a buffer with maps (specific to events)
      */
-    public PlaceInMons(Place buffer)
+    public PlaceInMons(Maps buffer)
     {
         evt = Events.PlaceInMons;
         this.buffer = buffer;
@@ -26,7 +26,7 @@ public class PlaceInMons implements Notification
 
 
     /**
-     * This constructor define a notification when people change place in maps
+     * This constructor define a notification when people change maps in maps
      */
     public PlaceInMons()
     {
@@ -47,10 +47,10 @@ public class PlaceInMons implements Notification
 
     /**
      * This method return the buffer of this notification if it isn't empty
-     * @return place
+     * @return maps
      */
     @Override
-    public Place getBuffer()
+    public Maps getBuffer()
     {
         return buffer;
     }

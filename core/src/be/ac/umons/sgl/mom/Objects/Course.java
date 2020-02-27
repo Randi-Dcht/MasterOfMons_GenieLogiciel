@@ -40,7 +40,7 @@ public class Course
      * This method allows to give the full name of the course with:
      *  - date
      *  - lesson
-     *  - place
+     *  - maps
      * @return string of the course
      */
     @Override

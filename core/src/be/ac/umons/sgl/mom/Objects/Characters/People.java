@@ -1,13 +1,7 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Gender;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -394,14 +388,14 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
-     * This method allows to change the place of this people
-     * @param place is the new place
+     * This method allows to change the maps of this people
+     * @param maps is the new maps
      */
     @Override
-    public void setPlace(Place place)
+    public void setMaps(Maps maps)
     {
-        state = place.getState();
-        super.setPlace(place);
+        state = maps.getState();
+        super.setMaps(maps);
     }
 
 
@@ -454,7 +448,7 @@ public class People extends Character implements Serializable, Observer
     public void update(Notification notify)
     {
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
-            setPlace(((PlaceInMons)notify).getBuffer());
+            setMaps(((PlaceInMons)notify).getBuffer());
         if (notify.getEvents().equals(Events.ChangeMonth))
             createPlanning();
     }

@@ -245,7 +245,7 @@ public class PlayingState extends GameState implements Observer {
      */
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
-        Place map = SuperviserNormally.getSupervisor().getMaps(mapPath);
+        Maps map = SuperviserNormally.getSupervisor().getMaps(mapPath);
         SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(map));
         pnjs = new ArrayList<>();
         mapObjects = new ArrayList<>();
@@ -258,7 +258,7 @@ public class PlayingState extends GameState implements Observer {
             pnjs.add(new Character(gs, mob));
 
         Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda,Actions.Dialog));
-        testPNJ.getCharacteristics().setPlace(Place.Nimy);
+        testPNJ.getCharacteristics().setMaps(Maps.Nimy);
         pnjs.add(testPNJ);
 
 
@@ -624,7 +624,7 @@ public class PlayingState extends GameState implements Observer {
             mo.setMapPos(new Point(player.getPosX(), player.getPosY()));
             mapObjects.add(mo);
             SuperviserNormally.getSupervisor().getPeople().removeObject(dropped.getItem());
-            dropped.getItem().setPlace(SuperviserNormally.getSupervisor().getMaps(gmm.getActualMapName()));
+            dropped.getItem().setMaps(SuperviserNormally.getSupervisor().getMaps(gmm.getActualMapName()));
         }
     }
 

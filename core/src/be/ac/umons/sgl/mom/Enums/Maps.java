@@ -2,10 +2,10 @@ package be.ac.umons.sgl.mom.Enums;
 
 
 /**
- *This is a list of the Tmx place in this game (MasterOfMonsBAc2/core/Tmx)
+ *This is a list of the Tmx maps in this game (MasterOfMonsBAc2/core/Tmx)
  *@author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public enum Place
+public enum Maps
 {
     Nimy(      "Tmx/Umons_Nimy.tmx",      State.normal, "InfoNimy"),
     Warocque(  "Tmx/Umons_Warocque.tmx",  State.listen, "InfoWaroc"),
@@ -24,10 +24,10 @@ public enum Place
 
 
     /**
-     * This constructor allows to create the place in the game with the name of the place
+     * This constructor allows to create the maps in the game with the name of the maps
      * @param maps is the name of the maps .tmx
      */
-    private Place(String maps,State state,String about)
+    private Maps(String maps, State state, String about)
     {
         this.maps  = maps;
         this.state = state;
@@ -36,7 +36,7 @@ public enum Place
 
 
     /**
-     * This method return the state of the people in function the place
+     * This method return the state of the people in function the maps
      * @return state of the people
      */
     public State getState()
@@ -46,8 +46,8 @@ public enum Place
 
 
     /**
-     * This method to give the name of the Tmx/place of Mons
-     * @return maps who is the name of the Mons place.
+     * This method to give the name of the Tmx/maps of Mons
+     * @return maps who is the name of the Mons maps.
      */
     public String getMaps()
     {
@@ -57,7 +57,7 @@ public enum Place
 
     /**
      * This method return the id of the information
-     * @return the id of information about the place
+     * @return the id of information about the maps
      */
     public String getInformation()
     {

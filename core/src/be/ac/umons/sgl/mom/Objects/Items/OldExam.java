@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
-import be.ac.umons.sgl.mom.Enums.Place;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 public class OldExam extends Items

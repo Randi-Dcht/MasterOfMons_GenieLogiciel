@@ -5,7 +5,7 @@ import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Gender;
 import be.ac.umons.sgl.mom.Enums.MobileType;
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Items.Phone;
@@ -45,7 +45,7 @@ public class TestCharacters
         double second = people.getEnergy();
         assertTrue(first > second,"depency energy");
 
-        people.setPlace(Place.Kot);
+        people.setMaps(Maps.Kot);
         for (int i = 0; i < 100 ; i++ ){people.energy(1);}
         first = people.getEnergy();
         assertTrue(second < first,"add energy");
