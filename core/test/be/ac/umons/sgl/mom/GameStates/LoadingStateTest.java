@@ -4,7 +4,10 @@ import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameMapManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,6 +29,7 @@ public class LoadingStateTest extends LoadingState {
         gim = Mockito.mock(GameInputManager.class);
         gsm = Mockito.mock(GameStateManager.class);
         gs = Mockito.mock(GraphicalSettings.class);
+        Mockito.when(gs.getBackgroundColor()).thenReturn(new Color());
         am = Mockito.mock(AssetManager.class);
         sb = Mockito.mock(SpriteBatch.class);
         gmm = Mockito.mock(GameMapManager.class);
@@ -35,6 +39,7 @@ public class LoadingStateTest extends LoadingState {
         when(gs.getAssetManager()).thenReturn(am);
         when(am.update()).thenReturn(false);
         when(gs.getStringFromId("loading")).thenReturn("Loading...");
+        Gdx.gl = Mockito.mock(GL20.class);
 //        when(am.getProgress()).thenReturn(0f);
 //        when(gmm.getProgress()).thenReturn(0d);
     }
