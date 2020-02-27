@@ -8,10 +8,10 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Gun;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
-import be.ac.umons.sgl.mom.Objects.Items.Pen;
+import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import be.ac.umons.sgl.mom.Quests.Under.ChooseSubject;
+import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.sgl.mom.Quests.Under.Traineeship;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class PreparedCompany extends MasterQuest
     /*This tab is a list of the course of the people for this year*/
     final Lesson[] lesson ={Lesson.res2,Lesson.lecred,Lesson.proglog,Lesson.bda,Lesson.comp,Lesson.algbio,Lesson.sofev,Lesson.angl};
     /*This is the goals of this MasterQuest*/
-    final UnderQuest[] underQuest = {new Traineeship(this)};
+    final UnderQuest[] underQuest = {/*new Traineeship(this),*/new GoToPriorityLesson(this,50,people),new ChooseSubject(this,people)};
 
 
     /**
@@ -75,15 +75,23 @@ public class PreparedCompany extends MasterQuest
     }
 
 
-    /***/
+    /**
+     * This method allows us to know the different items for this quest
+     * @return an arraylist of the items
+     */
     public ArrayList<Items> whatItem()
     {
-        //ajouter les items que je veux et le nombre de fois que je les veux durant cette quete
         ArrayList<Items> listofitems = new ArrayList<>();
         for (int i=0 ; i < 8; i++) {
             listofitems.add(new Pen());
             listofitems.add(new Gun());
         }
+        for (int i=0;i<3;i++)
+        {
+            listofitems.add(new PaperHelp());
+            listofitems.add(new Synthesis());
+        }
+        listofitems.add(new Sportswear());
         return listofitems;
     }
 

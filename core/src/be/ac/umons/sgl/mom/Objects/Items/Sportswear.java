@@ -2,9 +2,9 @@ package be.ac.umons.sgl.mom.Objects.Items;
 
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
-public class sportswear extends Items {
+public class Sportswear extends Items {
 
-    public sportswear() {
+    public Sportswear() {
         super("Sportswear");
     }
 
@@ -23,6 +23,10 @@ public class sportswear extends Items {
         return 0;
     }
 
+    /**
+     * It help to know what do the item
+     * @return the utility of the item
+     */
     @Override
     public String question() {
         return graphic.getStringFromId("sportswear");

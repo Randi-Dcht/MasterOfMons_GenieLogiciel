@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Enums.Subject;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
+import java.util.Scanner;
 
 public class ChooseSubject extends UnderQuest
 {
@@ -11,12 +12,8 @@ public class ChooseSubject extends UnderQuest
     public ChooseSubject(Quest q, People people)
     {
         super("ChooseSubject", 50, q,people);
-    } //TODO regarder si je garde cette valeur là pour cette sous quete
-    /**
-     * This method allows to choice the subject of the memory
-     *
-     * @return choice is the choice of your subject
-     */
+    }
+
     public String showSubject()
     {
         String res="";
@@ -25,10 +22,17 @@ public class ChooseSubject extends UnderQuest
             res=res+sub+", \n";
         }
         return res;
+        //on appelle cette methode dans une bulle de dialogue et ça permet de savoir les sujets disponible
     }
-    public void makeChoice(Subject sub)  //Quand tu cliques sur le sujet cette méthode est appelé !
+
+    /**
+     * This method allows to choice the subject of the memory
+     *
+     * @return choice is the choice of your subject
+     */
+    public Subject makeChoice()  //Cette méthode est appelle lors du choix  !
     {
-        /*System.out.println("It's the different subject that you can choice");
+        System.out.println("It's the different subject that you can choice");
         for (Subject sub : Subject.values()) {
             System.out.println("-->" + sub.getSubjectName() + "\n");
             Scanner a = new Scanner(System.in);
@@ -37,14 +41,23 @@ public class ChooseSubject extends UnderQuest
             if (answer.equals("YES"))
             {
                 System.out.println("Your choice is : "+sub.getSubjectName());
-                subject=sub;
+                this.subject=sub;
                 return sub;
             }
         }
         System.out.println("You must do this subject because you didn't choose anything");
-        subject=Subject.crepro;
-        return  Subject.crepro;*/
-    subject=sub;
+        this.subject=Subject.crepro;
+        return (Subject.crepro);
+    }
+
+    /**
+     * This method allows us to change the subject before the confirmation
+     */
+    public void removeChoice()
+    {
+        this.subject=null; //on détruit l'ancien sujet
+        this.makeChoice();
+        //Cette methode est appele quand on demande si l'utilisateur est sur de son choix et qu'il dit nn sinon elle n'est jamais appellé.
     }
 
     public Quest[] getSubQuests() {

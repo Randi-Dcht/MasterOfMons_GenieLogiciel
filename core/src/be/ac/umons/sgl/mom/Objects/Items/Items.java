@@ -123,8 +123,8 @@ public abstract class Items implements Serializable, FrameTime
     }
 
     /**
-     *This method allow to say what is this quest
-     *@return a goal (=question) of this quest
+     *This method allow to say what is this item
+     *@return the utility of this object
      */
     public abstract String question();
 }
