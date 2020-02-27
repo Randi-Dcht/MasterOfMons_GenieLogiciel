@@ -1,33 +1,20 @@
 package be.ac.umons.sgl.mom.Events;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Gender;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.MobileType;
-import be.ac.umons.sgl.mom.Enums.Place;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
-import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
-import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
-import be.ac.umons.sgl.mom.Objects.Characters.MovingPNJ;
-import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Objects.Characters.Social;
+import be.ac.umons.sgl.mom.Objects.Characters.*;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
+import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Other.Regulator;
 import be.ac.umons.sgl.mom.Other.TimeGame;
-import be.ac.umons.sgl.mom.Other.Date;
-import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
-import com.sun.jdi.request.ExceptionRequest;
+import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 
 import java.util.ArrayList;
 import java.util.HashMap;

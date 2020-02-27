@@ -100,6 +100,8 @@ public class PlayingState extends GameState implements Observer {
      * The positions where PNJs can be spawned.
      */
     protected MapObjects randomPNJPositions;
+
+    protected MapObjects aboutObjects;
     /**
      * The camera.
      */
@@ -229,15 +231,16 @@ public class PlayingState extends GameState implements Observer {
      */
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
-        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(SuperviserNormally.getSupervisor().getMaps(mapPath)));
+        Place map = SuperviserNormally.getSupervisor().getMaps(mapPath);
+        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(map));
         pnjs = new ArrayList<>();
         mapObjects = new ArrayList<>();
 
-        for (Items it : SuperviserNormally.getSupervisor().getItems(SuperviserNormally.getSupervisor().getMaps(mapPath))) {
+        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
             addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO
         }
 
-        for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(SuperviserNormally.getSupervisor().getMaps(mapPath)))
+        for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(map))
             pnjs.add(new Character(gs, mob));
 
         Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda,Actions.Dialog));
@@ -258,6 +261,9 @@ public class PlayingState extends GameState implements Observer {
         MapLayer pnjLayer = gmm.getActualMap().getLayers().get("RandomPNJ");
         if (pnjLayer != null)
             randomPNJPositions = pnjLayer.getObjects();
+        MapLayer aboutLayer = gmm.getActualMap().getLayers().get("About");
+        if (aboutLayer != null)
+            aboutObjects = aboutLayer.getObjects();
 
         initPNJsPositions();
         initPlayerPosition(spawnX, spawnY);
@@ -372,6 +378,7 @@ public class PlayingState extends GameState implements Observer {
         }
         checkForMapChanging(player);
         checkForNearSelectable(player);
+        checkForAboutCollision(player);
 
         if (cam.position != null) { // For testing purposes
             player.setxT((int)(player.getPosX() - cam.position.x));
@@ -400,22 +407,31 @@ public class PlayingState extends GameState implements Observer {
     }
 
     /**
+     * Check if the player is in collision with one of the given collision area.
+     * @param player The player.
+     * @return If the player is in collision with one of the given collision area.
+     */
+    protected RectangleMapObject checkForCollision(MapObjects objectsToCheck, Player player) {
+        if (objectsToCheck == null)
+            return null;
+        for (RectangleMapObject rectangleMapObject : objectsToCheck.getByType(RectangleMapObject.class)) {
+            Rectangle rect = rectangleMapObject.getRectangle();
+            Rectangle playerRect = player.getMapRectangle();
+            Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
+            if (Intersector.overlaps(mapRect, playerRect)) {
+                return rectangleMapObject;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Check if the player is in collision with one of the collision area on the map.
      * @param player The player.
      * @return If the player is in collision with one of the collision area on the map.
      */
     protected boolean checkForCollision(Player player) {
-        if (collisionObjects == null)
-            return false;
-        for (RectangleMapObject rectangleMapObject : collisionObjects.getByType(RectangleMapObject.class)) {
-            Rectangle rect = rectangleMapObject.getRectangle();
-            Rectangle playerRect = player.getMapRectangle();
-            Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
-            if (Intersector.overlaps(mapRect, playerRect)) {
-                return true;
-            }
-        }
-        return false;
+        return checkForCollision(collisionObjects, player) != null;
     }
 
     /**
@@ -423,21 +439,31 @@ public class PlayingState extends GameState implements Observer {
      * @param player The player.
      */
     protected void checkForMapChanging(Player player) {
-        if (changingMapObjects == null)
+        RectangleMapObject rectangleMapObject = checkForCollision(changingMapObjects, player);
+        if (rectangleMapObject == null)
             return;
-        for (RectangleMapObject rectangleMapObject : changingMapObjects.getByType(RectangleMapObject.class)) {
-            Rectangle rect = rectangleMapObject.getRectangle();
-            Rectangle playerRect = player.getMapRectangle();
-            Rectangle mapRect = new Rectangle( rect.x * 2 / tileWidth, (mapHeight * tileHeight - rect.y - rect.height) / tileHeight, rect.width * 2 / tileWidth, rect.height / tileHeight);
-            if (Intersector.overlaps(mapRect, playerRect)) {
-                if (rectangleMapObject.getProperties().containsKey("spawnX") && rectangleMapObject.getProperties().containsKey("spawnY")) {
-                    int spawnX, spawnY;
-                    spawnX = (int)rectangleMapObject.getProperties().get("spawnX");
-                    spawnY = (int)rectangleMapObject.getProperties().get("spawnY");
-                    initMap(rectangleMapObject.getName(), spawnX, spawnY);
-                } else
-                    initMap(rectangleMapObject.getName());
-            }
+        if (rectangleMapObject.getProperties().containsKey("spawnX") && rectangleMapObject.getProperties().containsKey("spawnY")) {
+            int spawnX, spawnY;
+            spawnX = (int)rectangleMapObject.getProperties().get("spawnX");
+            spawnY = (int)rectangleMapObject.getProperties().get("spawnY");
+            initMap(rectangleMapObject.getName(), spawnX, spawnY);
+        } else
+            initMap(rectangleMapObject.getName());
+    }
+
+    /**
+     * Check if the player is in collision with one of the about collision area
+     * @param player The player.
+     */
+    protected void checkForAboutCollision(Player player) {
+        RectangleMapObject rectangleMapObject = checkForCollision(changingMapObjects, player);
+        if (rectangleMapObject == null)
+            return;
+        try {
+            SuperviserNormally.getSupervisor().analyseIdMap(rectangleMapObject.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO : Handle the exception
         }
     }
 
