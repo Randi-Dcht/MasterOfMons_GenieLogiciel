@@ -27,6 +27,8 @@ import be.ac.umons.sgl.mom.Other.TimeGame;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
+import com.sun.jdi.request.ExceptionRequest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -294,6 +296,23 @@ public class SuperviserNormally implements Observer
                     mb.setPlace(place[new Random().nextInt(place.length)]);
                 listMobile.get(mb.getPlace()).add(mb);
             }
+        }
+
+
+        /**
+         * This method allows to analyse the id in the maps
+         * @param id is the id of the object name
+         */
+        public void analyseIdMap(String id) throws Exception
+        {
+            String[] word = id.split("_");
+            if (word[0].equals("Room") && word.length >= 2)
+                return;
+            else if (word[0].equals("Info") && word.length >= 2)
+                regule.placeQuestion(word[1]);
+            else
+                throw new Exception();
+
         }
 
 

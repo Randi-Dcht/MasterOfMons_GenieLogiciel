@@ -2393,6 +2393,6 @@
   <object id="218" x="17644" y="7348" width="102" height="106"/>
  </objectgroup>
  <objectgroup name="About">
-  <object id="246" name="Memory" x="14764" y="2610" width="954" height="914"/>
+  <object id="246" name="Info_Memory" x="14764" y="2610" width="954" height="914"/>
  </objectgroup>
 </map>
