@@ -1,11 +1,10 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.MobileType;
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Maps;
+import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
@@ -100,9 +99,9 @@ public class MyFirstYear extends MasterQuest
 
     /***/
     @Override
-    public Place[] whatPlace()
+    public Maps[] whatPlace()
     {
-        return new Place[]{Place.Nimy,Place.DeVinci,Place.Mons};
+        return new Maps[]{Maps.Nimy, Maps.DeVinci, Maps.Mons};
     }
 
 

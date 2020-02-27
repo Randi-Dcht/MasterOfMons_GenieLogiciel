@@ -11,7 +11,7 @@ public class Pen extends Items
 
     /**
      * this constructor define the items
-     * @param place is the place of this item
+     * @param place is the maps of this item
      */
     public Pen() {
         super("Pen");

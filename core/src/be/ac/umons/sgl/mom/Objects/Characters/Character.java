@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dead;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
@@ -26,7 +26,7 @@ public abstract class Character implements Attack, Social, Serializable
     protected int defence;
     protected int agility;
     protected double life;
-    protected Place place;
+    protected Maps maps;
     protected Gun gun;
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
@@ -148,22 +148,22 @@ public abstract class Character implements Attack, Social, Serializable
 
 
     /**
-     * This method return the place of the people
-     * @return place in maps (TMX)
+     * This method return the maps of the people
+     * @return maps in maps (TMX)
      */
-    public Place getPlace()
+    public Maps getMaps()
     {
-        return place;
+        return maps;
     }
 
 
     /**
-     * This method allows to add the place to the mobile
-     * @param place is the place of the mobile
+     * This method allows to add the maps to the mobile
+     * @param maps is the maps of the mobile
      */
-    public void setPlace(Place place)
+    public void setMaps(Maps maps)
     {
-        this.place = place;
+        this.maps = maps;
     }
 
 

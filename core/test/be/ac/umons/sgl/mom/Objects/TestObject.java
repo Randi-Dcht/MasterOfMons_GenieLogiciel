@@ -1,10 +1,7 @@
 package be.ac.umons.sgl.mom.Objects;
 
 import be.ac.umons.sgl.mom.Enums.*;
-import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Other.Date;
-import be.ac.umons.sgl.mom.Other.TimeGame;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +29,7 @@ class TestObject
     //assertTrue(l2.take(levelPlayer),"take the lesson of level player");
     //assertFalse(l3.take(levelPlayer),"take the lesson of level player");
     assertTrue(l1.obligatoryCourse(),"Obligatory of lesson");
-    assertSame(l1.location(),Place.Nimy,"same place"); /*<= prob*/
+    assertSame(l1.location(), Maps.Nimy,"same maps"); /*<= prob*/
   }
 
   @Test

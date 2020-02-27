@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.FrameTime;
 
@@ -8,13 +8,13 @@ import java.io.Serializable;
 
 /**
  * This class define the Item in the game, this items help the people in the Quest
- * Every Item is associated to Place and a Quest (SupervisorNormally)
+ * Every Item is associated to Maps and a Quest (SupervisorNormally)
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
 public abstract class Items implements Serializable, FrameTime
 {
-    /*the place of this items*/
-    protected Place place;
+    /*the maps of this items*/
+    protected Maps maps;
     /*if the items isn't obsolete*/
     protected boolean visible = true;
     /*the name of this items*/
@@ -41,9 +41,9 @@ public abstract class Items implements Serializable, FrameTime
 
 
     /***/
-    public void setPlace(Place place)
+    public void setMaps(Maps maps)
     {
-        this.place = place;
+        this.maps = maps;
     }
 
 
@@ -69,9 +69,9 @@ public abstract class Items implements Serializable, FrameTime
 
 
     /***/
-    public Place getPlace()
+    public Maps getMaps()
     {
-        return place;
+        return maps;
     }
 
 

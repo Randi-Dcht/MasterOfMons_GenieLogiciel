@@ -26,52 +26,52 @@ public enum Lesson
      */
 
     /*Lesson of Bachelor 1*/
-    MI1(    'O',"math for computer 1",Place.GrandAmphi,Bloc.BA1,30),
-    MI2(    'O',"math for computer 2",Place.GrandAmphi,Bloc.BA1,15),
-    algo1(  'O',"algorithm python"   ,Place.DeVinci,Bloc.BA1,   20),
-    algo2(  'F',"algorithm java"     ,Place.DeVinci,Bloc.BA1,   15),
-    ftOrdi( 'F',"computer operation" ,Place.GrandAmphi,Bloc.BA1,10),
-    projet1('F',"bachelor project 1" ,Place.DeVinci,Bloc.BA1,   10),
+    MI1(    'O',"math for computer 1", Maps.GrandAmphi,Bloc.BA1,30),
+    MI2(    'O',"math for computer 2", Maps.GrandAmphi,Bloc.BA1,15),
+    algo1(  'O',"algorithm python"   , Maps.DeVinci,Bloc.BA1,   20),
+    algo2(  'F',"algorithm java"     , Maps.DeVinci,Bloc.BA1,   15),
+    ftOrdi( 'F',"computer operation" , Maps.GrandAmphi,Bloc.BA1,10),
+    projet1('F',"bachelor project 1" , Maps.DeVinci,Bloc.BA1,   10),
 
     /*Lesson of Bachelor 2*/
-    nbComplexe('F',"complex number"       ,Place.GrandAmphi,Bloc.BA2,10),
-    opti(      'O',"linear optimization"  ,Place.Poly    ,Bloc.BA2,10),
-    anglais(   'O',"english for sciences" ,Place.Nimy    ,Bloc.BA2,10),
-    OS(        'O',"systeme exploitation" ,Place.Nimy    ,Bloc.BA2,10),
-    projet2(   'F',"projet bachelier 2"   ,Place.Nimy    ,Bloc.BA2,10),
-    calculus2( 'O',"algèbre partie B"     ,Place.Poly    ,Bloc.BA2,10),
-    ecopol(    'F',"economie politique"   ,Place.Warocque,Bloc.BA2,10),
-    reseau(    'O',"reseau"               ,Place.DeVinci ,Bloc.BA2,10),
+    nbComplexe('F',"complex number"       , Maps.GrandAmphi,Bloc.BA2,10),
+    opti(      'O',"linear optimization"  , Maps.Poly    ,Bloc.BA2,10),
+    anglais(   'O',"english for sciences" , Maps.Nimy    ,Bloc.BA2,10),
+    OS(        'O',"systeme exploitation" , Maps.Nimy    ,Bloc.BA2,10),
+    projet2(   'F',"projet bachelier 2"   , Maps.Nimy    ,Bloc.BA2,10),
+    calculus2( 'O',"algèbre partie B"     , Maps.Poly    ,Bloc.BA2,10),
+    ecopol(    'F',"economie politique"   , Maps.Warocque,Bloc.BA2,10),
+    reseau(    'O',"reseau"               , Maps.DeVinci ,Bloc.BA2,10),
 
     /*Lesson of Bachelor 3*/
-    calculProba('O',"calcul de probabilite",Place.Poly,Bloc.BA3,10),
-    intelligen('O',"intelligence artificielle",Place.DeVinci,Bloc.BA3,10),
-    compilation('F',"compilation",Place.Nimy,Bloc.BA3,10),
-    grapheOpti('O',"graphe et optimisation",Place.Poly,Bloc.BA3,10),
-    baseDonnes('F',"base de données",Place.Nimy,Bloc.BA3,10),
-    statistique('F',"statistique",Place.Nimy,Bloc.BA3,10),
+    calculProba('O',"calcul de probabilite", Maps.Poly,Bloc.BA3,10),
+    intelligen('O',"intelligence artificielle", Maps.DeVinci,Bloc.BA3,10),
+    compilation('F',"compilation", Maps.Nimy,Bloc.BA3,10),
+    grapheOpti('O',"graphe et optimisation", Maps.Poly,Bloc.BA3,10),
+    baseDonnes('F',"base de données", Maps.Nimy,Bloc.BA3,10),
+    statistique('F',"statistique", Maps.Nimy,Bloc.BA3,10),
 
     /*Lesson of Master 1 & 2*/
 
-    res2('F',"reseaux 2",Place.Nimy,Bloc.MA1,10),
-    lecred('0',"lecture et redaction scientifiques",Place.Nimy,Bloc.MA1,10),
-    proglog('F',"programmation logique",Place.Nimy,Bloc.MA1,10),
-    bda('F',"Big data analytics",Place.Nimy,Bloc.MA1,10),
-    comp('F',"compilation",Place.Nimy,Bloc.MA1,10),
-    algbio('F',"algorithme et bioinformatique",Place.Nimy,Bloc.MA1,10),
-    sofev('F',"software evolution",Place.Nimy,Bloc.MA1,10),
-    angl('F',"English for scientific communication",Place.Nimy,Bloc.MA1,10),
+    res2('F',"reseaux 2", Maps.Nimy,Bloc.MA1,10),
+    lecred('0',"lecture et redaction scientifiques", Maps.Nimy,Bloc.MA1,10),
+    proglog('F',"programmation logique", Maps.Nimy,Bloc.MA1,10),
+    bda('F',"Big data analytics", Maps.Nimy,Bloc.MA1,10),
+    comp('F',"compilation", Maps.Nimy,Bloc.MA1,10),
+    algbio('F',"algorithme et bioinformatique", Maps.Nimy,Bloc.MA1,10),
+    sofev('F',"software evolution", Maps.Nimy,Bloc.MA1,10),
+    angl('F',"English for scientific communication", Maps.Nimy,Bloc.MA1,10),
 
-    mem('O',"Memoire",Place.Nimy,Bloc.MA2,10),
-    stage('O',"Stage en entreprise",Place.Nimy,Bloc.MA2,10),
-    ss('F',"Sciences et societe",Place.Nimy,Bloc.MA2,10),
-    ps('F',"Philosophie des sciences",Place.Nimy,Bloc.MA2,10),
-    mang('F',"Managment",Place.Nimy,Bloc.MA2,10);
+    mem('O',"Memoire", Maps.Nimy,Bloc.MA2,10),
+    stage('O',"Stage en entreprise", Maps.Nimy,Bloc.MA2,10),
+    ss('F',"Sciences et societe", Maps.Nimy,Bloc.MA2,10),
+    ps('F',"Philosophie des sciences", Maps.Nimy,Bloc.MA2,10),
+    mang('F',"Managment", Maps.Nimy,Bloc.MA2,10);
 
 
     final char type;
     final String name;
-    final Place place;
+    final Maps maps;
     final Bloc year;
     final int number;
 
@@ -80,15 +80,15 @@ public enum Lesson
      *This constructor define the lesson with:
      * @param type who is obligatory (O) lesson or not (F).
      * @param name who is the full name of the lesson.
-     * @param place of the lesson (see Tmx map).
+     * @param maps of the lesson (see Tmx map).
      * @param year who is the year of the Lesson
      * @param number who is the number of this course for a month.
      */
-    private Lesson(char type,String name, Place place,Bloc year,int number)
+    private Lesson(char type, String name, Maps maps, Bloc year, int number)
     {
         this.type  = type;
         this.name   = name;
-        this.place  = place;
+        this.maps = maps;
         this.year = year;
         this.number = number;
     }
@@ -115,12 +115,12 @@ public enum Lesson
 
 
     /**
-     *This method return the place where the teacher give the course
-     *@return place (Tmx map)
+     *This method return the maps where the teacher give the course
+     *@return maps (Tmx map)
      */
-    public Place location()
+    public Maps location()
     {
-        return place;
+        return maps;
     }
 
 

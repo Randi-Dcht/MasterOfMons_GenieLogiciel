@@ -50,13 +50,13 @@ public class MovingPNJ extends Mobile implements Observer
     /**
      * This constructor define the moving PNJ in the maps
      * @param bloc  is the level of the player
-     * @param place is the place of this pnj
+     * @param maps is the maps of this pnj
      * @param type  is the type of the Mobile
      */
-    public MovingPNJ(Bloc bloc, MobileType type, Place place)
+    public MovingPNJ(Bloc bloc, MobileType type, Maps maps)
     {
         super("MovingPNJ",bloc,type,Actions.Attack);
-        setPlace(place);
+        setMaps(maps);
         time = TIME;
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
     }

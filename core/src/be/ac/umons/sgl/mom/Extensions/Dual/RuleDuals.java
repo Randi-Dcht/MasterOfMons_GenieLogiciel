@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Extensions.Dual;
 
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.GameStates.PlayingState;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Saving;
@@ -13,7 +13,7 @@ public class RuleDuals //TODO: extends avec supervisor qui sera en instance
     private MasterQuest masterQuest;
     final PlayingState gui;
     private Saving save;
-    private Place maps; //TODO : changer avec futur maps de Guillaume
+    private Maps maps; //TODO : changer avec futur maps de Guillaume
 
     public RuleDuals(PlayingState gui)
     {

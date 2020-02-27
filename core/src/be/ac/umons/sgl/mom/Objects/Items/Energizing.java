@@ -1,12 +1,14 @@
 package be.ac.umons.sgl.mom.Objects.Items;
 
+import be.ac.umons.sgl.mom.Events.Notifications.UseItem;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 
 /***/
 public class Energizing extends Items
 {
     private double obsolete = 31536000;
-    private double reVisible = 0;
+    private double reVisible = 0;//TODO for all item
 
 
     /***/
@@ -20,8 +22,9 @@ public class Energizing extends Items
     @Override
     public void used(People pp)
     {
-        pp.energy(0.23);
+        pp.addEnergy(25);//TODO check
         visibly();
+        SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(this));
     }
 
 

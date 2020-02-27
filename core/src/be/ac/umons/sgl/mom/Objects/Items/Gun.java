@@ -7,8 +7,6 @@ public class Gun extends Items implements Guns
 
     /**
      * this constructor define the items
-     * @param place is the place of this item
-     * @param name  is the name of this items
      */
     public Gun()
     {

@@ -3,7 +3,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Events.Observer;
@@ -16,7 +16,6 @@ import be.ac.umons.sgl.mom.Quests.Quest;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -28,7 +27,7 @@ import java.util.HashMap;
  */
 public abstract class MasterQuest implements Quest,Serializable,Observer
 {
-    /*place in the list of MasterQuest*/
+    /*maps in the list of MasterQuest*/
     protected static int numberQuest = 1;
     /*the percent to advance this quest*/
     protected double percent = 0;
@@ -338,10 +337,10 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /**
-     * This method return the place for this Quest
-     * @return list of the place
+     * This method return the maps for this Quest
+     * @return list of the maps
      */
-    public abstract Place[] whatPlace();
+    public abstract Maps[] whatPlace();
 
 
     /**

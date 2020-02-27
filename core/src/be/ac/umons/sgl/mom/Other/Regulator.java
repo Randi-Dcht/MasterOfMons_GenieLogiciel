@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Other;
 
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
@@ -36,9 +36,9 @@ public class Regulator implements Observer
      */
     private boolean informEnergizing=true, informPlace=true;
     /**
-     * The all place of the maps
+     * The all maps of the maps
      */
-    private ArrayList<Place> places;
+    private ArrayList<Maps> maps;
 
 
     /**
@@ -54,8 +54,8 @@ public class Regulator implements Observer
         manager.getEvent().add(Events.ChangeHour,this);
         manager.getEvent().add(Events.PlaceInMons,this);
         manager.getEvent().add(Events.MeetOther,this);
-        places = new ArrayList<>();
-        places.addAll(Arrays.asList(Place.values()));
+        maps = new ArrayList<>();
+        maps.addAll(Arrays.asList(Maps.values()));
     }
 
 
@@ -75,14 +75,14 @@ public class Regulator implements Observer
     /**
      * This method allows to give the information about the actual Map
      */
-    private void questionPlace(Place place)
+    private void questionPlace(Maps maps)
     {
-        if (informPlace && places.contains(place))
+        if (informPlace && this.maps.contains(maps))
         {
-            manager.getEvent().notify(new Dialog(place.getInformation(),"ESC"));
-            places.remove(place);
+            manager.getEvent().notify(new Dialog(maps.getInformation(),"ESC"));
+            this.maps.remove(maps);
         }
-        if (places.size()==0)
+        if (this.maps.size()==0)
            informPlace = false;
     }
 
@@ -93,7 +93,7 @@ public class Regulator implements Observer
      */
     private void nightHour()
     {
-        if (time.getDate().getHour() >= 22 && player.getPlace().equals(Place.Kot))
+        if (time.getDate().getHour() >= 22 && player.getMaps().equals(Maps.Kot))
         {
             time.refreshTime(0,8,0);
             player.addEnergy(90); //TODO calculer difference
@@ -102,8 +102,8 @@ public class Regulator implements Observer
 
 
     /**
-     * This method allows to inform the player of this place and give also the information
-     * @param id of the place
+     * This method allows to inform the player of this maps and give also the information
+     * @param id of the maps
      */
     public void placeQuestion(String id)
     {
@@ -122,9 +122,9 @@ public class Regulator implements Observer
 
 
     /***/
-    public void timeOfCourse(Place place)
+    public void timeOfCourse(Maps maps)
     {
-        if (place.getState().equals(State.listen))
+        if (maps.getState().equals(State.listen))
             time.refreshTime(0,1,50);
     }
 
@@ -140,8 +140,8 @@ public class Regulator implements Observer
             nightHour();
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
         {
-            questionPlace((Place)notify.getBuffer());
-            timeOfCourse((Place)notify.getBuffer());
+            questionPlace((Maps)notify.getBuffer());
+            timeOfCourse((Maps)notify.getBuffer());
         }
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
             soulMateMeet((SaoulMatePNJ) notify.getBuffer());

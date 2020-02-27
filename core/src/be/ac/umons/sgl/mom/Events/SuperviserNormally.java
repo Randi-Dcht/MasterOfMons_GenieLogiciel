@@ -53,15 +53,15 @@ public class SuperviserNormally implements Observer
         /**
          * The all objects in all maps in this game
          */
-        private HashMap<Place,ArrayList<Items>> listItems;
+        private HashMap<Maps,ArrayList<Items>> listItems;
         /**
          * The all mobile - PNJ (not moving) in this game
          */
-        private HashMap<Place,ArrayList<Mobile>> listMobile;
+        private HashMap<Maps,ArrayList<Mobile>> listMobile;
         /**
          * The all mobile who moves in this game
          */
-        private HashMap<Place,ArrayList<MovingPNJ>> listMoving;
+        private HashMap<Maps,ArrayList<MovingPNJ>> listMoving;
         /**
          * This is a lst of the mobile dead
          */
@@ -85,7 +85,7 @@ public class SuperviserNormally implements Observer
         /**
          * Associate String to maps
          */
-        private HashMap<String,Place> listMap = new HashMap<>();
+        private HashMap<String, Maps> listMap = new HashMap<>();
         /**
          * Associate Bloc to Lesson
          */
@@ -105,7 +105,7 @@ public class SuperviserNormally implements Observer
         */
        private SuperviserNormally()
        {
-           for (Place plt : Place.values())
+           for (Maps plt : Maps.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
            event.add(Events.Dead,this);
@@ -125,13 +125,13 @@ public class SuperviserNormally implements Observer
 
 
         /**
-         * This method return the items for a place.
-         * @param place is the map where there are items
+         * This method return the items for a maps.
+         * @param maps is the map where there are items
          * @return list of items
          */
-        public ArrayList<Items> getItems(Place place)
+        public ArrayList<Items> getItems(Maps maps)
         {
-             return listItems.get(place);
+             return listItems.get(maps);
         }
 
 
@@ -160,13 +160,13 @@ public class SuperviserNormally implements Observer
 
         /**
          * This method return the mobile for a maps
-         * @param place is the place (maps)
+         * @param maps is the maps (maps)
          * @return list of the mobile for this maps.
          */
-        public ArrayList<Mobile> getMobile(Place place)
+        public ArrayList<Mobile> getMobile(Maps maps)
         {
 
-            return listMobile.get(place);
+            return listMobile.get(maps);
 
         }
 
@@ -196,28 +196,29 @@ public class SuperviserNormally implements Observer
          }
 
     /**
-         * This method create the hashMap with mobile and the place of this mobile
+         * This method create the hashMap with mobile and the maps of this mobile
          * @param difficulty is the difficulty of the game
          */
         private void createMovingPnj(Difficulty difficulty)
         {
             listMoving = new HashMap<>();
-            Place[] plc = Place.values();Place place;
-            for (Place pl : plc)
+            Maps[] plc = Maps.values();
+            Maps maps;
+            for (Maps pl : plc)
                 listMoving.put(pl,new ArrayList<>());
             for (int i = 0 ; i <= difficulty.getNumberPNJ() ; i++)
-                listMoving.get((place = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic,place));
+                listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic, maps));
         }
 
 
         /**
          * This method return the list of the moving PNJ in the specific map TMX
-         * @param place is the place
+         * @param maps is the maps
          * @return list of the moving pnj in the maps
          */
-        public ArrayList<MovingPNJ> getMovingPnj(Place place)
+        public ArrayList<MovingPNJ> getMovingPnj(Maps maps)
         {
-            return listMoving.get(place);
+            return listMoving.get(maps);
         }
 
 
@@ -259,9 +260,9 @@ public class SuperviserNormally implements Observer
         /**
          * This method return the enum of the maps with the name in String (.tmx)
          * @param nameTmx is the name of the maps with the name .TMX
-         * @return the place (enum)
+         * @return the maps (enum)
          */
-        public Place getMaps(String nameTmx)
+        public Maps getMaps(String nameTmx)
         {
             return listMap.get(nameTmx);
         }
@@ -274,14 +275,14 @@ public class SuperviserNormally implements Observer
         private void createMobil(MasterQuest quest)
         {
             listMobile = new HashMap<>();
-            Place[] place = quest.whatPlace();
-            for (Place plc : Place.values())
+            Maps[] maps = quest.whatPlace();
+            for (Maps plc : Maps.values())
                 listMobile.put(plc,new ArrayList<>());
             for (Mobile mb : quest.whatMobile())
             {
-                if (mb.getPlace() == null)
-                    mb.setPlace(place[new Random().nextInt(place.length)]);
-                listMobile.get(mb.getPlace()).add(mb);
+                if (mb.getMaps() == null)
+                    mb.setMaps(maps[new Random().nextInt(maps.length)]);
+                listMobile.get(mb.getMaps()).add(mb);
             }
         }
 
@@ -311,14 +312,14 @@ public class SuperviserNormally implements Observer
         private void createItems(MasterQuest quest)
         {
             listItems = new HashMap<>();
-            Place[] place = quest.whatPlace();
-            for (Place plc : Place.values())
+            Maps[] maps = quest.whatPlace();
+            for (Maps plc : Maps.values())
                 listItems.put(plc,new ArrayList<>());
             for (Items mb : quest.whatItem())
             {
-                if (mb.getPlace() == null)
-                    mb.setPlace(place[new Random().nextInt(place.length)]);
-                listItems.get(mb.getPlace()).add(mb);
+                if (mb.getMaps() == null)
+                    mb.setMaps(maps[new Random().nextInt(maps.length)]);
+                listItems.get(mb.getMaps()).add(mb);
             }
         }
 
@@ -344,7 +345,7 @@ public class SuperviserNormally implements Observer
             if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(Character.TypePlayer.Computer))
             {
                 Mobile mb = (Mobile)notify.getBuffer();
-                listMobile.get(mb.getPlace()).remove(mb);
+                listMobile.get(mb.getMaps()).remove(mb);
                 deadMobile.add(mb);
                 if (mb.equals(memoryMobile))
                     memoryMobile = null;
@@ -372,6 +373,7 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : deadMobile)
                 mobileLife(mb,dt);
             deadMobile.removeIf(Character::isLiving);
+            people.getQuest().addProgress(0.1);
         }
 
 
@@ -380,7 +382,7 @@ public class SuperviserNormally implements Observer
          */
         public void addItems()
         {
-            ArrayList<Items> list = listItems.get(people.getPlace());
+            ArrayList<Items> list = listItems.get(people.getMaps());
             people.pushObject(list.get(new Random().nextInt(list.size())));
         }
 
@@ -395,7 +397,7 @@ public class SuperviserNormally implements Observer
             mobile.regeneration(dt);
             if (mobile.isLiving())
             {
-                listMobile.get(mobile.getPlace()).add(mobile);
+                listMobile.get(mobile.getMaps()).add(mobile);
             }
         }
 
