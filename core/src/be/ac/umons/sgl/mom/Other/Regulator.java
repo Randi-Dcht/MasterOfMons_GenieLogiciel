@@ -122,10 +122,10 @@ public class Regulator implements Observer
 
 
     /***/
-    public void timeOfCourse(Maps maps)
+    public void timeOfCourse(Maps maps)//TODO
     {
-        if (maps.getState().equals(State.listen))
-            time.refreshTime(0,1,50);
+       // if (maps.getState().equals(State.listen))
+       //     time.refreshTime(0,1,50);
     }
 
 

@@ -7,19 +7,17 @@ package be.ac.umons.sgl.mom.Enums;
  */
 public enum Maps
 {
-    Nimy(      "Tmx/Umons_Nimy.tmx",      State.normal, "InfoNimy"),
-    Warocque(  "Tmx/Umons_Warocque.tmx",  State.listen, "InfoWaroc"),
-    GrandAmphi("Tmx/Umons_GrandAmphi.tmx",State.listen, "InfoGA"),
-    DeVinci(   "Tmx/Umons_DeVinci.tmx",   State.study,  "InfoDeVinci"),
-    Poly(      "Tmx/Umons_Polytech.tmx",  State.listen, "InfoPoly"),
-    Kot(       "Tmx/kot.tmx",             State.nap,    "InfoKot"),
-    Mons(      "Tmx/CityMons.tmx",        State.normal, "InfoCity");
-    /*MicrosoftCompany("Tmx/MicrosoftCompany.tmx",State.normal);*/ //TODO up to mx
+    Nimy(      "Tmx/Umons_Nimy.tmx",      "InfoNimy"),
+    Warocque(  "Tmx/Umons_Warocque.tmx",  "InfoWaroc"),
+    GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA"),
+    DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci"),
+    Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly"),
+    Kot(       "Tmx/kot.tmx",             "InfoKot"),
+    Mons(      "Tmx/CityMons.tmx",        "InfoCity");
 
 
     /**The characteristic of the maps*/
     final String maps;
-    final State state;
     final String about;
 
 
@@ -27,21 +25,10 @@ public enum Maps
      * This constructor allows to create the maps in the game with the name of the maps
      * @param maps is the name of the maps .tmx
      */
-    private Maps(String maps, State state, String about)
+    private Maps(String maps,String about)
     {
         this.maps  = maps;
-        this.state = state;
         this.about = about;
-    }
-
-
-    /**
-     * This method return the state of the people in function the maps
-     * @return state of the people
-     */
-    public State getState()
-    {
-        return state;
     }
 
 

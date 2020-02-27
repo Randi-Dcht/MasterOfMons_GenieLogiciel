@@ -10,7 +10,9 @@ public enum Places
     /***/
     Bed("MyBed",State.nap),
     /***/
-    StudyRoom("RoomOfStudy",State.study);
+    StudyRoom("RoomOfStudy",State.study),
+    /***/
+    OnTheMap("OnTheMaps",State.normal);
 
     final String name;
     final State state;

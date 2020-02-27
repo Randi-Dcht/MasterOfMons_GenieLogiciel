@@ -1,13 +1,6 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.Actions;
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Gender;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Maps;
-import be.ac.umons.sgl.mom.Enums.State;
-import be.ac.umons.sgl.mom.Enums.Type;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -48,6 +41,7 @@ public class People extends Character implements Serializable, Observer
     private Mobile saoulMate; //TODO check the type
     /*The point of the level*/
     private int actual = 0;
+    private Places place;
 
 
     /**
@@ -421,7 +415,7 @@ public class People extends Character implements Serializable, Observer
     @Override
     public void setMaps(Maps maps)
     {
-        state = maps.getState();
+        state = State.normal;//maps.getState();TODO
         super.setMaps(maps);
     }
 

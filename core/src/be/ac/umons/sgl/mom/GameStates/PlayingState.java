@@ -473,7 +473,7 @@ public class PlayingState extends GameState implements Observer {
      * @param player The player.
      */
     protected void checkForAboutCollision(Player player) {
-        RectangleMapObject rectangleMapObject = checkForCollision(changingMapObjects, player);
+        RectangleMapObject rectangleMapObject = checkForCollision(aboutObjects, player);
         if (rectangleMapObject == null)
             return;
         try {
