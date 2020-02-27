@@ -79,7 +79,7 @@ public class SuperviserNormally implements Observer
          */
         private TimeGame time;
         /**
-         * This is the events variable
+         * This is the events instance
          */
         private Event event;
         /**
@@ -293,6 +293,7 @@ public class SuperviserNormally implements Observer
          */
         public void analyseIdMap(String id) throws Exception
         {
+            System.out.println("=> " + id);
             String[] word = id.split("_");
             if (word[0].equals("Room") && word.length >= 2)
                 return;//TODO prevenir UnderQuest

@@ -1,6 +1,7 @@
 package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -120,6 +121,14 @@ public class Regulator implements Observer
     }
 
 
+    /***/
+    public void timeOfCourse(Place place)
+    {
+        if (place.getState().equals(State.listen))
+            time.refreshTime(0,1,50);
+    }
+
+
     /**
      * This method allows to receive the notification of the other class
      * @param notify is the notification
@@ -130,7 +139,10 @@ public class Regulator implements Observer
         if (notify.getEvents().equals(Events.ChangeHour))
             nightHour();
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
+        {
             questionPlace((Place)notify.getBuffer());
+            timeOfCourse((Place)notify.getBuffer());
+        }
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
             soulMateMeet((SaoulMatePNJ) notify.getBuffer());
     }
