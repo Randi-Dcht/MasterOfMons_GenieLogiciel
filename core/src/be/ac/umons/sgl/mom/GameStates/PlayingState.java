@@ -218,7 +218,7 @@ public class PlayingState extends GameState implements Observer {
         SuperviserNormally.getSupervisor().getEvent().add(Events.Dialog,this);
 
         velocity = 50;
-//        velocity = SuperviserNormally.getSupervisor().getPeople().displacement(); // TODO
+//        velocity = SuperviserNormally.getSupervisor().getPeople().getSpeed(); // TODO
     }
 
     /**

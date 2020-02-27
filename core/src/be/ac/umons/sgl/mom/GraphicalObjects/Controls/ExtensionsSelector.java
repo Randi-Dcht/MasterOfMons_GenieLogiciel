@@ -220,10 +220,10 @@ public class ExtensionsSelector extends Control {
     public void generateLoadLists() {
         mapsToLoad = new ArrayList<>();
         filesToLoad = new ArrayList<>();
-        for (int i = 0; i < checkBoxList.size(); i++) {
-            if (checkBoxList.get(i).isChecked()) {
-                mapsToLoad.addAll(extensions.get(i).mapsToLoad);
-                filesToLoad.addAll(extensions.get(i).dirsFileToLoad);
+        for (Extension ext : checkBoxList.keySet()) {
+            if (checkBoxList.get(ext).isChecked()) {
+                mapsToLoad.addAll(ext.mapsToLoad);
+                filesToLoad.addAll(ext.dirsFileToLoad);
             }
         }
     }
