@@ -373,6 +373,7 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : deadMobile)
                 mobileLife(mb,dt);
             deadMobile.removeIf(Character::isLiving);
+            people.getQuest().addProgress(0.1);
         }
 
 

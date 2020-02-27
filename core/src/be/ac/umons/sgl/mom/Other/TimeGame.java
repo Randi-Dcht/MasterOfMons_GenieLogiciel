@@ -15,6 +15,10 @@ import java.util.Objects;
  */
 public class TimeGame implements Observer
 {
+    /***/
+    private static final int FASTER = 40;
+
+    /***/
     static final int[][] years = { {31,28,31,30,31,30,31,31,30,31,30,31},
                                    {31,29,31,30,31,30,31,31,30,31,30,31}
                                  };
@@ -66,7 +70,7 @@ public class TimeGame implements Observer
      */
     public void updateSecond(double time)
     {
-        second = second + time *150;
+        second = second + time *FASTER;
         if(second>= 60)
         {
             changeMin();
