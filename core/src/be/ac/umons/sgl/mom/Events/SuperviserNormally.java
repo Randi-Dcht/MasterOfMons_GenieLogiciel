@@ -1,12 +1,24 @@
 package be.ac.umons.sgl.mom.Events;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Maps;
+import be.ac.umons.sgl.mom.Enums.MobileType;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
+import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
-import be.ac.umons.sgl.mom.Objects.Characters.*;
+import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
+import be.ac.umons.sgl.mom.Objects.Characters.MovingPNJ;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
+import be.ac.umons.sgl.mom.Objects.Characters.Social;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
@@ -15,7 +27,6 @@ import be.ac.umons.sgl.mom.Other.Regulator;
 import be.ac.umons.sgl.mom.Other.TimeGame;
 import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import be.ac.umons.sgl.mom.Quests.Master.MyFirstYear;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -109,7 +120,7 @@ public class SuperviserNormally implements Observer
                listMap.put(plt.getMaps(),plt);
            event = new Event();
            event.add(Events.Dead,this);
-           event.add(Events.Answer,this);//TODO changer pour mettre avec remove
+          // event.add(Events.Answer,this);//TODO changer pour mettre avec remove
            associateLesson();
        }
 
@@ -179,7 +190,7 @@ public class SuperviserNormally implements Observer
          */
         public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
         {
-            time = new TimeGame(new Date(16,9,2020,8,15));//TODO check the month
+            time = new TimeGame(new Date(16,9,2019,8,15));
             people = new People(namePlayer,type, gender,difficulty);
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
@@ -294,7 +305,6 @@ public class SuperviserNormally implements Observer
          */
         public void analyseIdMap(String id) throws Exception
         {
-            System.out.println("=> " + id);
             String[] word = id.split("_");
             if (word[0].equals("Room") && word.length >= 2)
                 return;//TODO prevenir UnderQuest
@@ -488,7 +498,10 @@ public class SuperviserNormally implements Observer
             if (action.equals(Actions.Attack))
                 attackMethod(memoryMobile,people);//event.notify(new LaunchAttack());TODO donner à Guillaume
             else if (action.equals(Actions.Dialog))
+            {
+                event.add(Events.Answer,this);
                 event.notify(new Dialog(people.getDialog("Start")));
+            }
         }
 
 
@@ -498,12 +511,14 @@ public class SuperviserNormally implements Observer
          */
         public void switchingDialog(String answer)
         {
+            if (answer.equals("OK"))
+                return;//TODO
             if (answer.equals("Attack"))
                 attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));TODO donner à guillaume
             if(answer.equals("ESC"))
             {
                 event.notify(new Dialog("ESC"));
-                //event.remove(Events.Answer,this);//TODO raccorder
+                //event.remove(Events.Answer,this);TODO
             }
             else
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));

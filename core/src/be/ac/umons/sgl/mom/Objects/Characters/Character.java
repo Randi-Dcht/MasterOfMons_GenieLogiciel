@@ -86,6 +86,11 @@ public abstract class Character implements Attack, Social, Serializable
     }
 
 
+    /***/
+    @Override
+    public abstract TypePlayer getType();
+
+
     /**
      * This method returns the number of the life of this character
      * @return the life of character

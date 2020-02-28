@@ -400,11 +400,11 @@ public class People extends Character implements Serializable, Observer
     /**
      * This method allows to up level of this people (#debug#)
      */
-    public void upLevel()//TODO ajouter pour guillaume up level point
+    public void upLevel()
     {
         level++;
         SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
-        //System.out.println(level + " <= level =>" + getPointType(level));
+        System.out.println("People level:  " + level);
     }
 
 
@@ -415,14 +415,29 @@ public class People extends Character implements Serializable, Observer
     @Override
     public void setMaps(Maps maps)
     {
-        state = State.normal;//maps.getState();TODO
+        state = maps.getStart().getState();
         super.setMaps(maps);
+    }
+
+
+    /***/
+    public void setPlaceMaps(Places place)
+    {
+        this.place = place;
+        state = place.getState();
+    }
+
+
+    /***/
+    public Places getPlace()
+    {
+        return place;
     }
 
 
     /**
      * This method reduce the energizing once.
-     * @param state is the state of the people²
+     * @param state is the state of the people
      */
     public void reduceEnergizing(State state)
     {

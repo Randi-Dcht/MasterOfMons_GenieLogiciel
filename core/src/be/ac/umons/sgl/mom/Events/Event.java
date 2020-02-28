@@ -40,6 +40,14 @@ public class Event implements Observable
     }
 
 
+    /***/
+    public void add(Observer obs,Events ... evts)
+    {
+        for (Events evt : evts)
+            add(evt,obs);
+    }
+
+
     /**
      * This method allows to remove the observer associate with the event
      * @param evt is an events

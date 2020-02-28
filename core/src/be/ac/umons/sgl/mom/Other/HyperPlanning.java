@@ -31,7 +31,7 @@ public class HyperPlanning
             for (double i=0; i<average; i++) //new Random().nextInt(4)
             {
                 int random = new Random().nextInt(monthL.size());
-                ll.add(new Course(monthL.get(random),new Date(dayy,date.getMonth(),date.getYear(),hour.get(rdh=new Random().nextInt(hour.size())),0)));
+                ll.add(new Course(monthL.get(random),new Date(dayy,date.getMonth(),date.getYear(),hour.get(rdh=random(hour.size())),0)));
                 monthL.remove(random);
                 hour.remove(rdh);
                 if(monthL.size()==0)//TODO modifier cela pour éviter le bound of arraylist
@@ -44,6 +44,15 @@ public class HyperPlanning
     }
 
 
+    private static int random(int max)
+    {
+        int rdh;
+        if((rdh=new Random().nextInt(max))>= 0)
+            return rdh;
+        return 0;
+    }
+
+
     /***/
     private static void createMonthLesson(ArrayList<Lesson> list)
     {
@@ -53,6 +62,10 @@ public class HyperPlanning
             for (int i =0; i < ls.numberOfCourse();i++)
                 monthL.add(ls);
         }
-        average= monthL.size()/31;
+
+        if (monthL.size()/31 <= 4)//TODO max
+            average= monthL.size()/31;
+        else
+            average = 4;
     }
 }

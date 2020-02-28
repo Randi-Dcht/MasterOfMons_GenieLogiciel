@@ -7,28 +7,30 @@ package be.ac.umons.sgl.mom.Enums;
  */
 public enum Maps
 {
-    Nimy(      "Tmx/Umons_Nimy.tmx",      "InfoNimy"),
-    Warocque(  "Tmx/Umons_Warocque.tmx",  "InfoWaroc"),
-    GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA"),
-    DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci"),
-    Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly"),
-    Kot(       "Tmx/kot.tmx",             "InfoKot"),
-    Mons(      "Tmx/CityMons.tmx",        "InfoCity");
+    Nimy(      "Tmx/Umons_Nimy.tmx",      "InfoNimy",Places.OnTheMap),
+    Warocque(  "Tmx/Umons_Warocque.tmx",  "InfoWaroc",Places.OnTheMap),
+    GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA",Places.OnTheMap),
+    DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci",Places.OnTheMap),
+    Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",Places.OnTheMap),
+    Kot(       "Tmx/kot.tmx",             "InfoKot",Places.OnTheMap),
+    Mons(      "Tmx/CityMons.tmx",        "InfoCity",Places.OnTheMap);
 
 
     /**The characteristic of the maps*/
     final String maps;
     final String about;
+    final Places start;
 
 
     /**
      * This constructor allows to create the maps in the game with the name of the maps
      * @param maps is the name of the maps .tmx
      */
-    private Maps(String maps,String about)
+    private Maps(String maps,String about,Places start)
     {
         this.maps  = maps;
         this.about = about;
+        this.start = start;
     }
 
 
@@ -49,5 +51,15 @@ public enum Maps
     public String getInformation()
     {
         return about;
+    }
+
+
+    /**
+     * This method returns the first places of this map
+     * @return the place of the map
+     */
+    public Places getStart()
+    {
+        return start;
     }
 }

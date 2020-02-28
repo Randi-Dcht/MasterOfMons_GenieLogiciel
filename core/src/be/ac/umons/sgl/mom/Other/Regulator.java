@@ -1,7 +1,6 @@
 package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Enums.Maps;
-import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -34,11 +33,19 @@ public class Regulator implements Observer
     /**
      * To warn the people if there are problems
      */
-    private boolean informEnergizing=true, informPlace=true;
+    private boolean informEnergizing=true, informPlace=true, firstStart=true;
     /**
      * The all maps of the maps
      */
     private ArrayList<Maps> maps;
+    /**
+     * This list allows to save the dialog when the dialog is use by other
+     */
+    private ArrayList<String> waitingLine = new ArrayList<>();
+    /**
+     * This variable allows to know if the dialog is use
+     */
+    private boolean displayQuestion = true;
 
 
     /**
@@ -66,9 +73,27 @@ public class Regulator implements Observer
     {
         if (player.getEnergy() <= 10 && informEnergizing)
         {
-            manager.getEvent().notify(new Dialog("Low10","ESC"));
+            push("Low10");
             informEnergizing = false ;
         }
+    }
+
+
+    /**
+     * This method allows to give the new dialog to the player or wait if the dialog is used now
+     * @param newDialog is the dialog ID
+     */
+    private void push(String newDialog)
+    {
+        if(waitingLine.size() == 0 && displayQuestion)
+        {
+            manager.getEvent().add(Events.Answer,this);
+            manager.getEvent().notify(new Dialog(newDialog,"OK"));
+            displayQuestion = false;
+        }
+        else
+            waitingLine.add(newDialog);
+
     }
 
 
@@ -77,11 +102,18 @@ public class Regulator implements Observer
      */
     private void questionPlace(Maps maps)
     {
+        if (firstStart)
+        {
+            firstStart=false;
+            push("HelloWord");
+        }
+
         if (informPlace && this.maps.contains(maps))
         {
-            manager.getEvent().notify(new Dialog(maps.getInformation(),"ESC"));
+            push(maps.getInformation());
             this.maps.remove(maps);
         }
+
         if (this.maps.size()==0)
            informPlace = false;
     }
@@ -130,6 +162,29 @@ public class Regulator implements Observer
 
 
     /**
+     * This method allows to analyze the answer of the player after the dialog and launch the dialog in the waiting line
+     * @param answer is the answer of the player
+     */
+    private void regulateDialog(String answer)
+    {
+        if (answer.equals("OK"))
+            displayQuestion = true;
+        
+        if (waitingLine.size() != 0)
+        {
+            manager.getEvent().notify(new Dialog(waitingLine.get(0),"OK"));
+            waitingLine.remove(0);
+            displayQuestion = false;
+        }
+        else
+        {
+            manager.getEvent().notify(new Dialog("ESC"));
+            //manager.getEvent().remove(Events.Answer,this);TODO
+        }
+    }
+
+
+    /**
      * This method allows to receive the notification of the other class
      * @param notify is the notification
      */
@@ -138,12 +193,18 @@ public class Regulator implements Observer
     {
         if (notify.getEvents().equals(Events.ChangeHour))
             nightHour();
+
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
         {
             questionPlace((Maps)notify.getBuffer());
             timeOfCourse((Maps)notify.getBuffer());
         }
+
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
             soulMateMeet((SaoulMatePNJ) notify.getBuffer());
+
+        if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
+            regulateDialog((String)notify.getBuffer());
+
     }
 }

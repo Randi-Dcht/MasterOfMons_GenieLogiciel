@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Other;
 
+import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeDay;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeHour;
 import be.ac.umons.sgl.mom.Events.Notifications.ChangeMonth;
@@ -50,6 +51,7 @@ public class TimeGame implements Observer
         this.min  = date.getMin();
         NByear    = leap(date.getYear());
         second    = 0;
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
     }
 
 
@@ -60,7 +62,10 @@ public class TimeGame implements Observer
     @Override
     public void update(Notification notify)
     {
-        changeMin();
+        //changeMin();//TODO
+
+        if (notify.getEvents().equals(Events.ChangeQuest))//TODO check the years
+            newYear();
     }
 
 
