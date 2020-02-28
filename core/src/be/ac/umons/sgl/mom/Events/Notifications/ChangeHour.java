@@ -6,14 +6,14 @@ import be.ac.umons.sgl.mom.Objects.Characters.Character;
 public class ChangeHour implements Notification
 {
     private Events evt;
-    private Character buffer;
+    private int buffer;
 
 
     /**
      * This constructor define a notification when change day with buffer
      * @param buffer is a buffer with character (specific to events)
      */
-    public ChangeHour(Character buffer)
+    public ChangeHour(int buffer)
     {
         evt = Events.ChangeHour;
         this.buffer = buffer;
@@ -45,7 +45,7 @@ public class ChangeHour implements Notification
      * @return character
      */
     @Override
-    public Character getBuffer()
+    public Integer getBuffer()
     {
         return buffer;
     }
@@ -58,6 +58,6 @@ public class ChangeHour implements Notification
     @Override
     public boolean bufferNotEmpty()
     {
-        return !(buffer == null);
+        return true;
     }
 }

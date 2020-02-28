@@ -9,10 +9,7 @@ import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
-import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
-import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
-import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.Notifications.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
@@ -20,6 +17,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.MovingPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.Social;
+import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
@@ -114,6 +112,10 @@ public class SuperviserNormally implements Observer
          * This the actual variable of the Id on the maps
          */
         private String actualID;
+        /***/
+        private ArrayList<Course> listCourse;
+        /***/
+        private Course actualCourse;
 
 
        /**
@@ -124,7 +126,7 @@ public class SuperviserNormally implements Observer
            for (Maps plt : Maps.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
-           event.add(Events.Dead,this);
+           event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour);
           // event.add(Events.Answer,this);//TODO changer pour mettre avec remove
            associateLesson();
        }
@@ -181,9 +183,14 @@ public class SuperviserNormally implements Observer
          */
         public ArrayList<Mobile> getMobile(Maps maps)
         {
-
             return listMobile.get(maps);
+        }
 
+
+        /***/
+        public Course getActualCourse()
+        {
+            return actualCourse;
         }
 
 
@@ -203,6 +210,8 @@ public class SuperviserNormally implements Observer
             save = new Saving(people,namePlayer);
             refreshQuest();
             regule = new Regulator(people,time);
+            listCourse = people.getPlanning().get(time.getDate().getDay());
+            checkPlanning();System.out.println("*** " + time.getDate().getDay() + " : " + listCourse);
         }
 
 
@@ -375,6 +384,12 @@ public class SuperviserNormally implements Observer
 
             if (notify.getEvents().equals(Events.ChangeQuest))
                 refreshQuest();
+
+            if (notify.getEvents().equals(Events.ChangeDay))
+                listCourse = people.getPlanning().get(time.getDate().getDay());
+
+            if (notify.getEvents().equals(Events.ChangeHour))
+                checkPlanning();
         }
 
 
@@ -534,6 +549,24 @@ public class SuperviserNormally implements Observer
             }
             else
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
+        }
+
+
+
+        /***/
+        public void checkPlanning()
+        {
+            Date actu = time.getDate();
+            if (actualCourse == null || actualCourse.getDate().getHour() + 2 <= actu.getHour())
+            {
+                  actualCourse = null;
+                  for (Course crs : listCourse)
+                  {
+                       if (crs.getDate().getHour()<= actu.getHour() && (crs.getDate().getHour()+2) > actu.getHour())
+                               actualCourse = crs;
+                  }
+            }
+            //System.out.println(actualCourse + " : " + actu.getHour() + " => " + listCourse);
         }
 
     }

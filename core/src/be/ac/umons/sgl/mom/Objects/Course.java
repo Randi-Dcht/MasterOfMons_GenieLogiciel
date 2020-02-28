@@ -36,6 +36,12 @@ public class Course
     }
 
 
+    /***/
+    public Date getDate()
+    {
+        return date;
+    }
+
     /**
      * This method allows to give the full name of the course with:
      *  - date
