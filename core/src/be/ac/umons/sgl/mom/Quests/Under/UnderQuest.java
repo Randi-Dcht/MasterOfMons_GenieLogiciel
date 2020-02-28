@@ -98,6 +98,15 @@ public abstract class UnderQuest implements Quest,Serializable
         }
     }
 
+    public void removeProgress(double many)
+    {
+        progress=progress-many;
+        if (progress<0)
+            progress=0;
+        master.removeProgress(many);
+
+    }
+
 
     /**
      * This method return the advancement of this Quest

@@ -1,9 +1,6 @@
 package be.ac.umons.sgl.mom.Quests.Master;
 
-import be.ac.umons.sgl.mom.Enums.Bloc;
-import be.ac.umons.sgl.mom.Enums.Difficulty;
-import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Maps;
+import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -14,6 +11,7 @@ import be.ac.umons.sgl.mom.Quests.Under.ChooseSubject;
 import be.ac.umons.sgl.mom.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *This class define the four year in the University of Mons with the goals.
@@ -60,7 +58,7 @@ public class PreparedCompany extends MasterQuest
      */
     public Maps[] whatPlace()
     {
-        return new Maps[]{Maps.Mons,Maps.Nimy};
+        return new Maps[]{Maps.Mons,Maps.Nimy,Maps.DeVinci};
     }
 
     /**
@@ -97,14 +95,20 @@ public class PreparedCompany extends MasterQuest
     /***/
     public ArrayList<Mobile> whatMobile()
     {
-        ArrayList<Mobile> list = new ArrayList<>();
-        return list;
+        ArrayList<Mobile> mob = new ArrayList<>();
+        MobileType[] type = MobileType.values();
+        for(int i=0; i < 30;i++)
+            mob.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
+        for(int i = 30; i < 50; i++)
+            mob.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
+
+        return mob;
     }
 
 
     @Override
     public double getProgress() {
-        return 0;
+        return percent;
     }
 
     @Override
@@ -143,6 +147,7 @@ public class PreparedCompany extends MasterQuest
 
     @Override
     public boolean isFinished() {
+
         return false;
     }
 
