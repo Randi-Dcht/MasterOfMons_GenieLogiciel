@@ -42,13 +42,13 @@ public class ChooseSubject extends UnderQuest
             {
                 System.out.println("Your choice is : "+sub.getSubjectName());
                 this.subject=sub;
-                addProgress(15);
+                addProgress(50);
                 return sub;
             }
         }
         System.out.println("You must do this subject because you didn't choose anything");
         this.subject=Subject.crepro;
-        addProgress(15);
+        addProgress(50);
         return (Subject.crepro);
     }
 
@@ -57,9 +57,10 @@ public class ChooseSubject extends UnderQuest
      */
     public void removeChoice()
     {
-        //TODO regarder si j'ajoute 15 pour cette quete et pas oublier de changer ça dans makeChoice
+        //TODO regarder si j'ajoute 50 pour cette quete et pas oublier de changer ça dans makeChoice
         this.subject=null; //on détruit l'ancien sujet
-        removeProgress(15); // si on ne retire pas de l'experience alors on peut en gagnger tout le temps
+        //removeProgress(15); // si on ne retire pas de l'experience alors on peut en gagnger tout le temps
+        progress=progress-50;
         this.makeChoice();
         //Cette methode est appele quand on demande si l'utilisateur est sur de son choix et qu'il dit nn sinon elle n'est jamais appellé.
     }
