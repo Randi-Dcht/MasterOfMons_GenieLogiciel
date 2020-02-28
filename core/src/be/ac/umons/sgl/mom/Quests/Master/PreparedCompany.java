@@ -3,7 +3,7 @@ package be.ac.umons.sgl.mom.Quests.Master;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Lesson;
-import be.ac.umons.sgl.mom.Enums.Place;
+import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
@@ -54,10 +54,13 @@ public class PreparedCompany extends MasterQuest
 
 
 
-    /***/
-    public Place[] whatPlace()
+    /**
+     * This method return all of the place for this quest
+     * @return the different place for this quest
+     */
+    public Maps[] whatPlace()
     {
-        return new Place[]{Place.Mons,Place.Nimy};
+        return new Maps[]{Maps.Mons,Maps.Nimy};
     }
 
     /**

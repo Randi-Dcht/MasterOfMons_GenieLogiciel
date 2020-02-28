@@ -12,7 +12,6 @@ import be.ac.umons.sgl.mom.Quests.Under.GoToLesson;
 import be.ac.umons.sgl.mom.Quests.Under.UnderQuest;
 import be.ac.umons.sgl.mom.Quests.Under.WriteMemory;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *This class define the five year in the University of Mons with the goals.
@@ -60,11 +59,12 @@ public class FinishUniversity extends MasterQuest
     }
 
 
-    /***/
+    /**
+     * @return*/
     @Override
-    public Place[] whatPlace()
+    public Maps[] whatPlace()
     {
-        return new Place[]{Place.Nimy,Place.Mons};
+        return new Maps[]{Maps.Nimy,Maps.Mons};
     }
 
 
