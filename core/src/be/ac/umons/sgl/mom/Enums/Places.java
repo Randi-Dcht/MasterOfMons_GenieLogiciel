@@ -4,15 +4,15 @@ public enum Places
 {
 
     /***/
-    ComputerRoom("RoomOfComputer",State.listen),
+    ComputerRoom("Computer",State.listen),
     /***/
-    RoomCourse("RoomOfCourse",State.listen),
+    RoomCourse("Course",State.listen),
     /***/
-    Bed("MyBed",State.nap),
+    Bed("Bed",State.nap),
     /***/
-    StudyRoom("RoomOfStudy",State.study),
+    StudyRoom("Study",State.study),
     /***/
-    OnTheMap("OnTheMaps",State.normal);
+    OnTheMap("Maps",State.normal);
 
     final String name;
     final State state;
@@ -23,6 +23,12 @@ public enum Places
     {
         this.name  = name;
         this.state = state;
+    }
+
+    /***/
+    public String toString()
+    {
+        return name;
     }
 
 

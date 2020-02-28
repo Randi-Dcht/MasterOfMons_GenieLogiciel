@@ -314,7 +314,7 @@ public class SuperviserNormally implements Observer
                 actualID = id;
                 String[] word = id.split("_");
                 if (word[0].equals("Room") && word.length >= 3)
-                    regule.placeInOut(id);
+                    regule.placeInOut(word[2],word[1]);
                 else if (word[0].equals("Info") && word.length >= 2)
                     regule.push(word[1]);
                 else
