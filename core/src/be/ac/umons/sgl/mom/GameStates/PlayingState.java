@@ -260,10 +260,11 @@ public class PlayingState extends GameState implements Observer {
         for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(map))
             pnjs.add(new Character(gs, mob));
 
-        Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda,Actions.Dialog));
-        testPNJ.getCharacteristics().setMaps(Maps.Nimy);
-        pnjs.add(testPNJ);
-        pnjs.add(pm.initialisation(gs,player));
+
+            Character testPNJ = new Character(gs, new Mobile("xx",Bloc.BA2, MobileType.Lambda,Actions.Dialog));
+                  testPNJ.getCharacteristics().setMaps(Maps.Nimy);pm=new MovingPNJ(Bloc.BA3,MobileType.Lambda,Maps.Nimy);
+                  pnjs.add(testPNJ);
+                  pnjs.add(pm.initialisation(gs,player));
 
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
