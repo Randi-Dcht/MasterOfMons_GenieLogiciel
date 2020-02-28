@@ -17,7 +17,7 @@ import java.util.Objects;
 public class TimeGame implements Observer
 {
     /***/
-    public static int FASTER = 20;
+    public static int FASTER = 10;
 
     /***/
     static final int[][] years = { {31,28,31,30,31,30,31,31,30,31,30,31},

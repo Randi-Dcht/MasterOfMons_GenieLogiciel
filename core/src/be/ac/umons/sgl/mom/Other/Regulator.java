@@ -193,7 +193,7 @@ public class Regulator implements Observer
         }
 
         if ((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)) /*&& player.getItems()!= null && player.getItems().getClass().equals(Pen.class)*/)//TODO
-            time.refreshTime(0,2,0);
+            time.refreshTime(0,2,0);//TODO hyperplanning with in UnderQuest
 
         if (place.equals(Places.StudyRoom) && firstStudy)
         {
@@ -205,7 +205,7 @@ public class Regulator implements Observer
             TimeGame.FASTER = 350;
 
         if (place.equals(Places.OnTheMap))
-            TimeGame.FASTER = 20;
+            TimeGame.FASTER = 10;
 
     }
 
