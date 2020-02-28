@@ -7,13 +7,13 @@ package be.ac.umons.sgl.mom.Enums;
  */
 public enum Maps
 {
-    Nimy(      "Tmx/Umons_Nimy.tmx",      "InfoNimy",Places.OnTheMap),
-    Warocque(  "Tmx/Umons_Warocque.tmx",  "InfoWaroc",Places.OnTheMap),
-    GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA",Places.OnTheMap),
+    Nimy(      "Tmx/Umons_Nimy.tmx",      "InfoNimy",   Places.OnTheMap),
+    Warocque(  "Tmx/Umons_Warocque.tmx",  "InfoWaroc",  Places.OnTheMap),
+    GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA",     Places.OnTheMap),
     DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci",Places.OnTheMap),
-    Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",Places.OnTheMap),
-    Kot(       "Tmx/kot.tmx",             "InfoKot",Places.OnTheMap),
-    Mons(      "Tmx/CityMons.tmx",        "InfoCity",Places.OnTheMap);
+    Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",   Places.OnTheMap),
+    Kot(       "Tmx/kot.tmx",             "InfoKot",    Places.OnTheMap),
+    Mons(      "Tmx/CityMons.tmx",        "InfoCity",   Places.OnTheMap);
 
 
     /**The characteristic of the maps*/
@@ -25,6 +25,8 @@ public enum Maps
     /**
      * This constructor allows to create the maps in the game with the name of the maps
      * @param maps is the name of the maps .tmx
+     * @param about is the information about the maps
+     * @param start is the first place to start in this maps
      */
     private Maps(String maps,String about,Places start)
     {
