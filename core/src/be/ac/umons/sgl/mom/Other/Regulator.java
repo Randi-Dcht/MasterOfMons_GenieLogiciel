@@ -10,7 +10,6 @@ import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.SaoulMatePNJ;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

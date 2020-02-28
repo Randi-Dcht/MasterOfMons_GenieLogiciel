@@ -10,6 +10,7 @@ import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
+import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
 import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
@@ -391,7 +392,7 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : deadMobile)
                 mobileLife(mb,dt);
             deadMobile.removeIf(Character::isLiving);
-            people.getQuest().addProgress(0.1);
+            //people.getQuest().addProgress(0.1);
         }
 
 
@@ -451,8 +452,11 @@ public class SuperviserNormally implements Observer
        public void attackMethod(Attack attacker, Attack victim) //TODO ajout
        {
            if (attacker.getType().equals(Character.TypePlayer.Human))
+           {
                ((People)attacker).reduceEnergizing(State.attack);
-           if(victim.dodge() < 0.6)
+               event.notify(new LaunchAttack(memoryMobile));
+           }
+           if(victim.dodge() < 0.6 && attacker.canAttacker())
            {
                if(attacker.howGun())
                    victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
@@ -504,7 +508,7 @@ public class SuperviserNormally implements Observer
                 event.notify(new MeetOther(memoryMobile = (Mobile)player2));
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
-                attackMethod(memoryMobile,people);//event.notify(new LaunchAttack());TODO donner à Guillaume
+                attackMethod(memoryMobile,people);
             else if (action.equals(Actions.Dialog))
             {
                 event.add(Events.Answer,this);
@@ -522,7 +526,7 @@ public class SuperviserNormally implements Observer
             if (answer.equals("OK"))
                 return;//TODO
             if (answer.equals("Attack"))
-                attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));TODO donner à guillaume
+                attackMethod(people,memoryMobile);
             if(answer.equals("ESC"))
             {
                 event.notify(new Dialog("ESC"));

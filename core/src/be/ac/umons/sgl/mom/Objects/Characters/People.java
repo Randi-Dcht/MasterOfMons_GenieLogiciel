@@ -243,6 +243,14 @@ public class People extends Character implements Serializable, Observer
     }
 
 
+    /***/
+    @Override
+    public boolean canAttacker()
+    {
+        return energy>=10;
+    }
+
+
     /**
      * This method allows to give the all inventory of this people
      * @return The inventory of the player

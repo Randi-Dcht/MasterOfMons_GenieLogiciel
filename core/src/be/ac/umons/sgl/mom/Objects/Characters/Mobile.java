@@ -58,6 +58,15 @@ public class Mobile extends Character implements Serializable,FrameTime
     }
 
 
+    /***/
+    @Override
+    public boolean canAttacker()
+    {
+        return true;
+    }
+
+
+    /***/
     public boolean setFriend()
     {
         if(addFriend)
@@ -166,5 +175,5 @@ public class Mobile extends Character implements Serializable,FrameTime
     }
 
 
-    //TODO mettre les tyepe pour les mobile
+    //TODO mettre les type pour les mobile
 }
