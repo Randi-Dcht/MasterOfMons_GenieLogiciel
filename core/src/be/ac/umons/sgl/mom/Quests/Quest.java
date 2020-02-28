@@ -1,46 +1,56 @@
 package be.ac.umons.sgl.mom.Quests;
 
 /**
-*Cette classe définit ce qu'est une quête de bachelier 1
-*@author Randy Dauchot (étudiant en Sciences informatique)
-*/
+ *This interface define the MasterQuest and UnderQuest with the same method
+ *@author Umons_Group_2_ComputerScience_RandyDauchot
+ */
 
 public interface Quest
 {
-/**
-*Cette méthode permet de retourner l'avancement entre 0 et 1
-*/
-  public double getProgress();
+    /**
+     *This method return the progress for the graphic
+     * @return number between 0 and 1
+     */
+    public double getProgress();
 
-/**
-*Cette méthode permet de retourner l'avancement
-*/
-  public double getAdvancement();
 
-/**
-*Cette méthode permet de savoir si la quete est toujours active
-*/
-  public boolean isActive();
+    /**
+     * This method allows to know if the Quest is active or not
+     * @return boolean of active
+     */
+    public boolean isActive();
 
-/**
-*Cette méthode permet de retourner les sous quete de celle-ci
-*/
-  public Quest[] getSubQuests();
 
-/**
-*Cette méthode permet de retourner le nom de la méthode
-*/
-  public String getName();
+    /**
+     * This method returns the under of this Quest
+     * @return the under Quest of this
+     */
+    public Quest[] getSubQuests();
 
-/**
-*Permet de retourner le nombre de sous quete
-*/
-  public int getTotalSubQuestsNumber();
 
-/**
-*Cette méthode permet d'ajouter une progression dans la quete
-*/
-  public void addProgress(double many);
+    /**
+     * This method returns the name of the Quest
+     * @return the name of the Quest
+     */
+    public String getName();
 
-  public boolean isFinished();
+
+    /**
+     * This method returns the number of the depth of the recursion
+     * @return the number of depth
+     */
+    public int getTotalSubQuestsNumber();
+
+
+    /**
+     * This method allows to give the percent to the progress of Quest
+     */
+    public void addProgress(double many);
+
+
+    /**
+     * This method allows to kown if the Quest is finish
+     * @return the boolean of finish
+     */
+    public boolean isFinished();
 }

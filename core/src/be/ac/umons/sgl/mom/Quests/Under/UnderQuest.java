@@ -70,12 +70,18 @@ public abstract class UnderQuest implements Quest,Serializable
 
     /**
      * This method allows to add the progress of advancement this quest
+     * @param many is the percent to succeed of quest
      */
     public void addProgress(double many)
     {
-        progress = progress + many;
-        master.addProgress(many);
-        finished();
+        if (progress+many<0)
+            progress = 0;
+        else
+        {
+            progress += many;
+            master.addProgress(many);
+            finished();
+        }
     }
 
 

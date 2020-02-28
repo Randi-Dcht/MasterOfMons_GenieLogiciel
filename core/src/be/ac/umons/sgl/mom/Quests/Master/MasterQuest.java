@@ -228,13 +228,24 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         if(!finished)
         {
-            percent = percent + many;
-            if(percent >= maxPercent)
-            {
-                finished = true;
-                nextQuest();
-                //Supervisor.changedQuest(); TODO revoir cela
-            }
+            if (percent+many < 0)
+                percent = 0;
+            else
+                percent += many;
+            testFinish();
+        }
+    }
+
+
+    /**
+     * This method allows to test if the Quest is finish
+     */
+    private void testFinish()
+    {
+        if(percent >= maxPercent)
+        {
+            finished = true;
+            nextQuest();
         }
     }
 
