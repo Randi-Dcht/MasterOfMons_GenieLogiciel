@@ -130,6 +130,7 @@ public abstract class DialogState extends GameState {
      * @param run The action
      */
     public void addAnswer(String answer, Runnable run) {
+        answer = gs.getStringFromId(answer);
         whenSelectedActions.put(answer, run);
         Button b = new Button(gim, gs);
         b.setText(answer);

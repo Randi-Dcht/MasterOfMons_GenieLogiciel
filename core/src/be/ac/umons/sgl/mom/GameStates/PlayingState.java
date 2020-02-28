@@ -195,9 +195,8 @@ public class PlayingState extends GameState implements Observer {
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         inventoryShower = new InventoryShower(gim, gs, player);
 
-        SuperviserNormally.getSupervisor().getEvent().add(Events.Dead, this);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest, this);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.Dialog,this);
+
+        SuperviserNormally.getSupervisor().getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog);
 
         initMap("Tmx/Umons_Nimy.tmx");
 
@@ -712,7 +711,7 @@ public class PlayingState extends GameState implements Observer {
         dialogState.setText(diag.get(0));
         for (int i = 1; i < diag.size(); i++) {
             String s = diag.get(i);
-            dialogState.addAnswer(gs.getStringFromId(s), () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
+            dialogState.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
         }
     }
 
