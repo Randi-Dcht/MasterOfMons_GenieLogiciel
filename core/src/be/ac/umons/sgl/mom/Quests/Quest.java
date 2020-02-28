@@ -53,4 +53,7 @@ public interface Quest
      * @return the boolean of finish
      */
     public boolean isFinished();
+
+
+    public double getAdvancement();
 }
