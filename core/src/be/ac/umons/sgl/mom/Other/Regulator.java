@@ -83,7 +83,7 @@ public class Regulator implements Observer
      * This method allows to give the new dialog to the player or wait if the dialog is used now
      * @param newDialog is the dialog ID
      */
-    private void push(String newDialog)
+    public void push(String newDialog)
     {
         if(waitingLine.size() == 0 && displayQuestion)
         {
@@ -137,9 +137,9 @@ public class Regulator implements Observer
      * This method allows to inform the player of this maps and give also the information
      * @param id of the maps
      */
-    public void placeQuestion(String id)
+    public void placeInOut(String id)
     {
-        System.out.println("Oh je rencontre cette id : " + id);
+        //System.out.println("Place In/OUT : " + id);
     }
 
 
@@ -179,7 +179,7 @@ public class Regulator implements Observer
         else
         {
             manager.getEvent().notify(new Dialog("ESC"));
-            //manager.getEvent().remove(Events.Answer,this);TODO
+            //manager.getEvent().remove(Events.Answer,this);//TODO
         }
     }
 

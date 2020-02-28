@@ -109,6 +109,10 @@ public class SuperviserNormally implements Observer
          * The instance of the regulator class*
          */
         private Regulator regule;
+        /**
+         * This the actual variable of the Id on the maps
+         */
+        private String actualID;
 
 
        /**
@@ -305,13 +309,17 @@ public class SuperviserNormally implements Observer
          */
         public void analyseIdMap(String id) throws Exception
         {
-            String[] word = id.split("_");
-            if (word[0].equals("Room") && word.length >= 2)
-                return;//TODO prevenir UnderQuest
-            else if (word[0].equals("Info") && word.length >= 2)
-                regule.placeQuestion(word[1]);
-            else
-                throw new Exception();
+            if (!id.equals(actualID))
+            {
+                actualID = id;
+                String[] word = id.split("_");
+                if (word[0].equals("Room") && word.length >= 3)
+                    regule.placeInOut(id);
+                else if (word[0].equals("Info") && word.length >= 2)
+                    regule.push(word[1]);
+                else
+                    throw new Exception();
+            }
         }
 
 

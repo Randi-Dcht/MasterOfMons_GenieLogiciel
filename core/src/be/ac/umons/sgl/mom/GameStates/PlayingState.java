@@ -712,7 +712,7 @@ public class PlayingState extends GameState implements Observer {
         dialogState.setText(diag.get(0));
         for (int i = 1; i < diag.size(); i++) {
             String s = diag.get(i);
-            dialogState.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
+            dialogState.addAnswer(gs.getStringFromId(s), () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
         }
     }
 
