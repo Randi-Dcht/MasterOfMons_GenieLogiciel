@@ -537,14 +537,12 @@ public class SuperviserNormally implements Observer
          */
         public void switchingDialog(String answer)
         {
-            if (answer.equals("OK"))
-                return;//TODO
             if (answer.equals("Attack"))
                 attackMethod(people,memoryMobile);
             if(answer.equals("ESC"))
             {
                 event.notify(new Dialog("ESC"));
-                //event.remove(Events.Answer,this);TODO
+                event.remove(Events.Answer,this);//TODO
             }
             else
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));

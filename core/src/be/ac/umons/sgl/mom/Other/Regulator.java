@@ -187,16 +187,20 @@ public class Regulator implements Observer
 
 
     /***/
-    public void timeOfDay(Places place)//TODO mettre les deux ensembles
+    public void timeOfDay(Places place)
     {
-        if(firstCourse && (place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)))
+        if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)))
         {
-            firstCourse=false;
-            push("StartCourse");
+            if (firstCourse)
+            {
+                firstCourse=false;
+                push("StartCourse");
+            }
+
+            if (advanceTime())
+                time.refreshTime(0,2,0);
         }
 
-        if ((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)) && advanceTime())//TODO
-            time.refreshTime(0,2,0);
 
         if (place.equals(Places.StudyRoom) && firstStudy)
         {
@@ -244,7 +248,7 @@ public class Regulator implements Observer
         else
         {
             manager.getEvent().notify(new Dialog("ESC"));
-            //manager.getEvent().remove(Events.Answer,this);//TODO
+            manager.getEvent().remove(Events.Answer,this);//TODO
         }
     }
 

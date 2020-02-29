@@ -17,7 +17,7 @@ public interface Observable
 
 
     /**Remove a observer associate an events*/
-    void remove(Events evt, Observer ... obs);
+    void remove(Events evt, Observer obs);
 
 
     /**Remove all observer with the events*/
