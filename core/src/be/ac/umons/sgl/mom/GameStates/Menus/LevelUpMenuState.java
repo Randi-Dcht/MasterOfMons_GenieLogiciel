@@ -4,6 +4,7 @@ import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class LevelUpMenuState extends MenuState {
     /**
      * The number of points that the user must attributes.
      */
-    int pointToUse = 3;
+    int pointToUse;
     /**
      * Where the points has been attributed.
      */
@@ -105,6 +106,7 @@ public class LevelUpMenuState extends MenuState {
     public void setPlayer(Player player) {
         this.player = player;
         init();
+        pointToUse = ((People)player.getCharacteristics()).getPointLevel();
     }
 
     public void confirm() {

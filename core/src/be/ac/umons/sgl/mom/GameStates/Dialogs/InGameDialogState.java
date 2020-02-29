@@ -2,6 +2,8 @@ package be.ac.umons.sgl.mom.GameStates.Dialogs;
 
 import be.ac.umons.sgl.mom.Animations.StringAnimation;
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
+import be.ac.umons.sgl.mom.Events.Notifications.Answer;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -88,6 +90,8 @@ public class InGameDialogState extends DialogState {
         super.handleInput();
         if (gim.isKey(Input.Keys.SPACE, KeyStatus.Pressed) || gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             sa.finishNow();
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
+            SuperviserNormally.getSupervisor().getEvent().notify(new Answer("ESC"));
     }
 
     @Override
