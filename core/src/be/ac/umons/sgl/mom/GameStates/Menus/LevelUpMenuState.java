@@ -105,12 +105,12 @@ public class LevelUpMenuState extends MenuState {
      */
     public void setPlayer(Player player) {
         this.player = player;
-        init();
         pointToUse = ((People)player.getCharacteristics()).getPointLevel();
+        init();
     }
 
     public void confirm() {
-        SuperviserNormally.getSupervisor().getPeople().updateType(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
+        SuperviserNormally.getSupervisor().getPeople().updateUpLevel(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
     }
 
     public enum Characteristics {
