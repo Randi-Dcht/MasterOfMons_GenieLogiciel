@@ -12,6 +12,7 @@ import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.sgl.mom.Objects.Course;
+import be.ac.umons.sgl.mom.Objects.Items.Pen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -194,8 +195,8 @@ public class Regulator implements Observer
             push("StartCourse");
         }
 
-        if ((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)) /*&& player.getItems()!= null && player.getItems().getClass().equals(Pen.class)*/)//TODO
-            time.refreshTime(0,2,0);//TODO hyperplanning with in UnderQuest
+        if ((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)) && advanceTime())//TODO
+            time.refreshTime(0,2,0);
 
         if (place.equals(Places.StudyRoom) && firstStudy)
         {
@@ -209,6 +210,19 @@ public class Regulator implements Observer
         if (place.equals(Places.OnTheMap))
             TimeGame.FASTER = 10;
 
+    }
+
+
+    /***/
+    public boolean advanceTime()
+    {
+        if (manager.getActualCourse() == null)
+            return false;
+        if (!manager.getActualCourse().getLesson().location().equals(player.getMaps()))
+            return false;
+        /*if (player.getItems() == null || !player.getItems().getClass().equals(Pen.class))
+            return false;*/
+        return true;
     }
 
 

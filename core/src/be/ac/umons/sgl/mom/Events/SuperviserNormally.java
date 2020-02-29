@@ -211,7 +211,7 @@ public class SuperviserNormally implements Observer
             refreshQuest();
             regule = new Regulator(people,time);
             listCourse = people.getPlanning().get(time.getDate().getDay());
-            checkPlanning();System.out.println("*** " + time.getDate().getDay() + " : " + listCourse);
+            checkPlanning();
         }
 
 
@@ -407,7 +407,6 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : deadMobile)
                 mobileLife(mb,dt);
             deadMobile.removeIf(Character::isLiving);
-            //people.getQuest().addProgress(0.1);
         }
 
 
@@ -566,7 +565,6 @@ public class SuperviserNormally implements Observer
                                actualCourse = crs;
                   }
             }
-            //System.out.println(actualCourse + " : " + actu.getHour() + " => " + listCourse);
         }
 
     }

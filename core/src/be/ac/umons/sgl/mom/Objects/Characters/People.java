@@ -54,6 +54,7 @@ public class People extends Character implements Serializable, Observer
         super(name,type);
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.EntryPlace,this);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         this.threshold = minExperience(level+1);
         this.difficulty = difficulty;

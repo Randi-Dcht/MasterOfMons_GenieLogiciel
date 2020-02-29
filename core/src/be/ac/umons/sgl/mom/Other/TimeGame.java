@@ -17,7 +17,7 @@ import java.util.Objects;
 public class TimeGame implements Observer
 {
     /***/
-    public static int FASTER = 510;
+    public static int FASTER = 10;
 
     /***/
     static final int[][] years = { {31,28,31,30,31,30,31,31,30,31,30,31},
@@ -222,6 +222,11 @@ public class TimeGame implements Observer
         min  = (memM = min + addMin)%60;
         hour = (memH = hour +(memM/60)+addHour)%24;
         day  = (day+memH/24+addDay)%years[NByear][NBmonth];
+
+        if(addHour != 0) //TODO
+            SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
+        if(addDay != 0) //TODO
+            SuperviserNormally.getSupervisor().getEvent().notify(new ChangeDay());
     }
 
 
