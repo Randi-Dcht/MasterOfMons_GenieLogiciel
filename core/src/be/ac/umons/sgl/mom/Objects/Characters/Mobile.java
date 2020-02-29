@@ -6,7 +6,10 @@ import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Events.Notifications.AddFriend;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.FrameTime;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
+
 import java.io.Serializable;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -151,6 +154,13 @@ public class Mobile extends Character implements Serializable,FrameTime
     {
         if(living)
             SuperviserNormally.getSupervisor().attackMethod(this,victim);
+    }
+
+
+    /***/
+    public List<Items> getListItems()//TODO displace
+    {
+        return myObject;
     }
 
 

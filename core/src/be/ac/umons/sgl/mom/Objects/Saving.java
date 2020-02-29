@@ -83,6 +83,11 @@ public class Saving implements Observer
     }
 
 
+    /***/
+    public void setNameSave(String name)
+    {}
+
+
     /**
      * This method allows to create a file with the save of the game
      * @param file who is the file with the saving game.

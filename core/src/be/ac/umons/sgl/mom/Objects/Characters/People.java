@@ -423,7 +423,6 @@ public class People extends Character implements Serializable, Observer
     {
         level++;
         SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
-        System.out.println("People level:  " + level+  " : " + getPointLevel()+ " : "+getPointType(level) + " : " + actual);
     }
 
 
