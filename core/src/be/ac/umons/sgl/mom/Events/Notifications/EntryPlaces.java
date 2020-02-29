@@ -1,31 +1,32 @@
 package be.ac.umons.sgl.mom.Events.Notifications;
 
+import be.ac.umons.sgl.mom.Enums.Maps;
+import be.ac.umons.sgl.mom.Enums.Places;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Objects.Characters.Character;
 
-public class ChangeHour implements Notification
+public class EntryPlaces implements Notification
 {
     private Events evt;
-    private int buffer;
+    private Places buffer;
 
 
     /**
-     * This constructor define a notification when change day with buffer
-     * @param buffer is a buffer with character (specific to events)
+     * This constructor define a notification when people change maps in maps with buffer
+     * @param buffer is a buffer with maps (specific to events)
      */
-    public ChangeHour(int buffer)
+    public EntryPlaces(Places buffer)
     {
-        evt = Events.ChangeHour;
+        evt = Events.EntryPlace;
         this.buffer = buffer;
     }
 
 
     /**
-     * This constructor define a notification when change day
+     * This constructor define a notification when people change maps in maps
      */
-    public ChangeHour()
+    public EntryPlaces()
     {
-        evt= Events.ChangeHour;
+        evt= Events.EntryPlace;
     }
 
 
@@ -42,10 +43,10 @@ public class ChangeHour implements Notification
 
     /**
      * This method return the buffer of this notification if it isn't empty
-     * @return character
+     * @return maps
      */
     @Override
-    public Integer getBuffer()
+    public Places getBuffer()
     {
         return buffer;
     }
@@ -55,9 +56,8 @@ public class ChangeHour implements Notification
      * This method return if the buffer isn't empty
      * @return true is the buffer isn't empty
      */
-    @Override
     public boolean bufferNotEmpty()
     {
-        return true;
+        return !(buffer == null);//TODO tester ce problème
     }
 }

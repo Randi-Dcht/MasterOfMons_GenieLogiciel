@@ -85,4 +85,10 @@ public interface Attack
      */
     public Type getCharacteristic();
 
+    /**
+     * This method allows to say if the character can to attacker the other
+     * @return boolean if can attack (true) else false
+     */
+    public boolean canAttacker();
+
 }

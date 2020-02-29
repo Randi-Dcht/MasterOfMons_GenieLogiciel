@@ -9,9 +9,7 @@ import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
-import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
-import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.Notifications.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
@@ -19,6 +17,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.MovingPNJ;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.Social;
+import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Saving;
@@ -113,6 +112,10 @@ public class SuperviserNormally implements Observer
          * This the actual variable of the Id on the maps
          */
         private String actualID;
+        /***/
+        private ArrayList<Course> listCourse;
+        /***/
+        private Course actualCourse;
 
 
        /**
@@ -123,7 +126,7 @@ public class SuperviserNormally implements Observer
            for (Maps plt : Maps.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
-           event.add(Events.Dead,this);
+           event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour);
           // event.add(Events.Answer,this);//TODO changer pour mettre avec remove
            associateLesson();
        }
@@ -180,9 +183,14 @@ public class SuperviserNormally implements Observer
          */
         public ArrayList<Mobile> getMobile(Maps maps)
         {
-
             return listMobile.get(maps);
+        }
 
+
+        /***/
+        public Course getActualCourse()
+        {
+            return actualCourse;
         }
 
 
@@ -202,6 +210,8 @@ public class SuperviserNormally implements Observer
             save = new Saving(people,namePlayer);
             refreshQuest();
             regule = new Regulator(people,time);
+            listCourse = people.getPlanning().get(time.getDate().getDay());
+            checkPlanning();
         }
 
 
@@ -314,7 +324,7 @@ public class SuperviserNormally implements Observer
                 actualID = id;
                 String[] word = id.split("_");
                 if (word[0].equals("Room") && word.length >= 3)
-                    regule.placeInOut(id);
+                    regule.placeInOut(word[2],word[1]);
                 else if (word[0].equals("Info") && word.length >= 2)
                     regule.push(word[1]);
                 else
@@ -374,6 +384,12 @@ public class SuperviserNormally implements Observer
 
             if (notify.getEvents().equals(Events.ChangeQuest))
                 refreshQuest();
+
+            if (notify.getEvents().equals(Events.ChangeDay))
+                listCourse = people.getPlanning().get(time.getDate().getDay());
+
+            if (notify.getEvents().equals(Events.ChangeHour))
+                checkPlanning();
         }
 
 
@@ -391,7 +407,6 @@ public class SuperviserNormally implements Observer
             for (Mobile mb : deadMobile)
                 mobileLife(mb,dt);
             deadMobile.removeIf(Character::isLiving);
-            people.getQuest().addProgress(0.1);
         }
 
 
@@ -451,8 +466,11 @@ public class SuperviserNormally implements Observer
        public void attackMethod(Attack attacker, Attack victim) //TODO ajout
        {
            if (attacker.getType().equals(Character.TypePlayer.Human))
+           {
                ((People)attacker).reduceEnergizing(State.attack);
-           if(victim.dodge() < 0.6)
+               event.notify(new LaunchAttack(memoryMobile));
+           }
+           if(victim.dodge() < 0.6 && attacker.canAttacker())
            {
                if(attacker.howGun())
                    victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
@@ -504,7 +522,7 @@ public class SuperviserNormally implements Observer
                 event.notify(new MeetOther(memoryMobile = (Mobile)player2));
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
-                attackMethod(memoryMobile,people);//event.notify(new LaunchAttack());TODO donner à Guillaume
+                attackMethod(memoryMobile,people);
             else if (action.equals(Actions.Dialog))
             {
                 event.add(Events.Answer,this);
@@ -519,17 +537,32 @@ public class SuperviserNormally implements Observer
          */
         public void switchingDialog(String answer)
         {
-            if (answer.equals("OK"))
-                return;//TODO
             if (answer.equals("Attack"))
-                attackMethod(people,memoryMobile);//event.notify(new LaunchAttack(memoryMobile));TODO donner à guillaume
+                attackMethod(people,memoryMobile);
             if(answer.equals("ESC"))
             {
                 event.notify(new Dialog("ESC"));
-                //event.remove(Events.Answer,this);TODO
+                event.remove(Events.Answer,this);//TODO
             }
             else
                 event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
+        }
+
+
+
+        /***/
+        public void checkPlanning()
+        {
+            Date actu = time.getDate();
+            if (actualCourse == null || actualCourse.getDate().getHour() + 2 <= actu.getHour())
+            {
+                  actualCourse = null;
+                  for (Course crs : listCourse)
+                  {
+                       if (crs.getDate().getHour()<= actu.getHour() && (crs.getDate().getHour()+2) > actu.getHour())
+                               actualCourse = crs;
+                  }
+            }
         }
 
     }

@@ -12,8 +12,14 @@ import java.util.List;
  */
 public class Event implements Observable
 {
-    /*This is a couple with a class associated to events*/
+    /**
+     * This is a couple with a class associated to events
+     */
     private HashMap<Events, List<Observer>> list;
+    /***/
+    private Observer removeObserver;
+    /***/
+    private Events removeEvents;
 
 
     /**
@@ -54,11 +60,10 @@ public class Event implements Observable
      * @param obs is the observer who remove
      */
     @Override
-    public void remove(Events evt, Observer... obs)
+    public void remove(Events evt, Observer obs)
     {
-        if(list.containsKey(evt))
-            for(Observer ob : obs)
-                list.get(evt).remove(ob);
+       removeEvents   = evt;
+       removeObserver = obs;
     }
 
 
@@ -80,6 +85,12 @@ public class Event implements Observable
     @Override
     public void notify(Notification notify)
     {
+        if (removeObserver != null && removeEvents != null)
+        {
+            list.get(removeEvents).remove(removeObserver);
+            removeEvents=null; removeObserver=null;
+        }
+
         if(list.containsKey(notify.getEvents()))
         {
             for (Observer obs : list.get(notify.getEvents()))

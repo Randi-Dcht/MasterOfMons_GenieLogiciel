@@ -11,7 +11,8 @@ public enum Events
     ChangeQuest("quest"),                     /*This event notify when the quest changes*/
     ChangeMonth("month"),                     /*This event notify when the month change in the game*/
     ChangeHour("hour"),                       /*This event notify when the hour change in the game*/
-    PlaceInMons("placeOfPeople"),             /*This event notify when the people change the maps*/
+    PlaceInMons("PeopleOnMaps"),              /*This event notify when the people change the maps*/
+    EntryPlace("PlaceOnMap"),
     MeetOther("meetOther"),                   /*This event notify when the character meet an other character*/
     Attack("LaunchAttack"),                   /*This event notify when the character attack other character*/
     AddFriend("meetFriend"),                  /*This event notify when the people add friend*/

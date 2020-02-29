@@ -2,10 +2,7 @@ package be.ac.umons.sgl.mom.Objects.Characters;
 
 import be.ac.umons.sgl.mom.Enums.*;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
-import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
-import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
+import be.ac.umons.sgl.mom.Events.Notifications.*;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Course;
@@ -42,6 +39,7 @@ public class People extends Character implements Serializable, Observer
     /*The point of the level*/
     private int actual = 0;
     private Places place;
+    private Items use;
 
 
     /**
@@ -56,6 +54,7 @@ public class People extends Character implements Serializable, Observer
         super(name,type);
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
+        SuperviserNormally.getSupervisor().getEvent().add(Events.EntryPlace,this);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         this.threshold = minExperience(level+1);
         this.difficulty = difficulty;
@@ -158,6 +157,16 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
+     * This method return the actual item to use in the game
+     * @return item to use
+     */
+    public Items getItems()
+    {
+        return use;
+    }
+
+
+    /**
      * This method allows to add the friend Mobile at this people
      * @param mobile is the friend
      */
@@ -235,6 +244,14 @@ public class People extends Character implements Serializable, Observer
     }
 
 
+    /***/
+    @Override
+    public boolean canAttacker()
+    {
+        return energy>=10;
+    }
+
+
     /**
      * This method allows to give the all inventory of this people
      * @return The inventory of the player
@@ -253,7 +270,10 @@ public class People extends Character implements Serializable, Observer
     {
         System.out.println(object + "to use");
         if (myObject.contains(object))
+        {
             object.used(this);
+            use = object;
+        }
     }
 
 
@@ -404,7 +424,7 @@ public class People extends Character implements Serializable, Observer
     {
         level++;
         SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
-        System.out.println("People level:  " + level);
+        //System.out.println("People level:  " + level);
     }
 
 
@@ -485,6 +505,8 @@ public class People extends Character implements Serializable, Observer
     {
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
             setMaps(((PlaceInMons)notify).getBuffer());
+        if (notify.getEvents().equals(Events.EntryPlace) && notify.bufferNotEmpty())
+            setPlaceMaps(((EntryPlaces)notify).getBuffer());
         if (notify.getEvents().equals(Events.ChangeMonth))
             createPlanning();
     }

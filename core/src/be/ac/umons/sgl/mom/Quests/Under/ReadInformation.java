@@ -4,9 +4,9 @@ import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Quests.Quest;
 
-public class GoToTest extends UnderQuest
+public class ReadInformation extends UnderQuest
     {
-      public GoToTest(Quest q, int nb, People people)
+      public ReadInformation(Quest q, int nb, People people)
       {
         super("GoToTest",nb,q,people );
       }

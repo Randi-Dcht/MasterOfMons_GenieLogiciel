@@ -17,7 +17,7 @@ import java.util.Objects;
 public class TimeGame implements Observer
 {
     /***/
-    private static final int FASTER = 40;
+    public static int FASTER = 10;
 
     /***/
     static final int[][] years = { {31,28,31,30,31,30,31,31,30,31,30,31},
@@ -112,9 +112,9 @@ public class TimeGame implements Observer
      */
     private void changeDay()
     {
-        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeDay());
         if(( day = (day+1)%years[NByear][NBmonth] )== 0)
             changeMonth();
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeDay());
     }
 
 
@@ -123,9 +123,9 @@ public class TimeGame implements Observer
      */
     private void changeMonth()//TODO check month
     {
-        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeMonth());
         if((NBmonth =(NBmonth+1)%timeYr) == 0)
             changeYear();
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeMonth());
     }
 
 
@@ -168,9 +168,9 @@ public class TimeGame implements Observer
      */
     private void changeHour()
     {
-        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
         if((hour = (hour+1)%timeHour)==0)
             changeDay();
+        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
     }
 
 
@@ -222,6 +222,11 @@ public class TimeGame implements Observer
         min  = (memM = min + addMin)%60;
         hour = (memH = hour +(memM/60)+addHour)%24;
         day  = (day+memH/24+addDay)%years[NByear][NBmonth];
+
+        if(addHour != 0) //TODO
+            SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
+        if(addDay != 0) //TODO
+            SuperviserNormally.getSupervisor().getEvent().notify(new ChangeDay());
     }
 
 
