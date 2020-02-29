@@ -1,6 +1,6 @@
 package be.ac.umons.sgl.mom.Extensions.LAN.GameStates;
 
-import be.ac.umons.sgl.mom.Extensions.LAN.Objects.NetworkManager;
+import be.ac.umons.sgl.mom.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;

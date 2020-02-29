@@ -20,7 +20,7 @@ public class CreatePlayerMenuState extends MenuState {
     Gender playerGender = Gender.values()[0];
     Type characterType = Type.values()[0];
     Difficulty difficulty = Difficulty.values()[0];
-    protected Class<? extends GameState> afterCreationState = LoadingState.class;
+    protected Class<? extends GameState> afterCreationState;
     protected Class<? extends GameState> afterLoadingState;
 
     /**
@@ -30,6 +30,7 @@ public class CreatePlayerMenuState extends MenuState {
      */
     public CreatePlayerMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
+        afterCreationState = LoadingState.class;
     }
 
     @Override
