@@ -3,7 +3,6 @@ package be.ac.umons.sgl.mom.Other;
 import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.Places;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Notifications.ChangeDay;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.EntryPlaces;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
@@ -11,9 +10,6 @@ import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.SaoulMatePNJ;
-import be.ac.umons.sgl.mom.Objects.Course;
-import be.ac.umons.sgl.mom.Objects.Items.Pen;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -248,7 +244,7 @@ public class Regulator implements Observer
         else
         {
             manager.getEvent().notify(new Dialog("ESC"));
-            manager.getEvent().remove(Events.Answer,this);//TODO
+            manager.getEvent().remove(Events.Answer,this);
         }
     }
 

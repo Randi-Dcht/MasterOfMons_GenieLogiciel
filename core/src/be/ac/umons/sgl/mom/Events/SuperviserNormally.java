@@ -9,7 +9,10 @@ import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Enums.Type;
-import be.ac.umons.sgl.mom.Events.Notifications.*;
+import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
+import be.ac.umons.sgl.mom.Events.Notifications.LaunchAttack;
+import be.ac.umons.sgl.mom.Events.Notifications.MeetOther;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
 import be.ac.umons.sgl.mom.GraphicalObjects.QuestShower;
 import be.ac.umons.sgl.mom.Objects.Characters.Attack;
 import be.ac.umons.sgl.mom.Objects.Characters.Character;
@@ -215,12 +218,14 @@ public class SuperviserNormally implements Observer
         }
 
 
-         public Regulator getRegule()
+        /***/
+         public Regulator getRegale()
          {
              return regule;
          }
 
-    /**
+
+        /**
          * This method create the hashMap with mobile and the maps of this mobile
          * @param difficulty is the difficulty of the game
          */

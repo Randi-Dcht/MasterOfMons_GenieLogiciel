@@ -73,8 +73,7 @@ public class People extends Character implements Serializable, Observer
 
 
     /***/
-    @Override
-    public void updateType(int strength, int defence, int agility)
+    public void updateUpLevel(int strength, int defence, int agility)
     {
         super.updateType(strength, defence, agility);
         actual += strength+defence+agility;
@@ -311,7 +310,7 @@ public class People extends Character implements Serializable, Observer
         if (energy <= 2)
             this.energy = 2;
 
-        SuperviserNormally.getSupervisor().getRegule().lowEnergizing();//TODO upgrade
+        SuperviserNormally.getSupervisor().getRegale().lowEnergizing();//TODO upgrade
     }
 
 
@@ -424,7 +423,7 @@ public class People extends Character implements Serializable, Observer
     {
         level++;
         SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
-        //System.out.println("People level:  " + level);
+        System.out.println("People level:  " + level+  " : " + getPointLevel()+ " : "+getPointType(level) + " : " + actual);
     }
 
 
