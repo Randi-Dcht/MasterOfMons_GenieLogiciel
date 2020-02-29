@@ -110,7 +110,7 @@ public class LevelUpMenuState extends MenuState {
     }
 
     public void confirm() {
-        SuperviserNormally.getSupervisor().getPeople().updateType(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
+        SuperviserNormally.getSupervisor().getPeople().updateUpLevel(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
     }
 
     public enum Characteristics {
