@@ -105,8 +105,8 @@ public class LevelUpMenuState extends MenuState {
      */
     public void setPlayer(Player player) {
         this.player = player;
-        init();
         pointToUse = ((People)player.getCharacteristics()).getPointLevel();
+        init();
     }
 
     public void confirm() {
