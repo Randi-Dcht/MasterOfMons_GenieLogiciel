@@ -579,17 +579,18 @@ public class PlayingState extends GameState implements Observer {
         }
         sb.end();
 
+        int inventoryShowerHeight = tileHeight * 2;
         // Dessine le HUD.
         agendaShower.draw(sb);
-        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth()), (int)topMargin),
+        timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth()), (int)topMargin * 2 + inventoryShowerHeight),
                 new Point((int)(timeShower.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
-        inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, tileHeight * 2, new Point(tileWidth, tileWidth));
+        inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, inventoryShowerHeight, new Point(tileWidth, tileWidth));
         lifeBar.draw(sb, (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         expBar.draw((int)leftMargin * 2 + topBarWidth, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         energyBar.draw((int)leftMargin * 3 + topBarWidth * 2, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         Point pauseButtonSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
-        pauseButton.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - pauseButtonSize.x), (int)(MasterOfMonsGame.HEIGHT - pauseButtonSize.y - topBarHeight - 2 * topMargin)),
+        pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH - pauseButtonSize.x, (int)(MasterOfMonsGame.HEIGHT - pauseButtonSize.y - topBarHeight - 2 * topMargin)),
                 pauseButtonSize);
     }
 
@@ -597,27 +598,31 @@ public class PlayingState extends GameState implements Observer {
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.setState(InGameMenuState.class);
-        else if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Down)) {
+        if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Down)) {
             DebugMenuState dms = (DebugMenuState) gsm.setState(DebugMenuState.class);
             dms.setPlayingState(this);
-        } else if (gim.isKey(Input.Keys.P, KeyStatus.Pressed))
+        }
+        if (gim.isKey(Input.Keys.P, KeyStatus.Pressed))
             debugLevelUp();
-        else if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
+        if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
             debugMakeInvincible();
-        else if (gim.isKey(Input.Keys.C, KeyStatus.Pressed))
+        if (gim.isKey(Input.Keys.C, KeyStatus.Pressed))
             attack(player);
-        else if (gim.isKey(Input.Keys.L, KeyStatus.Pressed))
+        if (gim.isKey(Input.Keys.L, KeyStatus.Pressed))
             dropSelectedObject();
-        else if (gim.isKey(Input.Keys.F, KeyStatus.Pressed)) {
+        if (gim.isKey(Input.Keys.T, KeyStatus.Pressed))
+            timeShower.extendOnFullWidth();
+        if (gim.isKey(Input.Keys.F, KeyStatus.Pressed)) {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)
                 SuperviserNormally.getSupervisor().getPeople().useObject(ii.getItem());
         }
 
-        else if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
+        if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
-        } else if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
+        }
+        if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
             if (selectedOne instanceof Character)
                 SuperviserNormally.getSupervisor().meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
             else {

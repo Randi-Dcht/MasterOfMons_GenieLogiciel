@@ -102,9 +102,10 @@ public class Date
     @Override
     public String toString()
     {
-        return "Date{" +
-                ", day=" + day +
-                ", month=" + month +
-                '}';
+        return String.format("%02d / %02d / %s  %02d:%02d",day,month,year,hour,min);
+//        return "Date{" +
+//                ", day=" + day +
+//                ", month=" + month +
+//                '}';
     }
 }
