@@ -1,6 +1,5 @@
 package be.ac.umons.sgl.mom.GraphicalObjects;
 
-import be.ac.umons.sgl.mom.Animations.Animation;
 import be.ac.umons.sgl.mom.Animations.DoubleAnimation;
 import be.ac.umons.sgl.mom.Animations.StringAnimation;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
@@ -46,7 +45,7 @@ public class TimeShower {
 
     protected double animationWidth;
 
-    protected Date oldTime = SuperviserNormally.getSupervisor().getTime().getDate();
+    protected Date oldTime;
     protected String textToShow;
     protected boolean isTextBeingAnimated = false;
 
@@ -62,7 +61,10 @@ public class TimeShower {
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         beginAnimation();
         textToShow = SuperviserNormally.getSupervisor().getTime().toString();
+        oldTime = SuperviserNormally.getSupervisor().getTime().getDate();
     }
+
+    protected TimeShower() {}
 
     /**
      * Draw the clock with the given parameters.
