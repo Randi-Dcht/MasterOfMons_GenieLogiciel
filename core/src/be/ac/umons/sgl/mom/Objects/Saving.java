@@ -114,7 +114,7 @@ public class Saving implements Observer
      * This method allows to save the element of graphic param
      * @param setting who is the class with the param to save.
      */
-    private void savingGraphic(Settings setting)
+    public void savingGraphic(Settings setting)
     {
         try
         {
