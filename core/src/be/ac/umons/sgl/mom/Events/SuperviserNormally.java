@@ -219,6 +219,13 @@ public class SuperviserNormally implements Observer
 
 
         /***/
+        public Saving getSave()
+        {
+           return save;
+        }
+
+
+         /***/
          public Regulator getRegale()
          {
              return regule;
