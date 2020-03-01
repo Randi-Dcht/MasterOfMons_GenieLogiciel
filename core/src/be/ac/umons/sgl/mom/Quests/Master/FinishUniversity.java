@@ -58,10 +58,26 @@ public class FinishUniversity extends MasterQuest
         return graphic.getStringFromId("answerMasterSecond");
     }
 
+    @Override
+    protected void createListItems() {
+        // TODO
+    }
+
+    @Override
+    protected void createListMobiles() {
+        // TODO
+
+    }
+
+    @Override
+    public Maps[] getListMaps() {
+        // TODO
+        return new Maps[0];
+    }
+
 
     /**
      * @return*/
-    @Override
     public Maps[] whatPlace()
     {
         return new Maps[]{Maps.Nimy,Maps.Mons};
@@ -69,7 +85,6 @@ public class FinishUniversity extends MasterQuest
 
 
     /***/
-    @Override
     public ArrayList<Items> whatItem()
     {
         ArrayList<Items> list = new ArrayList<>();
@@ -83,7 +98,6 @@ public class FinishUniversity extends MasterQuest
 
 
     /***/
-    @Override
     public ArrayList<Mobile> whatMobile()
     {
         ArrayList<Mobile> list = new ArrayList<>();

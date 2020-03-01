@@ -350,14 +350,14 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     @Override
     public void update(Notification notify)//TODO difficulte
     {
-        eventMaps(notify);
+//        eventMaps(notify);
         if(notify.getEvents().equals(Events.UpLevel) && memory != null && memory.bloc.getMinPeople() <= people.getLevel())
         {
             this.after = memory;
             people.newQuest(memory);
             memory = null;
         }
-    }*/
+    }
 
 
     /**

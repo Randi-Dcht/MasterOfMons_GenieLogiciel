@@ -51,7 +51,7 @@ public interface Quest
    * Cette methode permet de retirer de la progression
    * @param many c'est le nombre que l'on veut retirer à la progression
    */
-  public void removeProgress(double many); // TODO Check the utility of the function, like addProgress(-many) ???
+//  public void removeProgress(double many); // TODO Check the utility of the function, like addProgress(-many) ???
 
 
     /**

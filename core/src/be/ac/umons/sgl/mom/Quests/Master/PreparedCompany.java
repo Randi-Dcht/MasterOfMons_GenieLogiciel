@@ -70,6 +70,23 @@ public class PreparedCompany extends MasterQuest
         return graphic.getStringFromId("answerMasterOne");
     }
 
+    @Override
+    protected void createListItems() {
+        // TODO
+    }
+
+    @Override
+    protected void createListMobiles() {
+        // TODO
+
+    }
+
+    @Override
+    public Maps[] getListMaps() {
+        // TODO
+        return new Maps[0];
+    }
+
 
     /**
      * This method allows us to know the different items for this quest
