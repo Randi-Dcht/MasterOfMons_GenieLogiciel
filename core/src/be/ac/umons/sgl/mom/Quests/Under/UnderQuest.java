@@ -15,19 +15,33 @@ import java.io.Serializable;
  */
 public abstract class UnderQuest implements Quest,Serializable
 {
-    /**name of this UnderQuest*/
+    /**
+     * Name of this UnderQuest
+     */
     final String name;
-    /**the percent maximum to succeed the quest */
+    /**
+     * The percent maximum to succeed the quest
+     */
     final double percentMax;
-    /**the percent of progress of this Quest*/
+    /**
+     * The percent of progress of this Quest
+     */
     protected double progress = 0;
-    /**this variable allows to know if finish*/
+    /**
+     * This variable allows to know if finish
+     */
     protected boolean finish = false;
-    /**The Quest overhead */
+    /**
+     * The Quest overhead
+     */
     protected Quest master;
-    /**The people who play this game*/
+    /**
+     * The people who play this game
+     */
     protected People people;
-    /**This is the instance of the superNormally*/
+    /**
+     * This is the instance of the superNormally
+     */
     protected SuperviserNormally instance;
 
 

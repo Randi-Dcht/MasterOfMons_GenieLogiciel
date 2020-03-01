@@ -22,7 +22,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.Social;
 import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.*;
 import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Other.Regulator;
@@ -130,7 +130,6 @@ public class SuperviserNormally implements Observer
                listMap.put(plt.getMaps(),plt);
            event = new Event();
            event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour);
-          // event.add(Events.Answer,this);//TODO changer pour mettre avec remove
            associateLesson();
        }
 
@@ -178,6 +177,12 @@ public class SuperviserNormally implements Observer
             return listLesson.get(blc);
         }
 
+
+        /***/
+        public Items[] getAllItems()//TODO optimize
+        {
+            return new Items[]{new Energizing(),new Flower(),new Gun(),new OldExam(),new PaperHelp(),new Pen(),new Phone(),new TheKillBoot()};
+        }
 
         /**
          * This method return the mobile for a maps
@@ -570,7 +575,6 @@ public class SuperviserNormally implements Observer
 
         /**
          * This method allows to check the actual course of the player in the game
-
          */
         public void checkPlanning()
         {

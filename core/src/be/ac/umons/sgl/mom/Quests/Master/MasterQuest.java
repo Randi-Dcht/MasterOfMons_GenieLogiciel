@@ -23,37 +23,65 @@ import java.util.ArrayList;
  * Each player can play only one MasterQuest at a time.
  * To pass a MasterQuest, you must pass a maximum of underQuest which increase the% of success.
  * Each MasterQuest has a parent and / or a child.
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public abstract class MasterQuest implements Quest,Serializable,Observer
 {
-    /*maps in the list of MasterQuest*/
+    /**
+     * Maps in the list of MasterQuest
+     */
     protected static int numberQuest = 1;
-    /*the percent to advance this quest*/
+    /**
+     * The percent to advance this quest
+     */
     protected double percent = 0;
-    /*the percent of maximum of this quest to succeed this*/
+    /**
+     * The percent of maximum of this quest to succeed this
+     */
     protected double maxPercent;
-    /*the masterQuest who is before this (parent MasterQuest)*/
+    /**
+     * The masterQuest who is before this (parent MasterQuest)
+     */
     final MasterQuest before;
-    /*the people who play this masterQuest*/
+    /**
+     * The people who play this masterQuest
+     */
     final People people;
-    /*the next masterQuest after this (son MasterQuest)*/
+    /**
+     * The next masterQuest after this (son MasterQuest)
+     */
     protected MasterQuest after = null;
-    /*it is a list of underquest of this quest (goal)*/
+    /**
+     * It is a list of underQuest of this quest (goal)
+     */
     protected UnderQuest[] underQuest;
-    /*masterQuest is finished*/
+    /**
+     * MasterQuest is finished
+     */
     protected boolean finished = false;
-    /*The bloc of this MasterQuest*/
+    /**
+     * The bloc of this MasterQuest
+     */
     protected Bloc bloc;
-    /*Memory the MasterQuest when the level isn't up*/
+    /**
+     * Memory the MasterQuest when the level isn't up
+     */
     protected MasterQuest memory;
-    /*this the instance of the graphic*/
+    /**
+     * This the instance of the graphic
+     */
     protected GraphicalSettings graphic;
-    /***/
+    /**
+     * This is the difficulty of the quest
+     */
     protected Difficulty difficulty;
-    /***/
+    /**
+     * This list is a list of the Mobiles
+     */
     protected ArrayList<Mobile> listMobs;
-    /***/
+    /**
+     * This list is a list of the items
+     */
     protected ArrayList<Items> listItems;
 
 
@@ -98,7 +126,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /***/
-    public ArrayList<Mobile> createRdMobile(Mobile[] list, int[] number) throws ExceptionInInitializerError
+    public ArrayList<Mobile> createRdMobile(Mobile[] list, int[] number) throws ExceptionInInitializerError//TODO
     {
         if (list.length != number.length)
             throw new ExceptionInInitializerError();
@@ -313,7 +341,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             this.after = memory;
             people.newQuest(memory);
             memory = null;
-           // SuperviserNormally.getSupervisor().getEvent().remove(notify.getEvents(),this);TODO error the current time action
         }
     }
 

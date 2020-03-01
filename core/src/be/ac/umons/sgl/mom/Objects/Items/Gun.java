@@ -44,4 +44,11 @@ public class Gun extends Items implements Guns
         return 0;
     }
 
+
+    /***/
+    @Override
+    public int addDamageGun()
+    {
+        return 0;
+    }
 }

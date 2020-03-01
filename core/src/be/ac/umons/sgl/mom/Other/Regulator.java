@@ -185,6 +185,9 @@ public class Regulator implements Observer
     /***/
     public void timeOfDay(Places place)
     {
+        if (place.equals(Places.Bed))
+            nightHour();
+
         if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)))
         {
             if (firstCourse)
