@@ -26,7 +26,9 @@ import java.util.Random;
 public class MyFirstYear extends MasterQuest
 {
 
-    /*This is the goals of this MasterQuest*/
+    /**
+     * This is the goals of this MasterQuest
+     */
     final UnderQuest[] underQuest = {new GoToLesson(this,33,people),new MeetManyPeople(this,34,people),new BattleForPlace(this,33,people)};
 
 
@@ -63,43 +65,46 @@ public class MyFirstYear extends MasterQuest
 
     /**
      * This method return the items for this quest
-     * @return list of items
      */
     @Override
-    public ArrayList<Items> whatItem() //TODO optimiser cela
+    public void createListItems() //TODO optimiser cela
     {
-        ArrayList<Items> list = new ArrayList<>();
+        listItems = new ArrayList<>();
         for (int i=0; i < 10; i++)
-            list.add(new Energizing());
+            listItems.add(new Energizing());
         for (int i=0 ; i < 6; i++)
-            list.add(new OldExam());
-        list.add(new TheKillBoot());
-
-        return list;
+            listItems.add(new OldExam());
+        listItems.add(new TheKillBoot());
     }
 
 
     /**
      * This method return the mobile for this quest
-     * @return list of mobile
      */
     @Override
-    public ArrayList<Mobile> whatMobile() //TODO optimiser cela
+    protected void createListMobiles() //TODO optimiser cela
     {
-        ArrayList<Mobile> list = new ArrayList<>();
+        listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
         for(int i=0; i < 30;i++)
-            list.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
+            listMobs.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
         for(int i = 30; i < 40; i++)
-            list.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
-
-        return list;
+            listMobs.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
+        for (int i = 0; i < 35;i++)
+        {
+            Mobile mb = new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack);
+            mb.setMaps(Maps.GrandAmphi);
+            listMobs.add(mb);
+        }
     }
 
 
-    /***/
+    /**
+     * This method allows to see the maps of the player interact with the other things
+     * @return a list of the Maps
+     */
     @Override
-    public Maps[] whatPlace()
+    public Maps[] getListMaps()
     {
         return new Maps[]{Maps.Nimy, Maps.DeVinci, Maps.Mons};
     }

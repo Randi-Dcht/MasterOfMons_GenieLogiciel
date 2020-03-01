@@ -41,13 +41,29 @@ public class DisplacementMons extends MasterQuest
         return "Si tu accepte ta quête sera de parcourir la ville de Mons en défiant ton adversaire";
     }
 
+    /**
+     * This method allows to create the list of the items
+     */
     @Override
-    public ArrayList<Items> whatItem() {
+    protected void createListItems() {
+
+    }
+
+    /**
+     * This method allows to create the list of the mobiles
+     */
+    @Override
+    protected void createListMobiles() {
+
+    }
+
+    @Override
+    public ArrayList<Items> getListItems() {
         return null;
     }
 
     @Override
-    public ArrayList<Mobile> whatMobile() {
+    public ArrayList<Mobile> getListPnj() {
         return null;
     }
 
@@ -57,7 +73,7 @@ public class DisplacementMons extends MasterQuest
      * @return list of the maps
      */
     @Override
-    public Maps[] whatPlace() {
+    public Maps[] getListMaps() {
         return new Maps[0];
     }
 

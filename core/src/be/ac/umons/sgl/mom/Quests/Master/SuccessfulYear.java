@@ -5,11 +5,9 @@ import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.MobileType;
 import be.ac.umons.sgl.mom.Events.Notifications.Notification;
-import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Energizing;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Items.OldExam;
 import be.ac.umons.sgl.mom.Objects.Items.PaperHelp;
 import be.ac.umons.sgl.mom.Objects.Items.TheKillBoot;
@@ -27,7 +25,9 @@ import java.util.ArrayList;
 public class SuccessfulYear extends MasterQuest
 {
 
-    /*This is the goals of this Quest*/
+    /**
+     * This is the goals of this Quest
+     */
     final UnderQuest[] underQuest = {new HelpMe(this,34,people),new FreeTimeMons(this,33,people)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33,people)};
 
 
@@ -64,46 +64,43 @@ public class SuccessfulYear extends MasterQuest
 
     /**
      * This method return the items for this quest
-     * @return list of items
      */
     @Override
-    public ArrayList<Items> whatItem() //TODO opimiser cela
+    public void createListItems() //TODO opimiser cela
     {
-        ArrayList<Items> list = new ArrayList<>();
+        listItems = new ArrayList<>();
         for (int i=0; i < 6; i++)
-            list.add(new Energizing());
+            listItems.add(new Energizing());
         for (int i=0 ; i < 3; i++)
-            list.add(new OldExam());
+            listItems.add(new OldExam());
         for (int i=0 ; i < 3; i++)
-            list.add(new PaperHelp());
+            listItems.add(new PaperHelp());
         for (int i=0 ; i < 5; i++)
-            list.add(new TheKillBoot());
-
-        return list;
+            listItems.add(new TheKillBoot());
     }
 
 
     /**
      * This method return the mobile for this quest
-     * @return list of mobile
      */
     @Override
-    public ArrayList<Mobile> whatMobile() //TODO optimiser cela
+    protected void createListMobiles() //TODO optimiser cela
     {
-        ArrayList<Mobile> list = new ArrayList<>();
+        listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
         /*for(int i=0; i < 30;i++)
             list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
         for(int i = 30; i < 40; i++)
             list.add(new FightPNJ(getBloc(), MobileType.Athletic));*/
-
-        return list;
     }
 
 
-    /***/
+    /**
+     * This method allows to see the maps of the player interact with the other things
+     * @return a list of the Maps
+     */
     @Override
-    public Maps[] whatPlace()
+    public Maps[] getListMaps()
     {
         return new Maps[]{Maps.Poly, Maps.Mons, Maps.Nimy};
     }
