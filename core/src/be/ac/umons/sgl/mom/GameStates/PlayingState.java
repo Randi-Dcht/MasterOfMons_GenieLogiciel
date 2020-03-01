@@ -28,6 +28,7 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 
+import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Quests.Quest;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -42,10 +43,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 import static be.ac.umons.sgl.mom.GraphicalObjects.QuestShower.TEXT_AND_RECTANGLE_MARGIN;
 
@@ -196,7 +197,7 @@ public class PlayingState extends GameState implements Observer {
         inventoryShower = new InventoryShower(gim, gs, player);
 
 
-        SuperviserNormally.getSupervisor().getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog);
+        SuperviserNormally.getSupervisor().getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
         initMap("Tmx/Umons_Nimy.tmx");
 
@@ -617,6 +618,12 @@ public class PlayingState extends GameState implements Observer {
             if (ii != null)
                 SuperviserNormally.getSupervisor().getPeople().useObject(ii.getItem());
         }
+        if (gim.isKey(Input.Keys.F5, KeyStatus.Pressed)) {
+            timeShower.extendOnFullWidth(gs.getStringFromId("quickSaving"));
+            quickSave();
+        }
+        if (gim.isKey(Input.Keys.F6, KeyStatus.Pressed))
+            quickLoad();
 
         if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
@@ -689,12 +696,13 @@ public class PlayingState extends GameState implements Observer {
                 NewChapterMenuState ncms = (NewChapterMenuState) gsm.setState(NewChapterMenuState.class);
                 ncms.setNewChapterName(q.getName());
             });
-        }
-        else if (notify.getEvents().equals(Events.Dialog) && notify.bufferNotEmpty())
-        {
+        } else if (notify.getEvents().equals(Events.Dialog) && notify.bufferNotEmpty()) {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
             Gdx.app.postRunnable(() -> updateDialog(diag));
+        } else if (notify.getEvents().equals(Events.UpLevel)) {
+            timeShower.extendOnFullWidth(gs.getStringFromId("levelUp"));
         }
+
     }
 
     /**
@@ -737,5 +745,30 @@ public class PlayingState extends GameState implements Observer {
     @Override
     public void getFocus() {
         inventoryShower.setHided(false);
+    }
+
+    public static void quickSave() {
+        String name = String.format("MOM QS - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
+        String newName = getNonExistingFilePath(name);
+        Saving save = SuperviserNormally.getSupervisor().getSave();
+        save.setNameSave(newName);
+        save.signal();
+        MasterOfMonsGame.settings.setLastSavePath(newName);
+    }
+
+
+    private static String getNonExistingFilePath(String name) {
+        String newName = name;
+        int i = 1;
+        while (new File(new File(".").getAbsoluteFile().getParent(), newName + ".mom").exists()) {
+            newName = String.format("%s(%d)", name, i);
+            i++;
+        }
+        return newName;
+    }
+
+    public static void quickLoad() {
+        String path = MasterOfMonsGame.settings.getLastSavePath();
+        // TODO : Call load system with last save (automatic or not).
     }
 }

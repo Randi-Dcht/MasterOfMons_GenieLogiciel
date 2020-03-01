@@ -24,6 +24,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeShower {
 
+    protected final int EXPEND_TIME = 1500;
+
     /**
      * The game's graphical settings.
      */
@@ -125,31 +127,35 @@ public class TimeShower {
         isBeingAnimated = true;
     }
 
-    public void extendOnFullWidth() {
-        DoubleAnimation da = new DoubleAnimation(getWidth(), MasterOfMonsGame.WIDTH - leftMargin, 2000);
+    public void extendOnFullWidth(String text) {
+        DoubleAnimation da = new DoubleAnimation(getWidth(), MasterOfMonsGame.WIDTH - leftMargin, EXPEND_TIME);
         da.setRunningAction(() -> setAnimationWidth(da.getActual()));
         da.setEndingAction(() -> {
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.schedule(this::unextendFromFullWidth, 2, TimeUnit.SECONDS);
+            executorService.schedule(this::unextendFromFullWidth, 5, TimeUnit.SECONDS);
         });
         AnimationManager.getInstance().addAnAnimation("TimeShowerAnimExtend", da);
         isBeingAnimated = true;
-        String s = String.format("%s -> %s", oldTime.toString(), SuperviserNormally.getSupervisor().getTime().toString());
-        StringAnimation sa = new StringAnimation(s, 500);
+        StringAnimation sa = new StringAnimation(text, EXPEND_TIME);
         sa.setRunningAction(() -> textToShow = sa.getActual());
         isTextBeingAnimated = true;
         AnimationManager.getInstance().addAnAnimation("SA_TimeShower_Extend", sa);
     }
 
+    public void extendOnFullWidth() {
+        extendOnFullWidth(
+                String.format("%s -> %s", oldTime.toString(), SuperviserNormally.getSupervisor().getTime().toString()));
+    }
+
     protected void unextendFromFullWidth() {
-        DoubleAnimation da = new DoubleAnimation(MasterOfMonsGame.WIDTH - 2 * leftMargin, getWidth(), 2000);
+        DoubleAnimation da = new DoubleAnimation(MasterOfMonsGame.WIDTH - 2 * leftMargin, getWidth(), EXPEND_TIME);
         da.setRunningAction(() -> setAnimationWidth(da.getActual()));
         da.setEndingAction(() -> isBeingAnimated = false);
         AnimationManager.getInstance().addAnAnimation("TimeShowerAnimUnextend", da);
         isBeingAnimated = true;
         isTextBeingAnimated = false;
         updateTime();
-        StringAnimation sa = new StringAnimation(textToShow, 2000);
+        StringAnimation sa = new StringAnimation(textToShow, EXPEND_TIME);
         sa.setRunningAction(() -> textToShow = sa.getActual());
         sa.setEndingAction(() -> isTextBeingAnimated = false);
         isTextBeingAnimated = true;
