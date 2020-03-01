@@ -45,8 +45,14 @@ public class SettingsMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser, "SLC_Difficulty"),
                 new MenuItem(gs.getStringFromId("backgroundColor"), MenuItemType.ColorChooser, "CS_Background"),
                 new MenuItem(gs.getStringFromId("transparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Transparent_Background"),
+                new MenuItem(gs.getStringFromId("attackRangeColor"), MenuItemType.ColorChooser, "CS_Attack_Range_Color"),
+                new MenuItem(gs.getStringFromId("recoveringAttackRangeColor"), MenuItemType.ColorChooser, "CS_Recovering_Attack_Range_Color"),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
         });
+        initDefaultValue(); // TODO : Remove the switch
+    }
+
+    public void initDefaultValue() {
         Settings settings = MasterOfMonsGame.settings;
         for (MenuItem mi : menuItems) {
             switch (mi.id) {
@@ -86,6 +92,14 @@ public class SettingsMenuState extends MenuState {
                     ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getTransparentBackgroundColor()));
                     mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
                     break;
+                case "CS_Attack_Range_Color":
+                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getAttackRangeColor()));
+                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
+                    break;
+                case "CS_Recovering_Attack_Range_Color":
+                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getRecoveringAttackRangeColor()));
+                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
+                    break;
             }
         }
     }
@@ -111,6 +125,12 @@ public class SettingsMenuState extends MenuState {
                     break;
                 case "CS_Transparent_Background":
                     settings.setTransparentBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Attack_Range_Color":
+                    settings.setAttackRangeColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Recovering_Attack_Range_Color":
+                    settings.setRecoveringAttackRangeColor(((ColorSelector)mi.control).getSelectedColor().toString());
                     break;
             }
         }

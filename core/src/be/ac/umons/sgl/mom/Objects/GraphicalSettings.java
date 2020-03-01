@@ -77,7 +77,7 @@ public class GraphicalSettings {
         backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
         transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
         attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getAttackRangeColor());
-        recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.recoveringAttackRangeColor);
+        recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getRecoveringAttackRangeColor());
     }
 
     /**
