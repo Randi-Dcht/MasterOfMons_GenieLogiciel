@@ -1,10 +1,13 @@
 package be.ac.umons.sgl.mom.GameStates.Menus;
 
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
+import be.ac.umons.sgl.mom.MasterOfMonsGame;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
+import be.ac.umons.sgl.mom.Objects.Saving;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -85,7 +88,10 @@ public class SaveMenuState extends ChooseFolderMenuState {
             g.addAnswer(gs.getStringFromId("yes"), () -> save(saveFilePath, true));
             g.addAnswer(gs.getStringFromId("no"));
         } else {
-            // TODO : Call the save system
+            Saving save = SuperviserNormally.getSupervisor().getSave();
+            save.setNameSave(saveFilePath);
+            save.signal();
+            MasterOfMonsGame.settings.setLastSavePath(saveFilePath);
             gsm.removeFirstState();
         }
     }

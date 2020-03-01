@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.Difficulty;
 import be.ac.umons.sgl.mom.Enums.Languages;
+import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ColorSelector;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.TextBox;
@@ -113,8 +114,8 @@ public class SettingsMenuState extends MenuState {
                     break;
             }
         }
-        // TODO : Save the settings object
         MasterOfMonsGame.settings = settings;
+        SuperviserNormally.getSupervisor().getSave().savingGraphic(settings);
         gsm.removeFirstState();
         gs.refreshColors();
     }
