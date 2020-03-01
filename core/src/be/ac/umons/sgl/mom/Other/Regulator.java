@@ -81,7 +81,9 @@ public class Regulator implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to create a hasMap to associate the place with the string
+     */
     private void createPlaceAssociation()
     {
         for (Places plc : Places.values())
@@ -146,10 +148,12 @@ public class Regulator implements Observer
     }
 
 
+    /**
+     * This method allows to display the question of the Quest in the screen when this starts
+     */
     private void changeQuest()
     {
-        if (chgQuest)
-            push(player.getQuest().question());
+        push(player.getQuest().question());
     }
 
 
@@ -196,11 +200,14 @@ public class Regulator implements Observer
      */
     private void soulMateMeet(SaoulMatePNJ pnj)
     {
-        System.out.println("oh il y a une chance que je lui face l'amour à " + pnj );
+        System.out.println("oh il y a une chance que je lui face l'*** à " + pnj );
     }
 
 
-    /***/
+    /**
+     * This method see the place of the player and display the message or advance the time
+     * @param place is the place of the player
+     */
     public void timeOfDay(Places place)
     {
         if (place.equals(Places.Bed))
@@ -234,7 +241,10 @@ public class Regulator implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to advance the time when the people go to the lesson
+     * @return boolean if the condition is respect
+     */
     public boolean advanceTime()
     {
         if (manager.getActualCourse() == null)
