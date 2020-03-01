@@ -2,8 +2,8 @@ package be.ac.umons.sgl.mom.GameStates.Menus;
 
 import be.ac.umons.sgl.mom.Enums.KeyStatus;
 import be.ac.umons.sgl.mom.GameStates.GameState;
-import be.ac.umons.sgl.mom.GraphicalObjects.Controls.*;
 import be.ac.umons.sgl.mom.GraphicalObjects.Controls.Button;
+import be.ac.umons.sgl.mom.GraphicalObjects.Controls.*;
 import be.ac.umons.sgl.mom.Helpers.StringHelper;
 import be.ac.umons.sgl.mom.Managers.GameInputManager;
 import be.ac.umons.sgl.mom.Managers.GameStateManager;
@@ -12,7 +12,6 @@ import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -25,7 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static be.ac.umons.sgl.mom.MasterOfMonsGame.*;
+import static be.ac.umons.sgl.mom.MasterOfMonsGame.HEIGHT;
 
 /**
  * Abstract class representing a menu.
@@ -65,11 +64,6 @@ public abstract class MenuState extends GameState {
     protected List<List<ColorSelector>> colorSelectors;
 
     /**
-     * The camera for this state.
-     */
-    protected OrthographicCamera cam;
-
-    /**
      * If the background must be transparent or not.
      */
     protected boolean transparentBackground;
@@ -85,6 +79,10 @@ public abstract class MenuState extends GameState {
     protected boolean handleEscape;
 
     protected double topMargin = .1;
+
+    protected int mouseScrolled = 0;
+
+    protected int maxScrolled = 0;
 
     /**
      * Create a new menu
@@ -109,9 +107,6 @@ public abstract class MenuState extends GameState {
         scrollListChoosers = new ArrayList<>();
         colorSelectors = new ArrayList<>();
         sb = new SpriteBatch();
-		cam = new OrthographicCamera(WIDTH, HEIGHT); // Make the camera the same size as the game
-		cam.translate(WIDTH / 2, HEIGHT / 2);
-		cam.update();
 		sr = new ShapeRenderer();
 		sr.setAutoShapeType(true);
 		handleEscape = true;
@@ -141,8 +136,6 @@ public abstract class MenuState extends GameState {
 
         int alreadyUsed = (int)(topMargin * HEIGHT);
 
-        sb.setProjectionMatrix(cam.combined);
-
         BitmapFont font;
         int width = (int) leftMargin;
         for (int i = 0; i < menuItems.length; i++) {
@@ -163,14 +156,17 @@ public abstract class MenuState extends GameState {
             else if (size.y == -2)
                 size.y = (int) (MasterOfMonsGame.HEIGHT - alreadyUsed + 2 * topMargin);
 
-            menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : topMargin))), size);
-            if (menuItems.length > i + 1 && menuItems[i+1].drawUnderPreviousOne) {
+            menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : topMargin) + mouseScrolled)), size);
+            if (i == menuItems.length - 1 || (menuItems.length > i + 1 && menuItems[i+1].drawUnderPreviousOne)) {
                 alreadyUsed += size.y + topMargin;
                 width = (int) leftMargin;
             }
             else
                 width += size.x + leftMargin;
         }
+        maxScrolled = alreadyUsed - HEIGHT;
+        if (maxScrolled < 0)
+            maxScrolled = 0;
     }
 
     @Override
@@ -206,6 +202,12 @@ public abstract class MenuState extends GameState {
         for (List<ColorSelector> csl : colorSelectors)
             for (ColorSelector cs : csl)
                 cs.handleInput();
+
+        mouseScrolled += gim.getScrolledAmount() * 20;
+        if (mouseScrolled < 0)
+            mouseScrolled = 0;
+        else if (mouseScrolled > maxScrolled)
+            mouseScrolled = maxScrolled;
     }
 
     public void checkSelectedItem() {
