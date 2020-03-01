@@ -377,11 +377,21 @@ public class People extends Character implements Serializable, Observer
      */
     public void winExperience(double win)
     {
-        experience = experience + win;
+        experience += win;
+        calculusWinXp();
+    }
+
+
+    /**
+     * This method check the experience with the threshold of the level
+     */
+    private void calculusWinXp()
+    {
         if(experience >= threshold)
         {
             upLevel();
             threshold = minExperience(level+1);
+            calculusWinXp();
         }
     }
 
@@ -393,7 +403,7 @@ public class People extends Character implements Serializable, Observer
      */
     private double calculateWin(Attack vtm)
     {
-        return (minExperience(level+1)-minExperience(level))/(3*Math.pow((level/vtm.getLevel()),2));
+        return (minExperience(level+1)-minExperience(level))/(3*(Math.pow(((float)level/vtm.getLevel()),2)));
     }
 
 
