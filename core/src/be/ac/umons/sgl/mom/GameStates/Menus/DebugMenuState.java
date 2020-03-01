@@ -39,7 +39,7 @@ public class DebugMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Button, () -> ps.debugLevelUp()),
                 new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Button, () -> ps.debugMakeInvincible()),
                 new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Button),
-                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button),
+                new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button, () -> gsm.setState(DebugGetObject.class, true)),
                 new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> gsm.removeFirstState())
         });
     }
