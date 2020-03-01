@@ -1,11 +1,13 @@
 package be.ac.umons.sgl.mom.Dialog;
 
 import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /***/
@@ -49,5 +51,25 @@ public class DialogPNJ
         {
             return list;
         }
+    }
+
+    private ArrayList<String> replaceId(String id, ArrayList<String> list)
+    {
+        if (id.equals("MYITEMS"))
+        {
+            list.add("NoItems");//TODO
+            for (Items it : mobile.getListItems())
+                list.add(it.getIdItems());
+        }
+
+        if (id.equals("MYMAPS"))
+            list.add(mobile.getMaps().getInformation());
+
+        if (id.equals("MYPLACES"))
+        {
+        }
+
+
+        return list;
     }
 }

@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.Places;
+import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.EntryPlaces;
@@ -144,12 +145,17 @@ public class Regulator implements Observer
      * This method allows to regular the time of the game as pass the night
      * This method also allows to add the energizing of the people
      */
-    private void nightHour()
+    private void kotliebed()
     {
         if (time.getDate().getHour() >= 22 && player.getMaps().equals(Maps.Kot))
         {
             time.refreshTime(0,8,0);
             player.addEnergy(90); //TODO calculer difference
+        }
+        if (player.getMaps().equals(Maps.Kot) && player.getPlace().equals(Places.Bed))
+        {
+            TimeGame.FASTER=300;
+            player.reduceEnergizing(State.nap);
         }
     }
 
@@ -186,7 +192,7 @@ public class Regulator implements Observer
     public void timeOfDay(Places place)
     {
         if (place.equals(Places.Bed))
-            nightHour();
+            kotliebed();
 
         if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)))
         {
@@ -260,7 +266,7 @@ public class Regulator implements Observer
     public void update(Notification notify)
     {
         if (notify.getEvents().equals(Events.ChangeHour))
-            nightHour();
+            kotliebed();
 
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
             questionPlace((Maps)notify.getBuffer());

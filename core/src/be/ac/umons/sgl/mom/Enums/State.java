@@ -21,7 +21,7 @@ public enum State
   /**
    * When the people nap in the kot
    */
-  nap("Nap",0.014),
+  nap("Nap",2.0),
   /**
    * when the people running in the map
    */
