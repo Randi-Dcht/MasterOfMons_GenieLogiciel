@@ -123,6 +123,10 @@ public class InventoryShower extends Control {
     public void draw(Batch batch, int centerX, int height, Point itemSize) {
         if (hided)
             return;
+        if (inventory.size() != inventoryItemList.size()) {
+            dispose();
+            init();
+        }
         itemWidth = itemSize.x;
         if (isBeingAnimated)
             itemSize.x = (int)duringAnimationItemWidth;
@@ -166,6 +170,7 @@ public class InventoryShower extends Control {
      */
     public void animate() {
         beginAnimation();
+        duringAnimationItemWidth = 0;
         DoubleAnimation da = new DoubleAnimation(0, 1, 750);
         setDuringAnimationWidth(getWidth() / 5);
         setDuringAnimationBackgroundOpacity(1);

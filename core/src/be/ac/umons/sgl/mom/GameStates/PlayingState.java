@@ -607,12 +607,12 @@ public class PlayingState extends GameState implements Observer {
             debugLevelUp();
         if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
             debugMakeInvincible();
+        if (gim.isKey(Input.Keys.O, KeyStatus.Pressed))
+            gsm.setState(DebugGetObject.class);
         if (gim.isKey(Input.Keys.C, KeyStatus.Pressed))
             attack(player);
         if (gim.isKey(Input.Keys.L, KeyStatus.Pressed))
             dropSelectedObject();
-        if (gim.isKey(Input.Keys.T, KeyStatus.Pressed))
-            timeShower.extendOnFullWidth();
         if (gim.isKey(Input.Keys.F, KeyStatus.Pressed)) {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)
