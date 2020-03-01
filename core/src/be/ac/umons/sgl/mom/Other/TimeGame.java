@@ -62,8 +62,6 @@ public class TimeGame implements Observer
     @Override
     public void update(Notification notify)
     {
-        //changeMin();//TODO
-
         if (notify.getEvents().equals(Events.ChangeQuest))//TODO check the years
             newYear();
     }
@@ -196,7 +194,7 @@ public class TimeGame implements Observer
     @Override
     public int hashCode()
     {
-        return Objects.hash(NBmonth, hour, min, day, years);
+        return Objects.hash(NBmonth, hour, min, day+1, years);
     }
 
 

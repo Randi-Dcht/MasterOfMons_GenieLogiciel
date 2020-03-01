@@ -570,7 +570,6 @@ public class SuperviserNormally implements Observer
 
         /**
          * This method allows to check the actual course of the player in the game
-
          */
         public void checkPlanning()
         {
