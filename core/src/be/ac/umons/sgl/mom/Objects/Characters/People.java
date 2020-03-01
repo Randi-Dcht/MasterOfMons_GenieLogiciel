@@ -238,6 +238,8 @@ public class People extends Character implements Serializable, Observer
     {
         if(myObject.size() == difficulty.getManyItem())
             return false;
+        System.out.println("Push the object (241): "+object);
+        SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(object));
         myObject.add(object);
         return true;
     }
@@ -267,7 +269,7 @@ public class People extends Character implements Serializable, Observer
      */
     public void useObject(Items object)
     {
-        System.out.println(object + "to use");
+        System.out.println(object + "to use (270)");
         if (myObject.contains(object))
         {
             object.used(this);

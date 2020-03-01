@@ -11,6 +11,8 @@ import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.SaoulMatePNJ;
+import be.ac.umons.sgl.mom.Objects.Items.Pen;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -75,6 +77,7 @@ public class Regulator implements Observer
         manager.getEvent().add(Events.MeetOther,this);
         manager.getEvent().add(Events.EntryPlace,this);
         manager.getEvent().add(Events.ChangeQuest,this);
+        manager.getEvent().add(Events.UseItems,this);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
         createPlaceAssociation();
@@ -298,6 +301,9 @@ public class Regulator implements Observer
 
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
             soulMateMeet((SaoulMatePNJ) notify.getBuffer());
+
+        /*if (notify.getEvents().equals(Events.UseItems))
+            timeOfDay(player.getPlace());*/
 
         if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
             regulateDialog((String)notify.getBuffer());

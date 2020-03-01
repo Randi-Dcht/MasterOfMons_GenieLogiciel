@@ -400,6 +400,7 @@ public class SuperviserNormally implements Observer
                 Mobile mb = (Mobile)notify.getBuffer();
                 listMobile.get(mb.getMaps()).remove(mb);
                 deadMobile.add(mb);
+                people.winExperience(mb);
                 if (mb.equals(memoryMobile))
                     memoryMobile = null;
             }
