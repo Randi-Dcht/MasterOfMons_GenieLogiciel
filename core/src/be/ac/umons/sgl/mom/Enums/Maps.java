@@ -12,7 +12,7 @@ public enum Maps
     GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA",     Places.OnTheMap),
     DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci",Places.OnTheMap),
     Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",   Places.OnTheMap),
-    Kot(       "Tmx/kot.tmx",             "InfoKot",    Places.OnTheMap),
+    Kot(       "Tmx/Kot.tmx",             "InfoKot",    Places.OnTheMap),
     Mons(      "Tmx/CityMons.tmx",        "InfoCity",   Places.OnTheMap);
 
 
