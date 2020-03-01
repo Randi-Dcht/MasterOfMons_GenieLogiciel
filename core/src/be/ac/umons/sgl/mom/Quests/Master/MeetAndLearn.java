@@ -27,7 +27,9 @@ import java.util.ArrayList;
 public class MeetAndLearn extends MasterQuest
 {
 
-    /*this is the goals of this quest*/
+    /**
+     * This is the goals of this quest
+     */
     final UnderQuest[] underQuest = {new LookSoulMate(this,50,people), new GoToPriorityLesson(this,50,people)};
 
 
@@ -39,7 +41,6 @@ public class MeetAndLearn extends MasterQuest
     public MeetAndLearn(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
         super(before,people,Bloc.BA3,graphic,difficulty);
-        //ObligationLesson(lesson);
         addUnderQuest(underQuest);
     }
 
@@ -68,39 +69,37 @@ public class MeetAndLearn extends MasterQuest
      * @return list of items
      */
     @Override
-    public ArrayList<Items> whatItem() //TODO optimiser cela
+    protected void createListItems() //TODO optimiser cela
     {
-        ArrayList<Items> list = new ArrayList<>();
+        listItems = new ArrayList<>();
         for (int i=0; i < 4; i++)
-            list.add(new Flower());
+            listItems.add(new Flower());
         for (int i=0 ; i < 6; i++)
-            list.add(new OldExam());
-        list.add(new Gun());
-        list.add(new TheKillBoot());
+            listItems.add(new OldExam());
+        listItems.add(new Gun());
+        listItems.add(new TheKillBoot());
 
-        return list;
     }
 
 
     /**
      * This method return the mobile for this quest
-     * @return list of mobile
      */
     @Override
-    public ArrayList<Mobile> whatMobile() //TODO optimiser cela
+    protected void createListMobiles() //TODO optimiser cela
     {
-        ArrayList<Mobile> list = new ArrayList<>();
+        listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
-
-        list.add(new SaoulMatePNJ(getBloc(),MobileType.Lambda));
-
-        return list;
+        listMobs.add(new SaoulMatePNJ(getBloc(),MobileType.Lambda));
     }
 
 
-    /***/
+    /**
+     * This method allows to see the maps of the player interact with the other things
+     * @return a list of the Maps
+     */
     @Override
-    public Maps[] whatPlace()
+    public Maps[] getListMaps()
     {
         return new Maps[]{Maps.Nimy, Maps.Mons, Maps.Poly};
     }

@@ -312,10 +312,10 @@ public class SuperviserNormally implements Observer
         private void createMobil(MasterQuest quest)
         {
             listMobile = new HashMap<>();
-            Maps[] maps = quest.whatPlace();
+            Maps[] maps = quest.getListMaps();
             for (Maps plc : Maps.values())
                 listMobile.put(plc,new ArrayList<>());
-            for (Mobile mb : quest.whatMobile())
+            for (Mobile mb : quest.getListPnj())
             {
                 if (mb.getMaps() == null)
                     mb.setMaps(maps[new Random().nextInt(maps.length)]);
@@ -352,10 +352,10 @@ public class SuperviserNormally implements Observer
         private void createItems(MasterQuest quest)
         {
             listItems = new HashMap<>();
-            Maps[] maps = quest.whatPlace();
+            Maps[] maps = quest.getListMaps();
             for (Maps plc : Maps.values())
                 listItems.put(plc,new ArrayList<>());
-            for (Items mb : quest.whatItem())
+            for (Items mb : quest.getListItems())
             {
                 if (mb.getMaps() == null)
                     mb.setMaps(maps[new Random().nextInt(maps.length)]);
@@ -424,11 +424,17 @@ public class SuperviserNormally implements Observer
 
         /**
          * This method allows to give an items to the people for this Quest (#debug#)
+         * @param items is the items that the people want to add in the bag
          */
-        public void addItems()
+        public void addItems(Items items)
         {
-            ArrayList<Items> list = listItems.get(people.getMaps());
-            people.pushObject(list.get(new Random().nextInt(list.size())));
+            if (items != null)
+                people.pushObject(items);
+            else
+            {
+                ArrayList<Items> list = listItems.get(people.getMaps());
+                people.pushObject(list.get(new Random().nextInt(list.size())));
+            }
         }
 
 
@@ -562,7 +568,10 @@ public class SuperviserNormally implements Observer
 
 
 
-        /***/
+        /**
+         * This method allows to check the actual course of the player in the game
+
+         */
         public void checkPlanning()
         {
             Date actu = time.getDate();

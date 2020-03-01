@@ -83,6 +83,11 @@ public class Saving implements Observer
     }
 
 
+    /***/
+    public void setNameSave(String name)
+    {}
+
+
     /**
      * This method allows to create a file with the save of the game
      * @param file who is the file with the saving game.
@@ -109,7 +114,7 @@ public class Saving implements Observer
      * This method allows to save the element of graphic param
      * @param setting who is the class with the param to save.
      */
-    private void savingGraphic(Settings setting)
+    public void savingGraphic(Settings setting)
     {
         try
         {

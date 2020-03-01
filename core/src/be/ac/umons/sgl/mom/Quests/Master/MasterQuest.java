@@ -326,13 +326,26 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /**
+     * This method allows to create the list of the items
+     */
+    protected abstract void createListItems();
+
+
+    /**
+     * This method allows to create the list of the mobiles
+     */
+    protected abstract void createListMobiles();
+
+
+    /**
      * This method return the all items for this quest
      * @return list of items
      */
-    public ArrayList<Items> whatItem()
+    public ArrayList<Items> getListItems()
     {
-        return new ArrayList<>();
-        //return listItems;
+        if (listItems == null)
+            createListItems();
+        return listItems;
     }
 
 
@@ -340,10 +353,11 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method return the all mobile and PNJ for this quest
      * @return list of mobile
      */
-    public ArrayList<Mobile> whatMobile()
+    public ArrayList<Mobile> getListPnj()
     {
-        return new ArrayList<>();
-        //return listMobs;
+        if (listMobs == null)
+            createListMobiles();
+        return listMobs;
     }
 
 
@@ -351,7 +365,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method return the maps for this Quest
      * @return list of the maps
      */
-    public abstract Maps[] whatPlace();
+    public abstract Maps[] getListMaps();
 
 
     /**
