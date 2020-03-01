@@ -58,7 +58,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public String question()
     {
-        return graphic.getStringFromId("answerSuccessFulYear");
+        return "answerSuccessFulYear";
     }
 
 

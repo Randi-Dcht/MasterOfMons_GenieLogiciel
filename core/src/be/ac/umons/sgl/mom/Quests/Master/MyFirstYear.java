@@ -9,7 +9,6 @@ import be.ac.umons.sgl.mom.Objects.Characters.Mobile;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
 import be.ac.umons.sgl.mom.Objects.Items.Energizing;
-import be.ac.umons.sgl.mom.Objects.Items.Items;
 import be.ac.umons.sgl.mom.Objects.Items.OldExam;
 import be.ac.umons.sgl.mom.Objects.Items.TheKillBoot;
 import be.ac.umons.sgl.mom.Quests.Under.BattleForPlace;
@@ -59,7 +58,7 @@ public class MyFirstYear extends MasterQuest
      */
     public String question()
     {
-        return graphic.getStringFromId("answerMyFirstYear");
+        return "answerMyFirstYear";
     }
 
 

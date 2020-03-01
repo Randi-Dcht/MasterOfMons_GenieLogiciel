@@ -37,7 +37,7 @@ public class Regulator implements Observer
     /**
      * To warn the people if there are problems
      */
-    private boolean informEnergizing=true, informPlace=true, firstStart=true, firstCourse=true, firstStudy=true;
+    private boolean informEnergizing=true, informPlace=true, firstStart=true, firstCourse=true, firstStudy=true, chgQuest=true;
     /**
      * The all maps of the maps
      */
@@ -74,6 +74,7 @@ public class Regulator implements Observer
         manager.getEvent().add(Events.PlaceInMons,this);
         manager.getEvent().add(Events.MeetOther,this);
         manager.getEvent().add(Events.EntryPlace,this);
+        manager.getEvent().add(Events.ChangeQuest,this);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
         createPlaceAssociation();
@@ -129,7 +130,11 @@ public class Regulator implements Observer
             firstStart=false;
             push("HelloWord");
         }
-
+        if (chgQuest)
+        {
+            changeQuest();
+            chgQuest = false;
+        }
         if (informPlace && this.maps.contains(maps))
         {
             push(maps.getInformation());
@@ -138,6 +143,13 @@ public class Regulator implements Observer
 
         if (this.maps.size()==0)
            informPlace = false;
+    }
+
+
+    private void changeQuest()
+    {
+        if (chgQuest)
+            push(player.getQuest().question());
     }
 
 
@@ -279,6 +291,9 @@ public class Regulator implements Observer
 
         if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
             regulateDialog((String)notify.getBuffer());
+
+        if (notify.getEvents().equals(Events.ChangeQuest))
+            changeQuest();
 
     }
 }
