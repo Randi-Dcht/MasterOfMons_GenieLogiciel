@@ -31,7 +31,6 @@ public abstract class Character implements Attack, Social, Serializable
     protected Gun gun;
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
-    protected ReadConversation conversation;
     protected double speed;
     final String name;
     final Type type;
@@ -45,7 +44,6 @@ public abstract class Character implements Attack, Social, Serializable
     {
         this.name     = name;
         this.type     = type;
-        conversation  = ReadConversation.getInstance();
     }
 
 

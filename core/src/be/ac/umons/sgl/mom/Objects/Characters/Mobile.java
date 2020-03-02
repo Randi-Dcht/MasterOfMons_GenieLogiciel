@@ -174,7 +174,7 @@ public class Mobile extends Character implements Serializable,FrameTime
      */
     public String getDialog(String answer)
     {
-        return conversation.getDialogPNJ().get(answer);
+        return null;
     }
 
 

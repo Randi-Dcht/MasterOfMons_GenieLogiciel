@@ -140,7 +140,7 @@ public class People extends Character implements Serializable, Observer
      */
     public ArrayList<String> getDialog(String answer)
     {
-        return conversation.getDialogPeople().get(answer);
+        return null;
     }
 
 
