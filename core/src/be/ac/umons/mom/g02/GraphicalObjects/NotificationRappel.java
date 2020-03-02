@@ -31,9 +31,11 @@ public class NotificationRappel {
 
     protected boolean isBeingAnimated = false;
     protected boolean isHided = true;
+    protected boolean mustHide = false;
 
     protected double animatedWidth = 0;
     protected String animatedText = "";
+
 
     public NotificationRappel(GraphicalSettings gs) {
         this.gs = gs;
@@ -48,8 +50,8 @@ public class NotificationRappel {
     public void draw(Batch batch, Point pos, Point size) {
         if (isHided)
             return;
-        if (isHided) {
-            pos = new Point((int)(pos.x - size.x + animatedWidth), pos.y);
+        if (isBeingAnimated) {
+            pos = new Point((int)(pos.x - animatedWidth + size.x), pos.y);
             size = new Point((int)animatedWidth, size.y);
         }
         Gdx.gl.glEnable(GL30.GL_BLEND);
@@ -78,11 +80,13 @@ public class NotificationRappel {
     protected void unexpend() {
         isBeingAnimated = true;
         DoubleAnimation da = new DoubleAnimation(getWidth(), 0, ANIM_TIME);
+        da.setRunningAction(() -> animatedWidth = da.getActual());
         da.setEndingAction(() -> {
             isBeingAnimated = false;
             isHided = true;
-            if (textToShow != null)
+            if (textToShow != null && ! mustHide)
                 Gdx.app.postRunnable(this::expend);
+            mustHide = false;
         });
         AnimationManager.getInstance().addAnAnimation("DA_NotifRappelUnexpend", da);
     }
@@ -97,13 +101,15 @@ public class NotificationRappel {
     }
 
     public void setTextToShow(String textToShow) {
-        if (this.textToShow != null) {
-            unexpend();
-            this.textToShow = textToShow;
-        }
-        else {
+        if (this.textToShow == null && textToShow != null) {
             this.textToShow = textToShow;
             expend();
+        } else if (this.textToShow != null && textToShow != null) {
+            unexpend();
+            this.textToShow = textToShow;
+        } else { // textToShow == null
+            mustHide = true;
+            unexpend();
         }
     }
 }

@@ -631,6 +631,14 @@ public class PlayingState extends GameState implements Observer {
         if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
+            lums.setOnPointsAttributed(() -> {
+                int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
+                if (pointLevel != 0)
+                    notificationRappel.setTextToShow(String.format(gs.getStringFromId("pointsToAttribute"),
+                            pointLevel, "N")); // TODO Check for key
+                else
+                    notificationRappel.setTextToShow(null);
+            });
         }
         if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
             if (selectedOne instanceof Character)
@@ -704,7 +712,12 @@ public class PlayingState extends GameState implements Observer {
             Gdx.app.postRunnable(() -> updateDialog(diag));
         } else if (notify.getEvents().equals(Events.UpLevel)) {
             timeShower.extendOnFullWidth(gs.getStringFromId("levelUp"));
+            notificationRappel.setTextToShow(String.format(gs.getStringFromId("pointsToAttribute"),
+                    ((People)player.getCharacteristics()).getPointLevel(), "N")); // TODO Check for key
         }
+    }
+
+    public void pointsAttributed() {
 
     }
 
