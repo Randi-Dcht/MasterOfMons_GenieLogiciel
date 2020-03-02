@@ -168,6 +168,8 @@ public class PlayingState extends GameState implements Observer {
      */
     protected InGameDialogState dialogState;
 
+    protected NotificationRappel notificationRappel;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -187,6 +189,7 @@ public class PlayingState extends GameState implements Observer {
         questShower = new QuestShower(gsm, gs);
         agendaShower = new AgendaShower(gim, gs);
         timeShower = new TimeShower(gs);
+        notificationRappel = new NotificationRappel(gs);
 
         SuperviserNormally.getSupervisor().setQuest(questShower);
 
@@ -583,6 +586,8 @@ public class PlayingState extends GameState implements Observer {
         agendaShower.draw(sb);
         timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth()), (int)topMargin * 2 + inventoryShowerHeight),
                 new Point((int)(timeShower.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
+        notificationRappel.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - notificationRappel.getWidth()), (int)topMargin * 2),
+                new Point((int)(notificationRappel.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
         questShower.draw(sb, tileWidth / 2 - QuestShower.TEXT_AND_RECTANGLE_MARGIN, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight));
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH / 2, inventoryShowerHeight, new Point(tileWidth, tileWidth));
         lifeBar.draw(sb, (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
