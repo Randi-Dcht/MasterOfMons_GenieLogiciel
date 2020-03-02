@@ -60,7 +60,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public String question()
     {
-        return graphic.getStringFromId("answerMeetLearn");
+        return "answerMeetLearn";
     }
 
 

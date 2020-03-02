@@ -1,0 +1,16 @@
+% In this file are the IDs for the conversations between character and NPC.
+% Words written in SHIFT are special words that must be understood by the code.
+% Here is the id which will be translated by the bundle in the language of the player.
+% Comments have '%' before and will be ignored by the program.
+Start/Start/Attack/HelloCvt/ESC
+ESC/ESC
+HelloCvt/Hello/GiveMeItems/GiveMeInfo
+GiveMeItems/WhereItems/YourItems/RandomItems
+YourItems/WhichItem/NoneThx/ITEMS
+NoneThx/Shame/ESC
+RandomItems/OkyItems/Thx
+Thx/ESC/ESC
+GiveMeInfo/WhatInfo/InfoPlace/InfoMap/InfoQuest
+InfoPlace/PLACE/Thx
+InfoMap/MAPS/Thx
+InfoQuest/QUEST/Thx

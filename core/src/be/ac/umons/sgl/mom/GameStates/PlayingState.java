@@ -361,7 +361,7 @@ public class PlayingState extends GameState implements Observer {
         pm.update(dt);
         SuperviserNormally.getSupervisor().callMethod(dt);
 
-        lifeBar.setValue((int)player.getCharacteristics().getLife());
+        lifeBar.setValue((int)player.getCharacteristics().getActualLife());
         lifeBar.setMaxValue((int)player.getCharacteristics().lifeMax());
         lifeBar.update(dt);
         expBar.setValue((int)((People)player.getCharacteristics()).getExperience());
@@ -615,12 +615,12 @@ public class PlayingState extends GameState implements Observer {
             debugLevelUp();
         if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
             debugMakeInvincible();
+        if (gim.isKey(Input.Keys.O, KeyStatus.Pressed))
+            gsm.setState(DebugGetObject.class);
         if (gim.isKey(Input.Keys.C, KeyStatus.Pressed))
             attack(player);
         if (gim.isKey(Input.Keys.L, KeyStatus.Pressed))
             dropSelectedObject();
-        if (gim.isKey(Input.Keys.T, KeyStatus.Pressed))
-            timeShower.extendOnFullWidth();
         if (gim.isKey(Input.Keys.F, KeyStatus.Pressed)) {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)

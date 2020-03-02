@@ -157,13 +157,6 @@ public class Mobile extends Character implements Serializable,FrameTime
     }
 
 
-    /***/
-    public List<Items> getListItems()//TODO displace
-    {
-        return myObject;
-    }
-
-
     /**
      * This method allows to give the action of the mobile
      * @return the action of the mobile
@@ -181,7 +174,7 @@ public class Mobile extends Character implements Serializable,FrameTime
      */
     public String getDialog(String answer)
     {
-        return conversation.getDialogPNJ().get(answer);
+        return null;
     }
 
 

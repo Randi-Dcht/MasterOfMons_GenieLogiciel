@@ -2,6 +2,7 @@ package be.ac.umons.sgl.mom.Other;
 
 import be.ac.umons.sgl.mom.Enums.Maps;
 import be.ac.umons.sgl.mom.Enums.Places;
+import be.ac.umons.sgl.mom.Enums.State;
 import be.ac.umons.sgl.mom.Events.Events;
 import be.ac.umons.sgl.mom.Events.Notifications.Dialog;
 import be.ac.umons.sgl.mom.Events.Notifications.EntryPlaces;
@@ -10,6 +11,8 @@ import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.SaoulMatePNJ;
+import be.ac.umons.sgl.mom.Objects.Items.Pen;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,7 +39,7 @@ public class Regulator implements Observer
     /**
      * To warn the people if there are problems
      */
-    private boolean informEnergizing=true, informPlace=true, firstStart=true, firstCourse=true, firstStudy=true;
+    private boolean informEnergizing=true, informPlace=true, firstStart=true, firstCourse=true, firstStudy=true, chgQuest=true;
     /**
      * The all maps of the maps
      */
@@ -73,13 +76,17 @@ public class Regulator implements Observer
         manager.getEvent().add(Events.PlaceInMons,this);
         manager.getEvent().add(Events.MeetOther,this);
         manager.getEvent().add(Events.EntryPlace,this);
+        manager.getEvent().add(Events.ChangeQuest,this);
+        manager.getEvent().add(Events.UseItems,this);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
         createPlaceAssociation();
     }
 
 
-    /***/
+    /**
+     * This method allows to create a hasMap to associate the place with the string
+     */
     private void createPlaceAssociation()
     {
         for (Places plc : Places.values())
@@ -128,7 +135,11 @@ public class Regulator implements Observer
             firstStart=false;
             push("HelloWord");
         }
-
+        if (chgQuest)
+        {
+            changeQuest();
+            chgQuest = false;
+        }
         if (informPlace && this.maps.contains(maps))
         {
             push(maps.getInformation());
@@ -141,15 +152,29 @@ public class Regulator implements Observer
 
 
     /**
+     * This method allows to display the question of the Quest in the screen when this starts
+     */
+    private void changeQuest()
+    {
+        push(player.getQuest().question());
+    }
+
+
+    /**
      * This method allows to regular the time of the game as pass the night
      * This method also allows to add the energizing of the people
      */
-    private void nightHour()
+    private void kotliebed()
     {
         if (time.getDate().getHour() >= 22 && player.getMaps().equals(Maps.Kot))
         {
             time.refreshTime(0,8,0);
             player.addEnergy(90); //TODO calculer difference
+        }
+        if (player.getMaps().equals(Maps.Kot) && player.getPlace().equals(Places.Bed))
+        {
+            TimeGame.FASTER=300;
+            player.reduceEnergizing(State.nap);
         }
     }
 
@@ -178,15 +203,18 @@ public class Regulator implements Observer
      */
     private void soulMateMeet(SaoulMatePNJ pnj)
     {
-        System.out.println("oh il y a une chance que je lui face l'amour à " + pnj );
+        System.out.println("oh il y a une chance que je lui face l'*** à " + pnj );
     }
 
 
-    /***/
+    /**
+     * This method see the place of the player and display the message or advance the time
+     * @param place is the place of the player
+     */
     public void timeOfDay(Places place)
     {
         if (place.equals(Places.Bed))
-            nightHour();
+            kotliebed();
 
         if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)))
         {
@@ -216,7 +244,10 @@ public class Regulator implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to advance the time when the people go to the lesson
+     * @return boolean if the condition is respect
+     */
     public boolean advanceTime()
     {
         if (manager.getActualCourse() == null)
@@ -260,7 +291,7 @@ public class Regulator implements Observer
     public void update(Notification notify)
     {
         if (notify.getEvents().equals(Events.ChangeHour))
-            nightHour();
+            kotliebed();
 
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
             questionPlace((Maps)notify.getBuffer());
@@ -271,8 +302,14 @@ public class Regulator implements Observer
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
             soulMateMeet((SaoulMatePNJ) notify.getBuffer());
 
+        /*if (notify.getEvents().equals(Events.UseItems))
+            timeOfDay(player.getPlace());*/
+
         if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
             regulateDialog((String)notify.getBuffer());
+
+        if (notify.getEvents().equals(Events.ChangeQuest))
+            changeQuest();
 
     }
 }

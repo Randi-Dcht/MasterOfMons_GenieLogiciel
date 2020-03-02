@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Events;
 
+import be.ac.umons.sgl.mom.Dialog.DialogCharacter;
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
@@ -22,7 +23,15 @@ import be.ac.umons.sgl.mom.Objects.Characters.People;
 import be.ac.umons.sgl.mom.Objects.Characters.Social;
 import be.ac.umons.sgl.mom.Objects.Course;
 import be.ac.umons.sgl.mom.Objects.GraphicalSettings;
-import be.ac.umons.sgl.mom.Objects.Items.*;
+import be.ac.umons.sgl.mom.Objects.Items.Energizing;
+import be.ac.umons.sgl.mom.Objects.Items.Flower;
+import be.ac.umons.sgl.mom.Objects.Items.Gun;
+import be.ac.umons.sgl.mom.Objects.Items.Items;
+import be.ac.umons.sgl.mom.Objects.Items.OldExam;
+import be.ac.umons.sgl.mom.Objects.Items.PaperHelp;
+import be.ac.umons.sgl.mom.Objects.Items.Pen;
+import be.ac.umons.sgl.mom.Objects.Items.Phone;
+import be.ac.umons.sgl.mom.Objects.Items.TheKillBoot;
 import be.ac.umons.sgl.mom.Objects.Saving;
 import be.ac.umons.sgl.mom.Other.Date;
 import be.ac.umons.sgl.mom.Other.Regulator;
@@ -120,6 +129,8 @@ public class SuperviserNormally implements Observer
         /***/
         private Course actualCourse;
 
+        private DialogCharacter dialog;
+
 
        /**
         * This constructor allows to define the class who monitor the game
@@ -130,6 +141,8 @@ public class SuperviserNormally implements Observer
                listMap.put(plt.getMaps(),plt);
            event = new Event();
            event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour);
+           save = new Saving(people,"xxxx");//TODO
+           System.out.println("INIT");
            associateLesson();
        }
 
@@ -162,7 +175,7 @@ public class SuperviserNormally implements Observer
         public void associateLesson()
         {
             for (Bloc blc : Bloc.values())
-                listLesson.put(blc,new ArrayList<Lesson>());
+                listLesson.put(blc,new ArrayList<>());
             for (Lesson ls : Lesson.values())
                 listLesson.get(ls.getBloc()).add(ls);
         }
@@ -215,11 +228,12 @@ public class SuperviserNormally implements Observer
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
-            save = new Saving(people,namePlayer);
+           // save = new Saving(people,namePlayer);//TODO
             refreshQuest();
             regule = new Regulator(people,time);
             listCourse = people.getPlanning().get(time.getDate().getDay());
             checkPlanning();
+            dialog= new DialogCharacter();//TODO
         }
 
 
@@ -392,6 +406,7 @@ public class SuperviserNormally implements Observer
                 Mobile mb = (Mobile)notify.getBuffer();
                 listMobile.get(mb.getMaps()).remove(mb);
                 deadMobile.add(mb);
+                people.winExperience(mb);
                 if (mb.equals(memoryMobile))
                     memoryMobile = null;
             }
@@ -549,7 +564,7 @@ public class SuperviserNormally implements Observer
             else if (action.equals(Actions.Dialog))
             {
                 event.add(Events.Answer,this);
-                event.notify(new Dialog(people.getDialog("Start")));
+                event.notify(new Dialog(dialog.getDialog("Start")));
             }
         }
 
@@ -561,14 +576,17 @@ public class SuperviserNormally implements Observer
         public void switchingDialog(String answer)
         {
             if (answer.equals("Attack"))
+            {
                 attackMethod(people,memoryMobile);
+                event.notify(new Dialog("ESC"));
+            }
             if(answer.equals("ESC"))
             {
                 event.notify(new Dialog("ESC"));
                 event.remove(Events.Answer,this);//TODO
             }
             else
-                event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
+                event.notify(new Dialog(dialog.getDialog(answer)));
         }
 
 

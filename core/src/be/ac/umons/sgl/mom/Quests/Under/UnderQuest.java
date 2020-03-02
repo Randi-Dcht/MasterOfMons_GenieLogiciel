@@ -92,8 +92,11 @@ public abstract class UnderQuest implements Quest,Serializable
             progress = 0;
         else
         {
-            progress += many;
-            master.addProgress(many);
+            if (!finish)
+            {
+                progress += many;
+                master.addProgress(many);
+            }
             finished();
         }
     }

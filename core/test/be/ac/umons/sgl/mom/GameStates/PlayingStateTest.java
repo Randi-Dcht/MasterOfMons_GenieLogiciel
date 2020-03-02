@@ -57,7 +57,7 @@ public class PlayingStateTest extends PlayingState {
         mapObjects = new ArrayList<>();
 
         People characteristics = Mockito.mock(People.class);
-        Mockito.when(characteristics.getLife()).thenReturn(0d);
+        Mockito.when(characteristics.getActualLife()).thenReturn(0d);
         Mockito.when(characteristics.getEnergy()).thenReturn(0d);
         Mockito.when(characteristics.getExperience()).thenReturn(0d);
         player.setCharacteristics(characteristics);

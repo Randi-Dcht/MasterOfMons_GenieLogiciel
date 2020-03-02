@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -25,12 +26,11 @@ public abstract class Character implements Attack, Social, Serializable
     protected ArrayList<Items> myObject = new ArrayList<>(); //objet dans son sac à dos
     protected int defence;
     protected int agility;
-    protected double life;
+    protected double actualLife = 0;
     protected Maps maps;
     protected Gun gun;
     protected boolean living = true;
     protected int level = 1; /*between 1 and 40*/
-    protected ReadConversation conversation;
     protected double speed;
     final String name;
     final Type type;
@@ -44,7 +44,6 @@ public abstract class Character implements Attack, Social, Serializable
     {
         this.name     = name;
         this.type     = type;
-        conversation  = ReadConversation.getInstance();
     }
 
 
@@ -54,9 +53,9 @@ public abstract class Character implements Attack, Social, Serializable
      */
     public void regeneration(double dt)//TODO displace
     {
-        if((life+dt)<=lifeMax())
-            life = life + dt+10;
-        if(!living && life > lifeMax()*0.6)
+        if((actualLife +dt)<=lifeMax())
+            actualLife = actualLife + dt+10;
+        if(!living && actualLife > lifeMax()*0.6)
             living = true;
     }
 
@@ -95,9 +94,9 @@ public abstract class Character implements Attack, Social, Serializable
      * This method returns the number of the life of this character
      * @return the life of character
      */
-    public double getLife()
+    public double getActualLife()
     {
-        return life;
+        return actualLife;
     }
 
 
@@ -183,8 +182,33 @@ public abstract class Character implements Attack, Social, Serializable
         this.strength += strength;
         this.defence  += defence;
         this.agility  += agility;
-        this.life     = lifeMax();
-        this.speed    = displacement();
+        this.speed     = displacement();
+
+        if (actualLife == 0)
+            actualLife = lifeMax();
+    }
+
+
+    /**
+     *This method allows the remove a object in the bag of people.
+     *@return true of the object is remove and false otherwise
+     */
+    public boolean removeObject(Items object)
+    {
+        if(myObject.size()==0 || !myObject.contains(object))
+            return false;
+        myObject.remove(object);
+        return true;
+    }
+
+
+    /**
+     * This method allows to give the all inventory of this people
+     * @return The inventory of the player
+     */
+    public List<Items> getInventory()
+    {
+        return myObject;
     }
 
 
@@ -212,8 +236,8 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public void loseAttack(double lose)
     {
-        life = life - lose;
-        if(life <= 0)
+        actualLife = actualLife - lose;
+        if(actualLife <= 0)
             dead();
     }
 

@@ -1,8 +1,21 @@
 package be.ac.umons.sgl.mom.Objects.Characters;
 
-import be.ac.umons.sgl.mom.Enums.*;
+import be.ac.umons.sgl.mom.Enums.Actions;
+import be.ac.umons.sgl.mom.Enums.Bloc;
+import be.ac.umons.sgl.mom.Enums.Difficulty;
+import be.ac.umons.sgl.mom.Enums.Gender;
+import be.ac.umons.sgl.mom.Enums.Lesson;
+import be.ac.umons.sgl.mom.Enums.Maps;
+import be.ac.umons.sgl.mom.Enums.Places;
+import be.ac.umons.sgl.mom.Enums.State;
+import be.ac.umons.sgl.mom.Enums.Type;
 import be.ac.umons.sgl.mom.Events.Events;
-import be.ac.umons.sgl.mom.Events.Notifications.*;
+import be.ac.umons.sgl.mom.Events.Notifications.ChangeQuest;
+import be.ac.umons.sgl.mom.Events.Notifications.EntryPlaces;
+import be.ac.umons.sgl.mom.Events.Notifications.Notification;
+import be.ac.umons.sgl.mom.Events.Notifications.PlaceInMons;
+import be.ac.umons.sgl.mom.Events.Notifications.UpLevel;
+import be.ac.umons.sgl.mom.Events.Notifications.UseItem;
 import be.ac.umons.sgl.mom.Events.Observer;
 import be.ac.umons.sgl.mom.Events.SuperviserNormally;
 import be.ac.umons.sgl.mom.Objects.Course;
@@ -12,7 +25,6 @@ import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *This class allows to define a people with all characteristic.
@@ -128,7 +140,7 @@ public class People extends Character implements Serializable, Observer
      */
     public ArrayList<String> getDialog(String answer)
     {
-        return conversation.getDialogPeople().get(answer);
+        return null;
     }
 
 
@@ -217,19 +229,6 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
-     *This method allows the remove a object in the bag of people.
-     *@return true of the object is remove and false otherwise
-     */
-    public boolean removeObject(Items objet)
-    {
-        if(myObject.size()==0 || !myObject.contains(objet))
-            return false;
-        myObject.remove(objet);
-        return true;
-    }
-
-
-    /**
      *This method allows to push a object in the bag of people.
      *@param object who is the object taken.
      *@return true if the object is in the bag and false otherwise.
@@ -238,26 +237,21 @@ public class People extends Character implements Serializable, Observer
     {
         if(myObject.size() == difficulty.getManyItem())
             return false;
+        System.out.println("Push the object (241): "+object);
+        SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(object));
         myObject.add(object);
         return true;
     }
 
 
-    /***/
+    /**
+     * This method check if the people can attack the other
+     * @return boolean of can attack
+     */
     @Override
     public boolean canAttacker()
     {
         return energy>=10;
-    }
-
-
-    /**
-     * This method allows to give the all inventory of this people
-     * @return The inventory of the player
-     */
-    public List<Items> getInventory()
-    {
-        return myObject;
     }
 
 
@@ -267,7 +261,7 @@ public class People extends Character implements Serializable, Observer
      */
     public void useObject(Items object)
     {
-        System.out.println(object + "to use");
+        System.out.println(object + "to use (265)");
         if (myObject.contains(object))
         {
             object.used(this);
@@ -337,7 +331,7 @@ public class People extends Character implements Serializable, Observer
     /**
      * This method allows to give the minimum of experience for have a level
      * @param nb is the level
-     * @return the minium of experience for the level in param
+     * @return the minimum of experience for the level in param
      */
     private double minExperience(int nb)
     {
@@ -375,11 +369,21 @@ public class People extends Character implements Serializable, Observer
      */
     public void winExperience(double win)
     {
-        experience = experience + win;
+        experience += win;
+        calculusWinXp();
+    }
+
+
+    /**
+     * This method check the experience with the threshold of the level
+     */
+    private void calculusWinXp()
+    {
         if(experience >= threshold)
         {
             upLevel();
             threshold = minExperience(level+1);
+            calculusWinXp();
         }
     }
 
@@ -391,7 +395,7 @@ public class People extends Character implements Serializable, Observer
      */
     private double calculateWin(Attack vtm)
     {
-        return (minExperience(level+1)-minExperience(level))/(3*Math.pow((level/vtm.getLevel()),2));
+        return (minExperience(level+1)-minExperience(level))/(3*(Math.pow(((float)level/vtm.getLevel()),2)));
     }
 
 
@@ -438,7 +442,10 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to give the actual place of the people
+     * @param place is the place on the maps
+     */
     public void setPlaceMaps(Places place)
     {
         this.place = place;
@@ -446,7 +453,10 @@ public class People extends Character implements Serializable, Observer
     }
 
 
-    /***/
+    /**
+     * This method returns the place of the people
+     * @return the place
+     */
     public Places getPlace()
     {
         return place;

@@ -59,13 +59,13 @@ public class TestCharacters
         People p1 = sp.getPeople();
         Mobile p2 = new Mobile("Testing",Bloc.BA3, MobileType.Athletic, Actions.Never);
 
-        double memory = p1.getLife();
+        double memory = p1.getActualLife();
         sp.attackMethod(p2,p1);
-        assertTrue(memory > p1.getLife(),"Check the life after the attack (people)");
+        assertTrue(memory > p1.getActualLife(),"Check the life after the attack (people)");
 
-        memory = p2.getLife();
+        memory = p2.getActualLife();
         sp.attackMethod(p1,p2);
-        assertTrue(memory > p2.getLife(),"Chack the life after the attack (PNJ)");
+        assertTrue(memory > p2.getActualLife(),"Chack the life after the attack (PNJ)");
     }
 
     @Test
