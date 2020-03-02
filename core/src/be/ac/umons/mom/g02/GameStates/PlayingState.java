@@ -248,17 +248,14 @@ public class PlayingState extends GameState implements Observer {
         mapObjects = new ArrayList<>();
 
         for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
-            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO
+            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
         }
 
         for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(map))
             pnjs.add(new Character(gs, mob));
 
-
-            Character testPNJ = new Character(gs, new Mobile("xx", Bloc.BA2, MobileType.Lambda, Actions.Dialog));
-                  testPNJ.getCharacteristics().setMaps(Maps.Nimy);
-                  pnjs.add(testPNJ);
-
+        for (MovingPNJ mv : SuperviserNormally.getSupervisor().getMovingPnj(map))
+            pnjs.add(mv.initialisation(this,gs,player));
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
@@ -277,10 +274,8 @@ public class PlayingState extends GameState implements Observer {
         if (aboutLayer != null)
             aboutObjects = aboutLayer.getObjects();
 
-                  initPNJsPositions();
-                  initPlayerPosition(spawnX, spawnY);
-
-                  testPNJ.setMapPos(new Point(player.getPosX(), player.getPosY()));
+        initPNJsPositions();
+        initPlayerPosition(spawnX, spawnY);
 
     }
 
