@@ -336,7 +336,7 @@ public class People extends Character implements Serializable, Observer
     private double minExperience(int nb)
     {
         if(nb <= 1) //TODO tester
-            return 0;
+            return 750;
         else
             return minExperience(nb-1) + 1000 * Math.pow(1.1,nb-1);
     }
