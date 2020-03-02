@@ -1,5 +1,6 @@
 package be.ac.umons.sgl.mom.Events;
 
+import be.ac.umons.sgl.mom.Dialog.DialogCharacter;
 import be.ac.umons.sgl.mom.Enums.Actions;
 import be.ac.umons.sgl.mom.Enums.Bloc;
 import be.ac.umons.sgl.mom.Enums.Difficulty;
@@ -128,6 +129,8 @@ public class SuperviserNormally implements Observer
         /***/
         private Course actualCourse;
 
+        private DialogCharacter dialog;
+
 
        /**
         * This constructor allows to define the class who monitor the game
@@ -139,6 +142,7 @@ public class SuperviserNormally implements Observer
            event = new Event();
            event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour);
            save = new Saving(people,"xxxx");//TODO
+           System.out.println("INIT");
            associateLesson();
        }
 
@@ -171,7 +175,7 @@ public class SuperviserNormally implements Observer
         public void associateLesson()
         {
             for (Bloc blc : Bloc.values())
-                listLesson.put(blc,new ArrayList<Lesson>());
+                listLesson.put(blc,new ArrayList<>());
             for (Lesson ls : Lesson.values())
                 listLesson.get(ls.getBloc()).add(ls);
         }
@@ -229,6 +233,7 @@ public class SuperviserNormally implements Observer
             regule = new Regulator(people,time);
             listCourse = people.getPlanning().get(time.getDate().getDay());
             checkPlanning();
+            dialog= new DialogCharacter();//TODO
         }
 
 
@@ -559,7 +564,7 @@ public class SuperviserNormally implements Observer
             else if (action.equals(Actions.Dialog))
             {
                 event.add(Events.Answer,this);
-                event.notify(new Dialog(people.getDialog("Start")));
+                event.notify(new Dialog(dialog.getDialog("Start")));
             }
         }
 
@@ -571,14 +576,17 @@ public class SuperviserNormally implements Observer
         public void switchingDialog(String answer)
         {
             if (answer.equals("Attack"))
+            {
                 attackMethod(people,memoryMobile);
+                event.notify(new Dialog("ESC"));
+            }
             if(answer.equals("ESC"))
             {
                 event.notify(new Dialog("ESC"));
                 event.remove(Events.Answer,this);//TODO
             }
             else
-                event.notify(new Dialog(people.getDialog(memoryMobile.getDialog(answer))));
+                event.notify(new Dialog(dialog.getDialog(answer)));
         }
 
 

@@ -1,9 +1,0 @@
-%In this file, this is the dialog of the character PNJ.
-%Every dialogs are two parties, one is the input and two is the output.
-%This file contains the Id of dialog, the true dialog is in Bundle file.
-%ESC equal the quit dialog
-HelloEntry/HowHelpYou
-HelpMe/HowHelpYou
-GiveRepLesson/WhatLesson
-GivePaper/WhatLesson
-Other/NotUnderstand
