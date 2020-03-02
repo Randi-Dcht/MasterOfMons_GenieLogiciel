@@ -1,7 +1,7 @@
 LAN
-.mainClassBeforeLoading be.ac.umons.sgl.mom.Extensions.LAN.GameStates.Menus.WaitingOrConnectionState
+.mainClassBeforeLoading WaitingOrConnectionState
 .map Tmx/Umons_Nimy.tmx
 .canActivateWith Dual
 Dual
-.mainClass be.ac.umons.sgl.mom.Extensions.LAN.GameStates.PlayingState
+.mainClass PlayingState
 .map Tmx/Umons_Nimy.tmx
