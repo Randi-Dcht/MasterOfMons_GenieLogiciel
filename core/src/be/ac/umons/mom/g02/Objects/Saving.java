@@ -36,14 +36,17 @@ public class Saving implements Observer
 
     /**
      * This constructor allows give the class who are saving.
-     * @param nameSave who is the name of the saving
+     */
+    public Saving() {}
+
+
+    /**
      * @param people who is the people who play this game with Quest
      */
-    public Saving(People people, String nameSave)
-    {/*
-        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+    public void setSaving(People people)
+    {
         this.people = people;
-        this.nameSave = nameSave;*///TODO
+        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
     }
 
 
@@ -84,9 +87,13 @@ public class Saving implements Observer
     }
 
 
-    /***/
+    /**
+     * @param name who is the name of the saving
+     */
     public void setNameSave(String name)
-    {}
+    {
+        this.nameSave = name;
+    }
 
 
     /**
@@ -115,19 +122,19 @@ public class Saving implements Observer
      * This method allows to save the element of graphic param
      * @param setting who is the class with the param to save.
      */
-    public void savingGraphic(Settings setting)
-    {/*
+    public void savingGraphic(Settings setting/*,String nameSave*/)
+    {
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe +oldSave+"_Settings"+".mom"))));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe +nameSave+"_Settings"+".mom"))));
             sortie.writeObject(setting);
             sortie.close();
         }
         catch(IOException e)
         {
             Gdx.app.error("Error in the saving the game (out)", e.getMessage());
-        }*/
+        }
     }
 
 
@@ -160,6 +167,7 @@ public class Saving implements Observer
     @Override
     public void update(Notification notify)
     {
-        signal();
+        if (nameSave != null)
+            signal();
     }
 }
