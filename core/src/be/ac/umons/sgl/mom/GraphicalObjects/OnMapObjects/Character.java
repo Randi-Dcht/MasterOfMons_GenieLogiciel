@@ -91,7 +91,7 @@ public class Character extends OnMapObject {
         batch.draw(getTexture(),  x, y, width, height);
         batch.end();
 
-        lifeBar.setValue((int)getCharacteristics().getLife());
+        lifeBar.setValue((int)getCharacteristics().getActualLife());
         lifeBar.setMaxValue((int)getCharacteristics().lifeMax());
 
 //        if (lifeBar.getPercent() < 1) {

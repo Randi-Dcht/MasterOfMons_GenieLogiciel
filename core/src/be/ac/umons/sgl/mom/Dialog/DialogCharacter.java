@@ -74,7 +74,7 @@ public class DialogCharacter
         ArrayList<String> list = new ArrayList<>();
         for (String str : lst)
         {
-            if (str.equals("ITEMS") || str.equals("MAPS") || str.equals("PLACE"))
+            if (str.equals("ITEMS") || str.equals("MAPS") || str.equals("PLACE") || str.equals("QUEST"))
                 list.addAll(replaceId(str));
             else
                 list.add(str);
@@ -85,7 +85,7 @@ public class DialogCharacter
 
     private ArrayList<String> replaceId(String id)
     {
-        ArrayList<String> list = new  ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         if (id.equals("ITEMS"))
         {
             for (Items it : SuperviserNormally.getSupervisor().getAllItems())
@@ -101,6 +101,17 @@ public class DialogCharacter
         {
             list.add("ESC");
         }
+
+        if (id.equals("QUEST"))
+            list.add(SuperviserNormally.getSupervisor().getPeople().getQuest().question());
         return list;
+    }
+
+
+    /***/
+    @Override
+    public String toString()
+    {
+        return "DialogCharacter{" + "listDialog=" + listDialog + '}';
     }
 }

@@ -25,7 +25,6 @@ import be.ac.umons.sgl.mom.Quests.Master.MasterQuest;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *This class allows to define a people with all characteristic.
@@ -262,7 +261,7 @@ public class People extends Character implements Serializable, Observer
      */
     public void useObject(Items object)
     {
-        System.out.println(object + "to use (270)");
+        System.out.println(object + "to use (265)");
         if (myObject.contains(object))
         {
             object.used(this);

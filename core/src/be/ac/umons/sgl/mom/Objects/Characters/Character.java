@@ -26,7 +26,7 @@ public abstract class Character implements Attack, Social, Serializable
     protected ArrayList<Items> myObject = new ArrayList<>(); //objet dans son sac à dos
     protected int defence;
     protected int agility;
-    protected double life;
+    protected double actualLife = 0;
     protected Maps maps;
     protected Gun gun;
     protected boolean living = true;
@@ -55,9 +55,9 @@ public abstract class Character implements Attack, Social, Serializable
      */
     public void regeneration(double dt)//TODO displace
     {
-        if((life+dt)<=lifeMax())
-            life = life + dt+10;
-        if(!living && life > lifeMax()*0.6)
+        if((actualLife +dt)<=lifeMax())
+            actualLife = actualLife + dt+10;
+        if(!living && actualLife > lifeMax()*0.6)
             living = true;
     }
 
@@ -96,9 +96,9 @@ public abstract class Character implements Attack, Social, Serializable
      * This method returns the number of the life of this character
      * @return the life of character
      */
-    public double getLife()
+    public double getActualLife()
     {
-        return life;
+        return actualLife;
     }
 
 
@@ -184,8 +184,10 @@ public abstract class Character implements Attack, Social, Serializable
         this.strength += strength;
         this.defence  += defence;
         this.agility  += agility;
-        this.life     = lifeMax();
-        this.speed    = displacement();
+        this.speed     = displacement();
+
+        if (actualLife == 0)
+            actualLife = lifeMax();
     }
 
 
@@ -236,8 +238,8 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public void loseAttack(double lose)
     {
-        life = life - lose;
-        if(life <= 0)
+        actualLife = actualLife - lose;
+        if(actualLife <= 0)
             dead();
     }
 
