@@ -637,7 +637,7 @@ public class PlayingState extends GameState implements Observer {
                     notificationRappel.setTextToShow(String.format(gs.getStringFromId("pointsToAttribute"),
                             pointLevel, "N")); // TODO Check for key
                 else
-                    notificationRappel.setTextToShow(null);
+                    notificationRappel.setTextToShow("");
             });
         }
         if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
@@ -715,10 +715,6 @@ public class PlayingState extends GameState implements Observer {
             notificationRappel.setTextToShow(String.format(gs.getStringFromId("pointsToAttribute"),
                     ((People)player.getCharacteristics()).getPointLevel(), "N")); // TODO Check for key
         }
-    }
-
-    public void pointsAttributed() {
-
     }
 
     /**

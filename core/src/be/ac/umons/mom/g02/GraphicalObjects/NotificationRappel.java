@@ -34,7 +34,6 @@ public class NotificationRappel {
     protected boolean mustHide = false;
 
     protected double animatedWidth = 0;
-    protected String animatedText = "";
 
 
     public NotificationRappel(GraphicalSettings gs) {
@@ -88,7 +87,11 @@ public class NotificationRappel {
                 Gdx.app.postRunnable(this::expend);
             mustHide = false;
         });
+        StringAnimation sa = new StringAnimation(textToShow, ANIM_TIME);
+        sa.setRunningAction(() -> textToShow = sa.getActual());
+        sa.invert();
         AnimationManager.getInstance().addAnAnimation("DA_NotifRappelUnexpend", da);
+        AnimationManager.getInstance().addAnAnimation("SA_NotifRappelUnexpend", sa);
     }
 
     /**
@@ -101,13 +104,13 @@ public class NotificationRappel {
     }
 
     public void setTextToShow(String textToShow) {
-        if (this.textToShow == null && textToShow != null) {
+        if (this.textToShow.equals("") && !textToShow.equals("")) {
             this.textToShow = textToShow;
             expend();
-        } else if (this.textToShow != null && textToShow != null) {
+        } else if (!this.textToShow.equals("") && !textToShow.equals("")) {
             unexpend();
             this.textToShow = textToShow;
-        } else { // textToShow == null
+        } else { // textToShow == ""
             mustHide = true;
             unexpend();
         }
