@@ -36,17 +36,17 @@ public class CreatePlayerMenuState extends MenuState {
     @Override
     public void init() {
         super.init();
-        MenuItem nameMi = new MenuItem("Character's name", MenuItemType.TextBox);
-        MenuItem genderMi = new MenuItem("Character's gender", MenuItemType.ScrollListChooser);
-        MenuItem typeMi = new MenuItem("Character's type", MenuItemType.ScrollListChooser);
-        MenuItem difficultyMi = new MenuItem("Difficulty", MenuItemType.ScrollListChooser);
+        MenuItem nameMi = new MenuItem(gs.getStringFromId("charName"), MenuItemType.TextBox);
+        MenuItem genderMi = new MenuItem(gs.getStringFromId("charGender"), MenuItemType.ScrollListChooser);
+        MenuItem typeMi = new MenuItem(gs.getStringFromId("charType"), MenuItemType.ScrollListChooser);
+        MenuItem difficultyMi = new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser);
         setMenuItems(new MenuItem[] {
-                new MenuItem("Start a new game", MenuItemType.Title),
+                new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Title),
                 nameMi,
                 genderMi,
                 typeMi,
                 difficultyMi,
-                new MenuItem("Start the game !", MenuItemType.Button, () -> {
+                new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Button, () -> {
                     SuperviserNormally.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
                             characterType, gs, playerGender, difficulty);
                     GameState gs = gsm.setState(afterCreationState);
@@ -56,16 +56,16 @@ public class CreatePlayerMenuState extends MenuState {
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
         for (Gender s : Gender.values())
-            slil.add(new ScrollListChooser.ScrollListItem(s.toString(), () -> playerGender = s, slil.isEmpty()));
+            slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(s.toString()), () -> playerGender = s, slil.isEmpty()));
         ((ScrollListChooser)genderMi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
         setScrollListProperties(genderMi, slil);
         slil = new LinkedList<>();
         for (Type t : Type.values())
-            slil.add(new ScrollListChooser.ScrollListItem(t.toString(), () -> characterType = t, slil.isEmpty()));
+            slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(t.toString()), () -> characterType = t, slil.isEmpty()));
         setScrollListProperties(typeMi, slil);
         slil = new LinkedList<>();
         for (Difficulty d : Difficulty.values())
-            slil.add(new ScrollListChooser.ScrollListItem(d.toString(), () -> difficulty = d, slil.isEmpty()));
+            slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(d.toString()), () -> difficulty = d, slil.isEmpty()));
         setScrollListProperties(difficultyMi, slil);
     }
 

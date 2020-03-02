@@ -38,7 +38,7 @@ public abstract class ChooseFolderMenuState extends MenuState {
         super.init();
         topMargin = .1;
         transparentBackground = false;
-        directoryMI = new MenuItem("Directory : " + path, MenuItemType.Text);
+        directoryMI = new MenuItem(gs.getStringFromId("directory") + " : " + path, MenuItemType.Text);
         chooseSaveSLC = new MenuItem("", MenuItemType.ScrollListChooser);
         path = new File(".").getAbsoluteFile().getParent(); //getParent() to remove the \.
     }
@@ -69,7 +69,7 @@ public abstract class ChooseFolderMenuState extends MenuState {
         ((ScrollListChooser)chooseSaveSLC.control).setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
         chooseSaveSLC.size.x = -2;
         chooseSaveSLC.size.y = -2;
-        directoryMI.setHeader("Directory : " + path);
+        directoryMI.setHeader(gs.getStringFromId("directory") + " : " + path);
         directoryMI.size.y = -1;
     }
 
