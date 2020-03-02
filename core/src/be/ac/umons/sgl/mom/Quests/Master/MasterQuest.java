@@ -157,21 +157,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         underQuest = list;
     }
 
-    /**
-     * This method return a list of the obligation lesson
-     * @param lesson it's all of the lesson of the year
-     * @return a ArrayList of obligation lesson
-     */
-    public ArrayList<Lesson> obligationLesson(Lesson[] lesson) {
-        ArrayList<Lesson> olesson = new ArrayList<Lesson>();
-        for (Lesson l : lesson) {
-            if (l.obligatoryCourse()) {
-                olesson.add(l);
-            }
-        }
-        return olesson;
-    }
-
 
     /**
      * This method returns if this quest is finished
@@ -254,13 +239,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *This method allows to notify the underQuest, there are changes in the people or other in maps.
      * @param notify is a notification of change
      */
-    /*public void eventMaps(Notification notify)
+    public void eventMaps(Notification notify)
     {
         for(UnderQuest uq : underQuest)
         {
             uq.evenActivity(notify);
         }
-    }*/
+    }
 
 
     /**
@@ -350,7 +335,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     @Override
     public void update(Notification notify)//TODO difficulte
     {
-//        eventMaps(notify);
+        eventMaps(notify);
         if(notify.getEvents().equals(Events.UpLevel) && memory != null && memory.bloc.getMinPeople() <= people.getLevel())
         {
             this.after = memory;

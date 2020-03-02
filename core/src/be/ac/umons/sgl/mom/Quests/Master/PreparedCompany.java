@@ -33,7 +33,6 @@ public class PreparedCompany extends MasterQuest
     public PreparedCompany(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
     {
         super(before,people,Bloc.MA1,graphic,difficulty);
-        obligationLesson(lesson);
         addUnderQuest(underQuest);
     }
 

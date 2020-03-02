@@ -46,9 +46,4 @@ public class Flower extends Items
     {
         return 0;
     }
-
-    @Override
-    public String question() {
-        return null;
-    }
 }

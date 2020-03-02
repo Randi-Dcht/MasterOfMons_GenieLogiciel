@@ -28,8 +28,6 @@ public class HelpMe extends UnderQuest
       @Override
       public void evenActivity(Notification notify)
       {
-        if (notify.getEvents().equals(Events.MeetOther))
-          goToPnj(((Mobile)notify.getBuffer()));
       }
 
 
@@ -39,8 +37,6 @@ public class HelpMe extends UnderQuest
        */
       private void goToPnj(Mobile mobile)
       {
-        if(mobile.getAction().equals(Actions.Dialog))
-          addProgress(5);
       }
 
 

@@ -33,7 +33,6 @@ public class FinishUniversity extends MasterQuest
     public FinishUniversity(People people, MasterQuest before, GraphicalSettings grahic, Difficulty difficulty)
     {
         super(before,people,Bloc.MA2,grahic,difficulty);
-        obligationLesson(lesson);
         addUnderQuest(underQuest);
     }
 

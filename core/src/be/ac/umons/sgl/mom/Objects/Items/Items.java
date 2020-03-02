@@ -26,8 +26,6 @@ public abstract class Items implements Serializable, FrameTime
      * The name of this items
      */
     final String name;
-    /*this is the instance of the graphic*/
-    protected GraphicalSettings graphic;
 
 
     /**
@@ -121,10 +119,4 @@ public abstract class Items implements Serializable, FrameTime
     {
         return name;
     }
-
-    /**
-     *This method allow to say what is this item
-     *@return the utility of this object
-     */
-    public abstract String question();
 }

@@ -45,8 +45,4 @@ public class Energizing extends Items
         return obsolete;
     }
 
-    @Override
-    public String question() {
-        return null;
-    }
 }

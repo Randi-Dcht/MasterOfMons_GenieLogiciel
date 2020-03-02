@@ -26,9 +26,8 @@ public class Sportswear extends Items {
      * It help to know what do the item
      * @return the utility of the item
      */
-    @Override
     public String question() {
-        return graphic.getStringFromId("sportswear");
+        return "sportswear";
     }
 
     @Override

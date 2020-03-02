@@ -14,7 +14,7 @@ public class Synthesis extends Items {
      */
     public String question()
     {
-        return graphic.getStringFromId("synthesis");
+        return "synthesis";
     }
 
     @Override

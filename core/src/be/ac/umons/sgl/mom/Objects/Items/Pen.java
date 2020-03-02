@@ -11,7 +11,6 @@ public class Pen extends Items
 
     /**
      * this constructor define the items
-     * @param place is the maps of this item
      */
     public Pen() {
         super("Pen");
@@ -48,10 +47,5 @@ public class Pen extends Items
     public double getObsolete()
     {
         return 0;
-    }
-
-    @Override
-    public String question() {
-        return null;
     }
 }
