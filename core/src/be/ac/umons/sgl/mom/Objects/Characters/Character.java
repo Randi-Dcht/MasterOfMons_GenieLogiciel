@@ -8,6 +8,7 @@ import be.ac.umons.sgl.mom.Objects.Items.Gun;
 import be.ac.umons.sgl.mom.Objects.Items.Items;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -185,6 +186,29 @@ public abstract class Character implements Attack, Social, Serializable
         this.agility  += agility;
         this.life     = lifeMax();
         this.speed    = displacement();
+    }
+
+
+    /**
+     *This method allows the remove a object in the bag of people.
+     *@return true of the object is remove and false otherwise
+     */
+    public boolean removeObject(Items object)
+    {
+        if(myObject.size()==0 || !myObject.contains(object))
+            return false;
+        myObject.remove(object);
+        return true;
+    }
+
+
+    /**
+     * This method allows to give the all inventory of this people
+     * @return The inventory of the player
+     */
+    public List<Items> getInventory()
+    {
+        return myObject;
     }
 
 

@@ -39,10 +39,10 @@ public class Saving implements Observer
      * @param people who is the people who play this game with Quest
      */
     public Saving(People people, String nameSave)
-    {
+    {/*
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
         this.people = people;
-        this.nameSave = nameSave;
+        this.nameSave = nameSave;*///TODO
     }
 
 
@@ -115,7 +115,7 @@ public class Saving implements Observer
      * @param setting who is the class with the param to save.
      */
     public void savingGraphic(Settings setting)
-    {
+    {/*
         try
         {
             ObjectOutputStream sortie;
@@ -126,7 +126,7 @@ public class Saving implements Observer
         catch(IOException e)
         {
             Gdx.app.error("Error in the saving the game (out)", e.getMessage());
-        }
+        }*/
     }
 
 

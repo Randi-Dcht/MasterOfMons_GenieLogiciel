@@ -230,19 +230,6 @@ public class People extends Character implements Serializable, Observer
 
 
     /**
-     *This method allows the remove a object in the bag of people.
-     *@return true of the object is remove and false otherwise
-     */
-    public boolean removeObject(Items objet)
-    {
-        if(myObject.size()==0 || !myObject.contains(objet))
-            return false;
-        myObject.remove(objet);
-        return true;
-    }
-
-
-    /**
      *This method allows to push a object in the bag of people.
      *@param object who is the object taken.
      *@return true if the object is in the bag and false otherwise.
@@ -266,16 +253,6 @@ public class People extends Character implements Serializable, Observer
     public boolean canAttacker()
     {
         return energy>=10;
-    }
-
-
-    /**
-     * This method allows to give the all inventory of this people
-     * @return The inventory of the player
-     */
-    public List<Items> getInventory()
-    {
-        return myObject;
     }
 
 

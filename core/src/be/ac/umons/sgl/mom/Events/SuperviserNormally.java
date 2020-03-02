@@ -138,6 +138,7 @@ public class SuperviserNormally implements Observer
                listMap.put(plt.getMaps(),plt);
            event = new Event();
            event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour);
+           save = new Saving(people,"xxxx");//TODO
            associateLesson();
        }
 
@@ -223,7 +224,7 @@ public class SuperviserNormally implements Observer
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
             people.newQuest(mQ);
-            save = new Saving(people,namePlayer);
+           // save = new Saving(people,namePlayer);//TODO
             refreshQuest();
             regule = new Regulator(people,time);
             listCourse = people.getPlanning().get(time.getDate().getDay());
