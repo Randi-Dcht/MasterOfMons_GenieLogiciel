@@ -11,6 +11,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
 import java.util.List;
@@ -20,6 +21,15 @@ import java.util.List;
  * @author Guillaume Cardoen
  */
 public class Character extends OnMapObject {
+
+    /**
+     * A tile's size
+     */
+    protected int tileWidth, tileHeight;
+    /**
+     * The map's size (in pixel)
+     */
+    protected int mapWidth, mapHeight;
     /**
      * An asset's manager.
      */
@@ -54,6 +64,8 @@ public class Character extends OnMapObject {
      */
     protected boolean isATarget = false;
 
+    protected int width, height;
+
 
     protected AttackRangeCircle arc;
 
@@ -80,6 +92,8 @@ public class Character extends OnMapObject {
      * @param height The height of the character
      */
     public void draw(Batch batch, int x, int y, int width, int height) {
+        this.width = width;
+        this.height = height;
         if (isATarget) {
             sr.begin();
             sr.setColor(new Color(0xB71C1CAA));
@@ -246,8 +260,53 @@ public class Character extends OnMapObject {
         return attackRange;
     }
 
+
+    /**
+     * A part of the code is from https://stackoverflow.com/a/34522439 by Ernst Albrigtsen
+     * @return A rectangle representing the position of the player (in tiles) (originating from the tile (0,0) at the top of the map).
+     */
+    public com.badlogic.gdx.math.Rectangle getMapRectangle() {
+//        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2 + 4276;
+//        int y = getPosX() - x;
+        int x = (int)((double)(-getPosY()) / tileHeight + (getPosX()) / tileWidth);
+        int y = (int)(mapHeight / tileHeight - ((double)(getPosY()) / tileHeight + (getPosX()) / tileWidth));
+
+        return new Rectangle(x , y, ((float)width / tileWidth), (float)height / tileHeight);
+    }
+
     public void dispose() {
         lifeBar.dispose();
         arc.dispose();
     }
+
+
+    /**
+     * Set the map's width to use.
+     * @param mapWidth The map's width.
+     */
+    public void setMapWidth(int mapWidth) {
+        this.mapWidth = mapWidth;
+    }
+    /**
+     * Set the map's height to use.
+     * @param mapHeight The map's height.
+     */
+    public void setMapHeight(int mapHeight) {
+        this.mapHeight = mapHeight;
+    }
+    /**
+     * Set the tile's width to use.
+     * @param tileWidth The tile's width.
+     */
+    public void setTileWidth(int tileWidth) {
+        this.tileWidth = tileWidth;
+    }
+    /**
+     * Set the tile's height to use.
+     * @param tileHeight The tile's height.
+     */
+    public void setTileHeight(int tileHeight) {
+        this.tileHeight = tileHeight;
+    }
+
 }

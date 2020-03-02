@@ -65,7 +65,7 @@ public class PlayingState extends GameState implements Observer {
     /**
      * The player's speed
      */
-    protected double velocity;
+    public double velocity;
     /**
      * The number of tile in the map (horizontally)
      */
@@ -168,8 +168,6 @@ public class PlayingState extends GameState implements Observer {
      */
     protected InGameDialogState dialogState;
 
-    protected MovingPNJ pm;
-
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -258,9 +256,8 @@ public class PlayingState extends GameState implements Observer {
 
 
             Character testPNJ = new Character(gs, new Mobile("xx", Bloc.BA2, MobileType.Lambda, Actions.Dialog));
-                  testPNJ.getCharacteristics().setMaps(Maps.Nimy);pm=new MovingPNJ(Bloc.BA3,MobileType.Lambda,Maps.Nimy);
+                  testPNJ.getCharacteristics().setMaps(Maps.Nimy);
                   pnjs.add(testPNJ);
-                  pnjs.add(pm.initialisation(gs,player));
 
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
@@ -284,7 +281,6 @@ public class PlayingState extends GameState implements Observer {
                   initPlayerPosition(spawnX, spawnY);
 
                   testPNJ.setMapPos(new Point(player.getPosX(), player.getPosY()));
-                  pm.getCharacter().setMapPos(new Point(player.getPosX()+30, player.getPosY()+40));pm.setSize(tileWidth);
 
     }
 
@@ -300,6 +296,10 @@ public class PlayingState extends GameState implements Observer {
             Rectangle mapRect = new Rectangle( mo.x * 2 / tileWidth, (mapHeight * tileHeight - mo.y - mo.height) / tileHeight, mo.width * 2 / tileWidth, mo.height / tileHeight);
             c.setMapPos(new Point((int)(mapRect.x - mapRect.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
                     mapHeight * tileHeight / 2 - (int)(mapRect.x + mapRect.y) * tileHeight / 2));
+            c.setMapWidth(mapWidth * tileWidth);
+            c.setMapHeight(mapHeight * tileHeight);
+            c.setTileWidth(tileWidth);
+            c.setTileHeight(tileHeight);
         }
     }
 
@@ -354,7 +354,6 @@ public class PlayingState extends GameState implements Observer {
         makePlayerMove(dt);
         cam.update();
 
-        pm.update(dt);
         SuperviserNormally.getSupervisor().callMethod(dt);
 
         lifeBar.setValue((int)player.getCharacteristics().getActualLife());
@@ -432,7 +431,7 @@ public class PlayingState extends GameState implements Observer {
      * @param player The player.
      * @return If the player is in collision with one of the given collision area.
      */
-    protected RectangleMapObject checkForCollision(MapObjects objectsToCheck, Player player) {
+    public RectangleMapObject checkForCollision(MapObjects objectsToCheck, Character player) {
         if (objectsToCheck == null)
             return null;
         for (RectangleMapObject rectangleMapObject : objectsToCheck.getByType(RectangleMapObject.class)) {
@@ -451,7 +450,7 @@ public class PlayingState extends GameState implements Observer {
      * @param player The player.
      * @return If the player is in collision with one of the collision area on the map.
      */
-    protected boolean checkForCollision(Player player) {
+    public boolean checkForCollision(Character player) {
         return checkForCollision(collisionObjects, player) != null;
     }
 

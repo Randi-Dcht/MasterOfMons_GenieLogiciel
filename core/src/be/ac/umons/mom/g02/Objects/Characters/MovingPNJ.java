@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -37,14 +38,13 @@ public class MovingPNJ extends Mobile implements Observer
      * The instance of this PNJ (graphic)
      */
     private Character myGraphic;
+
+    private PlayingState ps;
+
     /**
      * Size of the tile
      */
     private int tileSize = 64;
-    /**
-     * The time to displacement on the maps
-     */
-    private double time;
 
 
     /**
@@ -67,10 +67,11 @@ public class MovingPNJ extends Mobile implements Observer
      * @param gs is the graphic setting
      * @param victim is the instance of graphic Player
      */
-    public Character initialisation(GraphicalSettings gs, Player victim)
+    public Character initialisation(PlayingState ps, GraphicalSettings gs, Player victim)
     {
         myGraphic = new Character(gs,this);
         setVictim(victim);
+        this.ps = ps;
         return myGraphic;
     }
 
@@ -112,43 +113,39 @@ public class MovingPNJ extends Mobile implements Observer
     @Override
     public void update(double dt)
     {
-        time = time - dt;
-        if (time < 0)
-            moving();
+        moving(dt);
     }
 
 
     /**
      * This method allows to move the people in the maps with refresh
      */
-    private void moving()//TODO optimiser cela
+    private void moving(double dt)//TODO optimiser cela
     {
         int x=0,y=0;
+        int toMove = (int)Math.round(ps.velocity * dt * tileSize);
         calculusDistance();
 
-        if(tileXbetween > tileSize+5 || tileXbetween < 0)
+        if(tileXbetween > toMove || tileXbetween < -toMove || tileYbetween > toMove || tileYbetween < -toMove)
         {
             if (tileXbetween < 0)
             {
-                x = tileSize;
+                x = toMove;
                 myGraphic.setOrientation(Orientation.Right);
             }
             else
             {
-                x = -tileSize;
+                x = -toMove;
                 myGraphic.setOrientation(Orientation.Left);
             }
-        }
-        else if (tileYbetween > tileSize+5 || tileYbetween < 0)
-        {
             if (tileYbetween < 0)
             {
-                y = tileSize;
+                y = toMove;
                 myGraphic.setOrientation(Orientation.Top);
             }
             else
             {
-                y = -tileSize;
+                y = -toMove;
                 myGraphic.setOrientation(Orientation.Bottom);
             }
         }
@@ -156,7 +153,8 @@ public class MovingPNJ extends Mobile implements Observer
         {
             SuperviserNormally.getSupervisor().meetCharacter(this,victim.getCharacteristics());
         }
-        myGraphic.move(x,y);
+        if (ps.checkForCollision(myGraphic))
+            myGraphic.move(x,y);
         time = TIME;
     }
 

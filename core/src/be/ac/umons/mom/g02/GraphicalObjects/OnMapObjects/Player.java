@@ -18,17 +18,9 @@ public class Player extends Character {
      */
     private int middleX, middleY;
     /**
-     * A tile's size
-     */
-    private int tileWidth, tileHeight;
-    /**
      * The translation to do originating at the middle of the screen.
      */
     private int xT, yT;
-    /**
-     * The map's size (in pixel)
-     */
-    private int mapWidth, mapHeight;
 
     /**
      * @param gs The game's graphical settings.
@@ -105,47 +97,5 @@ public class Player extends Character {
      */
     public int getHeight() {
         return tileHeight;
-    }
-
-    /**
-     * A part of the code is from https://stackoverflow.com/a/34522439 by Ernst Albrigtsen
-     * @return A rectangle representing the position of the player (in tiles) (originating from the tile (0,0) at the top of the map).
-     */
-    public Rectangle getMapRectangle() {
-//        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2 + 4276;
-//        int y = getPosX() - x;
-        int x = (int)((double)(-getPosY()) / tileHeight + (getPosX()) / tileWidth);
-        int y = (int)(mapHeight / tileHeight - ((double)(getPosY()) / tileHeight + (getPosX()) / tileWidth));
-
-        return new Rectangle(x , y, ((float)getWidth() / tileWidth), (float)getHeight() / tileHeight);
-    }
-
-    /**
-     * Set the map's width to use.
-     * @param mapWidth The map's width.
-     */
-    public void setMapWidth(int mapWidth) {
-        this.mapWidth = mapWidth;
-    }
-    /**
-     * Set the map's height to use.
-     * @param mapHeight The map's height.
-     */
-    public void setMapHeight(int mapHeight) {
-        this.mapHeight = mapHeight;
-    }
-    /**
-     * Set the tile's width to use.
-     * @param tileWidth The tile's width.
-     */
-    public void setTileWidth(int tileWidth) {
-        this.tileWidth = tileWidth;
-    }
-    /**
-     * Set the tile's height to use.
-     * @param tileHeight The tile's height.
-     */
-    public void setTileHeight(int tileHeight) {
-        this.tileHeight = tileHeight;
     }
 }
