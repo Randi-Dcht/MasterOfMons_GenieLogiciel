@@ -1,9 +1,7 @@
 package be.ac.umons.mom.g02.Events;
 
 import be.ac.umons.mom.g02.Dialog.DialogCharacter;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
@@ -14,12 +12,6 @@ import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.Regulator;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Lesson;
-import be.ac.umons.mom.g02.Enums.State;
-import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Objects.Characters.Attack;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;

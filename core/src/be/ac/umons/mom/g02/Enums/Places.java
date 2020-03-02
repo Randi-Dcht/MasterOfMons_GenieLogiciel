@@ -33,6 +33,20 @@ public enum Places
 
 
     /***/
+    public String getIdName()
+    {
+        return "ID"+name;
+    }
+
+
+    /***/
+    public String getIdUse()
+    {
+        return "ID"+name+"_Use";
+    }
+
+
+    /***/
     public State getState()
     {
         return state;
