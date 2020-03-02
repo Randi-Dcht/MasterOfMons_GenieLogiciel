@@ -17,38 +17,42 @@ public class StringAnimation extends Animation<String> {
 
     /**
      * Create a new animation.
-     * @param to The string to animate.
+     * @param s The string to animate.
      * @param time The duration
      */
-    public StringAnimation(String to, double time) {
-        super("", to, time);
+    public StringAnimation(String s, double time) {
+        super("", s, time);
         toAddBySecond = (to.length()) / (time / 1000);
     }
 
     /**
      * Create a new animation.
-     * @param to The string to animate.
+     * @param s The string to animate.
      * @param time The duration
      * @param runningAction Action to execute each time the value is updated
      * @param endCallback Action to execute when the animation is finished.
      */
-    public StringAnimation(String to, double time, Runnable runningAction, Runnable endCallback) {
-        super("", to, time, runningAction, endCallback);
+    public StringAnimation(String s, double time, Runnable runningAction, Runnable endCallback) {
+        super("", s, time, runningAction, endCallback);
     }
 
     @Override
     public void update(double dt) {
-        if ((toAddBySecond > 0 && actual.length() >= to.length()) || (toAddBySecond < 0 && actual.length() <= to.length()))
+        if ((toAddBySecond > 0 && actual.length() >= to.length()) || (toAddBySecond < 0 && actual.length() == 0)) // if < 0, inverted => actual = ""
             return;
 
         actualNbr += dt * toAddBySecond;
         if (actualNbr > to.length())
             actualNbr = to.length();
-        actual = to.substring(0, (int)actualNbr);
+        if (actualNbr < 1)
+            actual = "";
+        else
+            actual = to.substring(0, (int)actualNbr);
         if (runningAction != null)
             runningAction.run();
-        if ((toAddBySecond > 0 && actual.length() >= to.length()) || (toAddBySecond < 0 && actual.length() <= to.length())) {
-            actual = to;
+        if ((toAddBySecond > 0 && actual.length() >= to.length()) || (toAddBySecond < 0 && actual.length() == 0)) {
+            if (toAddBySecond > 0)
+                actual = to;
             if (endingAction != null)
                 endingAction.run();
         }
@@ -57,5 +61,11 @@ public class StringAnimation extends Animation<String> {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    public void invert() {
+        toAddBySecond = -toAddBySecond;
+        actualNbr = to.length() - 1;
+        actual = to;
     }
 }

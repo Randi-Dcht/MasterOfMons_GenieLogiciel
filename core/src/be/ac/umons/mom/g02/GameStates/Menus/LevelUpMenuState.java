@@ -28,6 +28,8 @@ public class LevelUpMenuState extends MenuState {
      */
     int[] pointsAttributed = new int[Characteristics.values().length];
 
+    protected Runnable onPointsAttributed;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -112,6 +114,12 @@ public class LevelUpMenuState extends MenuState {
     public void confirm() {
         SuperviserNormally.getSupervisor().getPeople().updateUpLevel(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
         gsm.removeFirstState();
+        if (onPointsAttributed != null)
+            onPointsAttributed.run();
+    }
+
+    public void setOnPointsAttributed(Runnable onPointsAttributed) {
+        this.onPointsAttributed = onPointsAttributed;
     }
 
     public enum Characteristics {
