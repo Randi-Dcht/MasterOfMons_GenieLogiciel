@@ -101,6 +101,7 @@ public class InGameDialogState extends DialogState {
         sa = new StringAnimation(text, 20 * text.length());
         whenSelectedActions = new HashMap<>();
         buttons = new ArrayList<>();
+        selectedButtonIndex = 0;
     }
 
     /**

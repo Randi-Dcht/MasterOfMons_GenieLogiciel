@@ -166,6 +166,7 @@ public abstract class DialogState extends GameState {
      */
     public void setText(String text) {
         this.text = StringHelper.adaptTextToWidth(gs.getNormalFont(), text, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
+        selectedButtonIndex = 0;
     }
 
     /**
