@@ -19,10 +19,6 @@ public class MovingPNJ extends Mobile implements Observer
 {
 
     /**
-     * The constance of the time between two displacements
-     */
-    private static final double TIME = 0.7;
-    /**
      * Distance between people and this PNJ on X
      */
     private int tileXbetween;
@@ -38,9 +34,10 @@ public class MovingPNJ extends Mobile implements Observer
      * The instance of this PNJ (graphic)
      */
     private Character myGraphic;
-
+    /**
+     * This is the variable of the playingState
+     */
     private PlayingState ps;
-
     /**
      * Size of the tile
      */
@@ -57,7 +54,6 @@ public class MovingPNJ extends Mobile implements Observer
     {
         super("MovingPNJ",bloc,type, Actions.Attack);
         setMaps(maps);
-        time = TIME;
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
     }
 
@@ -155,8 +151,8 @@ public class MovingPNJ extends Mobile implements Observer
         }
         if (ps.checkForCollision(myGraphic))
             myGraphic.move(x,y);
-        time = TIME;
     }
+
 
 
     /**

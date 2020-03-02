@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
+import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Other.HyperPlanning;
 import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Bloc;
@@ -31,7 +32,7 @@ import java.util.HashMap;
  *This is a logic party of people.
  *@author Umons_Group_2_ComputerScience
  */
-public class People extends Character implements Serializable, Observer
+public class People extends Character implements Serializable, Observer, FrameTime
 {
     /*characteristic of people*/
     private double energy = 100;
@@ -308,11 +309,17 @@ public class People extends Character implements Serializable, Observer
     }
 
 
+    @Override
+    public void update(double dt)
+    {
+        energy(dt);
+    }
+
     /**
      *This method allows to do exist energy of people.
      * @param time is the time between two frame.
      */
-    public void energy(double time)
+    private void energy(double time)
     {
         addEnergy(this.state.getEnergy()*time);
     }

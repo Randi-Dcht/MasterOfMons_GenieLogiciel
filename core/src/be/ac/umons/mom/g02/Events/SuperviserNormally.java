@@ -4,11 +4,11 @@ import be.ac.umons.mom.g02.Dialog.DialogCharacter;
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
-import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
 import be.ac.umons.mom.g02.Objects.Course;
+import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
@@ -20,8 +20,6 @@ import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Lesson;
 import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Events.Notifications.Dialog;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.Attack;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
@@ -128,6 +126,8 @@ public class SuperviserNormally implements Observer
         private ArrayList<Course> listCourse;
         /***/
         private Course actualCourse;
+        /***/
+        private ArrayList<FrameTime> listUpdate;
 
         private DialogCharacter dialog;
 
@@ -140,7 +140,7 @@ public class SuperviserNormally implements Observer
            for (Maps plt : Maps.values())
                listMap.put(plt.getMaps(),plt);
            event = new Event();
-           event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour);
+           event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons);
            save = new Saving();
            associateLesson();
        }
@@ -262,7 +262,21 @@ public class SuperviserNormally implements Observer
             for (Maps pl : plc)
                 listMoving.put(pl,new ArrayList<>());
             for (int i = 0 ; i <= difficulty.getNumberPNJ() ; i++)
+            {
+                listMoving.get(Maps.Nimy).add(new MovingPNJ(Bloc.BA1,MobileType.Lambda,Maps.Nimy));
                 listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic, maps));
+            }
+        }
+
+
+        /***/
+        private void refreshList(Maps maps)
+        {
+            listUpdate = new ArrayList<>();
+            listUpdate.add(people);
+            //listUpdate.addAll(getMobile(maps));TODO
+            //listUpdate.addAll(getMovingPnj(maps));TODO
+            //listUpdate.addAll(getItems(maps));TODO
         }
 
 
@@ -421,6 +435,9 @@ public class SuperviserNormally implements Observer
 
             if (notify.getEvents().equals(Events.ChangeHour))
                 checkPlanning();
+
+            if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
+                refreshList(((PlaceInMons)notify).getBuffer());
         }
 
 
@@ -431,12 +448,12 @@ public class SuperviserNormally implements Observer
         public void callMethod(double dt)
         {
             time.updateSecond(dt);
-            if(people != null)
-                people.energy(dt);
             if (memoryMobile != null)
                 memoryMobile.update(dt);
             for (Mobile mb : deadMobile)
                 mobileLife(mb,dt);
+            for (FrameTime up : listUpdate)
+                up.update(dt);
             deadMobile.removeIf(Character::isLiving);
         }
 
