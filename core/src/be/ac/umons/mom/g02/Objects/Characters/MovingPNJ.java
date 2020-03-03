@@ -43,6 +43,8 @@ public class MovingPNJ extends Mobile implements Observer
      */
     private int tileSize = 64;
 
+    private boolean meet = false;
+
 
     /**
      * This constructor define the moving PNJ in the maps
@@ -52,7 +54,7 @@ public class MovingPNJ extends Mobile implements Observer
      */
     public MovingPNJ(Bloc bloc, MobileType type, Maps maps)
     {
-        super("MovingPNJ",bloc,type, Actions.Attack);
+        super("MovingPNJ",bloc,type,Actions.Dialog /*Actions.Attack*/);
         setMaps(maps);
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
     }
@@ -109,7 +111,8 @@ public class MovingPNJ extends Mobile implements Observer
     @Override
     public void update(double dt)
     {
-        moving(dt);
+        if (!meet)
+            moving(dt);
     }
 
 
@@ -148,8 +151,9 @@ public class MovingPNJ extends Mobile implements Observer
         else
         {
             SuperviserNormally.getSupervisor().meetCharacter(this,victim.getCharacteristics());
+            meet=true;
         }
-        if (ps.checkForCollision(myGraphic))
+        /*if (ps.checkForCollision(myGraphic))*///TODO
             myGraphic.move(x,y);
     }
 

@@ -119,8 +119,8 @@ public class SuperviserNormally implements Observer
         /***/
         private Course actualCourse;
         /***/
-        private ArrayList<FrameTime> listUpdate;
-
+        private ArrayList<FrameTime> listUpdate = new ArrayList<>();
+        /***/
         private DialogCharacter dialog;
 
 
@@ -255,9 +255,9 @@ public class SuperviserNormally implements Observer
                 listMoving.put(pl,new ArrayList<>());
             for (int i = 0 ; i <= difficulty.getNumberPNJ() ; i++)
             {
-                listMoving.get(Maps.Nimy).add(new MovingPNJ(Bloc.BA1,MobileType.Lambda,Maps.Nimy));
-                listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic, maps));
+                //listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic, maps));
             }
+            listMoving.get(Maps.Nimy).add(new MovingPNJ(Bloc.BA1,MobileType.Lambda,Maps.Nimy));
         }
 
 
@@ -267,7 +267,7 @@ public class SuperviserNormally implements Observer
             listUpdate = new ArrayList<>();
             listUpdate.add(people);
             //listUpdate.addAll(getMobile(maps));TODO
-            //listUpdate.addAll(getMovingPnj(maps));TODO
+            listUpdate.addAll(getMovingPnj(maps));
             //listUpdate.addAll(getItems(maps));TODO
         }
 
