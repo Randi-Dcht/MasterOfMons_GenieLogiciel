@@ -25,18 +25,15 @@ public class NetworkManager {
 
     protected final int PORT = 32516;
 
-    ServerSocket serverSocket;
-    Socket socket;
-    List<ServerInfo> detectedServers;
-    DataOutputStream dOut;
-    DataInputStream dIn;
-
-    DatagramSocket ds;
-
-    Thread thread;
+    protected boolean connected = false;
+    protected List<ServerInfo> detectedServers;
+    protected DatagramSocket ds;
+    protected Thread thread;
+    protected Runnable onServerDetected;
 
     protected NetworkManager() throws SocketException {
         ds = new DatagramSocket(PORT);
+        detectedServers = new LinkedList<>();
     }
 
     public void startBroadcastingMessage(String message) {
@@ -51,7 +48,7 @@ public class NetworkManager {
         }
         thread = new Thread(() -> {
             try {
-                while (socket == null) {
+                while (! connected) {
                     for (InetAddress address : addressToBroadcast.keySet())
                         broadcastMessage("MOMServer" + address.toString() + "/TestName", addressToBroadcast.get(address));
                     try {
@@ -95,6 +92,13 @@ public class NetworkManager {
             if (received.startsWith("MOMServer")) {
                 String[] tab = received.split("/");
                 Gdx.app.log("NetworkManager", String.format("Server detected : %s", tab[1]));
+                try {
+                    InetAddress serverAddress = InetAddress.getByName(tab[1]);
+                    detectedServers.add(new ServerInfo(tab[2], serverAddress, PORT));
+                    Gdx.app.postRunnable(onServerDetected);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
@@ -127,5 +131,11 @@ public class NetworkManager {
         return broadcastList;
     }
 
+    public List<ServerInfo> getDetectedServers() {
+        return detectedServers;
+    }
 
+    public void setOnServerDetected(Runnable onServerDetected) {
+        this.onServerDetected = onServerDetected;
+    }
 }
