@@ -2,7 +2,6 @@ package be.ac.umons.mom.g02.Objects;
 
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.sgl.mom.Enums.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +37,6 @@ class TestObject
   void SavingClassTest() //TODO : a continuer cette méthode quand celle-ci sera finie.
   {
       People people = new People("TestObject", Type.normal, Gender.Men , Difficulty.Easy);
-      Saving save = new Saving(people,"TestSaving");
+      Saving save = new Saving();
   }
 }

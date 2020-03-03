@@ -1,15 +1,9 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.Phone;
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.Type;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,12 +35,12 @@ public class TestCharacters
     {
         People people = new People("Junit",Type.normal,Gender.Men,Difficulty.Easy);
         double first = people.getEnergy();
-        for (int i = 0; i < 100 ; i++ ){people.energy(1);}
+        for (int i = 0; i < 100 ; i++ ){/*people.energy(1);*/}
         double second = people.getEnergy();
         assertTrue(first > second,"depency energy");
 
         people.setMaps(Maps.Kot);
-        for (int i = 0; i < 100 ; i++ ){people.energy(1);}
+        for (int i = 0; i < 100 ; i++ ){/*people.energy(1);*/}
         first = people.getEnergy();
         assertTrue(second < first,"add energy");
     }
@@ -57,7 +51,7 @@ public class TestCharacters
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
         sp.newParty("Test",Type.beefy,null,Gender.Men,Difficulty.Easy);
         People p1 = sp.getPeople();
-        Mobile p2 = new Mobile("Testing",Bloc.BA3, MobileType.Athletic, Actions.Never);
+        Mobile p2 = new Mobile("Testing",Bloc.BA3, MobileType.Athletic, Actions.Never, NameDialog.Lambda);
 
         double memory = p1.getActualLife();
         sp.attackMethod(p2,p1);

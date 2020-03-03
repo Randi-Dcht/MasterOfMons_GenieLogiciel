@@ -43,6 +43,9 @@ public class DialogCharacter
      * This is the redirection of the specificID
      */
     private String specificID = null;
+    /**
+     * The before answer of the player
+     */
     private String before="";
 
     /**
@@ -52,7 +55,7 @@ public class DialogCharacter
     public DialogCharacter(NameDialog nameDialog)//TODO add sp
     {
         listDialog = readFileConversation(nameDialog);
-        addIdSpecific("ITEMS","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON");
+        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON");
     }
 
 
@@ -138,9 +141,14 @@ public class DialogCharacter
     private ArrayList<String> replaceId(String id)
     {
         ArrayList<String> list = new ArrayList<>();
-        if (id.equals("ITEMS"))
+        if (id.equals("ITEMSGIVE"))
         {
             for (Items it : mobile.getInventory())
+                list.add(it.getIdItems());
+        }
+        if (id.equals("ITEMSUSE"))
+        {
+            for (Items it : SuperviserNormally.getSupervisor().getAllItems())
                 list.add(it.getIdItems());
         }
         else if (id.equals("MAPS"))
@@ -190,7 +198,6 @@ public class DialogCharacter
             if (specificID != null)
             {
                 idAnswer(answerID);
-                classSp.getEvent().notify(new Dialog(getDialog("ESC")));
             }
             else if (!listDialog.containsKey(answerID))
             {
@@ -212,18 +219,30 @@ public class DialogCharacter
      */
     private void idAnswer(String answer)
     {
-        if (specificID.equals("ITEMS"))
+        if (specificID.equals("ITEMSGIVE"))
         {
 
             for (Items its : mobile.getInventory())
             {
-                if (its.getIdUse().equals(answer) || its.getIdItems().equals(answer))
+                if (its.getIdItems().equals(answer))
                 {
                     SuperviserNormally.getSupervisor().getPeople().pushObject(its);
                     return;//TODO
                     //mobile.removeObject(its);
                 }
             }
+            SuperviserNormally.getSupervisor().getEvent().notify(new Dialog(getDialog("ESC")));
+        }
+        if (specificID.equals("ITEMSUSE"))
+        {
+           for (Items it : SuperviserNormally.getSupervisor().getAllItems())
+           {
+               if (it.getIdItems().equals(answer))
+               {
+                   SuperviserNormally.getSupervisor().getEvent().notify(new Dialog(it.getIdUse(),"ESC"));
+                   return;//TODO
+               }
+           }
         }
         specificID = null;
     }
