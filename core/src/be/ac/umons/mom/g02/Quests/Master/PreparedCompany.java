@@ -126,25 +126,5 @@ public class PreparedCompany extends MasterQuest
     {
         return graphic.getStringFromId("nameMasterOne");
     }
-
-<<<<<<< HEAD
-=======
-    @Override
-    public int getTotalSubQuestsNumber() {
-        return 0;
-    }
-
-    @Override
-    public void addProgress(double many) {
-
-    }
-
-
-    @Override
-    public boolean isFinished() {
->>>>>>> 44ad2dd012c401de94f8617f4e097b651acccb79
-
-
-
 }
 

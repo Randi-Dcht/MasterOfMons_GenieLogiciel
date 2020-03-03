@@ -115,7 +115,7 @@ public class SuccessfulYear extends MasterQuest
     {
         return graphic.getStringFromId("nameSuccessFulYear");
     }
-    
+
 
     /**
      * This method analyse the notification who receive and notify underQuest
