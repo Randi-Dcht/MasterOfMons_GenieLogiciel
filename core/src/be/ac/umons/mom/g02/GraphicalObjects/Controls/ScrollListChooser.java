@@ -52,7 +52,7 @@ public class ScrollListChooser extends Control {
     public void draw(Batch batch, Point pos, Point size) {
         super.draw(batch, pos, size);
         int alreadyUsed = 0;
-        int ySize = (int)Math.floor(gs.getNormalFont().getLineHeight()) + 2 * topMargin;
+        int ySize = (int)Math.floor(gs.getNormalFont().getLineHeight());
         int maxScrolled = ySize * buttons.size() - size.y;
         if (maxScrolled < 0)
             maxScrolled = 0;
