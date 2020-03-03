@@ -113,8 +113,11 @@ public class MeetAndLearn extends MasterQuest
         return graphic.getStringFromId("nameMeetLearn");
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 44ad2dd012c401de94f8617f4e097b651acccb79
 
     /**
      * This method analyse the notification who receive and notify underQuest

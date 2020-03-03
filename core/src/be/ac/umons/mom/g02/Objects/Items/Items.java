@@ -42,7 +42,7 @@ public abstract class Items implements Serializable, FrameTime
      */
     protected void visibly()
     {
-        this.visible = false;
+        visible = false;
     }
 
 

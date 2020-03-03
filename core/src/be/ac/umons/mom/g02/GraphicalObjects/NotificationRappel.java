@@ -15,13 +15,25 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * Represent a small notification shower (for reminding them)
+ */
 public class NotificationRappel {
-
+    /**
+     * The time between each notification (in s).
+     */
     protected final int NOTIFICATION_TIME = 20;
-
+    /**
+     * The time of the animations (in ms).
+     */
     protected final int ANIM_TIME = 1500;
-
+    /**
+     * The game's graphical settings.
+     */
     GraphicalSettings gs;
+    /**
+     * Allow to draw shapes.
+     */
     ShapeRenderer sr;
     /**
      * The horizontal margin
@@ -31,21 +43,46 @@ public class NotificationRappel {
      * The vertical margin
      */
     protected int topMargin;
+    /**
+     * The text that need to be showed when all the animations are finished.
+     */
     protected String textToShow;
+    /**
+     * The text shown at the moment.
+     */
     protected String showedText;
-
+    /**
+     * The link between the notification's name and it's content.
+     */
     protected HashMap<String, String> notificationsToShow;
+    /**
+     * The iterator to remember where we are in the list.
+     */
     Iterator<String> notificationsKeyIterator;
-
+    /**
+     * If the object is being animated.
+     */
     protected boolean isBeingAnimated = false;
+    /**
+     * If the object is hided.
+     */
     protected boolean isHided = true;
+    /**
+     * If the object must be hided after the animations.
+     */
     protected boolean mustHide = false;
-
+    /**
+     * The width of the object during an animation
+     */
     protected double animatedWidth = 0;
-
+    /**
+     * The remaining time before changing the notification (in s).
+     */
     protected double timeBetweenNotification = NOTIFICATION_TIME;
 
-
+    /**
+     * @param gs The game's graphical settings.
+     */
     public NotificationRappel(GraphicalSettings gs) {
         this.gs = gs;
         sr = new ShapeRenderer();
@@ -58,6 +95,12 @@ public class NotificationRappel {
         notificationsToShow = new HashMap<>();
     }
 
+    /**
+     * Draw the object on <code>batch</code> with the given parameters.
+     * @param batch The batch where to draw the control.
+     * @param pos The control's position.
+     * @param size The control's size.
+     */
     public void draw(Batch batch, Point pos, Point size) {
         if (isHided)
             return;
@@ -76,12 +119,19 @@ public class NotificationRappel {
         batch.end();
     }
 
+    /**
+     * Update the timing of the object.
+     * @param dt The delta-time with precedent call.
+     */
     public void update(double dt) {
         timeBetweenNotification -= dt;
         if (timeBetweenNotification <= 0)
             showNextNotification();
     }
 
+    /**
+     * Animate the object's width (and text) from 0 to it's maximal width.
+     */
     protected void expend() {
         AnimationManager.getInstance().remove("DA_NotifRappelUnexpend");
         AnimationManager.getInstance().remove("SA_NotifRappelUnexpend");
@@ -96,6 +146,9 @@ public class NotificationRappel {
         AnimationManager.getInstance().addAnAnimation("SA_NotifRappelExpend", sa);
     }
 
+    /**
+     * Animate the object's width (and text) from it's maximal width to 0.
+     */
     protected void unexpend() {
         AnimationManager.getInstance().remove("DA_NotifRappelExpend");
         AnimationManager.getInstance().remove("SA_NotifRappelExpend");
@@ -133,6 +186,11 @@ public class NotificationRappel {
         return gl.width + 2 * leftMargin;
     }
 
+    /**
+     * Add a notification to show.
+     * @param notificationName The name of the notification (non-shown)
+     * @param notificationContent The content of the notification (shown)
+     */
     public void addANotification(String notificationName, String notificationContent) {
         notificationsToShow.put(notificationName, notificationContent);
         setTextToShow(notificationContent);
@@ -140,12 +198,19 @@ public class NotificationRappel {
         timeBetweenNotification = NOTIFICATION_TIME;
     }
 
+    /**
+     * Remove a notification.
+     * @param notificationName The notification's name.
+     */
     public void removeANotification(String notificationName) {
         notificationsToShow.remove(notificationName);
         if (notificationsToShow.size() == 0)
             setTextToShow("");
     }
 
+    /**
+     * Switch the current notification with the next one.
+     */
     protected void showNextNotification() {
         if (notificationsToShow.size() < 2)
             return;
@@ -156,6 +221,10 @@ public class NotificationRappel {
         timeBetweenNotification = NOTIFICATION_TIME;
     }
 
+    /**
+     * Set the text that must be shown and animate the object.
+     * @param textToShow The text that must be shown.
+     */
     protected void setTextToShow(String textToShow) {
         if (this.textToShow.equals("") && ! textToShow.equals("")) {
             this.textToShow = textToShow;

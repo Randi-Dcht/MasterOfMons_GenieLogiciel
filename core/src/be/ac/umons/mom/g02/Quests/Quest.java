@@ -47,11 +47,6 @@ public interface Quest
      */
     void addProgress(double many);
 
-    /**
-     * This method allows to take off the percent to the progress of Quest
-     */
-    void removeProgress(double many);
-
 
     /**
      * This method allows to kown if the Quest is finish

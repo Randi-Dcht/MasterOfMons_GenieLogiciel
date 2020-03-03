@@ -98,7 +98,9 @@ public class PlayingState extends GameState implements Observer {
      * The positions where PNJs can be spawned.
      */
     protected MapObjects randomPNJPositions;
-
+    /**
+     * The position where the player can have additional information.
+     */
     protected MapObjects aboutObjects;
     /**
      * The camera.
@@ -167,7 +169,9 @@ public class PlayingState extends GameState implements Observer {
      * The state of dialog if one is active.
      */
     protected InGameDialogState dialogState;
-
+    /**
+     * The graphical object showing older (important) notification if needed.
+     */
     protected NotificationRappel notificationRappel;
 
     /**
@@ -301,6 +305,11 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Add the given item at the given position.
+     * @param item The item
+     * @param pos The position
+     */
     public void addItemToMap(Items item, Point pos) {
         MapObject mo = new MapObject(gs, item);
         mo.setMapPos(pos);
@@ -427,6 +436,7 @@ public class PlayingState extends GameState implements Observer {
 
     /**
      * Check if the player is in collision with one of the given collision area.
+     * @param objectsToCheck Which objects must be checked.
      * @param player The player.
      * @return If the player is in collision with one of the given collision area.
      */
@@ -760,6 +770,9 @@ public class PlayingState extends GameState implements Observer {
         inventoryShower.setHided(false);
     }
 
+    /**
+     * Executed when the user want to quick save a game.
+     */
     public static void quickSave() {
         String name = String.format("MOM QS - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
         String newName = getNonExistingFilePath(name);
@@ -769,7 +782,10 @@ public class PlayingState extends GameState implements Observer {
         MasterOfMonsGame.settings.setLastSavePath(newName);
     }
 
-
+    /**
+     * @param name The base name.
+     * @return A alteration of the base name (or itself) which doesn't exists in the current directory.
+     */
     private static String getNonExistingFilePath(String name) {
         String newName = name;
         int i = 1;
@@ -780,6 +796,9 @@ public class PlayingState extends GameState implements Observer {
         return newName;
     }
 
+    /**
+     * Executed when the user want to quick load a game.
+     */
     public static void quickLoad() {
         String path = MasterOfMonsGame.settings.getLastSavePath();
         // TODO : Call load system with last save (automatic or not).

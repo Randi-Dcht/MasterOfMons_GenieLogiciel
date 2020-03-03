@@ -60,6 +60,9 @@ public class InGameMenuState extends MenuState {
         super.handleInput();
     }
 
+    /**
+     * Executed when the "exit" option is chosen
+     */
     public void exit() {
         GameState g = gsm.setState(OutGameDialogState.class);
         ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));

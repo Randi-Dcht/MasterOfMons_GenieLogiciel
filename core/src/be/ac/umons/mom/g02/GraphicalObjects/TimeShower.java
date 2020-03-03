@@ -23,7 +23,9 @@ import java.util.concurrent.TimeUnit;
  * Represent a small clock in the game.
  */
 public class TimeShower {
-
+    /**
+     * The time the object take to go from it's width to the screen's width.
+     */
     protected final int EXPEND_TIME = 1500;
 
     /**
@@ -42,13 +44,25 @@ public class TimeShower {
      * The vertical margin
      */
     protected int topMargin;
-
+    /**
+     * If the object is being animated.
+     */
     protected boolean isBeingAnimated = false;
-
+    /**
+     * The width of the object when animated.
+     */
     protected double animationWidth;
-
+    /**
+     * The time before the update call.
+     */
     protected Date oldTime;
+    /**
+     * The text to show in this object.
+     */
     protected String textToShow;
+    /**
+     * If the text is being animated.
+     */
     protected boolean isTextBeingAnimated = false;
 
     /**
@@ -91,6 +105,9 @@ public class TimeShower {
         batch.end();
     }
 
+    /**
+     * Update the time and expend to full-width if more than a minute has passed.
+     */
     protected void updateTime() {
         TimeGame tg = SuperviserNormally.getSupervisor().getTime();
         ;
@@ -102,6 +119,12 @@ public class TimeShower {
         oldTime = tg.getDate();
     }
 
+    /**
+     * Check if the object must go to full-width or not.
+     * @param date1 The in-game date before the update.
+     * @param date2 The in-game date now.
+     * @return If the object must go to full-width or not.
+     */
     protected boolean mustExpend(Date date1, Date date2) {
         int time1 = date1.getMin() + 60 * date1.getHour() + 24 * 60 * date1.getDay();
         int time2 = date2.getMin() + 60 * date2.getHour() + 24 * 60 * date2.getDay();
@@ -119,17 +142,24 @@ public class TimeShower {
         return gl.width + 2 * leftMargin;
     }
 
+    /**
+     * Start the animation for make the object appear.
+     */
     protected void beginAnimation() {
         DoubleAnimation da = new DoubleAnimation(0, 1, 500);
-        da.setRunningAction(() -> setAnimationWidth(da.getActual() * getWidth()));
+        da.setRunningAction(() -> animationWidth = da.getActual() * getWidth());
         da.setEndingAction(() -> isBeingAnimated = false);
         AnimationManager.getInstance().addAnAnimation("TimeShowerAnim", da);
         isBeingAnimated = true;
     }
 
+    /**
+     * Start the animation for make the object appear on the whole screen.
+     * @param text The text to show.
+     */
     public void extendOnFullWidth(String text) {
         DoubleAnimation da = new DoubleAnimation(getWidth(), MasterOfMonsGame.WIDTH - leftMargin, EXPEND_TIME);
-        da.setRunningAction(() -> setAnimationWidth(da.getActual()));
+        da.setRunningAction(() -> animationWidth = da.getActual());
         da.setEndingAction(() -> {
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.schedule(this::unextendFromFullWidth, 5, TimeUnit.SECONDS);
@@ -142,27 +172,29 @@ public class TimeShower {
         AnimationManager.getInstance().addAnAnimation("SA_TimeShower_Extend", sa);
     }
 
+    /**
+     * Start the animation for make the object appear on the whole screen and show the time gone by.
+     */
     public void extendOnFullWidth() {
         extendOnFullWidth(
                 String.format("%s -> %s", oldTime.toString(), SuperviserNormally.getSupervisor().getTime().toString()));
     }
 
+    /**
+     * Animate the object to make it go back to it's normal width.
+     */
     protected void unextendFromFullWidth() {
-        DoubleAnimation da = new DoubleAnimation(MasterOfMonsGame.WIDTH - 2 * leftMargin, getWidth(), EXPEND_TIME);
-        da.setRunningAction(() -> setAnimationWidth(da.getActual()));
-        da.setEndingAction(() -> isBeingAnimated = false);
-        AnimationManager.getInstance().addAnAnimation("TimeShowerAnimUnextend", da);
         isBeingAnimated = true;
         isTextBeingAnimated = false;
         updateTime();
+        DoubleAnimation da = new DoubleAnimation(MasterOfMonsGame.WIDTH - 2 * leftMargin, getWidth(), EXPEND_TIME);
+        da.setRunningAction(() -> animationWidth = da.getActual());
+        da.setEndingAction(() -> isBeingAnimated = false);
+        AnimationManager.getInstance().addAnAnimation("TimeShowerAnimUnextend", da);
         StringAnimation sa = new StringAnimation(textToShow, EXPEND_TIME);
         sa.setRunningAction(() -> textToShow = sa.getActual());
         sa.setEndingAction(() -> isTextBeingAnimated = false);
         isTextBeingAnimated = true;
         AnimationManager.getInstance().addAnAnimation("SA_TimeShower_Unextend", sa);
-    }
-
-    public void setAnimationWidth(double animationWidth) {
-        this.animationWidth = animationWidth;
     }
 }

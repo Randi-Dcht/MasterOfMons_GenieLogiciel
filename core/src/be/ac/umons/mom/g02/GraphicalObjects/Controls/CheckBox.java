@@ -36,16 +36,29 @@ public class CheckBox extends Control {
      * The color if the checkbox isn't checked.
      */
     private Color uncheckedColor;
-
+    /**
+     * The color if the checkbox isn't activated.
+     */
     private Color deactivatedColor;
+    /**
+     * The color if the checkbox is selected.
+     */
     private Color selectedColor;
-
+    /**
+     * What to do the moment it's checked.
+     */
     private Runnable onChecked;
-
+    /**
+     * What to do the moment it's unchecked.
+     */
     private Runnable onUnchecked;
-
+    /**
+     * If it is activated.
+     */
     private boolean isActivated = true;
-
+    /**
+     * If it is selected
+     */
     private boolean isSelected = false;
 
     /**
@@ -128,6 +141,9 @@ public class CheckBox extends Control {
         return checked;
     }
 
+    /**
+     * @param checked If the checkbox is checked or not.
+     */
     public void setChecked(boolean checked) {
         this.checked = checked;
     }
@@ -140,18 +156,30 @@ public class CheckBox extends Control {
         this.text = text;
     }
 
+    /**
+     * @param activated If it's activated.
+     */
     public void setActivated(boolean activated) {
         isActivated = activated;
     }
 
+    /**
+     * @param onChecked What to do the moment it's checked.
+     */
     public void setOnChecked(Runnable onChecked) {
         this.onChecked = onChecked;
     }
 
+    /**
+     * @param onUnchecked What to do the moment it's unchecked.
+     */
     public void setOnUnchecked(Runnable onUnchecked) {
         this.onUnchecked = onUnchecked;
     }
 
+    /**
+     * @param selected If it's selected.
+     */
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
