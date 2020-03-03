@@ -353,6 +353,7 @@ public class PlayingState extends GameState implements Observer {
         cam.update();
 
         SuperviserNormally.getSupervisor().callMethod(dt);
+        notificationRappel.update(dt);
 
         lifeBar.setValue((int)player.getCharacteristics().getActualLife());
         lifeBar.setMaxValue((int)player.getCharacteristics().lifeMax());
@@ -634,10 +635,10 @@ public class PlayingState extends GameState implements Observer {
             lums.setOnPointsAttributed(() -> {
                 int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
                 if (pointLevel != 0)
-                    notificationRappel.setTextToShow(String.format(gs.getStringFromId("pointsToAttribute"),
+                    notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
                             pointLevel, "N")); // TODO Check for key
                 else
-                    notificationRappel.setTextToShow("");
+                    notificationRappel.removeANotification("pointsToAttribute");
             });
         }
         if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
@@ -712,7 +713,7 @@ public class PlayingState extends GameState implements Observer {
             Gdx.app.postRunnable(() -> updateDialog(diag));
         } else if (notify.getEvents().equals(Events.UpLevel)) {
             timeShower.extendOnFullWidth(gs.getStringFromId("levelUp"));
-            notificationRappel.setTextToShow(String.format(gs.getStringFromId("pointsToAttribute"),
+            notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
                     ((People)player.getCharacteristics()).getPointLevel(), "N")); // TODO Check for key
         }
     }
