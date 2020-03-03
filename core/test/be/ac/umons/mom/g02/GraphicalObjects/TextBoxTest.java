@@ -96,4 +96,55 @@ public class TextBoxTest extends TextBox {
         handleInput();
         Assertions.assertEquals("2", actualText);
     }
+    @Test
+    public void acceptOnlyHexaTest() {
+        isSelected = true;
+        acceptOnlyHexadecimal = true;
+        LinkedList<java.lang.Character> ll = new LinkedList<>();
+        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(gim.getLastChars()).thenReturn(ll);
+        ll.add('A');
+        handleInput();
+        Assertions.assertEquals("A", actualText);
+        ll.clear();
+        ll.add('1');
+        ll.add('9');
+        handleInput();
+        ll.clear();
+        Assertions.assertEquals("A19", actualText);
+        ll.add('G');
+        handleInput();
+        Assertions.assertEquals("A19", actualText);
+    }
+
+    @Test
+    public void selectedPositionTest() {
+        isSelected = true;
+        actualText = "ABCD";
+        selectedPosition = 4;
+        LinkedList<java.lang.Character> ll = new LinkedList<>();
+        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(gim.getLastChars()).thenReturn(ll);
+        ll.add('E');
+        handleInput();
+        Assertions.assertEquals("ABCDE", actualText);
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
+        ll.clear();
+        for (int i = 0; i < 3; i++)
+            handleInput();
+        ll.add('B');
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(false);
+        handleInput();
+        Assertions.assertEquals("ABBCDE", actualText);
+        ll.clear();
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
+        for (int i = 0; i < 10; i++)
+            handleInput();
+        Assertions.assertEquals(0, selectedPosition);
+        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(false);
+        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed)).thenReturn(true);
+        for (int i = 0; i < 10; i++)
+            handleInput();
+        Assertions.assertEquals(6, selectedPosition);
+    }
 }
