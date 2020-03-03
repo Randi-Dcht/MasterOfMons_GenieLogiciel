@@ -27,6 +27,7 @@ public class NetworkManager {
 
     protected boolean connected = false;
     protected List<ServerInfo> detectedServers;
+    HashMap<InetAddress, InetAddress> addressToBroadcast;
     protected DatagramSocket ds;
     protected Thread thread;
     protected Runnable onServerDetected;
@@ -34,18 +35,17 @@ public class NetworkManager {
     protected NetworkManager() throws SocketException {
         ds = new DatagramSocket(PORT);
         detectedServers = new LinkedList<>();
-    }
-
-    public void startBroadcastingMessage(String message) {
-//        if (thread != null)
-//            thread.interrupt();
-        HashMap<InetAddress, InetAddress> addressToBroadcast;
         try {
             addressToBroadcast = listAllBroadcastAddresses();
         } catch (SocketException e) {
             e.printStackTrace();
             return;
         }
+    }
+
+    public void startBroadcastingMessage(String message) {
+//        if (thread != null)
+//            thread.interrupt();
         thread = new Thread(() -> {
             try {
                 while (! connected) {
@@ -137,5 +137,9 @@ public class NetworkManager {
 
     public void setOnServerDetected(Runnable onServerDetected) {
         this.onServerDetected = onServerDetected;
+    }
+
+    public HashMap<InetAddress, InetAddress> getAddressToBroadcast() {
+        return addressToBroadcast;
     }
 }

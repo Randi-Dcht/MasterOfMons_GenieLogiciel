@@ -45,7 +45,6 @@ public class ConnectionRoomState extends MenuState {
                 new MenuItem(gs.getStringFromId("enterServerInfo"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text),
                 new MenuItem("IP : ", MenuItemType.TextBox, "TXT_IP"),
-                new MenuItem("Port :", MenuItemType.NumberTextBox, "TXT_Port"),
         });
     }
 
@@ -53,12 +52,11 @@ public class ConnectionRoomState extends MenuState {
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem(gs.getStringFromId("automaticDetect"), MenuItemType.Title));
         for (ServerInfo si : nm.getDetectedServers()) {
-            menuItems.add(new MenuItem(String.format("%s (%s:%d)", si.getName(), si.getIp().toString(), si.getPort()), MenuItemType.Button));
+            menuItems.add(new MenuItem(String.format("%s (%s)", si.getName(), si.getIp().toString().replace("/", "")), MenuItemType.Button));
         }
         menuItems.add(new MenuItem(gs.getStringFromId("enterServerInfo"), MenuItemType.Title));
         menuItems.add(new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text));
         menuItems.add(new MenuItem("IP : ", MenuItemType.TextBox, "TXT_IP"));
-        menuItems.add(new MenuItem("Port :", MenuItemType.NumberTextBox, "TXT_Port"));
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }
 }
