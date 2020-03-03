@@ -72,6 +72,7 @@ public class MyFirstYear extends MasterQuest
         for (int i=0 ; i < 6; i++)
             listItems.add(new OldExam());
         listItems.add(new TheKillBoot());
+        //createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class},new int[]{10,1,6});
     }
 
 

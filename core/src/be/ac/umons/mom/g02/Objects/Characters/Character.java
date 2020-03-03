@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * This class define a character who have life,strength,agility,defence and level in the game
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public abstract class Character implements Attack, Social, Serializable
 {
@@ -81,8 +81,8 @@ public abstract class Character implements Attack, Social, Serializable
      */
     public Character(String name, Type type)
     {
-        this.name     = name;
-        this.type     = type;
+        this.name = name;
+        this.type = type;
     }
 
 
