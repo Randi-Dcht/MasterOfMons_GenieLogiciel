@@ -15,7 +15,6 @@ import be.ac.umons.mom.g02.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.mom.g02.Quests.Under.LookSoulMate;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Objects.Items.Gun;
-
 import java.util.ArrayList;
 
 
@@ -122,6 +121,6 @@ public class MeetAndLearn extends MasterQuest
     @Override
     public void update(Notification notify)
     {
-        //super.update(notify);
+        super.update(notify);
     }
 }
