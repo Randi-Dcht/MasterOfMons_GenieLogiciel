@@ -43,13 +43,13 @@ public class DialogCharacter
      * This is the redirection of the specificID
      */
     private String specificID = null;
-
+    private String before="";
 
     /**
      * This constructor define the dialog of the character
      * @param nameDialog is the name of the dialog with the ID
      */
-    public DialogCharacter(NameDialog nameDialog)
+    public DialogCharacter(NameDialog nameDialog)//TODO add sp
     {
         listDialog = readFileConversation(nameDialog);
         addIdSpecific("ITEMS","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON");
@@ -183,22 +183,26 @@ public class DialogCharacter
      */
     public void analyzeAnswer(String answerID,SuperviserNormally classSp,Mobile mobile)
     {
-        this.mobile = mobile;
+        if (!answerID.equals(before))
+        {
+            this.mobile = mobile;
 
-        if (!listDialog.containsKey(answerID))
-        {
-            classSp.getEvent().notify(new Dialog("ESC"));
-            //classSp.getEvent().remove(Events.Answer,classSp);TODO
+            if (specificID != null)
+            {
+                idAnswer(answerID);
+                classSp.getEvent().notify(new Dialog(getDialog("ESC")));
+            }
+            else if (!listDialog.containsKey(answerID))
+            {
+                classSp.getEvent().notify(new Dialog("ESC"));
+                //classSp.getEvent().remove(Events.Answer,classSp);TODO
+            }
+            else if (check(getDialog(answerID)))
+                classSp.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
+            else
+                classSp.getEvent().notify(new Dialog(getDialog(answerID)));
+            before = answerID;
         }
-        else if (specificID != null)
-        {
-            idAnswer(answerID);
-            classSp.getEvent().notify(new Dialog(getDialog("ESC")));
-        }
-        else if (check(getDialog(answerID)))
-            classSp.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
-        else
-            classSp.getEvent().notify(new Dialog(getDialog(answerID)));
     }
 
 
@@ -210,12 +214,14 @@ public class DialogCharacter
     {
         if (specificID.equals("ITEMS"))
         {
+
             for (Items its : mobile.getInventory())
             {
                 if (its.getIdUse().equals(answer) || its.getIdItems().equals(answer))
                 {
                     SuperviserNormally.getSupervisor().getPeople().pushObject(its);
-                    mobile.removeObject(its);
+                    return;//TODO
+                    //mobile.removeObject(its);
                 }
             }
         }

@@ -418,6 +418,8 @@ public class SuperviserNormally implements Observer
             if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
                 switchingDialog(((String)notify.getBuffer()));
 
+
+
             if (notify.getEvents().equals(Events.ChangeQuest))
                 refreshQuest();
 
