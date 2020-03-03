@@ -136,10 +136,6 @@ public class PreparedCompany extends MasterQuest
 
     }
 
-    @Override
-    public void removeProgress(double many) {
-
-    }
 
     @Override
     public boolean isFinished() {

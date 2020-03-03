@@ -113,11 +113,6 @@ public class MeetAndLearn extends MasterQuest
         return graphic.getStringFromId("nameMeetLearn");
     }
 
-    @Override
-    public void removeProgress(double many) {
-
-    }
-
 
     /**
      * This method analyse the notification who receive and notify underQuest

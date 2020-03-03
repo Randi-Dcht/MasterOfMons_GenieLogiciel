@@ -117,11 +117,6 @@ public class MyFirstYear extends MasterQuest
         return graphic.getStringFromId("nameMyFirstYear");
     }
 
-    @Override
-    public void removeProgress(double many) {
-
-    }
-
 
     /**
      * This method analyse the notification who receive and notify underQuest

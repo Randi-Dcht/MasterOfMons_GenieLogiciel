@@ -153,11 +153,9 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
         for (int j = 0; j < list.length; j++)
         {
-            for (int i=0; i <
-                    cmb[j];i++ )
-                listItems.add(list[j].getConstructor().newInstance());
+            for (int i=0; i <cmb[j];i++ )
+                System.out.println(list[j].getConstructor().newInstance());
         }
-        System.out.println(listItems);
     }
 
 

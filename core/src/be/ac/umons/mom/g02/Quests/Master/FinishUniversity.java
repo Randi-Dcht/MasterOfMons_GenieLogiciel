@@ -117,10 +117,6 @@ public class FinishUniversity extends MasterQuest
         return graphic.getStringFromId("nameMasterSecond");
     }
 
-    @Override
-    public void removeProgress(double many) {
-
-    }
 
     @Override
     public void update(Notification notify) {

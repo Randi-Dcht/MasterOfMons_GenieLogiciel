@@ -36,10 +36,6 @@ public class MovingInMons extends MasterQuest
         return "Displacement in the city of Mons";
     }
 
-    @Override
-    public void removeProgress(double many) {
-
-    }
 
     public void meetOther(People people)
     {
