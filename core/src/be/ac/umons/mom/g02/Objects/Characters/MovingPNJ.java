@@ -1,6 +1,11 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
-import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
@@ -42,7 +47,9 @@ public class MovingPNJ extends Mobile implements Observer
      * Size of the tile
      */
     private int tileSize = 64;
-
+    /**
+     * If the moving PNJ already meet the player on the maps
+     */
     private boolean meet = false;
 
 
@@ -52,9 +59,9 @@ public class MovingPNJ extends Mobile implements Observer
      * @param maps is the maps of this pnj
      * @param type  is the type of the Mobile
      */
-    public MovingPNJ(Bloc bloc, MobileType type, Maps maps)
+    public MovingPNJ(Bloc bloc, MobileType type, Maps maps,Actions action)
     {
-        super("MovingPNJ",bloc,type,Actions.Dialog /*Actions.Attack*/);
+        super("MovingPNJ",bloc,type,action, NameDialog.Move);
         setMaps(maps);
         SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
     }
@@ -177,12 +184,5 @@ public class MovingPNJ extends Mobile implements Observer
     public void update(Notification notify)
     {
          //TODO delete if never use
-    }
-
-    /***/
-    @Override
-    public NameDialog getDialog()
-    {
-        return NameDialog.Move;
     }
 }

@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects.Items;
 
 import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
@@ -29,7 +30,7 @@ public class Phone extends Items
    */
   public void used(People pp)
   {
-    pp.addFriend(new Mobile("FriendRandom",pp.getBloc(), MobileType.Lambda, Actions.Never));
+    pp.addFriend(new Mobile("FriendRandom",pp.getBloc(), MobileType.Lambda, Actions.Never, NameDialog.Lambda));
     SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(this));
   }
 

@@ -114,11 +114,12 @@ public class PreparedCompany extends MasterQuest
     {
         ArrayList<Mobile> mob = new ArrayList<>();
         MobileType[] type = MobileType.values();
-        for(int i=0; i < 30;i++)
+        //TODO update
+/*        for(int i=0; i < 30;i++)
             mob.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
         for(int i = 30; i < 50; i++)
             mob.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
-
+*/
         return mob;
     }
 

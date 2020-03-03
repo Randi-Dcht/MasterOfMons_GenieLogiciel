@@ -256,7 +256,7 @@ public class SuperviserNormally implements Observer
             {
                 //listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic, maps));
             }
-            listMoving.get(Maps.Nimy).add(new MovingPNJ(Bloc.BA1,MobileType.Lambda,Maps.Nimy));
+            listMoving.get(Maps.Nimy).add(new MovingPNJ(Bloc.BA1,MobileType.Lambda,Maps.Nimy,Actions.Dialog));
         }
 
 
