@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Dialog;
 
 import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class DialogCharacter
 {
+    private static final String PATH="Conversations/IdConversations/";
     /***/
     private Mobile mobile;
     /**
@@ -30,26 +32,28 @@ public class DialogCharacter
 
     /**
      * This constructor define the dialog of the character
+     * @param nameDialog is the name of the dialog with the ID
      */
-    public DialogCharacter(/*xxx*/)
+    public DialogCharacter(NameDialog nameDialog)
     {
-        listDialog = readFileConversation();
+        listDialog = readFileConversation(nameDialog);
     }
 
 
     /**
      * This static method read the file and create a tab with first column is speech of PNJ.
      * And the second columns is a tab with three columns who are answers of question of PNJ
+     * @param name is the name of the file in the repertory Conversation with ID
      * @return table[speech PNJ][table[choose speech people]]
      */
-    private HashMap<String,ArrayList<String>> readFileConversation()
+    private HashMap<String,ArrayList<String>> readFileConversation(NameDialog name)
     {
         String vertical;
         String[] split;
         HashMap<String,ArrayList<String>> list = new HashMap<>();
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/IdConversations/Conversation.Move.id")))));
+            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal(PATH + name.getFile())))));
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )

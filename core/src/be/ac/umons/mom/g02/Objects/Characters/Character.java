@@ -17,28 +17,67 @@ import java.util.List;
  */
 public abstract class Character implements Attack, Social, Serializable
 {
-    /**The enum for the player of the character*/
+
+    /**
+     * The enum for the player of the character
+     */
     public enum TypePlayer{Computer,Human;};
-
-
-    /*characteristic of the character*/
+    /**
+     * characteristic of the character strength
+     */
     protected int strength;
-    protected ArrayList<Items> myObject = new ArrayList<>(); //objet dans son sac à dos
+    /**
+     * This is the list of the items in the bag of the character
+     */
+    protected ArrayList<Items> myObject = new ArrayList<>();
+    /**
+     * characteristic of the character defence
+     */
     protected int defence;
+    /**
+     * characteristic of the character agility
+     */
     protected int agility;
+    /**
+     * This is the actual life of the character
+     */
     protected double actualLife = 0;
+    /**
+     * This is the location on the word (TMX)
+     */
     protected Maps maps;
+    /**
+     * This is the specific object
+     * This is the gun of the character
+     */
     protected Gun gun;
+    /**
+     * This is the mobile living
+     */
     protected boolean living = true;
-    protected int level = 1; /*between 1 and 40*/
+    /**
+     * This is the level of the character
+     * between 1 and 40
+     */
+    protected int level = 1;
+    /**
+     * The speed of the character
+     */
     protected double speed;
+    /**
+     * The name of the character
+     */
     final String name;
+    /**
+     * The type of character when it is instantiate this
+     */
     final Type type;
 
 
     /**
      * This constructor allows to create a new people who pilot by a player
      * @param name is the name of the character
+     * @param type is the specific type of the character
      */
     public Character(String name, Type type)
     {

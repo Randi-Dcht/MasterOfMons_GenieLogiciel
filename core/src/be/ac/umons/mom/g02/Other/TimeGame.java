@@ -12,7 +12,7 @@ import java.util.Objects;
 
 /**
  * This class is the time in the game who changed with the refresh frame.
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public class TimeGame implements Observer
 {
@@ -88,7 +88,7 @@ public class TimeGame implements Observer
      */
     public Date getDate()
     {
-        return new Date(day+1,NBmonth+1,this.year,hour,min);
+        return new Date(day,NBmonth+1,this.year,hour,min);
     }
 
 

@@ -3,26 +3,50 @@ package be.ac.umons.mom.g02.Objects.Characters;
 import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Events.Notifications.AddFriend;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
  *This abstract class allows define a no player, it is a character pilot by computer.
- *@author Umons_Group_2_ComputerScience
+ *@author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public class Mobile extends Character implements Serializable, FrameTime
 {
-    /*save the bloc of player*/
+    /**
+     * Save the bloc of human player of the quest
+     */
     protected Bloc playerBloc;
+    /**
+     * This is the type of the Mobile
+     */
     protected MobileType type;
+    /**
+     * This is the time between two attacks
+     */
     protected double time;
+    /**
+     * The other characters to attack
+     */
     protected Attack victim = null;
+    /**
+     * The action of this mobile in the game
+     */
     protected Actions action;
+    /**
+     * If this mobile can add the human friend
+     */
     protected Boolean addFriend = true;
+    /**
+     * The name of the dialog of this PNJ
+     */
+    protected NameDialog nameDialog;
 
 
     /**
@@ -32,12 +56,13 @@ public class Mobile extends Character implements Serializable, FrameTime
      * @param type is the type of the mobile
      * @param myAction is the action of this mobile
      */
-    public Mobile(String name, Bloc playerBloc, MobileType type,Actions myAction)
+    public Mobile(String name, Bloc playerBloc, MobileType type,Actions myAction,NameDialog nameDialog)
     {
         super(name,type.getType());
         this.level = calculus(playerBloc);
         this.playerBloc  = playerBloc;
         this.type = type;
+        this.nameDialog = nameDialog;
         action = myAction;
         calculusPoint(type);
     }
@@ -50,7 +75,7 @@ public class Mobile extends Character implements Serializable, FrameTime
     @Override
     public void update(double dt)
     {
-        time = time - dt;
+        time -= dt;
         if (time <= 0 && victim != null)
         {
             nextAttack(victim);
@@ -59,7 +84,10 @@ public class Mobile extends Character implements Serializable, FrameTime
     }
 
 
-    /***/
+    /**
+     * This method allows to say if the character can attack the other
+     * @return a boolean
+     */
     @Override
     public boolean canAttacker()
     {
@@ -67,7 +95,10 @@ public class Mobile extends Character implements Serializable, FrameTime
     }
 
 
-    /***/
+    /**
+     * This method allows to add the friend human player at this mobile
+     * @return boolean of can add friend
+     */
     public boolean setFriend()
     {
         if(addFriend)
@@ -134,17 +165,6 @@ public class Mobile extends Character implements Serializable, FrameTime
 
 
     /**
-     * When the player up in the level or the bloc, the mobile/PNJ must upgrade
-     * @param playerBloc is the bloc of the player
-     */
-    public void upgrade(Bloc playerBloc)
-    {
-        this.playerBloc  = playerBloc;
-        calculusPoint(type);
-    }
-
-
-    /**
      * This method allows to attack the other attacker automatic
      * @param victim is the other character of the attack
      */
@@ -167,14 +187,21 @@ public class Mobile extends Character implements Serializable, FrameTime
 
 
     /**
-     * This method allows to give the dialog id of the mobile
-     * @param answer is the answer of the other character
+     * This method return the name of the dialog of this PNJ
+     * @return the name of the dialog (enum)
      */
-    public String getDialog(String answer)
+    public NameDialog getDialog()
     {
-        return null;
+        return nameDialog;
     }
 
 
-    //TODO mettre les type pour les mobile
+    /**
+     * This method allows to add the items to the bag of the mobile
+     * @param items is the items
+     */
+    public void addObject(Items ... items)
+    {
+        myObject.addAll(Arrays.asList(items));
+    }
 }
