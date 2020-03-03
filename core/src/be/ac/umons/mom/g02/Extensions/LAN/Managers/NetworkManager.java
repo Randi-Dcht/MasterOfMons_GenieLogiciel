@@ -7,17 +7,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * https://www.baeldung.com/java-broadcast-multicast
  */
 public class NetworkManager {
 
-    static NetworkManager instance;
+    protected static NetworkManager instance;
 
     public static NetworkManager getInstance() throws SocketException {
         if (instance == null)
@@ -28,32 +25,39 @@ public class NetworkManager {
 
     protected final int PORT = 32516;
 
-    ServerSocket serverSocket;
-    Socket socket;
-    List<ServerInfo> detectedServers;
-    DataOutputStream dOut;
-    DataInputStream dIn;
-
-    DatagramSocket ds;
-
-    Thread thread;
+    protected boolean connected = false;
+    protected List<ServerInfo> detectedServers;
+    HashMap<InetAddress, InetAddress> addressToBroadcast;
+    protected DatagramSocket ds;
+    protected Thread thread;
+    protected Runnable onServerDetected;
 
     protected NetworkManager() throws SocketException {
         ds = new DatagramSocket(PORT);
+        detectedServers = new LinkedList<>();
+        try {
+            addressToBroadcast = listAllBroadcastAddresses();
+        } catch (SocketException e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     public void startBroadcastingMessage(String message) {
-        if (thread != null)
-            thread.interrupt();
+//        if (thread != null)
+//            thread.interrupt();
         thread = new Thread(() -> {
             try {
-                List<InetAddress> addressToBroadcast = listAllBroadcastAddresses();
-                while (socket != null && ! socket.isConnected()) {
-                    for (InetAddress address : addressToBroadcast)
-                        broadcastMessage(message, address);
-                    Thread.sleep(1000);
+                while (! connected) {
+                    for (InetAddress address : addressToBroadcast.keySet())
+                        broadcastMessage("MOMServer" + address.toString() + "/TestName", addressToBroadcast.get(address));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -68,8 +72,8 @@ public class NetworkManager {
     }
 
     public void startListeningForServer() {
-        if (thread != null)
-            thread.interrupt();
+//        if (thread != null)
+//            thread.interrupt();
         thread = new Thread(this::listenToBroadcast);
         thread.start();
     }
@@ -86,7 +90,15 @@ public class NetworkManager {
 
             String received = new String(dp.getData());
             if (received.startsWith("MOMServer")) {
-                Gdx.app.log("NetworkManager", "Server detected");
+                String[] tab = received.split("/");
+                Gdx.app.log("NetworkManager", String.format("Server detected : %s", tab[1]));
+                try {
+                    InetAddress serverAddress = InetAddress.getByName(tab[1]);
+                    detectedServers.add(new ServerInfo(tab[2], serverAddress, PORT));
+                    Gdx.app.postRunnable(onServerDetected);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
@@ -97,8 +109,8 @@ public class NetworkManager {
      * @return
      * @throws SocketException
      */
-    protected List<InetAddress> listAllBroadcastAddresses() throws SocketException {
-        List<InetAddress> broadcastList = new ArrayList<>();
+    protected HashMap<InetAddress, InetAddress> listAllBroadcastAddresses() throws SocketException {
+        HashMap<InetAddress, InetAddress> broadcastList = new HashMap<>();
         Enumeration<NetworkInterface> interfaces
                 = NetworkInterface.getNetworkInterfaces();
         while (interfaces.hasMoreElements()) {
@@ -108,13 +120,26 @@ public class NetworkManager {
                 continue;
             }
 
-            networkInterface.getInterfaceAddresses().stream()
-                    .map(InterfaceAddress::getBroadcast)
-                    .filter(Objects::nonNull)
-                    .forEach(broadcastList::add);
+            Iterator<InterfaceAddress> it = networkInterface.getInterfaceAddresses().stream().iterator();
+            while (it.hasNext()) {
+                InterfaceAddress ia = it.next();
+                InetAddress broadcast = ia.getBroadcast();
+                if (broadcast != null)
+                    broadcastList.put(ia.getAddress(), ia.getBroadcast());
+            }
         }
         return broadcastList;
     }
 
+    public List<ServerInfo> getDetectedServers() {
+        return detectedServers;
+    }
 
+    public void setOnServerDetected(Runnable onServerDetected) {
+        this.onServerDetected = onServerDetected;
+    }
+
+    public HashMap<InetAddress, InetAddress> getAddressToBroadcast() {
+        return addressToBroadcast;
+    }
 }

@@ -6,7 +6,10 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WaitingRoomState extends MenuState {
 
@@ -35,12 +38,15 @@ public class WaitingRoomState extends MenuState {
 
         topMargin = .1;
         transparentBackground = false;
-        nm.startListeningForServer();
-        setMenuItems(new MenuItem[]{
-                new MenuItem(gs.getStringFromId("waitingConnection"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text),
-                new MenuItem("IP : ", MenuItemType.Text), // TODO
-                new MenuItem("Port :", MenuItemType.Text), // TODO
-        });
+        List<MenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new MenuItem(gs.getStringFromId("waitingConnection"), MenuItemType.Title));
+        menuItems.add(new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text));
+
+        for (InetAddress ia : nm.getAddressToBroadcast().keySet()) {
+            menuItems.add(new MenuItem("IP : " + ia.toString().replace("/", ""), MenuItemType.Text));
+        }
+        menuItems.add(new MenuItem(gs.getStringFromId("multiplesIPInfo"), MenuItemType.Text));
+
+        setMenuItems(menuItems.toArray(new MenuItem[0]));
     }
 }
