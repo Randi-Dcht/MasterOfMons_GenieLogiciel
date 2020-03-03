@@ -8,14 +8,23 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import java.awt.*;
 import java.io.Serializable;
 
+/**
+ * Represent on object on the map of the game (like a dropped inventory's item)
+ */
 public class MapObject extends OnMapObject {
-
+    /**
+     * The characteristics of the represented item.
+     */
     OnMapItem omi = new OnMapItem();
 
-    public MapObject(GraphicalSettings gs, Items go) {
+    /**
+     * @param gs The game's graphical settings.
+     * @param item The item to represent.
+     */
+    public MapObject(GraphicalSettings gs, Items item) {
         super(gs);
         this.gs = gs;
-        omi.item = go;
+        omi.item = item;
         omi.mapPos = new Point(0,0);
     }
     public MapObject(GraphicalSettings gs, OnMapItem omi) {
@@ -67,6 +76,9 @@ public class MapObject extends OnMapObject {
         return omi.item;
     }
 
+    /**
+     * @return The characteristics of the represented item.
+     */
     public OnMapItem getCharacteristics() {
         return omi;
     }

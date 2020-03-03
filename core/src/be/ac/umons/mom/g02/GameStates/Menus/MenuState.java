@@ -213,6 +213,9 @@ public abstract class MenuState extends GameState {
             mouseScrolled = maxScrolled;
     }
 
+    /**
+     * Check if the selected item is valid (make it valid if necessary)
+     */
     public void checkSelectedItem() {
         if (selectedItem.x >= buttons.size())
             selectedItem.x = 0;

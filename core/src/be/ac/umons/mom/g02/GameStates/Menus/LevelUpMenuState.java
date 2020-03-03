@@ -27,7 +27,9 @@ public class LevelUpMenuState extends MenuState {
      * Where the points has been attributed.
      */
     int[] pointsAttributed = new int[Characteristics.values().length];
-
+    /**
+     * What to do when the points are attributed.
+     */
     protected Runnable onPointsAttributed;
 
     /**
@@ -111,6 +113,9 @@ public class LevelUpMenuState extends MenuState {
         init();
     }
 
+    /**
+     * Executed when the "Confirm" button is pressed
+     */
     public void confirm() {
         SuperviserNormally.getSupervisor().getPeople().updateUpLevel(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
         gsm.removeFirstState();
@@ -118,10 +123,16 @@ public class LevelUpMenuState extends MenuState {
             onPointsAttributed.run();
     }
 
+    /**
+     * @param onPointsAttributed What to do when the points are attributed.
+     */
     public void setOnPointsAttributed(Runnable onPointsAttributed) {
         this.onPointsAttributed = onPointsAttributed;
     }
 
+    /**
+     * The possible characteristics available in this state.
+     */
     public enum Characteristics {
         Strength,
         Agility,

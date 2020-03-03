@@ -17,10 +17,25 @@ import java.util.List;
 
 public class CreatePlayerMenuState extends MenuState {
 
+    /**
+     * The gender of the character.
+     */
     Gender playerGender = Gender.values()[0];
+    /**
+     * The type of the character.
+     */
     Type characterType = Type.values()[0];
+    /**
+     * The chosen difficulty
+     */
     Difficulty difficulty = Difficulty.values()[0];
+    /**
+     * The state to launch when the creation is done.
+     */
     protected Class<? extends GameState> afterCreationState;
+    /**
+     * The state to launch when the loading is done.
+     */
     protected Class<? extends GameState> afterLoadingState;
 
     /**
@@ -70,19 +85,25 @@ public class CreatePlayerMenuState extends MenuState {
     }
 
     /**
-     * Set the <code>ScrollListChooser</code> properties for this state.
-     * @param mi
-     * @param slil
+     * Set the <code>ScrollListChooser</code>'s properties for this state.
+     * @param mi The <code>MenuItem</code> containing the <code>ScrollListChooser</code>
+     * @param slil The list in which the <code>ScrollListChooser</code> must be added.
      */
     private void setScrollListProperties(MenuItem mi, List<ScrollListChooser.ScrollListItem> slil) {
         ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
         mi.size.y = (int)((slil.size() + 1) * (gs.getNormalFont().getLineHeight() + 2 * topMargin) + 2 * topMargin);
     }
 
+    /**
+     * @param afterCreationState The state to launch when the creation is done.
+     */
     public void setAfterCreationState(Class<? extends GameState> afterCreationState) {
         this.afterCreationState = afterCreationState;
     }
 
+    /**
+     * @param afterLoadingState The state to launch when the loading is done.
+     */
     public void setAfterLoadingState(Class<? extends GameState> afterLoadingState) {
         this.afterLoadingState = afterLoadingState;
     }

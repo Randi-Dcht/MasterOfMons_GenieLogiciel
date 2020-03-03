@@ -71,6 +71,7 @@ public class Character extends OnMapObject {
 
     /**
      * @param gs The game's graphical settings.
+     * @param characteristics The character's characteristics
      */
     public Character(GraphicalSettings gs, be.ac.umons.mom.g02.Objects.Characters.Character characteristics) {
         super(gs);

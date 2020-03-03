@@ -63,6 +63,9 @@ public class StringAnimation extends Animation<String> {
         return false;
     }
 
+    /**
+     * Invert the animation ((add -> | <- remove) character by character)
+     */
     public void invert() {
         toAddBySecond = -toAddBySecond;
         actualNbr = to.length() - 1;

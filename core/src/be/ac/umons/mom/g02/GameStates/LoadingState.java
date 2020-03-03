@@ -61,12 +61,13 @@ public class LoadingState extends GameState {
      * Allow to load the resources.
      */
     protected AssetManager am;
-
     /**
      * The font to use.
      */
     protected BitmapFont font;
-
+    /**
+     * The state to launch when the loading is done.
+     */
     protected Class<? extends GameState> afterLoadingState;
 
     /**
@@ -132,10 +133,6 @@ public class LoadingState extends GameState {
         sr.end();
     }
 
-    public void setAfterLoadingState(Class<? extends GameState> state) {
-        this.afterLoadingState = state;
-    }
-
     @Override
     public void handleInput() {}
 
@@ -143,5 +140,11 @@ public class LoadingState extends GameState {
     public void dispose() {
         sr.dispose();
         sb.dispose();
+    }
+    /**
+     * @param state The state to launch when the loading is done.
+     */
+    public void setAfterLoadingState(Class<? extends GameState> state) {
+        this.afterLoadingState = state;
     }
 }

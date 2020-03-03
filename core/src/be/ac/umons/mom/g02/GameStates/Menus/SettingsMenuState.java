@@ -52,6 +52,9 @@ public class SettingsMenuState extends MenuState {
         initDefaultValue(); // TODO : Remove the switch
     }
 
+    /**
+     * Init the default value of each <code>MenuItem</code> higher.
+     */
     public void initDefaultValue() {
         Settings settings = MasterOfMonsGame.settings;
         for (MenuItem mi : menuItems) {

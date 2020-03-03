@@ -52,6 +52,7 @@ public class GameStateManager {
      * Add a new state to the game and remove the previous one if asked.
      * @param gst The state to add (class).
      * @param popPreviousOne If the previous state must be removed.
+     * @return The created GameState
      */
     public GameState setState(Class<? extends GameState> gst, boolean popPreviousOne) {
         GameState g;
