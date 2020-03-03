@@ -36,6 +36,11 @@ public class DisplacementMons extends MasterQuest
     }
 
     @Override
+    public void removeProgress(double many) {
+
+    }
+
+    @Override
     public String question()
     {
         return "Si tu accepte ta quête sera de parcourir la ville de Mons en défiant ton adversaire";
