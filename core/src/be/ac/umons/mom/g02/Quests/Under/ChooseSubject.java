@@ -26,30 +26,26 @@ public class ChooseSubject extends UnderQuest
     }
 
     /**
-     * This method allows to choice the subject of the memory
+     * This method show the subject of the memory
      *
-     * @return choice is the choice of your subject
+     * @return all the choice
      */
-    public Subject makeChoice()  //Cette méthode est appelle lors du choix  !
+    public String displayChoice()
     {
-        System.out.println("It's the different subject that you can choice");
+        String subject="";
         for (Subject sub : Subject.values()) {
-            System.out.println("-->" + sub.getSubjectName() + "\n");
-            Scanner a = new Scanner(System.in);
-            System.out.println("Do you want to choose this subject, YES or NO");
-            String answer = a.nextLine();
-            if (answer.equals("YES"))
-            {
-                System.out.println("Your choice is : "+sub.getSubjectName());
-                this.subject=sub;
-                addProgress(50);
-                return sub;
-            }
+            subject=subject+" , "+sub;
         }
-        System.out.println("You must do this subject because you didn't choose anything");
-        this.subject=Subject.crepro;
+        return subject;
+    }
+
+    /**
+     * This method allows to choice your subject
+     */
+    public void makeChoice(Subject sub)  //Cette méthode est appelle lors du choix  !
+    {
+        this.subject=sub;
         addProgress(50);
-        return (Subject.crepro);
     }
 
     /**
@@ -59,9 +55,7 @@ public class ChooseSubject extends UnderQuest
     {
         //TODO regarder si j'ajoute 50 pour cette quete et pas oublier de changer ça dans makeChoice
         this.subject=null; //on détruit l'ancien sujet
-        //removeProgress(15); // si on ne retire pas de l'experience alors on peut en gagnger tout le temps
-        progress=progress-50;
-        this.makeChoice();
+        removeProgress(50);
         //Cette methode est appele quand on demande si l'utilisateur est sur de son choix et qu'il dit nn sinon elle n'est jamais appellé.
     }
 

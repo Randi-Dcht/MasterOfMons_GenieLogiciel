@@ -118,6 +118,11 @@ public class FinishUniversity extends MasterQuest
     }
 
     @Override
+    public void removeProgress(double many) {
+
+    }
+
+    @Override
     public void update(Notification notify) {
 
     }
