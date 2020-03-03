@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
 import be.ac.umons.mom.g02.Managers.GameInputManager;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -34,6 +35,8 @@ public class ScrollListChooser extends Control {
      */
     protected boolean newItems = false;
 
+    protected int ySize;
+
     /**
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
@@ -41,6 +44,7 @@ public class ScrollListChooser extends Control {
     public ScrollListChooser(GameInputManager gim, GraphicalSettings gs) {
         super(gim, gs);
         buttons = new ArrayList<>();
+        ySize = (int)Math.floor(gs.getNormalFont().getLineHeight());
     }
 
     /**
@@ -52,7 +56,6 @@ public class ScrollListChooser extends Control {
     public void draw(Batch batch, Point pos, Point size) {
         super.draw(batch, pos, size);
         int alreadyUsed = 0;
-        int ySize = (int)Math.floor(gs.getNormalFont().getLineHeight());
         int maxScrolled = ySize * buttons.size() - size.y;
         if (maxScrolled < 0)
             maxScrolled = 0;
@@ -69,9 +72,12 @@ public class ScrollListChooser extends Control {
         }
     }
 
+
+
     @Override
     public void handleInput() {
-        mouseScrolled += gim.getScrolledAmount() * 10;
+        if (isMouseOver())
+            mouseScrolled += gim.getScrolledAmount() * 10;
         for (int i = 0; i < buttons.size(); i++) {
             if (newItems) {
                 newItems = false;
@@ -79,6 +85,14 @@ public class ScrollListChooser extends Control {
             }
             buttons.get(i).handleInput();
         }
+    }
+
+    /**
+     * @return If the mouse is over the control.
+     */
+    protected boolean isMouseOver() {
+        Point mp = gim.getLastMousePosition();
+        return new Rectangle(x, MasterOfMonsGame.HEIGHT - y - ySize, width, height).contains(mp);
     }
 
     @Override
