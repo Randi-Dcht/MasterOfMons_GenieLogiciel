@@ -55,7 +55,7 @@ public class ChooseSubject extends UnderQuest
     {
         //TODO regarder si j'ajoute 50 pour cette quete et pas oublier de changer ça dans makeChoice
         this.subject=null; //on détruit l'ancien sujet
-        addProgress(50);
+        progress=progress-50;
         //Cette methode est appele quand on demande si l'utilisateur est sur de son choix et qu'il dit nn sinon elle n'est jamais appellé.
     }
 
