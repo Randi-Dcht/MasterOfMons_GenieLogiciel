@@ -7,7 +7,10 @@ import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Events.Notifications.AddFriend;
+import be.ac.umons.mom.g02.Objects.Items.Items;
+
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -190,5 +193,15 @@ public class Mobile extends Character implements Serializable, FrameTime
     public NameDialog getDialog()
     {
         return nameDialog;
+    }
+
+
+    /**
+     * This method allows to add the items to the bag of the mobile
+     * @param items is the items
+     */
+    public void addObject(Items ... items)
+    {
+        myObject.addAll(Arrays.asList(items));
     }
 }
