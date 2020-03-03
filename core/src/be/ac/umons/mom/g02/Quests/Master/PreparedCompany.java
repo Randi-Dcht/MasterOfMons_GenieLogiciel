@@ -20,10 +20,7 @@ import java.util.Random;
  */
 public class PreparedCompany extends MasterQuest
 {
-    /*This tab is a list of the course of the people for this year*/
-   //final Lesson[] lesson ={Lesson.res2,Lesson.lecred,Lesson.proglog,Lesson.bda,Lesson.comp,Lesson.algbio,Lesson.sofev,Lesson.angl};
-    /*This is the goals of this MasterQuest*/
-    final UnderQuest[] underQuest = {/*new Traineeship(this),*/new GoToPriorityLesson(this,50,people),new ChooseSubject(this,people)};
+    final UnderQuest[] underQuest = {new GoToPriorityLesson(this,50,people),new ChooseSubject(this,people)};
 
 
     /**

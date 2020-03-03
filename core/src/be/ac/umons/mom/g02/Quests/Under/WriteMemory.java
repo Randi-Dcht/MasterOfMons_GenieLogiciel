@@ -8,7 +8,7 @@ public class WriteMemory extends UnderQuest
 {
     public WriteMemory(Quest master, People people)
     {
-        super("WriteMemory", 95, master,people);
+        super("WriteMemory", 80, master,people);
     }
 
     @Override
