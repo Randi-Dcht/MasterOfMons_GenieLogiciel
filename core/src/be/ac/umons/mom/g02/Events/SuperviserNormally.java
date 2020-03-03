@@ -35,7 +35,7 @@ import java.util.Random;
 
 /**
  * This class allows to monitor the game in the normally game without extension .
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public class SuperviserNormally implements Observer
 {

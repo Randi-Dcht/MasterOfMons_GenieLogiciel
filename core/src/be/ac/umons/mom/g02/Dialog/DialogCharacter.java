@@ -13,20 +13,29 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-/***/
+/**
+ * This class define the dialog of the character and a people
+ * The dialog is coding but also it is on the file .id in conversation
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
+ */
 public class DialogCharacter
 {
     /***/
     private Mobile mobile;
-    /***/
+    /**
+     * The list with the dialog after the reading in file
+     */
     private HashMap<String,ArrayList<String>> listDialog;
 
-    /***/
-    public DialogCharacter(/*Mobile mobile*/)
+
+    /**
+     * This constructor define the dialog of the character
+     */
+    public DialogCharacter(/*xxx*/)
     {
-       // this.mobile = mobile;
         listDialog = readFileConversation();
     }
+
 
     /**
      * This static method read the file and create a tab with first column is speech of PNJ.
@@ -40,7 +49,7 @@ public class DialogCharacter
         HashMap<String,ArrayList<String>> list = new HashMap<>();
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/IdConversations/Conversation.Landa.id")))));
+            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal("Conversations/IdConversations/Conversation.Move.id")))));
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
@@ -61,6 +70,7 @@ public class DialogCharacter
     }
 
 
+    /***/
     public ArrayList<String> getDialog(String answer)
     {
         if (listDialog.containsKey(answer))
@@ -68,12 +78,14 @@ public class DialogCharacter
         return listDialog.get("ESC");
     }
 
+
+    /***/
     private ArrayList<String> processString(List<String> lst)
     {
         ArrayList<String> list = new ArrayList<>();
         for (String str : lst)
         {
-            if (str.equals("ITEMS") || str.equals("MAPS") || str.equals("PLACE") || str.equals("QUEST"))
+            if (str.equals("ITEMS") || str.equals("MAPS") || str.equals("PLACE") || str.equals("QUEST") ||  str.equals("RANDOM") || str.equals("NEXTLESSON"))
                 list.addAll(replaceId(str));
             else
                 list.add(str);
@@ -82,6 +94,10 @@ public class DialogCharacter
     }
 
 
+    /**
+     * This method allows to analyse the id for replace the id of the game
+     * @return a list of the dialog
+     */
     private ArrayList<String> replaceId(String id)
     {
         ArrayList<String> list = new ArrayList<>();
@@ -101,16 +117,19 @@ public class DialogCharacter
             list.add("ESC");
         }
 
-        if (id.equals("QUEST"))
+        if (id.equals("QUEST") || id.equals("RANDOM") || id.equals("NEXTLESSON"))
             list.add(SuperviserNormally.getSupervisor().getPeople().getQuest().question());
         return list;
     }
 
 
-    /***/
+    /**
+     * This method returns the list of the dialog for the debug
+     * @return the dialog of the character
+     */
     @Override
     public String toString()
     {
-        return "DialogCharacter{" + "listDialog=" + listDialog + '}';
+        return "DialogCharacter: {"+ listDialog +'}';
     }
 }
