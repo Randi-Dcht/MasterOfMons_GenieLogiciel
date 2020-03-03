@@ -35,6 +35,7 @@ public class DisplacementMons extends MasterQuest
         return "Displacement in the city of Mons";
     }
 
+
     @Override
     public String question()
     {

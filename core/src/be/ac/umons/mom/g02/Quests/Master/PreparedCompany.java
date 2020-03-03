@@ -21,7 +21,7 @@ import java.util.Random;
 public class PreparedCompany extends MasterQuest
 {
     /*This tab is a list of the course of the people for this year*/
-   final Lesson[] lesson ={Lesson.res2,Lesson.lecred,Lesson.proglog,Lesson.bda,Lesson.comp,Lesson.algbio,Lesson.sofev,Lesson.angl};
+   //final Lesson[] lesson ={Lesson.res2,Lesson.lecred,Lesson.proglog,Lesson.bda,Lesson.comp,Lesson.algbio,Lesson.sofev,Lesson.angl};
     /*This is the goals of this MasterQuest*/
     final UnderQuest[] underQuest = {/*new Traineeship(this),*/new GoToPriorityLesson(this,50,people),new ChooseSubject(this,people)};
 
@@ -45,21 +45,6 @@ public class PreparedCompany extends MasterQuest
         newQuest(new FinishUniversity(people,this,graphic,difficulty));
     }
 
-    /**
-     * This method returns the list of the lesson
-     * @return list of lesson
-     */
-
-
-
-    /**
-     * This method return all of the place for this quest
-     * @return the different place for this quest
-     */
-    public Maps[] whatPlace()
-    {
-        return new Maps[]{Maps.Mons,Maps.Nimy,Maps.DeVinci};
-    }
 
     /**
      *This method allows to say the ask of this MasterQuest
@@ -72,19 +57,36 @@ public class PreparedCompany extends MasterQuest
 
     @Override
     protected void createListItems() {
-        // TODO
+        listItems = new ArrayList<>();
+        for (int i=0 ; i < 8; i++) {
+            listItems.add(new Pen());
+            listItems.add(new Gun());
+        }
+        for (int i=0;i<3;i++)
+        {
+            listItems.add(new PaperHelp());
+            listItems.add(new Synthesis());
+        }
+        listItems.add(new Sportswear());
     }
 
     @Override
     protected void createListMobiles() {
-        // TODO
-
+        listMobs = new ArrayList<>();
+        MobileType[] type = MobileType.values();
+        for(int i=0; i < 30;i++)
+            listMobs.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog,NameDialog.Lambda));
+        for(int i = 30; i < 50; i++)
+            listMobs.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda));
     }
 
+    /**
+     * This method return all of the place for this quest
+     * @return the different place for this quest
+     */
     @Override
     public Maps[] getListMaps() {
-        // TODO
-        return new Maps[0];
+        return new Maps[]{Maps.Nimy, Maps.DeVinci, Maps.Mons};
     }
 
 
@@ -92,36 +94,7 @@ public class PreparedCompany extends MasterQuest
      * This method allows us to know the different items for this quest
      * @return an arraylist of the items
      */
-    public ArrayList<Items> whatItem()
-    {
-        ArrayList<Items> listofitems = new ArrayList<>();
-        for (int i=0 ; i < 8; i++) {
-            listofitems.add(new Pen());
-            listofitems.add(new Gun());
-        }
-        for (int i=0;i<3;i++)
-        {
-            listofitems.add(new PaperHelp());
-            listofitems.add(new Synthesis());
-        }
-        listofitems.add(new Sportswear());
-        return listofitems;
-    }
 
-
-    /***/
-    public ArrayList<Mobile> whatMobile()
-    {
-        ArrayList<Mobile> mob = new ArrayList<>();
-        MobileType[] type = MobileType.values();
-        //TODO update
-/*        for(int i=0; i < 30;i++)
-            mob.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
-        for(int i = 30; i < 50; i++)
-            mob.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
-*/
-        return mob;
-    }
 
 
     @Override
@@ -163,6 +136,7 @@ public class PreparedCompany extends MasterQuest
 
     }
 
+
     @Override
     public boolean isFinished() {
 
@@ -173,14 +147,5 @@ public class PreparedCompany extends MasterQuest
     public void update(Notification notify) {
 
     }
-
-
-    /**
-    @Override
-    public void update(Notification notify)
-    {
-        super.update(notify);
-        /*code ici
-    }*/
 }
 

@@ -117,6 +117,7 @@ public class FinishUniversity extends MasterQuest
         return graphic.getStringFromId("nameMasterSecond");
     }
 
+
     @Override
     public void update(Notification notify) {
 

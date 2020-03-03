@@ -36,6 +36,7 @@ public class MovingInMons extends MasterQuest
         return "Displacement in the city of Mons";
     }
 
+
     public void meetOther(People people)
     {
 

@@ -3,6 +3,8 @@ package be.ac.umons.mom.g02.Quests.Master;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Flower;
+import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.Difficulty;
@@ -12,9 +14,11 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
+import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 
@@ -137,6 +141,21 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
                 mob.add(null);
         }
         return mob;
+    }
+
+
+
+    /***/
+    protected void createListItems(Class<Items>[] list,int[] cmb) throws Exception
+    {
+        if (list.length != cmb.length)
+            throw new Exception();
+
+        for (int j = 0; j < list.length; j++)
+        {
+            for (int i=0; i <cmb[j];i++ )
+                System.out.println(list[j].getConstructor().newInstance());
+        }
     }
 
 
@@ -355,7 +374,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /**
      * This method allows to create the list of the items
      */
-    protected abstract void createListItems();
+    protected abstract void createListItems() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, Exception;
 
 
     /**
@@ -371,7 +390,16 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     public ArrayList<Items> getListItems()
     {
         if (listItems == null)
-            createListItems();
+        {
+            try
+            {
+                createListItems();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
         return listItems;
     }
 
