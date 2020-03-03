@@ -178,4 +178,11 @@ public class MovingPNJ extends Mobile implements Observer
     {
          //TODO delete if never use
     }
+
+    /***/
+    @Override
+    public NameDialog getDialog()
+    {
+        return NameDialog.Move;
+    }
 }

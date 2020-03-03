@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Events.Notifications.AddFriend;
@@ -173,6 +174,12 @@ public class Mobile extends Character implements Serializable, FrameTime
     public String getDialog(String answer)
     {
         return null;
+    }
+
+
+    public NameDialog getDialog()
+    {
+        return NameDialog.Lambda;
     }
 
 

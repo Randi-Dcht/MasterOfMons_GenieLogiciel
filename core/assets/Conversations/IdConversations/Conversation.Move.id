@@ -5,9 +5,10 @@
 Start/Start/HelloBgt/ESC
 HelloBgt/EntryBgt/Indices/GiveItm
 Indices/WhatIndices/UseObject/NextCourse/Inspire
-GiveItm/LetGo/AhOk/Attack
+GiveItm/LetGo/ahOk/Attack
 ahOk/ESC
+ESC/ESC
 UseObject/WhyObject/ESC/ITEMS
-NextCourse/NEXTLESSON/ahOK
+NextCourse/NEXTLESSON/ahOk
 Inspire/Joke/GoodJoke
 GoodJoke/RANDOM/ESC

@@ -224,7 +224,6 @@ public class SuperviserNormally implements Observer
             regule = new Regulator(people,time);
             listCourse = people.getPlanning().get(time.getDate().getDay());
             checkPlanning();
-            dialog= new DialogCharacter();//TODO
         }
 
 
@@ -563,9 +562,15 @@ public class SuperviserNormally implements Observer
         public void meetCharacter(Social player1, Social player2)//TODO upgrade pour moins de clss
         {
             if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
+            {
                 event.notify(new MeetOther(memoryMobile = (Mobile)player1));
+                dialog= new DialogCharacter(((Mobile)player1).getDialog());//TODO
+            }
             if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
+            {
                 event.notify(new MeetOther(memoryMobile = (Mobile)player2));
+                dialog= new DialogCharacter(((Mobile)player2).getDialog());//TODO
+            }
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
                 attackMethod(memoryMobile,people);
@@ -583,15 +588,15 @@ public class SuperviserNormally implements Observer
          */
         public void switchingDialog(String answer)
         {
+            if(answer.equals("ESC") || dialog == null)
+            {
+                event.notify(new Dialog("ESC"));
+                //event.remove(Events.Answer,this);//TODO
+            }
             if (answer.equals("Attack"))
             {
                 attackMethod(people,memoryMobile);
                 event.notify(new Dialog("ESC"));
-            }
-            if(answer.equals("ESC"))
-            {
-                event.notify(new Dialog("ESC"));
-                event.remove(Events.Answer,this);//TODO
             }
             else
                 event.notify(new Dialog(dialog.getDialog(answer)));
