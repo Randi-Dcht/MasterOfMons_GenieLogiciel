@@ -63,7 +63,7 @@ public class InGameMenuState extends MenuState {
     public void exit() {
         GameState g = gsm.setState(OutGameDialogState.class);
         ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));
-        ((OutGameDialogState)g).addAnswer(gs.getStringFromId("yes"), () -> Gdx.app.exit());
-        ((OutGameDialogState)g).addAnswer(gs.getStringFromId("no"), () -> gsm.removeFirstState());
+        ((OutGameDialogState)g).addAnswer("yes", () -> Gdx.app.exit());
+        ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
     }
 }
