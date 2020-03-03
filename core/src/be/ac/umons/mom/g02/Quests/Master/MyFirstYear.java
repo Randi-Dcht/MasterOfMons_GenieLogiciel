@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
+import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 import be.ac.umons.mom.g02.Quests.Under.BattleForPlace;
 import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
@@ -94,6 +95,9 @@ public class MyFirstYear extends MasterQuest
             mb.setMaps(Maps.GrandAmphi);
             listMobs.add(mb);
         }
+        //TODO delete this:
+        for (Mobile m : listMobs)
+            m.addObject(new Pen(),new Pen(),new Pen());
     }
 
 

@@ -1,7 +1,7 @@
 package be.ac.umons.mom.g02.Dialog;
 
-import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
@@ -11,8 +11,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+
 
 /**
  * This class define the dialog of the character and a people
@@ -21,13 +22,27 @@ import java.util.List;
  */
 public class DialogCharacter
 {
+
+    /**
+     * This is the path of the file for the conversation
+     */
     private static final String PATH="Conversations/IdConversations/";
-    /***/
+    /**
+     * This is the mobile who speak with the people
+     */
     private Mobile mobile;
     /**
      * The list with the dialog after the reading in file
      */
     private HashMap<String,ArrayList<String>> listDialog;
+    /***
+     * The list of the special ID in the dialog
+     */
+    private ArrayList<String> listID = new ArrayList<>();
+    /**
+     * This is the redirection of the specificID
+     */
+    private String specificID = null;
 
 
     /**
@@ -37,6 +52,17 @@ public class DialogCharacter
     public DialogCharacter(NameDialog nameDialog)
     {
         listDialog = readFileConversation(nameDialog);
+        addIdSpecific("ITEMS","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON");
+    }
+
+
+    /**
+     * This method allows to add the specific ID in the conversation
+     * @param id is a word or a list of the id
+     */
+    private void addIdSpecific(String ... id)
+    {
+        Collections.addAll(listID, id);
     }
 
 
@@ -58,8 +84,7 @@ public class DialogCharacter
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
                 {
-                    //list.put(split[0],new ArrayList<>(Arrays.asList(split).subList(1, split.length)));
-                    list.put(split[0], processString(Arrays.asList(split).subList(1, split.length)));
+                    list.put(split[0],new ArrayList<>(Arrays.asList(split).subList(1, split.length)));
                 }
             }
         }
@@ -74,8 +99,12 @@ public class DialogCharacter
     }
 
 
-    /***/
-    public ArrayList<String> getDialog(String answer)
+    /**
+     * This method allows to give the dialog with answer of the player
+     * @param answer is the answer of the player
+     * @return a list with the new dialog for the graphic
+     */
+    private ArrayList<String> getDialog(String answer)
     {
         if (listDialog.containsKey(answer))
             return listDialog.get(answer);
@@ -83,18 +112,22 @@ public class DialogCharacter
     }
 
 
-    /***/
-    private ArrayList<String> processString(List<String> lst)
+    /**
+     * This method allows to prepared the dialog of the player when the specific ID is found
+     * @param list is a list with the bad ID to replace
+     * @return list with the good ID
+     */
+    private ArrayList<String> preparingDialog(ArrayList<String> list)
     {
-        ArrayList<String> list = new ArrayList<>();
-        for (String str : lst)
+        ArrayList<String> newList = new ArrayList<>();
+        for (String str : list)
         {
-            if (str.equals("ITEMS") || str.equals("MAPS") || str.equals("PLACE") || str.equals("QUEST") ||  str.equals("RANDOM") || str.equals("NEXTLESSON"))
-                list.addAll(replaceId(str));
+            if (listID.contains(str))
+                newList.addAll(replaceId(str));
             else
-                list.add(str);
+                newList.add(str);
         }
-        return list;
+        return newList;
     }
 
 
@@ -107,33 +140,96 @@ public class DialogCharacter
         ArrayList<String> list = new ArrayList<>();
         if (id.equals("ITEMS"))
         {
-            for (Items it : SuperviserNormally.getSupervisor().getAllItems())
+            for (Items it : mobile.getInventory())
                 list.add(it.getIdItems());
         }
-
-        if (id.equals("MAPS"))
-        {
-            list.add(Maps.Nimy.getInformation());
-        }
-
-        if (id.equals("PLACE"))
-        {
+        else if (id.equals("MAPS"))
+            list.add(SuperviserNormally.getSupervisor().getPeople().getMaps().getInformation());
+        else if (id.equals("PLACE"))
             list.add("ESC");
-        }
-
-        if (id.equals("QUEST") || id.equals("RANDOM") || id.equals("NEXTLESSON"))
+        else if (id.equals("QUEST") || id.equals("RANDOM"))
             list.add(SuperviserNormally.getSupervisor().getPeople().getQuest().question());
+        else if (id.equals("NEXTLESSON") && SuperviserNormally.getSupervisor().getActualCourse() != null)
+            list.add(SuperviserNormally.getSupervisor().getActualCourse().getLesson().location().getInformation());
+        else
+            list.add("ESC");
         return list;
     }
 
 
     /**
-     * This method returns the list of the dialog for the debug
+     * Check if the list contains the specific ID
+     * @param list is the list of dialog
+     * @return the boolean if list contains ID
+     */
+    public boolean check(ArrayList<String> list)
+    {
+        for (String str : list)
+        {
+            if (listID.contains(str))
+            {
+                specificID = str;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * This method allows to analyze the answer of people with the ID
+     * @param mobile is the mobile who speak
+     * @param answerID is the answer ID
+     */
+    public void analyzeAnswer(String answerID,SuperviserNormally classSp,Mobile mobile)
+    {
+        this.mobile = mobile;
+
+        if (!listDialog.containsKey(answerID))
+        {
+            classSp.getEvent().notify(new Dialog("ESC"));
+            //classSp.getEvent().remove(Events.Answer,classSp);TODO
+        }
+        else if (specificID != null)
+        {
+            idAnswer(answerID);
+            classSp.getEvent().notify(new Dialog(getDialog("ESC")));
+        }
+        else if (check(getDialog(answerID)))
+            classSp.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
+        else
+            classSp.getEvent().notify(new Dialog(getDialog(answerID)));
+    }
+
+
+    /**
+     * This method allows to analyze the answer with the specific ID
+     * @param answer is the answer of the player
+     */
+    private void idAnswer(String answer)
+    {
+        if (specificID.equals("ITEMS"))
+        {
+            for (Items its : mobile.getInventory())
+            {
+                if (its.getIdUse().equals(answer) || its.getIdItems().equals(answer))
+                {
+                    SuperviserNormally.getSupervisor().getPeople().pushObject(its);
+                    mobile.removeObject(its);
+                }
+            }
+        }
+        specificID = null;
+    }
+
+
+    /**
+     * This method returns the list of the dialog for the debug with the ID
      * @return the dialog of the character
      */
     @Override
     public String toString()
     {
-        return "DialogCharacter: {"+ listDialog +'}';
+        return "DialogCharacter: "+ listDialog +" (#DEBUG#)";
     }
 }

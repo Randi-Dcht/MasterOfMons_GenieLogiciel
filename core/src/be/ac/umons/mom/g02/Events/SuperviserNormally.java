@@ -577,7 +577,7 @@ public class SuperviserNormally implements Observer
             else if (action.equals(Actions.Dialog))
             {
                 event.add(Events.Answer,this);
-                event.notify(new Dialog(dialog.getDialog("Start")));
+                switchingDialog("Start");
             }
         }
 
@@ -599,7 +599,7 @@ public class SuperviserNormally implements Observer
                 event.notify(new Dialog("ESC"));
             }
             else
-                event.notify(new Dialog(dialog.getDialog(answer)));
+                dialog.analyzeAnswer(answer,this,memoryMobile);
         }
 
 
