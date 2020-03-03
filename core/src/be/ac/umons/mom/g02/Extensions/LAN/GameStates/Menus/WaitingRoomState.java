@@ -35,7 +35,6 @@ public class WaitingRoomState extends MenuState {
 
         topMargin = .1;
         transparentBackground = false;
-        nm.startListeningForServer();
         setMenuItems(new MenuItem[]{
                 new MenuItem(gs.getStringFromId("waitingConnection"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text),

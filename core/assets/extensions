@@ -1,5 +1,5 @@
 LAN
-.mainClassBeforeLoading WaitingOrConnectionState
+.mainClassBeforeLoading be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitingOrConnectionState
 .map Tmx/Umons_Nimy.tmx
 .canActivateWith Dual
 Dual

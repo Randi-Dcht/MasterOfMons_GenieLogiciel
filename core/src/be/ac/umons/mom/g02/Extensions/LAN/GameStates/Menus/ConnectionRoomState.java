@@ -35,7 +35,6 @@ public class ConnectionRoomState extends MenuState {
 
         topMargin = .1;
         transparentBackground = false;
-        nm.startBroadcastingMessage("MOMServer/");
         setMenuItems(new MenuItem[]{
                 new MenuItem(gs.getStringFromId("automaticDetect"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("enterServerInfo"), MenuItemType.Title),
