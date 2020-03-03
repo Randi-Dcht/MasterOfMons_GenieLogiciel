@@ -268,8 +268,10 @@ public abstract class MenuState extends GameState {
             }
             mi.control = c;
         }
-        if (! buttons.isEmpty() && selectFirstOne)
+        if (! buttons.isEmpty() && selectFirstOne) {
             buttons.get(0).get(0).setSelected(true);
+            selectedItem = new Point(0,0);
+        }
         this.menuItems = menuItems;
     }
 
