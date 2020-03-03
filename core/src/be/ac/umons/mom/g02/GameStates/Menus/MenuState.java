@@ -115,6 +115,9 @@ public abstract class MenuState extends GameState {
     @Override
     public void update(float dt) {
         handleInput();
+        for (List<TextBox> tbs : textBoxes)
+            for (TextBox tb : tbs)
+                tb.update(dt);
     }
 
     @Override

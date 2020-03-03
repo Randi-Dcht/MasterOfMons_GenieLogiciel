@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
@@ -27,6 +28,7 @@ public class TextBox extends Control {
      * The actual text entered
      */
     protected String actualText = "";
+    protected int selectedPosition=0;
     /**
      * The suffix that will be placed at the end of the text
      */
@@ -44,6 +46,9 @@ public class TextBox extends Control {
      * If the <code>TextBox</code> accepts ONLY characters corresponding the hexa-decimal encodage(1-9, A-F)
      */
     protected boolean acceptOnlyHexadecimal = false;
+
+    protected boolean mustShowVerticalBar = false;
+    protected double timeGone = 0;
 
     /**
      * @param gim The game's input manager
@@ -71,6 +76,13 @@ public class TextBox extends Control {
             sr.setColor(Color.WHITE);
         sr.begin();
         sr.rect(x, y, width, height);
+        GlyphLayout gl = new GlyphLayout();
+        gl.setText(gs.getNormalFont(), actualText.substring(0, selectedPosition));
+        float lineX = x + gl.width + leftMargin;
+        if (mustShowVerticalBar) {
+            sr.setColor(gs.getNormalFont().getColor());
+            sr.line(lineX, y, lineX, y + height);
+        }
         sr.end();
         batch.begin();
         gs.getNormalFont().draw(batch, actualText + suffix, x + leftMargin, y + gs.getNormalFont().getLineHeight());
@@ -79,21 +91,57 @@ public class TextBox extends Control {
 
     }
 
+    public void update(double dt) {
+        timeGone += dt;
+        if (timeGone > .5) {
+            timeGone = 0;
+            if (isSelected)
+                mustShowVerticalBar = ! mustShowVerticalBar;
+        }
+    }
+
     @Override
     public void handleInput() {
-        for (Point click : gim.getRecentClicks())
+        for (Point click : gim.getRecentClicks()) {
             isSelected = new Rectangle(x, MasterOfMonsGame.HEIGHT - y - height, width, height).contains(click);
+            if (isSelected) {
+                mustShowVerticalBar = true;
+                selectedPosition = actualText.length();
+            }
+            else
+                mustShowVerticalBar = false;
+        }
+
+        if (gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed))
+            if (selectedPosition < actualText.length())
+                selectedPosition++;
+        if (gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed))
+            if (selectedPosition > 0)
+                selectedPosition--;
+
         if (isSelected) {
             for (char c : gim.getLastChars()) {
                 if (acceptOnlyNumbers && (c < '0' || c > '9'))
                     continue;
                 if (acceptOnlyHexadecimal && ((c < '0' || c > '9') && (c < 'a' || c > 'f') && (c < 'A' || c > 'F')))
                     continue;
-                if (Character.isLetterOrDigit(c))
-                    actualText += c;
+                if (Character.isLetterOrDigit(c)) {
+                    if (selectedPosition == actualText.length())
+                        actualText += c;
+                    else if (selectedPosition == 0)
+                        actualText = c + actualText;
+                    else {
+                        actualText = actualText.substring(0, selectedPosition) + c + actualText.substring(selectedPosition);
+                    }
+                    selectedPosition++;
+                }
             }
-            if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed) && actualText.length() > 0)
+            if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed) && actualText.length() > 0) {
                 actualText = actualText.substring(0, actualText.length() - 1);
+                if (selectedPosition > actualText.length()) {
+                    selectedPosition = actualText.length();
+                }
+            }
         }
     }
 
