@@ -45,21 +45,6 @@ public class PreparedCompany extends MasterQuest
         newQuest(new FinishUniversity(people,this,graphic,difficulty));
     }
 
-    /**
-     * This method returns the list of the lesson
-     * @return list of lesson
-     */
-
-
-
-    /**
-     * This method return all of the place for this quest
-     * @return the different place for this quest
-     */
-    public Maps[] whatPlace()
-    {
-        return new Maps[]{Maps.Mons,Maps.Nimy,Maps.DeVinci};
-    }
 
     /**
      *This method allows to say the ask of this MasterQuest
@@ -72,33 +57,36 @@ public class PreparedCompany extends MasterQuest
 
     @Override
     protected void createListItems() {
-        ArrayList<Items> listofitems = new ArrayList<>();
+        listItems = new ArrayList<>();
         for (int i=0 ; i < 8; i++) {
-            listofitems.add(new Pen());
-            listofitems.add(new Gun());
+            listItems.add(new Pen());
+            listItems.add(new Gun());
         }
         for (int i=0;i<3;i++)
         {
-            listofitems.add(new PaperHelp());
-            listofitems.add(new Synthesis());
+            listItems.add(new PaperHelp());
+            listItems.add(new Synthesis());
         }
-        listofitems.add(new Sportswear());
+        listItems.add(new Sportswear());
     }
 
     @Override
     protected void createListMobiles() {
-        ArrayList<Mobile> mob = new ArrayList<>();
+        listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
         for(int i=0; i < 30;i++)
-            mob.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
+            listMobs.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog,NameDialog.Lambda));
         for(int i = 30; i < 50; i++)
-            mob.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
+            listMobs.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda));
     }
 
+    /**
+     * This method return all of the place for this quest
+     * @return the different place for this quest
+     */
     @Override
     public Maps[] getListMaps() {
-        // TODO
-        return new Maps[0];
+        return new Maps[]{Maps.Nimy, Maps.DeVinci, Maps.Mons};
     }
 
 
@@ -163,14 +151,5 @@ public class PreparedCompany extends MasterQuest
     public void update(Notification notify) {
 
     }
-
-
-    /**
-    @Override
-    public void update(Notification notify)
-    {
-        super.update(notify);
-        /*code ici
-    }*/
 }
 

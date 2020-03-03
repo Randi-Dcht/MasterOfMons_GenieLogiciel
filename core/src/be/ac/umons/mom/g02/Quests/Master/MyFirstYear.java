@@ -84,12 +84,12 @@ public class MyFirstYear extends MasterQuest
         listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
         for(int i=0; i < 30;i++)
-            listMobs.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog));
+            listMobs.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog,NameDialog.Lambda));
         for(int i = 30; i < 40; i++)
-            listMobs.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack));
+            listMobs.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda));
         for (int i = 0; i < 35;i++)
         {
-            Mobile mb = new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack);
+            Mobile mb = new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda);
             mb.setMaps(Maps.GrandAmphi);
             listMobs.add(mb);
         }
