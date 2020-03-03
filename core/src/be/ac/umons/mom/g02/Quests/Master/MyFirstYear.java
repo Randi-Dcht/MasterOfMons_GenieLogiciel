@@ -118,6 +118,7 @@ public class MyFirstYear extends MasterQuest
     }
 
 
+
     /**
      * This method analyse the notification who receive and notify underQuest
      * @param notify who is a notification with events.
@@ -125,7 +126,6 @@ public class MyFirstYear extends MasterQuest
     @Override
     public void update(Notification notify)
     {
-
-        //super.update(notify);
+        super.update(notify);
     }
 }
