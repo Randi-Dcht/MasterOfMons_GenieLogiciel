@@ -23,11 +23,6 @@ public class QuestShowerTest extends QuestShower {
             }
 
             @Override
-            public double getAdvancement() {
-                return 0;
-            }
-
-            @Override
             public boolean isActive() {
                 return false;
             }
@@ -60,11 +55,6 @@ public class QuestShowerTest extends QuestShower {
         Quest q1 = new Quest() {
             @Override
             public double getProgress() {
-                return 0;
-            }
-
-            @Override
-            public double getAdvancement() {
                 return 0;
             }
 
