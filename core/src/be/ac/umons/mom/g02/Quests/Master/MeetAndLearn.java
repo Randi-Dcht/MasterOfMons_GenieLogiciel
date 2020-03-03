@@ -113,10 +113,7 @@ public class MeetAndLearn extends MasterQuest
         return graphic.getStringFromId("nameMeetLearn");
     }
 
-    @Override
-    public void removeProgress(double many) {
 
-    }
 
 
     /**

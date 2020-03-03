@@ -58,26 +58,54 @@ public class PreparedCompany extends MasterQuest
     @Override
     protected void createListItems() {
         listItems = new ArrayList<>();
-        for (int i=0 ; i < 8; i++) {
-            listItems.add(new Pen());
-            listItems.add(new Gun());
+        Maps[] type = Maps.values();
+        for (int i=0 ; i < 4; i++) {
+            Items pen=new Pen();
+            Items gun=new Gun();
+            pen.setMaps(Maps.GrandAmphi);
+            gun.setMaps(Maps.Nimy);
+            listItems.add(pen);
+            listItems.add(gun);
         }
-        for (int i=0;i<3;i++)
+        for (int i=0;i<4;i++)
         {
+            Items pen=new Pen();
+            Items gun=new Gun();
+            Items paper=new PaperHelp();
+            pen.setMaps(Maps.DeVinci);
+            gun.setMaps(Maps.Mons);
+            paper.setMaps(type[new Random().nextInt(type.length)]);
+            listItems.add(pen);
+            listItems.add(gun);
             listItems.add(new PaperHelp());
-            listItems.add(new Synthesis());
         }
-        listItems.add(new Sportswear());
+        Items synthesis=new Synthesis();
+        Items sport=new Sportswear();
+        sport.setMaps(type[new Random().nextInt(type.length)]);
+        synthesis.setMaps(type[new Random().nextInt(type.length)]);
+        listItems.add(synthesis);
+        listItems.add(sport);
     }
 
     @Override
     protected void createListMobiles() {
         listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
-        for(int i=0; i < 30;i++)
-            listMobs.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog,NameDialog.Lambda));
-        for(int i = 30; i < 50; i++)
-            listMobs.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda));
+        Maps[] typemap = Maps.values();
+        for(int i=0; i < 30;i++) {
+            Mobile mb = new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog,NameDialog.Lambda);
+            mb.setMaps(typemap[new Random().nextInt(type.length)]);
+            listMobs.add(mb);
+            Mobile mob=new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda);
+            mob.setMaps(typemap[new Random().nextInt(type.length)]);
+            listMobs.add(mob);
+            Mobile mobi=new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda);
+            mobi.setMaps(typemap[new Random().nextInt(type.length)]);
+            listMobs.add(mobi);
+            Mobile mobil=new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda);
+            mobil.setMaps(typemap[new Random().nextInt(type.length)]);
+            listMobs.add(mobil);
+        }
     }
 
     /**
@@ -86,36 +114,9 @@ public class PreparedCompany extends MasterQuest
      */
     @Override
     public Maps[] getListMaps() {
-        return new Maps[]{Maps.Nimy, Maps.DeVinci, Maps.Mons};
+        return new Maps[]{Maps.Nimy, Maps.DeVinci, Maps.Mons,Maps.GrandAmphi};
     }
 
-
-    /**
-     * This method allows us to know the different items for this quest
-     * @return an arraylist of the items
-     */
-
-
-
-    @Override
-    public double getProgress() {
-        return percent;
-    }
-
-    @Override
-    public double getAdvancement() {
-        return 0;
-    }
-
-    @Override
-    public boolean isActive() {
-        return false;
-    }
-
-    @Override
-    public Quest[] getSubQuests() {
-        return new Quest[0];
-    }
 
     /**
      * This method allows to return the name of MasterQuest
@@ -126,30 +127,8 @@ public class PreparedCompany extends MasterQuest
         return graphic.getStringFromId("nameMasterOne");
     }
 
-    @Override
-    public int getTotalSubQuestsNumber() {
-        return 0;
-    }
 
-    @Override
-    public void addProgress(double many) {
 
-    }
 
-    @Override
-    public void removeProgress(double many) {
-
-    }
-
-    @Override
-    public boolean isFinished() {
-
-        return false;
-    }
-
-    @Override
-    public void update(Notification notify) {
-
-    }
 }
 

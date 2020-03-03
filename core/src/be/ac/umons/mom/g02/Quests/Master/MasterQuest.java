@@ -285,6 +285,17 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         }
     }
 
+    public void removeProgress(double many)
+    {
+        if(percent-many<0)
+            percent=0;
+        else
+        {
+            percent=percent-many;
+        }
+    }
+
+
 
     /**
      * This method allows to test if the Quest is finish

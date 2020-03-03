@@ -116,10 +116,7 @@ public class SuccessfulYear extends MasterQuest
         return graphic.getStringFromId("nameSuccessFulYear");
     }
 
-    @Override
-    public void removeProgress(double many) {
-
-    }
+   
 
 
     /**
