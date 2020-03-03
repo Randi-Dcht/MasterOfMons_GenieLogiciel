@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -40,6 +41,7 @@ public class LoadingStateTest extends LoadingState {
         when(am.update()).thenReturn(false);
         when(gs.getStringFromId("loading")).thenReturn("Loading...");
         Gdx.gl = Mockito.mock(GL20.class);
+        Gdx.app = Mockito.mock(Application.class);
 //        when(am.getProgress()).thenReturn(0f);
 //        when(gmm.getProgress()).thenReturn(0d);
     }
@@ -47,30 +49,24 @@ public class LoadingStateTest extends LoadingState {
     @Test
     public void testAssets() {
         Assertions.assertFalse(assetsLoaded);
-        Mockito.verify(gsm, Mockito.times(0)).setState(PlayingState.class, true);
         Assertions.assertEquals(0, Mockito.mockingDetails(am).getInvocations().size());
         draw();
         Assertions.assertFalse(assetsLoaded);
-        Mockito.verify(gsm, Mockito.times(0)).setState(PlayingState.class, true);
         Assertions.assertEquals(2, Mockito.mockingDetails(am).getInvocations().size()); // 2 because update() and getProgress()
         when(am.update()).thenReturn(true);
         draw();
         Assertions.assertTrue(assetsLoaded);
         Assertions.assertFalse(mapsLoaded);
-        Mockito.verify(gsm, Mockito.times(0)).setState(PlayingState.class, true);
         draw();
         Assertions.assertTrue(assetsLoaded);
         Assertions.assertFalse(mapsLoaded);
-        Mockito.verify(gsm, Mockito.times(0)).setState(PlayingState.class, true);
         draw();
         Assertions.assertTrue(assetsLoaded);
         Assertions.assertFalse(mapsLoaded);
-        Mockito.verify(gsm, Mockito.times(0)).setState(PlayingState.class, true);
         when(gmm.loadNextMap()).thenReturn(true);
         draw();
         Assertions.assertTrue(assetsLoaded);
         Assertions.assertTrue(mapsLoaded);
-        Mockito.verify(gsm, Mockito.times(1)).setState(PlayingState.class, true);
     }
 
     @Test
