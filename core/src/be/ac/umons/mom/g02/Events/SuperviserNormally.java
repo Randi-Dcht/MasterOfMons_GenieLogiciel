@@ -103,6 +103,10 @@ public class SuperviserNormally implements Observer
          */
         private HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<Bloc, ArrayList<Lesson>>();
         /**
+         * The all instance of the dialog in the game
+         */
+        private HashMap<NameDialog,DialogCharacter> listDialog = new HashMap<>();
+        /**
          * when the attack is the mobile
          */
         private Mobile memoryMobile;
@@ -127,10 +131,12 @@ public class SuperviserNormally implements Observer
        /**
         * This constructor allows to define the class who monitor the game
         */
-       private SuperviserNormally()
+       protected SuperviserNormally()
        {
            for (Maps plt : Maps.values())
                listMap.put(plt.getMaps(),plt);
+           for (NameDialog name : NameDialog.values())
+               listDialog.put(name, new DialogCharacter(name));
            event = new Event();
            event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons);
            save = new Saving();
@@ -566,12 +572,12 @@ public class SuperviserNormally implements Observer
             if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
             {
                 event.notify(new MeetOther(memoryMobile = (Mobile)player1));
-                dialog= new DialogCharacter(((Mobile)player1).getDialog());//TODO
+                dialog= listDialog.get(((Mobile)player1).getDialog());//TODO
             }
             if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
             {
                 event.notify(new MeetOther(memoryMobile = (Mobile)player2));
-                dialog= new DialogCharacter(((Mobile)player2).getDialog());//TODO
+                dialog= listDialog.get(((Mobile)player2).getDialog());//TODO
             }
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
