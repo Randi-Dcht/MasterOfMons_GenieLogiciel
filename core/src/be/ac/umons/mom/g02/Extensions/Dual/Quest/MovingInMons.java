@@ -1,4 +1,4 @@
-package be.ac.umons.mom.g02.Extensions.Dual;
+package be.ac.umons.mom.g02.Extensions.Dual.Quest;
 
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.Difficulty;
@@ -16,9 +16,12 @@ import java.util.ArrayList;
 public class MovingInMons extends MasterQuest
 {
     final UnderQuest[] underQuests = {};
-    public MovingInMons(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
+    protected People playerTwo;
+
+    public MovingInMons(People playerOne,People playerTwo,GraphicalSettings graphic, Difficulty difficulty)
     {
-        super(before,people, Bloc.Extend,graphic,difficulty);
+        super(null,playerOne, Bloc.Extend,graphic,difficulty);
+        this.playerTwo = playerTwo;
         addUnderQuest(underQuest);
     }
 

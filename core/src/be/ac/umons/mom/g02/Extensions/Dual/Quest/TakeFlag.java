@@ -1,4 +1,4 @@
-package be.ac.umons.mom.g02.Extensions.Dual;
+package be.ac.umons.mom.g02.Extensions.Dual.Quest;
 
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.People;
