@@ -136,7 +136,7 @@ public class SuperviserNormally implements Observer
            for (Maps plt : Maps.values())
                listMap.put(plt.getMaps(),plt);
            for (NameDialog name : NameDialog.values())
-               listDialog.put(name, new DialogCharacter(name));
+               listDialog.put(name,new DialogCharacter(name,this));
            event = new Event();
            event.add(this,Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons);
            save = new Saving();
@@ -607,7 +607,7 @@ public class SuperviserNormally implements Observer
                 event.notify(new Dialog("ESC"));
             }
             else
-                dialog.analyzeAnswer(answer,this,memoryMobile);
+                dialog.analyzeAnswer(answer,memoryMobile);
         }
 
 
