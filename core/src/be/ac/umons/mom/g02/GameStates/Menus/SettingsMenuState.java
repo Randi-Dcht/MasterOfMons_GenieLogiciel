@@ -47,6 +47,9 @@ public class SettingsMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("transparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Transparent_Background"),
                 new MenuItem(gs.getStringFromId("attackRangeColor"), MenuItemType.ColorChooser, "CS_Attack_Range_Color"),
                 new MenuItem(gs.getStringFromId("recoveringAttackRangeColor"), MenuItemType.ColorChooser, "CS_Recovering_Attack_Range_Color"),
+                new MenuItem(gs.getStringFromId("lifeBarColor"), MenuItemType.ColorChooser, "CS_Life_Bar_Color"),
+                new MenuItem(gs.getStringFromId("experienceBarColor"), MenuItemType.ColorChooser, "CS_Experience_Bar_Color"),
+                new MenuItem(gs.getStringFromId("energyBarColor"), MenuItemType.ColorChooser, "CS_Energy_Bar_Color"),
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
         });
         initDefaultValue(); // TODO : Remove the switch
@@ -88,23 +91,33 @@ public class SettingsMenuState extends MenuState {
                     mi.size.y = (int)(4 * (gs.getNormalFont().getLineHeight() + 3 * topMargin));
                     break;
                 case "CS_Background":
-                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getBackgroundColor()));
-                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
+                    setColorSelectorDefaultValue(mi, settings.getBackgroundColor());
                     break;
                 case "CS_Transparent_Background":
-                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getTransparentBackgroundColor()));
-                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
+                    setColorSelectorDefaultValue(mi, settings.getTransparentBackgroundColor());
                     break;
                 case "CS_Attack_Range_Color":
-                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getAttackRangeColor()));
-                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
+                    setColorSelectorDefaultValue(mi, settings.getAttackRangeColor());
                     break;
                 case "CS_Recovering_Attack_Range_Color":
-                    ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(settings.getRecoveringAttackRangeColor()));
-                    mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
+                    setColorSelectorDefaultValue(mi, settings.getRecoveringAttackRangeColor());
+                    break;
+                case "CS_Life_Bar_Color":
+                    setColorSelectorDefaultValue(mi, settings.getLifeBarColor());
+                    break;
+                case "CS_Experience_Bar_Color":
+                    setColorSelectorDefaultValue(mi, settings.getExperienceBarColor());
+                    break;
+                case "CS_Energy_Bar_Color":
+                    setColorSelectorDefaultValue(mi, settings.getEnergyBarColor());
                     break;
             }
         }
+    }
+
+    protected void setColorSelectorDefaultValue(MenuItem mi, String color) {
+        ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(color));
+        mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
     }
 
     /**
@@ -134,6 +147,15 @@ public class SettingsMenuState extends MenuState {
                     break;
                 case "CS_Recovering_Attack_Range_Color":
                     settings.setRecoveringAttackRangeColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Life_Bar_Color":
+                    settings.setLifeBarColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Experience_Bar_Color":
+                    settings.setExperienceBarColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Energy_Bar_Color":
+                    settings.setEnergyBarColor(((ColorSelector)mi.control).getSelectedColor().toString());
                     break;
             }
         }

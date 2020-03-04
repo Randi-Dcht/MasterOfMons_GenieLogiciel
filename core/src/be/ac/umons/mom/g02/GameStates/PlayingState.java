@@ -212,11 +212,11 @@ public class PlayingState extends GameState implements Observer {
         cam.update();
 
         lifeBar = new LifeBar(gs);
-        lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
+        lifeBar.setForegroundColor(gs.getLifeBarColor());
         expBar = new ProgressBar(gs);
-        expBar.setForegroundColor(new Color(46f / 255, 125f / 255, 50f / 255, .8f));
+        expBar.setForegroundColor(gs.getExperienceBarColor());
         energyBar = new ProgressBar(gs);
-        energyBar.setForegroundColor(new Color(2f / 255, 119f / 255, 189f / 255, .8f));
+        energyBar.setForegroundColor(gs.getEnergyBarColor());
 
         pauseButton = new Button(gim, gs);
         pauseButton.setText("||");
