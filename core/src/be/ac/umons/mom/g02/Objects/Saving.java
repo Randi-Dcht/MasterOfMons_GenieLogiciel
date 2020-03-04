@@ -142,7 +142,7 @@ public class Saving implements Observer
      * Cette méthode permet de reprendre les objets sauvguarder dans un fichier et démarer une nouvelle partie
      * @param file qui est le nom de fichier complet
      */
-    private void playOldParty(String file)
+    public void playOldParty(String file)
     {
         try
         {

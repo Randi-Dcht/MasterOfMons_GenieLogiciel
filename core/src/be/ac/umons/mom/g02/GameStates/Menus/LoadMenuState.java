@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -43,7 +44,7 @@ public class LoadMenuState extends ChooseFolderMenuState {
      * @param loadFilePath The load file's path.
      */
     private void load(String loadFilePath) {
-        // TODO : call the load system
+        SuperviserNormally.getSupervisor().getSave().playOldParty(loadFilePath);
         gsm.removeFirstState();
     }
 }

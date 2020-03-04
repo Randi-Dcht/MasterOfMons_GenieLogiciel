@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.GameStates.Dialogs.InGameDialogState;
+import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.*;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
@@ -637,7 +638,7 @@ public class PlayingState extends GameState implements Observer {
             quickSave();
         }
         if (gim.isKey(Input.Keys.F6, KeyStatus.Pressed))
-            quickLoad();
+            quickLoad(gsm, gs);
 
         if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
@@ -798,9 +799,13 @@ public class PlayingState extends GameState implements Observer {
 
     /**
      * Executed when the user want to quick load a game.
+     * @param gsm The game's state manager (needed for the dialog)
      */
-    public static void quickLoad() {
-        String path = MasterOfMonsGame.settings.getLastSavePath();
-        // TODO : Call load system with last save (automatic or not).
+    public static void quickLoad(GameStateManager gsm, GraphicalSettings gs) {
+        OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+        ogds.setText(gs.getStringFromId("sureLoad"));
+        ogds.addAnswer("yes", () ->
+                SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.settings.getLastSavePath()));
+        ogds.addAnswer("no");
     }
 }

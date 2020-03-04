@@ -135,7 +135,8 @@ public abstract class DialogState extends GameState {
         Button b = new Button(gim, gs);
         b.setText(answer);
         b.setOnClick(() -> {
-            run.run();
+            if (run != null)
+                run.run();
             if (mustQuitWhenAnswered && ! gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
                 gsm.removeFirstState();
         });
