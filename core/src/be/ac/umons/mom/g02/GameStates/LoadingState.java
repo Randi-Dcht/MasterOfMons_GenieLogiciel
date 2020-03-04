@@ -70,6 +70,8 @@ public class LoadingState extends GameState {
      */
     protected Class<? extends GameState> afterLoadingState;
 
+    private boolean changedCalled = false;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -118,8 +120,11 @@ public class LoadingState extends GameState {
             mapsLoaded = gmm.loadNextMap();
             if (mapsLoaded) {
                 sr.end();
-                Gdx.app.postRunnable(() ->
-                    gsm.removeAllStateAndAdd(afterLoadingState));
+                if (! changedCalled) {
+                    Gdx.app.postRunnable(() ->
+                            gsm.removeAllStateAndAdd(afterLoadingState));
+                    changedCalled = true;
+                }
                 return;
             }
         } else

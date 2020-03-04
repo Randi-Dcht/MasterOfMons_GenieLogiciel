@@ -737,11 +737,11 @@ public class PlayingState extends GameState implements Observer {
         if (diag.get(0).equals("ESC")) {
             dialogState = null;
             inventoryShower.setHided(false);
-            gsm.removeFirstState();
+            gsm.removeFirstStateFromStack();
             return;
         }
         if (dialogState == null) {
-            dialogState = (InGameDialogState) gsm.setState(InGameDialogState.class);
+            dialogState = (InGameDialogState) gsm.setStateWithoutAnimation(InGameDialogState.class);
             dialogState.setMustQuitWhenAnswered(false);
             inventoryShower.setHided(true);
         }
