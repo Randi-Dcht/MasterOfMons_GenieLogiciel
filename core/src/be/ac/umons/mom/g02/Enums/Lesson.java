@@ -18,38 +18,38 @@ public enum Lesson
      * ____________________________________________
      * Note of year:
      * -------------
-     * MyFirstYear       ==  1
-     * SuccessfulYear    ==  2
-     * MeetAndLearn      ==  3
-     * PreparedCompany   ==  4
-     * FinishUniversity  ==  5
+     * MyFirstYear       ==  bloc_BA1
+     * SuccessfulYear    ==  bloc_BA2
+     * MeetAndLearn      ==  bloc_BA3
+     * PreparedCompany   ==  bloc_Ma1
+     * FinishUniversity  ==  bloc_MA2
      */
 
     /*Lesson of Bachelor 1*/
     MI1(    'O',"math for computer 1", Maps.GrandAmphi,Bloc.BA1,30),
     MI2(    'O',"math for computer 2", Maps.GrandAmphi,Bloc.BA1,15),
-    algo1(  'O',"algorithm python"   , Maps.DeVinci,Bloc.BA1,   20),
-    algo2(  'F',"algorithm java"     , Maps.DeVinci,Bloc.BA1,   15),
+    algo1(  'O',"algorithm python"   , Maps.DeVinci   ,Bloc.BA1,20),
+    algo2(  'F',"algorithm java"     , Maps.DeVinci   ,Bloc.BA1,15),
     ftOrdi( 'F',"computer operation" , Maps.GrandAmphi,Bloc.BA1,10),
-    projet1('F',"bachelor project 1" , Maps.DeVinci,Bloc.BA1,   10),
+    projet1('F',"bachelor project 1" , Maps.DeVinci   ,Bloc.BA1,10),
 
     /*Lesson of Bachelor 2*/
     nbComplexe('F',"complex number"       , Maps.GrandAmphi,Bloc.BA2,5),
-    opti(      'O',"linear optimization"  , Maps.Poly    ,Bloc.BA2,5),
-    anglais(   'O',"english for sciences" , Maps.Nimy    ,Bloc.BA2,20),
-    OS(        'O',"systeme exploitation" , Maps.Nimy    ,Bloc.BA2,30),
-    projet2(   'F',"projet bachelier 2"   , Maps.Nimy    ,Bloc.BA2,20),
-    calculus2( 'O',"algèbre partie B"     , Maps.Poly    ,Bloc.BA2,15),
-    ecopol(    'F',"economie politique"   , Maps.Warocque,Bloc.BA2,5),
-    reseau(    'O',"reseau"               , Maps.DeVinci ,Bloc.BA2,30),
+    opti(      'O',"linear optimization"  , Maps.Poly      ,Bloc.BA2,5),
+    anglais(   'O',"english for sciences" , Maps.Nimy      ,Bloc.BA2,20),
+    OS(        'O',"operating system"     , Maps.Nimy      ,Bloc.BA2,30),
+    projet2(   'F',"Bachelor project 2"   , Maps.Nimy      ,Bloc.BA2,20),
+    calculus2( 'O',"calculus2"            , Maps.Poly      ,Bloc.BA2,15),
+    ecopol(    'F',"political economics"  , Maps.Warocque  ,Bloc.BA2,5),
+    reseau(    'O',"network"              , Maps.DeVinci   ,Bloc.BA2,30),
 
     /*Lesson of Bachelor 3*/
-    calculProba('O',"calcul de probabilite", Maps.Poly,Bloc.BA3,10),
-    intelligen('O',"intelligence artificielle", Maps.DeVinci,Bloc.BA3,40),
-    compilation('F',"compilation", Maps.Nimy,Bloc.BA3,30),
-    grapheOpti('O',"graphe et optimisation", Maps.Poly,Bloc.BA3,20),
-    baseDonnes('F',"base de données", Maps.Nimy,Bloc.BA3,20),
-    statistique('F',"statistique", Maps.Nimy,Bloc.BA3,10),
+    calculProba('O',"probability calculation" , Maps.Poly    ,Bloc.BA3,10),
+    intelligen( 'O',"artificial intelligence" , Maps.DeVinci ,Bloc.BA3,40),
+    compilation('F',"compilation"             , Maps.Nimy    ,Bloc.BA3,30),
+    grapheOpti( 'O',"graph and optimization"  , Maps.Poly    ,Bloc.BA3,20),
+    baseDonnes( 'F',"data base"               , Maps.Nimy    ,Bloc.BA3,20),
+    statistique('F',"Statistics"              , Maps.Nimy    ,Bloc.BA3,10),
 
     /*Lesson of Master 1 & 2*/
 
