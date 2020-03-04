@@ -9,10 +9,7 @@ import com.badlogic.gdx.Gdx;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 
 /**
@@ -47,13 +44,18 @@ public class DialogCharacter
      * The before answer of the player
      */
     private String before="";
+    /**
+     * This is an instance of the SuperviserNormally
+     */
+    private SuperviserNormally supervisor;
 
     /**
      * This constructor define the dialog of the character
      * @param nameDialog is the name of the dialog with the ID
      */
-    public DialogCharacter(NameDialog nameDialog)//TODO add sp
+    public DialogCharacter(NameDialog nameDialog,SuperviserNormally supervisor)//TODO add sp
     {
+        this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
         addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON");
     }
@@ -148,17 +150,17 @@ public class DialogCharacter
         }
         if (id.equals("ITEMSUSE"))
         {
-            for (Items it : SuperviserNormally.getSupervisor().getAllItems())
+            for (Items it : supervisor.getAllItems())
                 list.add(it.getIdItems());
         }
         else if (id.equals("MAPS"))
-            list.add(SuperviserNormally.getSupervisor().getPeople().getMaps().getInformation());
+            list.add(supervisor.getPeople().getMaps().getInformation());
         else if (id.equals("PLACE"))
             list.add("ESC");
         else if (id.equals("QUEST") || id.equals("RANDOM"))
-            list.add(SuperviserNormally.getSupervisor().getPeople().getQuest().question());
+            list.add(supervisor.getPeople().getQuest().question());
         else if (id.equals("NEXTLESSON") && SuperviserNormally.getSupervisor().getActualCourse() != null)
-            list.add(SuperviserNormally.getSupervisor().getActualCourse().getLesson().location().getInformation());
+            list.add(supervisor.getActualCourse().getLesson().location().getInformation());
         else
             list.add("ESC");
         return list;
@@ -189,7 +191,7 @@ public class DialogCharacter
      * @param mobile is the mobile who speak
      * @param answerID is the answer ID
      */
-    public void analyzeAnswer(String answerID,SuperviserNormally classSp,Mobile mobile)
+    public void analyzeAnswer(String answerID,Mobile mobile)
     {
         if (!answerID.equals(before))
         {
@@ -201,13 +203,13 @@ public class DialogCharacter
             }
             else if (!listDialog.containsKey(answerID))
             {
-                classSp.getEvent().notify(new Dialog("ESC"));
+                supervisor.getEvent().notify(new Dialog("ESC"));
                 //classSp.getEvent().remove(Events.Answer,classSp);TODO
             }
             else if (check(getDialog(answerID)))
-                classSp.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
+                supervisor.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
             else
-                classSp.getEvent().notify(new Dialog(getDialog(answerID)));
+                supervisor.getEvent().notify(new Dialog(getDialog(answerID)));
             before = answerID;
         }
     }
@@ -221,30 +223,37 @@ public class DialogCharacter
     {
         if (specificID.equals("ITEMSGIVE"))
         {
-
-            for (Items its : mobile.getInventory())
-            {
-                if (its.getIdItems().equals(answer))
-                {
-                    SuperviserNormally.getSupervisor().getPeople().pushObject(its);
-                    return;//TODO
-                    //mobile.removeObject(its);
-                }
-            }
-            SuperviserNormally.getSupervisor().getEvent().notify(new Dialog(getDialog("ESC")));
+            Items it = getItems(mobile.getInventory(),answer);
+            if (it != null)
+                supervisor.getPeople().pushObject(it);
+            supervisor.getEvent().notify(new Dialog(getDialog("ESC")));
         }
         if (specificID.equals("ITEMSUSE"))
         {
-           for (Items it : SuperviserNormally.getSupervisor().getAllItems())
-           {
-               if (it.getIdItems().equals(answer))
-               {
-                   SuperviserNormally.getSupervisor().getEvent().notify(new Dialog(it.getIdUse(),"ESC"));
-                   return;//TODO
-               }
-           }
+            Items it = getItems(Arrays.asList(supervisor.getAllItems()),answer);
+            if (it != null)
+                supervisor.getEvent().notify(new Dialog(it.getIdUse(),"ESC"));
+            else
+                supervisor.getEvent().notify(new Dialog("ESC"));
         }
         specificID = null;
+    }
+
+
+    /**
+     * This method allows to give the Items in the list
+     * @param list is a list of the item
+     * @param find is the word who research in list
+     * @return item if found or null
+     */
+    private Items getItems(List<Items> list, String find)
+    {
+        for (Items it : list)
+        {
+            if (it.getIdItems().equals(find))
+                return it;
+        }
+        return null;
     }
 
 
