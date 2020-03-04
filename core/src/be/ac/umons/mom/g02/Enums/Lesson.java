@@ -8,7 +8,7 @@ public enum Lesson
     /*
      * Note of type:
      * -----
-     * O --> course is obligatory to pass a test
+     * O --> course  is   obligatory to pass a test
      * F --> course isn't obligatory to pass a test
      * ____________________________________________
      * Note of number:
