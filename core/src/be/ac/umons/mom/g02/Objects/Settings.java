@@ -29,6 +29,9 @@ public class Settings implements Serializable {
     private String transparentBackgroundColor = "21212180";
     private String attackRangeColor = "FF212180";
     private String recoveringAttackRangeColor = "63636380";
+    private String lifeBarColor = "D50000AF";
+    private String energyBarColor = "689F38AF";
+    private String experienceBarColor = "01579BAF";
 
     private String lastSavePath = null;
 
@@ -127,6 +130,30 @@ public class Settings implements Serializable {
 
     public void setRecoveringAttackRangeColor(String recoveringAttackRangeColor) {
         this.recoveringAttackRangeColor = recoveringAttackRangeColor;
+    }
+
+    public String getEnergyBarColor() {
+        return energyBarColor;
+    }
+
+    public String getExperienceBarColor() {
+        return experienceBarColor;
+    }
+
+    public String getLifeBarColor() {
+        return lifeBarColor;
+    }
+
+    public void setEnergyBarColor(String energyBarColor) {
+        this.energyBarColor = energyBarColor;
+    }
+
+    public void setLifeBarColor(String lifeBarColor) {
+        this.lifeBarColor = lifeBarColor;
+    }
+
+    public void setExperienceBarColor(String experienceBarColor) {
+        this.experienceBarColor = experienceBarColor;
     }
 
     public void setLastSavePath(String lastSavePath) {

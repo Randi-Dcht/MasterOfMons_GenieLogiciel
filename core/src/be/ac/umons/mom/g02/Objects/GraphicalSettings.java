@@ -57,6 +57,9 @@ public class GraphicalSettings {
     protected Color transparentBackgroundColor;
     protected Color attackRangeColor;
     protected Color recoveringAttackRangeColor;
+    protected Color lifeBarColor;
+    protected Color energyBarColor;
+    protected Color experienceBarColor;
 
     public GraphicalSettings() {
         init();
@@ -78,6 +81,9 @@ public class GraphicalSettings {
         transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
         attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getAttackRangeColor());
         recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getRecoveringAttackRangeColor());
+        lifeBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getLifeBarColor());
+        energyBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getEnergyBarColor());
+        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getExperienceBarColor());;
     }
 
     /**
@@ -262,5 +268,17 @@ public class GraphicalSettings {
 
     public Color getRecoveringAttackRangeColor() {
         return recoveringAttackRangeColor;
+    }
+
+    public Color getEnergyBarColor() {
+        return energyBarColor;
+    }
+
+    public Color getExperienceBarColor() {
+        return experienceBarColor;
+    }
+
+    public Color getLifeBarColor() {
+        return lifeBarColor;
     }
 }

@@ -130,17 +130,18 @@ public class Character extends OnMapObject {
      * @return The texture to use when drawing the character
      */
     public Texture getTexture() {
+        String s = "Pictures/Characters/" + characteristics.toString();
         switch (orientation) {
             case Top:
-                return ((posY < 0 ? -posY : posY) / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/hautbh.png") : assetManager.get("Pictures/Characters/hautbh2.png");
+                return ((posY < 0 ? -posY : posY) / 100) % 2 == 1 ? assetManager.get(s + "haut.png") : assetManager.get(s + "haut2.png");
             case Bottom:
-                return ((posY < 0 ? -posY : posY) / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/basbh.png") : assetManager.get("Pictures/Characters/basbh2.png");
+                return ((posY < 0 ? -posY : posY) / 100) % 2 == 1 ? assetManager.get(s + "bas.png") : assetManager.get(s + "bas2.png");
             case Left:
-                return ((posX < 0 ? -posX : posX) / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/gauchebh.png") : assetManager.get("Pictures/Characters/gauchebh2.png");
+                return ((posX < 0 ? -posX : posX) / 100) % 2 == 1 ? assetManager.get(s + "gauche.png") : assetManager.get(s + "gauche2.png");
             case Right:
-                return ((posX < 0 ? -posX : posX) / 100) % 2 == 1 ? assetManager.get("Pictures/Characters/droitebh.png") : assetManager.get("Pictures/Characters/droitebh2.png");
+                return ((posX < 0 ? -posX : posX) / 100) % 2 == 1 ? assetManager.get(s + "droite.png") : assetManager.get(s + "droite2.png");
         }
-        return assetManager.get("Characters/hautbh.png");
+        return assetManager.get(s + "haut.png");
     }
 
     /**

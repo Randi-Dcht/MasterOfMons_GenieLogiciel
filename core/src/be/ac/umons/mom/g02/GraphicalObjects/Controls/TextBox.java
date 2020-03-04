@@ -137,10 +137,20 @@ public class TextBox extends Control {
                 }
             }
             if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed) && actualText.length() > 0) {
-                actualText = actualText.substring(0, actualText.length() - 1);
-                if (selectedPosition > actualText.length()) {
+                if (selectedPosition == 0)
+                    return;
+                else if (selectedPosition == 1)
+                    actualText = actualText.substring(1);
+                else if (selectedPosition == actualText.length())
+                    actualText = actualText.substring(0, actualText.length() - 1);
+                else
+                    actualText = actualText.substring(0, selectedPosition - 1) + actualText.substring(selectedPosition);
+                selectedPosition--;
+                if (selectedPosition > actualText.length())
                     selectedPosition = actualText.length();
-                }
+                else if (selectedPosition < 0)
+                    selectedPosition = 0;
+
             }
         }
     }

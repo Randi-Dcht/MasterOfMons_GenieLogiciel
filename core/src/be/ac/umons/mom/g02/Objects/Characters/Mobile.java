@@ -204,4 +204,14 @@ public class Mobile extends Character implements Serializable, FrameTime
     {
         myObject.addAll(Arrays.asList(items));
     }
+
+    /**
+     * This method allows to say the picture of the mobile
+     * @return the start name of the picture
+     */
+    @Override
+    public String toString()
+    {
+        return "bh_H_sa_";
+    }
 }

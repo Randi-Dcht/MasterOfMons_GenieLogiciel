@@ -91,7 +91,6 @@ public class InventoryShower extends Control {
     public InventoryShower(GameInputManager gim, GraphicalSettings gs, Player inventoryOf) {
         super(gim, gs);
         inventory = inventoryOf.getInventory();
-        inventory.add(new Phone());
         this.am = AnimationManager.getInstance();
         init();
     }
