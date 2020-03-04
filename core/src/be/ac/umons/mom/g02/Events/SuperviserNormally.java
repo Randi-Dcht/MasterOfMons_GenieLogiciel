@@ -1,8 +1,21 @@
 package be.ac.umons.mom.g02.Events;
 
 import be.ac.umons.mom.g02.Dialog.DialogCharacter;
-import be.ac.umons.mom.g02.Enums.*;
-import be.ac.umons.mom.g02.Events.Notifications.*;
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Difficulty;
+import be.ac.umons.mom.g02.Enums.Gender;
+import be.ac.umons.mom.g02.Enums.Lesson;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Enums.State;
+import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Events.Notifications.Dialog;
+import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
+import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
 import be.ac.umons.mom.g02.Objects.Course;
@@ -61,71 +74,79 @@ public class SuperviserNormally implements Observer
         /**
          * The people who play this party
          */
-        private People people;
+        protected People playerOne;
         /**
          * The all objects in all maps in this game
          */
-        private HashMap<Maps,ArrayList<Items>> listItems;
+        protected HashMap<Maps,ArrayList<Items>> listItems;
         /**
          * The all mobile - PNJ (not moving) in this game
          */
-        private HashMap<Maps,ArrayList<Mobile>> listMobile;
+        protected HashMap<Maps,ArrayList<Mobile>> listMobile;
         /**
          * The all mobile who moves in this game
          */
-        private HashMap<Maps,ArrayList<MovingPNJ>> listMoving;
+        protected HashMap<Maps,ArrayList<MovingPNJ>> listMoving;
         /**
          * This is a lst of the mobile dead
          */
-        private ArrayList<Mobile> deadMobile = new ArrayList<>();
+        protected ArrayList<Mobile> deadMobile = new ArrayList<>();
         /**
          * This the class who save the game in real time
          */
-        private Saving save;
+        protected Saving save;
         /**
          * This is the instance of the Graphic
          */
-        private GraphicalSettings graphic;
+        protected GraphicalSettings graphic;
         /**
          * This is the time in the game
          */
-        private TimeGame time;
+        protected TimeGame time;
         /**
          * This is the events instance
          */
-        private Event event;
+        protected Event event;
         /**
          * Associate String to maps
          */
-        private HashMap<String, Maps> listMap = new HashMap<>();
+        protected HashMap<String, Maps> listMap = new HashMap<>();
         /**
          * Associate Bloc to Lesson
          */
-        private HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<Bloc, ArrayList<Lesson>>();
+        protected HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<Bloc, ArrayList<Lesson>>();
         /**
          * The all instance of the dialog in the game
          */
-        private HashMap<NameDialog,DialogCharacter> listDialog = new HashMap<>();
+        protected HashMap<NameDialog,DialogCharacter> listDialog = new HashMap<>();
         /**
          * when the attack is the mobile
          */
-        private Mobile memoryMobile;
+        protected Mobile memoryMobile;
         /**
          * The instance of the regulator class*
          */
-        private Regulator regule;
+        protected Regulator regulator;
         /**
          * This the actual variable of the Id on the maps
          */
-        private String actualID;
-        /***/
-        private ArrayList<Course> listCourse;
-        /***/
-        private Course actualCourse;
-        /***/
-        private ArrayList<FrameTime> listUpdate = new ArrayList<>();
-        /***/
-        private DialogCharacter dialog;
+        protected String actualID;
+        /**
+         * This is the list of the course of the player
+         */
+        protected ArrayList<Course> listCourse;
+        /**
+         * This is the actual course of player
+         */
+        protected Course actualCourse;
+        /**
+         * This is a list with the class to update between every changed frames
+         */
+        protected ArrayList<FrameTime> listUpdate = new ArrayList<>();
+        /**
+         * This is the dialog instance
+         */
+        protected DialogCharacter dialog;
 
 
        /**
@@ -150,7 +171,7 @@ public class SuperviserNormally implements Observer
          */
         public  People getPeople()
         {
-            return people;
+            return playerOne;
         }
 
 
@@ -221,14 +242,14 @@ public class SuperviserNormally implements Observer
         public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
         {
             time = new TimeGame(new Date(16,9,2019,8,15));
-            people = new People(namePlayer,type, gender,difficulty);
+            playerOne = new People(namePlayer,type, gender,difficulty);
             this.graphic = graphic;
-            MasterQuest mQ = new MyFirstYear(people,null,graphic,difficulty);
-            people.newQuest(mQ);
-            save.setSaving(people);
+            MasterQuest mQ = new MyFirstYear(playerOne,null,graphic,difficulty);
+            playerOne.newQuest(mQ);
+            save.setSaving(playerOne);
             refreshQuest();
-            regule = new Regulator(people,time);
-            listCourse = people.getPlanning().get(time.getDate().getDay());
+            regulator = new Regulator(playerOne,time);
+            listCourse = playerOne.getPlanning().get(time.getDate().getDay());
             checkPlanning();
         }
 
@@ -243,7 +264,7 @@ public class SuperviserNormally implements Observer
          /***/
          public Regulator getRegale()
          {
-             return regule;
+             return regulator;
          }
 
 
@@ -270,7 +291,7 @@ public class SuperviserNormally implements Observer
         private void refreshList(Maps maps)
         {
             listUpdate = new ArrayList<>();
-            listUpdate.add(people);
+            listUpdate.add(playerOne);
             //listUpdate.addAll(getMobile(maps));TODO
             listUpdate.addAll(getMovingPnj(maps));
             //listUpdate.addAll(getItems(maps));TODO
@@ -294,7 +315,7 @@ public class SuperviserNormally implements Observer
          */
         public void setQuest(QuestShower qs)
         {
-            qs.setQuest(people.getQuest());
+            qs.setQuest(playerOne.getQuest());
         }
 
 
@@ -307,7 +328,7 @@ public class SuperviserNormally implements Observer
         public void oldGame(People people, Date date,Saving save)
         {
             time = new TimeGame(date);
-            this.people  = people;
+            this.playerOne = people;
             this.save    = save;
             refreshQuest();
         }
@@ -365,9 +386,9 @@ public class SuperviserNormally implements Observer
                 actualID = id;
                 String[] word = id.split("_");
                 if (word[0].equals("Room") && word.length >= 3)
-                    regule.placeInOut(word[2],word[1]);
+                    regulator.placeInOut(word[2],word[1]);
                 else if (word[0].equals("Info") && word.length >= 2)
-                    regule.push(word[1]);
+                    regulator.push(word[1]);
                 else
                     throw new Exception();
             }
@@ -398,9 +419,9 @@ public class SuperviserNormally implements Observer
          */
         public void refreshQuest()
         {
-            createItems(people.getQuest());
-            createMobil(people.getQuest());
-            createMovingPnj(people.getDifficulty());
+            createItems(playerOne.getQuest());
+            createMobil(playerOne.getQuest());
+            createMovingPnj(playerOne.getDifficulty());
         }
 
 
@@ -416,7 +437,7 @@ public class SuperviserNormally implements Observer
                 Mobile mb = (Mobile)notify.getBuffer();
                 listMobile.get(mb.getMaps()).remove(mb);
                 deadMobile.add(mb);
-                people.winExperience(mb);
+                playerOne.winExperience(mb);
                 if (mb.equals(memoryMobile))
                     memoryMobile = null;
             }
@@ -430,7 +451,7 @@ public class SuperviserNormally implements Observer
                 refreshQuest();
 
             if (notify.getEvents().equals(Events.ChangeDay))
-                listCourse = people.getPlanning().get(time.getDate().getDay());
+                listCourse = playerOne.getPlanning().get(time.getDate().getDay());
 
             if (notify.getEvents().equals(Events.ChangeHour))
                 checkPlanning();
@@ -464,11 +485,11 @@ public class SuperviserNormally implements Observer
         public void addItems(Items items)
         {
             if (items != null)
-                people.pushObject(items);
+                playerOne.pushObject(items);
             else
             {
-                ArrayList<Items> list = listItems.get(people.getMaps());
-                people.pushObject(list.get(new Random().nextInt(list.size())));
+                ArrayList<Items> list = listItems.get(playerOne.getMaps());
+                playerOne.pushObject(list.get(new Random().nextInt(list.size())));
             }
         }
 
@@ -581,7 +602,7 @@ public class SuperviserNormally implements Observer
             }
             Actions action = player1.getAction().comparable(player2.getAction());
             if (action.equals(Actions.Attack))
-                attackMethod(memoryMobile,people);
+                attackMethod(memoryMobile, playerOne);
             else if (action.equals(Actions.Dialog))
             {
                 event.add(Events.Answer,this);
@@ -603,7 +624,7 @@ public class SuperviserNormally implements Observer
             }
             if (answer.equals("Attack"))
             {
-                attackMethod(people,memoryMobile);
+                attackMethod(playerOne,memoryMobile);
                 event.notify(new Dialog("ESC"));
             }
             else

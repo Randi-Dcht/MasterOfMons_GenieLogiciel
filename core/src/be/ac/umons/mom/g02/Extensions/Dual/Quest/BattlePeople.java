@@ -1,12 +1,15 @@
-package be.ac.umons.mom.g02.Extensions.Dual;
+package be.ac.umons.mom.g02.Extensions.Dual.Quest;
 
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 
-public class MoreCasesMons extends UnderQuest {
-    public MoreCasesMons(String name, double max, Quest master, People people) {
+public class BattlePeople extends UnderQuest
+{
+
+    public BattlePeople(String name, double max, Quest master, People people)
+    {
         super(name, max, master,people);
     }
 
@@ -14,6 +17,7 @@ public class MoreCasesMons extends UnderQuest {
     public void evenActivity(Notification notify) {
 
     }
+
 
 
     @Override
