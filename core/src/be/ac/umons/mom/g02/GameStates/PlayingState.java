@@ -614,7 +614,7 @@ public class PlayingState extends GameState implements Observer {
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.setState(InGameMenuState.class);
-        if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Down)) {
+        if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
             DebugMenuState dms = (DebugMenuState) gsm.setState(DebugMenuState.class);
             dms.setPlayingState(this);
         }

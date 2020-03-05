@@ -59,6 +59,8 @@ public class QuestProgressCircle {
         this.quest = quest;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
+        lastDegrees = 0;
+        duringAnimationCircleDegrees = 0;
     }
 
     /**
@@ -74,14 +76,14 @@ public class QuestProgressCircle {
         else
             degrees = (float)quest.getProgress() * 360;
 
-        if (! isBeingAnimated && degrees - lastDegrees > 1E-2) {
+        if (! isBeingAnimated && degrees - lastDegrees > 1E-8) {
             beginAnimation();
-            duringAnimationCircleDegrees = lastDegrees;
-            degrees = lastDegrees;
             DoubleAnimation da = new DoubleAnimation(lastDegrees, degrees, 2 * degrees - lastDegrees);
             da.setRunningAction(() -> setDuringAnimationCircleDegrees(da.getActual().floatValue()));
             da.setEndingAction(this::finishAnimation);
             AnimationManager.getInstance().addAnAnimation("QuestProgressCircleDegreesAnimation_" + quest.getName(), da);
+            duringAnimationCircleDegrees = lastDegrees;
+            degrees = lastDegrees;
         }
 
         lastDegrees = degrees;
