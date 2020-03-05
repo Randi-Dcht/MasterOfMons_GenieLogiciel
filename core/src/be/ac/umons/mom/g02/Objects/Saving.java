@@ -120,12 +120,13 @@ public class Saving implements Observer
         try
         {
             ObjectInputStream entree;
-            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(path + file ))));
+            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file))));
             people = (People) entree.readObject();
             be.ac.umons.mom.g02.Other.Date date = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
 
-            SuperviserNormally.getSupervisor().oldGame(people, date,this);
+            SuperviserNormally.getSupervisor().oldGame(people,date);
             SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+            path = file;
         }
         catch(ClassNotFoundException | IOException e)
         {

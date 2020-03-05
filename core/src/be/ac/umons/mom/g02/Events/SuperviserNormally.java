@@ -324,14 +324,14 @@ public class SuperviserNormally implements Observer
          * This method allows to start an old game
          * @param people is the people of the game
          * @param  date is the actually date
-         * @param save  is the class of the saving
          */
-        public void oldGame(People people, Date date,Saving save)
+        public void oldGame(People people, Date date)
         {
             time = new TimeGame(date);
             this.playerOne = people;
-            this.save    = save;
             refreshQuest();
+
+            System.out.println(people.getPlace() + people.toString() + people.getMaps() + people.getQuest());//TODO
         }
 
 
