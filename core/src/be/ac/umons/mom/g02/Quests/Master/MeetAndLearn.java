@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -109,7 +110,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public String getName()
     {
-        return graphic.getStringFromId("nameMeetLearn");
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMeetLearn");
     }
 
 

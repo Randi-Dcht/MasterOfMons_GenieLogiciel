@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Lesson;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -51,7 +52,7 @@ public class FinishUniversity extends MasterQuest {
      * @return a question who is a string
      */
     public String question() {
-        return graphic.getStringFromId("answerMasterSecond");
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMasterSecond");
     }
 
     @Override
@@ -96,7 +97,7 @@ public class FinishUniversity extends MasterQuest {
      * @return name who is a string
      */
     public String getName() {
-        return graphic.getStringFromId("nameMasterSecond");
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMasterSecond");
     }
 }
 

@@ -1,10 +1,12 @@
 package be.ac.umons.mom.g02.Other;
 
+import java.io.Serializable;
+
 /**
  * This define a date with day-moth-year and hour-min
  * @author Umons_Group_2_ComputerScience
  */
-public class Date
+public class Date implements Serializable
 {
     private int year;
     private int day;

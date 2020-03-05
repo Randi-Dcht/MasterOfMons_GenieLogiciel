@@ -26,12 +26,9 @@ import com.badlogic.gdx.Gdx;
  */
 public class Saving implements Observer
 {
-    private String nameSave;
-    private String oldSave;
     private People people;
-    private be.ac.umons.mom.g02.Other.Date date;
-    private DateFormat format = new SimpleDateFormat("dd/MM/yy_HH:mm:ss");//TODO : modifier en fct
     private String path = "/tmp/";
+    private String defaltName= "MasterOfMons_Save_NoneName.mom";
 
 
     /**
@@ -51,39 +48,14 @@ public class Saving implements Observer
 
 
     /**
-     * This method allows to play in the old game who is saving.
-     * @param oldSave who is the full name of the saving (with the timeDate).
-     */
-    public Saving(String oldSave)
-    {
-        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
-        this.oldSave = oldSave;
-        nameSave = cleanName(oldSave,0);
-        playOldParty(oldSave);
-    }
-
-
-    /**
-     * This method allows to clean the String of the file.
-     * @param name who is teh name to clean
-     * @param who who is maps of word to return
-     * @return word of name, after clean.
-     */
-    private String cleanName(String name,int who)
-    {
-        String[] list = name.split("_");
-        return list[who];
-    }
-
-
-    /**
      * This method who is called to save this party
      */
     public void signal()
     {
-        Date date = new Date();
-        oldSave =  nameSave+"_"+format.format(date);
-        /*newSave(people,oldSave);*/ System.out.println("False save automatic : "+ oldSave );
+        if (defaltName == null)
+            newSave(people,path,SuperviserNormally.getSupervisor().getTime().getDate());
+        else
+            newSave(people,defaltName,SuperviserNormally.getSupervisor().getTime().getDate());
     }
 
 
@@ -92,7 +64,8 @@ public class Saving implements Observer
      */
     public void setNameSave(String name)
     {
-        this.nameSave = name;
+        path = name;
+        defaltName = null;
     }
 
 
@@ -106,7 +79,7 @@ public class Saving implements Observer
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path +"MasterOfMons_"+ file +"_Party.save"))));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(file))));
             sortie.writeObject(people);
             sortie.writeObject(date);
             sortie.close();
@@ -147,11 +120,12 @@ public class Saving implements Observer
         try
         {
             ObjectInputStream entree;
-            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(path + file + ".mom"))));
+            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(path + file ))));
             people = (People) entree.readObject();
-            date   = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
+            be.ac.umons.mom.g02.Other.Date date = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
 
-            SuperviserNormally.getSupervisor().oldGame(people,date,this);
+            SuperviserNormally.getSupervisor().oldGame(people, date,this);
+            SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
         }
         catch(ClassNotFoundException | IOException e)
         {
@@ -167,7 +141,6 @@ public class Saving implements Observer
     @Override
     public void update(Notification notify)
     {
-        if (nameSave != null)
-            signal();
+        signal();
     }
 }

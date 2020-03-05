@@ -2,13 +2,14 @@ package be.ac.umons.mom.g02.Objects;
 
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Enums.Lesson;
+import java.io.Serializable;
 
 
 /**
  * This class define the course who is an associate between lesson and date
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public class Course
+public class Course implements Serializable
 {
     /**
      * The lesson of this course (enum)

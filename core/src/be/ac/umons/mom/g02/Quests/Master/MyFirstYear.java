@@ -47,7 +47,7 @@ public class MyFirstYear extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new SuccessfulYear(people,this,graphic,difficulty));
+        newQuest(new SuccessfulYear(people,this,null,difficulty));
     }
 
 
@@ -118,7 +118,7 @@ public class MyFirstYear extends MasterQuest
      */
     public String getName()
     {
-        return graphic.getStringFromId("nameMyFirstYear");
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMyFirstYear");
     }
 
 

@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Quests.Master;
 
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -39,7 +40,7 @@ public class PreparedCompany extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new FinishUniversity(people,this,graphic,difficulty));
+        newQuest(new FinishUniversity(people,this,null,difficulty));
     }
 
 
@@ -49,7 +50,7 @@ public class PreparedCompany extends MasterQuest
      */
     public String question()
     {
-        return graphic.getStringFromId("answerMasterOne");
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMasterOne");
     }
 
     @Override
@@ -121,7 +122,7 @@ public class PreparedCompany extends MasterQuest
      */
     public String getName()
     {
-        return graphic.getStringFromId("nameMasterOne");
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMasterOne");
     }
 }
 

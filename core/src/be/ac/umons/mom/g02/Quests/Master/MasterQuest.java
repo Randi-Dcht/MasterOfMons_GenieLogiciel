@@ -71,7 +71,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /**
      * This the instance of the graphic
      */
-    protected GraphicalSettings graphic;
+    //protected GraphicalSettings graphic;
     /**
      * This is the difficulty of the quest
      */
@@ -97,7 +97,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         numberQuest++;
         this.people = people;
         this.bloc = bloc;
-        this.graphic = graphic;
+       // this.graphic = graphic;
         this.maxPercent = difficulty.getMaxPercent();
         this.difficulty = difficulty;
     }

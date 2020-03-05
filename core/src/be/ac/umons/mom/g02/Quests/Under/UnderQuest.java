@@ -42,7 +42,7 @@ public abstract class UnderQuest implements Quest,Serializable
     /**
      * This is the instance of the superNormally
      */
-    protected SuperviserNormally instance;
+    //protected SuperviserNormally instance;
 
 
     /**
@@ -58,7 +58,7 @@ public abstract class UnderQuest implements Quest,Serializable
         percentMax  = max;
         this.master = master;
         this.people = people;
-        instance    = SuperviserNormally.getSupervisor();
+        //instance    = SuperviserNormally.getSupervisor();
     }
 
 

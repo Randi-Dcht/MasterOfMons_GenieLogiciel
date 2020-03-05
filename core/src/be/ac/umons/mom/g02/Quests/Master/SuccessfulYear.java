@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
@@ -49,7 +50,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new MeetAndLearn(people,this,graphic,difficulty));
+        newQuest(new MeetAndLearn(people,this,null,difficulty));
     }
 
 
@@ -113,7 +114,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public String getName()
     {
-        return graphic.getStringFromId("nameSuccessFulYear");
+        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameSuccessFulYear");
     }
 
 
