@@ -31,7 +31,7 @@ public class Saving implements Observer
     private People people;
     private be.ac.umons.mom.g02.Other.Date date;
     private DateFormat format = new SimpleDateFormat("dd/MM/yy_HH:mm:ss");//TODO : modifier en fct
-    final static String prefixe = ""; //TODO : à modifier
+    private String path = "/tmp/";
 
 
     /**
@@ -106,7 +106,7 @@ public class Saving implements Observer
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe + file+".mom"))));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path +"MasterOfMons_"+ file +"_Party.save"))));
             sortie.writeObject(people);
             sortie.writeObject(date);
             sortie.close();
@@ -127,7 +127,7 @@ public class Saving implements Observer
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(prefixe +nameSave+"_Settings"+".mom"))));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path +"MasterOfMons_Settings.save"))));
             sortie.writeObject(setting);
             sortie.close();
         }
@@ -139,15 +139,15 @@ public class Saving implements Observer
 
 
     /**
-     * Cette méthode permet de reprendre les objets sauvguarder dans un fichier et démarer une nouvelle partie
-     * @param file qui est le nom de fichier complet
+     * This method allows you to resume the objects saved in a file and start a new game.
+     * @param file which is the full file name
      */
     public void playOldParty(String file)
     {
         try
         {
             ObjectInputStream entree;
-            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(prefixe + file+".mom"))));
+            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(path + file + ".mom"))));
             people = (People) entree.readObject();
             date   = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
 
