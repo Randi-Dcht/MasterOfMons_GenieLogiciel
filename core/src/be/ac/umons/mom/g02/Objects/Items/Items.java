@@ -63,16 +63,6 @@ public abstract class Items implements Serializable, FrameTime
 
 
     /**
-     * This method allows to take the items by the people
-     */
-    public void takeItem()
-    {
-        if(visible)
-            visible = false;
-    }
-
-
-    /**
      * This method allows to said if the items is obsolete
      * @return number
      */

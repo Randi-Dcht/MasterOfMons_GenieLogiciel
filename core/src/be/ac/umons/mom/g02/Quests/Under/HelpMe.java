@@ -1,8 +1,9 @@
 package be.ac.umons.mom.g02.Quests.Under;
 
-import be.ac.umons.mom.g02.Objects.Characters.People;
+
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 
 public class HelpMe extends UnderQuest
@@ -34,8 +35,7 @@ public class HelpMe extends UnderQuest
        * @param mobile is the mobile who have help
        */
       private void goToPnj(Mobile mobile)
-      {
-      }
+      {}
 
 
 

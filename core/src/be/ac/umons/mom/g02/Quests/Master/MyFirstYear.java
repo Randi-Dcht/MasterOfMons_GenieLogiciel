@@ -11,10 +11,7 @@ import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
-import be.ac.umons.mom.g02.Quests.Under.BattleForPlace;
-import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
-import be.ac.umons.mom.g02.Quests.Under.MeetManyPeople;
-import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
+import be.ac.umons.mom.g02.Quests.Under.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,7 +26,7 @@ public class MyFirstYear extends MasterQuest
     /**
      * This is the goals of this MasterQuest
      */
-    final UnderQuest[] underQuest = {new GoToLesson(this,33,people),new MeetManyPeople(this,34,people),new BattleForPlace(this,33,people)};
+    final UnderQuest[] underQuest = {new GoTo(this,10,people),new GoToLesson(this,23,people),new MeetManyPeople(this,34,people),new BattleForPlace(this,33,people)};
 
 
     /**
