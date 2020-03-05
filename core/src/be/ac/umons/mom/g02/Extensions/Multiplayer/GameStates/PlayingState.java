@@ -10,7 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 /**
- * L'état de jeu du jeu. Il affiche la carte, deux joueurs ainsi qu'un HUD.
+ * The state of play of the game. It displays the map, two players and a HUD.
  */
 public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
@@ -20,11 +20,11 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     private int defaultCamYPos;
 
     /**
-     * Crée un nouvel état de jeu.
+     * Create a new game state.
      *
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs  Les paramètres graphiques à utiliser.
+     * @param gsm The GameStateManager of the game.
+     * @param gim The GameInputManager of the game.
+     * @param gs  The graphic parameters to use.
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
