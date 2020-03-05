@@ -6,12 +6,22 @@ import be.ac.umons.mom.g02.Enums.Lesson;
 
 /**
  * This class define the course who is an associate between lesson and date
- * @author Umons_Group_2_ComputerScience
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public class Course
 {
+    /**
+     * The lesson of this course (enum)
+     */
     private Lesson lesson;
+    /**
+     * The date of the lesson
+     */
     private Date date;
+    /**
+     * If the people go to the lesson
+     */
+    private boolean go = false;
 
 
     /**
@@ -36,11 +46,34 @@ public class Course
     }
 
 
-    /***/
+    /**
+     * This method is called when the people go to the lesson
+     */
+    public void goCourse()
+    {
+        go = true;
+    }
+
+
+    /**
+     * This method returns the boolean if the people go the course
+     * @return boolean if people isGo
+     */
+    public boolean isGo()
+    {
+        return go;
+    }
+
+
+    /**
+     * This method returns the date of the course
+     * @return the date
+     */
     public Date getDate()
     {
         return date;
     }
+
 
     /**
      * This method allows to give the full name of the course with:

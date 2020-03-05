@@ -224,7 +224,10 @@ public class Regulator implements Observer
             }
 
             if (advanceTime())
+            {
+                manager.getActualCourse().goCourse();
                 time.refreshTime(0,2,0);
+            }
         }
 
 
