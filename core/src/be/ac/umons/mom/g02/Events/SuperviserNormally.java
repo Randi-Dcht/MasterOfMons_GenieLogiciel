@@ -325,13 +325,15 @@ public class SuperviserNormally implements Observer
          * @param people is the people of the game
          * @param  date is the actually date
          */
-        public void oldGame(People people, Date date)
+        public void oldGame(People people, Date date,GraphicalSettings graphic)
         {
             time = new TimeGame(date);
             this.playerOne = people;
+            listCourse = people.getPlanning().get(date.getDay());
+            this.graphic = graphic;
+            regulator= new Regulator(playerOne,time);
             refreshQuest();
-
-            System.out.println(people.getPlace() + people.toString() + people.getMaps() + people.getQuest());//TODO
+            checkPlanning();
         }
 
 

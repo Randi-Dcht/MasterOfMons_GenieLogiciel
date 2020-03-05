@@ -115,7 +115,7 @@ public class Saving implements Observer
      * This method allows you to resume the objects saved in a file and start a new game.
      * @param file which is the full file name
      */
-    public void playOldParty(String file)
+    public void playOldParty(String file ,GraphicalSettings gs)
     {
         try
         {
@@ -123,8 +123,7 @@ public class Saving implements Observer
             entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file))));
             people = (People) entree.readObject();
             be.ac.umons.mom.g02.Other.Date date = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
-
-            SuperviserNormally.getSupervisor().oldGame(people,date);
+            SuperviserNormally.getSupervisor().oldGame(people,date,gs);
             SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
             path = file;
         }

@@ -805,7 +805,7 @@ public class PlayingState extends GameState implements Observer {
         OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
         ogds.setText(gs.getStringFromId("sureLoad"));
         ogds.addAnswer("yes", () ->
-                SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.settings.getLastSavePath()));
+                SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.settings.getLastSavePath(),gs));
         ogds.addAnswer("no");
     }
 }
