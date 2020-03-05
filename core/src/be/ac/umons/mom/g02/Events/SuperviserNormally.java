@@ -476,10 +476,6 @@ public class SuperviserNormally implements Observer
             for (FrameTime up : listUpdate)
                 up.update(dt);
             deadMobile.removeIf(Character::isLiving);
-
-            //TODO delete:
-            for (Quest u : getPeople().getQuest().getSubQuests())
-                u.addProgress(0.1);
         }
 
 
