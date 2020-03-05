@@ -141,6 +141,18 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     }
 
 
+    /**
+     * This method allows to pass this Quest (#debug#)
+     */
+    public void passQuest()
+    {
+        percent  = maxPercent;
+        finished = true;
+        nextQuest();
+        for (UnderQuest under : underQuest)
+            under.passQuest();
+    }
+
 
     /***/
     protected void createListItems(Class<Items>[] list,int[] cmb) throws Exception

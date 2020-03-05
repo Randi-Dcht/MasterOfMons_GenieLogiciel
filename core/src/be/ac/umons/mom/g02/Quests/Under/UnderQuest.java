@@ -72,6 +72,12 @@ public abstract class UnderQuest implements Quest,Serializable
     }
 
 
+    public void passQuest()
+    {
+        progress = percentMax;
+        finish   = true;
+    }
+
     /**
      * This method check if the actual Quest is finish with the percent
      */

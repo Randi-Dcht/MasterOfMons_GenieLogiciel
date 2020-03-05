@@ -1,9 +1,11 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 
+import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 
 /***
  * This class define the menu to choose in the Dual extension
@@ -35,13 +37,13 @@ public class DualChooseMenu extends MenuState
 
         setMenuItems(new MenuItem[]
                 {
-                        new MenuItem("Menu of Choose",MenuItemType.Title),
-                        new MenuItem("Combat",MenuItemType.Button),
-                        new MenuItem("Flag",MenuItemType.Button),
-                        new MenuItem("Survivor",MenuItemType.Button),
-                        new MenuItem("Occupation",MenuItemType.Button),
-                        new MenuItem("Main",MenuItemType.Button),
-                        new MenuItem("Quit",MenuItemType.Button)
+                        new MenuItem("Menu of Choose",MenuItemType.Title, () -> gsm.removeAllStateAndAdd(PlayDual.class)),
+                        new MenuItem("Combat"        ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+                        new MenuItem("Flag"          ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+                        new MenuItem("Survivor"      ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+                        new MenuItem("Occupation"    ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+                        new MenuItem("Main"          ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(MainMenuState.class)),
+                        new MenuItem("Quit"          ,MenuItemType.Button,() -> Gdx.app.exit())
                 });
     }
 }
