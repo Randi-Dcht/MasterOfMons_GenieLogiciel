@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -41,6 +42,7 @@ public class DebugMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Button, () -> ps.debugMakeInvincible()),
                 new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Button),
                 new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button, () -> gsm.setState(DebugGetObject.class, true)),
+                new MenuItem(gs.getStringFromId("debugNextQuest"), MenuItemType.Button, () -> SuperviserNormally.getSupervisor().getPeople().getQuest().passQuest()),
                 new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> gsm.removeFirstState())
         });
     }
