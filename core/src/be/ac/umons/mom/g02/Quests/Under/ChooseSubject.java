@@ -1,29 +1,24 @@
 package be.ac.umons.mom.g02.Quests.Under;
 
 import be.ac.umons.mom.g02.Enums.Subject;
+import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ChooseSubject extends UnderQuest
 {
     public Subject subject;
+    public ArrayList choice=new ArrayList();
     public ChooseSubject(Quest q, People people)
     {
         super("ChooseSubject", 50, q,people);
     }
 
-    public String showSubject()
-    {
-        String res="";
-        for (Subject sub :Subject.values())
-        {
-            res=res+sub+", \n";
-        }
-        return res;
-        //on appelle cette methode dans une bulle de dialogue et ça permet de savoir les sujets disponible
-    }
 
     /**
      * This method show the subject of the memory
@@ -32,9 +27,14 @@ public class ChooseSubject extends UnderQuest
      */
     public String displayChoice()
     {
+        choice.add("Please, choice your subject");
+        choice.add(subject.crepro);
+        choice.add(subject.crelang);
+        choice.add(subject.infauto);
+        SuperviserNormally.getSupervisor().getEvent().notify(new Dialog(choice));
         String subject="";
         for (Subject sub : Subject.values()) {
-            subject=subject+" , "+sub;
+            subject = subject + " , " + sub;
         }
         return subject;
     }
@@ -46,6 +46,7 @@ public class ChooseSubject extends UnderQuest
     {
         this.subject=sub;
         addProgress(50);
+
     }
 
     /**
@@ -53,9 +54,8 @@ public class ChooseSubject extends UnderQuest
      */
     public void removeChoice()
     {
-        //TODO regarder si j'ajoute 50 pour cette quete et pas oublier de changer ça dans makeChoice
         this.subject=null; //on détruit l'ancien sujet
-        progress=progress-50;
+        addProgress(-50);
         //Cette methode est appele quand on demande si l'utilisateur est sur de son choix et qu'il dit nn sinon elle n'est jamais appellé.
     }
 
