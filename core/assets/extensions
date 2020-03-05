@@ -3,5 +3,5 @@ LAN
 .map Tmx/Umons_Nimy.tmx
 .canActivateWith Dual
 Dual
-.mainClass be.ac.umons.mom.g02.Extensions.Dual.Graphic.DualChooseMenu
+.mainClass be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu
 .map Tmx/Umons_Nimy.tmx
