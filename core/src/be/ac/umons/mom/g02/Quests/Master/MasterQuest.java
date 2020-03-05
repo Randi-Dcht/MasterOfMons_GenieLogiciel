@@ -108,7 +108,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method check the level of player and if this quest is finished
      * @param after is the next MasterQuest.
      */
-    public void newQuest(MasterQuest after)//TODO difficulte
+    protected void newQuest(MasterQuest after)//TODO difficulte
     {
         if(finished)
         {

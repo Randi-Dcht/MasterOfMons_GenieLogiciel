@@ -41,6 +41,7 @@ import be.ac.umons.mom.g02.Objects.Items.Phone;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
+import be.ac.umons.mom.g02.Quests.Quest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
