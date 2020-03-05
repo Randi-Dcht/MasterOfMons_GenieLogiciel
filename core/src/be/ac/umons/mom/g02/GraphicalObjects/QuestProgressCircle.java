@@ -1,5 +1,7 @@
 package be.ac.umons.mom.g02.GraphicalObjects;
 
+import be.ac.umons.mom.g02.Animations.DoubleAnimation;
+import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -46,6 +48,7 @@ public class QuestProgressCircle {
      * The last radius given on the last drawing.
      */
     protected float lastRadius;
+    protected float lastDegrees;
 
     /**
      * @param gs Game's graphical settings.
@@ -70,6 +73,18 @@ public class QuestProgressCircle {
             degrees = getDuringAnimationCircleDegrees();
         else
             degrees = (float)quest.getProgress() * 360;
+
+        if (! isBeingAnimated && degrees - lastDegrees > 1E-2) {
+            beginAnimation();
+            duringAnimationCircleDegrees = lastDegrees;
+            degrees = lastDegrees;
+            DoubleAnimation da = new DoubleAnimation(lastDegrees, degrees, 2 * degrees - lastDegrees);
+            da.setRunningAction(() -> setDuringAnimationCircleDegrees(da.getActual().floatValue()));
+            da.setEndingAction(this::finishAnimation);
+            AnimationManager.getInstance().addAnAnimation("QuestProgressCircleDegreesAnimation_" + quest.getName(), da);
+        }
+
+        lastDegrees = degrees;
         lastRadius = radius;
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
