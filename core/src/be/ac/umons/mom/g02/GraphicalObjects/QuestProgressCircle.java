@@ -34,10 +34,6 @@ public class QuestProgressCircle {
      */
     protected boolean isBeingAnimated;
     /**
-     * Object's opacity when animating.
-     */
-    protected float duringAnimationOpacity;
-    /**
      * Drawn degrees when animated.
      */
     protected float duringAnimationCircleDegrees;
@@ -86,9 +82,6 @@ public class QuestProgressCircle {
         else if (quest.isActive() || degrees != 0)
             sr.setColor(ACTIVATED_QUEST_CIRCLE_COLOR);
 
-        if (isBeingAnimated)
-            sr.getColor().a = duringAnimationOpacity;
-
         if (quest.isActive() && quest.getProgress() == 0) {
             sr.set(ShapeRenderer.ShapeType.Line); // Ce n'est pas dérangeant qu'il s'éxécute en dernier comme le end est appelé juste après.
             if (isBeingAnimated)
@@ -110,13 +103,6 @@ public class QuestProgressCircle {
      */
     public void dispose() {
         sr.dispose();
-    }
-
-    /**Set the opacity during an animation.
-     * @param duringAnimationOpacity Opacity during animation.
-     */
-    public void setDuringAnimationOpacity(float duringAnimationOpacity) {
-        this.duringAnimationOpacity = duringAnimationOpacity;
     }
 
     /**

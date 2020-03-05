@@ -76,7 +76,7 @@ public class QuestShower {
     /**
      * The progress circle mapped to their corresponding quest (under-quest).
      */
-    protected Map<Quest, QuestProgressCircle> questProgressCircleMap;
+    protected Map<Quest, QuestItem> questItemsMap;
     /**
      * The game's animation manager.
      */
@@ -103,7 +103,7 @@ public class QuestShower {
      */
     protected void init() {
         circleRadius = (int)gs.getQuestFont().getLineHeight() / 2;
-        questProgressCircleMap = new HashMap<>();
+        questItemsMap = new HashMap<>();
 
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
@@ -131,15 +131,9 @@ public class QuestShower {
         else
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - questShowerHeight + TEXT_AND_RECTANGLE_MARGIN, questShowerWidth, questShowerHeight);
         sr.end();
-        drawQuestCircles(questToShow, x + TEXT_AND_RECTANGLE_MARGIN, y - circleRadius, circleRadius);
+        drawQuests(batch, questToShow, x + TEXT_AND_RECTANGLE_MARGIN, y - circleRadius, circleRadius);
 
         Gdx.gl.glDisable(GL30.GL_BLEND);
-        batch.begin();
-        if (isBeingAnimated)
-            printQuest(questToShow, batch, x + 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN, y, (float)duringAnimationForegroundOpacity);
-        else
-            printQuest(questToShow, batch, x + 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN, y, 1);
-        batch.end();
     }
 
     /**
@@ -149,39 +143,20 @@ public class QuestShower {
     public void setQuest(Quest q) {
         if (questToShow == null) {
             questToShow = q;
-            questProgressCircleMap.put(q, new QuestProgressCircle(gs, q));
+            questItemsMap.put(q, new QuestItem(gs, q));
             questShowerWidth = getMaximumQuestNameWidth(q, 2 * circleRadius + BETWEEN_CIRCLE_AND_TEXT_MARGIN) + 2 * TEXT_AND_RECTANGLE_MARGIN;
             questShowerHeight = getMaximumQuestHeight(q) + TEXT_AND_RECTANGLE_MARGIN * 2;
             for (Quest q2 : q.getSubQuests()) {
-                questProgressCircleMap.put(q2, new QuestProgressCircle(gs, q2));
+                questItemsMap.put(q2, new QuestItem(gs, q2));
             }
             animateQuestRectangle(0, 1, 750);
-            animateQuestProgressCircle(0,1,1500);
+            animateQuestItems(0,1,1500);
         } else {
             animateQuestRectangle(1, 0, 1500, () -> {
                 questToShow = null;
                 setQuest(q);
             });
-            animateQuestProgressCircle(1,0,1500);
-        }
-    }
-
-
-    /**
-     * Show the quest <code>q</code> and its under-quests from position (<code>beginningX</code>, <code>beginningY</code>) with the opacity <code>textOpacity</code>.
-     * @param q The quest to show.
-     * @param batch Where its must be drawn
-     * @param beginningX The beginning horizontal position.
-     * @param beginningY The beginning vertical position.
-     * @param textOpacity The text's opacity.
-     */
-    protected void printQuest(Quest q, Batch batch, int beginningX, int beginningY, float textOpacity) {
-        gs.getQuestFont().setColor(1, 1, 1, textOpacity);
-        gs.getQuestFont().draw(batch, q.getName() + '\n', beginningX, beginningY);
-        gs.getQuestFont().setColor(1, 1, 1, 1); // Si jamais il est utilisé entre temps
-        for (Quest q2 : q.getSubQuests()) {
-            beginningY -= (gs.getQuestFont().getLineHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
-            printQuest(q2, batch, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, textOpacity);
+            animateQuestItems(1,0,1500);
         }
     }
 
@@ -192,13 +167,11 @@ public class QuestShower {
      * @param beginningY The beginning vertical position.
      * @param radius The radius of the circle to draw.
      */
-    protected void drawQuestCircles(Quest q, int beginningX, int beginningY, float radius) {
-//        sr.setColor(21f / 255, 21f / 255, 21f / 255, 1f);
-
-        questProgressCircleMap.get(q).draw(beginningX, beginningY, radius);
+    protected void drawQuests(Batch batch, Quest q, int beginningX, int beginningY, float radius) {
+        questItemsMap.get(q).draw(batch, new Point(beginningX, beginningY), radius);
         for (Quest q2 : q.getSubQuests()) {
-            beginningY -= (questProgressCircleMap.get(q).getHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
-            drawQuestCircles(q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
+            beginningY -= (questItemsMap.get(q).getHeight() + BETWEEN_QUEST_MARGIN_HEIGHT);
+            drawQuests(batch, q2, beginningX + BETWEEN_QUEST_MARGIN_WIDTH, beginningY, radius);
         }
     }
 
@@ -208,16 +181,10 @@ public class QuestShower {
      * @param to The ending percent.
      * @param time The duration of the animation.
      */
-    public void animateQuestProgressCircle(double from, double to, int time) {
-        for (QuestProgressCircle qpc : questProgressCircleMap.values()) {
-            qpc.beginAnimation();
-            DoubleAnimation da = new DoubleAnimation(from, to, time);
-            da.setRunningAction(() -> {
-                qpc.setDuringAnimationProgressPercent(da.getActual());
-                qpc.setDuringAnimationOpacity((float)da.getActual().doubleValue());
-            });
-            am.addAnAnimation("QuestCircleRectangleAnimation" + qpc.toString(), da); // Evite de remplacer les animations :)
-            da.setEndingAction(qpc::finishAnimation);
+    public void animateQuestItems(double from, double to, int time) {
+        for (QuestItem qi : questItemsMap.values()) {
+            qi.animateCircle(from, to, time);
+            qi.animateText(to, time);
         }
     }
 
