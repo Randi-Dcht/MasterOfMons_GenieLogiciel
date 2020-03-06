@@ -32,8 +32,8 @@ public class KeyChoosingMenuState extends MenuState {
         menuItems.add(new MenuItem(gs.getStringFromId("keyChoosing"), MenuItemType.Title));
         for (String id : keysMap.keySet())
             menuItems.add(new MenuItem(gs.getStringFromId(id), MenuItemType.KeySelector, id));
-        setMenuItems(menuItems.toArray(new MenuItem[0]));
         menuItems.add(new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save));
+        setMenuItems(menuItems.toArray(new MenuItem[0]));
         setDefaultValue();
     }
 
@@ -48,5 +48,6 @@ public class KeyChoosingMenuState extends MenuState {
             if (!mi.id.equals(""))
                 keysMap.put(mi.id, ((KeySelector)mi.control).getActualKeyCode());
         GameKeyManager.getInstance().saveKeysMap();
+        gsm.removeFirstState();
     }
 }

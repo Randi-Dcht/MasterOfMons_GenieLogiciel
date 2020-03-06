@@ -4,9 +4,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class GameKeyManager {
@@ -46,7 +44,15 @@ public class GameKeyManager {
     }
 
     public void saveKeysMap() {
-        // TODO
+        try {
+            FileHandle ef = Gdx.files.getFileHandle("keys", Files.FileType.Internal);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ef.file()));
+            for (String id : keysMap.keySet())
+                bw.write(String.format("%s=%d\n", id, keysMap.get(id)));
+            bw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getKeyCodeFor(String id) {
