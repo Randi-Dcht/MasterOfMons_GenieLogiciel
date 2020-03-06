@@ -46,7 +46,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
         });
         setFolder(path);
         ((TextBox)nameMI.control).setSuffix(".mom");
-        ((TextBox)nameMI.control).setText(String.format("MOM - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())));
+        ((TextBox)nameMI.control).setText(String.format("MOM-%s", new SimpleDateFormat("dd_MM_yy_HH:mm:ss").format(new Date())));
         nameMI.size.x = -2;
     }
 

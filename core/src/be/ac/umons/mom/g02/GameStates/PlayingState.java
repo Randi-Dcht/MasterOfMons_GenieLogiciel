@@ -775,7 +775,7 @@ public class PlayingState extends GameState implements Observer {
      * Executed when the user want to quick save a game.
      */
     public static void quickSave() {
-        String name = String.format("MOM QS - %s", new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
+        String name = String.format("QS-MOM-%s", new SimpleDateFormat("dd_MM_yy_HH:mm:ss").format(new Date()));
         String newName = getNonExistingFilePath(name);
         Saving save = SuperviserNormally.getSupervisor().getSave();
         save.setNameSave(newName);
