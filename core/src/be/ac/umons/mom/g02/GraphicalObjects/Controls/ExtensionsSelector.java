@@ -149,7 +149,6 @@ public class ExtensionsSelector extends Control {
         ArrayList<Extension> extensionList = new ArrayList<>();
         BufferedReader br;
         try {
-            Files f = Gdx.files;
             FileHandle ef = Gdx.files.getFileHandle("extensions", Files.FileType.Internal);
             br = new BufferedReader(new FileReader(ef.file()));
             Extension ext = null;

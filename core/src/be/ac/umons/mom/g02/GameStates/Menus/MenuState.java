@@ -62,6 +62,7 @@ public abstract class MenuState extends GameState {
     protected List<List<ScrollListChooser>> scrollListChoosers;
 
     protected List<List<ColorSelector>> colorSelectors;
+    protected List<List<KeySelector>> keySelectors;
 
     /**
      * If the background must be transparent or not.
@@ -106,6 +107,7 @@ public abstract class MenuState extends GameState {
         textBoxes = new ArrayList<>();
         scrollListChoosers = new ArrayList<>();
         colorSelectors = new ArrayList<>();
+        keySelectors = new ArrayList<>();
         sb = new SpriteBatch();
 		sr = new ShapeRenderer();
 		sr.setAutoShapeType(true);
@@ -205,6 +207,9 @@ public abstract class MenuState extends GameState {
         for (List<ColorSelector> csl : colorSelectors)
             for (ColorSelector cs : csl)
                 cs.handleInput();
+        for (List<KeySelector> ksl : keySelectors)
+            for (KeySelector ks : ksl)
+                ks.handleInput();
 
         mouseScrolled += gim.getScrolledAmount() * 20;
         if (mouseScrolled < 0)
@@ -263,6 +268,10 @@ public abstract class MenuState extends GameState {
                     break;
                 case ColorChooser:
                     c = createMenuItemControl(ColorSelector.class, mi, colorSelectors);
+                    break;
+                case KeySelector:
+                    c = createMenuItemControl(KeySelector.class, mi, keySelectors);
+                    break;
                 default:
                     break;
             }
@@ -437,6 +446,7 @@ public abstract class MenuState extends GameState {
                 case TextBox:
                 case ScrollListChooser:
                 case ColorChooser:
+                case KeySelector:
                     GlyphLayout gl = new GlyphLayout();
                     gl.setText(gs.getNormalFont(), header);
                     batch.begin();
@@ -468,6 +478,7 @@ public abstract class MenuState extends GameState {
         TextBox,
         NumberTextBox,
         ScrollListChooser,
-        ColorChooser
+        ColorChooser,
+        KeySelector
     }
 }

@@ -1,7 +1,7 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.ExtensionsSelector;
 import be.ac.umons.mom.g02.GameStates.GameState;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.ExtensionsSelector;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;

@@ -67,4 +67,7 @@ public class KeySelector extends Control {
         sr.dispose();
     }
 
+    public int getActualKeyCode() {
+        return actualKeyCode;
+    }
 }
