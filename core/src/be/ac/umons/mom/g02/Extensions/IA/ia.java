@@ -148,7 +148,6 @@ public class ia extends Mobile implements Observer {
             SuperviserNormally.getSupervisor().meetCharacter(this,player.getCharacteristics());
             meet=true;
         }
-        /*if (ps.checkForCollision(myGraphic))*///TODO
         pnjGraphic.move(x,y);
     }
 
