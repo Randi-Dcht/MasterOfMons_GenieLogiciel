@@ -79,7 +79,7 @@ public abstract class MenuState extends GameState {
      */
     protected boolean handleEscape;
 
-    protected double topMargin = .1;
+    protected double topMargin = HEIGHT / 100;
 
     protected int mouseScrolled = 0;
 
@@ -139,7 +139,7 @@ public abstract class MenuState extends GameState {
             sr.end();
         }
 
-        int alreadyUsed = (int)(topMargin * HEIGHT);
+        int alreadyUsed = (int)(.1 * HEIGHT);
 
         BitmapFont font;
         int width = (int) leftMargin;
@@ -163,7 +163,7 @@ public abstract class MenuState extends GameState {
 
             menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : topMargin) + mouseScrolled)), size);
             if (i == menuItems.length - 1 || (menuItems.length > i + 1 && menuItems[i+1].drawUnderPreviousOne)) {
-                alreadyUsed += size.y + topMargin;
+                alreadyUsed += size.y + 2 * topMargin;
                 width = (int) leftMargin;
             }
             else
