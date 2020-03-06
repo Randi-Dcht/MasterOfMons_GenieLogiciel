@@ -18,10 +18,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.OnMapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
-import be.ac.umons.mom.g02.Managers.AnimationManager;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameMapManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
+import be.ac.umons.mom.g02.Managers.*;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
@@ -171,6 +168,8 @@ public class PlayingState extends GameState implements Observer {
      */
     protected NotificationRappel notificationRappel;
 
+    protected GameKeyManager gkm;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -187,6 +186,7 @@ public class PlayingState extends GameState implements Observer {
         sb = new SpriteBatch();
         am = AnimationManager.getInstance();
         gmm = GameMapManager.getInstance();
+        gkm = GameKeyManager.getInstance();
         questShower = new QuestShower(gsm, gs);
         agendaShower = new AgendaShower(gim, gs);
         timeShower = new TimeShower(gs);
@@ -376,19 +376,19 @@ public class PlayingState extends GameState implements Observer {
         int toMove = (int)Math.round(velocity * dt * tileWidth);
         int toMoveX = 0, toMoveY = 0;
 
-        if (gim.isKey(Input.Keys.DOWN, KeyStatus.Down)) {
+        if (gim.isKey(gkm.getKeyCodeFor("movingDownward"), KeyStatus.Down)) {
             player.setOrientation(Orientation.Bottom);
             toMoveY += -toMove;
         }
-        if (gim.isKey(Input.Keys.UP, KeyStatus.Down)) {
+        if (gim.isKey(gkm.getKeyCodeFor("movingUpward"), KeyStatus.Down)) {
             player.setOrientation(Orientation.Top);
             toMoveY += toMove;
         }
-        if (gim.isKey(Input.Keys.LEFT, KeyStatus.Down)) {
+        if (gim.isKey(gkm.getKeyCodeFor("movingLeftward"), KeyStatus.Down)) {
             player.setOrientation(Orientation.Left);
             toMoveX += -toMove;
         }
-        if (gim.isKey(Input.Keys.RIGHT, KeyStatus.Down)) {
+        if (gim.isKey(gkm.getKeyCodeFor("movingRightward"), KeyStatus.Down)) {
             player.setOrientation(Orientation.Right);
             toMoveX += toMove;
         }
