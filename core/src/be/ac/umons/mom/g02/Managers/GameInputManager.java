@@ -42,6 +42,8 @@ public class GameInputManager implements InputProcessor {
      */
     private List<Character> lastChars;
 
+    private int lastKeyCode;
+
     public GameInputManager() {
         keys = new KeyStatus[AVAILABLE_INPUT_KEYS];
         lastMousePosition = new Point();
@@ -52,8 +54,10 @@ public class GameInputManager implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode != -1)
+        if (keycode != -1) {
             keys[keycode] = KeyStatus.Pressed;
+            lastKeyCode = keycode;
+        }
         return true;
     }
 
@@ -73,13 +77,13 @@ public class GameInputManager implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (button == Input.Buttons.LEFT)
-            recentClicks.add(new Point(screenX, screenY));
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.LEFT)
+            recentClicks.add(new Point(screenX, screenY));
         return true;
     }
 
@@ -124,6 +128,7 @@ public class GameInputManager implements InputProcessor {
         recentClicks.clear();
         lastChars.clear();
         scrolledAmount = 0;
+        lastKeyCode = -1;
     }
 
     /**
@@ -152,5 +157,9 @@ public class GameInputManager implements InputProcessor {
      */
     public List<Character> getLastChars() {
         return lastChars;
+    }
+
+    public int getLastKeyPressedCode() {
+        return lastKeyCode;
     }
 }
