@@ -70,4 +70,9 @@ public class KeySelector extends Control {
     public int getActualKeyCode() {
         return actualKeyCode;
     }
+
+    public void setActualKeyCode(int actualKeyCode) {
+        this.actualKeyCode = actualKeyCode;
+        actualKey = Input.Keys.toString(actualKeyCode);
+    }
 }

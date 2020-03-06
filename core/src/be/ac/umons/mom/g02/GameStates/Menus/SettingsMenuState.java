@@ -13,6 +13,7 @@ import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Settings;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class SettingsMenuState extends MenuState {
         transparentBackground = false;
         setMenuItems(new MenuItem[] {
                 new MenuItem(gs.getStringFromId("settings"), MenuItemType.Title),
+                new MenuItem(gs.getStringFromId("keyChoosing"), MenuItemType.Button, () -> gsm.setState(KeyChoosingMenuState.class)),
                 new MenuItem(gs.getStringFromId("gameResolutionWidth"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Width"),
                 new MenuItem(gs.getStringFromId("gameResolutionHeight"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Height"),
                 new MenuItem(gs.getStringFromId("maximumAutomaticSaves"), MenuItemType.NumberTextBox, "TXT_Maximum_Automatic_Saves"),

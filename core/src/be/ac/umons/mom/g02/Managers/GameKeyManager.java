@@ -45,6 +45,10 @@ public class GameKeyManager {
         }
     }
 
+    public void saveKeysMap() {
+        // TODO
+    }
+
     public int getKeyCodeFor(String id) {
         return keysMap.get(id);
     }
