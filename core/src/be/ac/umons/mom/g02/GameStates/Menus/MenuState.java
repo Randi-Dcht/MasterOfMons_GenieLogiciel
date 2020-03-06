@@ -251,7 +251,7 @@ public abstract class MenuState extends GameState {
             Control c = null;
             switch (mi.mit) {
                 case Button:
-                    be.ac.umons.mom.g02.GraphicalObjects.Controls.Button b = createMenuItemControl(Button.class, mi, buttons);
+                    Button b = createMenuItemControl(Button.class, mi, buttons);
                     b.setText(mi.header);
                     b.setOnClick(mi.toDoIfExecuted);
                     c = b;

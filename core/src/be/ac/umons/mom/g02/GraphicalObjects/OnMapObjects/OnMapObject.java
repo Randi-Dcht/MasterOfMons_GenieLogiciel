@@ -1,7 +1,9 @@
 package be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects;
 
+import be.ac.umons.mom.g02.Managers.GameKeyManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -51,7 +53,8 @@ public abstract class OnMapObject {
             Gdx.gl.glEnable(GL30.GL_BLEND);
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             GlyphLayout gl = new GlyphLayout();
-            gl.setText(gs.getSmallFont(), String.format(gs.getStringFromId("pressToInteract"), "E"));
+            gl.setText(gs.getSmallFont(), String.format(gs.getStringFromId("pressToInteract"),
+                    Input.Keys.toString(GameKeyManager.getInstance().getKeyCodeFor("interact"))));
             sr.begin(ShapeRenderer.ShapeType.Filled);
             sr.setColor(gs.getTransparentBackgroundColor());
             sr.rect(x, y - gs.getSmallFont().getLineHeight(), gl.width, gs.getSmallFont().getLineHeight());
@@ -59,7 +62,8 @@ public abstract class OnMapObject {
             Gdx.gl.glDisable(GL30.GL_BLEND);
             if (isSelected) {
                 batch.begin();
-                gs.getSmallFont().draw(batch, String.format(gs.getStringFromId("pressToInteract"), "E"), x, y); //TODO Check for touch
+                gs.getSmallFont().draw(batch, String.format(gs.getStringFromId("pressToInteract"),
+                        Input.Keys.toString(GameKeyManager.getInstance().getKeyCodeFor("interact"))), x, y);
                 batch.end();
             }
         }
