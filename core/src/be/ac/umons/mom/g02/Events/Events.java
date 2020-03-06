@@ -13,6 +13,7 @@ public enum Events
     ChangeHour("hour"),                       /*This event notify when the hour change in the game*/
     PlaceInMons("PeopleOnMaps"),              /*This event notify when the people change the maps*/
     EntryPlace("PlaceOnMap"),
+    OtherInformation("OtherInfo"),
     MeetOther("meetOther"),                   /*This event notify when the character meet an other character*/
     Attack("LaunchAttack"),                   /*This event notify when the character attack other character*/
     AddFriend("meetFriend"),                  /*This event notify when the people add friend*/
