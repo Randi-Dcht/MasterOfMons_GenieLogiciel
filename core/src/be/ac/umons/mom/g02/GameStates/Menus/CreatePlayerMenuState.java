@@ -67,7 +67,8 @@ public class CreatePlayerMenuState extends MenuState {
                     GameState gs = gsm.setState(afterCreationState);
                     if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
                         ((LoadingState)gs).setAfterLoadingState(afterLoadingState);
-                })
+                }),
+                new MenuItem(gs.getStringFromId("cancel"), MenuItemType.Button, () -> gsm.removeFirstState())
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
         for (Gender s : Gender.values())

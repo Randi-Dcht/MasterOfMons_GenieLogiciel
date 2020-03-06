@@ -633,7 +633,6 @@ public class PlayingState extends GameState implements Observer {
         }
         if (gim.isKey("quickLoad", KeyStatus.Pressed))
             quickLoad(gsm, gs);
-
         if (gim.isKey("pointsAttribution", KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);

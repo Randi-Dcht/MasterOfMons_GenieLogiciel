@@ -71,7 +71,7 @@ public class TextBox extends Control {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         if (isSelected)
-            sr.setColor(new Color(0x0288D1));
+            sr.setColor(gs.getControlSelectedColor());
         else
             sr.setColor(Color.WHITE);
         sr.begin();

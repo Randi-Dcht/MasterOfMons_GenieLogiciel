@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.Objects;
 
 /**
@@ -38,7 +39,7 @@ public class GraphicalSettings {
     /**
      * An asset manager to load assets.
      */
-    private AssetManager assetManager; // TODO : Why did I put that here ?
+    private AssetManager assetManager;
     /**
      * A BitmapFont generator.
      */
@@ -53,8 +54,12 @@ public class GraphicalSettings {
      */
     private boolean showMapCoordinates = false;
 
+    protected Color foregroundColor;
     protected Color backgroundColor;
     protected Color transparentBackgroundColor;
+    protected Color controlBackgroundColor;
+    protected Color controlTransparentBackgroundColor;
+    protected Color controlSelectedColor;
     protected Color attackRangeColor;
     protected Color recoveringAttackRangeColor;
     protected Color lifeBarColor;
@@ -77,13 +82,25 @@ public class GraphicalSettings {
     }
 
     public void refreshColors() {
+        foregroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getForegroundColor());
         backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
         transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
+        controlBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlBackgroundColor());
+        controlTransparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlTransparentBackgroundColor());
+        controlSelectedColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlSelectedColor());
         attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getAttackRangeColor());
         recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getRecoveringAttackRangeColor());
         lifeBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getLifeBarColor());
         energyBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getEnergyBarColor());
-        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getExperienceBarColor());;
+        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getExperienceBarColor());
+        if (smallFont != null)
+            smallFont.setColor(foregroundColor);
+        if (normalFont != null)
+            normalFont.setColor(foregroundColor);
+        if (titleFont != null)
+            titleFont.setColor(foregroundColor);
+        if (questFont != null)
+            questFont.setColor(foregroundColor);
     }
 
     /**
@@ -95,6 +112,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         smallFont = ftfg.generateFont(ftfp);
+        smallFont.setColor(foregroundColor);
     }
 
     /**
@@ -113,6 +131,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         normalFont = ftfg.generateFont(ftfp);
+        normalFont.setColor(foregroundColor);
     }
 
     /**
@@ -131,6 +150,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         titleFont = ftfg.generateFont(ftfp);
+        titleFont.setColor(foregroundColor);
     }
 
     /**
@@ -149,6 +169,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         questFont = ftfg.generateFont(ftfp);
+        questFont.setColor(foregroundColor);
     }
 
     /**
@@ -211,7 +232,12 @@ public class GraphicalSettings {
      * @return The string corresponding with the given id in the previously configured language (or the default one).
      */
     public String getStringFromId(String id) {
-        return bundle.get(id);
+        try {
+            return bundle.get(id);
+        } catch (MissingResourceException e) {
+            Gdx.app.error("GraphicalSettings", "Bundle key not found", e);
+            return "Error";
+        }
     }
 
     /**
@@ -246,20 +272,28 @@ public class GraphicalSettings {
         this.showMapCoordinates = showMapCoordinates;
     }
 
-    public Color getBackgroundColor() {
-        return backgroundColor;
+    public Color getForegroundColor() {
+        return foregroundColor;
     }
 
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
+    public Color getBackgroundColor() {
+        return backgroundColor;
     }
 
     public Color getTransparentBackgroundColor() {
         return transparentBackgroundColor;
     }
 
-    public void setTransparentBackgroundColor(Color transparentBackgroundColor) {
-        this.transparentBackgroundColor = transparentBackgroundColor;
+    public Color getControlBackgroundColor() {
+        return controlBackgroundColor;
+    }
+
+    public Color getControlTransparentBackgroundColor() {
+        return controlTransparentBackgroundColor;
+    }
+
+    public Color getControlSelectedColor() {
+        return controlSelectedColor;
     }
 
     public Color getAttackRangeColor() {

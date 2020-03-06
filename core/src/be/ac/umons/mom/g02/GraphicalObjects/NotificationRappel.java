@@ -87,7 +87,7 @@ public class NotificationRappel {
         this.gs = gs;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        sr.setColor(gs.getTransparentBackgroundColor());
+        sr.setColor(gs.getControlTransparentBackgroundColor());
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         textToShow = "";
