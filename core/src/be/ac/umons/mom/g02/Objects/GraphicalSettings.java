@@ -39,7 +39,7 @@ public class GraphicalSettings {
     /**
      * An asset manager to load assets.
      */
-    private AssetManager assetManager; // TODO : Why did I put that here ?
+    private AssetManager assetManager;
     /**
      * A BitmapFont generator.
      */
@@ -54,6 +54,7 @@ public class GraphicalSettings {
      */
     private boolean showMapCoordinates = false;
 
+    protected Color foregroundColor;
     protected Color backgroundColor;
     protected Color transparentBackgroundColor;
     protected Color controlBackgroundColor;
@@ -81,6 +82,7 @@ public class GraphicalSettings {
     }
 
     public void refreshColors() {
+        foregroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getForegroundColor());
         backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
         transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
         controlBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlBackgroundColor());
@@ -90,7 +92,15 @@ public class GraphicalSettings {
         recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getRecoveringAttackRangeColor());
         lifeBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getLifeBarColor());
         energyBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getEnergyBarColor());
-        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getExperienceBarColor());;
+        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getExperienceBarColor());
+        if (smallFont != null)
+            smallFont.setColor(foregroundColor);
+        if (normalFont != null)
+            normalFont.setColor(foregroundColor);
+        if (titleFont != null)
+            titleFont.setColor(foregroundColor);
+        if (questFont != null)
+            questFont.setColor(foregroundColor);
     }
 
     /**
@@ -102,6 +112,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         smallFont = ftfg.generateFont(ftfp);
+        smallFont.setColor(foregroundColor);
     }
 
     /**
@@ -120,6 +131,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         normalFont = ftfg.generateFont(ftfp);
+        normalFont.setColor(foregroundColor);
     }
 
     /**
@@ -138,6 +150,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         titleFont = ftfg.generateFont(ftfp);
+        titleFont.setColor(foregroundColor);
     }
 
     /**
@@ -156,6 +169,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         questFont = ftfg.generateFont(ftfp);
+        questFont.setColor(foregroundColor);
     }
 
     /**
@@ -256,6 +270,10 @@ public class GraphicalSettings {
      */
     public void setShowMapCoordinates(boolean showMapCoordinates) {
         this.showMapCoordinates = showMapCoordinates;
+    }
+
+    public Color getForegroundColor() {
+        return foregroundColor;
     }
 
     public Color getBackgroundColor() {

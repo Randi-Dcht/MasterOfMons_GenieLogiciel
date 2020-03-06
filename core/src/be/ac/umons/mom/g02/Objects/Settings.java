@@ -25,6 +25,7 @@ public class Settings implements Serializable {
 
     private Difficulty difficulty = Difficulty.Medium;
 
+    private String foregroundColor = "FFFFFF";
     private String backgroundColor = "212121";
     private String transparentBackgroundColor = "21212180";
     private String controlBackgroundColor = "111111";
@@ -105,6 +106,14 @@ public class Settings implements Serializable {
 
     public void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+
+    public String getForegroundColor() {
+        return foregroundColor;
+    }
+
+    public void setForegroundColor(String foregroundColor) {
+        this.foregroundColor = foregroundColor;
     }
 
     public String getBackgroundColor() {
