@@ -65,7 +65,7 @@ public class ProgressBar {
     public void init() {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        backgroundColor = gs.getTransparentBackgroundColor();
+        backgroundColor = gs.getControlTransparentBackgroundColor();
     }
 
     /**

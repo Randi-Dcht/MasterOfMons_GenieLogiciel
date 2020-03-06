@@ -63,7 +63,7 @@ public class Button extends Control {
         super(gim, gs);
         sr = new ShapeRenderer();
         font = gs.getNormalFont();
-        backgroundColor = gs.getTransparentBackgroundColor();
+        backgroundColor = gs.getControlTransparentBackgroundColor();
     }
 
     /**

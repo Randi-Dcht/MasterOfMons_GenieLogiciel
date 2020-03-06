@@ -125,7 +125,7 @@ public class QuestShower {
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(gs.getTransparentBackgroundColor());
+        sr.setColor(gs.getControlTransparentBackgroundColor());
         if (isBeingAnimated)
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - duringAnimationQuestShowerHeight + TEXT_AND_RECTANGLE_MARGIN, duringAnimationQuestShowerWidth, duringAnimationQuestShowerHeight);
         else

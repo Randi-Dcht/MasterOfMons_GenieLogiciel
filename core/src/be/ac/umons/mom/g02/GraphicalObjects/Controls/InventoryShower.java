@@ -139,11 +139,11 @@ public class InventoryShower extends Control {
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
         if (isBeingAnimated) {
-            sr.setColor(gs.getTransparentBackgroundColor().r, gs.getTransparentBackgroundColor().g, gs.getTransparentBackgroundColor().b, (float)duringAnimationBackgroundOpacity * BACKGROUND_RECTANGLE_OPACITY);
+            sr.setColor(gs.getControlTransparentBackgroundColor().r, gs.getControlTransparentBackgroundColor().g, gs.getControlTransparentBackgroundColor().b, (float)duringAnimationBackgroundOpacity * BACKGROUND_RECTANGLE_OPACITY);
             sr.rect(beginX, topMargin, duringAnimationWidth, duringAnimationHeight);
         }
         else {
-            sr.setColor(gs.getTransparentBackgroundColor().r, gs.getTransparentBackgroundColor().g, gs.getTransparentBackgroundColor().b, BACKGROUND_RECTANGLE_OPACITY);
+            sr.setColor(gs.getControlTransparentBackgroundColor().r, gs.getControlTransparentBackgroundColor().g, gs.getControlTransparentBackgroundColor().b, BACKGROUND_RECTANGLE_OPACITY);
             sr.rect(beginX, topMargin, getWidth(), height);
         }
         sr.end();
