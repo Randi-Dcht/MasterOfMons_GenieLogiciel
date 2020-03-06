@@ -256,7 +256,7 @@ public class PlayingState extends GameState implements Observer {
             pnjs.add(new Character(gs, mob));
 
         for (MovingPNJ mv : SuperviserNormally.getSupervisor().getMovingPnj(map))
-            pnjs.add(mv.initialisation(gs,player));
+            pnjs.add(mv.initialisation(gs, this, player));
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
@@ -801,5 +801,14 @@ public class PlayingState extends GameState implements Observer {
         ogds.addAnswer("yes", () ->
                 SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.settings.getLastSavePath(),gs));
         ogds.addAnswer("no");
+    }
+
+    public Point getPlayerPosition() {
+        return new Point(player.getPosX(), player.getPosY());
+    }
+
+    public void setPlayerPosition(Point pos) {
+        player.setPosX(pos.x);
+        player.setPosY(pos.y);
     }
 }
