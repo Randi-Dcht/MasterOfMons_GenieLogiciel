@@ -26,6 +26,8 @@ import com.badlogic.gdx.Gdx;
  */
 public class Saving implements Observer
 {
+    private final String SETTINGS_FILE_NAME = "MasterOfMons.settings.mom";
+
     private People people;
     private String path = "/tmp/";
     private String defaltName= "MasterOfMons_Save_NoneName.mom";
@@ -95,12 +97,12 @@ public class Saving implements Observer
      * This method allows to save the element of graphic param
      * @param setting who is the class with the param to save.
      */
-    public void savingGraphic(Settings setting/*,String nameSave*/)
+    public void savingGraphic(Settings setting)
     {
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path +"MasterOfMons_Settings.save"))));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(SETTINGS_FILE_NAME))));
             sortie.writeObject(setting);
             sortie.close();
         }
@@ -113,15 +115,17 @@ public class Saving implements Observer
 
     /**
      * This method allows to give the saving of the graphic parameters
-     * @param file is the name of the file
      */
-    public Settings getSavingGraphic(String file)
+    public Settings getSavingGraphic()
     {
         try
         {
-            ObjectInputStream entree;
-            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file))));
-            return (Settings) entree.readObject();
+            if (new File(SETTINGS_FILE_NAME).exists()) {
+                ObjectInputStream entree;
+                entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(SETTINGS_FILE_NAME))));
+                return (Settings) entree.readObject();
+            }
+            return new Settings();
         }
         catch(ClassNotFoundException | IOException e)
         {
