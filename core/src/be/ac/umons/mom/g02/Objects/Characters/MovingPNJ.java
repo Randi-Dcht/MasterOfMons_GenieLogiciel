@@ -47,6 +47,10 @@ public class MovingPNJ extends Mobile
      * If the moving PNJ already meet the player on the maps
      */
     private boolean meet = false;
+    /**
+     * The variable of the PlayingState
+     */
+    private PlayingState ps;
 
 
     /**
@@ -67,13 +71,22 @@ public class MovingPNJ extends Mobile
      * @param gs is the graphic setting
      * @param victim is the instance of graphic Player
      */
-    public Character initialisation(GraphicalSettings gs, Player victim)
+    public Character initialisation(GraphicalSettings gs,PlayingState ps, Player victim)
     {
         myGraphic = new Character(gs,this);
-        /**
-         * This is the variable of the playingState
-         */
+        setVictim(victim);
+        this.ps = ps;
         return myGraphic;
+    }
+
+
+    /**
+     * This method allows to add a victim player to the mobile
+     * @param victim  is the graphic of the player
+     */
+    public void setVictim(Player victim)
+    {
+        this.victim = victim;
     }
 
 }
