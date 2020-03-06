@@ -51,7 +51,7 @@ public class ColorSelector extends Control {
         sr.setColor(selectedColor);
         sr.ellipse(pos.x + leftMargin, pos.y + topMargin, size.y - 2 * topMargin, size.y - 2 * topMargin);
         sr.end();
-        tb.draw(batch, new Point(pos.x + size.y - 2 * topMargin + leftMargin, pos.y), new Point(size.x - size.y + 2 * topMargin - leftMargin, size.y));
+        tb.draw(batch, new Point(pos.x + size.y - 2 * topMargin + 2 * leftMargin, pos.y), new Point(size.x - size.y + 2 * topMargin - 2 * leftMargin, size.y));
     }
 
     @Override
