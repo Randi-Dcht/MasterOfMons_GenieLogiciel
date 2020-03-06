@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.Objects;
 
 /**
@@ -211,7 +212,12 @@ public class GraphicalSettings {
      * @return The string corresponding with the given id in the previously configured language (or the default one).
      */
     public String getStringFromId(String id) {
-        return bundle.get(id);
+        try {
+            return bundle.get(id);
+        } catch (MissingResourceException e) {
+            Gdx.app.error("GraphicalSettings", "Bundle key not found", e);
+            return "Error";
+        }
     }
 
     /**
