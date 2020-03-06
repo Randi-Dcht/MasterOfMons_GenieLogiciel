@@ -112,6 +112,26 @@ public class Saving implements Observer
 
 
     /**
+     * This method allows to give the saving of the graphic parameters
+     * @param file is the name of the file
+     */
+    public Settings getSavingGraphic(String file)
+    {
+        try
+        {
+            ObjectInputStream entree;
+            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file))));
+            return (Settings) entree.readObject();
+        }
+        catch(ClassNotFoundException | IOException e)
+        {
+            Gdx.app.error("Error in the replay the get of setting (in)", e.getMessage());
+        }
+        return null;
+    }
+
+
+    /**
      * This method allows you to resume the objects saved in a file and start a new game.
      * @param file which is the full file name
      */
