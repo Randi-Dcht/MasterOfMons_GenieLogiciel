@@ -47,6 +47,9 @@ public class SettingsMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser, "SLC_Difficulty"),
                 new MenuItem(gs.getStringFromId("backgroundColor"), MenuItemType.ColorChooser, "CS_Background"),
                 new MenuItem(gs.getStringFromId("transparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Transparent_Background"),
+                new MenuItem(gs.getStringFromId("controlBackgroundColor"), MenuItemType.ColorChooser, "CS_Control_Background"),
+                new MenuItem(gs.getStringFromId("controlTransparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Control_Transparent_Background"),
+                new MenuItem(gs.getStringFromId("controlSelectedBackgroundColor"), MenuItemType.ColorChooser, "CS_Control_Selected_Background"),
                 new MenuItem(gs.getStringFromId("attackRangeColor"), MenuItemType.ColorChooser, "CS_Attack_Range_Color"),
                 new MenuItem(gs.getStringFromId("recoveringAttackRangeColor"), MenuItemType.ColorChooser, "CS_Recovering_Attack_Range_Color"),
                 new MenuItem(gs.getStringFromId("lifeBarColor"), MenuItemType.ColorChooser, "CS_Life_Bar_Color"),
@@ -98,6 +101,15 @@ public class SettingsMenuState extends MenuState {
                 case "CS_Transparent_Background":
                     setColorSelectorDefaultValue(mi, settings.getTransparentBackgroundColor());
                     break;
+                case "CS_Control_Background":
+                    setColorSelectorDefaultValue(mi, settings.getControlBackgroundColor());
+                    break;
+                case "CS_Control_Transparent_Background":
+                    setColorSelectorDefaultValue(mi, settings.getControlTransparentBackgroundColor());
+                    break;
+                case "CS_Control_Selected_Background":
+                    setColorSelectorDefaultValue(mi, settings.getControlSelectedColor());
+                    break;
                 case "CS_Attack_Range_Color":
                     setColorSelectorDefaultValue(mi, settings.getAttackRangeColor());
                     break;
@@ -143,6 +155,15 @@ public class SettingsMenuState extends MenuState {
                     break;
                 case "CS_Transparent_Background":
                     settings.setTransparentBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Control_Background":
+                    settings.setControlBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Control_Transparent_Background":
+                    settings.setControlTransparentBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    break;
+                case "CS_Control_Selected_Background":
+                    settings.setControlSelectedColor(((ColorSelector)mi.control).getSelectedColor().toString());
                     break;
                 case "CS_Attack_Range_Color":
                     settings.setAttackRangeColor(((ColorSelector)mi.control).getSelectedColor().toString());

@@ -73,7 +73,7 @@ public class InventoryItem {
     public void init() {
         sr = new ShapeRenderer();
         backgroundColor = new Color(gs.getControlTransparentBackgroundColor().r, gs.getControlTransparentBackgroundColor().g, gs.getControlTransparentBackgroundColor().b, BACKGROUND_RECTANGLE_OPACITY);
-        selectedBackgroundColor = new Color(69f / 255, 39f / 255, 160f / 255, BACKGROUND_RECTANGLE_OPACITY);
+        selectedBackgroundColor = gs.getControlSelectedColor();
         backgroundColorToUse = backgroundColor;
     }
 

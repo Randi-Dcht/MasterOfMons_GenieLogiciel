@@ -25,7 +25,7 @@ public class Button extends Control {
     /**
      * The background's color when the mouse is over it.
      */
-    protected Color isMouseOverBackgroundColor = new Color(0x21212142);
+    protected Color isMouseOverBackgroundColor;
     /**
      * The background color when the button is selected.
      */
@@ -64,6 +64,11 @@ public class Button extends Control {
         sr = new ShapeRenderer();
         font = gs.getNormalFont();
         backgroundColor = gs.getControlTransparentBackgroundColor();
+        isMouseOverBackgroundColor = new Color(backgroundColor.r - 11 < 0 ? 0 : backgroundColor.r - 11,
+                backgroundColor.g - 11 < 0 ? 0 : backgroundColor.g - 11,
+                backgroundColor.b - 11 < 0 ? 0 : backgroundColor.b - 11,
+                backgroundColor.a);
+        isSelectedBackgroundColor = gs.getControlSelectedColor();
     }
 
     /**

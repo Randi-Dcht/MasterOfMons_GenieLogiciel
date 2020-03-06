@@ -58,6 +58,7 @@ public class GraphicalSettings {
     protected Color transparentBackgroundColor;
     protected Color controlBackgroundColor;
     protected Color controlTransparentBackgroundColor;
+    protected Color controlSelectedColor;
     protected Color attackRangeColor;
     protected Color recoveringAttackRangeColor;
     protected Color lifeBarColor;
@@ -84,6 +85,7 @@ public class GraphicalSettings {
         transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
         controlBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlBackgroundColor());
         controlTransparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlTransparentBackgroundColor());
+        controlSelectedColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlSelectedColor());
         attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getAttackRangeColor());
         recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getRecoveringAttackRangeColor());
         lifeBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getLifeBarColor());
@@ -264,13 +266,16 @@ public class GraphicalSettings {
         return transparentBackgroundColor;
     }
 
-
     public Color getControlBackgroundColor() {
         return controlBackgroundColor;
     }
 
     public Color getControlTransparentBackgroundColor() {
         return controlTransparentBackgroundColor;
+    }
+
+    public Color getControlSelectedColor() {
+        return controlSelectedColor;
     }
 
     public Color getAttackRangeColor() {

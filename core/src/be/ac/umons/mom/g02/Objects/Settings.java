@@ -29,6 +29,7 @@ public class Settings implements Serializable {
     private String transparentBackgroundColor = "21212180";
     private String controlBackgroundColor = "111111";
     private String controlTransparentBackgroundColor = "11111180";
+    private String controlSelectedColor = "4527A0";
     private String attackRangeColor = "FF212180";
     private String recoveringAttackRangeColor = "63636380";
     private String lifeBarColor = "D50000AF";
@@ -132,6 +133,14 @@ public class Settings implements Serializable {
 
     public void setTransparentBackgroundColor(String transparentBackgroundColor) {
         this.transparentBackgroundColor = transparentBackgroundColor;
+    }
+
+    public String getControlSelectedColor() {
+        return controlSelectedColor;
+    }
+
+    public void setControlSelectedColor(String controlSelectedColor) {
+        this.controlSelectedColor = controlSelectedColor;
     }
 
     public String getAttackRangeColor() {
