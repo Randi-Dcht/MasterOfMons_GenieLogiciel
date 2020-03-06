@@ -40,10 +40,6 @@ public class MovingPNJ extends Mobile implements Observer
      */
     private Character myGraphic;
     /**
-     * This is the variable of the playingState
-     */
-    private PlayingState ps;
-    /**
      * Size of the tile
      */
     private int tileSize = 64;
@@ -72,11 +68,13 @@ public class MovingPNJ extends Mobile implements Observer
      * @param gs is the graphic setting
      * @param victim is the instance of graphic Player
      */
-    public Character initialisation(PlayingState ps, GraphicalSettings gs, Player victim)
+    public Character initialisation(GraphicalSettings gs, Player victim)
     {
         myGraphic = new Character(gs,this);
         setVictim(victim);
-        this.ps = ps;
+        /**
+         * This is the variable of the playingState
+         */
         return myGraphic;
     }
 
@@ -129,7 +127,7 @@ public class MovingPNJ extends Mobile implements Observer
     private void moving(double dt)//TODO optimiser cela
     {
         int x=0,y=0;
-        int toMove = (int)Math.round(ps.velocity * dt * tileSize);
+        int toMove = (int)Math.round(SuperviserNormally.getSupervisor().getPeople().getSpeed() * dt * tileSize);
         calculusDistance();
 
         if(tileXbetween > toMove || tileXbetween < -toMove || tileYbetween > toMove || tileYbetween < -toMove)

@@ -64,10 +64,6 @@ public class PlayingState extends GameState implements Observer {
      */
     public static int SHOWED_MAP_HEIGHT = 17;
     /**
-     * The player's speed
-     */
-    public double velocity;
-    /**
      * The number of tile in the map (horizontally)
      */
     protected int mapWidth;
@@ -223,9 +219,6 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setText("||");
         pauseButton.setOnClick(() -> gsm.setState(InGameMenuState.class));
         pauseButton.setFont(gs.getSmallFont());
-
-        velocity = 50;
-//        velocity = SuperviserNormally.getSupervisor().getPeople().getSpeed(); // TODO
     }
 
     /**
@@ -263,7 +256,7 @@ public class PlayingState extends GameState implements Observer {
             pnjs.add(new Character(gs, mob));
 
         for (MovingPNJ mv : SuperviserNormally.getSupervisor().getMovingPnj(map))
-            pnjs.add(mv.initialisation(this,gs,player));
+            pnjs.add(mv.initialisation(gs,player));
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
@@ -379,6 +372,7 @@ public class PlayingState extends GameState implements Observer {
      * @param dt The delta time
      */
     protected void makePlayerMove(float dt) {
+        double velocity = SuperviserNormally.getSupervisor().getPeople().getSpeed();
         int toMove = (int)Math.round(velocity * dt * tileWidth);
         int toMoveX = 0, toMoveY = 0;
 

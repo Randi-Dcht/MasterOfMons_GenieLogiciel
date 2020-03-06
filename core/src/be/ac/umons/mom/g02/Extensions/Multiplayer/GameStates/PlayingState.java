@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -41,6 +42,7 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
     @Override
     public void draw() {
+        double velocity = SuperviserNormally.getSupervisor().getPeople().getSpeed();
         int toMove = (int)Math.round(velocity * Gdx.graphics.getDeltaTime() * tileWidth);
         int toMoveX = 0, toMoveY = 0;
         super.draw();
