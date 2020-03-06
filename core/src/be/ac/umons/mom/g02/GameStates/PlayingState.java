@@ -376,19 +376,19 @@ public class PlayingState extends GameState implements Observer {
         int toMove = (int)Math.round(velocity * dt * tileWidth);
         int toMoveX = 0, toMoveY = 0;
 
-        if (gim.isKey(gkm.getKeyCodeFor("movingDownward"), KeyStatus.Down)) {
+        if (gim.isKey("movingDownward", KeyStatus.Down)) {
             player.setOrientation(Orientation.Bottom);
             toMoveY += -toMove;
         }
-        if (gim.isKey(gkm.getKeyCodeFor("movingUpward"), KeyStatus.Down)) {
+        if (gim.isKey("movingUpward", KeyStatus.Down)) {
             player.setOrientation(Orientation.Top);
             toMoveY += toMove;
         }
-        if (gim.isKey(gkm.getKeyCodeFor("movingLeftward"), KeyStatus.Down)) {
+        if (gim.isKey("movingLeftward", KeyStatus.Down)) {
             player.setOrientation(Orientation.Left);
             toMoveX += -toMove;
         }
-        if (gim.isKey(gkm.getKeyCodeFor("movingRightward"), KeyStatus.Down)) {
+        if (gim.isKey("movingRightward", KeyStatus.Down)) {
             player.setOrientation(Orientation.Right);
             toMoveX += toMove;
         }
@@ -612,41 +612,41 @@ public class PlayingState extends GameState implements Observer {
             DebugMenuState dms = (DebugMenuState) gsm.setState(DebugMenuState.class);
             dms.setPlayingState(this);
         }
-        if (gim.isKey(Input.Keys.P, KeyStatus.Pressed))
+        if (gim.isKey("debugLevelUp", KeyStatus.Pressed))
             debugLevelUp();
-        if (gim.isKey(Input.Keys.I, KeyStatus.Pressed))
+        if (gim.isKey("debugMakeInvincible", KeyStatus.Pressed))
             debugMakeInvincible();
-        if (gim.isKey(Input.Keys.O, KeyStatus.Pressed))
+        if (gim.isKey("debugGetObject", KeyStatus.Pressed))
             gsm.setState(DebugGetObject.class);
-        if (gim.isKey(Input.Keys.C, KeyStatus.Pressed))
+        if (gim.isKey("attack", KeyStatus.Pressed))
             attack(player);
-        if (gim.isKey(Input.Keys.L, KeyStatus.Pressed))
+        if (gim.isKey("dropAnObject", KeyStatus.Pressed))
             dropSelectedObject();
-        if (gim.isKey(Input.Keys.F, KeyStatus.Pressed)) {
+        if (gim.isKey("useAnObject", KeyStatus.Pressed)) {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)
                 SuperviserNormally.getSupervisor().getPeople().useObject(ii.getItem());
         }
-        if (gim.isKey(Input.Keys.F5, KeyStatus.Pressed)) {
+        if (gim.isKey("quickSave", KeyStatus.Pressed)) {
             timeShower.extendOnFullWidth(gs.getStringFromId("quickSaving"));
             quickSave();
         }
-        if (gim.isKey(Input.Keys.F6, KeyStatus.Pressed))
+        if (gim.isKey("quickLoad", KeyStatus.Pressed))
             quickLoad(gsm, gs);
 
-        if (gim.isKey(Input.Keys.N, KeyStatus.Pressed)) {
+        if (gim.isKey("pointsAttribution", KeyStatus.Pressed)) {
             LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
             lums.setPlayer(player);
             lums.setOnPointsAttributed(() -> {
                 int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
                 if (pointLevel != 0)
                     notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
-                            pointLevel, "N")); // TODO Check for key
+                            pointLevel, Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
                 else
                     notificationRappel.removeANotification("pointsToAttribute");
             });
         }
-        if (gim.isKey(Input.Keys.E, KeyStatus.Pressed)) {
+        if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
             if (selectedOne instanceof Character)
                 SuperviserNormally.getSupervisor().meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
             else {
@@ -719,7 +719,7 @@ public class PlayingState extends GameState implements Observer {
         } else if (notify.getEvents().equals(Events.UpLevel)) {
             timeShower.extendOnFullWidth(gs.getStringFromId("levelUp"));
             notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
-                    ((People)player.getCharacteristics()).getPointLevel(), "N")); // TODO Check for key
+                    ((People)player.getCharacteristics()).getPointLevel(), Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
         }
     }
 

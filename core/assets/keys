@@ -1,4 +1,15 @@
-movingDownward=20
+interact=33
 movingUpward=19
 movingLeftward=21
+quickSave=248
 movingRightward=22
+debugLevelUp=44
+useAnObject=34
+debugReinitiatePlayer=46
+movingDownward=20
+debugGetObject=43
+debugMakeInvincible=39
+attack=31
+quickLoad=249
+levelUp=42
+dropAnObject=40

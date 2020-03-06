@@ -43,6 +43,7 @@ public class GameInputManager implements InputProcessor {
     private List<Character> lastChars;
 
     private int lastKeyCode;
+    private GameKeyManager gkm;
 
     public GameInputManager() {
         keys = new KeyStatus[AVAILABLE_INPUT_KEYS];
@@ -50,6 +51,7 @@ public class GameInputManager implements InputProcessor {
         recentClicks = new LinkedList<>();
         lastChars = new LinkedList<>();
         Arrays.fill(keys, KeyStatus.Up);
+        gkm = GameKeyManager.getInstance();
     }
 
     @Override
@@ -113,6 +115,15 @@ public class GameInputManager implements InputProcessor {
      */
     public boolean isKey(int k, KeyStatus ks) {
         return (keys[k].equals(ks));
+    }
+    /**
+     * Check if the key <code>k</code> is in the status <code>ks</code>
+     * @param id The id of the key in the GameKeyManager
+     * @param ks The status in which the key must be
+     * @return If the key is in this status.
+     */
+    public boolean isKey(String id, KeyStatus ks) {
+        return (keys[gkm.getKeyCodeFor(id)].equals(ks));
     }
 
     /**
