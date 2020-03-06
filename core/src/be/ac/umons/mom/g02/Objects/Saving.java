@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Objects;
 
+import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -12,11 +13,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.Managers.GameInputManager;
+import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 
 
@@ -26,11 +32,27 @@ import com.badlogic.gdx.Gdx;
  */
 public class Saving implements Observer
 {
-    private final String SETTINGS_FILE_NAME = "MasterOfMons.settings.mom";
 
+    /**
+     * The name of the file setting
+     */
+    private final String SETTINGS_FILE_NAME = "MasterOfMons.settings.mom";
+    /**
+     * The instance of the people
+     */
     private People people;
+    /**
+     * The path by default
+     */
     private String path = "/tmp/";
+    /**
+     * The name by default of the file
+     */
     private String defaltName= "MasterOfMons_Save_NoneName.mom";
+    /**
+     * This is the instance of the playing state graphic
+     */
+    private PlayingState playingState;
 
 
     /**
@@ -42,10 +64,20 @@ public class Saving implements Observer
     /**
      * @param people who is the people who play this game with Quest
      */
-    public void setSaving(People people)
+    public void setLogic(People people)
     {
         this.people = people;
         SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+    }
+
+
+    /**
+     * This methods to give the instance of the playing state graphic
+     * @param playingState is the instance of playingState
+     */
+    public void setGraphic(PlayingState playingState)
+    {
+        this.playingState = playingState;
     }
 
 
@@ -84,6 +116,8 @@ public class Saving implements Observer
             sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(file))));
             sortie.writeObject(people);
             sortie.writeObject(date);
+            sortie.writeObject(playingState.getPlayerPosition());
+            sortie.writeObject(playingState.getItemsOnMap());
             sortie.close();
         }
         catch(IOException e)
@@ -139,7 +173,7 @@ public class Saving implements Observer
      * This method allows you to resume the objects saved in a file and start a new game.
      * @param file which is the full file name
      */
-    public void playOldParty(String file ,GraphicalSettings gs)
+    public void playOldParty(String file , GraphicalSettings gs, PlayingState play)//TODO add playingState param
     {
         try
         {
@@ -147,6 +181,9 @@ public class Saving implements Observer
             entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file))));
             people = (People) entree.readObject();
             be.ac.umons.mom.g02.Other.Date date = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
+            play.initMap(people.getMaps().getMaps());
+            play.setPlayerPosition((Point)entree.readObject());
+            play.addItemsToMap((MapObject.OnMapItem[])entree.readObject());
             SuperviserNormally.getSupervisor().oldGame(people,date,gs);
             SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
             path = file;
@@ -155,6 +192,16 @@ public class Saving implements Observer
         {
             Gdx.app.error("Error in the replay the old game party (in)", e.getMessage());
         }
+    }
+
+
+    /***/
+    public void playOldParty(String file , GraphicalSettings gs)
+    {
+        if (playingState != null)
+            playOldParty(file,gs,playingState);
+        else
+            Gdx.app.error("Error in play an old game with PlayingState","Null pointer");
     }
 
 

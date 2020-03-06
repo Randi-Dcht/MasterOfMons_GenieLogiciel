@@ -16,6 +16,7 @@ import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
 import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
 import be.ac.umons.mom.g02.Objects.Course;
@@ -41,7 +42,7 @@ import be.ac.umons.mom.g02.Objects.Items.Phone;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
-import be.ac.umons.mom.g02.Quests.Quest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -115,7 +116,7 @@ public class SuperviserNormally implements Observer
         /**
          * Associate Bloc to Lesson
          */
-        protected HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<Bloc, ArrayList<Lesson>>();
+        protected HashMap<Bloc,ArrayList<Lesson>> listLesson = new HashMap<>();
         /**
          * The all instance of the dialog in the game
          */
@@ -247,7 +248,7 @@ public class SuperviserNormally implements Observer
             this.graphic = graphic;
             MasterQuest mQ = new MyFirstYear(playerOne,null,graphic,difficulty);
             playerOne.newQuest(mQ);
-            save.setSaving(playerOne);
+            save.setLogic(playerOne);
             refreshQuest();
             regulator = new Regulator(playerOne,time);
             listCourse = playerOne.getPlanning().get(time.getDate().getDay());
@@ -314,9 +315,10 @@ public class SuperviserNormally implements Observer
          * This method allows to give the actual quest to the graphic quest
          * @param qs is the graphic instance to quest
          */
-        public void setQuest(QuestShower qs)
+        public void setGraphic(QuestShower qs, PlayingState ps)
         {
             qs.setQuest(playerOne.getQuest());
+            save.setGraphic(ps);
         }
 
 

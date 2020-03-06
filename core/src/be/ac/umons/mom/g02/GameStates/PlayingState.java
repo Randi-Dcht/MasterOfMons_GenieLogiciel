@@ -192,7 +192,7 @@ public class PlayingState extends GameState implements Observer {
         timeShower = new TimeShower(gs);
         notificationRappel = new NotificationRappel(gs);
 
-        SuperviserNormally.getSupervisor().setQuest(questShower);
+        SuperviserNormally.getSupervisor().setGraphic(questShower,this);
 
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
         inventoryShower = new InventoryShower(gim, gs, player);

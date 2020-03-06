@@ -4,7 +4,6 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
-import be.ac.umons.mom.g02.Extensions.Dual.Quest.MovingInMons;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.Date;
@@ -45,8 +44,8 @@ public class SupervisorDual extends SuperviserNormally
         time      = new TimeGame(new Date(1,1,2020,9,0));
         playerOne.newQuest(dualQuest);
         playerTwo.newQuest(dualQuest);
-        save.setSaving(playerOne);
-        save.setSaving(playerTwo);
+        save.setLogic(playerOne);
+        save.setLogic(playerTwo);
         this.graphic = graphic;
 
         refreshQuest();
