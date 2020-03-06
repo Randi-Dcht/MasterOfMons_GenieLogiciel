@@ -59,8 +59,6 @@ public class QuestProgressCircle {
         this.quest = quest;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        lastDegrees = 0;
-        duringAnimationCircleDegrees = 0;
     }
 
     /**
