@@ -76,7 +76,6 @@ public class PlayingStateTest extends PlayingState {
         player.setMapWidth(mapWidth * tileWidth);
         player.setTileWidth(tileWidth);
         player.setTileHeight(tileHeight);
-        velocity = 1;
         SHOWED_MAP_WIDTH = 17;
         SHOWED_MAP_HEIGHT = 31;
         player.setPosX(25);

@@ -1,7 +1,8 @@
-package be.ac.umons.mom.g02.GraphicalObjects;
+package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.InventoryShower;
+import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import com.badlogic.gdx.Input;
 import org.junit.jupiter.api.Assertions;

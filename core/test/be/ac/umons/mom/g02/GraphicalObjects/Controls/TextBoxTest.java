@@ -1,4 +1,4 @@
-package be.ac.umons.mom.g02.GraphicalObjects;
+package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;

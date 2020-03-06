@@ -31,6 +31,8 @@ public class KeySelector extends Control {
         actualKey = "";
     }
 
+    public KeySelector() {}
+
     @Override
     public void draw(Batch batch, Point pos, Point size) {
         super.draw(batch, pos, size);
@@ -58,7 +60,6 @@ public class KeySelector extends Control {
         }
         for (Point click : gim.getRecentClicks())
             isSelected = new Rectangle(x, MasterOfMonsGame.HEIGHT - y - height, width, height).contains(click);
-
     }
 
     @Override

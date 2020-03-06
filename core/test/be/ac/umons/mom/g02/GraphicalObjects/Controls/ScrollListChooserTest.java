@@ -1,7 +1,5 @@
-package be.ac.umons.mom.g02.GraphicalObjects;
+package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
