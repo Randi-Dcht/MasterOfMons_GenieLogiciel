@@ -22,21 +22,53 @@ public class Settings implements Serializable {
      * Game's language
      */
     private Languages language = Languages.English;
-
-    private Difficulty difficulty = Difficulty.Medium;
-
+    /**
+     * The foreground's color (font color, ...)
+     */
     private String foregroundColor = "FFFFFF";
+    /**
+     * The background's color
+     */
     private String backgroundColor = "212121";
+    /**
+     * The semi-transparent background color
+     */
     private String transparentBackgroundColor = "21212180";
+    /**
+     * The background's color of a control
+     */
     private String controlBackgroundColor = "111111";
+    /**
+     * The semi-transparent background's color of a control
+     */
     private String controlTransparentBackgroundColor = "11111180";
+    /**
+     * The control's color when it's selected
+     */
     private String controlSelectedColor = "4527A0";
+    /**
+     * The color of the attack's circle.
+     */
     private String attackRangeColor = "FF212180";
+    /**
+     * The color of the attack's circle when recovering
+     */
     private String recoveringAttackRangeColor = "63636380";
+    /**
+     * The life bar's color
+     */
     private String lifeBarColor = "D50000AF";
+    /**
+     * The energy bar's color
+     */
     private String energyBarColor = "689F38AF";
+    /**
+     * The experience bar's color
+     */
     private String experienceBarColor = "01579BAF";
-
+    /**
+     * The path of the last save.
+     */
     private String lastSavePath = null;
 
     /**
@@ -96,107 +128,161 @@ public class Settings implements Serializable {
         this.language = language;
     }
 
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public void setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
+    /**
+     * @return The foreground's color (font color, ...)
+     */
     public String getForegroundColor() {
         return foregroundColor;
     }
 
+    /**
+     * @param foregroundColor The foreground's color (font color, ...)
+     */
     public void setForegroundColor(String foregroundColor) {
         this.foregroundColor = foregroundColor;
     }
-
+    /**
+     * @return The background's color
+     */
     public String getBackgroundColor() {
         return backgroundColor;
     }
 
+    /**
+     * @param backgroundColor The background's color
+     */
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+    /**
+     * @return The semi-transparent background color
+     */
     public String getTransparentBackgroundColor() {
         return transparentBackgroundColor;
     }
 
+    /**
+     * @param transparentBackgroundColor The semi-transparent background color
+     */
+    public void setTransparentBackgroundColor(String transparentBackgroundColor) {
+        this.transparentBackgroundColor = transparentBackgroundColor;
+    }
+    /**
+     * @return The background's color of a control
+     */
     public String getControlBackgroundColor() {
         return controlBackgroundColor;
     }
 
+    /**
+     * @param controlBackgroundColor The background's color of a control
+     */
+    public void setControlBackgroundColor(String controlBackgroundColor) {
+        this.controlBackgroundColor = controlBackgroundColor;
+    }
+    /**
+     * @return The semi-transparent background's color of a control
+     */
     public String getControlTransparentBackgroundColor() {
         return controlTransparentBackgroundColor;
     }
 
-    public void setControlBackgroundColor(String controlBackgroundColor) {
-        this.controlBackgroundColor = controlBackgroundColor;
-    }
-
+    /**
+     * @param controlTransparentBackgroundColor The semi-transparent background's color of a control
+     */
     public void setControlTransparentBackgroundColor(String controlTransparentBackgroundColor) {
         this.controlTransparentBackgroundColor = controlTransparentBackgroundColor;
     }
-
-    public void setTransparentBackgroundColor(String transparentBackgroundColor) {
-        this.transparentBackgroundColor = transparentBackgroundColor;
-    }
-
+    /**
+     * @return The control's color when it's selected
+     */
     public String getControlSelectedColor() {
         return controlSelectedColor;
     }
 
+    /**
+     * @param controlSelectedColor The control's color when it's selected
+     */
     public void setControlSelectedColor(String controlSelectedColor) {
         this.controlSelectedColor = controlSelectedColor;
     }
-
+    /**
+     * @return The color of the attack's circle
+     */
     public String getAttackRangeColor() {
         return attackRangeColor;
     }
 
+    /**
+     * @param attackRangeColor The color of the attack's circle
+     */
     public void setAttackRangeColor(String attackRangeColor) {
         this.attackRangeColor = attackRangeColor;
     }
-
+    /**
+     * @return The color of the attack's circle when recovering
+     */
     public String getRecoveringAttackRangeColor() {
         return recoveringAttackRangeColor;
     }
 
+    /**
+     * @param recoveringAttackRangeColor The color of the attack's circle when recovering
+     */
     public void setRecoveringAttackRangeColor(String recoveringAttackRangeColor) {
         this.recoveringAttackRangeColor = recoveringAttackRangeColor;
     }
-
+    /**
+     * @return The energy bar's color
+     */
     public String getEnergyBarColor() {
         return energyBarColor;
     }
 
+    /**
+     * @param energyBarColor The energy bar's color
+     */
+    public void setEnergyBarColor(String energyBarColor) {
+        this.energyBarColor = energyBarColor;
+    }
+    /**
+     * @return The experience bar's color
+     */
     public String getExperienceBarColor() {
         return experienceBarColor;
     }
 
+    /**
+     * @param experienceBarColor The experience bar's color
+     */
+    public void setExperienceBarColor(String experienceBarColor) {
+        this.experienceBarColor = experienceBarColor;
+    }
+    /**
+     * @return The life bar's color
+     */
     public String getLifeBarColor() {
         return lifeBarColor;
     }
 
-    public void setEnergyBarColor(String energyBarColor) {
-        this.energyBarColor = energyBarColor;
-    }
-
+    /**
+     * @param lifeBarColor The life bar's color
+     */
     public void setLifeBarColor(String lifeBarColor) {
         this.lifeBarColor = lifeBarColor;
     }
 
-    public void setExperienceBarColor(String experienceBarColor) {
-        this.experienceBarColor = experienceBarColor;
-    }
-
-    public void setLastSavePath(String lastSavePath) {
-        this.lastSavePath = lastSavePath;
-    }
-
+    /**
+     * @return The path of the last save.
+     */
     public String getLastSavePath() {
         return lastSavePath;
+    }
+
+    /**
+     * @param lastSavePath The path of the last save.
+     */
+    public void setLastSavePath(String lastSavePath) {
+        this.lastSavePath = lastSavePath;
     }
 }

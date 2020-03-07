@@ -44,7 +44,6 @@ public class SettingsMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId("gameResolutionHeight"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Height"),
                 new MenuItem(gs.getStringFromId("maximumAutomaticSaves"), MenuItemType.NumberTextBox, "TXT_Maximum_Automatic_Saves"),
                 new MenuItem(gs.getStringFromId("language"), MenuItemType.ScrollListChooser, "SLC_Language"),
-                new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser, "SLC_Difficulty"),
                 new MenuItem(gs.getStringFromId("foregroundColor"), MenuItemType.ColorChooser, "CS_Foreground"),
                 new MenuItem(gs.getStringFromId("backgroundColor"), MenuItemType.ColorChooser, "CS_Background"),
                 new MenuItem(gs.getStringFromId("transparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Transparent_Background"),
@@ -88,14 +87,6 @@ public class SettingsMenuState extends MenuState {
                     ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
                     mi.size.y = (int)(3 * (gs.getNormalFont().getLineHeight() + 2 * topMargin));
                     break;
-                case "SLC_Difficulty":
-                    List<ScrollListChooser.ScrollListItem> l = new ArrayList<>();
-                    for (Difficulty d : Difficulty.values())
-                        l.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(d.toString()),
-                                () -> MasterOfMonsGame.settings.setDifficulty(d), d == MasterOfMonsGame.settings.getDifficulty()));
-                    ((ScrollListChooser)mi.control).setScrollListItems(l.toArray(new ScrollListChooser.ScrollListItem[0]));
-                    mi.size.y = (int)(4 * (gs.getNormalFont().getLineHeight() + 3 * topMargin));
-                    break;
                 case "CS_Foreground":
                     setColorSelectorDefaultValue(mi, settings.getForegroundColor());
                     break;
@@ -133,6 +124,11 @@ public class SettingsMenuState extends MenuState {
         }
     }
 
+    /**
+     * Set the default value of a ColorSelector for this state + its size.
+     * @param mi The <code>MenuItem</code> associated with the ColorSelector.
+     * @param color The default color.
+     */
     protected void setColorSelectorDefaultValue(MenuItem mi, String color) {
         ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(color));
         mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
@@ -143,7 +139,7 @@ public class SettingsMenuState extends MenuState {
      */
     public void save() {
         Settings settings = new Settings();
-        for (MenuItem mi : menuItems) {
+        for (MenuItem mi : menuItems) {  // No need to add SCLs because done at each click !
             switch (mi.id) {
                 case "TXT_Game_Resolution_Width":
                     settings.setGameResolutionWidth(Integer.parseInt(((TextBox)mi.control).getText()));
@@ -151,7 +147,7 @@ public class SettingsMenuState extends MenuState {
                 case "TXT_Game_Resolution_Height":
                     settings.setGameResolutionHeight(Integer.parseInt(((TextBox)mi.control).getText()));
                     break;
-                case "TXT_Maximum_Automatic_Saves": // No need to add SCLs because done at each click !
+                case "TXT_Maximum_Automatic_Saves":
                     settings.setMaximumAutomaticSaves(Integer.parseInt(((TextBox)mi.control).getText()));
                     break;
                 case "CS_Foreground":

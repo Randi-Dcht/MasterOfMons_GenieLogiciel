@@ -54,16 +54,49 @@ public class GraphicalSettings {
      */
     private boolean showMapCoordinates = false;
 
+    /**
+     * The foreground's color (font color, ...)
+     */
     protected Color foregroundColor;
+    /**
+     * The background's color
+     */
     protected Color backgroundColor;
+    /**
+     * The semi-transparent background color
+     */
     protected Color transparentBackgroundColor;
+    /**
+     * The background's color of a control
+     */
     protected Color controlBackgroundColor;
+    /**
+     * The semi-transparent background's color for a control
+     */
     protected Color controlTransparentBackgroundColor;
+    /**
+     * The control's color when it's selected
+     */
     protected Color controlSelectedColor;
+    /**
+     * The color of the attack's circle.
+     */
     protected Color attackRangeColor;
+    /**
+     * The color of the attack's circle when recovering
+     */
     protected Color recoveringAttackRangeColor;
+    /**
+     * The life bar's color
+     */
     protected Color lifeBarColor;
+    /**
+     * The energy bar's color
+     */
     protected Color energyBarColor;
+    /**
+     * The experience bar's color
+     */
     protected Color experienceBarColor;
 
     public GraphicalSettings() {
@@ -81,6 +114,9 @@ public class GraphicalSettings {
         refreshColors();
     }
 
+    /**
+     * Refresh all the colors by taking the one in the settings.
+     */
     public void refreshColors() {
         foregroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getForegroundColor());
         backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
@@ -272,46 +308,79 @@ public class GraphicalSettings {
         this.showMapCoordinates = showMapCoordinates;
     }
 
+    /**
+     * @return The foreground's color (font color, ...)
+     */
     public Color getForegroundColor() {
         return foregroundColor;
     }
 
+    /**
+     * @return The background's color
+     */
     public Color getBackgroundColor() {
         return backgroundColor;
     }
 
+    /**
+     * @return The semi-transparent background color
+     */
     public Color getTransparentBackgroundColor() {
         return transparentBackgroundColor;
     }
 
+    /**
+     * @return The background's color of a control
+     */
     public Color getControlBackgroundColor() {
         return controlBackgroundColor;
     }
 
+    /**
+     * @return The semi-transparent background's color for a control
+     */
     public Color getControlTransparentBackgroundColor() {
         return controlTransparentBackgroundColor;
     }
 
+    /**
+     * @return The control's color when it's selected
+     */
     public Color getControlSelectedColor() {
         return controlSelectedColor;
     }
 
+    /**
+     * @return The color of the attack's circle.
+     */
     public Color getAttackRangeColor() {
         return attackRangeColor;
     }
 
+    /**
+     * @return The color of the attack's circle when recovering
+     */
     public Color getRecoveringAttackRangeColor() {
         return recoveringAttackRangeColor;
     }
 
+    /**
+     * @return The energy bar's color
+     */
     public Color getEnergyBarColor() {
         return energyBarColor;
     }
 
+    /**
+     * @return The experience bar's color
+     */
     public Color getExperienceBarColor() {
         return experienceBarColor;
     }
 
+    /**
+     * @return The life bar's color
+     */
     public Color getLifeBarColor() {
         return lifeBarColor;
     }

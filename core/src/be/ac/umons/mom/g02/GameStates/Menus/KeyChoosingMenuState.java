@@ -10,8 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Represent the state where the user can choose which key do what.
+ */
 public class KeyChoosingMenuState extends MenuState {
 
+    /**
+     * The hashmap representing an association between a given id and the key associated.
+     */
     HashMap<String, Integer> keysMap;
 
     /**
@@ -37,12 +43,18 @@ public class KeyChoosingMenuState extends MenuState {
         setDefaultValue();
     }
 
+    /**
+     * Set the default value of all the KeySelector.
+     */
     protected void setDefaultValue() {
         for (MenuItem mi : menuItems)
-            if (!mi.id.equals(""))
+            if (! mi.id.equals(""))
                 ((KeySelector)mi.control).setActualKeyCode(keysMap.get(mi.id));
     }
 
+    /**
+     * Save the keys.
+     */
     protected void save() {
         for (MenuItem mi : menuItems)
             if (!mi.id.equals(""))

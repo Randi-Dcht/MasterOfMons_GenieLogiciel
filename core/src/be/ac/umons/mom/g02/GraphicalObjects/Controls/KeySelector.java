@@ -12,11 +12,26 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 
+/**
+ * Represent a <code>TextBox</code> reacting for choosing only one key.
+ */
 public class KeySelector extends Control {
 
+    /**
+     * If the <code>KeySelector</code> is selected.
+     */
     protected boolean isSelected = false;
+    /**
+     * Allow to draw shapes.
+     */
     protected ShapeRenderer sr;
+    /**
+     * The string representing which key is selected.
+     */
     protected String actualKey;
+    /**
+     * The code of the key which is selected.
+     */
     protected int actualKeyCode;
 
     /**
@@ -31,6 +46,9 @@ public class KeySelector extends Control {
         actualKey = "";
     }
 
+    /**
+     * USES ONLY FOR TESTS
+     */
     public KeySelector() {}
 
     @Override
@@ -67,10 +85,16 @@ public class KeySelector extends Control {
         sr.dispose();
     }
 
+    /**
+     * @return The code of the key which is selected.
+     */
     public int getActualKeyCode() {
         return actualKeyCode;
     }
 
+    /**
+     * @param actualKeyCode The code of the key which is selected.
+     */
     public void setActualKeyCode(int actualKeyCode) {
         this.actualKeyCode = actualKeyCode;
         actualKey = Input.Keys.toString(actualKeyCode);

@@ -28,6 +28,9 @@ public class TextBox extends Control {
      * The actual text entered
      */
     protected String actualText = "";
+    /**
+     * Represent at which position the cursor is (in char).
+     */
     protected int selectedPosition=0;
     /**
      * The suffix that will be placed at the end of the text
@@ -46,8 +49,13 @@ public class TextBox extends Control {
      * If the <code>TextBox</code> accepts ONLY characters corresponding the hexa-decimal encodage(1-9, A-F)
      */
     protected boolean acceptOnlyHexadecimal = false;
-
+    /**
+     * If the vertical bar must be shown at the moment.
+     */
     protected boolean mustShowVerticalBar = false;
+    /**
+     * The time gone by since the vertical bar was shown/hided.
+     */
     protected double timeGone = 0;
 
     /**
