@@ -30,7 +30,7 @@ public class AddFriend implements Notification
      */
     public AddFriend()
     {
-        evt= Events.AddFriend;
+        this(null);
     }
 
 

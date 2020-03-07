@@ -11,6 +11,7 @@ public class ChangeDay implements Notification
 {
     private Events evt;
     private int buffer;
+    private boolean empty;
 
 
     /**
@@ -21,6 +22,7 @@ public class ChangeDay implements Notification
     {
         evt = Events.ChangeDay;
         this.buffer = buffer;
+        empty = false;
     }
 
 
@@ -29,7 +31,8 @@ public class ChangeDay implements Notification
      */
     public ChangeDay()
     {
-        evt= Events.ChangeDay;
+        evt = Events.ChangeDay;
+        empty = true;
     }
 
 
@@ -62,6 +65,6 @@ public class ChangeDay implements Notification
     @Override
     public boolean bufferNotEmpty()
     {
-        return buffer != 0;
+        return !empty;
     }
 }

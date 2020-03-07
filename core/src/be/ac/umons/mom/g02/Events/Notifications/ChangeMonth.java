@@ -11,17 +11,19 @@ import be.ac.umons.mom.g02.Objects.Characters.Character;
 public class ChangeMonth implements Notification
 {
     private Events evt;
-    private Character buffer;
+    private int buffer;
+    private boolean empty;
 
 
     /**
      * This constructor define a notification when change month with buffer
      * @param buffer is a buffer with character(specific to events)
      */
-    public ChangeMonth(Character buffer)
+    public ChangeMonth(int buffer)
     {
-        evt = Events.ChangeMonth;
+        evt         = Events.ChangeMonth;
         this.buffer = buffer;
+        empty       = false;
     }
 
 
@@ -30,7 +32,8 @@ public class ChangeMonth implements Notification
      */
     public ChangeMonth()
     {
-        evt= Events.ChangeMonth;
+        evt   = Events.ChangeMonth;
+        empty = true;
     }
 
 
@@ -50,7 +53,7 @@ public class ChangeMonth implements Notification
      * @return character
      */
     @Override
-    public Character getBuffer()
+    public Integer getBuffer()
     {
         return buffer;
     }
@@ -63,6 +66,6 @@ public class ChangeMonth implements Notification
     @Override
     public boolean bufferNotEmpty()
     {
-        return !(buffer == null);
+        return !empty;
     }
 }

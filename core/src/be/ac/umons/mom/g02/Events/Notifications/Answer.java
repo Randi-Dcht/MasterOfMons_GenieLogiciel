@@ -29,7 +29,7 @@ public class Answer implements Notification
      */
     public Answer()
     {
-        evt= Events.Answer;
+        this(null);
     }
 
 

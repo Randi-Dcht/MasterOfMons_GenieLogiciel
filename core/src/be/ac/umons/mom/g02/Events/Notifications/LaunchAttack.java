@@ -29,7 +29,7 @@ public class LaunchAttack implements Notification
      */
     public LaunchAttack()
     {
-        evt= Events.Attack;
+        this(null);
     }
 
 

@@ -30,7 +30,7 @@ public class Dead implements Notification
      */
     public Dead()
     {
-        evt= Events.Dead;
+        this(null);
     }
 
 

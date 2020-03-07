@@ -30,7 +30,7 @@ public class PlaceInMons implements Notification
      */
     public PlaceInMons()
     {
-        evt= Events.PlaceInMons;
+        this(null);
     }
 
 

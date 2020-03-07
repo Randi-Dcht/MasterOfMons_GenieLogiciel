@@ -25,7 +25,7 @@ public class MeetOther implements Notification
      */
     public MeetOther()
     {
-        evt= Events.MeetOther;
+        this(null);
     }
 
 

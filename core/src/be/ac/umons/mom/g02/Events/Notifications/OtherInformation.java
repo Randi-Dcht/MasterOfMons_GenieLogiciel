@@ -24,7 +24,7 @@ public class OtherInformation implements Notification
      */
     public OtherInformation()
     {
-        evt= Events.OtherInformation;
+        this(null);
     }
 
 

@@ -11,6 +11,7 @@ public class UpLevel implements Notification
 {
     private Events evt;
     private int buffer;
+    private boolean empty;
 
 
     /**
@@ -21,6 +22,7 @@ public class UpLevel implements Notification
     {
         evt = Events.UpLevel;
         this.buffer = buffer;
+        empty = false;
     }
 
 
@@ -30,6 +32,7 @@ public class UpLevel implements Notification
     public UpLevel()
     {
         evt= Events.UpLevel;
+        empty = true;
     }
 
 
@@ -62,6 +65,6 @@ public class UpLevel implements Notification
     @Override
     public boolean bufferNotEmpty()
     {
-        return !(buffer == 0);
+        return !empty;
     }
 }

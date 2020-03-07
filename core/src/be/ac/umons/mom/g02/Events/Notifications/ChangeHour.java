@@ -6,6 +6,7 @@ public class ChangeHour implements Notification
 {
     private Events evt;
     private int buffer;
+    private boolean empty;
 
 
     /**
@@ -16,6 +17,7 @@ public class ChangeHour implements Notification
     {
         evt = Events.ChangeHour;
         this.buffer = buffer;
+        empty = false;
     }
 
 
@@ -24,7 +26,8 @@ public class ChangeHour implements Notification
      */
     public ChangeHour()
     {
-        evt= Events.ChangeHour;
+        evt = Events.ChangeHour;
+        empty = true;
     }
 
 
@@ -57,6 +60,6 @@ public class ChangeHour implements Notification
     @Override
     public boolean bufferNotEmpty()
     {
-        return true;
+        return !empty;
     }
 }

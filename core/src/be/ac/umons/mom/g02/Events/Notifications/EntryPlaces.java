@@ -25,7 +25,7 @@ public class EntryPlaces implements Notification
      */
     public EntryPlaces()
     {
-        evt= Events.EntryPlace;
+        this(null);
     }
 
 

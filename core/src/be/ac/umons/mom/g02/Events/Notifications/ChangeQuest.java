@@ -30,7 +30,7 @@ public class ChangeQuest implements Notification
      */
     public ChangeQuest()
     {
-        evt= Events.ChangeQuest;
+        this(null);
     }
 
 

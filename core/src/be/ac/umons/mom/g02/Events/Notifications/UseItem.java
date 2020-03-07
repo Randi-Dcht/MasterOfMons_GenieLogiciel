@@ -29,7 +29,7 @@ public class UseItem implements Notification
      */
     public UseItem()
     {
-        evt= Events.UseItems;
+        this(null);
     }
 
 
