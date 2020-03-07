@@ -162,7 +162,8 @@ public class NetworkManager {
                             return;
                         }
                         if (onServerDetected != null)
-                            onServerDetected.run();
+                            Gdx.app.postRunnable(() ->
+                                onServerDetected.run());
                     }
                     break;
                 case "MOMConnect":
