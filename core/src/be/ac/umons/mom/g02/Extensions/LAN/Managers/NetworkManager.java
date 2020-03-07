@@ -43,14 +43,14 @@ public class NetworkManager {
         }
     }
 
-    public void startBroadcastingMessage(String message) {
-//        if (thread != null)
-//            thread.interrupt();
+    public void startBroadcastingMessage(String servName) {
+        if (thread != null)
+            thread.interrupt();
         thread = new Thread(() -> {
             try {
                 while (! connected) {
                     for (InetAddress address : addressToBroadcast.keySet())
-                        broadcastMessage("MOMServer" + address.toString() + "/TestName", addressToBroadcast.get(address));
+                        broadcastMessage("MOMServer" + address.toString() + "/" + servName, addressToBroadcast.get(address));
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -72,8 +72,8 @@ public class NetworkManager {
     }
 
     public void startListeningForServer() {
-//        if (thread != null)
-//            thread.interrupt();
+        if (thread != null)
+            thread.interrupt();
         thread = new Thread(this::listenToBroadcast);
         thread.start();
     }
