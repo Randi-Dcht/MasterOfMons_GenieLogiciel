@@ -6,4 +6,6 @@ package be.ac.umons.mom.g02.Objects.Items;
 public interface Guns
 {
     int addDamageGun();
+
+    void useGun();
 }

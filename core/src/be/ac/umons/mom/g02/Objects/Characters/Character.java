@@ -342,9 +342,19 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public boolean howGun()
     {
-        return gun != null;
+        return (gun != null && gun.getObsolete()!=0);
     }
 
+
+    /**
+     * This method return the gun of the attack during the attack
+     * @return gun of the attacker
+     */
+    @Override
+    public Gun getGun()
+    {
+        return gun;
+    }
 
     /**
      * This method allows to give the name of the people

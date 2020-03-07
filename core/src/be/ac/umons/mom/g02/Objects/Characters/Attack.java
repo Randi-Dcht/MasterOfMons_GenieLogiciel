@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Objects.Items.Guns;
 
 
 /**
@@ -78,6 +79,12 @@ public interface Attack
      */
     public double damageGun();
 
+
+    /**
+     * This method allows to give the actual gun of the attacker
+     * @return gun of the attacker
+     */
+    Guns getGun();
 
     /**
      * This method return the type of characteristic

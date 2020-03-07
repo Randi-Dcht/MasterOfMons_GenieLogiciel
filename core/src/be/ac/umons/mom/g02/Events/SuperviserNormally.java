@@ -42,7 +42,6 @@ import be.ac.umons.mom.g02.Objects.Items.Phone;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -553,7 +552,10 @@ public class SuperviserNormally implements Observer
            if(victim.dodge() < 0.6 && attacker.canAttacker())
            {
                if(attacker.howGun())
+               {
                    victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
+                   attacker.getGun().useGun();
+               }
                else
                    victim.loseAttack(calculateHits(attacker,victim,0));
            }
