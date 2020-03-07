@@ -6,8 +6,9 @@ import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 
-import java.awt.*;
+import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +53,23 @@ public class ConnectionRoomState extends MenuState {
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem(gs.getStringFromId("automaticDetect"), MenuItemType.Title));
         for (ServerInfo si : nm.getDetectedServers()) {
-            menuItems.add(new MenuItem(String.format("%s (%s)", si.getName(), si.getIp().toString().replace("/", "")), MenuItemType.Button));
+            menuItems.add(new MenuItem(
+                    String.format("%s (%s)", si.getName(), si.getIp().toString().replace("/", "")),
+                    MenuItemType.Button, () -> connectToServer(si)));
         }
         menuItems.add(new MenuItem(gs.getStringFromId("enterServerInfo"), MenuItemType.Title));
         menuItems.add(new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text));
         menuItems.add(new MenuItem("IP : ", MenuItemType.TextBox, "TXT_IP"));
         setMenuItems(menuItems.toArray(new MenuItem[0]));
+    }
+
+    protected void connectToServer(ServerInfo serverInfo) {
+        nm.setSelectedServer(serverInfo);
+        try {
+            nm.sendMessage("MOMConnect" + serverInfo.getMyIPOnTheSameNetwork().toString());
+            gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
+        } catch (IOException e) {
+            Gdx.app.error("ConnectionRoomState", "An error occurred while trying to connect to the server", e);
+        }
     }
 }

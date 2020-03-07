@@ -5,10 +5,12 @@ import java.net.InetAddress;
 public class ServerInfo {
     protected String name;
     protected InetAddress ip;
+    protected InetAddress myIPOnTheSameNetwork;
 
-    public ServerInfo(String name, InetAddress ip, int port) {
+    public ServerInfo(String name, InetAddress ip, InetAddress myIPOnTheSameNetwork) {
         this.name = name;
         this.ip = ip;
+        this.myIPOnTheSameNetwork = myIPOnTheSameNetwork;
     }
 
     public String getName() {
@@ -17,5 +19,9 @@ public class ServerInfo {
 
     public InetAddress getIp() {
         return ip;
+    }
+
+    public InetAddress getMyIPOnTheSameNetwork() {
+        return myIPOnTheSameNetwork;
     }
 }

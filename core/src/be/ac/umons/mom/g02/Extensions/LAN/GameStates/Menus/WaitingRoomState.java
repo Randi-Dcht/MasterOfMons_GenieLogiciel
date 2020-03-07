@@ -32,6 +32,8 @@ public class WaitingRoomState extends MenuState {
 
         try {
             nm = NetworkManager.getInstance();
+            nm.startListeningForServer(); // Only for MOMConnect message
+            nm.setOnServerSelected(() -> gsm.removeAllStateAndAdd(FinalisingConnectionState.class));
         } catch (SocketException e) {
             e.printStackTrace();
             return;
