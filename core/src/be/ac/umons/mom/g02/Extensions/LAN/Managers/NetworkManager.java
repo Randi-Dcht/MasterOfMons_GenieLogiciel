@@ -46,17 +46,24 @@ public class NetworkManager {
      */
     HashMap<InetAddress, InetAddress> addressToBroadcast;
     /**
-     * The socket used for broadcasting
+     * The socket used for broadcasting / sending message if a server is selected.
      */
     protected DatagramSocket ds;
     /**
-     * The thread used for listening/broadcasting the server's informations.
+     * The thread used for listening the server's informations.
      */
-    protected Thread servInfoThread;
+    protected Thread servInfoListeningThread;
+    /**
+     * The thread used for broadcasting the server's informations.
+     */
+    protected Thread servInfoBroadcastingThread;
     /**
      * What to do when a server is detected.
      */
     protected Runnable onServerDetected;
+    protected Runnable onServerSelected;
+
+    protected ServerInfo selectedServer;
 
     /**
      * @throws SocketException If the port used (32516) is already used
@@ -77,13 +84,13 @@ public class NetworkManager {
      * @param servName The server name
      */
     public void startBroadcastingMessage(String servName) {
-        if (servInfoThread != null)
-            servInfoThread.interrupt();
-        servInfoThread = new Thread(() -> {
+        if (servInfoBroadcastingThread != null)
+            servInfoBroadcastingThread.interrupt();
+        servInfoBroadcastingThread = new Thread(() -> {
             try {
                 while (! connected) {
                     for (InetAddress address : addressToBroadcast.keySet())
-                        broadcastMessage("MOMServer" + address.toString() + "/" + servName, addressToBroadcast.get(address));
+                        broadcastMessage("MOMServer" + address.toString() + addressToBroadcast.get(address).toString() + "/" + servName, addressToBroadcast.get(address));
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -94,13 +101,13 @@ public class NetworkManager {
                 e.printStackTrace();
             }
         });
-        servInfoThread.start();
+        servInfoBroadcastingThread.start();
     }
 
     /**
      * Broadcast the given message on the given address.
      * @param message The message
-     * @param address The address
+     * @param address The broadcasting address
      * @throws IOException If an error occur during the broadcasting
      */
     protected void broadcastMessage(String message, InetAddress address) throws IOException {
@@ -113,10 +120,10 @@ public class NetworkManager {
      * Start listening for the server informations.
      */
     public void startListeningForServer() {
-        if (servInfoThread != null)
-            servInfoThread.interrupt();
-        servInfoThread = new Thread(this::listenToBroadcast);
-        servInfoThread.start();
+        if (servInfoListeningThread != null)
+            servInfoListeningThread.interrupt();
+        servInfoListeningThread = new Thread(this::listenToBroadcast);
+        servInfoListeningThread.start();
     }
 
     /**
@@ -131,25 +138,54 @@ public class NetworkManager {
                 ds.receive(dp);
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
 
             String received = new String(dp.getData());
-            if (received.startsWith("MOMServer")) {
-                String[] tab = received.split("/");
-                Gdx.app.log("NetworkManager", String.format("Server detected : %s", tab[1]));
-                try {
+            String[] tab = received.split("/");
+            InetAddress serverAddress = null;
+            try {
+                serverAddress = InetAddress.getByName(tab[1]);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            switch (tab[0]) {
+                case "MOMServer":
+                    Gdx.app.log("NetworkManager", String.format("Server detected : %s", tab[1]));
                     if (! detected.contains(tab[1])) {
                         detected.add(tab[1]);
-                        InetAddress serverAddress = InetAddress.getByName(tab[1]);
-                        detectedServers.add(new ServerInfo(tab[2], serverAddress, PORT));
-                        Gdx.app.postRunnable(onServerDetected);
+                        try {
+                            detectedServers.add(new ServerInfo(tab[3], serverAddress,
+                                    getMyAddressFromBroadcast(InetAddress.getByName(tab[2]))));
+                        } catch (UnknownHostException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                        if (onServerDetected != null)
+                            onServerDetected.run();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    break;
+                case "MOMConnect":
+                    try {
+                        setSelectedServer(new ServerInfo("", InetAddress.getByName(tab[1]),
+                                null));
+                        if (onServerSelected != null)
+                            onServerSelected.run();
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
+    }
+
+    protected InetAddress getMyAddressFromBroadcast(InetAddress broadcast) {
+        for (InetAddress key : addressToBroadcast.keySet()) {
+            if (addressToBroadcast.get(key).equals(broadcast)) {
+                return key;
+            }
+        }
+        return null;
     }
 
     /**
@@ -177,6 +213,33 @@ public class NetworkManager {
             }
         }
         return broadcastList;
+    }
+
+    public void sendMessage(String message) throws IOException {
+        if (selectedServer == null)
+            throw new NullPointerException("No server was selected");
+        byte[] buf = message.getBytes();
+        DatagramPacket p = new DatagramPacket(buf, buf.length, selectedServer.getIp(), PORT);
+        ds.send(p);
+    }
+
+    public void setSelectedServer(ServerInfo selectedServer) {
+        if (servInfoListeningThread != null && servInfoListeningThread.isAlive())
+            servInfoListeningThread.interrupt();
+        if (servInfoBroadcastingThread != null && servInfoBroadcastingThread.isAlive())
+            servInfoBroadcastingThread.interrupt();
+        this.selectedServer = selectedServer;
+        try {
+            ds.close();
+            ds = new DatagramSocket();
+        } catch (SocketException e) {
+            Gdx.app.error("NetworkManager", "An error has occured while trying to create the socket", e);
+            return;
+        }
+    }
+
+    public void setOnServerSelected(Runnable onServerSelected) {
+        this.onServerSelected = onServerSelected;
     }
 
     /**
