@@ -72,6 +72,10 @@ public abstract class Character implements Attack, Social, Serializable
      * The type of character when it is instantiate this
      */
     final Type type;
+    /**
+     * This is the money of the player in the game
+     */
+    protected int myMoney;
 
 
     /**
@@ -127,6 +131,29 @@ public abstract class Character implements Attack, Social, Serializable
     /***/
     @Override
     public abstract TypePlayer getType();
+
+
+    /**
+     * This method return the total of the money
+     * @return the number of money
+     */
+    public int getMyMoney()
+    {
+        return myMoney;
+    }
+
+
+    /**
+     * This method allows to pull the money to the character
+     * @return if the people can pull money and pull money if true
+     */
+    public boolean pullMoney(int many)
+    {
+        if (myMoney + many < 0)
+            return false;
+        myMoney -= many;
+        return true;
+    }
 
 
     /**
