@@ -53,13 +53,13 @@ import java.util.*;
  */
 public class PlayingState extends GameState implements Observer {
     /**
-     * The horizontal map's width to show.
+     * The horizontal map's length to show.
      */
     public static int SHOWED_MAP_WIDTH = 31;
     /**
-     * The vertical map's width to show.
+     * The vertical map's length to show.
      */
-    public static int SHOWED_MAP_HEIGHT = 17;
+    public static int SHOWED_MAP_HEIGHT = 34;
     /**
      * The number of tile in the map (horizontally)
      */
@@ -202,7 +202,7 @@ public class PlayingState extends GameState implements Observer {
 
         initMap("Tmx/Umons_Nimy.tmx");
 
-        cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight * 2);
+        cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();
         gmm.setView(cam);
@@ -416,7 +416,7 @@ public class PlayingState extends GameState implements Observer {
      */
     protected void translateCamera(int x, int y) {
         double minX = (double)SHOWED_MAP_WIDTH / 2;
-        double minY = (double)SHOWED_MAP_HEIGHT / 2;
+        double minY = (double)SHOWED_MAP_HEIGHT / 4;
 
         Rectangle pmr = player.getMapRectangle();
 
