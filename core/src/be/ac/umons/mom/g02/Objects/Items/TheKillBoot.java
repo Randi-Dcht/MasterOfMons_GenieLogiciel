@@ -40,6 +40,10 @@ public class TheKillBoot extends Items implements Guns
 
     }
 
+    public int buy()
+    {
+        return 200;
+    }
 
     /**
      * This method allows to said if the items is obsolete

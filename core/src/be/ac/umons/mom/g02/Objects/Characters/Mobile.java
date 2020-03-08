@@ -65,7 +65,7 @@ public class Mobile extends Character implements Serializable, FrameTime
         this.nameDialog = nameDialog;
         action = myAction;
         calculusPoint(type);
-        myMoney = new Random().nextInt(20-1) + 1;
+        myMoney = new Random().nextInt(10-1) + 1;
     }
 
 
