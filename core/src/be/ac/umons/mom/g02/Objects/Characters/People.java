@@ -72,6 +72,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
         this.threshold = minExperience(level+1);
         this.difficulty = difficulty;
         this.gender = gender;
+        myMoney = 5;
     }
 
 
@@ -90,6 +91,16 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         super.updateType(strength, defence, agility);
         actual += strength+defence+agility;
+    }
+
+
+    /**
+     * This method allows to add the money to the player
+     * @param add is the money more
+     */
+    public void addMoney(int add)
+    {
+        myMoney += add;
     }
 
 
