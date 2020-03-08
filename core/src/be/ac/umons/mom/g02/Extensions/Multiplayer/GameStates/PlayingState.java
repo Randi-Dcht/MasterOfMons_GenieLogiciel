@@ -6,9 +6,12 @@ import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
+import java.awt.*;
 
 /**
  * The state of play of the game. It displays the map, two players and a HUD.
@@ -37,7 +40,7 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     public void init() {
         super.init();
         playerTwo = new Player(gs);
-        playerTwo.move(player.getPosX(), playerTwo.getPosY());
+        playerTwo.setMapPos(new Point(player.getPosX(), playerTwo.getPosY()));
     }
 
     @Override
@@ -65,6 +68,10 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
         playerTwo.move(toMoveX, toMoveY);
         playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + defaultCamXPos, playerTwo.getPosY() - (int)cam.position.y + defaultCamYPos, tileWidth, tileHeight);
 
+    }
+
+    public void setSecondPlayerCharacteristics(People secondPlayerCharacteristics) {
+        playerTwo.setCharacteristics(secondPlayerCharacteristics);
     }
 
 

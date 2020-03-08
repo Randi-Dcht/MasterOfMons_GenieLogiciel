@@ -65,14 +65,8 @@ public class GameStateManager {
      * @return The created GameState
      */
     public GameState setState(Class<? extends GameState> gst, boolean popPreviousOne) {
-        GameState g;
-        try {
-            Constructor con = gst.getConstructor(GameStateManager.class, GameInputManager.class, GraphicalSettings.class);
-            g = (GameState) con.newInstance(this, gim, gs);
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
-            return null;
-        }
+        GameState g = getState(gst);
+        if (g == null) return null;
         animateForChangingState(() -> addStateToStack(g, popPreviousOne));
         return g;
     }
@@ -112,6 +106,13 @@ public class GameStateManager {
      * @return The created GameState
      */
     public GameState setStateWithoutAnimation(Class<? extends GameState> gst, boolean popPreviousOne) {
+        GameState g = getState(gst);
+        if (g == null) return null;
+        addStateToStack(g, popPreviousOne);
+        return g;
+    }
+
+    private GameState getState(Class<? extends GameState> gst) {
         GameState g;
         try {
             Constructor con = gst.getConstructor(GameStateManager.class, GameInputManager.class, GraphicalSettings.class);
@@ -120,7 +121,6 @@ public class GameStateManager {
             e.printStackTrace();
             return null;
         }
-        addStateToStack(g, popPreviousOne);
         return g;
     }
 
@@ -151,11 +151,13 @@ public class GameStateManager {
      * Remove all the current states and add the given state to the stack.
      * @param gst The type of state to add.
      */
-    public void removeAllStateAndAdd(Class<? extends GameState> gst) {
+    public GameState removeAllStateAndAdd(Class<? extends GameState> gst) {
+        GameState g = getState(gst);
         animateForChangingState(() -> {
             gameStateStack.clear();
-            setStateWithoutAnimation(gst);
+            gameStateStack.add(g);
         });
+        return g;
     }
 
     /**

@@ -1,5 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
+import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
@@ -34,6 +36,14 @@ public class ConnectionRoomState extends MenuState {
             nm = NetworkManager.getInstance();
             nm.startListeningForServer();
             nm.setOnServerDetected(this::refresh);
+            nm.setOnConnected(() -> {
+                nm.sendPlayerInformation(SuperviserNormally.getSupervisor().getPeople());
+                // TODO Receive info and send info on the player
+            });
+            nm.setOnPlayerDetected(secondPlayer -> {
+                PlayingState ps = (PlayingState)gsm.removeAllStateAndAdd(PlayingState.class);
+                ps.setSecondPlayerCharacteristics(secondPlayer);
+            });
         } catch (SocketException e) {
             e.printStackTrace();
             return;
@@ -64,12 +74,8 @@ public class ConnectionRoomState extends MenuState {
     }
 
     protected void connectToServer(ServerInfo serverInfo) {
-        nm.setSelectedServer(serverInfo);
-        try {
-            nm.sendMessage("MOMConnect" + serverInfo.getMyIPOnTheSameNetwork().toString());
-            gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
-        } catch (IOException e) {
-            Gdx.app.error("ConnectionRoomState", "An error occurred while trying to connect to the server", e);
-        }
+        nm.selectAServer(serverInfo);
+        nm.tryToConnect();
+        gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
     }
 }
