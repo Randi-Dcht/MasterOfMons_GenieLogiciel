@@ -179,8 +179,11 @@ public abstract class MenuState extends GameState {
         if (handleEscape && gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             gsm.removeFirstState();
         if (! buttons.isEmpty()) {
-            if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
-                buttons.get(selectedItem.x).get(selectedItem.y).getOnClick().run();
+            if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
+                Runnable run = buttons.get(selectedItem.x).get(selectedItem.y).getOnClick();
+                if (run != null)
+                    run.run();
+            }
 
             Point oldSelectedItem = new Point(selectedItem.x, selectedItem.y);
             if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed))

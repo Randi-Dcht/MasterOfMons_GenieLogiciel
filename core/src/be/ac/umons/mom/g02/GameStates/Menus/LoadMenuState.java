@@ -24,7 +24,8 @@ public class LoadMenuState extends ChooseFolderMenuState {
         setMenuItems(new MenuItem[] {
                 new MenuItem(gs.getStringFromId("load"), MenuItemType.Title),
                 directoryMI,
-                chooseSaveSLC
+                new MenuItem(gs.getStringFromId("cancel"), MenuItemType.Button, () -> gsm.removeFirstState()),
+                chooseSaveSLC,
         });
         setFolder(path);
     }
