@@ -124,7 +124,7 @@ public abstract class Character implements Attack, Social, Serializable
      */
     public double getSpeed()
     {
-        return speed;
+        return speed*4;
     }
 
 

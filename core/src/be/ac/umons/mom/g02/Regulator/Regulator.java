@@ -35,7 +35,7 @@ public class Regulator implements Observer
     /**
      * This is the instance of the class who manage the game
      */
-    private SuperviserNormally manager;
+    private Superviser manager;
     /**
      * To warn the people if there are problems
      */
@@ -271,7 +271,7 @@ public class Regulator implements Observer
     {
         if (answer.equals("OK"))
             displayQuestion = true;
-        
+
         if (waitingLine.size() != 0)
         {
             manager.getEvent().notify(new Dialog(waitingLine.get(0),"OK"));

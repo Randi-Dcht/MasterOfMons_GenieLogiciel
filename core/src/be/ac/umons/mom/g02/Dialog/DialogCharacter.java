@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Regulator.Superviser;
 import com.badlogic.gdx.Gdx;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -47,13 +48,13 @@ public class DialogCharacter
     /**
      * This is an instance of the SuperviserNormally
      */
-    private SuperviserNormally supervisor;
+    private Superviser supervisor;
 
     /**
      * This constructor define the dialog of the character
      * @param nameDialog is the name of the dialog with the ID
      */
-    public DialogCharacter(NameDialog nameDialog,SuperviserNormally supervisor)//TODO add sp
+    public DialogCharacter(NameDialog nameDialog,Superviser supervisor)//TODO add sp
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
@@ -159,7 +160,7 @@ public class DialogCharacter
             list.add("ESC");
         else if (id.equals("QUEST") || id.equals("RANDOM"))
             list.add(supervisor.getPeople().getQuest().question());
-        else if (id.equals("NEXTLESSON") && SuperviserNormally.getSupervisor().getActualCourse() != null)
+        else if (id.equals("NEXTLESSON") && supervisor.getActualCourse() != null)
             list.add(supervisor.getActualCourse().getLesson().location().getInformation());
         else
             list.add("ESC");
