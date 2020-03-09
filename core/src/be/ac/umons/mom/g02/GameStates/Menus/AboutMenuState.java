@@ -20,7 +20,6 @@ public class AboutMenuState extends MenuState {
         super.init();
         transparentBackground = false;
         handleEscape = true;
-        topMargin = .1;
         setMenuItems(new MenuItem[]{
                 new MenuItem(gs.getStringFromId("about"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("aboutText"), MenuItemType.Text),

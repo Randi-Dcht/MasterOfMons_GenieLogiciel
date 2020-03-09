@@ -19,7 +19,6 @@ public class WaitingOrConnectionState extends MenuState {
     @Override
     public void init() {
         super.init();
-        topMargin = .1;
         setMenuItems(new MenuItem[]{
                 new MenuItem(gs.getStringFromId("chooseAState"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("waitingRoom"), MenuItemType.Button, () -> gsm.setState(WaitingRoomState.class, true)),

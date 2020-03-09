@@ -35,7 +35,6 @@ public class SettingsMenuState extends MenuState {
     @Override
     public void init() {
         super.init();
-        topMargin = .1;
         transparentBackground = false;
         setMenuItems(new MenuItem[] {
                 new MenuItem(gs.getStringFromId("settings"), MenuItemType.Title),

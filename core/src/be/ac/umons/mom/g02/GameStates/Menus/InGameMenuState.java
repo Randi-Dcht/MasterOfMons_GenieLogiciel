@@ -36,7 +36,6 @@ public class InGameMenuState extends MenuState {
         sr = new ShapeRenderer();
         sr.setProjectionMatrix(sb.getProjectionMatrix());
         sr.setAutoShapeType(true);
-        topMargin = .1;
         transparentBackground = true;
         setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("continue"), MenuItemType.Button, () -> gsm.removeFirstState()),

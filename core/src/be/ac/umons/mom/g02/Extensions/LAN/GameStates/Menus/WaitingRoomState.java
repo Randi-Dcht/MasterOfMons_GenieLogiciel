@@ -50,7 +50,6 @@ public class WaitingRoomState extends MenuState {
             return;
         }
 
-        topMargin = .1;
         transparentBackground = false;
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem(gs.getStringFromId("waitingConnection"), MenuItemType.Title));

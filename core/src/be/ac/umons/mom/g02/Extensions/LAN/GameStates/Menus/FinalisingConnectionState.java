@@ -32,7 +32,6 @@ public class FinalisingConnectionState extends MenuState {
             return;
         }
 
-        topMargin = .1;
         transparentBackground = false;
 
         setMenuItems(new MenuItem[]{

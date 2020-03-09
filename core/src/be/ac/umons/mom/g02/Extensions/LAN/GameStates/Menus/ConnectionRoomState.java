@@ -50,7 +50,6 @@ public class ConnectionRoomState extends MenuState {
             return;
         }
 
-        topMargin = .1;
         transparentBackground = false;
         setMenuItems(new MenuItem[]{
                 new MenuItem(gs.getStringFromId("automaticDetect"), MenuItemType.Title),

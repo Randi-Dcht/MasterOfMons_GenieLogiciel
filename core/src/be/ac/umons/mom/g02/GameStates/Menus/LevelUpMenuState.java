@@ -44,7 +44,6 @@ public class LevelUpMenuState extends MenuState {
     @Override
     public void init() {
         super.init();
-        topMargin = .1;
         transparentBackground = true;
         if (player == null)
             return;

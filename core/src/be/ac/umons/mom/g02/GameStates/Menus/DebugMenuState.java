@@ -33,7 +33,6 @@ public class DebugMenuState extends MenuState {
     public void init() {
         super.init();
         transparentBackground = true;
-        topMargin = .1;
         setMenuItems(new MenuItem[] {
                 new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
                 new MenuItem(gs.getStringFromId("debugMenu"), MenuItemType.Text),

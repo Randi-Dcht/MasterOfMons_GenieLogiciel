@@ -25,7 +25,6 @@ public class DebugGetObject extends MenuState {
     public void init() {
         super.init();
         transparentBackground = true;
-        topMargin = .1;
 
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Title));

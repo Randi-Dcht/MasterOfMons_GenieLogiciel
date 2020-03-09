@@ -41,7 +41,6 @@ public class MainMenuState extends MenuState {
     @Override
     public void init() {
         super.init();
-        topMargin = .1;
         handleEscape = false;
         leftMargin = .05 * MasterOfMonsGame.WIDTH;
         transparentBackground = false;

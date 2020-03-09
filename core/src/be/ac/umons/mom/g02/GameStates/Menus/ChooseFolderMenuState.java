@@ -36,7 +36,6 @@ public abstract class ChooseFolderMenuState extends MenuState {
     @Override
     public void init() {
         super.init();
-        topMargin = .1;
         transparentBackground = false;
         directoryMI = new MenuItem(gs.getStringFromId("directory") + " : " + path, MenuItemType.Text);
         chooseSaveSLC = new MenuItem("", MenuItemType.ScrollListChooser);
