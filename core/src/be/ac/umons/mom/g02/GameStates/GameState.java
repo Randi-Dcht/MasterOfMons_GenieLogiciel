@@ -44,7 +44,6 @@ public abstract class GameState {
         this.gim = gim;
         this.gsm = gsm;
         this.gs = gs;
-        init();
     }
 
     /**

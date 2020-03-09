@@ -129,6 +129,7 @@ public class GameStateManager {
             gameStateStack.pop().dispose();
         else if (! gameStateStack.empty())
             gameStateStack.peek().loseFocus();
+        gs.init();
         gameStateStack.push(gs);
         gs.getFocus();
     }
@@ -155,7 +156,7 @@ public class GameStateManager {
         GameState g = getState(gst);
         animateForChangingState(() -> {
             gameStateStack.clear();
-            gameStateStack.add(g);
+            addStateToStack(g, false);
         });
         return g;
     }
