@@ -51,21 +51,30 @@ public class MainMenuState extends MenuState {
                         GameMapManager.getInstance().addMapsToLoad(f.path());
                     GameMapManager.getInstance().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
-                    CreatePlayerMenuState cpms = (CreatePlayerMenuState) gsm.setState(CreatePlayerMenuState.class, false);
                     ExtensionsSelector.Extension mainExt = extSel.getMainExtension();
-                    try {
-                        if (mainExt != null) {
-                            Class<? extends GameState> gs = mainExt.getMainClassBeforeLoading();
-                            if (gs != null)
-                                cpms.setAfterCreationState(gs);
-                            gs = mainExt.getMainClass();
-                            if (gs != null)
-                                cpms.setAfterLoadingState(gs);
-
+                    if (mainExt.mainClassBeforeCharacterCreation != null) {
+                        try {
+                            gsm.setState(mainExt.getMainClassBeforeCharacterCreation());
+                        } catch (ClassNotFoundException e) {
+                            Gdx.app.error("ExtensionsFile", String.format("The class %s wasn't found", mainExt.mainClassBeforeCharacterCreation), e);
+                            return;
                         }
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                        Gdx.app.error("Critical error", e.getMessage());
+                    } else {
+                        CreatePlayerMenuState cpms = (CreatePlayerMenuState) gsm.setState(CreatePlayerMenuState.class, false);
+                        try {
+                            if (mainExt != null) {
+                                Class<? extends GameState> gs = mainExt.getMainClassBeforeLoading();
+                                if (gs != null)
+                                    cpms.setAfterCreationState(gs);
+                                gs = mainExt.getMainClass();
+                                if (gs != null)
+                                    cpms.setAfterLoadingState(gs);
+
+                            }
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                            Gdx.app.error("Critical error", e.getMessage());
+                        }
                     }
                 }),
                 new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),

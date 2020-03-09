@@ -170,6 +170,12 @@ public class ExtensionsSelector extends Control {
                         else
                             ext.mainClassBeforeLoading = lineTab[1];
                         break;
+                    case ".mainClassBeforeCharacterCreation":
+                        if (lineTab.length < 2)
+                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClassBeforeCharacterCreation needs a class", actualLine));
+                        else
+                            ext.mainClassBeforeCharacterCreation = lineTab[1];
+                        break;
                     case ".load":
                         if (lineTab.length < 3)
                             Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .load needs a file path and his type", actualLine));
@@ -273,6 +279,10 @@ public class ExtensionsSelector extends Control {
          */
         public String mainClassBeforeLoading;
         /**
+         * The class to launch in first for this extension (before the character creation).
+         */
+        public String mainClassBeforeCharacterCreation;
+        /**
          * The maps to load for this extension.
          */
         public ArrayList<String> mapsToLoad = new ArrayList<>();
@@ -290,6 +300,10 @@ public class ExtensionsSelector extends Control {
 
         public Class<? extends GameState> getMainClassBeforeLoading() throws ClassNotFoundException {
             return mainClassBeforeLoading == null ? null : (Class<? extends GameState>) Class.forName(mainClassBeforeLoading);
+        }
+
+        public Class<? extends GameState> getMainClassBeforeCharacterCreation() throws ClassNotFoundException {
+            return mainClassBeforeCharacterCreation == null ? null : (Class<? extends GameState>) Class.forName(mainClassBeforeCharacterCreation);
         }
     }
 }
