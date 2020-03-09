@@ -1,4 +1,4 @@
-package be.ac.umons.mom.g02.Other;
+package be.ac.umons.mom.g02.Regulator;
 
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Enums.Maps;
@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
+import be.ac.umons.mom.g02.Other.TimeGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;

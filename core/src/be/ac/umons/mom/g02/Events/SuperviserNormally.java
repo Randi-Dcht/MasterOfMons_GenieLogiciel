@@ -20,7 +20,7 @@ import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
-import be.ac.umons.mom.g02.Other.Regulator;
+import be.ac.umons.mom.g02.Regulator.Regulator;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Objects.Characters.Attack;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
