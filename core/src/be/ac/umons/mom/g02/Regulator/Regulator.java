@@ -35,7 +35,7 @@ public class Regulator implements Observer
     /**
      * This is the instance of the class who manage the game
      */
-    private Superviser manager;
+    private Supervisor manager;
     /**
      * To warn the people if there are problems
      */

@@ -2,10 +2,9 @@ package be.ac.umons.mom.g02.Dialog;
 
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
-import be.ac.umons.mom.g02.Regulator.Superviser;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -48,13 +47,13 @@ public class DialogCharacter
     /**
      * This is an instance of the SuperviserNormally
      */
-    private Superviser supervisor;
+    private Supervisor supervisor;
 
     /**
      * This constructor define the dialog of the character
      * @param nameDialog is the name of the dialog with the ID
      */
-    public DialogCharacter(NameDialog nameDialog,Superviser supervisor)//TODO add sp
+    public DialogCharacter(NameDialog nameDialog, Supervisor supervisor)//TODO add sp
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);

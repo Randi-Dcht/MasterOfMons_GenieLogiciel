@@ -47,9 +47,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public  abstract class Superviser implements Observer
+public  abstract class Supervisor implements Observer
 {
-    protected static Superviser instance;
+    protected static Supervisor instance;
 
     /*--------------------------------------------------------------------------------------------------------*/
 
@@ -135,7 +135,7 @@ public  abstract class Superviser implements Observer
     protected int[] debugSaving = new int[3];
 
 
-    protected Superviser()
+    protected Supervisor()
     {
         for (Maps plt : Maps.values())
             listMap.put(plt.getMaps(),plt);

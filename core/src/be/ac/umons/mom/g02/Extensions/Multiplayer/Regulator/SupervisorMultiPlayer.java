@@ -1,0 +1,55 @@
+package be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator;
+
+import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Other.Date;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
+
+
+/**
+ * This class defines the logic for two players on a map that can help or compete
+ * This class allows to integrate the Dual and network extensions
+ * @author Umons_Group_2_ComputerScience_RandyDauchot_GuillaumeCardoen
+ */
+public class SupervisorMultiPlayer extends Supervisor
+{
+
+    /**
+     * This is the instance of the second player
+     */
+    protected People playerTwo;
+
+    /**
+     * This is the constructor of the supervisor for two player in the game
+     */
+    protected SupervisorMultiPlayer()
+    {
+        super();
+    }
+
+
+    /**
+     * This method allows to load a old player in the extension game
+     * @param name   is the name of the saving
+     * @param player is the number of player
+     */
+    public void loadPlayer(String name, int player)
+    {
+        if (player == 1)
+            playerOne = null;
+        else
+            playerTwo = null;
+    }
+
+
+
+
+
+    @Override
+    public void analyseIdMap(String id) throws Exception {//TODO delete
+    }
+
+    @Override
+    public void oldGame(People p, Date d, GraphicalSettings g) {//TODO delete
+    }
+}

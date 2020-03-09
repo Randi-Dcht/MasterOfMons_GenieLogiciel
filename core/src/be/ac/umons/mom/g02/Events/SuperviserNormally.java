@@ -13,19 +13,19 @@ import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
 import be.ac.umons.mom.g02.Regulator.Regulator;
-import be.ac.umons.mom.g02.Regulator.Superviser;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 
 /**
  * This class allows to monitor the game in the normally game without extension .
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public class SuperviserNormally extends Superviser
+public class SuperviserNormally extends Supervisor
 {
     /**
      * This method to give the only instance of <code>SuperviserNormaly</code>
      */
-    public static Superviser getSupervisor()
+    public static Supervisor getSupervisor()
     {
         if(instance == null)
             instance = new SuperviserNormally();
