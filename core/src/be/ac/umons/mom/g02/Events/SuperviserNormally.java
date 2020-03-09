@@ -1,48 +1,19 @@
 package be.ac.umons.mom.g02.Events;
 
-import be.ac.umons.mom.g02.Dialog.DialogCharacter;
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Lesson;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
-import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Events.Notifications.*;
-import be.ac.umons.mom.g02.GameStates.PlayingState;
-import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
-import be.ac.umons.mom.g02.Objects.Characters.Character;
-import be.ac.umons.mom.g02.Objects.Course;
-import be.ac.umons.mom.g02.Objects.FrameTime;
-import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Saving;
-import be.ac.umons.mom.g02.Other.Date;
-import be.ac.umons.mom.g02.Regulator.Regulator;
-import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
-import be.ac.umons.mom.g02.Objects.Characters.Attack;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
-import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Characters.Social;
-import be.ac.umons.mom.g02.Objects.Items.Energizing;
-import be.ac.umons.mom.g02.Objects.Items.Flower;
-import be.ac.umons.mom.g02.Objects.Items.Gun;
-import be.ac.umons.mom.g02.Objects.Items.Items;
-import be.ac.umons.mom.g02.Objects.Items.OldExam;
-import be.ac.umons.mom.g02.Objects.Items.PaperHelp;
-import be.ac.umons.mom.g02.Objects.Items.Pen;
-import be.ac.umons.mom.g02.Objects.Items.Phone;
-import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
+import be.ac.umons.mom.g02.Objects.Course;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
+import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
+import be.ac.umons.mom.g02.Regulator.Regulator;
 import be.ac.umons.mom.g02.Regulator.Superviser;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 
 /**
@@ -67,5 +38,88 @@ public class SuperviserNormally extends Superviser
     protected SuperviserNormally()
     {
         super();
+    }
+
+
+    @Override
+    public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
+    {
+        super.newParty(namePlayer, type, graphic, gender, difficulty);
+        MasterQuest mQ = new MyFirstYear(playerOne,null,graphic,difficulty);
+        playerOne.newQuest(mQ);
+        save.setLogic(playerOne);
+        refreshQuest();
+        regulator = new Regulator(playerOne,time);
+        listCourse = playerOne.getPlanning().get(time.getDate().getDay());
+        checkPlanning();
+    }
+
+
+    /**
+     * This method allows to start an old game
+     * @param people is the people of the game
+     * @param  date is the actually date
+     */
+    public void oldGame(People people, Date date,GraphicalSettings graphic)
+    {
+        time = new TimeGame(date);
+        this.playerOne = people;
+        listCourse = people.getPlanning().get(date.getDay());
+        this.graphic = graphic;
+        regulator= new Regulator(playerOne,time);
+        refreshQuest();
+        checkPlanning();
+    }
+
+
+    /**
+     * This method allows to analyse the id in the maps
+     * @param id is the id of the object name
+     * @throws Exception is the exception if the the size of list is bad or the ill word
+     */
+    public void analyseIdMap(String id) throws Exception
+    {
+        if (!id.equals(actualID))
+        {
+            actualID = id;
+            String[] word = id.split("_");
+            if (word[0].equals("Room") && word.length >= 3)
+                regulator.placeInOut(word[2],word[1]);
+            else if (word[0].equals("Info") && word.length >= 2)
+            {
+                regulator.push(word[1]);
+                event.notify(new OtherInformation(word[1]));
+            }
+            else
+                throw new Exception();
+        }
+    }
+
+
+    /**
+     * This method allows to check the actual course of the player in the game
+     */
+    public void checkPlanning()
+    {
+        Date actu = time.getDate();
+        if (actualCourse == null || actualCourse.getDate().getHour() + 2 <= actu.getHour())
+        {
+            actualCourse = null;
+            for (Course crs : listCourse)
+            {
+                if (crs.getDate().getHour()<= actu.getHour() && (crs.getDate().getHour()+2) > actu.getHour())
+                    actualCourse = crs;
+            }
+        }
+    }
+
+
+    @Override
+    public void update(Notification notify)
+    {
+        super.update(notify);
+
+        if (notify.getEvents().equals(Events.ChangeHour))
+            checkPlanning();
     }
 }
