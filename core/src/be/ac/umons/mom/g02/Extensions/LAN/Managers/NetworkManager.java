@@ -7,12 +7,14 @@ import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import com.badlogic.gdx.Gdx;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Manage all the networking for the extension LAN.
@@ -82,6 +84,8 @@ public class NetworkManager {
     protected Runnable onServerSelected;
     protected Runnable onConnected;
     protected OnPlayerDetectedRunnable onPlayerDetected;
+    protected OnPositionDetectedRunnable onPositionDetected;
+    protected Runnable onPause;
 
     protected ServerInfo selectedServer;
     List<String> detected = new ArrayList<>();
@@ -210,6 +214,21 @@ public class NetworkManager {
                         Gdx.app.postRunnable(() ->
                             onPlayerDetected.run(new People(name, type, gender, difficulty)));
                     break;
+                case "PP": // Player Position
+                    String x = tab[1];
+                    String y = tab[2];
+                    try {
+                        if (onPositionDetected != null)
+                            Gdx.app.postRunnable(() ->
+                                    onPositionDetected.run(new Point(
+                                            Integer.parseInt(x),
+                                            Integer.parseInt(y))));
+                    } catch (NumberFormatException e) {
+                        Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
+                    }
+                case "PAUSE":
+                    if (onPause != null)
+                        Gdx.app.postRunnable(onPause);
             }
     }
 
@@ -388,7 +407,19 @@ public class NetworkManager {
         this.onPlayerDetected = onPlayerDetected;
     }
 
+    public void setOnPositionDetected(OnPositionDetectedRunnable onPositionDetected) {
+        this.onPositionDetected = onPositionDetected;
+    }
+
+    public void setOnPause(Runnable onPause) {
+        this.onPause = onPause;
+    }
+
     public interface OnPlayerDetectedRunnable {
         void run(People secondPlayer);
+    }
+
+    public interface OnPositionDetectedRunnable {
+        void run(Point pos);
     }
 }
