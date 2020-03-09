@@ -33,12 +33,12 @@ public class SupervisorMultiPlayer extends Supervisor
      * @param name   is the name of the saving
      * @param player is the number of player
      */
-    public void loadPlayer(String name, int player)
+    public void loadPlayer(String name, int player)//TODO approche naïve
     {
         if (player == 1)
-            playerOne = null;
+            playerOne = Saving.getPlayer(name);
         else
-            playerTwo = null;
+            playerTwo = Saving.getPlayer(name);
     }
 
 
