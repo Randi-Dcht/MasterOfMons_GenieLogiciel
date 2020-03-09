@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
@@ -32,7 +33,15 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
-            e.printStackTrace();
+            Gdx.app.error("PlayingState", "The NetworkManager couldn't be retrieved !", e);
+            // TODO Go to an error page
         }
+        nm.setOnPositionDetected(this::setSecondPlayerPosition);
+    }
+
+    @Override
+    public void handleInput() {
+        super.handleInput();
+        nm.sendPlayerPosition(player);
     }
 }

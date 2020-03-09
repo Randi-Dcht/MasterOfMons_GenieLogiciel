@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import com.badlogic.gdx.Gdx;
 
@@ -65,17 +66,19 @@ public class NetworkManager {
     protected PrintStream ps;
     protected BufferedReader br;
     /**
-     * The thread used for listening the server's informations.
-     */
-    protected Thread servInfoListeningThread;
-    /**
      * The thread used for broadcasting the server's informations.
      */
     protected Thread servInfoBroadcastingThread;
 
+    /**
+     * The thread used for listening the server's informations.
+     */
+    protected Thread listenOnUDPThread;
     protected Thread receiveOnTCPThread;
     protected Thread sendOnTCPThread;
+    protected Thread sendOnUDPThread;
     protected Stack<String> toSendOnTCP;
+    protected Stack<String> toSendOnUDP;
 
     /**
      * What to do when a server is detected.
@@ -145,26 +148,57 @@ public class NetworkManager {
      * Start listening for the server informations.
      */
     public void startListeningForServer() {
-        if (servInfoListeningThread != null)
-            servInfoListeningThread.interrupt();
-        servInfoListeningThread = new Thread(this::listenToBroadcast);
-        servInfoListeningThread.start();
+        if (listenOnUDPThread != null)
+            listenOnUDPThread.interrupt();
+        listenOnUDPThread = new Thread(this::listenToUDP);
+        listenOnUDPThread.start();
     }
 
-    /**
-     * Listen to every broadcast and check if one is a server or not.
-     */
-    protected void listenToBroadcast() {
-        while (true) {
-            byte[] buf = new byte[256];
-            DatagramPacket dp = new DatagramPacket(buf, buf.length);
+    public void tryToConnect() {
+        new Thread(() -> {
             try {
-                ds.receive(dp);
-                processMessage(new String(dp.getData()));
+                socket = new Socket(selectedServer.getIp(), PORT);
+                initConnection();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }).start();
+    }
+
+    public void acceptConnection() {
+        new Thread(() -> {
+            try {
+                serverSocket = new ServerSocket(PORT);
+                socket = serverSocket.accept();
+                initConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void initConnection() {
+        try {
+            ps = new PrintStream(socket.getOutputStream());
+            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
         }
+        toSendOnTCP = new Stack<>();
+        toSendOnUDP = new Stack<>();
+        sendOnTCPThread = new Thread(() -> {
+            try {
+                sendOnTCPThread();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        sendOnUDPThread = new Thread(this::sendOnUDPThread);
+        receiveOnTCPThread = new Thread(this::listenOnTCP);
+        sendOnTCPThread.start();
+        receiveOnTCPThread.start();
+        Gdx.app.postRunnable(onConnected);
     }
 
     protected void listenOnTCP() {
@@ -178,11 +212,11 @@ public class NetworkManager {
         }
     }
 
-    protected void sendOnTCP(String message) {
+    public void sendOnTCP(String message) {
         toSendOnTCP.add(message);
     }
 
-    public void sendOnTCPThread() throws InterruptedException {
+    protected void sendOnTCPThread() throws InterruptedException {
         while (true) {
             if (! toSendOnTCP.isEmpty()) {
                 ps.println(toSendOnTCP.pop());
@@ -191,6 +225,61 @@ public class NetworkManager {
                 Thread.sleep(100);
             }
         }
+    }
+
+    /**
+     * Listen to every broadcast and check if one is a server or not.
+     */
+    protected void listenToUDP() {
+        while (true) {
+            byte[] buf = new byte[256];
+            DatagramPacket dp = new DatagramPacket(buf, buf.length);
+            try {
+                ds.receive(dp);
+                processMessage(new String(dp.getData()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sendOnUDP(String message) {
+        if (toSendOnUDP.size() > 10)
+            toSendOnUDP.pop();
+        toSendOnUDP.push(message);
+    }
+
+    protected void sendOnUDPThread() {
+        while (true) {
+            if (toSendOnUDP.size() > 0) {
+                sendUDPMessage(toSendOnTCP.pop());
+            } else {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    protected void sendUDPMessage(String message) {
+        if (selectedServer == null)
+            throw new NullPointerException("No server was selected");
+        byte[] buf = message.getBytes();
+        DatagramPacket p = new DatagramPacket(buf, buf.length, selectedServer.getIp(), PORT);
+        try {
+            ds.send(p);
+        } catch (IOException e) {
+            Gdx.app.error("NetworkManager", "A message wasn't sent : " + message, e);
+        }
+    }
+
+    public void sendPlayerInformation(People player) {
+        sendOnTCP(String.format("PI/%s/%d/%d/%d", player.toString(), player.getType().ordinal(), player.getGender().ordinal(), player.getDifficulty().ordinal()));
+    }
+    public void sendPlayerPosition(Player player) {
+        sendOnUDP(String.format("PP/%d/%d", player.getPosX(), player.getPosY()));
     }
 
     protected void processMessage(String received) {
@@ -302,66 +391,7 @@ public class NetworkManager {
         return broadcastList;
     }
 
-    public void sendUDPMessage(String message) throws IOException {
-        if (selectedServer == null)
-            throw new NullPointerException("No server was selected");
-        byte[] buf = message.getBytes();
-        DatagramPacket p = new DatagramPacket(buf, buf.length, selectedServer.getIp(), PORT);
-        ds.send(p);
-    }
-
-    public void tryToConnect() {
-        new Thread(() -> {
-            try {
-                socket = new Socket(selectedServer.getIp(), PORT);
-                initConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
-    public void acceptConnection() {
-        new Thread(() -> {
-            try {
-                serverSocket = new ServerSocket(PORT);
-                socket = serverSocket.accept();
-                initConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
-    public void initConnection() {
-        try {
-            ps = new PrintStream(socket.getOutputStream());
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        toSendOnTCP = new Stack<>();
-        sendOnTCPThread = new Thread(() -> {
-            try {
-                sendOnTCPThread();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        receiveOnTCPThread = new Thread(this::listenOnTCP);
-        sendOnTCPThread.start();
-        receiveOnTCPThread.start();
-        Gdx.app.postRunnable(onConnected);
-    }
-
-    public void sendPlayerInformation(People player) {
-        sendOnTCP(String.format("PI/%s/%d/%d/%d", player.toString(), player.getType().ordinal(), player.getGender().ordinal(), player.getDifficulty().ordinal()));
-    }
-
     public void setSelectedServer(ServerInfo selectedServer) {
-        if (servInfoListeningThread != null && servInfoListeningThread.isAlive())
-            servInfoListeningThread.interrupt();
         if (servInfoBroadcastingThread != null && servInfoBroadcastingThread.isAlive())
             servInfoBroadcastingThread.interrupt();
         this.selectedServer = selectedServer;

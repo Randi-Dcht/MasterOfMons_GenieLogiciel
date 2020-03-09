@@ -21,7 +21,6 @@ import java.net.SocketException;
 public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
     private Player playerTwo;
-    private NetworkManager nm;
 
     private int defaultCamXPos;
     private int defaultCamYPos;
@@ -43,14 +42,7 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     public void init() {
         super.init();
         playerTwo = new Player(gs);
-        playerTwo.setMapPos(new Point(player.getPosX(), playerTwo.getPosY()));
-        try {
-            nm = NetworkManager.getInstance();
-        } catch (SocketException e) {
-            Gdx.app.error("PlayingState", "The NetworkManager couldn't be retrieved !", e);
-            // TODO Go to an error page
-        }
-        nm.setOnPositionDetected(this::setSecondPlayerPosition);
+        playerTwo.setMapPos(new Point(player.getPosX(), player.getPosY()));
     }
 
     @Override
