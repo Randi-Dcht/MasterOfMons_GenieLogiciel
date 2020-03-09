@@ -11,11 +11,7 @@ import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Events.Notifications.Dialog;
-import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
-import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
@@ -148,6 +144,10 @@ public class SuperviserNormally implements Observer
          * This is the dialog instance
          */
         protected DialogCharacter dialog;
+        /**
+         * This list save the characteristic of player
+         */
+        protected int[] debugSaving = new int[3];
 
 
        /**
@@ -393,7 +393,10 @@ public class SuperviserNormally implements Observer
                 if (word[0].equals("Room") && word.length >= 3)
                     regulator.placeInOut(word[2],word[1]);
                 else if (word[0].equals("Info") && word.length >= 2)
+                {
                     regulator.push(word[1]);
+                    event.notify(new OtherInformation(word[1]));
+                }
                 else
                     throw new Exception();
             }
@@ -480,22 +483,6 @@ public class SuperviserNormally implements Observer
             for (FrameTime up : listUpdate)
                 up.update(dt);
             deadMobile.removeIf(Character::isLiving);
-        }
-
-
-        /**
-         * This method allows to give an items to the people for this Quest (#debug#)
-         * @param items is the items that the people want to add in the bag
-         */
-        public void addItems(Items items)
-        {
-            if (items != null)
-                playerOne.pushObject(items);
-            else
-            {
-                ArrayList<Items> list = listItems.get(playerOne.getMaps());
-                playerOne.pushObject(list.get(new Random().nextInt(list.size())));
-            }
         }
 
 
@@ -656,6 +643,18 @@ public class SuperviserNormally implements Observer
                                actualCourse = crs;
                   }
             }
+        }
+
+
+        /**
+         * This method allows to reinitialisation of the player and save the old characteristic
+         */
+        public void reinitialisationPlayer()
+        {
+            debugSaving[0] = playerOne.getAgility();
+            debugSaving[1] = playerOne.getDefence();
+            debugSaving[2] = playerOne.getStrength();
+            playerOne.reinitialization();
         }
 
     }
