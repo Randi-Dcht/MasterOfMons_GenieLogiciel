@@ -182,7 +182,7 @@ public abstract class MenuState extends GameState {
             if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
                 buttons.get(selectedItem.x).get(selectedItem.y).getOnClick().run();
 
-            buttons.get(selectedItem.x).get(selectedItem.y).setSelected(false);
+            Point oldSelectedItem = new Point(selectedItem.x, selectedItem.y);
             if (gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed))
                 selectedItem.x++;
             if (gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed))
@@ -191,12 +191,16 @@ public abstract class MenuState extends GameState {
                 selectedItem.x--;
             if (gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed))
                 selectedItem.y--;
-            checkSelectedItem();
-            buttons.get(selectedItem.x).get(selectedItem.y).setSelected(true);
+            if (! oldSelectedItem.equals(selectedItem)) {
+                buttons.get(oldSelectedItem.x).get(oldSelectedItem.y).setSelected(false);
+                checkSelectedItem();
+                checkSelectedItemDrawingPosition();
+                buttons.get(selectedItem.x).get(selectedItem.y).setSelected(true);
+            }
         }
 
-        for (List<be.ac.umons.mom.g02.GraphicalObjects.Controls.Button> lb : buttons)
-            for (be.ac.umons.mom.g02.GraphicalObjects.Controls.Button b : lb)
+        for (List<Button> lb : buttons)
+            for (Button b : lb)
                 b.handleInput();
         for (List<TextBox> ltb : textBoxes)
             for (TextBox tb : ltb)
@@ -221,7 +225,7 @@ public abstract class MenuState extends GameState {
     /**
      * Check if the selected item is valid (make it valid if necessary)
      */
-    public void checkSelectedItem() {
+    protected void checkSelectedItem() {
         if (selectedItem.x >= buttons.size())
             selectedItem.x = 0;
         if (selectedItem.x < 0)
@@ -230,7 +234,14 @@ public abstract class MenuState extends GameState {
             selectedItem.y = 0;
         if (selectedItem.y < 0)
             selectedItem.y = buttons.get(selectedItem.x).size() - 1;
+    }
 
+    protected void checkSelectedItemDrawingPosition() {
+        int selectedItemY = buttons.get(selectedItem.x).get(selectedItem.y).getY();
+        if (selectedItemY < 0)
+            mouseScrolled -= selectedItemY - topMargin;
+        if (selectedItemY > HEIGHT)
+            mouseScrolled -= selectedItemY - HEIGHT + topMargin;
     }
 
     /**

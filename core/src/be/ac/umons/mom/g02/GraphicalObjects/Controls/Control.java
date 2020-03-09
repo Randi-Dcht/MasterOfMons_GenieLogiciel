@@ -65,6 +65,22 @@ public abstract class Control {
         this.height = size.y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     /**
      * Execute an action depending on which key was pressed.
      */
