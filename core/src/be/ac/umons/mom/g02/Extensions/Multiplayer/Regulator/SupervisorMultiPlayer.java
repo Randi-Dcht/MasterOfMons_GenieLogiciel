@@ -1,5 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator;
 
+import be.ac.umons.mom.g02.Enums.Gender;
+import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.Date;
@@ -18,6 +20,7 @@ public class SupervisorMultiPlayer extends Supervisor
      * This is the instance of the second player
      */
     protected People playerTwo;
+
 
     /**
      * This is the constructor of the supervisor for two player in the game
@@ -42,13 +45,24 @@ public class SupervisorMultiPlayer extends Supervisor
     }
 
 
+    /**
+     * This methods allows to create the second player on the maps
+     * @param namePlayer is the name of player
+     * @param type       is the type of the character
+     * @param gender     is the gender of the player (Men or Women)
+     */
+    public void createPlayerTwo(String namePlayer, Type type, GraphicalSettings graphic, Gender gender)
+    {
+        playerTwo = new People(namePlayer,type,gender,playerOne.getDifficulty());
+    }
+
+
 
 
 
     @Override
     public void analyseIdMap(String id) throws Exception {//TODO delete
     }
-
     @Override
     public void oldGame(People p, Date d, GraphicalSettings g) {//TODO delete
     }
