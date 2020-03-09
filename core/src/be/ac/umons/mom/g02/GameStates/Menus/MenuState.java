@@ -464,7 +464,7 @@ public abstract class MenuState extends GameState {
                     GlyphLayout gl = new GlyphLayout();
                     gl.setText(gs.getNormalFont(), header);
                     batch.begin();
-                    gs.getNormalFont().draw(batch, header, pos.x, pos.y + (int)(gs.getNormalFont().getLineHeight() + 2 * topMargin));
+                    gs.getNormalFont().draw(batch, header, pos.x, pos.y + (int)(gs.getNormalFont().getLineHeight()));
                     batch.end();
                     pos.x += gl.width + leftMargin;
                     size = new Point((int)(size.x - gl.width - leftMargin), size.y);
