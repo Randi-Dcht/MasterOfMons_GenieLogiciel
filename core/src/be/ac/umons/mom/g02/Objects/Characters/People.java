@@ -402,6 +402,13 @@ public class People extends Character implements Serializable, Observer, FrameTi
         }
     }
 
+    public void reinitialization()
+    {
+        strength = 0;
+        agility  = 0;
+        defence  = 0;
+    }
+
 
     /**
      * This method calculates the experience to win when the Mobile is dead

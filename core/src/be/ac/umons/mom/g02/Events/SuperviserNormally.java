@@ -484,22 +484,6 @@ public class SuperviserNormally implements Observer
 
 
         /**
-         * This method allows to give an items to the people for this Quest (#debug#)
-         * @param items is the items that the people want to add in the bag
-         */
-        public void addItems(Items items)
-        {
-            if (items != null)
-                playerOne.pushObject(items);
-            else
-            {
-                ArrayList<Items> list = listItems.get(playerOne.getMaps());
-                playerOne.pushObject(list.get(new Random().nextInt(list.size())));
-            }
-        }
-
-
-        /**
          * This method allows to get the life of the Mobile in the game
          * @param dt is the time between two frame
          * @param mobile is the mobile who check the life
@@ -656,6 +640,20 @@ public class SuperviserNormally implements Observer
                                actualCourse = crs;
                   }
             }
+        }
+
+
+        public void reinitialisationPlayer()
+        {
+            int a = playerOne.getAgility();
+            int b = playerOne.getDefence();
+            int c = playerOne.getStrength();
+            playerOne.reinitialization();
+        }
+
+        public void goBackPlayer()
+        {
+            playerOne.updateUpLevel(1,1,1);
         }
 
     }
