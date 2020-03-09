@@ -71,7 +71,9 @@ public class MainMenuState extends MenuState {
                 }),
                 new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
                 new MenuItem(gs.getStringFromId("settings"), MenuItemType.Button, () -> gsm.setState(SettingsMenuState.class)),
-                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> Gdx.app.exit())});
+                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> Gdx.app.exit()),
+                new MenuItem(gs.getStringFromId("about"), MenuItemType.Button, () -> gsm.setState(AboutMenuState.class))
+        });
         extSel = new ExtensionsSelector(gim, gs);
     }
 

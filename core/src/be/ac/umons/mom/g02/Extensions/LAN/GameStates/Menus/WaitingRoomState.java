@@ -42,7 +42,8 @@ public class WaitingRoomState extends MenuState {
                 nm.sendPlayerInformation(SuperviserNormally.getSupervisor().getPeople());
             });
             nm.setOnPlayerDetected(secondPlayer -> {
-                gsm.removeAllStateAndAdd(LoadingState.class);
+                LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+                ls.setAfterLoadingState(PlayingState.class);
             });
         } catch (SocketException e) {
             e.printStackTrace();

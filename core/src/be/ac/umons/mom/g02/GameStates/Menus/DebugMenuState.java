@@ -40,10 +40,10 @@ public class DebugMenuState extends MenuState {
                 new MenuItem(gs.getStringFromId(gs.mustShowMapCoordinates() ? "debugHidePlayerCoord" : "debugPlayerCoord"), () -> gs.setShowMapCoordinates(! gs.mustShowMapCoordinates())),
                 new MenuItem(gs.getStringFromId("debugLevelUp"), MenuItemType.Button, () -> ps.debugLevelUp()),
                 new MenuItem(gs.getStringFromId("debugMakeInvincible"), MenuItemType.Button, () -> ps.debugMakeInvincible()),
-                new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Button),
+                new MenuItem(gs.getStringFromId("debugReinitiatePlayer"), MenuItemType.Button, () -> SuperviserNormally.getSupervisor().reinitialisationPlayer()),
                 new MenuItem(gs.getStringFromId("debugGetObject"), MenuItemType.Button, () -> gsm.setState(DebugGetObject.class, true)),
                 new MenuItem(gs.getStringFromId("debugNextQuest"), MenuItemType.Button, () -> SuperviserNormally.getSupervisor().getPeople().getQuest().passQuest()),
-                new MenuItem(gs.getStringFromId("debugSpeedUp"), MenuItemType.Button, () -> SuperviserNormally.getSupervisor().getPeople().setSpeed(50)),
+                new MenuItem(gs.getStringFromId("debugSpeedUp"), MenuItemType.Button, () -> ps.debugChangePlayerSpeed()),
                 new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, () -> gsm.removeFirstState())
         });
     }

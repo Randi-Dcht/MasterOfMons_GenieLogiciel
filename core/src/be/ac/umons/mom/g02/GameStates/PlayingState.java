@@ -688,10 +688,16 @@ public class PlayingState extends GameState implements Observer {
         if (((People)player.getCharacteristics()).isInvincible()) {
             ((People)player.getCharacteristics()).invincible(false);
             lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
+            notificationRappel.addANotification("invincibleNotification", gs.getStringFromId("playerIsInvincible"));
         } else {
             ((People)player.getCharacteristics()).invincible(true);
             lifeBar.setForegroundColor(new Color(0x212121AA));
         }
+    }
+
+    public void debugChangePlayerSpeed() {
+        SuperviserNormally.getSupervisor().getPeople().setSpeed(50);
+        notificationRappel.addANotification("speedChangedNotification", gs.getStringFromId("playerIsFaster"));
     }
 
     @Override

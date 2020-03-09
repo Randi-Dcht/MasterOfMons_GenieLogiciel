@@ -42,6 +42,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
                 directoryMI,
                 nameMI,
                 new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save),
+                new MenuItem(gs.getStringFromId("cancel"), MenuItemType.Button, () -> gsm.removeFirstState()),
                 chooseSaveSLC
         });
         setFolder(path);

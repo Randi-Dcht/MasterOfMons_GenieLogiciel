@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
+import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -41,8 +42,8 @@ public class ConnectionRoomState extends MenuState {
                 // TODO Receive info and send info on the player
             });
             nm.setOnPlayerDetected(secondPlayer -> {
-                PlayingState ps = (PlayingState)gsm.removeAllStateAndAdd(PlayingState.class);
-                ps.setSecondPlayerCharacteristics(secondPlayer);
+                LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+                ls.setAfterLoadingState(PlayingState.class);
             });
         } catch (SocketException e) {
             e.printStackTrace();

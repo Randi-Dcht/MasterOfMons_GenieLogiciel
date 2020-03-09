@@ -117,7 +117,8 @@ public class ia extends Mobile implements Observer {
     private void moving(double dt)//TODO optimiser cela
     {
         int x=0,y=0;
-        int toMove = (int)Math.round(ps.velocity * dt * tileSize);
+//        int toMove = (int)Math.round(ps.velocity * dt * tileSize);
+        int toMove=0;
         calculusDistance();
 
         if(distanceX > toMove || distanceX < -toMove || distanceY > toMove || distanceY < -toMove)
