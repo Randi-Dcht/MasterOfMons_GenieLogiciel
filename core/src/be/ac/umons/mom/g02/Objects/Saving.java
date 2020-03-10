@@ -36,7 +36,7 @@ public class Saving implements Observer
     /**
      * The name of the file setting
      */
-    private final String SETTINGS_FILE_NAME = "MasterOfMons.settings.mom";
+    private static final String SETTINGS_FILE_NAME = "MasterOfMons.settings.mom";
     /**
      * The instance of the people
      */
@@ -150,7 +150,7 @@ public class Saving implements Observer
     /**
      * This method allows to give the saving of the graphic parameters
      */
-    public Settings getSavingGraphic()
+    public static Settings getSavingGraphic()
     {
         try
         {

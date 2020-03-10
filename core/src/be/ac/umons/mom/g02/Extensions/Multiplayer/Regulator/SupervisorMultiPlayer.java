@@ -2,20 +2,21 @@ package be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator;
 
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 
 /**
  * This class defines the logic for two players on a map that can help or compete
  * This class allows to integrate the Dual and network extensions
- * @author Umons_Group_2_ComputerScience_RandyDauchot_GuillaumeCardoen
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
 public class SupervisorMultiPlayer extends Supervisor
 {
+    /**
+     * This is the variable of the supervisorMultiplexer
+     */
     private static SupervisorMultiPlayer instance;
 
     /**
@@ -28,6 +29,8 @@ public class SupervisorMultiPlayer extends Supervisor
         return instance;
     }
 
+
+    /*-----------------------------------------------------------------------------------------------*/
 
     /**
      * This is the instance of the second player
@@ -74,7 +77,7 @@ public class SupervisorMultiPlayer extends Supervisor
      * This method returns the second player in the game
      * @return the second player
      */
-    public People getPlayerTwo()
+    public People getSecondPeople()
     {
         return playerTwo;
     }

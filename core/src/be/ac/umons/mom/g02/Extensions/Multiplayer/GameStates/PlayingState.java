@@ -2,8 +2,7 @@ package be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Orientation;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
-import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import java.awt.*;
-import java.net.SocketException;
 
 /**
  * The state of play of the game. It displays the map, two players and a HUD.
@@ -47,7 +45,7 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
     @Override
     public void draw() {
-        double velocity = SuperviserNormally.getSupervisor().getPeople().getSpeed();
+        double velocity = SupervisorMultiPlayer.getSupervisor().getSecondPeople().getSpeed();
         int toMove = (int)Math.round(velocity * Gdx.graphics.getDeltaTime() * tileWidth);
         int toMoveX = 0, toMoveY = 0;
         super.draw();

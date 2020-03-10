@@ -44,11 +44,15 @@ import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+
+/**
+ * This class define the supervisor who regulate the all game during with single player on the maps
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
+ */
 public  abstract class Supervisor implements Observer
 {
     /**
