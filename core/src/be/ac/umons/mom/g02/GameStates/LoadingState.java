@@ -79,6 +79,7 @@ public class LoadingState extends GameState {
      */
     public LoadingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
+        afterLoadingState = PlayingState.class;
     }
 
     /**
@@ -89,7 +90,6 @@ public class LoadingState extends GameState {
     @Override
     public void init() {
         super.init();
-        afterLoadingState = PlayingState.class;
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
         gmm = GameMapManager.getInstance();

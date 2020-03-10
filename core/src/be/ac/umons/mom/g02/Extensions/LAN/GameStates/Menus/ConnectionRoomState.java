@@ -36,12 +36,7 @@ public class ConnectionRoomState extends MenuState {
             nm.startListeningForServer();
             nm.setOnServerDetected(this::refresh);
             nm.setOnConnected(() -> {
-                nm.sendPlayerInformation(SuperviserNormally.getSupervisor().getPeople());
-                // TODO Receive info and send info on the player
-            });
-            nm.setOnPlayerDetected(secondPlayer -> {
-                LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-                ls.setAfterLoadingState(PlayingState.class);
+                gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
             });
         } catch (SocketException e) {
             e.printStackTrace();

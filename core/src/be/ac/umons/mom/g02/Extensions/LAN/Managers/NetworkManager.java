@@ -170,6 +170,7 @@ public class NetworkManager {
             try {
                 serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
+                setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
                 initConnection();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -194,10 +195,15 @@ public class NetworkManager {
                 e.printStackTrace();
             }
         });
+        if (listenOnUDPThread != null)
+            listenOnUDPThread.interrupt();
         sendOnUDPThread = new Thread(this::sendOnUDPThread);
         receiveOnTCPThread = new Thread(this::listenOnTCP);
+        listenOnUDPThread = new Thread(this::listenToUDP);
         sendOnTCPThread.start();
         receiveOnTCPThread.start();
+        sendOnUDPThread.start();
+        listenOnUDPThread.start();
         Gdx.app.postRunnable(onConnected);
     }
 
@@ -252,7 +258,7 @@ public class NetworkManager {
     protected void sendOnUDPThread() {
         while (true) {
             if (toSendOnUDP.size() > 0) {
-                sendUDPMessage(toSendOnTCP.pop());
+                sendUDPMessage(toSendOnUDP.pop());
             } else {
                 try {
                     Thread.sleep(100);
@@ -311,7 +317,7 @@ public class NetworkManager {
                             Gdx.app.postRunnable(() ->
                                     onPositionDetected.run(new Point(
                                             Integer.parseInt(x),
-                                            Integer.parseInt(y))));
+                                            Integer.parseInt(y.trim()))));
                     } catch (NumberFormatException e) {
                         Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
                     }
@@ -395,13 +401,6 @@ public class NetworkManager {
         if (servInfoBroadcastingThread != null && servInfoBroadcastingThread.isAlive())
             servInfoBroadcastingThread.interrupt();
         this.selectedServer = selectedServer;
-        try {
-            ds.close();
-            ds = new DatagramSocket();
-        } catch (SocketException e) {
-            Gdx.app.error("NetworkManager", "An error has occured while trying to create the socket", e);
-            return;
-        }
     }
 
     public void setOnServerSelected(Runnable onServerSelected) {
