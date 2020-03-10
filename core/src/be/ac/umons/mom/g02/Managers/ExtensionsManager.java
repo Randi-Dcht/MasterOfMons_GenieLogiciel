@@ -1,34 +1,29 @@
-package be.ac.umons.mom.g02.GraphicalObjects.Controls;
+package be.ac.umons.mom.g02.Managers;
 
 import be.ac.umons.mom.g02.GameStates.GameState;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.LoadFile;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
-import java.awt.*;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The control where the user can choose which extensions is (de)activated.
- * Extensions's list are generated from files "extensions".
- */
-public class ExtensionsSelector extends Control {
+public class ExtensionsManager {
+
+    protected static ExtensionsManager instance;
+
+    public static ExtensionsManager getInstance() {
+        if (instance == null)
+            instance = new ExtensionsManager();
+        return instance;
+    }
 
     /**
      * The list of the extensions to show.
      */
     protected List<Extension> extensions;
-    /**
-     * The list of <code>CheckBox</code> reserved by this control.
-     */
-    protected Map<Extension, CheckBox> checkBoxList;
-
     /**
      * A list of all the maps that need to be loaded.
      */
@@ -43,81 +38,8 @@ public class ExtensionsSelector extends Control {
      */
     protected Extension mainExtension;
 
-    /**
-     * @param gim The game's input manager
-     * @param gs The game's graphical settings
-     */
-    public ExtensionsSelector(GameInputManager gim, GraphicalSettings gs) {
-        super(gim, gs);
+    protected ExtensionsManager() {
         extensions = parseExtensionFile();
-        checkBoxList = new HashMap<>();
-        for (Extension ext : extensions) {
-            CheckBox cb = new CheckBox(gim, gs, ext.extensionName);
-            checkBoxList.put(ext, cb);
-            cb.setOnChecked(() -> {
-                boolean launch = true;
-                for (Extension e : extensions) {
-                    ext.activated = true;
-                    if (! ext.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(ext.extensionName)) {
-                        e.activated = false;
-                        checkBoxList.get(e).setActivated(false);
-                        checkBoxList.get(e).setChecked(false);
-                    }
-
-                    if (e != ext && e.activated && e.canActivateWith.contains(ext.extensionName))
-                        launch = false;
-                }
-                if (launch) {
-                    if (mainExtension != null)
-                        checkBoxList.get(mainExtension).setSelected(false);
-                    mainExtension = ext;
-                    checkBoxList.get(ext).setSelected(true);
-                }
-            });
-            cb.setOnUnchecked(() -> {
-                checkBoxList.get(ext).setSelected(false);
-                ext.activated = false;
-                if (mainExtension == ext) {
-                    searchMainExtension();
-                }
-                for (Extension e : extensions) {
-                    boolean mustActivate = true;
-                    for (Extension e2 : extensions) {
-                        if (e2.activated && ! e2.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(e2.extensionName)) {
-                            mustActivate = false;
-                            break;
-                        }
-                    }
-                    checkBoxList.get(e).setActivated(mustActivate);
-                }
-            });
-        }
-    }
-
-    /**
-     * Default constructor. USE ONLY FOR TEST.
-     */
-    protected ExtensionsSelector() {}
-
-    @Override
-    public void draw(Batch batch, Point pos, Point size) {
-        for (CheckBox c : checkBoxList.values()) {
-            c.draw(batch, pos, new Point(size.x, (int)gs.getSmallFont().getLineHeight()));
-            pos.y -= (int)gs.getSmallFont().getLineHeight() + topMargin;
-        }
-    }
-
-    @Override
-    public void handleInput() {
-        for (CheckBox c : checkBoxList.values()) {
-            c.handleInput();
-        }
-    }
-
-    @Override
-    public void dispose() {
-        for (CheckBox cb: checkBoxList.values())
-            cb.dispose();
     }
 
     protected void searchMainExtension() {
@@ -137,9 +59,8 @@ public class ExtensionsSelector extends Control {
                 break;
             }
         }
-        if (mainExtension != null)
-            checkBoxList.get(mainExtension).setSelected(true);
     }
+
 
     /**
      * Return a list of all extensions present in file "extensions". Returns <code>null</code> if an error occurred.
@@ -232,13 +153,48 @@ public class ExtensionsSelector extends Control {
     public void generateLoadLists() {
         mapsToLoad = new ArrayList<>();
         filesToLoad = new ArrayList<>();
-        for (Extension ext : checkBoxList.keySet()) {
-            if (checkBoxList.get(ext).isChecked()) {
+        for (Extension ext : extensions) {
+            if (ext.activated) {
                 mapsToLoad.addAll(ext.mapsToLoad);
                 filesToLoad.addAll(ext.dirsFileToLoad);
             }
         }
     }
+
+    public void onExtensionActivated(Extension activatedExtension) {
+        boolean launch = true;
+        for (Extension e : extensions) {
+            activatedExtension.activated = true;
+            if (! activatedExtension.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(activatedExtension.extensionName)) {
+                e.activated = false;
+                e.canBeActivated = false;
+            }
+
+            if (e != activatedExtension && e.activated && e.canActivateWith.contains(activatedExtension.extensionName))
+                launch = false;
+        }
+        if (launch) {
+            mainExtension = activatedExtension;
+        }
+    }
+
+    public void onExtensionDeactivated(Extension deactivatedExtension) {
+        deactivatedExtension.activated = false;
+        if (mainExtension == deactivatedExtension) {
+            searchMainExtension();
+        }
+        for (Extension e : extensions) {
+            boolean mustActivate = true;
+            for (Extension e2 : extensions) {
+                if (e2.activated && ! e2.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(e2.extensionName)) {
+                    mustActivate = false;
+                    break;
+                }
+            }
+            e.canBeActivated = mustActivate;
+        }
+    }
+
 
     /**
      * @return The maps that need to be loaded.
@@ -256,6 +212,10 @@ public class ExtensionsSelector extends Control {
 
     public Extension getMainExtension() {
         return mainExtension;
+    }
+
+    public List<Extension> getExtensions() {
+        return extensions;
     }
 
     /**
@@ -292,7 +252,9 @@ public class ExtensionsSelector extends Control {
         /**
          * If the extension is activated or not.
          */
-        public boolean activated;
+        public boolean activated = false;
+
+        public boolean canBeActivated = true;
 
         public Class<? extends GameState> getMainClass() throws ClassNotFoundException {
             return mainClass == null ? null : (Class<? extends GameState>) Class.forName(mainClass);

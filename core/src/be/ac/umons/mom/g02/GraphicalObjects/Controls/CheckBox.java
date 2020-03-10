@@ -47,7 +47,7 @@ public class CheckBox extends Control {
     /**
      * What to do the moment it's checked.
      */
-    private onStateChangedRunnable onStateChanged;
+    private OnStateChangedRunnable onStateChanged;
     /**
      * If it is activated.
      */
@@ -115,7 +115,7 @@ public class CheckBox extends Control {
         if (! isActivated)
             return;
         for (Point click : gim.getRecentClicks()) {
-            if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y, width, height).contains(click)) {
+            if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y - height, width, height).contains(click)) {
                 checked = !checked;
                 if (onStateChanged != null)
                     onStateChanged.run(checked);
@@ -158,7 +158,7 @@ public class CheckBox extends Control {
     }
 
 
-    public void setOnStateChanged(onStateChangedRunnable onStateChanged) {
+    public void setOnStateChanged(OnStateChangedRunnable onStateChanged) {
         this.onStateChanged = onStateChanged;
     }
 
@@ -169,7 +169,7 @@ public class CheckBox extends Control {
         isSelected = selected;
     }
 
-    public interface onStateChangedRunnable {
+    public interface OnStateChangedRunnable {
         void run(boolean newState);
     }
 }

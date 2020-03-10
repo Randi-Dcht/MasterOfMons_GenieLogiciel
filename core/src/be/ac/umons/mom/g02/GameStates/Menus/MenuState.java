@@ -63,6 +63,7 @@ public abstract class MenuState extends GameState {
 
     protected List<List<ColorSelector>> colorSelectors;
     protected List<List<KeySelector>> keySelectors;
+    protected List<List<CheckBox>> checkBoxes;
 
     /**
      * If the background must be transparent or not.
@@ -108,6 +109,7 @@ public abstract class MenuState extends GameState {
         scrollListChoosers = new ArrayList<>();
         colorSelectors = new ArrayList<>();
         keySelectors = new ArrayList<>();
+        checkBoxes = new ArrayList<>();
         sb = new SpriteBatch();
 		sr = new ShapeRenderer();
 		sr.setAutoShapeType(true);
@@ -163,7 +165,7 @@ public abstract class MenuState extends GameState {
 
             menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : topMargin) + mouseScrolled)), size);
             if (i == menuItems.length - 1 || (menuItems.length > i + 1 && menuItems[i+1].drawUnderPreviousOne)) {
-                alreadyUsed += size.y + 2 * topMargin;
+                alreadyUsed += size.y + topMargin;
                 width = (int) leftMargin;
             }
             else
@@ -217,6 +219,9 @@ public abstract class MenuState extends GameState {
         for (List<KeySelector> ksl : keySelectors)
             for (KeySelector ks : ksl)
                 ks.handleInput();
+        for (List<CheckBox> cbl : checkBoxes)
+            for (CheckBox cb : cbl)
+                cb.handleInput();
 
         mouseScrolled += gim.getScrolledAmount() * 20;
         if (mouseScrolled < 0)
@@ -285,6 +290,12 @@ public abstract class MenuState extends GameState {
                     break;
                 case KeySelector:
                     c = createMenuItemControl(KeySelector.class, mi, keySelectors);
+                    break;
+                case CheckBox:
+                    CheckBox cb = createMenuItemControl(CheckBox.class, mi, checkBoxes);
+                    cb.setOnStateChanged(mi.toDoIfStateChanged);
+                    cb.setText(mi.header);
+                    c = cb;
                     break;
                 default:
                     break;
@@ -355,6 +366,10 @@ public abstract class MenuState extends GameState {
          * The action to do if the item is selected.
          */
         public Runnable toDoIfExecuted;
+        /**
+         * The action to do if the item is selected.
+         */
+        public CheckBox.OnStateChangedRunnable toDoIfStateChanged;
 
         /**
          * The item's id.
@@ -394,6 +409,16 @@ public abstract class MenuState extends GameState {
          */
         public MenuItem(String header, MenuItemType mit, Runnable toDoIfExecuted) {
             this(header, mit, "", toDoIfExecuted);
+        }
+        /**
+         * Construct a new item.
+         * @param header The item's name
+         * @param mit The item's type.
+         * @param toDoIfStateChanged The action to do if the item is selected.
+         */
+        public MenuItem(String header, MenuItemType mit, CheckBox.OnStateChangedRunnable toDoIfStateChanged) {
+            this(header, mit, "", null);
+            this.toDoIfStateChanged = toDoIfStateChanged;
         }
         /**
          * Construct a new item.
@@ -469,7 +494,9 @@ public abstract class MenuState extends GameState {
                     pos.x += gl.width + leftMargin;
                     size = new Point((int)(size.x - gl.width - leftMargin), size.y);
                 case Button:
-                    control.draw(batch, pos, size);
+                case CheckBox:
+                    if (control != null)
+                        control.draw(batch, pos, size);
                     break;
             }
         }
@@ -493,6 +520,7 @@ public abstract class MenuState extends GameState {
         NumberTextBox,
         ScrollListChooser,
         ColorChooser,
-        KeySelector
+        KeySelector,
+        CheckBox
     }
 }
