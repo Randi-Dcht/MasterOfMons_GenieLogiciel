@@ -1,16 +1,21 @@
 package be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.AttackRangeCircle;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
@@ -69,6 +74,10 @@ public class Character extends OnMapObject {
 
     protected AttackRangeCircle arc;
 
+    protected double leftMargin;
+
+    protected double topMargin;
+
     /**
      * @param gs The game's graphical settings.
      * @param characteristics The character's characteristics
@@ -80,6 +89,8 @@ public class Character extends OnMapObject {
         this.characteristics = characteristics;
         lifeBar = new LifeBar(gs);
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
+        topMargin = MasterOfMonsGame.HEIGHT / 100;
+        leftMargin = MasterOfMonsGame.WIDTH / 200;
     }
 
     protected Character() {}
@@ -97,7 +108,7 @@ public class Character extends OnMapObject {
         this.height = height;
         if (isATarget) {
             sr.begin();
-            sr.setColor(new Color(0xB71C1CAA));
+            sr.setColor(new Color(0xB71C1CAA)); // TODO
             sr.ellipse(x, y, width, height / 4);
             sr.end();
         }
@@ -109,9 +120,24 @@ public class Character extends OnMapObject {
         lifeBar.setValue((int)getCharacteristics().getActualLife());
         lifeBar.setMaxValue((int)getCharacteristics().lifeMax());
 
-//        if (lifeBar.getPercent() < 1) {
+        if (lifeBar.getPercent() < 1) {
             lifeBar.draw(batch, x, y + height, width, height / 5);
-//        }
+        } else {
+            Gdx.gl.glEnable(GL30.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+            GlyphLayout gl = new GlyphLayout();
+            StringBuilder sb = new StringBuilder();
+            sb.append("Level : ").append(getCharacteristics().getLevel());
+            gl.setText(gs.getSmallFont(), sb.toString());
+            sr.setColor(gs.getTransparentBackgroundColor());
+            sr.begin(ShapeRenderer.ShapeType.Filled);
+            sr.rect(x, y + height, (int)(gl.width + 2 * leftMargin), (int)(gl.height + 2 * topMargin));
+            sr.end();
+            batch.begin();
+            gs.getSmallFont().draw(batch, sb.toString(), (int)(x + leftMargin), y + height + gs.getSmallFont().getLineHeight() * 1 + (int)(topMargin));
+            batch.end();
+            Gdx.gl.glDisable(GL30.GL_BLEND);
+        }
 
         super.draw(batch, x, y, width, height);
     }
