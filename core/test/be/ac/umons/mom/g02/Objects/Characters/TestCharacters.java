@@ -1,7 +1,7 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.*;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.Phone;
 import org.junit.jupiter.api.Test;

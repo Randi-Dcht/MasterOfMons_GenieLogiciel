@@ -5,7 +5,7 @@ import be.ac.umons.mom.g02.Events.Notifications.ChangeHour;
 import be.ac.umons.mom.g02.Events.Notifications.ChangeMonth;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Events.Notifications.ChangeDay;
 
 import java.util.Objects;

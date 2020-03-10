@@ -2,10 +2,8 @@ package be.ac.umons.mom.g02.Quests.Master;
 
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Lesson;
 import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -15,7 +13,6 @@ import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Quests.Under.WriteMemory;
-import com.badlogic.gdx.maps.Map;
 
 import java.util.ArrayList;
 

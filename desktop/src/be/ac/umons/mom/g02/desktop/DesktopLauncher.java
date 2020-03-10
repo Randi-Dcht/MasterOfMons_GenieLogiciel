@@ -1,9 +1,7 @@
 package be.ac.umons.mom.g02.desktop;
 
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Saving;
-import be.ac.umons.mom.g02.Objects.Settings;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 

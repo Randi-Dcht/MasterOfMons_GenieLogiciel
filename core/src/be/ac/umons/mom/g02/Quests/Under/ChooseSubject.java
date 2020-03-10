@@ -3,12 +3,11 @@ package be.ac.umons.mom.g02.Quests.Under;
 import be.ac.umons.mom.g02.Enums.Subject;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ChooseSubject extends UnderQuest
 {

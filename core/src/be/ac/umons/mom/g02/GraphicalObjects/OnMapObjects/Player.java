@@ -1,6 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects;
 
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.g2d.Batch;

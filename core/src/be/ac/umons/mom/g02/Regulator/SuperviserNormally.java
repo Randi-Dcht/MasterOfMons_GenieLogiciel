@@ -1,8 +1,9 @@
-package be.ac.umons.mom.g02.Events;
+package be.ac.umons.mom.g02.Regulator;
 
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -12,8 +13,6 @@ import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
-import be.ac.umons.mom.g02.Regulator.Regulator;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 
 /**

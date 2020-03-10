@@ -1,7 +1,7 @@
 package be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.mom.g02.Enums.Orientation;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.AttackRangeCircle;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.Objects.Characters.People;

@@ -1,9 +1,8 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Helpers.StringHelper;
-import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Languages;
-import be.ac.umons.mom.g02.Events.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ColorSelector;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
@@ -13,7 +12,6 @@ import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Settings;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
