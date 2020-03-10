@@ -248,9 +248,9 @@ public class PlayingState extends GameState implements Observer {
         pnjs = new ArrayList<>();
         mapObjects = new ArrayList<>();
 
-        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
-            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
-        }
+//        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
+//            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
+//        }
 
         for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(map))
             pnjs.add(new Character(gs, mob));
@@ -793,7 +793,7 @@ public class PlayingState extends GameState implements Observer {
             newName = String.format("%s(%d)", name, i);
             i++;
         }
-        return newName;
+        return newName + ".mom";
     }
 
     /**
@@ -801,7 +801,7 @@ public class PlayingState extends GameState implements Observer {
      * @param gsm The game's state manager (needed for the dialog)
      */
     public static void quickLoad(GameStateManager gsm, GraphicalSettings gs) {
-        OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+        OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
         ogds.setText(gs.getStringFromId("sureLoad"));
         ogds.addAnswer("yes", () ->
                 SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.settings.getLastSavePath(),gs));
