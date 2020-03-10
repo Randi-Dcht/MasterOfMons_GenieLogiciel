@@ -175,6 +175,11 @@ public class Mobile extends Character implements Serializable, FrameTime
             SuperviserNormally.getSupervisor().attackMethod(this,victim);
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
 
     /**
      * This method allows to give the action of the mobile
