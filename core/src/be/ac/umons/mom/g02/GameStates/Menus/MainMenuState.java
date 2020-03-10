@@ -52,7 +52,7 @@ public class MainMenuState extends MenuState {
                     GameMapManager.getInstance().addMapsToLoad(extSel.getMapsToLoad().toArray(new String[0]));
                     gs.addFilesToLoad(extSel.getFilesToLoad().toArray(new LoadFile[0]));
                     ExtensionsSelector.Extension mainExt = extSel.getMainExtension();
-                    if (mainExt.mainClassBeforeCharacterCreation != null) {
+                    if (mainExt != null && mainExt.mainClassBeforeCharacterCreation != null) {
                         try {
                             gsm.setState(mainExt.getMainClassBeforeCharacterCreation());
                         } catch (ClassNotFoundException e) {
