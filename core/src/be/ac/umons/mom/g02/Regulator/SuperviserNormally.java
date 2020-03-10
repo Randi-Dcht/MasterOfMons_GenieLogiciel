@@ -23,18 +23,25 @@ public class SuperviserNormally extends Supervisor
 {
 
     /**
-     * This is the only instance of the supervisorNormally
-     */
-    private static SuperviserNormally instance;
-
-    /**
      * This method to give the only instance of <code>SuperviserNormaly</code>
      */
     public static SuperviserNormally getSupervisor()
     {
+        if (instance == null)
+            initNormallyGame();//TODO delete go to other class
+        if (instance.getClass().equals(SuperviserNormally.class))
+            return (SuperviserNormally)instance;
+        return null;
+    }
+
+
+    /**
+     * This method allows to initialise the supervisor for the normally game with single
+     */
+    public static void initNormallyGame()
+    {
         if(instance == null)
             instance = new SuperviserNormally();
-        return instance;
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
