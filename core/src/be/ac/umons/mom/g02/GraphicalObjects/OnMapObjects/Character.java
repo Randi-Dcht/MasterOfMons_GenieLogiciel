@@ -127,6 +127,7 @@ public class Character extends OnMapObject {
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             GlyphLayout gl = new GlyphLayout();
             StringBuilder sb = new StringBuilder();
+            sb.append("Name : ").append(getCharacteristics().getName()).append('\n');
             sb.append("Level : ").append(getCharacteristics().getLevel());
             gl.setText(gs.getSmallFont(), sb.toString());
             sr.setColor(gs.getTransparentBackgroundColor());
@@ -134,7 +135,7 @@ public class Character extends OnMapObject {
             sr.rect(x, y + height, (int)(gl.width + 2 * leftMargin), (int)(gl.height + 2 * topMargin));
             sr.end();
             batch.begin();
-            gs.getSmallFont().draw(batch, sb.toString(), (int)(x + leftMargin), y + height + gs.getSmallFont().getLineHeight() * 1 + (int)(topMargin));
+            gs.getSmallFont().draw(batch, sb.toString(), (int)(x + leftMargin), y + height + gs.getSmallFont().getLineHeight() * 2 + (int)(topMargin));
             batch.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);
         }
