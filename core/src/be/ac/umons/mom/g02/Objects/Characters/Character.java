@@ -340,6 +340,11 @@ public abstract class Character implements Attack, Social, Serializable
     }
 
 
+    public String getName()
+    {
+        return name;
+    }
+
     /**
      * This method is call when the character is dead
      * And this method warn the other class with the <code>Events.Dead</code>
