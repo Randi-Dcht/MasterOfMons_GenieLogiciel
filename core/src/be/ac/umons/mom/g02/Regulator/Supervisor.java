@@ -43,13 +43,30 @@ import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public  abstract class Supervisor implements Observer
 {
+    /**
+     * This is the only instance of the Supervisor
+     */
     protected static Supervisor instance;
+
+
+    /**
+     * This method return the supervisor instance
+     * @return supervisor instance (one instance)
+     */
+    public static Supervisor getSupervisor()
+    {
+        if (instance == null)
+            Gdx.app.error("Error in the Supervisor by bad initialization", String.valueOf(new ExceptionInInitializerError()));
+        return instance;
+    }
 
     /*--------------------------------------------------------------------------------------------------------*/
 
@@ -105,14 +122,6 @@ public  abstract class Supervisor implements Observer
      * when the attack is the mobile
      */
     protected Mobile memoryMobile;
-    /**
-     * The instance of the regulator class*
-     */
-    protected Regulator regulator;
-    /**
-     * This the actual variable of the Id on the maps
-     */
-    protected String actualID;
     /**
      * This is the list of the course of the player
      */
@@ -234,16 +243,6 @@ public  abstract class Supervisor implements Observer
     public Saving getSave()
     {
         return save;
-    }
-
-    public abstract void analyseIdMap(String id) throws Exception;
-    public abstract void oldGame(People p,Date d, GraphicalSettings g);
-
-
-    /***/
-    public Regulator getRegale()
-    {
-        return regulator;
     }
 
 

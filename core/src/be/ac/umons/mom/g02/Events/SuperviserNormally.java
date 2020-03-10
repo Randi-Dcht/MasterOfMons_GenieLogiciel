@@ -22,15 +22,34 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
  */
 public class SuperviserNormally extends Supervisor
 {
+
+    /**
+     * This is the only instance of the supervisorNormally
+     */
+    private static SuperviserNormally instance;
+
     /**
      * This method to give the only instance of <code>SuperviserNormaly</code>
      */
-    public static Supervisor getSupervisor()
+    public static SuperviserNormally getSupervisor()
     {
         if(instance == null)
             instance = new SuperviserNormally();
         return instance;
     }
+
+    /*-----------------------------------------------------------------------------------------------------------------*/
+
+
+    /**
+     * The instance of the regulator class*
+     */
+    protected Regulator regulator;
+    /**
+     * This the actual variable of the Id on the maps
+     */
+    protected String actualID;
+
 
     /**
      * This constructor allows to define the class who monitor the game
@@ -69,6 +88,16 @@ public class SuperviserNormally extends Supervisor
         regulator= new Regulator(playerOne,time);
         refreshQuest();
         checkPlanning();
+    }
+
+
+    /**
+     * This method return the regulator of the game
+     * @return regulator instance
+     */
+    public Regulator getRegale()
+    {
+        return regulator;
     }
 
 
