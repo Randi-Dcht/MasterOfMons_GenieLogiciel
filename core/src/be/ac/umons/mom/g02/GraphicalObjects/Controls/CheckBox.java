@@ -47,11 +47,7 @@ public class CheckBox extends Control {
     /**
      * What to do the moment it's checked.
      */
-    private Runnable onChecked;
-    /**
-     * What to do the moment it's unchecked.
-     */
-    private Runnable onUnchecked;
+    private onStateChangedRunnable onStateChanged;
     /**
      * If it is activated.
      */
@@ -65,7 +61,7 @@ public class CheckBox extends Control {
      * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
-    protected CheckBox(GameInputManager gim, GraphicalSettings gs) {
+    public CheckBox(GameInputManager gim, GraphicalSettings gs) {
         this(gim, gs, "");
     }
     /**
@@ -96,22 +92,22 @@ public class CheckBox extends Control {
         else
             sr.setColor(uncheckedColor);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.ellipse(pos.x, pos.y - gs.getSmallFont().getLineHeight(), size.y, size.y);
+        sr.ellipse(pos.x, pos.y, size.y, size.y);
         sr.end();
         Color oldFontColor = null;
         if (isSelected) {
-            oldFontColor = gs.getSmallFont().getColor().cpy();
-            gs.getSmallFont().setColor(selectedColor);
+            oldFontColor = gs.getNormalFont().getColor().cpy();
+            gs.getNormalFont().setColor(selectedColor);
         }
         if (! isActivated) {
-            oldFontColor = gs.getSmallFont().getColor().cpy();
-            gs.getSmallFont().setColor(deactivatedColor);
+            oldFontColor = gs.getNormalFont().getColor().cpy();
+            gs.getNormalFont().setColor(deactivatedColor);
         }
         batch.begin();
-        gs.getSmallFont().draw(batch,text, pos.x + size.y + leftMargin, pos.y);
+        gs.getNormalFont().draw(batch,text, pos.x + size.y + leftMargin, pos.y + gs.getNormalFont().getLineHeight());
         batch.end();
         if (oldFontColor != null)
-            gs.getSmallFont().setColor(oldFontColor);
+            gs.getNormalFont().setColor(oldFontColor);
     }
 
     @Override
@@ -121,10 +117,8 @@ public class CheckBox extends Control {
         for (Point click : gim.getRecentClicks()) {
             if (new Rectangle(x, MasterOfMonsGame.HEIGHT - y, width, height).contains(click)) {
                 checked = !checked;
-                if (checked && onChecked != null)
-                    onChecked.run();
-                else if (! checked && onUnchecked != null)
-                    onUnchecked.run();
+                if (onStateChanged != null)
+                    onStateChanged.run(checked);
             }
         }
     }
@@ -163,18 +157,9 @@ public class CheckBox extends Control {
         isActivated = activated;
     }
 
-    /**
-     * @param onChecked What to do the moment it's checked.
-     */
-    public void setOnChecked(Runnable onChecked) {
-        this.onChecked = onChecked;
-    }
 
-    /**
-     * @param onUnchecked What to do the moment it's unchecked.
-     */
-    public void setOnUnchecked(Runnable onUnchecked) {
-        this.onUnchecked = onUnchecked;
+    public void setOnStateChanged(onStateChangedRunnable onStateChanged) {
+        this.onStateChanged = onStateChanged;
     }
 
     /**
@@ -182,5 +167,9 @@ public class CheckBox extends Control {
      */
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public interface onStateChangedRunnable {
+        void run(boolean newState);
     }
 }
