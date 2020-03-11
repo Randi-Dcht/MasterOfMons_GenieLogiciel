@@ -1,18 +1,25 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
-import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Difficulty;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Quests.Under.BattleForPlace;
+import be.ac.umons.mom.g02.Quests.Under.GoTo;
+import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
+import be.ac.umons.mom.g02.Quests.Under.MeetManyPeople;
+import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
-import be.ac.umons.mom.g02.Quests.Under.*;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -65,15 +72,10 @@ public class MyFirstYear extends MasterQuest
      * This method return the items for this quest
      */
     @Override
-    public void createListItems() //TODO optimiser cela
+    public void createListItems() throws Exception
     {
         listItems = new ArrayList<>();
-        for (int i=0; i < 10; i++)
-            listItems.add(new Energizing());
-        for (int i=0 ; i < 6; i++)
-            listItems.add(new OldExam());
-        listItems.add(new TheKillBoot());
-        //createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class},new int[]{10,1,6});
+        listItems.addAll(createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class},new int[]{10,1,6}));
     }
 
 

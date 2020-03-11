@@ -68,17 +68,10 @@ public class SuccessfulYear extends MasterQuest
      * This method return the items for this quest
      */
     @Override
-    public void createListItems() //TODO opimiser cela
+    public void createListItems() throws Exception
     {
         listItems = new ArrayList<>();
-        for (int i=0; i < 6; i++)
-            listItems.add(new Energizing());
-        for (int i=0 ; i < 3; i++)
-            listItems.add(new OldExam());
-        for (int i=0 ; i < 3; i++)
-            listItems.add(new PaperHelp());
-        for (int i=0 ; i < 5; i++)
-            listItems.add(new TheKillBoot());
+        listItems.addAll(createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class,PaperHelp.class},new int[]{6,1,6,3}));
     }
 
 
