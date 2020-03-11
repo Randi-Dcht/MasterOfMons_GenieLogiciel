@@ -14,11 +14,6 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
  */
 public class SupervisorMultiPlayer extends Supervisor
 {
-    /**
-     * This is the variable of the supervisorMultiplexer
-     */
-    private static SupervisorMultiPlayer instance;
-
 
     /**
      * This method allows to initialize the instance of multiPlayer
@@ -35,9 +30,11 @@ public class SupervisorMultiPlayer extends Supervisor
      */
     public static SupervisorMultiPlayer getSupervisor()
     {
-        if(instance == null)
+        if (instance == null)
             initMultiPlayerGame();
-        return instance;
+        if(instance.getClass().equals(SupervisorMultiPlayer.class))
+            return (SupervisorMultiPlayer) instance;
+        return null;
     }
 
 
