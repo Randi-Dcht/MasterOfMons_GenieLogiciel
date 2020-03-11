@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class DisplacementMons extends MasterQuest
 {
     final UnderQuest[] underQuests = {};
-    public DisplacementMons(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
+    public DisplacementMons(People people, MasterQuest before,Difficulty difficulty)
     {
-        super(before,people, Bloc.Extend,graphic,difficulty);
+        super(before,people, Bloc.Extend,difficulty);
         addUnderQuest(underQuest);
     }
 

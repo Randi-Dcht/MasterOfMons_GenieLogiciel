@@ -93,13 +93,12 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *@param before who is the before masterQuest
      *@param people who is the people who play this masterQuest
      */
-    public MasterQuest(MasterQuest before, People people, Bloc bloc, GraphicalSettings graphic, Difficulty difficulty)
+    public MasterQuest(MasterQuest before, People people, Bloc bloc,Difficulty difficulty)
     {
         this.before = before;
         numberQuest++;
         this.people = people;
         this.bloc = bloc;
-       // this.graphic = graphic;
         this.maxPercent = difficulty.getMaxPercent();
         this.difficulty = difficulty;
     }

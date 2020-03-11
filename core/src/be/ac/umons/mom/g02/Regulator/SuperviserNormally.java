@@ -71,7 +71,7 @@ public class SuperviserNormally extends Supervisor
     public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
     {
         super.newParty(namePlayer, type, graphic, gender, difficulty);
-        MasterQuest mQ = new MyFirstYear(playerOne,null,graphic,difficulty);
+        MasterQuest mQ = new MyFirstYear(playerOne,null,difficulty);
         playerOne.newQuest(mQ);
         save.setLogic(playerOne);
         refreshQuest();
