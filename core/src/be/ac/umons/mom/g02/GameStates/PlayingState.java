@@ -276,7 +276,7 @@ public class PlayingState extends GameState implements Observer {
         if (aboutLayer != null)
             aboutObjects = aboutLayer.getObjects();
 
-        initPNJsPositions();
+        initPNJsPositions(pnjs);
         initPlayerPosition(spawnX, spawnY);
 
     }
@@ -284,20 +284,24 @@ public class PlayingState extends GameState implements Observer {
     /**
      * Spawn all the PNJs randomly.
      */
-    public void initPNJsPositions() {
-        Random random = new Random();
+    public void initPNJsPositions(List<Character> pnjs) {
         Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
         for (Character c : pnjs) {
-            int posIndex = random.nextInt(rmos.size);
-            Rectangle mo = rmos.removeIndex(posIndex).getRectangle();
-            Rectangle mapRect = new Rectangle( mo.x * 2 / tileWidth, (mapHeight * tileHeight - mo.y - mo.height) / tileHeight, mo.width * 2 / tileWidth, mo.height / tileHeight);
-            c.setMapPos(new Point((int)(mapRect.x - mapRect.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
-                    mapHeight * tileHeight / 2 - (int)(mapRect.x + mapRect.y) * tileHeight / 2));
-            c.setMapWidth(mapWidth * tileWidth);
-            c.setMapHeight(mapHeight * tileHeight);
-            c.setTileWidth(tileWidth);
-            c.setTileHeight(tileHeight);
+            initPNJPosition(c, rmos);
         }
+    }
+
+    protected void initPNJPosition(Character c, Array<RectangleMapObject> rmos) {
+        Random random = new Random();
+        int posIndex = random.nextInt(rmos.size);
+        Rectangle mo = rmos.removeIndex(posIndex).getRectangle();
+        Rectangle mapRect = new Rectangle( mo.x * 2 / tileWidth, (mapHeight * tileHeight - mo.y - mo.height) / tileHeight, mo.width * 2 / tileWidth, mo.height / tileHeight);
+        c.setMapPos(new Point((int)(mapRect.x - mapRect.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
+                mapHeight * tileHeight / 2 - (int)(mapRect.x + mapRect.y) * tileHeight / 2));
+        c.setMapWidth(mapWidth * tileWidth);
+        c.setMapHeight(mapHeight * tileHeight);
+        c.setTileWidth(tileWidth);
+        c.setTileHeight(tileHeight);
     }
 
     /**

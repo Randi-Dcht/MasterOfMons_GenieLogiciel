@@ -93,6 +93,10 @@ public class MainMenuState extends MenuState {
             }
         } else {
             CreatePlayerMenuState cpms = (CreatePlayerMenuState) gsm.setState(CreatePlayerMenuState.class, false);
+            for (ExtensionsManager.Extension ext : em.getExtensions()) {
+                if (ext.activated && ext.isMultiplayer)
+                    cpms.setMustUseMultiplayer(true);
+            }
             try {
                 if (mainExt != null) {
                     Class<? extends GameState> gs = mainExt.getMainClassBeforeLoading();

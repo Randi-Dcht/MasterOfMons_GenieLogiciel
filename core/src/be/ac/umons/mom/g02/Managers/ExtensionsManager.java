@@ -127,6 +127,9 @@ public class ExtensionsManager {
                             ext.canActivateWith.add(lineTab[1]);
                         }
                         break;
+                    case ".isMultiplayer":
+                        ext.isMultiplayer = true;
+                        break;
                     default:
                         if (! line.startsWith(".")) {
                             ext = new Extension();
@@ -248,6 +251,8 @@ public class ExtensionsManager {
         public ArrayList<String> mapsToLoad = new ArrayList<>();
 
         public ArrayList<String> canActivateWith = new ArrayList<>();
+
+        public boolean isMultiplayer = false;
 
         /**
          * If the extension is activated or not.
