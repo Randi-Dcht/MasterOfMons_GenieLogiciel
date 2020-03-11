@@ -6,7 +6,6 @@ import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import com.badlogic.gdx.Gdx;
 
@@ -90,8 +89,8 @@ public class NetworkManager {
     protected OnPositionDetectedRunnable onPositionDetected;
     protected Runnable onPause;
     protected OnPNJDetectedRunnable onPNJDetected;
-    protected Runnable onGetPNJPos;
-    protected boolean mustSendPNJPos;
+    protected OnGetPNJRunnable onGetPNJ;
+    protected String mustSendPNJPos;
 
     protected ServerInfo selectedServer;
     List<String> detected = new ArrayList<>();
@@ -296,8 +295,8 @@ public class NetworkManager {
         sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
     }
 
-    public void askPNJsPositions() {
-        sendOnTCP("getPNJsPos");
+    public void askPNJsPositions(String map) {
+        sendOnTCP("getPNJsPos#" + map);
     }
 
     protected void processMessage(String received) {
@@ -354,10 +353,10 @@ public class NetworkManager {
                     e.printStackTrace();
                 }
             case "getPNJsPos":
-                if (onGetPNJPos != null)
-                    onGetPNJPos.run();
+                if (onGetPNJ != null)
+                    Gdx.app.postRunnable(() -> onGetPNJ.run(tab[1]));
                 else
-                    mustSendPNJPos = true;
+                    mustSendPNJPos = tab[1];
         }
     }
 
@@ -495,15 +494,15 @@ public class NetworkManager {
         this.onPause = onPause;
     }
 
-    public void setOnGetPNJPos(Runnable onGetPNJPos) {
-        this.onGetPNJPos = onGetPNJPos;
+    public void setOnGetPNJ(OnGetPNJRunnable onGetPNJ) {
+        this.onGetPNJ = onGetPNJ;
     }
 
     public boolean isTheServer() {
         return isTheServer;
     }
 
-    public boolean mustSendPNJPos() {
+    public String getMustSendPNJPos() {
         return mustSendPNJPos;
     }
 
@@ -516,5 +515,9 @@ public class NetworkManager {
 
     public interface OnPositionDetectedRunnable {
         void run(Point pos);
+    }
+
+    public interface OnGetPNJRunnable {
+        void run(String map);
     }
 }

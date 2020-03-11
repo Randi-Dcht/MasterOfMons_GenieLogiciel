@@ -1,21 +1,20 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
-import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.utils.Array;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * L'état de jeu du jeu. Il affiche la carte, un joueur ainsi qu'un HUD. Cet état suppose qu'une connexion avec un autre joueur a travers un réseau local a déjà été établi.
@@ -24,7 +23,7 @@ import java.util.HashMap;
 public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState {
 
     private NetworkManager nm;
-    private HashMap<String, Character> idCharacterMap; // Used only for MovingPNJ
+    private HashMap<String, Character> idCharacterMap;
 
 
     /**
@@ -36,6 +35,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
+//        supervisor = SupervisorMultiPlayer.getSupervisor();
     }
 
     @Override
@@ -47,6 +47,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             // TODO Go to an error page
         }
         idCharacterMap = new HashMap<>();
+//        supervisor.getPeople().newQuest(new MyFirstYear(supervisor.getPeople(), null, Difficulty.Easy));
         super.init();
         nm.setOnPNJDetected((name, mob, x, y) -> {
             Character c = new Character(gs, mob);
@@ -59,23 +60,26 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             c.setTileHeight(tileHeight);
         });
         if (nm.isTheServer()) {
-            if (nm.mustSendPNJPos()) {
-                sendPNJsPositions();
+            if (nm.getMustSendPNJPos() != null) {
+                sendPNJsPositions(nm.getMustSendPNJPos());
             } else
-                nm.setOnGetPNJPos(this::sendPNJsPositions);
+                nm.setOnGetPNJ(this::sendPNJsPositions);
         } else
-            nm.askPNJsPositions();
+            nm.askPNJsPositions(gmm.getActualMapName());
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
     }
 
     @Override
-    public void initMap(String mapPath) {
-        super.initMap(mapPath);
+    public void initMap(String mapPath, int spawnX, int spawnY) {
+        super.initMap(mapPath, spawnX, spawnY);
         if (nm.isTheServer()) {
             for (Character pnj : pnjs) {
-                if (! (pnj.getCharacteristics() instanceof MovingPNJ))
+                if (! idCharacterMap.containsKey(pnj.getCharacteristics().getName()))
                     idCharacterMap.put(pnj.getCharacteristics().getName(), pnj);
             }
+        } else {
+            pnjs.clear();
+            nm.askPNJsPositions(mapPath);
         }
     }
 
@@ -86,16 +90,33 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     }
 
     @Override
-    public void initPNJsPositions() {
+    public void initPNJsPositions(List<Character> pnjs) {
         if (nm.isTheServer()) {
-            super.initPNJsPositions();
+            Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
+            for (Character c : pnjs) {
+                if (! idCharacterMap.containsKey(c.getCharacteristics().getName()))
+                    initPNJPosition(c, rmos);
+            }
+            super.initPNJsPositions(pnjs);
         }
     }
 
-    public void sendPNJsPositions() {
-        for (String name : idCharacterMap.keySet()) {
+    protected void initMobilesPositions(List<Mobile> mobs) {
+        Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
+        for (Mobile mob : mobs) {
+            if ( ! idCharacterMap.containsKey(mob.getName())) {
+                Character c = new Character(gs, mob);
+                initPNJPosition(c, rmos);
+                idCharacterMap.put(mob.getName(), c);
+            }
+        }
+    }
+
+    public void sendPNJsPositions(String map) {
+        initMobilesPositions(supervisor.getMobile(supervisor.getMaps(map)));
+        for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {
-                nm.sendPNJInformation(idCharacterMap.get(name));
+                nm.sendPNJInformation(idCharacterMap.get(mob.getName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

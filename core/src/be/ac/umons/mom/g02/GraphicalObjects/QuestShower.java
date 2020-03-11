@@ -141,6 +141,8 @@ public class QuestShower {
      * @param q Quest to show.
      */
     public void setQuest(Quest q) {
+        if (q == null)
+            return;
         if (questToShow == null) {
             questToShow = q;
             questItemsMap.put(q, new QuestItem(gs, q));
