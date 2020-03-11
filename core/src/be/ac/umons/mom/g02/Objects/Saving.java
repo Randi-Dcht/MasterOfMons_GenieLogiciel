@@ -207,6 +207,7 @@ public class Saving implements Observer
     @Override
     public void update(Notification notify)
     {
-        signal();
+        if (!notify.getEvents().equals(Events.ChangeQuest))
+            signal();
     }
 }
