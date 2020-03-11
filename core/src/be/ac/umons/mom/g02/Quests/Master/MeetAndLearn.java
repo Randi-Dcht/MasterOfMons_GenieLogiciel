@@ -5,17 +5,15 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.Flower;
-import be.ac.umons.mom.g02.Objects.Items.OldExam;
-import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 import be.ac.umons.mom.g02.Quests.Under.GoToPriorityLesson;
 import be.ac.umons.mom.g02.Quests.Under.LookSoulMate;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
-import be.ac.umons.mom.g02.Objects.Items.Gun;
+
 import java.util.ArrayList;
 
 
@@ -68,15 +66,10 @@ public class MeetAndLearn extends MasterQuest
      * @return list of items
      */
     @Override
-    protected void createListItems() //TODO optimiser cela
+    protected void createListItems() throws Exception
     {
         listItems = new ArrayList<>();
-        for (int i=0; i < 4; i++)
-            listItems.add(new Flower());
-        for (int i=0 ; i < 6; i++)
-            listItems.add(new OldExam());
-        listItems.add(new Gun());
-        listItems.add(new TheKillBoot());
+        listItems.addAll(createListItems(new Class[]{Energizing.class, Flower.class, OldExam.class},new int[]{10,1,6}));
 
     }
 

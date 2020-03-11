@@ -78,11 +78,14 @@ public class Mobile extends Character implements Serializable, FrameTime
     @Override
     public void update(double dt)
     {
-        time -= dt;
+        if (victim != null)
+            time -= dt;
+
         if (time <= 0 && victim != null)
         {
-            nextAttack(victim);
-            victim = null;
+            Attack t = victim;
+            this.victim = null;
+            nextAttack(t);
         }
     }
 
@@ -174,7 +177,8 @@ public class Mobile extends Character implements Serializable, FrameTime
     public void nextAttack(Attack victim)
     {
         if(living)
-            Supervisor.getSupervisor().attackMethod(this,victim);
+            Supervisor.getSupervisor().attackMethod((Attack)this, victim, false);
+
     }
 
     public String getName()

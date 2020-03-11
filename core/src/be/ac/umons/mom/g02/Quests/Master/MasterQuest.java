@@ -156,16 +156,17 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /***/
-    protected void createListItems(Class<Items>[] list,int[] cmb) throws Exception
+    protected ArrayList<Items> createListItems(Class<Items>[] list, int[] cmb) throws Exception
     {
         if (list.length != cmb.length)
             throw new Exception();
-
+        ArrayList<Items> listI = new ArrayList<>();
         for (int j = 0; j < list.length; j++)
         {
             for (int i=0; i <cmb[j];i++ )
-                System.out.println(list[j].getConstructor().newInstance());
+                listI.add(list[j].getConstructor().newInstance());
         }
+        return listI ;
     }
 
 
