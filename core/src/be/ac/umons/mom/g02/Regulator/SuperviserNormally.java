@@ -15,6 +15,8 @@ import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
 
+import java.util.ArrayList;
+
 
 /**
  * This class allows to monitor the game in the normally game without extension .
@@ -41,8 +43,7 @@ public class SuperviserNormally extends Supervisor
      */
     public static void initNormallyGame()
     {
-        if(instance == null)
-            instance = new SuperviserNormally();
+        instance = new SuperviserNormally();
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
@@ -87,6 +88,7 @@ public class SuperviserNormally extends Supervisor
      */
     public void oldGame(People people, Date date,GraphicalSettings graphic)
     {
+        initNormallyGame();listUpdate = new ArrayList<>();
         time = new TimeGame(date);
         this.playerOne = people;
         listCourse = people.getPlanning().get(date.getDay());
@@ -149,6 +151,10 @@ public class SuperviserNormally extends Supervisor
     }
 
 
+    /**
+     * This method allows to receive the notification of the other class in the game
+     * @param notify is the notification
+     */
     @Override
     public void update(Notification notify)
     {

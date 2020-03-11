@@ -43,7 +43,6 @@ import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
-import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -90,6 +89,10 @@ public  abstract class Supervisor implements Observer
      * The all mobile who moves in this game
      */
     protected HashMap<Maps,ArrayList<MovingPNJ>> listMoving;
+    /**
+     * This is the list with the association with the character and the graphical instance
+     */
+    protected HashMap<Character, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character> graphicalMob;//TODO
     /**
      * This is a lst of the mobile dead
      */
@@ -499,7 +502,7 @@ public  abstract class Supervisor implements Observer
             ((Mobile) attacker).letsGo(victim);
             memoryMobile = (Mobile)attacker;
         }
-        if(victim.getType().equals(Character.TypePlayer.Computer) && first)
+        if(victim.getType().equals(Character.TypePlayer.Computer) && first && ((Character)victim).getActualLife() > 0)
             attackMethod(victim,attacker,false);
     }
 
