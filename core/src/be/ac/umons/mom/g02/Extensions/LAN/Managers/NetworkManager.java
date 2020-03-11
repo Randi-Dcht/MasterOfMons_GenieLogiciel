@@ -78,6 +78,8 @@ public class NetworkManager {
     protected Thread sendOnUDPThread;
     protected Stack<String> toSendOnTCP;
     protected Stack<String> toSendOnUDP;
+    protected Thread connectThread;
+    protected Thread acceptThread;
 
     /**
      * What to do when a server is detected.
@@ -147,6 +149,10 @@ public class NetworkManager {
         ds.send(packet);
     }
 
+    public void stopBroadcastingServerInfo() {
+        servInfoBroadcastingThread.interrupt();
+    }
+
     /**
      * Start listening for the server informations.
      */
@@ -158,20 +164,27 @@ public class NetworkManager {
     }
 
     public void tryToConnect() {
-        new Thread(() -> {
+        if (connectThread != null)
+            connectThread.interrupt();
+        connectThread = new Thread(() -> {
             try {
-                socket = new Socket(selectedServer.getIp(), PORT);
+                if (socket != null)
+                    socket = new Socket(selectedServer.getIp(), PORT);
                 initConnection();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        connectThread.start();
     }
 
     public void acceptConnection() {
-        new Thread(() -> {
+        if (acceptThread != null)
+            acceptThread.interrupt();
+        acceptThread = new Thread(() -> {
             try {
-                serverSocket = new ServerSocket(PORT);
+                if (serverSocket == null)
+                    serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
                 isTheServer = true;
                 setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
@@ -179,7 +192,8 @@ public class NetworkManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        acceptThread.start();
     }
 
     public void initConnection() {
@@ -192,6 +206,16 @@ public class NetworkManager {
         }
         toSendOnTCP = new Stack<>();
         toSendOnUDP = new Stack<>();
+
+        if (listenOnUDPThread != null)
+            listenOnUDPThread.interrupt();
+        if (sendOnUDPThread != null)
+            sendOnUDPThread.interrupt();
+        if (receiveOnTCPThread != null)
+            receiveOnTCPThread.interrupt();
+        if (sendOnTCPThread != null)
+            sendOnTCPThread.interrupt();
+
         sendOnTCPThread = new Thread(() -> {
             try {
                 sendOnTCPThread();
@@ -199,8 +223,6 @@ public class NetworkManager {
                 e.printStackTrace();
             }
         });
-        if (listenOnUDPThread != null)
-            listenOnUDPThread.interrupt();
         sendOnUDPThread = new Thread(this::sendOnUDPThread);
         receiveOnTCPThread = new Thread(this::listenOnTCP);
         listenOnUDPThread = new Thread(this::listenToUDP);
@@ -519,5 +541,14 @@ public class NetworkManager {
 
     public interface OnGetPNJRunnable {
         void run(String map);
+    }
+
+    public void dispose() {
+        ps.close();
+        try {
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

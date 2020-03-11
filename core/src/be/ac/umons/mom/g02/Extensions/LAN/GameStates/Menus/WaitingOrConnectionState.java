@@ -21,8 +21,8 @@ public class WaitingOrConnectionState extends MenuState {
         super.init();
         setMenuItems(new MenuItem[]{
                 new MenuItem(gs.getStringFromId("chooseAState"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("waitingRoom"), MenuItemType.Button, () -> gsm.setState(WaitingRoomState.class, true)),
-                new MenuItem(gs.getStringFromId("connectionRoom"), MenuItemType.Button, () -> gsm.setState(ConnectionRoomState.class, true)),
+                new MenuItem(gs.getStringFromId("waitingRoom"), MenuItemType.Button, () -> gsm.setState(WaitingRoomState.class)),
+                new MenuItem(gs.getStringFromId("connectionRoom"), MenuItemType.Button, () -> gsm.setState(ConnectionRoomState.class)),
         });
     }
 }

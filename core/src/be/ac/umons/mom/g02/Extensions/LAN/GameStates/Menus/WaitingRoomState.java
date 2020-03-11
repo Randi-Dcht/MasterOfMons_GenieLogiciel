@@ -58,4 +58,10 @@ public class WaitingRoomState extends MenuState {
 
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        nm.stopBroadcastingServerInfo();
+    }
 }
