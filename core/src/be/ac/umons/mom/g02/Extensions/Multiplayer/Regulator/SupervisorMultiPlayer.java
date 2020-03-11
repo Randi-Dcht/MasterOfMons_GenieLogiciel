@@ -19,13 +19,24 @@ public class SupervisorMultiPlayer extends Supervisor
      */
     private static SupervisorMultiPlayer instance;
 
+
     /**
-     * This method to give the only instance of <code>SuperviserNormaly</code>
+     * This method allows to initialize the instance of multiPlayer
+     */
+    public static void initMultiPlayerGame()
+    {
+        if(instance == null)
+            instance = new SupervisorMultiPlayer();
+    }
+
+
+    /**
+     * This method to give the only instance of <code>SuperviserMultiPlayer</code>
      */
     public static SupervisorMultiPlayer getSupervisor()
     {
         if(instance == null)
-            instance = new SupervisorMultiPlayer();
+            initMultiPlayerGame();
         return instance;
     }
 
