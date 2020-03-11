@@ -34,9 +34,9 @@ public class MyFirstYear extends MasterQuest
      * @param people who is the people who play the game
      * @param before who is the quest before this
      */
-    public MyFirstYear(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
+    public MyFirstYear(People people, MasterQuest before, Difficulty difficulty)
     {
-        super(before,people, Bloc.BA1,graphic,difficulty);
+        super(before,people, Bloc.BA1,difficulty);
         addUnderQuest(underQuest);
         SuperviserNormally.getSupervisor().getEvent().add(this, Events.MeetOther,Events.Dialog,Events.Attack,Events.UseItems,Events.AddFriend,Events.Dead);
     }
@@ -47,7 +47,7 @@ public class MyFirstYear extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new SuccessfulYear(people,this,null,difficulty));
+        newQuest(new SuccessfulYear(people,this,difficulty));
     }
 
 

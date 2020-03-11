@@ -37,9 +37,9 @@ public class MeetAndLearn extends MasterQuest
      * @param people who is the people who play the game
      * @param before who is the quest before this
      */
-    public MeetAndLearn(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
+    public MeetAndLearn(People people, MasterQuest before, Difficulty difficulty)
     {
-        super(before,people, Bloc.BA3,graphic,difficulty);
+        super(before,people, Bloc.BA3,difficulty);
         addUnderQuest(underQuest);
     }
 

@@ -18,9 +18,9 @@ public class MovingInMons extends MasterQuest
     final UnderQuest[] underQuests = {};
     protected People playerTwo;
 
-    public MovingInMons(People playerOne,People playerTwo,GraphicalSettings graphic, Difficulty difficulty)
+    public MovingInMons(People playerOne,People playerTwo, Difficulty difficulty)
     {
-        super(null,playerOne, Bloc.Extend,graphic,difficulty);
+        super(null,playerOne, Bloc.Extend,difficulty);
         this.playerTwo = playerTwo;
         addUnderQuest(underQuest);
     }

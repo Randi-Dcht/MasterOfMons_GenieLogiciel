@@ -38,9 +38,9 @@ public class SuccessfulYear extends MasterQuest
      * @param people who is the people who play the game
      * @param before who is the quest before this
      */
-    public SuccessfulYear(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
+    public SuccessfulYear(People people, MasterQuest before, Difficulty difficulty)
     {
-        super(before,people, Bloc.BA2,graphic,difficulty);
+        super(before,people, Bloc.BA2,difficulty);
         addUnderQuest(underQuest);
     }
 
@@ -50,7 +50,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new MeetAndLearn(people,this,null,difficulty));
+        newQuest(new MeetAndLearn(people,this,difficulty));
     }
 
 

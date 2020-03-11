@@ -42,7 +42,7 @@ public class RandomName
         }
         catch (Exception e)
         {
-            Gdx.app.error("Error in the reading text of the conversation", e.getMessage());
+            Gdx.app.error("Error in the reading text of the random name of the mobile", e.getMessage());
         }
     }
 

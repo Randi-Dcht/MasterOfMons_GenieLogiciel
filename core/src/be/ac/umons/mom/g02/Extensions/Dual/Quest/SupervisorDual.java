@@ -40,7 +40,7 @@ public class SupervisorDual extends SuperviserNormally
     {
         playerOne = new People(namePlayerOne,typeOne,genderOne,difficulty);
         playerTwo = new People(namePlayerTwo,typeTwo,genderTwo,difficulty);
-        dualQuest = new MovingInMons(playerOne,playerTwo,graphic,difficulty);
+        dualQuest = new MovingInMons(playerOne,playerTwo,difficulty);
         time      = new TimeGame(new Date(1,1,2020,9,0));
         playerOne.newQuest(dualQuest);
         playerTwo.newQuest(dualQuest);
