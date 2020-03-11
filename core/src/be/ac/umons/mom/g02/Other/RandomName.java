@@ -7,13 +7,28 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
+
+/**
+ * This class allows to give a random name to the mobile
+ * The name of the mobile stocks in the file .txt
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
+ */
 public class RandomName
 {
-    public static ArrayList<String> listName;
-    public static String pathName= "NamePnj/Name.LambdaPNJ.txt";
+    /**
+     * This is a list with the all name doesn't choose
+     */
+    private static ArrayList<String> listName;
+    /**
+     * This is tha path to read the file with name
+     */
+    private static final String pathName= "NamePnj/Name.LambdaPNJ.txt";
 
 
-    public static  void createList()
+    /**
+     * This method allows to read the file with the name of the PNJ
+     */
+    private static void createList()
     {
        listName  = new ArrayList<>();
        String vertical;
@@ -31,18 +46,27 @@ public class RandomName
         }
     }
 
+
+    /**
+     * This method allows to give the random name for a PNJ in the game
+     * @return the string's name
+     */
     public static String giveName()
     {
-        if (listName == null)
+        if (listName == null || listName.size()==0)
             createList();
-        return listName.get(random());
+        String name = listName.get(random(listName.size()));
+        listName.remove(name);
+        return name;
     }
 
-    public static int random()
+
+    /**
+     * This method return the number between max of size list and 0
+     * @return number >= 0
+     */
+    public static int random(int max)
     {
-        int nb = new Random().nextInt(listName.size());
-        if (nb >= 0 )
-            return nb;
-        return 0;
+        return Math.max(new Random().nextInt(max), 0);
     }
 }

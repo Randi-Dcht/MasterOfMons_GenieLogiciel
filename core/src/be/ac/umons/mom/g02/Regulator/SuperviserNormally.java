@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -76,7 +77,6 @@ public class SuperviserNormally extends Supervisor
         refreshQuest();
         regulator = new Regulator(playerOne,time);
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
-        checkPlanning();
     }
 
 
