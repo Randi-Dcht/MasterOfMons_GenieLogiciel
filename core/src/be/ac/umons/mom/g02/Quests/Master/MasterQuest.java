@@ -14,6 +14,8 @@ import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
+
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -119,7 +121,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             }
             else
             {
-                SuperviserNormally.getSupervisor().getEvent().add(Events.UpLevel,this);
+                Supervisor.getSupervisor().getEvent().add(Events.UpLevel,this);
                 memory = after;
             }
         }
@@ -202,7 +204,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      */
     public ArrayList<Lesson> getLesson()
     {
-        return SuperviserNormally.getSupervisor().getLesson(bloc);
+        return Supervisor.getSupervisor().getLesson(bloc);
     }
 
 

@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class CreatePlayerMenuState extends MenuState {
                 typeMi,
                 difficultyMi,
                 new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Button, () -> {
-                    SuperviserNormally.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
+                    Supervisor.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
                             characterType, gs, playerGender, difficulty);
                     GameState gs = gsm.setState(afterCreationState);
                     if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)

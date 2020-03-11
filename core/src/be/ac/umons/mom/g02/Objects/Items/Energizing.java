@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Objects.Items;
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 /***/
 public class Energizing extends Items
@@ -24,7 +25,7 @@ public class Energizing extends Items
     {
         pp.addEnergy(25);//TODO check
         visibly();
-        SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(this));
+        Supervisor.getSupervisor().getEvent().notify(new UseItem(this));
     }
 
 

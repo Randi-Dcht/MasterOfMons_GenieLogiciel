@@ -22,6 +22,8 @@ import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,9 +66,9 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
         super(name,type);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.PlaceInMons,this);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeMonth,this);
-        SuperviserNormally.getSupervisor().getEvent().add(Events.EntryPlace,this);
+        Supervisor.getSupervisor().getEvent().add(Events.PlaceInMons,this);
+        Supervisor.getSupervisor().getEvent().add(Events.ChangeMonth,this);
+        Supervisor.getSupervisor().getEvent().add(Events.EntryPlace,this);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         this.threshold = minExperience(level+1);
         this.difficulty = difficulty;
@@ -163,7 +165,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         myQuest = quest;
         myCourse.addAll(quest.getLesson());
-        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeQuest(quest));
+        Supervisor.getSupervisor().getEvent().notify(new ChangeQuest(quest));
         year = quest.getBloc() ;
         createPlanning();
     }
@@ -174,7 +176,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     private void createPlanning()
     {
-        myPlanning = HyperPlanning.createSchedule(myCourse,SuperviserNormally.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
+        myPlanning = HyperPlanning.createSchedule(myCourse,Supervisor.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
     }
 
 
@@ -311,8 +313,8 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
         if (energy <= 2)
             this.energy = 2;
-
-        SuperviserNormally.getSupervisor().getRegale().lowEnergizing();//TODO upgrade
+        if (Supervisor.getSupervisor().getClass().equals(SuperviserNormally.class))
+            SuperviserNormally.getSupervisor().getRegale().lowEnergizing();//TODO upgrade
     }
 
 
@@ -447,7 +449,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public void upLevel()
     {
         level++;
-        SuperviserNormally.getSupervisor().getEvent().notify(new UpLevel());
+        Supervisor.getSupervisor().getEvent().notify(new UpLevel());
     }
 
 

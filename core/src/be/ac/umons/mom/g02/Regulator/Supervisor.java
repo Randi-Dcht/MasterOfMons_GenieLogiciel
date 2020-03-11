@@ -68,7 +68,7 @@ public  abstract class Supervisor implements Observer
     public static Supervisor getSupervisor()
     {
         if (instance == null)
-            Gdx.app.error("Error in the Supervisor by bad initialization", String.valueOf(new ExceptionInInitializerError()));
+          SuperviserNormally.initNormallyGame();  //Gdx.app.error("Error in the Supervisor by bad initialization", String.valueOf(new ExceptionInInitializerError()));
         return instance;
     }
 

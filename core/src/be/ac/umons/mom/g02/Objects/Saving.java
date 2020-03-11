@@ -17,6 +17,7 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 
@@ -61,7 +62,7 @@ public class Saving implements Observer
     public void setLogic(People people)
     {
         this.people = people;
-        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+        Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
     }
 
 
@@ -81,9 +82,9 @@ public class Saving implements Observer
     public void signal()
     {
         if (defaltName == null)
-            newSave(people,path,SuperviserNormally.getSupervisor().getTime().getDate());
+            newSave(people,path,Supervisor.getSupervisor().getTime().getDate());
         else
-            newSave(people,defaltName,SuperviserNormally.getSupervisor().getTime().getDate());
+            newSave(people,defaltName,Supervisor.getSupervisor().getTime().getDate());
     }
 
 
@@ -179,7 +180,7 @@ public class Saving implements Observer
             play.setPlayerPosition((Point)entree.readObject());
             play.addItemsToMap((MapObject.OnMapItem[])entree.readObject());
             SuperviserNormally.getSupervisor().oldGame(people,date,gs);
-            SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+            Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
             path = file;
         }
         catch(ClassNotFoundException | IOException e)

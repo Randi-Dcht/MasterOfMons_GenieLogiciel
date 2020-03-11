@@ -9,6 +9,7 @@ import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Events.Notifications.AddFriend;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -105,7 +106,7 @@ public class Mobile extends Character implements Serializable, FrameTime
     {
         if(addFriend)
         {
-            SuperviserNormally.getSupervisor().getEvent().notify(new AddFriend(this));
+            Supervisor.getSupervisor().getEvent().notify(new AddFriend(this));
             addFriend = false;
             return true;
         }
@@ -173,7 +174,7 @@ public class Mobile extends Character implements Serializable, FrameTime
     public void nextAttack(Attack victim)
     {
         if(living)
-            SuperviserNormally.getSupervisor().attackMethod(this,victim);
+            Supervisor.getSupervisor().attackMethod(this,victim);
     }
 
     public String getName()

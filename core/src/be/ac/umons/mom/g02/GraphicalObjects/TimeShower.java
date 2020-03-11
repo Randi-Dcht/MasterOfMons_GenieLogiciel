@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -76,8 +77,8 @@ public class TimeShower {
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         beginAnimation();
-        textToShow = SuperviserNormally.getSupervisor().getTime().toString();
-        oldTime = SuperviserNormally.getSupervisor().getTime().getDate();
+        textToShow = Supervisor.getSupervisor().getTime().toString();
+        oldTime = Supervisor.getSupervisor().getTime().getDate();
     }
 
     protected TimeShower() {}
@@ -109,7 +110,7 @@ public class TimeShower {
      * Update the time and expend to full-width if more than a minute has passed.
      */
     protected void updateTime() {
-        TimeGame tg = SuperviserNormally.getSupervisor().getTime();
+        TimeGame tg = Supervisor.getSupervisor().getTime();
         ;
         if (! isTextBeingAnimated)
             textToShow = tg.toString();
@@ -177,7 +178,7 @@ public class TimeShower {
      */
     public void extendOnFullWidth() {
         extendOnFullWidth(
-                String.format("%s -> %s", oldTime.toString(), SuperviserNormally.getSupervisor().getTime().toString()));
+                String.format("%s -> %s", oldTime.toString(), Supervisor.getSupervisor().getTime().toString()));
     }
 
     /**

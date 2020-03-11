@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -40,7 +41,7 @@ public class Player extends Character {
      * @param gs Game's graphical settings
      */
     public Player(GraphicalSettings gs) {
-        super(gs, SuperviserNormally.getSupervisor().getPeople());
+        super(gs, Supervisor.getSupervisor().getPeople());
     }
 
     /**

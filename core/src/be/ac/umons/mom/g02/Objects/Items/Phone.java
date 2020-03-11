@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 /**
  * This class define the phone item who help the people in the Quest
@@ -31,7 +32,7 @@ public class Phone extends Items
   public void used(People pp)
   {
     pp.addFriend(new Mobile("FriendRandom",pp.getBloc(), MobileType.Lambda, Actions.Never, NameDialog.Lambda));
-    SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(this));
+    Supervisor.getSupervisor().getEvent().notify(new UseItem(this));
   }
 
 

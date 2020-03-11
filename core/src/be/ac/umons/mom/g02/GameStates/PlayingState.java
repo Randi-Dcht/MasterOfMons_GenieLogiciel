@@ -27,6 +27,7 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Quests.Quest;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -198,7 +199,7 @@ public class PlayingState extends GameState implements Observer {
         inventoryShower = new InventoryShower(gim, gs, player);
 
 
-        SuperviserNormally.getSupervisor().getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
+        Supervisor.getSupervisor().getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
         initMap("Tmx/Umons_Nimy.tmx");
 
@@ -243,8 +244,8 @@ public class PlayingState extends GameState implements Observer {
      */
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
-        Maps map = SuperviserNormally.getSupervisor().getMaps(mapPath);
-        SuperviserNormally.getSupervisor().getEvent().notify(new PlaceInMons(map));
+        Maps map = Supervisor.getSupervisor().getMaps(mapPath);
+        Supervisor.getSupervisor().getEvent().notify(new PlaceInMons(map));
         pnjs = new ArrayList<>();
         mapObjects = new ArrayList<>();
 
@@ -252,10 +253,10 @@ public class PlayingState extends GameState implements Observer {
 //            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
 //        }
 
-        for (Mobile mob : SuperviserNormally.getSupervisor().getMobile(map))
+        for (Mobile mob : Supervisor.getSupervisor().getMobile(map))
             pnjs.add(new Character(gs, mob));
 
-        for (MovingPNJ mv : SuperviserNormally.getSupervisor().getMovingPnj(map))
+        for (MovingPNJ mv : Supervisor.getSupervisor().getMovingPnj(map))
             pnjs.add(mv.initialisation(gs, this, player));
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
@@ -355,7 +356,7 @@ public class PlayingState extends GameState implements Observer {
         makePlayerMove(dt);
         cam.update();
 
-        SuperviserNormally.getSupervisor().callMethod(dt);
+        Supervisor.getSupervisor().callMethod(dt);
         notificationRappel.update(dt);
 
         lifeBar.setValue((int)player.getCharacteristics().getActualLife());
@@ -372,7 +373,7 @@ public class PlayingState extends GameState implements Observer {
      * @param dt The delta time
      */
     protected void makePlayerMove(float dt) {
-        double velocity = SuperviserNormally.getSupervisor().getPeople().getSpeed();
+        double velocity = Supervisor.getSupervisor().getPeople().getSpeed();
         int toMove = (int)Math.round(velocity * dt * tileWidth);
         int toMoveX = 0, toMoveY = 0;
 
@@ -563,7 +564,7 @@ public class PlayingState extends GameState implements Observer {
             return;
         player.expandAttackCircle();
         for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
-            SuperviserNormally.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
+            Supervisor.getSupervisor().attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
         }
     }
@@ -625,7 +626,7 @@ public class PlayingState extends GameState implements Observer {
         if (gim.isKey("useAnObject", KeyStatus.Pressed)) {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)
-                SuperviserNormally.getSupervisor().getPeople().useObject(ii.getItem());
+                Supervisor.getSupervisor().getPeople().useObject(ii.getItem());
         }
         if (gim.isKey("quickSave", KeyStatus.Pressed)) {
             timeShower.extendOnFullWidth(gs.getStringFromId("quickSaving"));
@@ -647,9 +648,9 @@ public class PlayingState extends GameState implements Observer {
         }
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
             if (selectedOne instanceof Character)
-                SuperviserNormally.getSupervisor().meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
+                Supervisor.getSupervisor().meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
             else {
-                if (SuperviserNormally.getSupervisor().getPeople().pushObject(((MapObject)selectedOne).getItem())) {
+                if (Supervisor.getSupervisor().getPeople().pushObject(((MapObject)selectedOne).getItem())) {
                     inventoryShower.addAnItem(((MapObject)selectedOne).getItem());
                     mapObjects.remove(selectedOne);
                 }
@@ -669,8 +670,8 @@ public class PlayingState extends GameState implements Observer {
             MapObject mo = new MapObject(gs, dropped.getItem());
             mo.setMapPos(new Point(player.getPosX(), player.getPosY()));
             mapObjects.add(mo);
-            SuperviserNormally.getSupervisor().getPeople().removeObject(dropped.getItem());
-            dropped.getItem().setMaps(SuperviserNormally.getSupervisor().getMaps(gmm.getActualMapName()));
+            Supervisor.getSupervisor().getPeople().removeObject(dropped.getItem());
+            dropped.getItem().setMaps(Supervisor.getSupervisor().getMaps(gmm.getActualMapName()));
         }
     }
 
@@ -696,7 +697,7 @@ public class PlayingState extends GameState implements Observer {
     }
 
     public void debugChangePlayerSpeed() {
-        SuperviserNormally.getSupervisor().getPeople().setSpeed(50);
+        Supervisor.getSupervisor().getPeople().setSpeed(50);
         notificationRappel.addANotification("speedChangedNotification", gs.getStringFromId("playerIsFaster"));
     }
 
@@ -747,7 +748,7 @@ public class PlayingState extends GameState implements Observer {
         dialogState.setText(diag.get(0));
         for (int i = 1; i < diag.size(); i++) {
             String s = diag.get(i);
-            dialogState.addAnswer(s, () -> SuperviserNormally.getSupervisor().getEvent().notify(new Answer(s)));
+            dialogState.addAnswer(s, () -> Supervisor.getSupervisor().getEvent().notify(new Answer(s)));
         }
     }
 

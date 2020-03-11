@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -222,7 +223,7 @@ public class Character extends OnMapObject {
      * @return Character's inventory
      */
     public List<Items> getInventory() {
-        return SuperviserNormally.getSupervisor().getPeople().getInventory();
+        return Supervisor.getSupervisor().getPeople().getInventory();
     }
 
     /**

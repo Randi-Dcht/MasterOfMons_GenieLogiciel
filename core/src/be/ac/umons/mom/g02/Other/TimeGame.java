@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Events.Notifications.ChangeDay;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.util.Objects;
 
@@ -51,7 +52,7 @@ public class TimeGame implements Observer
         this.min  = date.getMin();
         NByear    = leap(date.getYear());
         second    = 0;
-        SuperviserNormally.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+        Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
     }
 
 
@@ -112,7 +113,7 @@ public class TimeGame implements Observer
     {
         if(( day = (day+1)%years[NByear][NBmonth] )== 0)
             changeMonth();
-        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeDay());
+        Supervisor.getSupervisor().getEvent().notify(new ChangeDay());
     }
 
 
@@ -123,7 +124,7 @@ public class TimeGame implements Observer
     {
         if((NBmonth =(NBmonth+1)%timeYr) == 0)
             changeYear();
-        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeMonth());
+        Supervisor.getSupervisor().getEvent().notify(new ChangeMonth());
     }
 
 
@@ -168,7 +169,7 @@ public class TimeGame implements Observer
     {
         if((hour = (hour+1)%timeHour)==0)
             changeDay();
-        SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
+        Supervisor.getSupervisor().getEvent().notify(new ChangeHour());
     }
 
 
@@ -222,9 +223,9 @@ public class TimeGame implements Observer
         day  = (day+memH/24+addDay)%years[NByear][NBmonth];
 
         if(addHour != 0) //TODO
-            SuperviserNormally.getSupervisor().getEvent().notify(new ChangeHour());
+            Supervisor.getSupervisor().getEvent().notify(new ChangeHour());
         if(addDay != 0) //TODO
-            SuperviserNormally.getSupervisor().getEvent().notify(new ChangeDay());
+            Supervisor.getSupervisor().getEvent().notify(new ChangeDay());
     }
 
 

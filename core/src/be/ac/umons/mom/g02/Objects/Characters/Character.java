@@ -6,6 +6,8 @@ import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -352,7 +354,7 @@ public abstract class Character implements Attack, Social, Serializable
     public void dead()
     {
         living = false;
-        SuperviserNormally.getSupervisor().getEvent().notify(new Dead(this));
+        Supervisor.getSupervisor().getEvent().notify(new Dead(this));
     }
 
 

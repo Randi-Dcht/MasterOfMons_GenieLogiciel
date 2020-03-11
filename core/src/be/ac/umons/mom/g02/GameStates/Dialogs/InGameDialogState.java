@@ -9,6 +9,7 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -91,7 +92,7 @@ public class InGameDialogState extends DialogState {
         if (gim.isKey(Input.Keys.SPACE, KeyStatus.Pressed) || gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             sa.finishNow();
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
-            SuperviserNormally.getSupervisor().getEvent().notify(new Answer("ESC"));
+            Supervisor.getSupervisor().getEvent().notify(new Answer("ESC"));
     }
 
     @Override
