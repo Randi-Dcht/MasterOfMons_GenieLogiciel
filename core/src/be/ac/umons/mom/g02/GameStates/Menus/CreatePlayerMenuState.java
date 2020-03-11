@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
@@ -64,6 +65,8 @@ public class CreatePlayerMenuState extends MenuState {
                 difficultyMi,
                 new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Button, () -> {
                     Supervisor.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
+                            characterType, gs, playerGender, difficulty);
+                    SupervisorMultiPlayer.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
                             characterType, gs, playerGender, difficulty);
                     GameState gs = gsm.setState(afterCreationState);
                     if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)

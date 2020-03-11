@@ -4,15 +4,14 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import com.badlogic.gdx.Gdx;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.List;
@@ -47,6 +46,7 @@ public class NetworkManager {
      * If a connection has been established or not.
      */
     protected boolean connected = false;
+    protected boolean isTheServer = false;
     /**
      * The list of all the server that has been detected.
      */
@@ -89,6 +89,9 @@ public class NetworkManager {
     protected OnPlayerDetectedRunnable onPlayerDetected;
     protected OnPositionDetectedRunnable onPositionDetected;
     protected Runnable onPause;
+    protected OnPNJDetectedRunnable onPNJDetected;
+    protected Runnable onGetPNJPos;
+    protected boolean mustSendPNJPos;
 
     protected ServerInfo selectedServer;
     List<String> detected = new ArrayList<>();
@@ -118,7 +121,8 @@ public class NetworkManager {
             try {
                 while (! connected) {
                     for (InetAddress address : addressToBroadcast.keySet())
-                        broadcastMessage("MOMServer" + address.toString() + addressToBroadcast.get(address).toString() + "/" + servName, addressToBroadcast.get(address));
+                        broadcastMessage("MOMServer" + address.toString().replace("/", "#")
+                                + addressToBroadcast.get(address).toString().replace("/", "#") + "#" + servName, addressToBroadcast.get(address));
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -170,6 +174,7 @@ public class NetworkManager {
             try {
                 serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
+                isTheServer = true;
                 setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
                 initConnection();
             } catch (IOException e) {
@@ -218,8 +223,8 @@ public class NetworkManager {
         }
     }
 
-    public void sendOnTCP(String message) {
-        toSendOnTCP.add(message);
+    public void sendOnTCP(String... messages) {
+        toSendOnTCP.addAll(Arrays.asList(messages));
     }
 
     protected void sendOnTCPThread() throws InterruptedException {
@@ -228,7 +233,7 @@ public class NetworkManager {
                 ps.println(toSendOnTCP.pop());
             } else {
                 ps.flush();
-                Thread.sleep(100);
+                Thread.sleep(20);
             }
         }
     }
@@ -282,62 +287,80 @@ public class NetworkManager {
     }
 
     public void sendPlayerInformation(People player) {
-        sendOnTCP(String.format("PI/%s/%d/%d/%d", player.toString(), player.getType().ordinal(), player.getGender().ordinal(), player.getDifficulty().ordinal()));
+        sendOnTCP(String.format("PI#%s#%d#%d#%d", player.toString(), player.getType().ordinal(), player.getGender().ordinal(), player.getDifficulty().ordinal()));
+    }
+    public void sendPNJInformation(Character mob) throws IOException {
+        sendOnTCP(String.format("PNJ#%s#%d#%d#%s", mob.getCharacteristics().getName(), mob.getPosX(), mob.getPosY(), objectToString(mob.getCharacteristics())));
     }
     public void sendPlayerPosition(Player player) {
-        sendOnUDP(String.format("PP/%d/%d", player.getPosX(), player.getPosY()));
+        sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
+    }
+
+    public void askPNJsPositions() {
+        sendOnTCP("getPNJsPos");
     }
 
     protected void processMessage(String received) {
-            String[] tab = received.split("/");
-            switch (tab[0]) {
-                case "MOMServer":
-                    InetAddress serverAddress = null;
-                    try {
-                        serverAddress = InetAddress.getByName(tab[1]);
-                    } catch (UnknownHostException e) {
-                        e.printStackTrace();
-                    }
-                    addADetectedServer(tab, serverAddress);
-                    break;
-                case "PI": // Player info
-                    String name = tab[1];
-                    Type type = Type.values()[Integer.parseInt(tab[2])];
-                    Gender gender = Gender.values()[Integer.parseInt(tab[3])];
-                    Difficulty difficulty = Difficulty.values()[Integer.parseInt(tab[4])];
-                    if (onPlayerDetected != null)
-                        Gdx.app.postRunnable(() ->
+        if (received == null)
+            return;
+        String[] tab = received.split("#");
+        switch (tab[0]) {
+            case "MOMServer":
+                InetAddress serverAddress = null;
+                try {
+                    serverAddress = InetAddress.getByName(tab[1]);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                addADetectedServer(tab, serverAddress);
+                break;
+            case "PI": // Player info
+                String name = tab[1];
+                Type type = Type.values()[Integer.parseInt(tab[2])];
+                Gender gender = Gender.values()[Integer.parseInt(tab[3])];
+                Difficulty difficulty = Difficulty.values()[Integer.parseInt(tab[4])];
+                if (onPlayerDetected != null)
+                    Gdx.app.postRunnable(() ->
                             onPlayerDetected.run(new People(name, type, gender, difficulty)));
-                    break;
-                case "PP": // Player Position
-                    String x = tab[1];
-                    String y = tab[2];
-                    try {
-                        if (onPositionDetected != null)
-                            Gdx.app.postRunnable(() ->
-                                    onPositionDetected.run(new Point(
-                                            Integer.parseInt(x),
-                                            Integer.parseInt(y.trim()))));
-                    } catch (NumberFormatException e) {
-                        Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
-                    }
-                case "PAUSE":
-                    if (onPause != null)
-                        Gdx.app.postRunnable(onPause);
-            }
-    }
-
-    public void selectAServer(String s) {
-        try {
-            setSelectedServer(new ServerInfo("", InetAddress.getByName(s),
-                    null));
-            if (onServerSelected != null)
-                Gdx.app.postRunnable(onServerSelected);
-            detected = null; // Dispose now useless informations
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
+                break;
+            case "PP": // Player Position
+                String x = tab[1];
+                String y = tab[2];
+                try {
+                    if (onPositionDetected != null)
+                        Gdx.app.postRunnable(() ->
+                                onPositionDetected.run(new Point(
+                                        Integer.parseInt(x),
+                                        Integer.parseInt(y.trim()))));
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
+                }
+                break;
+            case "PAUSE":
+                if (onPause != null)
+                    Gdx.app.postRunnable(onPause);
+                break;
+            case "PNJ":
+                String pnjName = tab[1];
+                int pnjX = Integer.parseInt(tab[2]);
+                int pnjY = Integer.parseInt(tab[3]);
+                try {
+                    be.ac.umons.mom.g02.Objects.Characters.Character mob = (be.ac.umons.mom.g02.Objects.Characters.Character) objectFromString(tab[4]);
+                    if (onPNJDetected != null)
+                        Gdx.app.postRunnable(() -> onPNJDetected.run(pnjName, mob, pnjX, pnjY));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            case "getPNJsPos":
+                if (onGetPNJPos != null)
+                    onGetPNJPos.run();
+                else
+                    mustSendPNJPos = true;
         }
     }
+
     public void selectAServer(ServerInfo si) {
         setSelectedServer(si);
         if (onServerSelected != null)
@@ -347,7 +370,7 @@ public class NetworkManager {
 
     protected void addADetectedServer(String[] tab, InetAddress serverAddress) {
 //        Gdx.app.log("NetworkManager", String.format("Server detected : %s", tab[1]));
-        if (! detected.contains(tab[1])) {
+        if (detected != null && ! detected.contains(tab[1])) {
             detected.add(tab[1]);
             try {
                 detectedServers.add(new ServerInfo(tab[3], serverAddress,
@@ -397,6 +420,30 @@ public class NetworkManager {
         return broadcastList;
     }
 
+
+
+    /** Read the object from Base64 string.
+     * https://stackoverflow.com/a/134918 by OscarRyz*/
+    protected static Object objectFromString( String s ) throws IOException ,
+            ClassNotFoundException {
+        byte [] data = Base64.getDecoder().decode( s );
+        ObjectInputStream ois = new ObjectInputStream(
+                new ByteArrayInputStream(  data ) );
+        Object o  = ois.readObject();
+        ois.close();
+        return o;
+    }
+
+    /** Write the object to a Base64 string.
+     * https://stackoverflow.com/a/134918 by OscarRyz */
+    protected static String objectToString( Serializable o ) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream( baos );
+        oos.writeObject( o );
+        oos.close();
+        return Base64.getEncoder().encodeToString(baos.toByteArray());
+    }
+
     public void setSelectedServer(ServerInfo selectedServer) {
         if (servInfoBroadcastingThread != null && servInfoBroadcastingThread.isAlive())
             servInfoBroadcastingThread.interrupt();
@@ -440,12 +487,31 @@ public class NetworkManager {
         this.onPositionDetected = onPositionDetected;
     }
 
+    public void setOnPNJDetected(OnPNJDetectedRunnable onPNJDetected) {
+        this.onPNJDetected = onPNJDetected;
+    }
+
     public void setOnPause(Runnable onPause) {
         this.onPause = onPause;
     }
 
+    public void setOnGetPNJPos(Runnable onGetPNJPos) {
+        this.onGetPNJPos = onGetPNJPos;
+    }
+
+    public boolean isTheServer() {
+        return isTheServer;
+    }
+
+    public boolean mustSendPNJPos() {
+        return mustSendPNJPos;
+    }
+
     public interface OnPlayerDetectedRunnable {
         void run(People secondPlayer);
+    }
+    public interface OnPNJDetectedRunnable {
+        void run(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y);
     }
 
     public interface OnPositionDetectedRunnable {
