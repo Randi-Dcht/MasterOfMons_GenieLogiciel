@@ -274,7 +274,7 @@ public  abstract class Supervisor implements Observer
     {
         listUpdate = new ArrayList<>();
         listUpdate.add(playerOne);
-        //listUpdate.addAll(getMobile(maps));TODO
+        listUpdate.addAll(getMobile(maps));
         listUpdate.addAll(getMovingPnj(maps));
         //listUpdate.addAll(getItems(maps));TODO
     }
@@ -412,8 +412,8 @@ public  abstract class Supervisor implements Observer
     public void callMethod(double dt)
     {
         time.updateSecond(dt);
-        if (memoryMobile != null)
-            memoryMobile.update(dt);
+        //if (memoryMobile != null)
+         //   memoryMobile.update(dt);
         for (Mobile mb : deadMobile)
             mobileLife(mb,dt);
         for (FrameTime up : listUpdate)
@@ -467,6 +467,18 @@ public  abstract class Supervisor implements Observer
      */
     public void attackMethod(Attack attacker, Attack victim) //TODO ajout
     {
+        attackMethod(attacker,victim,true);
+    }
+
+
+    /**
+     * This method allows to attack the other
+     * @param victim is the victim on this attack
+     * @param attacker  is the attacker on this attack
+     * @param first     is the first attack of the player
+     */
+    public void attackMethod(Attack attacker, Attack victim, boolean first)
+    {
         if (attacker.getType().equals(Character.TypePlayer.Human))
         {
             ((People)attacker).reduceEnergizing(State.attack);
@@ -487,10 +499,9 @@ public  abstract class Supervisor implements Observer
             ((Mobile) attacker).letsGo(victim);
             memoryMobile = (Mobile)attacker;
         }
-        if(victim.getType().equals(Character.TypePlayer.Computer))
-            attackMethod(victim,attacker);
+        if(victim.getType().equals(Character.TypePlayer.Computer) && first)
+            attackMethod(victim,attacker,false);
     }
-
 
     /**
      * This method calculates the hits for the victim of the attack
