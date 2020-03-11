@@ -1,7 +1,9 @@
 LAN
 .mainClassBeforeLoading be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitingOrConnectionState
 .canActivateWith Dual
+.isMultiplayer
 Dual
 .mainClass be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu
+.isMultiplayer
 IA
 .mainClass be.ac.umons.mom.g02.Extensions.IA.Graphic.IaExplicationMenu

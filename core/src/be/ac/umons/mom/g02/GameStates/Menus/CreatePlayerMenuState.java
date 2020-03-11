@@ -40,6 +40,8 @@ public class CreatePlayerMenuState extends MenuState {
      */
     protected Class<? extends GameState> afterLoadingState;
 
+    protected boolean mustUseMultiplayer = false;
+
     /**
      * @param gsm The game's state manager
      * @param gim The game's input manager
@@ -64,10 +66,12 @@ public class CreatePlayerMenuState extends MenuState {
                 typeMi,
                 difficultyMi,
                 new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Button, () -> {
-                    Supervisor.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
-                            characterType, gs, playerGender, difficulty);
-                    SupervisorMultiPlayer.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
-                            characterType, gs, playerGender, difficulty);
+                    if (mustUseMultiplayer)
+                        SupervisorMultiPlayer.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
+                                characterType, gs, playerGender, difficulty);
+                    else
+                        Supervisor.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
+                                characterType, gs, playerGender, difficulty);
                     GameState gs = gsm.setState(afterCreationState);
                     if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
                         ((LoadingState)gs).setAfterLoadingState(afterLoadingState);
@@ -111,5 +115,9 @@ public class CreatePlayerMenuState extends MenuState {
      */
     public void setAfterLoadingState(Class<? extends GameState> afterLoadingState) {
         this.afterLoadingState = afterLoadingState;
+    }
+
+    public void setMustUseMultiplayer(boolean mustUseMultiplayer) {
+        this.mustUseMultiplayer = mustUseMultiplayer;
     }
 }
