@@ -404,7 +404,7 @@ public  abstract class Supervisor implements Observer
         {
             Mobile mb = (Mobile)notify.getBuffer();
             listMobile.get(mb.getMaps()).remove(mb);
-            //deadMobile.add(mb);TODO
+            deadMobile.add(mb);
             listUpdate.remove(mb);
             playerOne.winExperience(mb);
             if (mb.equals(memoryMobile))
@@ -483,6 +483,7 @@ public  abstract class Supervisor implements Observer
         if (mobile.isLiving())
         {
             listMobile.get(mobile.getMaps()).add(mobile);
+            listUpdate.add(mobile);
         }
     }
 

@@ -149,13 +149,11 @@ public class Mobile extends Character implements Serializable, FrameTime
         if (!living)
         {
             regenerationLife(dt*0.3);
-            System.out.println("life : " + actualLife);
         }
 
         if(!living && actualLife >= lifeMax())
         {
             living = true;
-            System.out.println("JE revits !!");
         }
     }
 

@@ -98,7 +98,7 @@ public abstract class Character implements Attack, Social, Serializable
      */
     protected void regenerationLife(double cmb)
     {
-        if (actualLife + cmb > lifeMax())
+        if (actualLife + cmb >= lifeMax())
             actualLife = lifeMax();
         else
             actualLife += cmb;
@@ -311,7 +311,12 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public void loseAttack(double lose)
     {
-        actualLife = actualLife - lose;
+        if (actualLife - lose < 0)
+            actualLife = 0;
+        else
+            actualLife -= lose;
+
+
         if(actualLife <= 0)
             dead();
     }
