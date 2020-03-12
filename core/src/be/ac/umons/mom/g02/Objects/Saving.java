@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -176,10 +177,9 @@ public class Saving implements Observer
             entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file))));
             people = (People) entree.readObject();
             be.ac.umons.mom.g02.Other.Date date = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
-            play.initMap(people.getMaps().getMaps());
-            play.setPlayerPosition((Point)entree.readObject());
-            play.addItemsToMap((MapObject.OnMapItem[])entree.readObject());
-            SuperviserNormally.getSupervisor().oldGame(people,date,gs);
+            Point pt = (Point)entree.readObject();
+            MapObject.OnMapItem[] lt = (MapObject.OnMapItem[])entree.readObject();
+            Objects.requireNonNull(SuperviserNormally.getSupervisor()).oldGame(people,date,gs,play,pt,lt);
             Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
             path = file;
         }

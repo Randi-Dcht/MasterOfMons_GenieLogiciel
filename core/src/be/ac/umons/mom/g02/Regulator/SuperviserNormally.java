@@ -7,6 +7,8 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -15,6 +17,7 @@ import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -86,7 +89,7 @@ public class SuperviserNormally extends Supervisor
      * @param people is the people of the game
      * @param  date is the actually date
      */
-    public void oldGame(People people, Date date,GraphicalSettings graphic)
+    public void oldGame(People people, Date date, GraphicalSettings graphic, PlayingState play, Point pt, MapObject.OnMapItem[] list)
     {
         initNormallyGame();listUpdate = new ArrayList<>();
         time = new TimeGame(date);
@@ -96,6 +99,9 @@ public class SuperviserNormally extends Supervisor
         regulator= new Regulator(playerOne,time);
         refreshQuest();
         checkPlanning();
+        play.initMap(people.getMaps().getMaps());
+        play.setPlayerPosition(pt);
+        play.addItemsToMap(list);
     }
 
 
