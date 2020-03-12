@@ -62,16 +62,16 @@ public abstract class DialogState extends GameState {
      */
     public DialogState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
+        whenSelectedActions = new HashMap<>();
+        buttons = new ArrayList<>();
     }
 
     @Override
     public void init() {
         super.init();
-        whenSelectedActions = new HashMap<>();
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
         sb = new SpriteBatch();
-        buttons = new ArrayList<>();
     }
 
     @Override
