@@ -256,8 +256,12 @@ public class PlayingState extends GameState implements Observer {
 //            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
 //        }
 
-        for (Mobile mob : supervisor.getMobile(map))
-            pnjs.add(new Character(gs, mob));
+        supervisor.init(player.getCharacteristics(), player);
+        for (Mobile mob : supervisor.getMobile(map)) {
+            Character c = new Character(gs, mob);
+            pnjs.add(c);
+            supervisor.init(mob, c);
+        }
 
         for (MovingPNJ mv : supervisor.getMovingPnj(map))
             pnjs.add(mv.initialisation(gs, this, player));
