@@ -1,9 +1,12 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
+import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
@@ -11,6 +14,7 @@ import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.Array;
 
@@ -31,11 +35,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
 
     /**
-     * Crée un nouvel état de jeu.
-     *
-     * @param gsm Le GameStateManager du jeu.
-     * @param gim Le GameInputManager du jeu.
-     * @param gs  Les paramètres graphiques à utiliser.
+     * @param gsm The game's state manager
+     * @param gim The game's input manager
+     * @param gs The game's graphical settings.
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
@@ -82,6 +84,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (idCharacterMap.containsKey(name))
                 supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
         });
+
+        pauseButton.setOnClick(() -> {
+            gsm.setState(InGameMenuState.class);
+            nm.sendPause();
+        });
+        nm.setOnPause(() -> gsm.setState(PauseMenuState.class));
+        nm.setOnEndPause(() -> gsm.removeFirstState());
     }
 
     @Override
@@ -102,6 +111,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     public void handleInput() {
         super.handleInput();
         nm.sendPlayerPosition(player);
+
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
+            nm.sendPause();
     }
 
     @Override
@@ -158,5 +170,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendPNJDeath(m.getName());
             idCharacterMap.remove(m.getName());
         }
+    }
+
+    @Override
+    public void getFocus() {
+        super.getFocus();
+        nm.sendEndPause();
     }
 }

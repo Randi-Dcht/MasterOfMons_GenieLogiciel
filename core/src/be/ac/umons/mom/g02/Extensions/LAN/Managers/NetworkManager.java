@@ -90,6 +90,7 @@ public class NetworkManager {
     protected OnPlayerDetectedRunnable onPlayerDetected;
     protected OnPositionDetectedRunnable onPositionDetected;
     protected Runnable onPause;
+    protected Runnable onEndPause;
     protected OnPNJDetectedRunnable onPNJDetected;
     protected OnGetPNJRunnable onGetPNJ;
     protected OnHitPNJRunnable onHitPNJ;
@@ -324,6 +325,15 @@ public class NetworkManager {
         sendOnUDP(String.format("hitPNJ#%s#%f", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife()));
     }
 
+    public void sendPause() {
+        sendOnTCP("Pause");
+    }
+
+    public void sendEndPause() {
+        sendOnTCP("EndPause");
+
+    }
+
     public void sendPNJDeath(String name) {
         sendOnTCP(String.format("PNJDeath#%s", name));
     }
@@ -368,9 +378,13 @@ public class NetworkManager {
                     Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
                 }
                 break;
-            case "PAUSE":
+            case "Pause":
                 if (onPause != null)
                     Gdx.app.postRunnable(onPause);
+                break;
+            case "EndPause":
+                if (onEndPause != null)
+                    Gdx.app.postRunnable(onEndPause);
                 break;
             case "PNJ": // Add a PNJ to the map
                 String pnjName = tab[1];
@@ -556,6 +570,10 @@ public class NetworkManager {
 
     public void setOnPNJDeath(OnPNJDeathRunnable onPNJDeath) {
         this.onPNJDeath = onPNJDeath;
+    }
+
+    public void setOnEndPause(Runnable onEndPause) {
+        this.onEndPause = onEndPause;
     }
 
     public interface OnPlayerDetectedRunnable {
