@@ -504,6 +504,8 @@ public  abstract class Supervisor implements Observer
      */
     public TimeGame getTime()
     {
+        if (time == null)
+            return new TimeGame(new Date(0,0,0,0,0));
         return time;
     }
 
