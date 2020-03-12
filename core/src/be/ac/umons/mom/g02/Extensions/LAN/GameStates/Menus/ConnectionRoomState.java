@@ -68,4 +68,9 @@ public class ConnectionRoomState extends MenuState {
         nm.tryToConnect();
         gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
 }

@@ -6,7 +6,6 @@ import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import com.badlogic.gdx.Gdx;
 
@@ -79,6 +78,8 @@ public class NetworkManager {
     protected Thread sendOnUDPThread;
     protected Stack<String> toSendOnTCP;
     protected Stack<String> toSendOnUDP;
+    protected Thread connectThread;
+    protected Thread acceptThread;
 
     /**
      * What to do when a server is detected.
@@ -90,8 +91,9 @@ public class NetworkManager {
     protected OnPositionDetectedRunnable onPositionDetected;
     protected Runnable onPause;
     protected OnPNJDetectedRunnable onPNJDetected;
-    protected Runnable onGetPNJPos;
-    protected boolean mustSendPNJPos;
+    protected OnGetPNJRunnable onGetPNJ;
+    protected OnHitPNJRunnable onHitPNJ;
+    protected String mustSendPNJPos;
 
     protected ServerInfo selectedServer;
     List<String> detected = new ArrayList<>();
@@ -108,6 +110,8 @@ public class NetworkManager {
             e.printStackTrace();
             return;
         }
+        toSendOnTCP = new Stack<>();
+        toSendOnUDP = new Stack<>();
     }
 
     /**
@@ -148,6 +152,10 @@ public class NetworkManager {
         ds.send(packet);
     }
 
+    public void stopBroadcastingServerInfo() {
+        servInfoBroadcastingThread.interrupt();
+    }
+
     /**
      * Start listening for the server informations.
      */
@@ -159,20 +167,28 @@ public class NetworkManager {
     }
 
     public void tryToConnect() {
-        new Thread(() -> {
+        if (connectThread != null)
+            connectThread.interrupt();
+        connectThread = new Thread(() -> {
             try {
+                if (socket != null)
+                    socket.close();
                 socket = new Socket(selectedServer.getIp(), PORT);
                 initConnection();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        connectThread.start();
     }
 
     public void acceptConnection() {
-        new Thread(() -> {
+        if (acceptThread != null)
+            acceptThread.interrupt();
+        acceptThread = new Thread(() -> {
             try {
-                serverSocket = new ServerSocket(PORT);
+                if (serverSocket == null)
+                    serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
                 isTheServer = true;
                 setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
@@ -180,7 +196,8 @@ public class NetworkManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        acceptThread.start();
     }
 
     public void initConnection() {
@@ -191,8 +208,16 @@ public class NetworkManager {
             e.printStackTrace();
             return;
         }
-        toSendOnTCP = new Stack<>();
-        toSendOnUDP = new Stack<>();
+
+        if (listenOnUDPThread != null)
+            listenOnUDPThread.interrupt();
+        if (sendOnUDPThread != null)
+            sendOnUDPThread.interrupt();
+        if (receiveOnTCPThread != null)
+            receiveOnTCPThread.interrupt();
+        if (sendOnTCPThread != null)
+            sendOnTCPThread.interrupt();
+
         sendOnTCPThread = new Thread(() -> {
             try {
                 sendOnTCPThread();
@@ -200,8 +225,6 @@ public class NetworkManager {
                 e.printStackTrace();
             }
         });
-        if (listenOnUDPThread != null)
-            listenOnUDPThread.interrupt();
         sendOnUDPThread = new Thread(this::sendOnUDPThread);
         receiveOnTCPThread = new Thread(this::listenOnTCP);
         listenOnUDPThread = new Thread(this::listenToUDP);
@@ -296,8 +319,12 @@ public class NetworkManager {
         sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
     }
 
-    public void askPNJsPositions() {
-        sendOnTCP("getPNJsPos");
+    public void sendHit(Character c) {
+        sendOnUDP(String.format("hitPNJ#%s#%f", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife()));
+    }
+
+    public void askPNJsPositions(String map) {
+        sendOnTCP("getPNJsPos#" + map);
     }
 
     protected void processMessage(String received) {
@@ -305,7 +332,7 @@ public class NetworkManager {
             return;
         String[] tab = received.split("#");
         switch (tab[0]) {
-            case "MOMServer":
+            case "MOMServer": // Broadcast of a server
                 InetAddress serverAddress = null;
                 try {
                     serverAddress = InetAddress.getByName(tab[1]);
@@ -340,7 +367,7 @@ public class NetworkManager {
                 if (onPause != null)
                     Gdx.app.postRunnable(onPause);
                 break;
-            case "PNJ":
+            case "PNJ": // Add a PNJ to the map
                 String pnjName = tab[1];
                 int pnjX = Integer.parseInt(tab[2]);
                 int pnjY = Integer.parseInt(tab[3]);
@@ -353,11 +380,18 @@ public class NetworkManager {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-            case "getPNJsPos":
-                if (onGetPNJPos != null)
-                    onGetPNJPos.run();
+                break;
+            case "getPNJsPos": // Get all PNJs and their positions
+                if (onGetPNJ != null)
+                    Gdx.app.postRunnable(() -> onGetPNJ.run(tab[1].trim()));
                 else
-                    mustSendPNJPos = true;
+                    mustSendPNJPos = tab[1].trim();
+                break;
+            case "hitPNJ": // A PNJ has been hit by the other player.
+                if (onHitPNJ != null)
+                    Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1].trim(),
+                            Double.parseDouble(tab[2].trim())));
+                break;
         }
     }
 
@@ -495,16 +529,20 @@ public class NetworkManager {
         this.onPause = onPause;
     }
 
-    public void setOnGetPNJPos(Runnable onGetPNJPos) {
-        this.onGetPNJPos = onGetPNJPos;
+    public void setOnGetPNJ(OnGetPNJRunnable onGetPNJ) {
+        this.onGetPNJ = onGetPNJ;
     }
 
     public boolean isTheServer() {
         return isTheServer;
     }
 
-    public boolean mustSendPNJPos() {
+    public String getMustSendPNJPos() {
         return mustSendPNJPos;
+    }
+
+    public void setOnHitPNJ(OnHitPNJRunnable onHitPNJ) {
+        this.onHitPNJ = onHitPNJ;
     }
 
     public interface OnPlayerDetectedRunnable {
@@ -516,5 +554,22 @@ public class NetworkManager {
 
     public interface OnPositionDetectedRunnable {
         void run(Point pos);
+    }
+
+    public interface OnGetPNJRunnable {
+        void run(String map);
+    }
+
+    public interface OnHitPNJRunnable {
+        void run(String name, double life);
+    }
+
+    public void dispose() {
+        ps.close();
+        try {
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

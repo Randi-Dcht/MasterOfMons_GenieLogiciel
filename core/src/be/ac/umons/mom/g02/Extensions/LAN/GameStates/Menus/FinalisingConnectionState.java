@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.net.SocketException;
 
@@ -33,7 +34,7 @@ public class FinalisingConnectionState extends MenuState {
             LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
             ls.setAfterLoadingState(PlayingState.class);
         });
-        nm.sendPlayerInformation(SupervisorMultiPlayer.getSupervisor().getPeople());
+        nm.sendPlayerInformation(Supervisor.getSupervisor().getPeople());
     }
 
     @Override
