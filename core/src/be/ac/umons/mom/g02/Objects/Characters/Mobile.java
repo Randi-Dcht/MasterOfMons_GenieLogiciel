@@ -92,10 +92,16 @@ public class Mobile extends Character implements Serializable, FrameTime
             victim = null;
     }
 
+
+    /**
+     * This method return if the mobile attacker now
+     * @return boolean if mobile attack other
+     */
     public boolean inAttack()
     {
         return victim != null;
     }
+
 
     /**
      * This method allows to say if the character can attack the other
@@ -131,6 +137,26 @@ public class Mobile extends Character implements Serializable, FrameTime
     {
         time = recovery();
         this.victim = victim;
+    }
+
+
+    /**
+     *This method allows to increase the life
+     * @param dt is the time between two frame
+     */
+    public void regeneration(double dt)//TODO displace
+    {
+        if (!living)
+        {
+            regenerationLife(dt*0.3);
+            System.out.println("life : " + actualLife);
+        }
+
+        if(!living && actualLife >= lifeMax())
+        {
+            living = true;
+            System.out.println("JE revits !!");
+        }
     }
 
 

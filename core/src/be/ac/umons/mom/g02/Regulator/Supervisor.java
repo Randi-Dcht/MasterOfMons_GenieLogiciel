@@ -79,7 +79,7 @@ public  abstract class Supervisor implements Observer
     /**
      * This is the list with the association with the character and the graphical instance
      */
-    protected HashMap<Character, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character> graphicalMob;//TODO
+    protected HashMap<Character, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character> graphicalMob;
     /**
      * This is a lst of the mobile dead
      */
@@ -136,6 +136,10 @@ public  abstract class Supervisor implements Observer
      * This list save the characteristic of player
      */
     protected int[] debugSaving = new int[3];
+    /**
+     * This variable is instance of the PlayingState
+     */
+    protected PlayingState playGraphic;
 
 
     protected Supervisor()
@@ -229,7 +233,9 @@ public  abstract class Supervisor implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to give the actual course of the player
+     */
     public Course getActualCourse()
     {
         return actualCourse;
@@ -252,7 +258,10 @@ public  abstract class Supervisor implements Observer
     }
 
 
-    /***/
+    /**
+     * This method returns the save of the game
+     * @return the instance of save
+     */
     public Saving getSave()
     {
         return save;
@@ -278,14 +287,16 @@ public  abstract class Supervisor implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to give the character to refresh with the changed frame
+     * @param maps is the actual maps of the player
+     */
     private void refreshList(Maps maps)
     {
         listUpdate = new ArrayList<>();
         listUpdate.add(playerOne);
         listUpdate.addAll(getMobile(maps));
         listUpdate.addAll(getMovingPnj(maps));
-        //listUpdate.addAll(getItems(maps));TODO
     }
 
 
@@ -308,6 +319,7 @@ public  abstract class Supervisor implements Observer
     {
         qs.setQuest(playerOne.getQuest());
         save.setGraphic(ps);
+        playGraphic = ps;
     }
 
 
