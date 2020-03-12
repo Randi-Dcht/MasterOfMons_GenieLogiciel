@@ -1,23 +1,10 @@
 package be.ac.umons.mom.g02.Regulator;
 
 import be.ac.umons.mom.g02.Dialog.DialogCharacter;
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Lesson;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
-import be.ac.umons.mom.g02.Enums.State;
-import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Dialog;
-import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
-import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
@@ -159,6 +146,7 @@ public  abstract class Supervisor implements Observer
         event.add(this, Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons);
         save = new Saving();
         associateLesson();
+        graphicalMob = new HashMap<>();
     }
 
 
@@ -211,6 +199,24 @@ public  abstract class Supervisor implements Observer
     {
         return new Items[]{new Energizing(),new Flower(),new Gun(),new OldExam(),new PaperHelp(),new Pen(),new Phone(),new TheKillBoot()};
     }
+
+
+    /***/
+    public void refreshAndDelete()
+    {
+        listUpdate   = new ArrayList<>();
+        memoryMobile = null;
+    }
+
+
+    public void init(Character pnj, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphic)
+    {
+        if (!graphicalMob.containsKey(pnj))
+            graphicalMob.put(pnj,graphic);
+        else
+            graphicalMob.replace(pnj,graphic);
+    }
+
 
     /**
      * This method return the mobile for a maps
@@ -386,11 +392,15 @@ public  abstract class Supervisor implements Observer
         {
             Mobile mb = (Mobile)notify.getBuffer();
             listMobile.get(mb.getMaps()).remove(mb);
-            deadMobile.add(mb);
+            //deadMobile.add(mb);TODO
+            listUpdate.remove(mb);
             playerOne.winExperience(mb);
             if (mb.equals(memoryMobile))
                 memoryMobile = null;
         }
+
+        if (notify.getEvents().equals(Events.Dead) && ((Dead)notify).getBuffer().getType().equals(Character.TypePlayer.Human))
+            refreshAndDelete();
 
         if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
             switchingDialog(((String)notify.getBuffer()));
@@ -415,13 +425,38 @@ public  abstract class Supervisor implements Observer
     public void callMethod(double dt)
     {
         time.updateSecond(dt);
-        //if (memoryMobile != null)
-         //   memoryMobile.update(dt);
+        if (memoryMobile != null && graphicalMob.containsKey(memoryMobile) && memoryMobile.inAttack())
+         mobileMove(dt);
         for (Mobile mb : deadMobile)
             mobileLife(mb,dt);
         for (FrameTime up : listUpdate)
             up.update(dt);
         deadMobile.removeIf(Character::isLiving);
+    }
+
+    public void mobileMove(double dt)
+    {
+        be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical = graphicalMob.get(memoryMobile);
+        be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character player    = graphicalMob.get(playerOne);
+        int displaceX = player.getPosX() - graphical.getPosX();
+        int displaceY = player.getPosY() - graphical.getPosY();
+
+        int x=0,y=0;
+        int toMove = (int)Math.round(memoryMobile.getSpeed() * dt * 64);
+
+        if(displaceX > toMove+64 || displaceX < -toMove-64 || displaceY > toMove+32 || displaceY < -toMove-32) {
+            if (displaceX < 0) {
+                x = -toMove;
+            } else {
+                x = toMove;
+            }
+            if (displaceY < 0) {
+                y = -toMove;
+            } else {
+                y = toMove;
+            }
+        }
+        graphical.move(x,y);
     }
 
 
@@ -497,12 +532,12 @@ public  abstract class Supervisor implements Observer
             else
                 victim.loseAttack(calculateHits(attacker,victim,0));
         }
-        if(attacker.getType().equals(Character.TypePlayer.Computer))
+        if(attacker.getType().equals(Character.TypePlayer.Computer) && ((Character)victim).isLiving())
         {
             ((Mobile) attacker).letsGo(victim);
             memoryMobile = (Mobile)attacker;
         }
-        if(victim.getType().equals(Character.TypePlayer.Computer) && first && ((Character)victim).getActualLife() > 0)
+        if(victim.getType().equals(Character.TypePlayer.Computer) && first && ((Character)victim).isLiving())
             attackMethod(victim,attacker,false);
     }
 

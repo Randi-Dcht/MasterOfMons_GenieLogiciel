@@ -81,14 +81,22 @@ public class Mobile extends Character implements Serializable, FrameTime
         if (victim != null)
             time -= dt;
 
-        if (time <= 0 && victim != null)
+        if (time <= 0 && victim != null && living)
         {
+            System.out.println(living + " : " + this);
             Attack t = victim;
             this.victim = null;
             nextAttack(t);
         }
+
+        if (!living)
+            victim = null;
     }
 
+    public boolean inAttack()
+    {
+        return victim != null;
+    }
 
     /**
      * This method allows to say if the character can attack the other
