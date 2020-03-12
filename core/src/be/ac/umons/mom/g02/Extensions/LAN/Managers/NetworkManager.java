@@ -159,6 +159,10 @@ public class NetworkManager {
      */
     protected OnPNJDeathRunnable onPNJDeath;
     /**
+     * What to do when the second player finished the current <code>MasterQuest</code>
+     */
+    protected Runnable onMasterQuestFinished;
+    /**
      * On which map the PNJ's informations has been asked.
      */
     protected String mustSendPNJPos;
@@ -170,6 +174,8 @@ public class NetworkManager {
      * The list of all servers that was detected.
      */
     List<String> detected = new ArrayList<>();
+
+    protected boolean ignoreEMQ = false;
 
     /**
      * @throws SocketException If the port used (32516) is already used
@@ -481,6 +487,11 @@ public class NetworkManager {
         sendOnTCP("getPNJsPos#" + map);
     }
 
+    public void sendEndOfMasterQuest() {
+        sendOnTCP("EMQ");
+        ignoreEMQ = true;
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -557,6 +568,13 @@ public class NetworkManager {
             case "PNJDeath":
                 if (onPNJDeath != null)
                     Gdx.app.postRunnable(() -> onPNJDeath.run(tab[1].trim()));
+                break;
+            case "EMQ":
+                if (ignoreEMQ)
+                    ignoreEMQ = false;
+                else
+                    Gdx.app.postRunnable(onMasterQuestFinished);
+                break;
 
         }
     }
@@ -784,6 +802,13 @@ public class NetworkManager {
      */
     public void setOnEndPause(Runnable onEndPause) {
         this.onEndPause = onEndPause;
+    }
+
+    /**
+     * @param onMasterQuestFinished What to do when the second player finished the current <code>MasterQuest</code>
+     */
+    public void setOnMasterQuestFinished(Runnable onMasterQuestFinished) {
+        this.onMasterQuestFinished = onMasterQuestFinished;
     }
 
     /**
