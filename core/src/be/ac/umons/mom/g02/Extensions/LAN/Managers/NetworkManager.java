@@ -93,6 +93,7 @@ public class NetworkManager {
     protected OnPNJDetectedRunnable onPNJDetected;
     protected OnGetPNJRunnable onGetPNJ;
     protected OnHitPNJRunnable onHitPNJ;
+    protected OnPNJDeathRunnable onPNJDeath;
     protected String mustSendPNJPos;
 
     protected ServerInfo selectedServer;
@@ -323,6 +324,10 @@ public class NetworkManager {
         sendOnUDP(String.format("hitPNJ#%s#%f", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife()));
     }
 
+    public void sendPNJDeath(String name) {
+        sendOnTCP(String.format("PNJDeath#%s", name));
+    }
+
     public void askPNJsPositions(String map) {
         sendOnTCP("getPNJsPos#" + map);
     }
@@ -389,9 +394,13 @@ public class NetworkManager {
                 break;
             case "hitPNJ": // A PNJ has been hit by the other player.
                 if (onHitPNJ != null)
-                    Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1].trim(),
-                            Double.parseDouble(tab[2].trim())));
+                    Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1],
+                            Double.parseDouble(tab[2])));
                 break;
+            case "PNJDeath":
+                if (onPNJDeath != null)
+                    Gdx.app.postRunnable(() -> onPNJDeath.run(tab[1].trim()));
+
         }
     }
 
@@ -545,6 +554,10 @@ public class NetworkManager {
         this.onHitPNJ = onHitPNJ;
     }
 
+    public void setOnPNJDeath(OnPNJDeathRunnable onPNJDeath) {
+        this.onPNJDeath = onPNJDeath;
+    }
+
     public interface OnPlayerDetectedRunnable {
         void run(People secondPlayer);
     }
@@ -562,6 +575,10 @@ public class NetworkManager {
 
     public interface OnHitPNJRunnable {
         void run(String name, double life);
+    }
+
+    public interface OnPNJDeathRunnable {
+        void run(String name);
     }
 
     public void dispose() {

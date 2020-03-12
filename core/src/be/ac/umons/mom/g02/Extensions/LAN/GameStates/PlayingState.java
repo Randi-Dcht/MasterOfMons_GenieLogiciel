@@ -1,5 +1,8 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -75,6 +78,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                 playerTwo.expandAttackCircle();
             }
         });
+        nm.setOnPNJDeath((name) -> {
+            if (idCharacterMap.containsKey(name))
+                supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
+        });
     }
 
     @Override
@@ -140,6 +147,16 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             supervisor.attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
             nm.sendHit(c);
+        }
+    }
+
+    @Override
+    public void update(Notification notify) {
+        super.update(notify);
+        if (notify.getEvents().equals(Events.Dead)) {
+            Mobile m = (Mobile) notify.getBuffer();
+            nm.sendPNJDeath(m.getName());
+            idCharacterMap.remove(m.getName());
         }
     }
 }

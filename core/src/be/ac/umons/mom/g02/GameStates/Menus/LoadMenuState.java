@@ -47,7 +47,7 @@ public class LoadMenuState extends ChooseFolderMenuState {
      * @param loadFilePath The load file's path.
      */
     private void load(String loadFilePath) {
-        SuperviserNormally.getSupervisor().getSave().playOldParty(loadFilePath,gs);
         gsm.removeAllStateAndAdd(LoadingState.class);
+        SuperviserNormally.getSupervisor().getSave().playOldParty(loadFilePath,gs);
     }
 }

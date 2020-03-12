@@ -111,13 +111,14 @@ public class TimeShower {
      */
     protected void updateTime() {
         TimeGame tg = Supervisor.getSupervisor().getTime();
-        ;
-        if (! isTextBeingAnimated)
-            textToShow = tg.toString();
-        if (mustExpend(oldTime, tg.getDate()) && ! isBeingAnimated) {
-            extendOnFullWidth();
+        if (tg != null) {
+            if (! isTextBeingAnimated)
+                textToShow = tg.toString();
+            if (mustExpend(oldTime, tg.getDate()) && ! isBeingAnimated) {
+                extendOnFullWidth();
+            }
+            oldTime = tg.getDate();
         }
-        oldTime = tg.getDate();
     }
 
     /**
