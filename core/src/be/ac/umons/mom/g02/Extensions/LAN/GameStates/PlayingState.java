@@ -25,12 +25,19 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * L'état de jeu du jeu. Il affiche la carte, un joueur ainsi qu'un HUD. Cet état suppose qu'une connexion avec un autre joueur a travers un réseau local a déjà été établi.
+ * The playing state. This state suppose that a connection has already been established.
+ * @see be.ac.umons.mom.g02.GameStates.PlayingState
  * @author Guillaume Cardoen
  */
 public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState {
 
+    /**
+     * The network manager.
+     */
     private NetworkManager nm;
+    /**
+     * The map associating an id (his name) and a character.
+     */
     private HashMap<String, Character> idCharacterMap;
 
 
@@ -41,7 +48,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
-//        supervisor = SupervisorMultiPlayer.getSupervisor();
+//        supervisor = SupervisorMultiPlayer.getSupervisor();  //TODO
     }
 
     @Override
@@ -128,6 +135,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
     }
 
+    /**
+     * Put a position to all mobiles and add it to the map.
+     * @param mobs The list of mobiles to initiaite.
+     */
     protected void initMobilesPositions(List<Mobile> mobs) {
         Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
         for (Mobile mob : mobs) {
@@ -139,7 +150,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
     }
 
-    protected void sendPNJsPositions(String map) {
+    /**
+     * Send all the PNJs positions to the second player.
+     * @param map The map asked.
+     */
+    protected void sendPNJsPositions(String map) { // TODO MovingPNJ
         initMobilesPositions(supervisor.getMobile(supervisor.getMaps(map)));
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {

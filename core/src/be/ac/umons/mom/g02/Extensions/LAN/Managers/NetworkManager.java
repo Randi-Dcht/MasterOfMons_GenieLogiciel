@@ -45,6 +45,9 @@ public class NetworkManager {
      * If a connection has been established or not.
      */
     protected boolean connected = false;
+    /**
+     * If the current manager is considered as a server (if it was waiting for a connection).
+     */
     protected boolean isTheServer = false;
     /**
      * The list of all the server that has been detected.
@@ -58,46 +61,114 @@ public class NetworkManager {
      * The socket used for broadcasting / sending message if a server is selected.
      */
     protected DatagramSocket ds;
-
+    /**
+     * The socket used to send/receive important messages when the connection is established.
+     */
     protected Socket socket;
+    /**
+     * The socket used to wait for a connection.
+     */
     protected ServerSocket serverSocket;
-
+    /**
+     * The PrintStream associated with the socket <code>socket</code>
+     */
     protected PrintStream ps;
+    /**
+     * The BufferedReader associated with the socket <code>socket</code>
+     */
     protected BufferedReader br;
     /**
      * The thread used for broadcasting the server's informations.
      */
     protected Thread servInfoBroadcastingThread;
-
     /**
      * The thread used for listening the server's informations.
      */
     protected Thread listenOnUDPThread;
+    /**
+     * The thread used for listening on the TCP socket.
+     */
     protected Thread receiveOnTCPThread;
+    /**
+     * The thread used for sending messages on the TCP socket.
+     */
     protected Thread sendOnTCPThread;
+    /**
+     * The thread used for sending messages on the UDP socket.
+     */
     protected Thread sendOnUDPThread;
+    /**
+     * The messages to send on the TCP socket.
+     */
     protected Stack<String> toSendOnTCP;
+    /**
+     * The messages to send on the UDP socket.
+     */
     protected Stack<String> toSendOnUDP;
+    /**
+     * The thread trying to connect to the server.
+     */
     protected Thread connectThread;
+    /**
+     * The thread waiting for a connection from the second player.
+     */
     protected Thread acceptThread;
 
     /**
      * What to do when a server is detected.
      */
     protected Runnable onServerDetected;
+    /**
+     * What to do when the server is selected.
+     */
     protected Runnable onServerSelected;
+    /**
+     * What to do when the second player is connected.
+     */
     protected Runnable onConnected;
+    /**
+     * What to do when the second player informations has been received.
+     */
     protected OnPlayerDetectedRunnable onPlayerDetected;
+    /**
+     * What to do when the second player position has been received.
+     */
     protected OnPositionDetectedRunnable onPositionDetected;
+    /**
+     * What to do when the second player is in pause.
+     */
     protected Runnable onPause;
+    /**
+     * What to do when the second player isn't in pause anymore.
+     */
     protected Runnable onEndPause;
+    /**
+     * What to do when the informations of a PNJ has been received.
+     */
     protected OnPNJDetectedRunnable onPNJDetected;
+    /**
+     * What to do when the second player ask informations about the PNJs on the map.
+     */
     protected OnGetPNJRunnable onGetPNJ;
+    /**
+     * What to do when the second player hit a PNJ.
+     */
     protected OnHitPNJRunnable onHitPNJ;
+    /**
+     * What to do when the second player killed a PNJ.
+     */
     protected OnPNJDeathRunnable onPNJDeath;
+    /**
+     * On which map the PNJ's informations has been asked.
+     */
     protected String mustSendPNJPos;
-
+    /**
+     * The server on which we must connect.
+     */
     protected ServerInfo selectedServer;
+    /**
+     * The list of all servers that was detected.
+     */
     List<String> detected = new ArrayList<>();
 
     /**
@@ -154,6 +225,9 @@ public class NetworkManager {
         ds.send(packet);
     }
 
+    /**
+     * Stop broadcasting the server's information on the network.
+     */
     public void stopBroadcastingServerInfo() {
         servInfoBroadcastingThread.interrupt();
     }
@@ -168,6 +242,9 @@ public class NetworkManager {
         listenOnUDPThread.start();
     }
 
+    /**
+     * Try to connect on the selected server.
+     */
     public void tryToConnect() {
         if (connectThread != null)
             connectThread.interrupt();
@@ -184,6 +261,9 @@ public class NetworkManager {
         connectThread.start();
     }
 
+    /**
+     * Wait a connection and select the connection as the selected server.
+     */
     public void acceptConnection() {
         if (acceptThread != null)
             acceptThread.interrupt();
@@ -202,6 +282,9 @@ public class NetworkManager {
         acceptThread.start();
     }
 
+    /**
+     * Initiate the PrintStream, the BufferedReader and the necessary threads when a connection was established.
+     */
     public void initConnection() {
         try {
             ps = new PrintStream(socket.getOutputStream());
@@ -227,7 +310,13 @@ public class NetworkManager {
                 e.printStackTrace();
             }
         });
-        sendOnUDPThread = new Thread(this::sendOnUDPThread);
+        sendOnUDPThread = new Thread(() -> {
+            try {
+                sendOnUDPThread();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
         receiveOnTCPThread = new Thread(this::listenOnTCP);
         listenOnUDPThread = new Thread(this::listenToUDP);
         sendOnTCPThread.start();
@@ -237,6 +326,9 @@ public class NetworkManager {
         Gdx.app.postRunnable(onConnected);
     }
 
+    /**
+     * Listen all messages from the TCP socket.
+     */
     protected void listenOnTCP() {
         while (true) {
             try {
@@ -248,10 +340,18 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * Add (a) message(s) to send on the TCP socket.
+     * @param messages The message(s)
+     */
     public void sendOnTCP(String... messages) {
         toSendOnTCP.addAll(Arrays.asList(messages));
     }
 
+    /**
+     * Check non-stop if there is a message to send on the TCP socket and send it.
+     * @throws InterruptedException If the thread was interrupted.
+     */
     protected void sendOnTCPThread() throws InterruptedException {
         while (true) {
             if (! toSendOnTCP.isEmpty()) {
@@ -278,27 +378,34 @@ public class NetworkManager {
             }
         }
     }
-
+    /**
+     * Add a message to send on the UDP socket. Remove the older message if there is more than 10 messages waiting.
+     * @param message The message
+     */
     public void sendOnUDP(String message) {
         if (toSendOnUDP.size() > 10)
             toSendOnUDP.pop();
         toSendOnUDP.push(message);
     }
 
-    protected void sendOnUDPThread() {
+    /**
+     * Check non-stop if there is a message to send on the UDP socket and send it.
+     * @throws InterruptedException If the thread was interrupted.
+     */
+    protected void sendOnUDPThread() throws InterruptedException {
         while (true) {
             if (toSendOnUDP.size() > 0) {
                 sendUDPMessage(toSendOnUDP.pop());
             } else {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Thread.sleep(100);
             }
         }
     }
 
+    /**
+     * Send a message on the UDP socket.
+     * @param message The message
+     */
     protected void sendUDPMessage(String message) {
         if (selectedServer == null)
             throw new NullPointerException("No server was selected");
@@ -311,37 +418,73 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * Send the player information on the TCP socket.
+     * @param player The player to send
+     */
     public void sendPlayerInformation(People player) {
         sendOnTCP(String.format("PI#%s#%d#%d#%d", player.toString(), player.getType().ordinal(), player.getGender().ordinal(), player.getDifficulty().ordinal()));
     }
+
+    /**
+     * Send the mob information on the TCP socket.
+     * @param mob The PNJ to send
+     * @throws IOException If the PNJ couldn't be serialized.
+     */
     public void sendPNJInformation(Character mob) throws IOException {
         sendOnTCP(String.format("PNJ#%s#%d#%d#%s", mob.getCharacteristics().getName(), mob.getPosX(), mob.getPosY(), objectToString(mob.getCharacteristics())));
     }
+
+    /**
+     * Send the player positions.
+     * @param player The player.
+     */
     public void sendPlayerPosition(Player player) {
         sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
     }
 
+    /**
+     * Send that a hit has been made on the character <code>c</code> and its life.
+     * @param c The character hit.
+     */
     public void sendHit(Character c) {
         sendOnUDP(String.format("hitPNJ#%s#%f", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife()));
     }
 
+    /**
+     * Send the pause signal.
+     */
     public void sendPause() {
         sendOnTCP("Pause");
     }
 
+    /**
+     * Send the signal ending the pause.
+     */
     public void sendEndPause() {
         sendOnTCP("EndPause");
-
     }
 
+    /**
+     * Send the death of a PNJ.
+     * @param name The name of the PNJ
+     */
     public void sendPNJDeath(String name) {
         sendOnTCP(String.format("PNJDeath#%s", name));
     }
 
+    /**
+     * Asks for all PNJs informations and positions.
+     * @param map The map on which the PNJ must be.
+     */
     public void askPNJsPositions(String map) {
         sendOnTCP("getPNJsPos#" + map);
     }
 
+    /**
+     * Process the received message and execute the necessary actions.
+     * @param received The received message
+     */
     protected void processMessage(String received) {
         if (received == null)
             return;
@@ -418,6 +561,10 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * Select a server
+     * @param si The server's informations.
+     */
     public void selectAServer(ServerInfo si) {
         setSelectedServer(si);
         if (onServerSelected != null)
@@ -425,6 +572,11 @@ public class NetworkManager {
         detected = null; // Dispose now useless informations
     }
 
+    /**
+     * Add a server to the detected one
+     * @param tab The received message parts.
+     * @param serverAddress The server address.
+     */
     protected void addADetectedServer(String[] tab, InetAddress serverAddress) {
 //        Gdx.app.log("NetworkManager", String.format("Server detected : %s", tab[1]));
         if (detected != null && ! detected.contains(tab[1])) {
@@ -441,6 +593,10 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * @param broadcast The broadcast address.
+     * @return The address of this machine on the network associated with the address <code>broadcast</code>
+     */
     protected InetAddress getMyAddressFromBroadcast(InetAddress broadcast) {
         for (InetAddress key : addressToBroadcast.keySet()) {
             if (addressToBroadcast.get(key).equals(broadcast)) {
@@ -480,7 +636,7 @@ public class NetworkManager {
 
 
     /** Read the object from Base64 string.
-     * https://stackoverflow.com/a/134918 by OscarRyz*/
+     * From https://stackoverflow.com/a/134918 by OscarRyz*/
     protected static Object objectFromString( String s ) throws IOException ,
             ClassNotFoundException {
         byte [] data = Base64.getDecoder().decode( s );
@@ -492,7 +648,7 @@ public class NetworkManager {
     }
 
     /** Write the object to a Base64 string.
-     * https://stackoverflow.com/a/134918 by OscarRyz */
+     * From https://stackoverflow.com/a/134918 by OscarRyz */
     protected static String objectToString( Serializable o ) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream( baos );
@@ -501,12 +657,33 @@ public class NetworkManager {
         return Base64.getEncoder().encodeToString(baos.toByteArray());
     }
 
+    /**
+     * Close all the connections established.
+     */
+    public void close() {
+        ps.close();
+        try {
+            br.close();
+            socket.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Set the selected server.
+     * @param selectedServer The selected server
+     */
     public void setSelectedServer(ServerInfo selectedServer) {
         if (servInfoBroadcastingThread != null && servInfoBroadcastingThread.isAlive())
             servInfoBroadcastingThread.interrupt();
         this.selectedServer = selectedServer;
     }
 
+    /**
+     * @param onServerSelected What to do when a server is detected.
+     */
     public void setOnServerSelected(Runnable onServerSelected) {
         this.onServerSelected = onServerSelected;
     }
@@ -532,79 +709,122 @@ public class NetworkManager {
         return addressToBroadcast;
     }
 
+    /**
+     * @param onConnected What to do when the second player is connected.
+     */
     public void setOnConnected(Runnable onConnected) {
         this.onConnected = onConnected;
     }
 
+    /**
+     * @param onPlayerDetected What to do when the second player informations has been received.
+     */
     public void setOnPlayerDetected(OnPlayerDetectedRunnable onPlayerDetected) {
         this.onPlayerDetected = onPlayerDetected;
     }
 
+    /**
+     * @param onPositionDetected What to do when the second player position has been received.
+     */
     public void setOnPositionDetected(OnPositionDetectedRunnable onPositionDetected) {
         this.onPositionDetected = onPositionDetected;
     }
 
+    /**
+     * @param onPNJDetected What to do when the informations of a PNJ has been received.
+     */
     public void setOnPNJDetected(OnPNJDetectedRunnable onPNJDetected) {
         this.onPNJDetected = onPNJDetected;
     }
 
+    /**
+     * @param onPause What to do when the second player is in pause.
+     */
     public void setOnPause(Runnable onPause) {
         this.onPause = onPause;
     }
 
+    /**
+     * @param onGetPNJ What to do when the second player ask informations about the PNJs on the map.
+     */
     public void setOnGetPNJ(OnGetPNJRunnable onGetPNJ) {
         this.onGetPNJ = onGetPNJ;
     }
 
+    /**
+     * @return If the current manager is considered as a server (if it was waiting for a connection).
+     */
     public boolean isTheServer() {
         return isTheServer;
     }
 
+    /**
+     * @return On which map the PNJ's informations has been asked.
+     */
     public String getMustSendPNJPos() {
         return mustSendPNJPos;
     }
 
+    /**
+     * @param onHitPNJ What to do when the second player hit a PNJ.
+     */
     public void setOnHitPNJ(OnHitPNJRunnable onHitPNJ) {
         this.onHitPNJ = onHitPNJ;
     }
 
+    /**
+     * @param onPNJDeath What to do when the second player killed a PNJ.
+     */
     public void setOnPNJDeath(OnPNJDeathRunnable onPNJDeath) {
         this.onPNJDeath = onPNJDeath;
     }
 
+    /**
+     * @param onEndPause What to do when the second player isn't in pause anymore.
+     */
     public void setOnEndPause(Runnable onEndPause) {
         this.onEndPause = onEndPause;
     }
 
+    /**
+     * Represent the runnable executed when the second player informations has been received.
+     */
     public interface OnPlayerDetectedRunnable {
         void run(People secondPlayer);
     }
+
+    /**
+     * Represent the runnable executed when the informations of a PNJ has been received.
+     */
     public interface OnPNJDetectedRunnable {
         void run(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y);
     }
 
+    /**
+     * Represent the runnable executed when the second player position has been received.
+     */
     public interface OnPositionDetectedRunnable {
         void run(Point pos);
     }
 
+    /**
+     * Represent the runnable executed when the second player ask informations about the PNJs on the map.
+     */
     public interface OnGetPNJRunnable {
         void run(String map);
     }
 
+    /**
+     * Represent the runnable executed when the second player hit a PNJ.
+     */
     public interface OnHitPNJRunnable {
         void run(String name, double life);
     }
 
+    /**
+     * Represent the runnable executed when the second player killed a PNJ.
+     */
     public interface OnPNJDeathRunnable {
         void run(String name);
-    }
-
-    public void dispose() {
-        ps.close();
-        try {
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
