@@ -12,9 +12,18 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The state where we wait for the second player to connect. (Broadcasting the information of this machine)
+ */
 public class WaitingRoomState extends MenuState {
 
+    /**
+     * The network manager
+     */
     NetworkManager nm;
+    /**
+     * The <code>TextBox</code>'s MenuItem where the user put the server's name.
+     */
     MenuItem TXT_ServerName;
 
     /**

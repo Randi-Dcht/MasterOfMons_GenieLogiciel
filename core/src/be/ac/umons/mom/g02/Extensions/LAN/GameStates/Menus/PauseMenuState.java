@@ -5,6 +5,9 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
+/**
+ * The state used when the second player is in the pause menu.
+ */
 public class PauseMenuState extends MenuState {
 
     /**

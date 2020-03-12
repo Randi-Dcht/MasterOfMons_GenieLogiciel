@@ -11,8 +11,14 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represent the state where the user can wait the detection of a server or enter the server's informations.
+ */
 public class ConnectionRoomState extends MenuState {
 
+    /**
+     * The network manager
+     */
     NetworkManager nm;
 
     /**
@@ -49,6 +55,9 @@ public class ConnectionRoomState extends MenuState {
         });
     }
 
+    /**
+     * Refresh the state with the detected server.
+     */
     protected void refresh() {
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem(gs.getStringFromId("automaticDetect"), MenuItemType.Title));
@@ -63,6 +72,10 @@ public class ConnectionRoomState extends MenuState {
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }
 
+    /**
+     * Try to connect to a server and go to <code>FinalisingConnectionState</code>
+     * @param serverInfo The server's informations on which the connection should be established.
+     */
     protected void connectToServer(ServerInfo serverInfo) {
         nm.selectAServer(serverInfo);
         nm.tryToConnect();
