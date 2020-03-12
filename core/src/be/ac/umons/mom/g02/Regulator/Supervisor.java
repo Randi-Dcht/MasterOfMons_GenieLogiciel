@@ -317,9 +317,12 @@ public  abstract class Supervisor implements Observer
      */
     public void setGraphic(QuestShower qs, PlayingState ps)
     {
-        qs.setQuest(playerOne.getQuest());
-        save.setGraphic(ps);
-        playGraphic = ps;
+        if (qs != null && playerOne.getQuest() != null && ps != null)
+        {
+            qs.setQuest(playerOne.getQuest());
+            save.setGraphic(ps);
+            playGraphic = ps;
+        }
     }
 
 
