@@ -17,15 +17,7 @@ import be.ac.umons.mom.g02.Objects.Characters.Social;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.Energizing;
-import be.ac.umons.mom.g02.Objects.Items.Flower;
-import be.ac.umons.mom.g02.Objects.Items.Gun;
-import be.ac.umons.mom.g02.Objects.Items.Items;
-import be.ac.umons.mom.g02.Objects.Items.OldExam;
-import be.ac.umons.mom.g02.Objects.Items.PaperHelp;
-import be.ac.umons.mom.g02.Objects.Items.Pen;
-import be.ac.umons.mom.g02.Objects.Items.Phone;
-import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
+import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
@@ -140,6 +132,8 @@ public  abstract class Supervisor implements Observer
      * This variable is instance of the PlayingState
      */
     protected PlayingState playGraphic;
+    /***/
+    protected MyPlacePosition placePosition;
 
 
     protected Supervisor()
@@ -250,6 +244,7 @@ public  abstract class Supervisor implements Observer
      */
     public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
     {
+        placePosition = new MyPlacePosition();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);
         this.graphic = graphic;
@@ -361,7 +356,7 @@ public  abstract class Supervisor implements Observer
         {
             if (mb.getMaps() == null)
                 mb.setMaps(maps[new Random().nextInt(maps.length)]);
-            listMobile.get(mb.getMaps()).add(mb);
+            listMobile.get(mb.getMaps()).add(mb);placePosition.getPosition(mb.getMaps());
         }
     }
 

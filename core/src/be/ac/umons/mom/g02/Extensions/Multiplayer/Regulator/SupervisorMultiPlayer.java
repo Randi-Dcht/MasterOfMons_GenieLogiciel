@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator;
 
+import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -77,7 +78,10 @@ public class SupervisorMultiPlayer extends Supervisor
      */
     public void createPlayerTwo(String namePlayer, Type type, GraphicalSettings graphic, Gender gender)
     {
-        playerTwo = new People(namePlayer,type,gender,playerOne.getDifficulty());
+        if (playerOne != null)
+            playerTwo = new People(namePlayer,type,gender,playerOne.getDifficulty());
+        else
+            playerTwo = new People(namePlayer,type,gender, Difficulty.Easy);
     }
 
 
