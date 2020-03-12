@@ -45,11 +45,11 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /**
      * The masterQuest who is before this (parent MasterQuest)
      */
-    final MasterQuest before;
+    protected final MasterQuest before;
     /**
      * The people who play this masterQuest
      */
-    final People people;
+    protected final People people;
     /**
      * The next masterQuest after this (son MasterQuest)
      */
@@ -298,7 +298,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /**
      * This method allows to test if the Quest is finish
      */
-    private void testFinish()
+    protected void testFinish()
     {
         if(percent >= maxPercent)
         {
