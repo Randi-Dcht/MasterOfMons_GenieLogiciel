@@ -92,6 +92,7 @@ public class NetworkManager {
     protected Runnable onPause;
     protected OnPNJDetectedRunnable onPNJDetected;
     protected OnGetPNJRunnable onGetPNJ;
+    protected OnHitPNJRunnable onHitPNJ;
     protected String mustSendPNJPos;
 
     protected ServerInfo selectedServer;
@@ -109,6 +110,8 @@ public class NetworkManager {
             e.printStackTrace();
             return;
         }
+        toSendOnTCP = new Stack<>();
+        toSendOnUDP = new Stack<>();
     }
 
     /**
@@ -169,7 +172,8 @@ public class NetworkManager {
         connectThread = new Thread(() -> {
             try {
                 if (socket != null)
-                    socket = new Socket(selectedServer.getIp(), PORT);
+                    socket.close();
+                socket = new Socket(selectedServer.getIp(), PORT);
                 initConnection();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -204,8 +208,6 @@ public class NetworkManager {
             e.printStackTrace();
             return;
         }
-        toSendOnTCP = new Stack<>();
-        toSendOnUDP = new Stack<>();
 
         if (listenOnUDPThread != null)
             listenOnUDPThread.interrupt();
@@ -317,6 +319,10 @@ public class NetworkManager {
         sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
     }
 
+    public void sendHit(Character c) {
+        sendOnUDP(String.format("hitPNJ#%s#%f", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife()));
+    }
+
     public void askPNJsPositions(String map) {
         sendOnTCP("getPNJsPos#" + map);
     }
@@ -326,7 +332,7 @@ public class NetworkManager {
             return;
         String[] tab = received.split("#");
         switch (tab[0]) {
-            case "MOMServer":
+            case "MOMServer": // Broadcast of a server
                 InetAddress serverAddress = null;
                 try {
                     serverAddress = InetAddress.getByName(tab[1]);
@@ -361,7 +367,7 @@ public class NetworkManager {
                 if (onPause != null)
                     Gdx.app.postRunnable(onPause);
                 break;
-            case "PNJ":
+            case "PNJ": // Add a PNJ to the map
                 String pnjName = tab[1];
                 int pnjX = Integer.parseInt(tab[2]);
                 int pnjY = Integer.parseInt(tab[3]);
@@ -374,11 +380,18 @@ public class NetworkManager {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-            case "getPNJsPos":
+                break;
+            case "getPNJsPos": // Get all PNJs and their positions
                 if (onGetPNJ != null)
-                    Gdx.app.postRunnable(() -> onGetPNJ.run(tab[1]));
+                    Gdx.app.postRunnable(() -> onGetPNJ.run(tab[1].trim()));
                 else
-                    mustSendPNJPos = tab[1];
+                    mustSendPNJPos = tab[1].trim();
+                break;
+            case "hitPNJ": // A PNJ has been hit by the other player.
+                if (onHitPNJ != null)
+                    Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1].trim(),
+                            Double.parseDouble(tab[2].trim())));
+                break;
         }
     }
 
@@ -528,6 +541,10 @@ public class NetworkManager {
         return mustSendPNJPos;
     }
 
+    public void setOnHitPNJ(OnHitPNJRunnable onHitPNJ) {
+        this.onHitPNJ = onHitPNJ;
+    }
+
     public interface OnPlayerDetectedRunnable {
         void run(People secondPlayer);
     }
@@ -541,6 +558,10 @@ public class NetworkManager {
 
     public interface OnGetPNJRunnable {
         void run(String map);
+    }
+
+    public interface OnHitPNJRunnable {
+        void run(String name, double life);
     }
 
     public void dispose() {

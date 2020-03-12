@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
@@ -67,6 +68,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         } else
             nm.askPNJsPositions(gmm.getActualMapName());
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
+        nm.setOnHitPNJ((name, life) -> {
+            Character c = idCharacterMap.get(name);
+            if (c != null) {
+                c.getCharacteristics().setActualLife(life);
+                playerTwo.expandAttackCircle();
+            }
+        });
     }
 
     @Override
@@ -112,7 +120,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
     }
 
-    public void sendPNJsPositions(String map) {
+    protected void sendPNJsPositions(String map) {
         initMobilesPositions(supervisor.getMobile(supervisor.getMaps(map)));
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {
@@ -120,6 +128,18 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    protected void attack(Player player) {
+        if (player.isRecovering())
+            return;
+        player.expandAttackCircle();
+        for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
+            supervisor.attackMethod(player.getCharacteristics(), c.getCharacteristics());
+            player.setTimeBeforeAttack(player.getCharacteristics().recovery());
+            nm.sendHit(c);
         }
     }
 }

@@ -14,7 +14,7 @@ import java.awt.*;
  */
 public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
-    private Player playerTwo;
+    protected Player playerTwo;
 
     /**
      * Create a new game state.

@@ -167,6 +167,13 @@ public abstract class Character implements Attack, Social, Serializable
         return actualLife;
     }
 
+    /**
+     * This method sets the life of this character
+     * @param actualLife  the life of character
+     */
+    public void setActualLife(double actualLife) {
+        this.actualLife = actualLife;
+    }
 
     /**
      * This method returns the number of the strength of this character
