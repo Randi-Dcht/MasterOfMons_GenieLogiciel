@@ -317,7 +317,7 @@ public  abstract class Supervisor implements Observer
      */
     public void setGraphic(QuestShower qs, PlayingState ps)
     {
-        if (qs != null && playerOne.getQuest() != null && ps != null)
+        if ( playerOne != null && qs != null && playerOne.getQuest() != null && ps != null)
         {
             qs.setQuest(playerOne.getQuest());
             save.setGraphic(ps);
@@ -449,6 +449,8 @@ public  abstract class Supervisor implements Observer
         deadMobile.removeIf(Character::isLiving);
     }
 
+
+    /**/
     public void mobileMove(double dt)
     {
         be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical = graphicalMob.get(memoryMobile);
