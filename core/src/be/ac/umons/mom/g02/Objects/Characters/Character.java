@@ -93,15 +93,15 @@ public abstract class Character implements Attack, Social, Serializable
 
 
     /**
-     *This method allows to increase the life
-     * @param dt is the time between two frame
+     * This method allows to add the point on the life
+     * @param cmb is the point to add
      */
-    public void regeneration(double dt)//TODO displace
+    protected void regenerationLife(double cmb)
     {
-        if((actualLife +dt)<=lifeMax())
-            actualLife = actualLife + dt+10;
-        if(!living && actualLife > lifeMax()*0.6)
-            living = true;
+        if (actualLife + cmb >= lifeMax())
+            actualLife = lifeMax();
+        else
+            actualLife += cmb;
     }
 
 
@@ -311,7 +311,12 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public void loseAttack(double lose)
     {
-        actualLife = actualLife - lose;
+        if (actualLife - lose < 0)
+            actualLife = 0;
+        else
+            actualLife -= lose;
+
+
         if(actualLife <= 0)
             dead();
     }
