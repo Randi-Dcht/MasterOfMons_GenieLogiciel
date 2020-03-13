@@ -85,8 +85,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (nm.isTheServer()) {
             if (nm.getMustSendPNJPos() != null) {
                 sendPNJsPositions(nm.getMustSendPNJPos());
-            } else
-                nm.setOnGetPNJ(this::sendPNJsPositions);
+            } else {
+                nm.setOnGetPNJ((map) -> {
+                    refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
+                    secondPlayerMap = map;
+                    mustDrawSecondPlayer = secondPlayerMap.equals(gmm.getActualMapName());
+                    sendPNJsPositions(map);
+                });
+            }
         } else
             nm.askPNJsPositions(gmm.getActualMapName());
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
@@ -118,6 +124,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     public void initMap(String mapPath, int spawnX, int spawnY) {
         refreshPNJsMap(gmm.getActualMapName(), mapPath, secondPlayerMap, secondPlayerMap);
         super.initMap(mapPath, spawnX, spawnY);
+        mustDrawSecondPlayer = gmm.getActualMapName().equals(secondPlayerMap);
         if (nm.isTheServer()) {
             for (Character pnj : pnjs) {
                 if (! idCharacterMap.containsKey(pnj.getCharacteristics().getName()))
@@ -211,8 +218,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * @param map The map asked.
      */
     protected void sendPNJsPositions(String map) { // TODO MovingPNJ
-        refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
-        secondPlayerMap = map;
         initMobilesPositions(map);
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {
