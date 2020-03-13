@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * The playing state. This state suppose that a connection has already been established.
- * @see be.ac.umons.mom.g02.GameStates.PlayingState
+ * @see be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState
  * @author Guillaume Cardoen
  */
 public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState {
@@ -42,6 +42,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * The map associating an id (his name) and a character.
      */
     private HashMap<String, Character> idCharacterMap;
+
+    private String secondPlayerMap;
 
 
     /**
@@ -109,6 +111,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
     @Override
     public void initMap(String mapPath, int spawnX, int spawnY) {
+        refreshPNJsMap(gmm.getActualMapName(), mapPath, secondPlayerMap, secondPlayerMap);
         super.initMap(mapPath, spawnX, spawnY);
         if (nm.isTheServer()) {
             for (Character pnj : pnjs) {
@@ -157,11 +160,25 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
     }
 
+    protected void refreshPNJsMap(String p1Old, String p1New, String p2Old, String p2New) {
+        if ( p1Old != null && p2New != null && ! p1Old.equals(p1New) && ! p2New.equals(p1Old))
+            removeAllPNJsFromMap(p1Old);
+        else if (p2Old != null && p2New != null && ! p2Old.equals(p1New) && ! p2New.equals(p2Old))
+            removeAllPNJsFromMap(p2Old);
+    }
+
+    protected void removeAllPNJsFromMap(String mapName) {
+        for (Mobile mob : supervisor.getMobile(supervisor.getMaps(mapName)))
+            idCharacterMap.remove(mob.getName());
+    }
+
     /**
      * Send all the PNJs positions to the second player.
      * @param map The map asked.
      */
     protected void sendPNJsPositions(String map) { // TODO MovingPNJ
+        refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
+        secondPlayerMap = map;
         initMobilesPositions(supervisor.getMobile(supervisor.getMaps(map)));
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {
