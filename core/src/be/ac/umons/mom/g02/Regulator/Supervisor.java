@@ -333,8 +333,8 @@ public  abstract class Supervisor implements Observer
         {
             for (Maps maps : Maps.values())
             {
-                for (Items it : listItems.get(maps))
-                    playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
+   //             for (Items it : listItems.get(maps))
+   //                 playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
             }
             first = false;
         }

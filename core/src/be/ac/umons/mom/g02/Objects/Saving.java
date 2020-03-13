@@ -1,6 +1,14 @@
 package be.ac.umons.mom.g02.Objects;
 
-import java.awt.*;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Observer;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Other.LogicSaving;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Gdx;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -10,16 +18,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
-
-import be.ac.umons.mom.g02.GameStates.PlayingState;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
-import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Observer;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
-import com.badlogic.gdx.Gdx;
 
 
 /**
@@ -83,9 +81,9 @@ public class Saving implements Observer
     public void signal()
     {
         if (defaltName == null)
-            newSave(people,path,Supervisor.getSupervisor().getTime().getDate());
+            newSave(people,path);
         else
-            newSave(people,defaltName,Supervisor.getSupervisor().getTime().getDate());
+            newSave(people,defaltName);
     }
 
 
@@ -104,22 +102,10 @@ public class Saving implements Observer
      * @param file who is the file with the saving game.
      * @param people qui est l'objet a safeguarded
      */
-    private void newSave(People people, String file, be.ac.umons.mom.g02.Other.Date date)
+    private void newSave(People people, String file)
     {
-        try
-        {
-            ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(file))));
-            sortie.writeObject(people);
-            sortie.writeObject(date);
-            sortie.writeObject(playingState.getPlayerPosition());
-            sortie.writeObject(playingState.getItemsOnMap());
-            sortie.close();
-        }
-        catch(IOException e)
-        {
-            Gdx.app.error("Error in the saving the game (out)", e.getMessage());
-        }
+        LogicSaving save = new LogicSaving(people,Supervisor.getSupervisor().getTime().getDate(),playingState.getPlayerPosition(),playingState.getItemsOnMap());
+        setSaveObject(file,save);
     }
 
 
@@ -129,11 +115,35 @@ public class Saving implements Observer
      */
     public void savingGraphic(Settings setting)
     {
+        setSaveObject(SETTINGS_FILE_NAME,setting);
+    }
+
+
+    /**
+     * This method allows to give the saving of the graphic parameters
+     */
+    public static Settings getSavingGraphic()
+    {
+        if (new File(SETTINGS_FILE_NAME).exists())
+        {
+            return (Settings) getSaveObject(SETTINGS_FILE_NAME);
+        }
+        return new Settings();
+    }
+
+
+    /**
+     * This method allows to save an object in the file
+     * @param file    is the name the file with path
+     * @param object  is the object to save
+     */
+    private static void setSaveObject(String file, Object object)
+    {
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(SETTINGS_FILE_NAME))));
-            sortie.writeObject(setting);
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(file))));
+            sortie.writeObject(object);
             sortie.close();
         }
         catch(IOException e)
@@ -144,18 +154,15 @@ public class Saving implements Observer
 
 
     /**
-     * This method allows to give the saving of the graphic parameters
+     * This methods allows to read the file with the object to saving
+     * @return object saving
      */
-    public static Settings getSavingGraphic()
+    private static Object getSaveObject(String file)
     {
+
         try
         {
-            if (new File(SETTINGS_FILE_NAME).exists()) {
-                ObjectInputStream entree;
-                entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(SETTINGS_FILE_NAME))));
-                return (Settings) entree.readObject();
-            }
-            return new Settings();
+           return new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file)))).readObject();
         }
         catch(ClassNotFoundException | IOException e)
         {
@@ -171,27 +178,18 @@ public class Saving implements Observer
      */
     public void playOldParty(String file , GraphicalSettings gs, PlayingState play)//TODO add playingState param
     {
-        try
+        LogicSaving saving = (LogicSaving) getSaveObject(file);
+         if (saving != null && saving.getClass().equals(LogicSaving.class))
         {
-            ObjectInputStream entree;
-            entree = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file))));
-            people = (People) entree.readObject();
-            be.ac.umons.mom.g02.Other.Date date = (be.ac.umons.mom.g02.Other.Date) entree.readObject();
-            Point pt = (Point)entree.readObject();
-            MapObject.OnMapItem[] lt = (MapObject.OnMapItem[])entree.readObject();
-            Objects.requireNonNull(SuperviserNormally.getSupervisor()).oldGame(people,date,gs,play,pt,lt);
+            Objects.requireNonNull(SuperviserNormally.getSupervisor()).oldGame(saving.getPlayer(),saving.getDate(),gs,play,saving.getPlayerPosition(),saving.getItemPosition());
             Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
             path = file;
-        }
-        catch(ClassNotFoundException | IOException e)
-        {
-            Gdx.app.error("Error in the replay the old game party (in)", e.getMessage());
         }
     }
 
 
     /***/
-    public void playOldParty(String file , GraphicalSettings gs)
+    public void playOldParty(String file , GraphicalSettings gs)//TODO delete
     {
         if (playingState != null)
             playOldParty(file,gs,playingState);

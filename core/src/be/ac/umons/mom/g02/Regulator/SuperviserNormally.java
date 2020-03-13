@@ -91,7 +91,8 @@ public class SuperviserNormally extends Supervisor
      */
     public void oldGame(People people, Date date, GraphicalSettings graphic, PlayingState play, Point pt, MapObject.OnMapItem[] list)
     {
-        initNormallyGame();listUpdate = new ArrayList<>();
+        //initNormallyGame();
+        listUpdate = new ArrayList<>();
         time = new TimeGame(date);
         this.playerOne = people;
         listCourse = people.getPlanning().get(date.getDay());
@@ -99,6 +100,7 @@ public class SuperviserNormally extends Supervisor
         regulator= new Regulator(playerOne,time);
         refreshQuest();
         checkPlanning();
+
         play.initMap(people.getMaps().getMaps());
         play.setPlayerPosition(pt);
         play.addItemsToMap(list);
