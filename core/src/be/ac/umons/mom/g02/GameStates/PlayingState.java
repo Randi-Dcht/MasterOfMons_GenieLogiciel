@@ -1,12 +1,13 @@
 package be.ac.umons.mom.g02.GameStates;
 
-import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Answer;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
 import be.ac.umons.mom.g02.Events.Observer;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.*;
@@ -24,9 +25,11 @@ import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Quests.Quest;
+import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -249,7 +252,6 @@ public class PlayingState extends GameState implements Observer {
         gmm.setMap(mapPath);
         Maps map = supervisor.getMaps(mapPath);
         mapObjects = new ArrayList<>();
-        supervisor.getEvent().notify(new PlaceInMons(map));
         pnjs = getPNJsOnMap(mapPath);
 
 //        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
@@ -275,6 +277,7 @@ public class PlayingState extends GameState implements Observer {
 
         initPNJsPositions(pnjs);
         initPlayerPosition(spawnX, spawnY);
+        supervisor.getEvent().notify(new PlaceInMons(map));
 
     }
 
@@ -324,7 +327,8 @@ public class PlayingState extends GameState implements Observer {
      */
     public void addItemToMap(Items item, Point pos) {
         MapObject mo = new MapObject(gs, item);
-        mo.setMapPos(pos);
+        mo.setMapPos(new Point((pos.x - pos.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
+                mapHeight * tileHeight / 2 - (pos.x + pos.y) * tileHeight / 2));
         mapObjects.add(mo);
     }
 
