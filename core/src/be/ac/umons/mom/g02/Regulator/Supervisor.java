@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.*;
+import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
@@ -22,6 +23,8 @@ import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -134,6 +137,8 @@ public  abstract class Supervisor implements Observer
     protected PlayingState playGraphic;
     /***/
     protected MyPlacePosition placePosition;
+    /***/
+    protected boolean first = true;
 
 
     protected Supervisor()
@@ -321,6 +326,21 @@ public  abstract class Supervisor implements Observer
     }
 
 
+    /***/
+    protected void placeItem()
+    {
+        if (playGraphic != null)
+        {
+            for (Maps maps : Maps.values())
+            {
+                for (Items it : listItems.get(maps))
+                    playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
+            }
+            first = false;
+        }
+    }
+
+
     /**
      * This method allows to give the graphical instance of Graphic
      * @return graphic instance
@@ -356,7 +376,7 @@ public  abstract class Supervisor implements Observer
         {
             if (mb.getMaps() == null)
                 mb.setMaps(maps[new Random().nextInt(maps.length)]);
-            listMobile.get(mb.getMaps()).add(mb);placePosition.getPosition(mb.getMaps());
+            listMobile.get(mb.getMaps()).add(mb);
         }
     }
 
@@ -424,7 +444,12 @@ public  abstract class Supervisor implements Observer
 
 
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
+        {
             refreshList(((PlaceInMons)notify).getBuffer());
+            if (first)//TODO changer et avec chaque position plus prècis !
+                placeItem();
+        }
+
     }
 
 
