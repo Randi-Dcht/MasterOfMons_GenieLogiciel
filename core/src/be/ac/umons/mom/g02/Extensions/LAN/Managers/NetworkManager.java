@@ -163,6 +163,10 @@ public class NetworkManager {
      */
     protected Runnable onMasterQuestFinished;
     /**
+     * What to do when the second player is disconnected
+     */
+    protected Runnable onDisconnected;
+    /**
      * On which map the PNJ's informations has been asked.
      */
     protected String mustSendPNJPos;
@@ -173,9 +177,11 @@ public class NetworkManager {
     /**
      * The list of all servers that was detected.
      */
-    List<String> detected = new ArrayList<>();
+    List<String> detected;
 
     protected boolean ignoreEMQ = false;
+
+    protected double msSinceLastMessage;
 
     /**
      * @throws SocketException If the port used (32516) is already used
@@ -183,6 +189,7 @@ public class NetworkManager {
     protected NetworkManager() throws SocketException {
         ds = new DatagramSocket(PORT);
         detectedServers = new LinkedList<>();
+        detected = new LinkedList<>();
         try {
             addressToBroadcast = listAllBroadcastAddresses();
         } catch (SocketException e) {
@@ -191,6 +198,17 @@ public class NetworkManager {
         }
         toSendOnTCP = new Stack<>();
         toSendOnUDP = new Stack<>();
+        msSinceLastMessage = 1;
+    }
+
+    /**
+     * Update the time gone by the last message.
+     * @param dt The time gone by since the last call of this function.
+     */
+    public void update(double dt) {
+        msSinceLastMessage += dt;
+        if (msSinceLastMessage > 2)
+            sendOnTCP("TC"); // Test Connection
     }
 
     /**
@@ -236,6 +254,7 @@ public class NetworkManager {
      */
     public void stopBroadcastingServerInfo() {
         servInfoBroadcastingThread.interrupt();
+        servInfoBroadcastingThread = null;
     }
 
     /**
@@ -330,15 +349,19 @@ public class NetworkManager {
         sendOnUDPThread.start();
         listenOnUDPThread.start();
         Gdx.app.postRunnable(onConnected);
+        connected = true;
     }
 
     /**
      * Listen all messages from the TCP socket.
      */
     protected void listenOnTCP() {
+        String message;
         while (true) {
             try {
-                processMessage(br.readLine());
+                processMessage(message = br.readLine());
+                if (message == null)
+                    break;
             } catch (IOException e) {
                 e.printStackTrace();
                 break;
@@ -497,8 +520,11 @@ public class NetworkManager {
      * @param received The received message
      */
     protected void processMessage(String received) {
-        if (received == null)
+        if (received == null) {
+            Gdx.app.error("NetworkManager", "Disconnected from distant server !");
+            onDisconnected();
             return;
+        }
         String[] tab = received.split("#");
         switch (tab[0]) {
             case "MOMServer": // Broadcast of a server
@@ -577,6 +603,13 @@ public class NetworkManager {
                 break;
 
         }
+        msSinceLastMessage = 0;
+    }
+
+    protected void onDisconnected() {
+        receiveOnTCPThread.interrupt();
+        sendOnTCPThread.interrupt();
+        Gdx.app.postRunnable(onDisconnected);
     }
 
     /**
@@ -809,6 +842,13 @@ public class NetworkManager {
      */
     public void setOnMasterQuestFinished(Runnable onMasterQuestFinished) {
         this.onMasterQuestFinished = onMasterQuestFinished;
+    }
+
+    /**
+     * @param onDisconnected What to do when the second player is disconnected
+     */
+    public void setOnDisconnected(Runnable onDisconnected) {
+        this.onDisconnected = onDisconnected;
     }
 
     /**

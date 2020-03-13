@@ -248,9 +248,9 @@ public class PlayingState extends GameState implements Observer {
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
         Maps map = supervisor.getMaps(mapPath);
+        mapObjects = new ArrayList<>();
         supervisor.getEvent().notify(new PlaceInMons(map));
         pnjs = getPNJsOnMap(mapPath);
-        mapObjects = new ArrayList<>();
 
 //        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
 //            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D

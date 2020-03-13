@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.MyFirstYear;
@@ -118,6 +119,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
             Supervisor.getSupervisor().getPeople().getQuest().passQuest();
         });
+        nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
+    }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        nm.update(dt);
     }
 
     @Override
