@@ -155,7 +155,8 @@ public class GameStateManager {
     public GameState removeAllStateAndAdd(Class<? extends GameState> gst) {
         GameState g = getState(gst);
         animateForChangingState(() -> {
-            gameStateStack.clear();
+            while (! gameStateStack.empty())
+                gameStateStack.pop().dispose();
             addStateToStack(g, false);
         });
         return g;
