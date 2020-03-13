@@ -71,6 +71,14 @@ public class GameMapManager {
         if (tiledMapsRenderer.containsKey(mapName))
             actualItmr = tiledMapsRenderer.get(mapName);
     }
+    /**
+     * @return The <code>TiledMap</code> representing <code>mapName</code>. <code>null</code> if it isn't loaded.
+     */
+    public TiledMap getMap(String mapName) {
+        if (tiledMapsRenderer.containsKey(mapName))
+            return tiledMapsRenderer.get(mapName).getMap();
+        return null;
+    }
 
     /**
      * Render the actual map.

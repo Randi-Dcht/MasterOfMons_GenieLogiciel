@@ -249,22 +249,12 @@ public class PlayingState extends GameState implements Observer {
         gmm.setMap(mapPath);
         Maps map = supervisor.getMaps(mapPath);
         supervisor.getEvent().notify(new PlaceInMons(map));
-        pnjs = new ArrayList<>();
+        pnjs = getPNJsOnMap(mapPath);
         mapObjects = new ArrayList<>();
 
 //        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
 //            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
 //        }
-
-        supervisor.init(player.getCharacteristics(), player);
-        for (Mobile mob : supervisor.getMobile(map)) {
-            Character c = new Character(gs, mob);
-            pnjs.add(c);
-            supervisor.init(mob, c);
-        }
-
-        for (MovingPNJ mv : supervisor.getMovingPnj(map))
-            pnjs.add(mv.initialisation(gs, this, player));
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
@@ -288,10 +278,26 @@ public class PlayingState extends GameState implements Observer {
 
     }
 
+    protected List<Character> getPNJsOnMap(String mapName) {
+        Maps map = supervisor.getMaps(mapName);
+        List<Character> pnjs = new ArrayList<>();
+        supervisor.init(player.getCharacteristics(), player);
+        for (Mobile mob : supervisor.getMobile(map)) {
+            Character c = new Character(gs, mob);
+            pnjs.add(c);
+            supervisor.init(mob, c);
+        }
+
+        for (MovingPNJ mv : supervisor.getMovingPnj(map))
+            pnjs.add(mv.initialisation(gs, this, player));
+
+        return pnjs;
+    }
+
     /**
      * Spawn all the PNJs randomly.
      */
-    public void initPNJsPositions(List<Character> pnjs) {
+    protected void initPNJsPositions(List<Character> pnjs) {
         Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
         for (Character c : pnjs) {
             initPNJPosition(c, rmos);

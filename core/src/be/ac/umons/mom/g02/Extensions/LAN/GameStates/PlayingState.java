@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
@@ -14,22 +15,26 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
+import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.Array;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * The playing state. This state suppose that a connection has already been established.
- * @see be.ac.umons.mom.g02.GameStates.PlayingState
+ * @see be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState
  * @author Guillaume Cardoen
  */
 public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState {
@@ -42,6 +47,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * The map associating an id (his name) and a character.
      */
     private HashMap<String, Character> idCharacterMap;
+
+    private String secondPlayerMap;
 
 
     /**
@@ -78,8 +85,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (nm.isTheServer()) {
             if (nm.getMustSendPNJPos() != null) {
                 sendPNJsPositions(nm.getMustSendPNJPos());
-            } else
-                nm.setOnGetPNJ(this::sendPNJsPositions);
+            } else {
+                nm.setOnGetPNJ((map) -> {
+                    refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
+                    secondPlayerMap = map;
+                    mustDrawSecondPlayer = secondPlayerMap.equals(gmm.getActualMapName());
+                    sendPNJsPositions(map);
+                });
+            }
         } else
             nm.askPNJsPositions(gmm.getActualMapName());
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
@@ -109,7 +122,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
     @Override
     public void initMap(String mapPath, int spawnX, int spawnY) {
+        refreshPNJsMap(gmm.getActualMapName(), mapPath, secondPlayerMap, secondPlayerMap);
         super.initMap(mapPath, spawnX, spawnY);
+        mustDrawSecondPlayer = gmm.getActualMapName().equals(secondPlayerMap);
         if (nm.isTheServer()) {
             for (Character pnj : pnjs) {
                 if (! idCharacterMap.containsKey(pnj.getCharacteristics().getName()))
@@ -119,6 +134,30 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             pnjs.clear();
             nm.askPNJsPositions(mapPath);
         }
+    }
+
+    @Override
+    protected List<Character> getPNJsOnMap(String mapName) {
+        Maps map = supervisor.getMaps(mapName);
+        List<Character> pnjs = new ArrayList<>();
+        supervisor.init(player.getCharacteristics(), player);
+        for (Mobile mob : supervisor.getMobile(map)) {
+            if (idCharacterMap.containsKey(mob.getName()))
+                pnjs.add(idCharacterMap.get(mob.getName()));
+            else {
+                Character c = new Character(gs, mob);
+                pnjs.add(c);
+                supervisor.init(mob, c);
+            }
+        }
+
+        for (MovingPNJ mv : supervisor.getMovingPnj(map))
+            if (idCharacterMap.containsKey(mv.getName()))
+                pnjs.add(idCharacterMap.get(mv.getName()));
+            else
+                pnjs.add(mv.initialisation(gs, this, player));
+
+        return pnjs;
     }
 
     @Override
@@ -138,23 +177,40 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                 if (! idCharacterMap.containsKey(c.getCharacteristics().getName()))
                     initPNJPosition(c, rmos);
             }
-            super.initPNJsPositions(pnjs);
         }
     }
 
     /**
      * Put a position to all mobiles and add it to the map.
-     * @param mobs The list of mobiles to initiaite.
+     * @param mapName The map's name where the mobiles must be
      */
-    protected void initMobilesPositions(List<Mobile> mobs) {
-        Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
-        for (Mobile mob : mobs) {
-            if ( ! idCharacterMap.containsKey(mob.getName())) {
-                Character c = new Character(gs, mob);
-                initPNJPosition(c, rmos);
-                idCharacterMap.put(mob.getName(), c);
+    protected void initMobilesPositions(String mapName) {
+        List<Mobile> mobs = supervisor.getMobile(supervisor.getMaps(mapName));
+        MapLayer pnjLayer = gmm.getMap(mapName).getLayers().get("RandomPNJ");
+        if (pnjLayer != null) {
+            MapObjects randomPNJPositions = pnjLayer.getObjects();
+
+            Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
+            for (Mobile mob : mobs) {
+                if ( ! idCharacterMap.containsKey(mob.getName())) {
+                    Character c = new Character(gs, mob);
+                    initPNJPosition(c, rmos);
+                    idCharacterMap.put(mob.getName(), c);
+                }
             }
         }
+    }
+
+    protected void refreshPNJsMap(String p1Old, String p1New, String p2Old, String p2New) {
+        if ( p1Old != null && p2New != null && ! p1Old.equals(p1New) && ! p2New.equals(p1Old))
+            removeAllPNJsFromMap(p1Old);
+        else if (p2Old != null && p2New != null && ! p2Old.equals(p1New) && ! p2New.equals(p2Old))
+            removeAllPNJsFromMap(p2Old);
+    }
+
+    protected void removeAllPNJsFromMap(String mapName) {
+        for (Mobile mob : supervisor.getMobile(supervisor.getMaps(mapName)))
+            idCharacterMap.remove(mob.getName());
     }
 
     /**
@@ -162,7 +218,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * @param map The map asked.
      */
     protected void sendPNJsPositions(String map) { // TODO MovingPNJ
-        initMobilesPositions(supervisor.getMobile(supervisor.getMaps(map)));
+        initMobilesPositions(map);
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {
                 nm.sendPNJInformation(idCharacterMap.get(mob.getName()));

@@ -15,6 +15,7 @@ import java.awt.*;
 public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
     protected Player playerTwo;
+    protected boolean mustDrawSecondPlayer = true;
 
     /**
      * Create a new game state.
@@ -37,7 +38,8 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     @Override
     public void draw() {
         super.draw();
-        playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
+        if (mustDrawSecondPlayer)
+            playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
 
     }
 
