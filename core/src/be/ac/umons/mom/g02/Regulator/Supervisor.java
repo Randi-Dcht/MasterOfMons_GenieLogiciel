@@ -211,6 +211,19 @@ public  abstract class Supervisor implements Observer
     }
 
 
+    /***/
+    public abstract void analyseIdMap(String id)throws Exception;
+
+
+    /***/
+    public abstract void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic);
+
+
+    /***/
+    public abstract void saveGame(String pathAndFile);
+
+
+    /***/
     public void init(Character pnj, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphic)
     {
         if (!graphicalMob.containsKey(pnj))

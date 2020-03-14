@@ -12,7 +12,9 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
+import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
@@ -71,6 +73,7 @@ public class SuperviserNormally extends Supervisor
     }
 
 
+    /***/
     @Override
     public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
     {
@@ -84,26 +87,35 @@ public class SuperviserNormally extends Supervisor
     }
 
 
-    /**
-     * This method allows to start an old game
-     * @param people is the people of the game
-     * @param  date is the actually date
-     */
-    public void oldGame(People people, Date date, GraphicalSettings graphic, PlayingState play, Point pt, MapObject.OnMapItem[] list)
+    /***/
+    @Override
+    public void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic)
     {
-        //initNormallyGame();
-        listUpdate = new ArrayList<>();
-        time = new TimeGame(date);
-        this.playerOne = people;
-        listCourse = people.getPlanning().get(date.getDay());
-        this.graphic = graphic;
-        regulator= new Regulator(playerOne,time);
-        refreshQuest();
-        checkPlanning();
+        LogicSaving saving =  (LogicSaving) Saving.getSaveObject(pathAndFile);
+        if (saving != null && saving.getClass().equals(LogicSaving.class))
+        {
+            listUpdate = new ArrayList<>();
+            time = new TimeGame(saving.getDate());
+            this.playerOne = saving.getPlayer();
+            playerOne.setMaps(saving.getMap());
+            listCourse = playerOne.getPlanning().get(time.getDate().getDay());
+            this.graphic = graphic;
+            regulator= new Regulator(playerOne,time);
+            refreshQuest();
+            checkPlanning();
 
-        play.initMap(people.getMaps().getMaps());
-        play.setPlayerPosition(pt);
-        play.addItemsToMap(list);
+            play.initMap(saving.getMap().getMaps());
+            play.setPlayerPosition(saving.getPlayerPosition());
+            play.addItemsToMap(saving.getItemPosition());
+        }
+    }
+
+    /***/
+    @Override
+    public void saveGame(String pathAndFile)
+    {
+        LogicSaving save = new LogicSaving(playerOne,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
+        Saving.setSaveObject(pathAndFile,save);
     }
 
 
@@ -122,6 +134,7 @@ public class SuperviserNormally extends Supervisor
      * @param id is the id of the object name
      * @throws Exception is the exception if the the size of list is bad or the ill word
      */
+    @Override
     public void analyseIdMap(String id) throws Exception
     {
         if (!id.equals(actualID))

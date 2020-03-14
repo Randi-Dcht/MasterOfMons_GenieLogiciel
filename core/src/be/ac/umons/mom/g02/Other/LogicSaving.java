@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Other;
 
+import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import java.awt.Point;
@@ -29,6 +30,10 @@ public class LogicSaving implements Serializable
      * The positions of all items on the maps
      */
     private MapObject.OnMapItem[] itemPosition;
+    /**
+     * The location of the people (TMX)
+     */
+    private Maps actualMap;
 
 
     /**
@@ -40,10 +45,25 @@ public class LogicSaving implements Serializable
      */
     public LogicSaving(People player, Date date, Point position, MapObject.OnMapItem[] list)
     {
+        this(player,player.getMaps(),date,position,list);
+    }
+
+
+    /**
+     * This constructor allows to save the object of the game
+     * @param player    is the player of the game
+     * @param date      is the actually date on the game
+     * @param position  is the position of the player
+     * @param list      is a list of position of item
+     * @param map       is the actual maps of player
+     */
+    public LogicSaving(People player, Maps map, Date date, Point position, MapObject.OnMapItem[] list)
+    {
         playerGame     = player;
         dateGame       = date;
         playerPosition = position;
         itemPosition   = list;
+        actualMap      = map;
 
     }
 
@@ -57,6 +77,12 @@ public class LogicSaving implements Serializable
         return dateGame;
     }
 
+
+    /***/
+    public Maps getMap()
+    {
+        return actualMap;
+    }
 
     /**
      * This method return a list of position of item in the game

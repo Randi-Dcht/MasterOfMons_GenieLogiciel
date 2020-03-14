@@ -15,7 +15,7 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
  * This class define the moving PNJ with displacement in the maps
  * @author Umons_Group_2_ComputerScience
  */
-public final class MovingPNJ extends Mobile
+public class MovingPNJ extends Mobile
 {
 
     /**
