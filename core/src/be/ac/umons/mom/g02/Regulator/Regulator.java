@@ -70,13 +70,8 @@ public class Regulator implements Observer
     {
         this.player = people;
         this.time   = time;
-        this.manager= SuperviserNormally.getSupervisor();
-        manager.getEvent().add(Events.ChangeHour,this);
-        manager.getEvent().add(Events.PlaceInMons,this);
-        manager.getEvent().add(Events.MeetOther,this);
-        manager.getEvent().add(Events.EntryPlace,this);
-        manager.getEvent().add(Events.ChangeQuest,this);
-        manager.getEvent().add(Events.UseItems,this);
+        this.manager= Supervisor.getSupervisor();
+        manager.getEvent().add(this,Events.ChangeHour,Events.PlaceInMons,Events.MeetOther,Events.EntryPlace,Events.ChangeQuest,Events.UseItems);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
         createPlaceAssociation();
