@@ -23,8 +23,7 @@ public class SupervisorMultiPlayer extends Supervisor
      */
     public static void initMultiPlayerGame()
     {
-        if(instance == null)
-            instance = new SupervisorMultiPlayer();
+        instance = new SupervisorMultiPlayer();
     }
 
 

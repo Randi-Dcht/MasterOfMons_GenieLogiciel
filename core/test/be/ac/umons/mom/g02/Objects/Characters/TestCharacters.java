@@ -46,7 +46,7 @@ public class TestCharacters
     }
 
     @Test
-    void testingAttack() throws InterruptedException
+    void testingAttack()
     {
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
         sp.newParty("Test",Type.beefy,null,Gender.Men,Difficulty.Easy);
