@@ -228,6 +228,8 @@ public  abstract class Supervisor implements Observer
      */
     public ArrayList<Mobile> getMobile(Maps maps)
     {
+        if (! listMobile.containsKey(maps))
+            return new ArrayList<>();
         return listMobile.get(maps);
     }
 
@@ -307,6 +309,8 @@ public  abstract class Supervisor implements Observer
      */
     public ArrayList<MovingPNJ> getMovingPnj(Maps maps)
     {
+        if (! listMoving.containsKey(maps))
+            return new ArrayList<>();
         return listMoving.get(maps);
     }
 

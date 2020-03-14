@@ -2,7 +2,6 @@ package be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects;
 
 import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.AttackRangeCircle;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -79,6 +78,10 @@ public class Character extends OnMapObject {
 
     protected double topMargin;
 
+    protected Color isATargetColor;
+
+    protected boolean noMoving = false;
+
     /**
      * @param gs The game's graphical settings.
      * @param characteristics The character's characteristics
@@ -92,6 +95,7 @@ public class Character extends OnMapObject {
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         leftMargin = MasterOfMonsGame.WIDTH / 200;
+        isATargetColor = new Color(0xB71C1CAA); // TODO
     }
 
     protected Character() {}
@@ -109,7 +113,7 @@ public class Character extends OnMapObject {
         this.height = height;
         if (isATarget) {
             sr.begin();
-            sr.setColor(new Color(0xB71C1CAA)); // TODO
+            sr.setColor(isATargetColor);
             sr.ellipse(x, y, width, height / 4);
             sr.end();
         }
@@ -178,6 +182,8 @@ public class Character extends OnMapObject {
      * @param y Vertical movement
      */
     public void move(int x, int y) {
+        if (noMoving)
+            return;
         posX += x;
         posY += y;
     }
@@ -339,4 +345,11 @@ public class Character extends OnMapObject {
         this.tileHeight = tileHeight;
     }
 
+    public void setIsATargetColor(Color isATargetColor) {
+        this.isATargetColor = isATargetColor;
+    }
+
+    public void setNoMoving(boolean noMoving) {
+        this.noMoving = noMoving;
+    }
 }
