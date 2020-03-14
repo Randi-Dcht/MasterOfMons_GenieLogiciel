@@ -72,6 +72,13 @@ public class SupervisorMultiPlayer extends Supervisor
 
     }
 
+    @Override
+    public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
+    {
+        super.newParty(namePlayer, type, graphic, gender, difficulty);
+        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
+    }
+
     /**
      * @param pathAndFile
      * @param play
