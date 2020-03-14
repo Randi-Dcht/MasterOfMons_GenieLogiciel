@@ -1,4 +1,4 @@
-package be.ac.umons.mom.g02.Dialog;
+package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;

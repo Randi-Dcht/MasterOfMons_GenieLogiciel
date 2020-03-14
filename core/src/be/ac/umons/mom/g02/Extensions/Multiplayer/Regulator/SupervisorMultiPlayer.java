@@ -3,8 +3,10 @@ package be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator;
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 
@@ -45,6 +47,12 @@ public class SupervisorMultiPlayer extends Supervisor
      * This is the instance of the second player
      */
     protected People playerTwo;
+    /***/
+    protected LogicSaving playerOneSave;
+    /***/
+    protected LogicSaving playerTwoSave;
+    /***/
+    protected RegulatorMultiPlayer regulator;
 
 
     /**
@@ -53,6 +61,56 @@ public class SupervisorMultiPlayer extends Supervisor
     protected SupervisorMultiPlayer()
     {
         super();
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void analyseIdMap(String id) throws Exception
+    {
+
+    }
+
+    @Override
+    public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
+    {
+        super.newParty(namePlayer, type, graphic, gender, difficulty);
+        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
+    }
+
+    /**
+     * @param pathAndFile
+     * @param play
+     * @param graphic
+     */
+    @Override
+    public void oldGame(String pathAndFile, PlayingState play, GraphicalSettings graphic)
+    {
+        //TODO
+    }
+
+
+    /**
+     * @param pathAndFile
+     */
+    @Override
+    public void saveGame(String pathAndFile)//TODO upgrade simple player
+    {
+        LogicSaving saveOne,saveTwo=null;
+
+        if (playerOneSave != null)
+            saveOne = new LogicSaving(playerOne,playerOneSave.getMap(),playerOneSave.getDate(),playerOneSave.getPlayerPosition(),playerOneSave.getItemPosition());
+        else//TODO update
+            saveOne = new LogicSaving(playerOne,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
+
+        if (playerTwoSave != null)
+            saveTwo = new LogicSaving(playerTwo,playerTwoSave.getMap(),playerTwoSave.getDate(),playerTwoSave.getPlayerPosition(),playerTwoSave.getItemPosition());
+        else//TODO update
+            saveOne = new LogicSaving(playerTwo,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
+
+        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveOne);
+        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveTwo);
     }
 
 
@@ -64,9 +122,9 @@ public class SupervisorMultiPlayer extends Supervisor
     public void loadPlayer(String name, int player)//TODO approche naïve
     {
         if (player == 1)
-            playerOne = Saving.getPlayer(name);
+            playerOne = Saving.getPlayer(name);//TODO delete
         else
-            playerTwo = Saving.getPlayer(name);
+            playerTwo = Saving.getPlayer(name);//TODO delete
     }
 
 

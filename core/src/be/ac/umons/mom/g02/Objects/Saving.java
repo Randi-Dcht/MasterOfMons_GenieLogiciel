@@ -99,8 +99,7 @@ public class Saving implements Observer
      */
     private void newSave(People people, String file)
     {
-        LogicSaving save = new LogicSaving(people,Supervisor.getSupervisor().getTime().getDate(),playingState.getPlayerPosition(),playingState.getItemsOnMap());
-        setSaveObject(file,save);
+        SuperviserNormally.getSupervisor().saveGame(file); //TODO delete
     }
 
 
@@ -132,7 +131,7 @@ public class Saving implements Observer
      * @param file    is the name the file with path
      * @param object  is the object to save
      */
-    private static void setSaveObject(String file, Object object)
+    public static void setSaveObject(String file, Object object)
     {
         try
         {
@@ -152,7 +151,7 @@ public class Saving implements Observer
      * This methods allows to read the file with the object to saving
      * @return object saving
      */
-    private static Object getSaveObject(String file)
+    public static Object getSaveObject(String file)
     {
 
         try
@@ -173,13 +172,7 @@ public class Saving implements Observer
      */
     public void playOldParty(String file , GraphicalSettings gs, PlayingState play)//TODO add playingState param
     {
-        LogicSaving saving = (LogicSaving) getSaveObject(file);
-         if (saving != null && saving.getClass().equals(LogicSaving.class))
-        {
-            Objects.requireNonNull(SuperviserNormally.getSupervisor()).oldGame(saving.getPlayer(),saving.getDate(),gs,play,saving.getPlayerPosition(),saving.getItemPosition());
-            Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
-            path = file;
-        }
+        SuperviserNormally.getSupervisor().oldGame(file,play,gs);//TODO delete
     }
 
 

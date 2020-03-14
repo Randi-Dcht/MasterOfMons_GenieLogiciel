@@ -26,39 +26,39 @@ public class Regulator implements Observer
     /**
      * This is the instance of the human player
      */
-    private People player;
+    protected People player;
     /**
      * This is the instance of the game time
      */
-    private TimeGame time;
+    protected TimeGame time;
     /**
      * This is the instance of the class who manage the game
      */
-    private Supervisor manager;
+    protected Supervisor manager;
     /**
      * To warn the people if there are problems
      */
-    private boolean informEnergizing=true, informPlace=true, firstStart=true, firstCourse=true, firstStudy=true, chgQuest=true;
+    protected boolean informEnergizing=true, informPlace=true, firstStart=true, firstCourse=true, firstStudy=true, chgQuest=true;
     /**
      * The all maps of the maps
      */
-    private ArrayList<Maps> maps;
+    protected ArrayList<Maps> maps;
     /**
      * This list allows to save the dialog when the dialog is use by other
      */
-    private ArrayList<String> waitingLine = new ArrayList<>();
+    protected ArrayList<String> waitingLine = new ArrayList<>();
     /**
      * This variable allows to know if the dialog is use
      */
-    private boolean displayQuestion = true;
+    protected boolean displayQuestion = true;
     /**
      * The search of the place in the maps
      */
-    private String searchDirection = "IN";
+    protected String searchDirection = "IN";
     /**
      * This is an HasMaps who associate the string to the place in the game
      */
-    private HashMap<String,Places> associatePlace = new HashMap<>();
+    protected HashMap<String,Places> associatePlace = new HashMap<>();
 
 
     /**
@@ -70,13 +70,8 @@ public class Regulator implements Observer
     {
         this.player = people;
         this.time   = time;
-        this.manager= SuperviserNormally.getSupervisor();
-        manager.getEvent().add(Events.ChangeHour,this);
-        manager.getEvent().add(Events.PlaceInMons,this);
-        manager.getEvent().add(Events.MeetOther,this);
-        manager.getEvent().add(Events.EntryPlace,this);
-        manager.getEvent().add(Events.ChangeQuest,this);
-        manager.getEvent().add(Events.UseItems,this);
+        this.manager= Supervisor.getSupervisor();
+        manager.getEvent().add(this,Events.ChangeHour,Events.PlaceInMons,Events.MeetOther,Events.EntryPlace,Events.ChangeQuest,Events.UseItems);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
         createPlaceAssociation();
@@ -127,7 +122,7 @@ public class Regulator implements Observer
     /**
      * This method allows to give the information about the actual Map
      */
-    private void questionPlace(Maps maps)
+    protected void questionPlace(Maps maps)
     {
         if (firstStart)
         {
@@ -153,7 +148,7 @@ public class Regulator implements Observer
     /**
      * This method allows to display the question of the Quest in the screen when this starts
      */
-    private void changeQuest()
+    protected void changeQuest()
     {
         push(player.getQuest().question());
     }
@@ -163,7 +158,7 @@ public class Regulator implements Observer
      * This method allows to regular the time of the game as pass the night
      * This method also allows to add the energizing of the people
      */
-    private void kotliebed()
+    protected void kotliebed()
     {
         if (time.getDate().getHour() >= 22 && player.getMaps().equals(Maps.Kot))
         {
@@ -266,7 +261,7 @@ public class Regulator implements Observer
      * This method allows to analyze the answer of the player after the dialog and launch the dialog in the waiting line
      * @param answer is the answer of the player
      */
-    private void regulateDialog(String answer)
+    protected void regulateDialog(String answer)
     {
         if (answer.equals("OK"))
             displayQuestion = true;
@@ -304,8 +299,8 @@ public class Regulator implements Observer
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(SaoulMatePNJ.class))
             soulMateMeet((SaoulMatePNJ) notify.getBuffer());
 
-        /*if (notify.getEvents().equals(Events.UseItems))
-            timeOfDay(player.getPlace());*/
+        if (notify.getEvents().equals(Events.UseItems))
+            timeOfDay(player.getPlace());
 
         if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
             regulateDialog((String)notify.getBuffer());

@@ -15,6 +15,7 @@ import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Gdx;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -70,10 +71,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * Memory the MasterQuest when the level isn't up
      */
     protected MasterQuest memory;
-    /**
-     * This the instance of the graphic
-     */
-    //protected GraphicalSettings graphic;
     /**
      * This is the difficulty of the quest
      */
@@ -160,13 +157,16 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     {
         if (list.length != cmb.length)
             throw new Exception();
-        ArrayList<Items> listI = new ArrayList<>();
-        for (int j = 0; j < list.length; j++)
+        else
         {
-            for (int i=0; i <cmb[j];i++ )
-                listI.add(list[j].getConstructor().newInstance());
+            ArrayList<Items> listI = new ArrayList<>();
+            for (int j = 0; j < list.length; j++)
+            {
+                for (int i=0; i <cmb[j];i++ )
+                    listI.add(list[j].getConstructor().newInstance());
+            }
+            return listI ;
         }
-        return listI ;
     }
 
 
@@ -408,7 +408,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             }
             catch (Exception e)
             {
-                e.printStackTrace();//TODO
+                Gdx.app.error("Error in MasterQuest to init the list of Item", String.valueOf(e));
             }
         }
         return listItems;
