@@ -149,7 +149,7 @@ public class NetworkManager {
     /**
      * What to do when the second player ask informations about the PNJs on the map.
      */
-    protected OnGetPNJRunnable onGetPNJ;
+    protected StringRunnable onGetPNJ;
     /**
      * What to do when the second player hit a PNJ.
      */
@@ -157,7 +157,7 @@ public class NetworkManager {
     /**
      * What to do when the second player killed a PNJ.
      */
-    protected OnPNJDeathRunnable onPNJDeath;
+    protected StringRunnable onPNJDeath;
     /**
      * What to do when the second player finished the current <code>MasterQuest</code>
      */
@@ -166,6 +166,7 @@ public class NetworkManager {
      * What to do when the second player is disconnected
      */
     protected Runnable onDisconnected;
+    protected StringRunnable onMapChanged;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -515,6 +516,10 @@ public class NetworkManager {
         ignoreEMQ = true;
     }
 
+    public void sendMapChanged(String map) {
+        sendOnTCP("CM#" + map);
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -600,6 +605,10 @@ public class NetworkManager {
                     ignoreEMQ = false;
                 else
                     Gdx.app.postRunnable(onMasterQuestFinished);
+                break;
+            case "CM":
+                if (onMapChanged != null)
+                    Gdx.app.postRunnable(() -> onMapChanged.run(tab[1]));
                 break;
 
         }
@@ -798,7 +807,7 @@ public class NetworkManager {
     /**
      * @param onGetPNJ What to do when the second player ask informations about the PNJs on the map.
      */
-    public void setOnGetPNJ(OnGetPNJRunnable onGetPNJ) {
+    public void setOnGetPNJ(StringRunnable onGetPNJ) {
         this.onGetPNJ = onGetPNJ;
     }
 
@@ -826,7 +835,7 @@ public class NetworkManager {
     /**
      * @param onPNJDeath What to do when the second player killed a PNJ.
      */
-    public void setOnPNJDeath(OnPNJDeathRunnable onPNJDeath) {
+    public void setOnPNJDeath(StringRunnable onPNJDeath) {
         this.onPNJDeath = onPNJDeath;
     }
 
@@ -851,6 +860,10 @@ public class NetworkManager {
         this.onDisconnected = onDisconnected;
     }
 
+    public void setOnMapChanged(StringRunnable onMapChanged) {
+        this.onMapChanged = onMapChanged;
+    }
+
     /**
      * Represent the runnable executed when the second player informations has been received.
      */
@@ -873,10 +886,10 @@ public class NetworkManager {
     }
 
     /**
-     * Represent the runnable executed when the second player ask informations about the PNJs on the map.
+     * Represent a runnable with a String as parameter.
      */
-    public interface OnGetPNJRunnable {
-        void run(String map);
+    public interface StringRunnable {
+        void run(String s);
     }
 
     /**
@@ -884,12 +897,5 @@ public class NetworkManager {
      */
     public interface OnHitPNJRunnable {
         void run(String name, double life);
-    }
-
-    /**
-     * Represent the runnable executed when the second player killed a PNJ.
-     */
-    public interface OnPNJDeathRunnable {
-        void run(String name);
     }
 }

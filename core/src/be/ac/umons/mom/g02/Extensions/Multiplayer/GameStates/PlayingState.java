@@ -28,6 +28,8 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
         super(gsm, gim, gs);
     }
 
+    public PlayingState() { }
+
     @Override
     public void init() {
         super.init();
@@ -39,7 +41,7 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     public void draw() {
         super.draw();
         if (mustDrawSecondPlayer)
-            playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
+            playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
     }
 
