@@ -20,6 +20,7 @@ import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -31,6 +32,7 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The playing state. This state suppose that a connection has already been established.
@@ -49,6 +51,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     protected HashMap<String, Character> idCharacterMap;
 
     protected String secondPlayerMap;
+
+    protected boolean mazeMode = false;
+    protected boolean isTheMazePlayer = false;
+
+    protected MapObjects puzzleObjects;
+
+    protected Color goodPuzzlePathColor;
+    protected Color badPuzzlePathColor;
 
 
     /**
@@ -122,12 +132,27 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             supervisor.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
+        nm.setOnMazePlayerDetected((b) -> {
+            isTheMazePlayer = b;
+            if (! b)
+                player.setNoMoving(true);
+        });
+
+        goodPuzzlePathColor = new Color(0x2E7D32);
+        badPuzzlePathColor = new Color(0xB71C1C);
     }
 
     @Override
     public void update(float dt) {
         super.update(dt);
         nm.update(dt);
+        if (mazeMode) {
+            boolean goodPath = checkForPuzzleCollision();
+            if (goodPath)
+                player.setIsATargetColor(goodPuzzlePathColor);
+            else
+                player.setIsATargetColor(badPuzzlePathColor);
+        }
     }
 
     @Override
@@ -145,6 +170,26 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             pnjs.clear();
             nm.askPNJsPositions(mapPath);
         }
+        if (gmm.getActualMap().getProperties().containsKey("MazeMode"))
+            mazeMode = (boolean)gmm.getActualMap().getProperties().get("MazeMode");
+        else
+            mazeMode = false;
+        if (mazeMode) {
+            mustDrawSecondPlayer = false;
+            player.setIsATarget(true);
+            MapLayer puzzleLayer = gmm.getActualMap().getLayers().get("Puzzle");
+            if (puzzleLayer != null)
+                puzzleObjects = puzzleLayer.getObjects();
+            if (nm.isTheServer())
+                isTheMazePlayer = (new Random().nextInt() % 2 == 2);
+            nm.sendIsTheMazePlayer(! isTheMazePlayer);
+            if (! isTheMazePlayer)
+                player.setNoMoving(true);
+        }
+    }
+
+    protected boolean checkForPuzzleCollision() {
+        return checkForCollision(puzzleObjects, player) == null;
     }
 
     @Override
@@ -276,5 +321,12 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     public void getFocus() {
         super.getFocus();
         nm.sendEndPause();
+    }
+
+    @Override
+    public void setSecondPlayerPosition(Point mapPos) {
+        super.setSecondPlayerPosition(mapPos);
+        if (mazeMode)
+            player.setMapPos(mapPos);
     }
 }

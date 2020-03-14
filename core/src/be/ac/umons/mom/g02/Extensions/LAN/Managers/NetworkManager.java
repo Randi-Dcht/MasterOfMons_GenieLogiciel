@@ -167,6 +167,7 @@ public class NetworkManager {
      */
     protected Runnable onDisconnected;
     protected StringRunnable onMapChanged;
+    protected BooleanRunnable onMazePlayerDetected;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -520,6 +521,10 @@ public class NetworkManager {
         sendOnTCP("CM#" + map);
     }
 
+    public void sendIsTheMazePlayer(boolean isTheMazePlayer) {
+        sendOnTCP("ITMP#" + isTheMazePlayer);
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -609,6 +614,11 @@ public class NetworkManager {
             case "CM":
                 if (onMapChanged != null)
                     Gdx.app.postRunnable(() -> onMapChanged.run(tab[1]));
+                break;
+            case "ITMP":
+                if (onMazePlayerDetected != null)
+                    Gdx.app.postRunnable(() -> onMazePlayerDetected.run(
+                            Boolean.parseBoolean(tab[1])));
                 break;
 
         }
@@ -864,6 +874,10 @@ public class NetworkManager {
         this.onMapChanged = onMapChanged;
     }
 
+    public void setOnMazePlayerDetected(BooleanRunnable onMazePlayerDetected) {
+        this.onMazePlayerDetected = onMazePlayerDetected;
+    }
+
     /**
      * Represent the runnable executed when the second player informations has been received.
      */
@@ -890,6 +904,13 @@ public class NetworkManager {
      */
     public interface StringRunnable {
         void run(String s);
+    }
+
+    /**
+     * Represent a runnable with a boolean as parameter.
+     */
+    public interface BooleanRunnable {
+        void run(boolean b);
     }
 
     /**
