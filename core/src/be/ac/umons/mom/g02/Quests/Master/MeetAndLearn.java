@@ -47,7 +47,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public void nextQuest()
     {
-        /*newQuest(new PreparedCompany(people,this,graphic,difficulty));*/ //TODO raccorder
+//        newQuest(new PreparedCompany(people,this,graphic,difficulty)); //TODO raccorder
     }
 
 

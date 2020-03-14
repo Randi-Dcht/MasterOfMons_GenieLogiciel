@@ -20,6 +20,7 @@ public class DisconnectedMenuState extends MenuState {
     public void init() {
         super.init();
         handleEscape = false;
+        transparentBackground = true;
         setMenuItems(new MenuItem[]{
                 new MenuItem(gs.getStringFromId("disconnected"), MenuItemType.Title),
         });

@@ -9,7 +9,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.MyFirstYear;
+import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -18,7 +18,6 @@ import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.MapLayer;
@@ -43,13 +42,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     /**
      * The network manager.
      */
-    private NetworkManager nm;
+    protected NetworkManager nm;
     /**
      * The map associating an id (his name) and a character.
      */
-    private HashMap<String, Character> idCharacterMap;
+    protected HashMap<String, Character> idCharacterMap;
 
-    private String secondPlayerMap;
+    protected String secondPlayerMap;
 
 
     /**
@@ -62,6 +61,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 //        supervisor = SupervisorMultiPlayer.getSupervisor();  //TODO
     }
 
+    protected PlayingState() { }
+
     @Override
     public void init() {
         try {
@@ -71,7 +72,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             // TODO Go to an error page
         }
         idCharacterMap = new HashMap<>();
-        supervisor.getPeople().newQuest(new MyFirstYear(supervisor.getPeople(), null, Difficulty.Easy));
+        supervisor.getPeople().newQuest(new LearnToCooperate(null, supervisor.getPeople(), Difficulty.Easy));
+        nm.setOnMapChanged((map) -> {
+            if (nm.isTheServer())
+                refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
+            secondPlayerMap = map;
+            mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
+        });
         super.init();
         nm.setOnPNJDetected((name, mob, x, y) -> {
             Character c = new Character(gs, mob);
@@ -87,12 +94,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (nm.getMustSendPNJPos() != null) {
                 sendPNJsPositions(nm.getMustSendPNJPos());
             } else {
-                nm.setOnGetPNJ((map) -> {
-                    refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
-                    secondPlayerMap = map;
-                    mustDrawSecondPlayer = secondPlayerMap.equals(gmm.getActualMapName());
-                    sendPNJsPositions(map);
-                });
+                nm.setOnGetPNJ(this::sendPNJsPositions);
             }
         } else
             nm.askPNJsPositions(gmm.getActualMapName());
@@ -117,7 +119,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnEndPause(() -> gsm.removeFirstState());
         nm.setOnMasterQuestFinished(() -> {
             timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
-            Supervisor.getSupervisor().getPeople().getQuest().passQuest();
+            supervisor.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
     }
@@ -132,6 +134,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     public void initMap(String mapPath, int spawnX, int spawnY) {
         refreshPNJsMap(gmm.getActualMapName(), mapPath, secondPlayerMap, secondPlayerMap);
         super.initMap(mapPath, spawnX, spawnY);
+        nm.sendMapChanged(mapPath);
         mustDrawSecondPlayer = gmm.getActualMapName().equals(secondPlayerMap);
         if (nm.isTheServer()) {
             for (Character pnj : pnjs) {
@@ -209,6 +212,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
     }
 
+    /**
+     * Remove unnecessary PNJs from idCharacterMap for refreshing the PNJs.
+     * @param p1Old The first player's old map
+     * @param p1New The first player's new map
+     * @param p2Old The second player's old map
+     * @param p2New The second player's new map
+     */
     protected void refreshPNJsMap(String p1Old, String p1New, String p2Old, String p2New) {
         if ( p1Old != null && p2New != null && ! p1Old.equals(p1New) && ! p2New.equals(p1Old))
             removeAllPNJsFromMap(p1Old);
@@ -216,6 +226,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             removeAllPNJsFromMap(p2Old);
     }
 
+    /**
+     * Remove all PNJs from map <code>mapName</code> from idCharacterMap.
+     * @param mapName The name of a map.
+     */
     protected void removeAllPNJsFromMap(String mapName) {
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(mapName)))
             idCharacterMap.remove(mob.getName());
