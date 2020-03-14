@@ -385,7 +385,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /**
      * This method allows to create the list of the items
      */
-    protected abstract void createListItems() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, Exception;
+    protected abstract void createListItems() throws Exception;
 
 
     /**
@@ -408,7 +408,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                e.printStackTrace();//TODO
             }
         }
         return listItems;

@@ -32,10 +32,6 @@ public class Saving implements Observer
      */
     private static final String SETTINGS_FILE_NAME = "MasterOfMons.settings.mom";
     /**
-     * The instance of the people
-     */
-    private People people;
-    /**
      * The path by default
      */
     private String path = "/tmp/";
@@ -60,7 +56,6 @@ public class Saving implements Observer
      */
     public void setLogic(People people)
     {
-        this.people = people;
         Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
     }
 
@@ -81,9 +76,9 @@ public class Saving implements Observer
     public void signal()
     {
         if (defaltName == null)
-            newSave(people,path);
+            newSave(Supervisor.getSupervisor().getPeople(),path);
         else
-            newSave(people,defaltName);
+            newSave(Supervisor.getSupervisor().getPeople(),defaltName);
     }
 
 
@@ -191,10 +186,10 @@ public class Saving implements Observer
     /***/
     public void playOldParty(String file , GraphicalSettings gs)//TODO delete
     {
-        if (playingState != null)
+        //if (playingState != null)
             playOldParty(file,gs,playingState);
-        else
-            Gdx.app.error("Error in play an old game with PlayingState","Null pointer");
+       // else
+        //    Gdx.app.error("Error in play an old game with PlayingState","Null pointer");
     }
 
 

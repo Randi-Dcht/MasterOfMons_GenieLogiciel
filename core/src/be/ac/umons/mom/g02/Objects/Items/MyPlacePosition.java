@@ -53,6 +53,7 @@ public class MyPlacePosition
                     listPoint.get(actually).add(new Point(Integer.parseInt(lst[0]),Integer.parseInt(lst[1])));
                 }
             }
+            line.close();
         }
         catch (Exception e)
         {

@@ -39,6 +39,7 @@ public class RandomName
             {
                 listName.add(vertical);
             }
+            line.close();
         }
         catch (Exception e)
         {

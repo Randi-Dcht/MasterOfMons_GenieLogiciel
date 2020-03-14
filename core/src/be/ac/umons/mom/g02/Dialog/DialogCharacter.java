@@ -92,6 +92,7 @@ public class DialogCharacter
                     list.put(split[0],new ArrayList<>(Arrays.asList(split).subList(1, split.length)));
                 }
             }
+            line.close();
         }
         catch (Exception e)
         {
