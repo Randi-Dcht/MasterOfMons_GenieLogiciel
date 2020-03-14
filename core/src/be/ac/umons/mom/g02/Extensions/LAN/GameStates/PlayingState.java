@@ -9,7 +9,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.MyFirstYear;
+import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -71,7 +71,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             // TODO Go to an error page
         }
         idCharacterMap = new HashMap<>();
-        supervisor.getPeople().newQuest(new MyFirstYear(supervisor.getPeople(), null, Difficulty.Easy));
+        supervisor.getPeople().newQuest(new LearnToCooperate(null, supervisor.getPeople(), Difficulty.Easy));
         super.init();
         nm.setOnPNJDetected((name, mob, x, y) -> {
             Character c = new Character(gs, mob);
