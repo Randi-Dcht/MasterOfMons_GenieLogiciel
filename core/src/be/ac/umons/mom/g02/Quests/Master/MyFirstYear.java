@@ -6,10 +6,9 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.NameDialog;
-import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Quests.Under.BattleForPlace;
-import be.ac.umons.mom.g02.Quests.Under.GoTo;
+import be.ac.umons.mom.g02.Quests.Under.LowEnergizing;
 import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
 import be.ac.umons.mom.g02.Quests.Under.MeetManyPeople;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
@@ -33,7 +32,7 @@ public class MyFirstYear extends MasterQuest
     /**
      * This is the goals of this MasterQuest
      */
-    final UnderQuest[] underQuest = {new GoTo(this,10,people),new GoToLesson(this,23,people),new MeetManyPeople(this,34,people),new BattleForPlace(this,33,people)};
+    final UnderQuest[] underQuest = {new LowEnergizing(this,10,people),new GoToLesson(this,23,people),new MeetManyPeople(this,34,people),new BattleForPlace(this,33,people)};
 
 
     /**
@@ -45,7 +44,7 @@ public class MyFirstYear extends MasterQuest
     {
         super(before,people, Bloc.BA1,difficulty);
         addUnderQuest(underQuest);
-        SuperviserNormally.getSupervisor().getEvent().add(this, Events.MeetOther,Events.Dialog,Events.Attack,Events.UseItems,Events.AddFriend,Events.Dead);
+        //SuperviserNormally.getSupervisor().getEvent().add(this, Events.MeetOther,Events.Dialog,Events.Attack,Events.UseItems,Events.AddFriend,Events.Dead);
     }
 
 

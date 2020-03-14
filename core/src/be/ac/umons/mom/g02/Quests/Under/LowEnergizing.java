@@ -5,10 +5,10 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 
 
-public class GoTo extends UnderQuest
+public class LowEnergizing extends UnderQuest//TODO new to implement
 {
     /***/
-    public GoTo(Quest q, int nb, People people)
+    public LowEnergizing(Quest q, int nb, People people)
     {
         super("GoTo",nb,q,people);
     }

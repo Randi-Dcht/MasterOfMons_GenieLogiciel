@@ -55,10 +55,6 @@ public class SuperviserNormally extends Supervisor
 
 
     /**
-     * The instance of the regulator class*
-     */
-    protected Regulator regulator;
-    /**
      * This the actual variable of the Id on the maps
      */
     protected String actualID;
@@ -117,16 +113,6 @@ public class SuperviserNormally extends Supervisor
     {
         LogicSaving save = new LogicSaving(playerOne,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
         Saving.setSaveObject(pathAndFile,save);
-    }
-
-
-    /**
-     * This method return the regulator of the game
-     * @return regulator instance
-     */
-    public Regulator getRegale()
-    {
-        return regulator;
     }
 
 

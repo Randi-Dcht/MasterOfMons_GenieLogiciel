@@ -9,13 +9,28 @@ import be.ac.umons.mom.g02.Quests.Quest;
 
 import java.util.ArrayList;
 
+
+/**
+ * This class define the goals of choose subject in the list
+ * @author Umons_Group_2_ComputerScience_RandyDauchot
+ */
 public class ChooseSubject extends UnderQuest
 {
+    /***/
     public Subject subject;
+    /***/
     public ArrayList choice=new ArrayList();
-    public ChooseSubject(Quest q, People people)
+
+
+    /**
+     * This constructor define the class of check study
+     * @param master is the master class of this
+     * @param max    is the maximum percent of this class
+     * @param people is the player when play the underQuest
+     */
+    public ChooseSubject(Quest master,int max, People people)
     {
-        super("ChooseSubject", 50, q,people);
+        super("ChooseSubject", max, master,people);
     }
 
 
@@ -58,16 +73,33 @@ public class ChooseSubject extends UnderQuest
         //Cette methode est appele quand on demande si l'utilisateur est sur de son choix et qu'il dit nn sinon elle n'est jamais appellé.
     }
 
-    public Quest[] getSubQuests() {
-        Quest[] q = {};
-        return q;
-    }
 
-    public int getTotalSubQuestsNumber() {
-        return getSubQuests().length;
-    }
-
+    /**
+     * This method allows to receive the notification of the game
+     * @param notify is the notification in the game
+     */
     @Override
-    public void evenActivity(Notification notify) {
+    public void evenActivity(Notification notify)
+    {
+    }
+
+
+    /**
+     * This method return the list of the under quest of this
+     * @return list of under quest
+     */
+    public Quest[] getSubQuests()
+    {
+        return new Quest[]{};
+    }
+
+
+    /**
+     * This method return the number of recursion on under this
+     * @return number recursion
+     */
+    public int getTotalSubQuestsNumber()
+    {
+        return 0;
     }
 }

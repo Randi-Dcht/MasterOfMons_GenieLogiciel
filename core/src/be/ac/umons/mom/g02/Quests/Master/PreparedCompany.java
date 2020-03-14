@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
 import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Quests.Under.WriteMemory;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -19,7 +20,7 @@ import java.util.Random;
  */
 public class PreparedCompany extends MasterQuest
 {
-    final UnderQuest[] underQuest = {new GoToPriorityLesson(this,50,people),new ChooseSubject(this,people)};
+    final UnderQuest[] underQuest = {new GoToPriorityLesson(this,50,people),new ChooseSubject(this,50,people),new WriteMemory(this,50, people)};
 
 
     /**
@@ -27,9 +28,9 @@ public class PreparedCompany extends MasterQuest
      * @param people who is the people goes to course
      * @param before who is the MasterQuest before them, (null or MasterQuest)
      */
-    public PreparedCompany(People people, MasterQuest before, GraphicalSettings graphic, Difficulty difficulty)
+    public PreparedCompany(People people, MasterQuest before, Difficulty difficulty)
     {
-        super(before,people, Bloc.MA1,graphic,difficulty);
+        super(before,people, Bloc.MA1,difficulty);
         addUnderQuest(underQuest);
     }
 
@@ -38,7 +39,7 @@ public class PreparedCompany extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new FinishUniversity(people,this,null,difficulty));
+
     }
 
 

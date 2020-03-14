@@ -1,10 +1,24 @@
 package be.ac.umons.mom.g02.Regulator;
 
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Difficulty;
+import be.ac.umons.mom.g02.Enums.Gender;
+import be.ac.umons.mom.g02.Enums.Lesson;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Enums.State;
+import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Events.Notifications.Dialog;
+import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
+import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
 import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
-import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
@@ -18,7 +32,16 @@ import be.ac.umons.mom.g02.Objects.Characters.Social;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.*;
+import be.ac.umons.mom.g02.Objects.Items.Energizing;
+import be.ac.umons.mom.g02.Objects.Items.Flower;
+import be.ac.umons.mom.g02.Objects.Items.Gun;
+import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Objects.Items.MyPlacePosition;
+import be.ac.umons.mom.g02.Objects.Items.OldExam;
+import be.ac.umons.mom.g02.Objects.Items.PaperHelp;
+import be.ac.umons.mom.g02.Objects.Items.Pen;
+import be.ac.umons.mom.g02.Objects.Items.Phone;
+import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
@@ -131,15 +154,20 @@ public  abstract class Supervisor implements Observer
      */
     protected int[] debugSaving = new int[3];
     /**
-     * This variable is instance of the PlayingState
+     * Instance of the PlayingState
      */
     protected PlayingState playGraphic;
     /***/
     protected MyPlacePosition placePosition;
     /***/
     protected boolean first = true;
+    /**
+     * The instance of the regulator class*
+     */
+    protected Regulator regulator;
 
 
+    /***/
     protected Supervisor()
     {
         for (Maps plt : Maps.values())
@@ -149,6 +177,16 @@ public  abstract class Supervisor implements Observer
         save = new Saving();
         associateLesson();
         graphicalMob = new HashMap<>();
+    }
+
+
+    /**
+     * This method return the regulator of the game
+     * @return regulator instance
+     */
+    public Regulator getRegale()
+    {
+        return regulator;
     }
 
 
@@ -349,8 +387,8 @@ public  abstract class Supervisor implements Observer
         {
             for (Maps maps : Maps.values())
             {
-   //             for (Items it : listItems.get(maps))
-   //                 playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
+                for (Items it : listItems.get(maps))
+                   playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
             }
             first = false;
         }

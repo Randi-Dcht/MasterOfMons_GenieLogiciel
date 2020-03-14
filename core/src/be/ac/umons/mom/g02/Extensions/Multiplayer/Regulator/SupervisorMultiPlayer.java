@@ -50,8 +50,6 @@ public class SupervisorMultiPlayer extends Supervisor
     protected LogicSaving playerOneSave;
     /***/
     protected LogicSaving playerTwoSave;
-    /***/
-    protected RegulatorMultiPlayer regulator;
 
 
     /**
