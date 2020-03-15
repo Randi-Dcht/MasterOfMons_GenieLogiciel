@@ -39,7 +39,7 @@ public class PreparedCompany extends MasterQuest
      */
     public void nextQuest()
     {
-
+        SuperviserNormally.getSupervisor().getRegale().finishQuest();
     }
 
 

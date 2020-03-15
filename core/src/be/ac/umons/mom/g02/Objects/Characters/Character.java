@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Items;
@@ -316,8 +317,10 @@ public abstract class Character implements Attack, Social, Serializable
         else
             actualLife -= lose;
 
+        if (actualLife <= lifeMax()*0.1 && this.getClass().equals(People.class))
+            Supervisor.getSupervisor().getEvent().notify(new LowSomething(LowSomething.TypeLow.Life));
 
-        if(actualLife <= 0)
+        if (actualLife <= 0)
             dead();
     }
 

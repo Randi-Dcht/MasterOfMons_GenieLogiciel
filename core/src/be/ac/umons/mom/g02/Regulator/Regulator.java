@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Regulator;
 
+import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Places;
@@ -116,6 +117,12 @@ public class Regulator implements Observer
         else
             waitingLine.add(newDialog);
 
+    }
+
+
+    public void finishQuest()
+    {
+        push("FinishQuest");
     }
 
 
@@ -307,6 +314,9 @@ public class Regulator implements Observer
 
         if (notify.getEvents().equals(Events.ChangeQuest))
             changeQuest();
+
+        if (notify.getEvents().equals(Events.LowSomething) && notify.bufferNotEmpty() && notify.getBuffer().equals(LowSomething.TypeLow.Energy))
+            lowEnergizing();
 
     }
 }

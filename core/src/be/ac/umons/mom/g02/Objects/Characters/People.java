@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Other.HyperPlanning;
 import be.ac.umons.mom.g02.Enums.Actions;
@@ -12,11 +13,6 @@ import be.ac.umons.mom.g02.Enums.Places;
 import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.ChangeQuest;
-import be.ac.umons.mom.g02.Events.Notifications.EntryPlaces;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
-import be.ac.umons.mom.g02.Events.Notifications.UpLevel;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Course;
@@ -313,8 +309,9 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
         if (energy <= 2)
             this.energy = 2;
-        if (Supervisor.getSupervisor().getClass().equals(SuperviserNormally.class))
-            SuperviserNormally.getSupervisor().getRegale().lowEnergizing();//TODO upgrade
+
+        if (energy <= 10)
+            Supervisor.getSupervisor().getEvent().notify(new LowSomething(LowSomething.TypeLow.Energy));
     }
 
 
