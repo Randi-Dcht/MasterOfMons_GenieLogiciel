@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
+import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -38,6 +39,15 @@ public class ConnectionRoomState extends MenuState {
             nm = NetworkManager.getInstance();
             nm.startListeningForServer();
             nm.setOnServerDetected(this::refresh);
+            nm.setOnMagicNumberReceived((i, j, k, l, m) -> {
+                OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+                ogds.setText(gs.getStringFromId("chooseTheMagicNumber"));
+                ogds.addNonInternationalizedAnswer("" + i, () -> checkMagicNumber(i));
+                ogds.addNonInternationalizedAnswer("" + j, () -> checkMagicNumber(j));
+                ogds.addNonInternationalizedAnswer("" + k, () -> checkMagicNumber(k));
+                ogds.addNonInternationalizedAnswer("" + l, () -> checkMagicNumber(l));
+                ogds.addNonInternationalizedAnswer("" + m, () -> checkMagicNumber(m));
+            });
             nm.setOnConnected(() -> {
                 gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
             });
@@ -86,4 +96,13 @@ public class ConnectionRoomState extends MenuState {
     public void dispose() {
         super.dispose();
     }
+
+
+    protected void checkMagicNumber(int magicNumber) {
+        if (! nm.checkMagicNumber(magicNumber)) {
+            OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+            ogds.setText("");
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
@@ -11,6 +12,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The state where we wait for the second player to connect. (Broadcasting the information of this machine)
@@ -42,6 +44,11 @@ public class WaitingRoomState extends MenuState {
         try {
             nm = NetworkManager.getInstance();
             nm.acceptConnection();
+            nm.setOnMagicNumberSent((magicNumber) -> {
+                OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+                ogds.setText(String.format(gs.getStringFromId("magicNumber"), magicNumber));
+                ogds.addAnswer("OK");
+            });
             nm.setOnConnected(() -> {
                 nm.startListeningForServer();
                 gsm.removeAllStateAndAdd(FinalisingConnectionState.class);

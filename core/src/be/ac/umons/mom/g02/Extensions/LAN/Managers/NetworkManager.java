@@ -126,6 +126,9 @@ public class NetworkManager {
      * What to do when the second player is connected.
      */
     protected Runnable onConnected;
+
+    protected OnMagicNumberReceivedRunnable onMagicNumberReceived;
+    protected IntRunnable onMagicNumberSent;
     /**
      * What to do when the second player informations has been received.
      */
@@ -281,7 +284,7 @@ public class NetworkManager {
                 if (socket != null)
                     socket.close();
                 socket = new Socket(selectedServer.getIp(), PORT);
-                initConnection();
+                waitMagicNumber();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -300,14 +303,72 @@ public class NetworkManager {
                 if (serverSocket == null)
                     serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
-                isTheServer = true;
-                setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
-                initConnection();
+                sendMagicNumber();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
         acceptThread.start();
+    }
+
+    protected void sendMagicNumber() {
+        new Thread(() -> {
+            int magicNumber = new Random().nextInt(256);
+            try {
+                Random rand = new Random();
+                int pos = rand.nextInt(5);
+                int [] magicNumbers = new int[5];
+                magicNumbers[pos] = magicNumber;
+                for (int i = 0; i < 5; i++) {
+                    if (i == pos)
+                        continue;
+                    int j = rand.nextInt(256);
+                    magicNumbers[i] = j;
+                }
+                for (int i = 0; i < 5; i++)
+                    socket.getOutputStream().write(magicNumbers[i]);
+                Gdx.app.postRunnable(() -> onMagicNumberSent.run(magicNumber));
+                int chosenOne = socket.getInputStream().read();
+                if (chosenOne == magicNumber) {
+                    socket.getOutputStream().write(0);
+                    isTheServer = true;
+                    setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
+                    initConnection();
+                } else
+                    socket.getOutputStream().write(1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    protected void waitMagicNumber() {
+        new Thread(() ->
+        Gdx.app.postRunnable(() -> {
+            try {
+                onMagicNumberReceived.run(
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        })).start();
+    }
+
+    public boolean checkMagicNumber(int i) { // TODO : Bug with the wrong one
+        try {
+            socket.getOutputStream().write(i);
+            if (socket.getInputStream().read() == 0) {
+                initConnection();
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
@@ -811,6 +872,14 @@ public class NetworkManager {
         this.onConnected = onConnected;
     }
 
+    public void setOnMagicNumberSent(IntRunnable onMagicNumberSent) {
+        this.onMagicNumberSent = onMagicNumberSent;
+    }
+
+    public void setOnMagicNumberReceived(OnMagicNumberReceivedRunnable onMagicNumberReceived) {
+        this.onMagicNumberReceived = onMagicNumberReceived;
+    }
+
     /**
      * @param onPlayerDetected What to do when the second player informations has been received.
      */
@@ -946,6 +1015,12 @@ public class NetworkManager {
      */
     public interface IntRunnable {
         void run(int i);
+    }
+    /**
+     * Represent a runnable with a 5 int as parameter.
+     */
+    public interface OnMagicNumberReceivedRunnable {
+        void run(int i, int j, int k, int l, int m);
     }
 
     /**
