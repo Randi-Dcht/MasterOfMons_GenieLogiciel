@@ -12,8 +12,9 @@ public enum Events
     ChangeMonth("month"),                     /*This event notify when the month change in the game*/
     ChangeHour("hour"),                       /*This event notify when the hour change in the game*/
     PlaceInMons("PeopleOnMaps"),              /*This event notify when the people change the maps*/
-    EntryPlace("PlaceOnMap"),
-    OtherInformation("OtherInfo"),
+    EntryPlace("PlaceOnMap"),                 /**/
+    OtherInformation("OtherInfo"),            /**/
+    LowSomething("low"),                      /**/
     MeetOther("meetOther"),                   /*This event notify when the character meet an other character*/
     Attack("LaunchAttack"),                   /*This event notify when the character attack other character*/
     AddFriend("meetFriend"),                  /*This event notify when the people add friend*/
@@ -32,7 +33,7 @@ public enum Events
      * The constructor of the event
      * @param name is the name of the event
      */
-    private Events(String name)
+    Events(String name)
     {
         this.name = name;
     }
