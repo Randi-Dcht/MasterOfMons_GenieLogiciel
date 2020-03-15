@@ -168,6 +168,7 @@ public class NetworkManager {
     protected Runnable onDisconnected;
     protected StringRunnable onMapChanged;
     protected BooleanRunnable onMazePlayerDetected;
+    protected Runnable onLevelUp;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -525,6 +526,10 @@ public class NetworkManager {
         sendOnTCP("ITMP#" + isTheMazePlayer);
     }
 
+    public void sendLevelUp() {
+        sendOnTCP("LVLUP");
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -619,6 +624,15 @@ public class NetworkManager {
                 if (onMazePlayerDetected != null)
                     Gdx.app.postRunnable(() -> onMazePlayerDetected.run(
                             Boolean.parseBoolean(tab[1])));
+                break;
+            case "LVLUP":
+                if (onLevelUp != null) {
+                    try {
+                        Gdx.app.postRunnable(onLevelUp);
+                    } catch (NumberFormatException e) {
+                        Gdx.app.error("NetworkManager", "Error detected while parsing level in Leveling up message (ignoring it)", e);
+                }
+        }
                 break;
 
         }
@@ -878,6 +892,10 @@ public class NetworkManager {
         this.onMazePlayerDetected = onMazePlayerDetected;
     }
 
+    public void setOnLevelUp(Runnable onLevelUp) {
+        this.onLevelUp = onLevelUp;
+    }
+
     /**
      * Represent the runnable executed when the second player informations has been received.
      */
@@ -911,6 +929,12 @@ public class NetworkManager {
      */
     public interface BooleanRunnable {
         void run(boolean b);
+    }
+    /**
+     * Represent a runnable with a int as parameter.
+     */
+    public interface IntRunnable {
+        void run(int i);
     }
 
     /**
