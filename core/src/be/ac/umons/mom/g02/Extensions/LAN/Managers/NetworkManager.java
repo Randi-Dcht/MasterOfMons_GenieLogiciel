@@ -553,12 +553,16 @@ public class NetworkManager {
                 break;
             case "PI": // Player info
                 String name = tab[1];
-                Type type = Type.values()[Integer.parseInt(tab[2])];
-                Gender gender = Gender.values()[Integer.parseInt(tab[3])];
-                Difficulty difficulty = Difficulty.values()[Integer.parseInt(tab[4])];
-                if (onPlayerDetected != null)
-                    Gdx.app.postRunnable(() ->
-                            onPlayerDetected.run(new People(name, type, gender, difficulty)));
+                try {
+                    Type type = Type.values()[Integer.parseInt(tab[2])];
+                    Gender gender = Gender.values()[Integer.parseInt(tab[3])];
+                    Difficulty difficulty = Difficulty.values()[Integer.parseInt(tab[4])];
+                    if (onPlayerDetected != null)
+                        Gdx.app.postRunnable(() ->
+                                onPlayerDetected.run(new People(name, type, gender, difficulty)));
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing player informations (ignoring message)", e);
+                }
                 break;
             case "PP": // Player Position
                 String x = tab[1];
@@ -583,9 +587,9 @@ public class NetworkManager {
                 break;
             case "PNJ": // Add a PNJ to the map
                 String pnjName = tab[1];
-                int pnjX = Integer.parseInt(tab[2]);
-                int pnjY = Integer.parseInt(tab[3]);
                 try {
+                    int pnjX = Integer.parseInt(tab[2]);
+                    int pnjY = Integer.parseInt(tab[3]);
                     be.ac.umons.mom.g02.Objects.Characters.Character mob = (be.ac.umons.mom.g02.Objects.Characters.Character) objectFromString(tab[4]);
                     if (onPNJDetected != null)
                         Gdx.app.postRunnable(() -> onPNJDetected.run(pnjName, mob, pnjX, pnjY));
@@ -593,6 +597,8 @@ public class NetworkManager {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing PNJs position (ignoring message)", e);
                 }
                 break;
             case "getPNJsPos": // Get all PNJs and their positions
@@ -602,9 +608,14 @@ public class NetworkManager {
                     mustSendPNJPos = tab[1].trim();
                 break;
             case "hitPNJ": // A PNJ has been hit by the other player.
-                if (onHitPNJ != null)
-                    Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1],
-                            Double.parseDouble(tab[2])));
+                if (onHitPNJ != null) {
+                    try {
+                        Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1],
+                                Double.parseDouble(tab[2])));
+                    } catch (NumberFormatException e) {
+                        Gdx.app.error("NetworkManager", "Error detected while parsing damage in hitPNJ message (ignoring it)", e);
+                    }
+                }
                 break;
             case "PNJDeath":
                 if (onPNJDeath != null)
@@ -631,8 +642,8 @@ public class NetworkManager {
                         Gdx.app.postRunnable(onLevelUp);
                     } catch (NumberFormatException e) {
                         Gdx.app.error("NetworkManager", "Error detected while parsing level in Leveling up message (ignoring it)", e);
+                    }
                 }
-        }
                 break;
 
         }
