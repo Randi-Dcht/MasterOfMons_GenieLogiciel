@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Quests.Under.BattleForPlace;
 import be.ac.umons.mom.g02.Quests.Under.LowEnergizing;
@@ -19,6 +20,7 @@ import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -44,7 +46,7 @@ public class MyFirstYear extends MasterQuest
     {
         super(before,people, Bloc.BA1,difficulty);
         addUnderQuest(underQuest);
-        //SuperviserNormally.getSupervisor().getEvent().add(this, Events.MeetOther,Events.Dialog,Events.Attack,Events.UseItems,Events.AddFriend,Events.Dead);
+        Supervisor.getSupervisor().getEvent().add(this, Events.MeetOther,Events.Dialog,Events.Attack,Events.UseItems,Events.AddFriend,Events.Dead);
     }
 
 

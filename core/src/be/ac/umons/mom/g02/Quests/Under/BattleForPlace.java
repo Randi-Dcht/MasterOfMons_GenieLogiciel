@@ -42,7 +42,7 @@ public class BattleForPlace extends UnderQuest
     @Override
     public void evenActivity(Notification notify)
     {
-        if (notify.getEvents().equals(Events.Attack))
+        if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty())
             attackOther(((LaunchAttack)notify).getBuffer());
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && ((Character)notify.getBuffer()).getType().equals(Character.TypePlayer.Computer))
             onlyOnPlace((Mobile) notify.getBuffer());
@@ -55,7 +55,7 @@ public class BattleForPlace extends UnderQuest
      */
     private void attackOther(Character victim)
     {
-        if ((people.getMaps().equals(Maps.GrandAmphi) || people.getMaps().equals(Maps.DeVinci)) && !victim.equals(memory))
+        if ((people.getMaps().equals(Maps.GrandAmphi) || people.getMaps().equals(Maps.DeVinci)) && (memory == null || !victim.equals(memory)))
         {
             addProgress(0.1);
             memory = victim;
