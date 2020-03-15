@@ -17,6 +17,7 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -136,6 +137,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             isTheMazePlayer = b;
             if (! b)
                 player.setNoMoving(true);
+        });
+        nm.setOnLevelUp(() -> {
+            ((People)playerTwo.getCharacteristics()).upLevel();
+            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
 
         goodPuzzlePathColor = new Color(0x2E7D32);
@@ -314,6 +319,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendPNJDeath(m.getName());
             idCharacterMap.remove(m.getName());
+        } else if (notify.getEvents().equals(Events.UpLevel)) {
+            nm.sendLevelUp();
         }
     }
 

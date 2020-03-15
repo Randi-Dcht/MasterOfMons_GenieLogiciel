@@ -126,6 +126,9 @@ public class NetworkManager {
      * What to do when the second player is connected.
      */
     protected Runnable onConnected;
+
+    protected OnMagicNumberReceivedRunnable onMagicNumberReceived;
+    protected IntRunnable onMagicNumberSent;
     /**
      * What to do when the second player informations has been received.
      */
@@ -168,6 +171,7 @@ public class NetworkManager {
     protected Runnable onDisconnected;
     protected StringRunnable onMapChanged;
     protected BooleanRunnable onMazePlayerDetected;
+    protected Runnable onLevelUp;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -280,7 +284,7 @@ public class NetworkManager {
                 if (socket != null)
                     socket.close();
                 socket = new Socket(selectedServer.getIp(), PORT);
-                initConnection();
+                waitMagicNumber();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -299,14 +303,72 @@ public class NetworkManager {
                 if (serverSocket == null)
                     serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
-                isTheServer = true;
-                setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
-                initConnection();
+                sendMagicNumber();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
         acceptThread.start();
+    }
+
+    protected void sendMagicNumber() {
+        new Thread(() -> {
+            int magicNumber = new Random().nextInt(256);
+            try {
+                Random rand = new Random();
+                int pos = rand.nextInt(5);
+                int [] magicNumbers = new int[5];
+                magicNumbers[pos] = magicNumber;
+                for (int i = 0; i < 5; i++) {
+                    if (i == pos)
+                        continue;
+                    int j = rand.nextInt(256);
+                    magicNumbers[i] = j;
+                }
+                for (int i = 0; i < 5; i++)
+                    socket.getOutputStream().write(magicNumbers[i]);
+                Gdx.app.postRunnable(() -> onMagicNumberSent.run(magicNumber));
+                int chosenOne = socket.getInputStream().read();
+                if (chosenOne == magicNumber) {
+                    socket.getOutputStream().write(0);
+                    isTheServer = true;
+                    setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
+                    initConnection();
+                } else
+                    socket.getOutputStream().write(1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    protected void waitMagicNumber() {
+        new Thread(() ->
+        Gdx.app.postRunnable(() -> {
+            try {
+                onMagicNumberReceived.run(
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read(),
+                        socket.getInputStream().read());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        })).start();
+    }
+
+    public boolean checkMagicNumber(int i) { // TODO : Bug with the wrong one
+        try {
+            socket.getOutputStream().write(i);
+            if (socket.getInputStream().read() == 0) {
+                initConnection();
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
@@ -525,6 +587,10 @@ public class NetworkManager {
         sendOnTCP("ITMP#" + isTheMazePlayer);
     }
 
+    public void sendLevelUp() {
+        sendOnTCP("LVLUP");
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -548,12 +614,16 @@ public class NetworkManager {
                 break;
             case "PI": // Player info
                 String name = tab[1];
-                Type type = Type.values()[Integer.parseInt(tab[2])];
-                Gender gender = Gender.values()[Integer.parseInt(tab[3])];
-                Difficulty difficulty = Difficulty.values()[Integer.parseInt(tab[4])];
-                if (onPlayerDetected != null)
-                    Gdx.app.postRunnable(() ->
-                            onPlayerDetected.run(new People(name, type, gender, difficulty)));
+                try {
+                    Type type = Type.values()[Integer.parseInt(tab[2])];
+                    Gender gender = Gender.values()[Integer.parseInt(tab[3])];
+                    Difficulty difficulty = Difficulty.values()[Integer.parseInt(tab[4])];
+                    if (onPlayerDetected != null)
+                        Gdx.app.postRunnable(() ->
+                                onPlayerDetected.run(new People(name, type, gender, difficulty)));
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing player informations (ignoring message)", e);
+                }
                 break;
             case "PP": // Player Position
                 String x = tab[1];
@@ -578,9 +648,9 @@ public class NetworkManager {
                 break;
             case "PNJ": // Add a PNJ to the map
                 String pnjName = tab[1];
-                int pnjX = Integer.parseInt(tab[2]);
-                int pnjY = Integer.parseInt(tab[3]);
                 try {
+                    int pnjX = Integer.parseInt(tab[2]);
+                    int pnjY = Integer.parseInt(tab[3]);
                     be.ac.umons.mom.g02.Objects.Characters.Character mob = (be.ac.umons.mom.g02.Objects.Characters.Character) objectFromString(tab[4]);
                     if (onPNJDetected != null)
                         Gdx.app.postRunnable(() -> onPNJDetected.run(pnjName, mob, pnjX, pnjY));
@@ -588,6 +658,8 @@ public class NetworkManager {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing PNJs position (ignoring message)", e);
                 }
                 break;
             case "getPNJsPos": // Get all PNJs and their positions
@@ -597,9 +669,14 @@ public class NetworkManager {
                     mustSendPNJPos = tab[1].trim();
                 break;
             case "hitPNJ": // A PNJ has been hit by the other player.
-                if (onHitPNJ != null)
-                    Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1],
-                            Double.parseDouble(tab[2])));
+                if (onHitPNJ != null) {
+                    try {
+                        Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1],
+                                Double.parseDouble(tab[2])));
+                    } catch (NumberFormatException e) {
+                        Gdx.app.error("NetworkManager", "Error detected while parsing damage in hitPNJ message (ignoring it)", e);
+                    }
+                }
                 break;
             case "PNJDeath":
                 if (onPNJDeath != null)
@@ -619,6 +696,15 @@ public class NetworkManager {
                 if (onMazePlayerDetected != null)
                     Gdx.app.postRunnable(() -> onMazePlayerDetected.run(
                             Boolean.parseBoolean(tab[1])));
+                break;
+            case "LVLUP":
+                if (onLevelUp != null) {
+                    try {
+                        Gdx.app.postRunnable(onLevelUp);
+                    } catch (NumberFormatException e) {
+                        Gdx.app.error("NetworkManager", "Error detected while parsing level in Leveling up message (ignoring it)", e);
+                    }
+                }
                 break;
 
         }
@@ -786,6 +872,14 @@ public class NetworkManager {
         this.onConnected = onConnected;
     }
 
+    public void setOnMagicNumberSent(IntRunnable onMagicNumberSent) {
+        this.onMagicNumberSent = onMagicNumberSent;
+    }
+
+    public void setOnMagicNumberReceived(OnMagicNumberReceivedRunnable onMagicNumberReceived) {
+        this.onMagicNumberReceived = onMagicNumberReceived;
+    }
+
     /**
      * @param onPlayerDetected What to do when the second player informations has been received.
      */
@@ -878,6 +972,10 @@ public class NetworkManager {
         this.onMazePlayerDetected = onMazePlayerDetected;
     }
 
+    public void setOnLevelUp(Runnable onLevelUp) {
+        this.onLevelUp = onLevelUp;
+    }
+
     /**
      * Represent the runnable executed when the second player informations has been received.
      */
@@ -911,6 +1009,18 @@ public class NetworkManager {
      */
     public interface BooleanRunnable {
         void run(boolean b);
+    }
+    /**
+     * Represent a runnable with a int as parameter.
+     */
+    public interface IntRunnable {
+        void run(int i);
+    }
+    /**
+     * Represent a runnable with a 5 int as parameter.
+     */
+    public interface OnMagicNumberReceivedRunnable {
+        void run(int i, int j, int k, int l, int m);
     }
 
     /**

@@ -442,13 +442,10 @@ public class PlayingState extends GameState implements Observer {
 
         Rectangle pmr = player.getMapRectangle();
 
-        if (pmr.x < minX || pmr.getY() < minY ||
-                pmr.x > mapWidth - minX || pmr.getY() > mapHeight - minY) {
-            return;
-        }
-
-        cam.position.x = x;
-        cam.position.y = y;
+        if (pmr.x > minX && pmr.x < mapWidth - minX)
+            cam.position.x = x;
+        if (pmr.y > minY && pmr.y < mapHeight - minY)
+            cam.position.y = y;
     }
 
     /**
@@ -718,7 +715,7 @@ public class PlayingState extends GameState implements Observer {
     }
 
     public void debugChangePlayerSpeed() {
-        supervisor.getPeople().setSpeed(50);
+        supervisor.getPeople().setSpeed(20);
         notificationRappel.addANotification("speedChangedNotification", gs.getStringFromId("playerIsFaster"));
     }
 
