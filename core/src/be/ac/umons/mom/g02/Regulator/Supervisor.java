@@ -616,10 +616,8 @@ public  abstract class Supervisor implements Observer
             ((People)attacker).reduceEnergizing(State.attack);
             event.notify(new LaunchAttack(memoryMobile));
         }
-        //if (attacker.getType().equals(Character.TypePlayer.Computer))
-            //graphicalMob.get((Mobile)attacker).expandAttackCircle();
         if(victim.dodge() < 0.6 && attacker.canAttacker())
-        {System.out.println(" Attack ... " + ((Character)attacker).getName() + " ~ " + ((Character)victim).getName());
+        {
             if(attacker.howGun())
             {
                 victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
@@ -632,6 +630,8 @@ public  abstract class Supervisor implements Observer
         {
             ((Mobile) attacker).letsGo(victim);
             memoryMobile = (Mobile)attacker;
+            //if (graphicalMob.containsKey(memoryMobile))
+            //    graphicalMob.get(memoryMobile).expandAttackCircle();
         }
         if(victim.getType().equals(Character.TypePlayer.Computer) && first && ((Character)victim).isLiving())
             attackMethod(victim,attacker,false);
