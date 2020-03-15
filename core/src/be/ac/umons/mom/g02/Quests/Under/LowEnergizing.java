@@ -29,7 +29,7 @@ public class LowEnergizing extends UnderQuest//TODO new to implement
      */
     public LowEnergizing(Quest master, int max, People people)
     {
-        super("GoTo",max,master,people);
+        super("LowAttack",max,master,people);
     }
 
 

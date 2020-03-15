@@ -535,7 +535,7 @@ public  abstract class Supervisor implements Observer
         int x=0,y=0;
         int toMove = (int)Math.round(memoryMobile.getSpeed() * dt * 64);
 
-        if(displaceX > toMove+64 || displaceX < -toMove-64 || displaceY > toMove+32 || displaceY < -toMove-32) {
+        if(displaceX > toMove+128 || displaceX < -toMove-128 || displaceY > toMove+64 || displaceY < -toMove-64) {
             if (displaceX < 0) {
                 x = -toMove;
             } else {
@@ -616,8 +616,10 @@ public  abstract class Supervisor implements Observer
             ((People)attacker).reduceEnergizing(State.attack);
             event.notify(new LaunchAttack(memoryMobile));
         }
+        //if (attacker.getType().equals(Character.TypePlayer.Computer))
+            //graphicalMob.get((Mobile)attacker).expandAttackCircle();
         if(victim.dodge() < 0.6 && attacker.canAttacker())
-        {
+        {System.out.println(" Attack ... " + ((Character)attacker).getName() + " ~ " + ((Character)victim).getName());
             if(attacker.howGun())
             {
                 victim.loseAttack(calculateHits(attacker,victim,attacker.damageGun()));
