@@ -1,15 +1,6 @@
 package be.ac.umons.mom.g02.Regulator;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Lesson;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
-import be.ac.umons.mom.g02.Enums.State;
-import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
@@ -538,13 +529,17 @@ public  abstract class Supervisor implements Observer
         if(displaceX > toMove+128 || displaceX < -toMove-128 || displaceY > toMove+64 || displaceY < -toMove-64) {
             if (displaceX < 0) {
                 x = -toMove;
+                graphical.setOrientation(Orientation.Left);
             } else {
                 x = toMove;
+                graphical.setOrientation(Orientation.Right);
             }
             if (displaceY < 0) {
                 y = -toMove;
+                graphical.setOrientation(Orientation.Bottom);
             } else {
                 y = toMove;
+                graphical.setOrientation(Orientation.Top);
             }
         }
         graphical.move(x,y);
