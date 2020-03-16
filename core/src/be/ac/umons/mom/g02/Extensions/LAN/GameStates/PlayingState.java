@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Events;
@@ -9,7 +8,6 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -83,14 +81,17 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             // TODO Go to an error page
         }
         idCharacterMap = new HashMap<>();
-        supervisor.getPeople().newQuest(new LearnToCooperate(null, supervisor.getPeople(), Difficulty.Easy));
         nm.setOnMapChanged((map) -> {
             if (nm.isTheServer())
                 refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
             secondPlayerMap = map;
             mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
         });
+
+        supervisor.setMustPlaceItem(false);
         super.init();
+//        supervisor.getPeople().newQuest(new LearnToCooperate(null, supervisor.getPeople(), Difficulty.Easy));
+//        supervisor.getPeople().newQuest(new MyFirstYear(supervisor.getPeople(), null, Difficulty.Easy));
         nm.setOnPNJDetected((name, mob, x, y) -> {
             Character c = new Character(gs, mob);
             pnjs.add(c);
@@ -101,6 +102,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             c.setTileWidth(tileWidth);
             c.setTileHeight(tileHeight);
         });
+        nm.setOnItemDetected((item, x, y) -> addItemToMap(item, new Point(x, y)));
         if (nm.isTheServer()) {
             if (nm.getMustSendPNJPos() != null) {
                 sendPNJsPositions(nm.getMustSendPNJPos());
@@ -142,6 +144,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             ((People)playerTwo.getCharacteristics()).upLevel();
             timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
+        nm.setOnGetItem((map) -> {
+
+        });
+
 
         goodPuzzlePathColor = new Color(0x2E7D32);
         badPuzzlePathColor = new Color(0xB71C1C);
@@ -335,5 +341,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         super.setSecondPlayerPosition(mapPos);
         if (mazeMode)
             player.setMapPos(mapPos);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        nm.close();
     }
 }

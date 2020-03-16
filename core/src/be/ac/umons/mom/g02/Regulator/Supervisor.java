@@ -156,6 +156,10 @@ public  abstract class Supervisor implements Observer
      * The instance of the regulator class*
      */
     protected Regulator regulator;
+    /**
+     * Boolean representing if the items must be added to the map.
+     */
+    protected boolean mustPlaceItem = true;
 
 
     /***/
@@ -374,7 +378,7 @@ public  abstract class Supervisor implements Observer
     /***/
     protected void placeItem()
     {
-        if (playGraphic != null)
+        if (playGraphic != null && mustPlaceItem)
         {
             for (Maps maps : Maps.values())
             {
@@ -714,4 +718,10 @@ public  abstract class Supervisor implements Observer
         playerOne.reinitialization();
     }
 
+    /**
+     * @param mustPlaceItem If the items must be added to the map.
+     */
+    public void setMustPlaceItem(boolean mustPlaceItem) {
+        this.mustPlaceItem = mustPlaceItem;
+    }
 }
