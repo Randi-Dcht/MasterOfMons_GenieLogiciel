@@ -13,6 +13,7 @@ import com.badlogic.gdx.Gdx;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 import java.util.List;
 import java.util.*;
 
@@ -139,7 +140,7 @@ public class NetworkManager {
     /**
      * What to do when the second player position has been received.
      */
-    protected PositionRunnable onPositionDetected;
+    protected OnPositionDetectedRunnable onPositionDetected;
     /**
      * What to do when the second player is in pause.
      */
@@ -315,8 +316,9 @@ public class NetworkManager {
             acceptThread.interrupt();
         acceptThread = new Thread(() -> {
             try {
-                if (serverSocket == null)
-                    serverSocket = new ServerSocket(PORT);
+                if (serverSocket != null)
+                    serverSocket.close();
+                serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
                 sendMagicNumber();
             } catch (IOException e) {
@@ -881,6 +883,7 @@ public class NetworkManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        connected = false;
     }
 
     /**
@@ -950,7 +953,7 @@ public class NetworkManager {
     /**
      * @param onPositionDetected What to do when the second player position has been received.
      */
-    public void setOnPositionDetected(PositionRunnable onPositionDetected) {
+    public void setOnPositionDetected(OnPositionDetectedRunnable onPositionDetected) {
         this.onPositionDetected = onPositionDetected;
     }
 
@@ -1073,7 +1076,7 @@ public class NetworkManager {
     /**
      * Represent the runnable executed when the second player position has been received.
      */
-    public interface PositionRunnable {
+    public interface OnPositionDetectedRunnable {
         void run(Point pos);
     }
 

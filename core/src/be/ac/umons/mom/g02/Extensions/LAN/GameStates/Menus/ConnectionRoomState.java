@@ -54,6 +54,7 @@ public class ConnectionRoomState extends MenuState {
                 ogds.setText(gs.getStringFromId("wrongOne"));
                 ogds.addAnswer("OK");
             });
+
         } catch (SocketException e) {
             e.printStackTrace();
             return;

@@ -834,4 +834,8 @@ public class PlayingState extends GameState implements Observer {
         player.setPosX(pos.x);
         player.setPosY(pos.y);
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

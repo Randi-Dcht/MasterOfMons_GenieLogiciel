@@ -49,7 +49,6 @@ public class WaitingRoomState extends MenuState {
                 ogds.addAnswer("OK");
             });
             nm.setOnConnected(() -> {
-                nm.startListeningForServer();
                 gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
             });
         } catch (SocketException e) {
