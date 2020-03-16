@@ -1,8 +1,10 @@
 package be.ac.umons.mom.g02.Objects.Items;
 
+import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.io.Serializable;
 
@@ -59,14 +61,17 @@ public abstract class Items implements Serializable, FrameTime
      * This method allows to said when people takes the items
      * @param pp is the people
      */
-    public abstract void used(People pp);
+    public void used(People pp)
+    {
+        Supervisor.getSupervisor().getEvent().notify(new UseItem(this));
+    }
 
 
     /**
      * This method allows to said if the items is obsolete
      * @return number
      */
-    public abstract double getObsolete();
+    public abstract boolean getObsolete();
 
 
     /**

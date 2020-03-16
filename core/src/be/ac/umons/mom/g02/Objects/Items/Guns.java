@@ -8,4 +8,6 @@ public interface Guns
     int addDamageGun();
 
     void useGun();
+
+    void setBall(int cmb);
 }

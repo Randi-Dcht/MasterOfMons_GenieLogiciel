@@ -42,8 +42,8 @@ public class Flower extends Items
      * @return number
      */
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return true;
     }
 }

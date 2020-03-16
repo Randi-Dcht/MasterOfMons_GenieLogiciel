@@ -14,16 +14,17 @@ public class Sportswear extends Items {
     }
 
     @Override
-    public void used(People pp){
+    public void used(People pp)
+    {
+        super.used(pp);
         pp.setSpeed(2); //on double sa vitesse quand il possede cet item
         visibly();
         pp.pushObject(this);
-        SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(this));
     }
 
     @Override
-    public double getObsolete() {
-        return 1 ;
+    public boolean getObsolete() {
+        return true ;
     }
     // Il ne me faut pas cette methode car ça reste tout le temps vsible et ça ne casse pas
 

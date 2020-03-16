@@ -5,6 +5,8 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 public class Gun extends Items implements Guns
 {
 
+    private int ball = 7;
+
     /**
      * this constructor define the items
      */
@@ -19,10 +21,18 @@ public class Gun extends Items implements Guns
      * @param pp is the people
      */
     @Override
-    public void used(People pp) {
-
+    public void used(People pp)
+    {
+        super.used(pp);
+        ball--;
     }
 
+
+    @Override
+    public void setBall(int ball)
+    {
+        this.ball += ball;
+    }
 
     /**
      * This method allows to decrease the life of this items
@@ -40,8 +50,8 @@ public class Gun extends Items implements Guns
      * @return number
      */
     @Override
-    public double getObsolete() {
-        return 0;
+    public boolean getObsolete() {
+        return ball <= 0;
     }
 
 
@@ -49,7 +59,7 @@ public class Gun extends Items implements Guns
     @Override
     public int addDamageGun()
     {
-        return 0;
+        return 2;
     }
 
     @Override

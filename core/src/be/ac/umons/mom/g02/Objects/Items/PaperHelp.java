@@ -29,8 +29,8 @@ public class PaperHelp extends Items
 
     /***/
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return true;
     }
 }

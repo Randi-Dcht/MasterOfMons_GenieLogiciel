@@ -50,9 +50,9 @@ public class TheKillBoot extends Items implements Guns
      * @return number
      */
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return true;
     }
 
 
@@ -65,6 +65,11 @@ public class TheKillBoot extends Items implements Guns
 
     @Override
     public void useGun() {
+
+    }
+
+    @Override
+    public void setBall(int cmb) {
 
     }
 }

@@ -33,8 +33,8 @@ public class TNT extends Items
 
     /***/
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return true;
     }
 }

@@ -14,13 +14,6 @@ public class OldExam extends Items
 
     /***/
     @Override
-    public void used(People pp)
-    {
-    }
-
-
-    /***/
-    @Override
     public void update(double time)
     {
     }
@@ -28,8 +21,8 @@ public class OldExam extends Items
 
     /***/
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return true;
     }
 }

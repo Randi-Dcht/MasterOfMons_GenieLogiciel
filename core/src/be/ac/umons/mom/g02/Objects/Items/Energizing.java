@@ -10,6 +10,7 @@ public class Energizing extends Items
 {
     private double obsolete = 31536000;
     private double reVisible = 0;//TODO for all item
+    private boolean useItem = false;
 
 
     /***/
@@ -23,9 +24,10 @@ public class Energizing extends Items
     @Override
     public void used(People pp)
     {
+        super.used(pp);
         pp.addEnergy(25);//TODO check
         visibly();
-        Supervisor.getSupervisor().getEvent().notify(new UseItem(this));
+        useItem = true;
     }
 
 
@@ -33,7 +35,8 @@ public class Energizing extends Items
     @Override
     public void update(double time) //TODO adpater pour être revisible
     {
-        obsolete = obsolete - time;
+        if (useItem)
+            obsolete -= time;
         if(obsolete <= 0)
             visibly();
     }
@@ -41,9 +44,9 @@ public class Energizing extends Items
 
     /***/
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return obsolete;
+        return obsolete<=0;
     }
 
 }

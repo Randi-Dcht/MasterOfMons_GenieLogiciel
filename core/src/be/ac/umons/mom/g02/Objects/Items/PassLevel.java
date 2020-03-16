@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 
 public class PassLevel extends Items
 {
+    private boolean use = false;
 
     /***/
     public PassLevel()
@@ -16,6 +17,9 @@ public class PassLevel extends Items
     @Override
     public void used(People pp)
     {
+        super.used(pp);
+        pp.upLevel();
+        use = false;
     }
 
     public int buy()
@@ -33,8 +37,8 @@ public class PassLevel extends Items
 
     /***/
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return !use;
     }
 }

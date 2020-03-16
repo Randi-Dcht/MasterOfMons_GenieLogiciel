@@ -18,17 +18,6 @@ public class Pen extends Items
 
 
     /**
-     * This method allows to said when people takes the items
-     * @param pp is the people
-     */
-    @Override
-    public void used(People pp)
-    {
-
-    }
-
-
-    /**
      * This method allows to decrease the life of this items
      * @param time is the time between two frames
      */
@@ -44,8 +33,8 @@ public class Pen extends Items
      * @return number
      */
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return true;
     }
 }

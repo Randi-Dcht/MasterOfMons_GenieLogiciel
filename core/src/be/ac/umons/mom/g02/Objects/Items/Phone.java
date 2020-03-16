@@ -16,37 +16,40 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 public class Phone extends Items
 {
 
-  /**
-   * This constructor define the phone item
-   */
-  public Phone()
-  {
-    super("Phone");
-  }
+    private double batteryEnergizing = 100;
+
+    /**
+     * This constructor define the phone item
+     */
+    public Phone()
+    {
+        super("Phone");
+    }
 
 
-  /**
-   * This method allows to define the help of this items to the people
-   * @param pp is the people
-   */
-  public void used(People pp)
-  {
-    pp.addFriend(new Mobile("FriendRandom",pp.getBloc(), MobileType.Lambda, Actions.Never, NameDialog.Lambda));
-    Supervisor.getSupervisor().getEvent().notify(new UseItem(this));
-  }
+    /**
+     * This method allows to define the help of this items to the people
+     * @param pp is the people
+     */
+    public void used(People pp)
+    {
+        super.used(pp);
+        pp.addFriend(new Mobile("FriendRandom",pp.getBloc(), MobileType.Lambda, Actions.Never, NameDialog.Lambda));
+        batteryEnergizing -= 25;
+    }
 
 
-  /***/
-  @Override
-  public void update(double time)//TODO check if use
-  {
+    /***/
+    @Override
+    public void update(double time)//TODO check if use
+    {
 
-  }
+    }
 
 
-  /***/
-  public double getObsolete()//TODO idem
-  {
-    return 0;
-  }
+    /***/
+    public boolean getObsolete()
+    {
+        return batteryEnergizing <= 0;
+    }
 }

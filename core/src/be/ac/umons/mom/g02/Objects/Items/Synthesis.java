@@ -17,18 +17,17 @@ public class Synthesis extends Items {
     }
 
     @Override
-    public void used(People pp) {
+    public void used(People pp)
+    {
+        super.used(pp);
         pp.upLevel();
         visibly();
-        SuperviserNormally.getSupervisor().getEvent().notify(new UseItem(this));
-
-
     }
 
 
     @Override
-    public double getObsolete() {
-        return obsolete;
+    public boolean getObsolete() {
+        return true;
     }
 
     @Override

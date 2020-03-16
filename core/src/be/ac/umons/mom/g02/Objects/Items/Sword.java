@@ -2,7 +2,7 @@ package be.ac.umons.mom.g02.Objects.Items;
 
 import be.ac.umons.mom.g02.Objects.Characters.People;
 
-public class Sword extends Items
+public class Sword extends Items implements Guns
 {
 
     /***/
@@ -33,8 +33,26 @@ public class Sword extends Items
 
     /***/
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
+    {
+        return true;
+    }
+
+    @Override
+    public int addDamageGun()
     {
         return 0;
+    }
+
+    @Override
+    public void useGun()
+    {
+
+    }
+
+    @Override
+    public void setBall(int cmb)
+    {
+
     }
 }

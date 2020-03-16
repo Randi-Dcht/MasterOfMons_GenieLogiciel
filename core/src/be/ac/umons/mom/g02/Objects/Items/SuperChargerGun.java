@@ -16,6 +16,10 @@ public class SuperChargerGun extends Items
     @Override
     public void used(People pp)
     {
+        if (pp.howGun())
+        {
+            pp.getGun().setBall(7);
+        }
     }
 
     public int buy()
@@ -33,8 +37,8 @@ public class SuperChargerGun extends Items
 
     /***/
     @Override
-    public double getObsolete()
+    public boolean getObsolete()
     {
-        return 0;
+        return true;
     }
 }

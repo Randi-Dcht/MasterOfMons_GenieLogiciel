@@ -391,7 +391,7 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public boolean howGun()
     {
-        return (gun != null && gun.getObsolete()!=0);
+        return (gun != null && gun.getObsolete());
     }
 
 
