@@ -502,7 +502,7 @@ public class PlayingState extends GameState implements Observer {
         if (rectangleMapObject == null)
             return;
         try {
-            SuperviserNormally.getSupervisor().analyseIdMap(rectangleMapObject.getName());
+            supervisor.analyseIdMap(rectangleMapObject.getName());
         } catch (Exception e) {
             e.printStackTrace();
             // TODO : Handle the exception
