@@ -89,6 +89,7 @@ public class Character extends OnMapObject {
     public Character(GraphicalSettings gs, be.ac.umons.mom.g02.Objects.Characters.Character characteristics) {
         super(gs);
         arc = new AttackRangeCircle(gs, this);
+        arc.setAttackRange(200);
         assetManager = gs.getAssetManager();
         this.characteristics = characteristics;
         lifeBar = new LifeBar(gs);
@@ -117,13 +118,14 @@ public class Character extends OnMapObject {
             sr.ellipse(x, y, width, height / 4);
             sr.end();
         }
+        arc.draw(new Point(x + width / 2, y));
 
         batch.begin();
         batch.draw(getTexture(),  x, y, width, height);
         batch.end();
 
         lifeBar.setValue((int)getCharacteristics().getActualLife());
-        lifeBar.setMaxValue((int)getCharacteristics().lifeMax());
+        lifeBar.setMaxValue((int)getCharacteristics().lifeMax()); // Draw arc
 
         if (lifeBar.getPercent() < 1) {
             lifeBar.draw(batch, x, y + height, width, height / 5);
@@ -190,7 +192,8 @@ public class Character extends OnMapObject {
 
 
     public void expandAttackCircle() {
-        arc.expand();
+        if (! isRecovering())
+            arc.expand();
     }
 
     public boolean isRecovering() {

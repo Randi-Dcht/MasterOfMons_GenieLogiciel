@@ -17,27 +17,27 @@ public class AttackRangeCircle {
     /**
      * The graphical's settings.
      */
-    GraphicalSettings gs;
+    protected GraphicalSettings gs;
     /**
      * Allow to draw shapes.
      */
-    ShapeRenderer sr;
+    protected ShapeRenderer sr;
     /**
      * The character on which the circle is bound.
      */
-    Character character;
+    protected Character character;
     /**
      * The character's attack range
      */
-    public int attackRange = 200;
+    protected int attackRange = 200;
     /**
      * The attack range to show when the circle is animated.
      */
-    public int animatingAttackRange = 0;
+    protected int animatingAttackRange = 0;
     /**
      * If the character is recovering from his attack.
      */
-    public boolean isRecovering = false;
+    protected boolean isRecovering = false;
 
     /**
      * @param gs The game's graphical settings.
@@ -55,6 +55,8 @@ public class AttackRangeCircle {
      * @param pos The position.
      */
     public void draw(Point pos) {
+        if (animatingAttackRange <= 0)
+            return;
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -71,10 +73,13 @@ public class AttackRangeCircle {
         sr.setColor(gs.getAttackRangeColor());
         DoubleAnimation da = new DoubleAnimation(0, attackRange, 200);
         isRecovering = true;
-        AnimationManager.getInstance().remove("AttackRangeCircleExpandAnim");
-        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleExpandAnim", da);
-        da.setEndingAction(() -> retract());
-        da.setRunningAction(() -> setAnimatingAttackRange(da.getActual().intValue()));
+        AnimationManager.getInstance().remove("AttackRangeCircleExpandAnim" + character.getCharacteristics().getName());
+        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleExpandAnim" + character.getCharacteristics().getName(), da);
+        da.setEndingAction(this::retract);
+        da.setRunningAction(() -> {
+            animatingAttackRange = da.getActual().intValue();
+//            Gdx.app.log("AttackRangeCircle", "attackRange=" + animatingAttackRange);
+        });
     }
 
     /**
@@ -82,9 +87,9 @@ public class AttackRangeCircle {
      */
     public void retract() {
         DoubleAnimation da = new DoubleAnimation(attackRange, 0, 200);
-        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleUnexpandAnim", da);
+        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleRetractingAnim" + character.getCharacteristics().getName(), da);
         da.setEndingAction(() -> isRecovering = false);
-        da.setRunningAction(() -> setAnimatingAttackRange(da.getActual().intValue()));
+        da.setRunningAction(() -> animatingAttackRange = da.getActual().intValue());
         sr.setColor(gs.getRecoveringAttackRangeColor());
     }
 
@@ -100,13 +105,6 @@ public class AttackRangeCircle {
      */
     public void setAttackRange(int attackRange) {
         this.attackRange = attackRange;
-    }
-
-    /**
-     * @param animatingAttackRange The character's attack range to show when animating.
-     */
-    public void setAnimatingAttackRange(int animatingAttackRange) {
-        this.animatingAttackRange = animatingAttackRange;
     }
 
     /**

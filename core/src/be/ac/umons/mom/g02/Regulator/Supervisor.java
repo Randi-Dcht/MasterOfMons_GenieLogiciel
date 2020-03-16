@@ -630,8 +630,8 @@ public  abstract class Supervisor implements Observer
         {
             ((Mobile) attacker).letsGo(victim);
             memoryMobile = (Mobile)attacker;
-            //if (graphicalMob.containsKey(memoryMobile))
-            //    graphicalMob.get(memoryMobile).expandAttackCircle();
+            if (graphicalMob.containsKey(memoryMobile))
+                graphicalMob.get(memoryMobile).expandAttackCircle();
         }
         if(victim.getType().equals(Character.TypePlayer.Computer) && first && ((Character)victim).isLiving())
             attackMethod(victim,attacker,false);
