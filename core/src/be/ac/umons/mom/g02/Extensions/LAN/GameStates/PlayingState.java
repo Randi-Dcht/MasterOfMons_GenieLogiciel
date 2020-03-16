@@ -90,6 +90,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             secondPlayerMap = map;
             mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
         });
+
+        supervisor.setMustPlaceItem(false);
         super.init();
         nm.setOnPNJDetected((name, mob, x, y) -> {
             Character c = new Character(gs, mob);
@@ -101,6 +103,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             c.setTileWidth(tileWidth);
             c.setTileHeight(tileHeight);
         });
+        nm.setOnItemDetected((item, x, y) -> addItemToMap(item, new Point(x, y)));
         if (nm.isTheServer()) {
             if (nm.getMustSendPNJPos() != null) {
                 sendPNJsPositions(nm.getMustSendPNJPos());
@@ -145,6 +148,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             ((People)playerTwo.getCharacteristics()).upLevel();
             timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
+        nm.setOnGetItem((map) -> {
+            // TODO
+        });
+
 
         goodPuzzlePathColor = new Color(0x2E7D32);
         badPuzzlePathColor = new Color(0xB71C1C);
@@ -338,5 +345,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         super.setSecondPlayerPosition(mapPos);
         if (mazeMode)
             player.setMapPos(mapPos);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        nm.close();
     }
 }
