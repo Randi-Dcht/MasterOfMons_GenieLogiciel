@@ -1,4 +1,4 @@
-package be.ac.umons.mom.g02.Extensions.Dual.Quest;
+package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.Difficulty;
@@ -13,12 +13,15 @@ import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 
 import java.util.ArrayList;
 
-public class DisplacementMons extends MasterQuest
+public class MovingInMons extends MasterQuest
 {
     final UnderQuest[] underQuests = {};
-    public DisplacementMons(People people, MasterQuest before,Difficulty difficulty)
+    protected People playerTwo;
+
+    public MovingInMons(People playerOne,People playerTwo, Difficulty difficulty)
     {
-        super(before,people, Bloc.Extend,difficulty);
+        super(null,playerOne, Bloc.Extend,difficulty);
+        this.playerTwo = playerTwo;
         addUnderQuest(underQuest);
     }
 
@@ -29,12 +32,18 @@ public class DisplacementMons extends MasterQuest
     }
 
 
+
     @Override
     public String getName()
     {
         return "Displacement in the city of Mons";
     }
 
+
+    public void meetOther(People people)
+    {
+
+    }
 
     @Override
     public String question()

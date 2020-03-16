@@ -1,13 +1,14 @@
-package be.ac.umons.mom.g02.Extensions.Dual.Quest;
+package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 
-public class TakeFlag extends UnderQuest
+public class BattlePeople extends UnderQuest
 {
-    public TakeFlag(String name, double max, Quest master, People people)
+
+    public BattlePeople(String name, double max, Quest master, People people)
     {
         super(name, max, master,people);
     }
@@ -16,6 +17,7 @@ public class TakeFlag extends UnderQuest
     public void evenActivity(Notification notify) {
 
     }
+
 
 
     @Override

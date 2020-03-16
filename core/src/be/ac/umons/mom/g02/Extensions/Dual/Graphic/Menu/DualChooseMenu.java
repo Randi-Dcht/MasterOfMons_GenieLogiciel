@@ -47,4 +47,7 @@ public class DualChooseMenu extends MenuState
                         new MenuItem(gs.getStringFromId("quit")          ,MenuItemType.Button,() -> Gdx.app.exit())
                 });
     }
+
+    private void afterChoose()
+    {}
 }

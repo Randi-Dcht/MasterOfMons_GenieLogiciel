@@ -9,7 +9,8 @@ package be.ac.umons.mom.g02.Enums;
 public enum NameDialog
 {
     Lambda("Conversation.Lambda.id"),
-    Move("Conversation.Move.id");
+    Move("Conversation.Move.id"),
+    Seller("Conversation.Seller.id");
 
     /**
      * The name of the file with conversation id

@@ -1,8 +1,9 @@
-package be.ac.umons.mom.g02.Extensions.Dual.Quest;
+package be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator;
 
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MovingInMons;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;

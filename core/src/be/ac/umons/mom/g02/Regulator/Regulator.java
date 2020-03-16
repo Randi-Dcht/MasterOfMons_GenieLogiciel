@@ -72,7 +72,7 @@ public class Regulator implements Observer
         this.player = people;
         this.time   = time;
         this.manager= Supervisor.getSupervisor();
-        manager.getEvent().add(this,Events.ChangeHour,Events.PlaceInMons,Events.MeetOther,Events.EntryPlace,Events.ChangeQuest,Events.UseItems);
+        manager.getEvent().add(this,Events.ChangeHour,Events.PlaceInMons,Events.MeetOther,Events.EntryPlace,Events.ChangeQuest,Events.UseItems,Events.LowSomething);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
         createPlaceAssociation();
@@ -120,6 +120,9 @@ public class Regulator implements Observer
     }
 
 
+    /**
+     * This method is called when the all quest is finished
+     */
     public void finishQuest()
     {
         push("FinishQuest");
