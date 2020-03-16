@@ -7,14 +7,13 @@ import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * Manage all the networking for the extension LAN.
@@ -130,8 +129,6 @@ public class NetworkManager {
 
     protected OnMagicNumberReceivedRunnable onMagicNumberReceived;
     protected IntRunnable onMagicNumberSent;
-
-    protected Runnable onWrongMagicNumber;
     /**
      * What to do when the second player informations has been received.
      */
@@ -139,7 +136,7 @@ public class NetworkManager {
     /**
      * What to do when the second player position has been received.
      */
-    protected PositionRunnable onPositionDetected;
+    protected OnPositionDetectedRunnable onPositionDetected;
     /**
      * What to do when the second player is in pause.
      */
@@ -153,17 +150,9 @@ public class NetworkManager {
      */
     protected OnPNJDetectedRunnable onPNJDetected;
     /**
-     * What to do when the informations of an item has been received.
-     */
-    protected OnItemDetectedRunnable onItemDetected;
-    /**
      * What to do when the second player ask informations about the PNJs on the map.
      */
     protected StringRunnable onGetPNJ;
-    /**
-     * What to do when the second player ask informations about the items on the map.
-     */
-    protected StringRunnable onGetItem;
     /**
      * What to do when the second player hit a PNJ.
      */
@@ -187,10 +176,6 @@ public class NetworkManager {
      * On which map the PNJ's informations has been asked.
      */
     protected String mustSendPNJPos;
-    /**
-     * On which map the item's informations has been asked.
-     */
-    protected String mustSendItemPos;
     /**
      * The server on which we must connect.
      */
@@ -315,8 +300,9 @@ public class NetworkManager {
             acceptThread.interrupt();
         acceptThread = new Thread(() -> {
             try {
-                if (serverSocket == null)
-                    serverSocket = new ServerSocket(PORT);
+                if (serverSocket != null)
+                    serverSocket.close();
+                serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();
                 sendMagicNumber();
             } catch (IOException e) {
@@ -382,9 +368,7 @@ public class NetworkManager {
             if (socket.getInputStream().read() == 0) {
                 initConnection();
                 return true;
-            } else
-                if(onWrongMagicNumber != null)
-                    Gdx.app.postRunnable(onWrongMagicNumber);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -547,14 +531,6 @@ public class NetworkManager {
     public void sendPNJInformation(Character mob) throws IOException {
         sendOnTCP(String.format("PNJ#%s#%d#%d#%s", mob.getCharacteristics().getName(), mob.getPosX(), mob.getPosY(), objectToString(mob.getCharacteristics())));
     }
-    /**
-     * Send the item's information on the TCP socket.
-     * @param item The item to send
-     * @throws IOException If the item couldn't be serialized.
-     */
-    public void sendPNJInformation(Items item, Point pos) throws IOException {
-        sendOnTCP(String.format("Item#%d#%d#%s", pos.x, pos.y, objectToString(item)));
-    }
 
     /**
      * Send the player positions.
@@ -600,13 +576,6 @@ public class NetworkManager {
      */
     public void askPNJsPositions(String map) {
         sendOnTCP("getPNJsPos#" + map);
-    }
-    /**
-     * Asks for all items informations and positions.
-     * @param map The map on which the items must be.
-     */
-    public void askItemsPositions(String map) {
-        sendOnTCP("getItemsPos#" + map);
     }
 
     public void sendEndOfMasterQuest() {
@@ -697,32 +666,11 @@ public class NetworkManager {
                     Gdx.app.error("NetworkManager", "Error detected while parsing PNJs position (ignoring message)", e);
                 }
                 break;
-            case "Item": // Add an item to the map
-                try {
-                    int itemX = Integer.parseInt(tab[1]);
-                    int itemY = Integer.parseInt(tab[2]);
-                    Items item = (Items) objectFromString(tab[3]);
-                    if (onItemDetected != null)
-                        Gdx.app.postRunnable(() -> onItemDetected.run(item, itemX, itemY));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing items position (ignoring message)", e);
-                }
-                break;
             case "getPNJsPos": // Get all PNJs and their positions
                 if (onGetPNJ != null)
                     Gdx.app.postRunnable(() -> onGetPNJ.run(tab[1].trim()));
                 else
                     mustSendPNJPos = tab[1].trim();
-                break;
-            case "getItemsPos": // Get all PNJs and their positions
-                if (onGetItem != null)
-                    Gdx.app.postRunnable(() -> onGetItem.run(tab[1].trim()));
-                else
-                    mustSendItemPos = tab[1].trim();
                 break;
             case "hitPNJ": // A PNJ has been hit by the other player.
                 if (onHitPNJ != null) {
@@ -881,6 +829,7 @@ public class NetworkManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        connected = false;
     }
 
     /**
@@ -936,10 +885,6 @@ public class NetworkManager {
         this.onMagicNumberReceived = onMagicNumberReceived;
     }
 
-    public void setOnWrongMagicNumber(Runnable onWrongMagicNumber) {
-        this.onWrongMagicNumber = onWrongMagicNumber;
-    }
-
     /**
      * @param onPlayerDetected What to do when the second player informations has been received.
      */
@@ -950,7 +895,7 @@ public class NetworkManager {
     /**
      * @param onPositionDetected What to do when the second player position has been received.
      */
-    public void setOnPositionDetected(PositionRunnable onPositionDetected) {
+    public void setOnPositionDetected(OnPositionDetectedRunnable onPositionDetected) {
         this.onPositionDetected = onPositionDetected;
     }
 
@@ -959,13 +904,6 @@ public class NetworkManager {
      */
     public void setOnPNJDetected(OnPNJDetectedRunnable onPNJDetected) {
         this.onPNJDetected = onPNJDetected;
-    }
-
-    /**
-     * @param onItemDetected What to do when the informations of an item has been received.
-     */
-    public void setOnItemDetected(OnItemDetectedRunnable onItemDetected) {
-        this.onItemDetected = onItemDetected;
     }
 
     /**
@@ -980,13 +918,6 @@ public class NetworkManager {
      */
     public void setOnGetPNJ(StringRunnable onGetPNJ) {
         this.onGetPNJ = onGetPNJ;
-    }
-
-    /**
-     * @param onGetItem What to do when the second player ask informations about the items on the map.
-     */
-    public void setOnGetItem(StringRunnable onGetItem) {
-        this.onGetItem = onGetItem;
     }
 
     /**
@@ -1063,17 +994,11 @@ public class NetworkManager {
     public interface OnPNJDetectedRunnable {
         void run(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y);
     }
-    /**
-     * Represent the runnable executed when the informations of a item has been received.
-     */
-    public interface OnItemDetectedRunnable {
-        void run(Items item, int x, int y);
-    }
 
     /**
      * Represent the runnable executed when the second player position has been received.
      */
-    public interface PositionRunnable {
+    public interface OnPositionDetectedRunnable {
         void run(Point pos);
     }
 
