@@ -2,14 +2,13 @@ package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
 import be.ac.umons.mom.g02.Animations.Animation;
 import be.ac.umons.mom.g02.Animations.DoubleAnimation;
+import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -108,9 +107,9 @@ public class AgendaShower extends Control {
 
     @Override
     public void handleInput() {
-        if (gim.isKey(Input.Keys.A, KeyStatus.Pressed))
+        if (gim.isKey("showHideAgenda", KeyStatus.Pressed))
             show();
-        else if (gim.isKey(Input.Keys.A, KeyStatus.UnPressed))
+        else if (gim.isKey("showHideAgenda", KeyStatus.UnPressed))
             hide();
     }
 
