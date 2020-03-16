@@ -60,7 +60,7 @@ public class StringAnimation extends Animation<String> {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return actual.equals(to);
     }
 
     /**
