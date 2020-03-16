@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The state where we wait for the second player to connect. (Broadcasting the information of this machine)

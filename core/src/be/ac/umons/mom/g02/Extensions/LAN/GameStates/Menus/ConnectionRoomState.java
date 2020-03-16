@@ -48,11 +48,8 @@ public class ConnectionRoomState extends MenuState {
                 ogds.addNonInternationalizedAnswer("" + l, () -> checkMagicNumber(l));
                 ogds.addNonInternationalizedAnswer("" + m, () -> checkMagicNumber(m));
             });
-            nm.setOnConnected(() -> gsm.removeAllStateAndAdd(FinalisingConnectionState.class));
-            nm.setOnWrongMagicNumber(() -> {
-                OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
-                ogds.setText(gs.getStringFromId("wrongOne"));
-                ogds.addAnswer("OK");
+            nm.setOnConnected(() -> {
+                gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
             });
 
         } catch (SocketException e) {
