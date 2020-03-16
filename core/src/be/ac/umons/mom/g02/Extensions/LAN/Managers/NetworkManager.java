@@ -129,6 +129,8 @@ public class NetworkManager {
 
     protected OnMagicNumberReceivedRunnable onMagicNumberReceived;
     protected IntRunnable onMagicNumberSent;
+
+    protected Runnable onWrongMagicNumber;
     /**
      * What to do when the second player informations has been received.
      */
@@ -312,50 +314,53 @@ public class NetworkManager {
     }
 
     protected void sendMagicNumber() {
-        new Thread(() -> {
-            int magicNumber = new Random().nextInt(256);
-            try {
-                Random rand = new Random();
-                int pos = rand.nextInt(5);
-                int [] magicNumbers = new int[5];
-                magicNumbers[pos] = magicNumber;
-                for (int i = 0; i < 5; i++) {
-                    if (i == pos)
-                        continue;
-                    int j = rand.nextInt(256);
-                    magicNumbers[i] = j;
-                }
-                for (int i = 0; i < 5; i++)
-                    socket.getOutputStream().write(magicNumbers[i]);
-                Gdx.app.postRunnable(() -> onMagicNumberSent.run(magicNumber));
-                int chosenOne = socket.getInputStream().read();
-                if (chosenOne == magicNumber) {
-                    socket.getOutputStream().write(0);
-                    isTheServer = true;
-                    setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
-                    initConnection();
-                } else
-                    socket.getOutputStream().write(1);
-            } catch (IOException e) {
-                e.printStackTrace();
+        int magicNumber = new Random().nextInt(256);
+        try {
+            Random rand = new Random();
+            int pos = rand.nextInt(5);
+            int [] magicNumbers = new int[5];
+            magicNumbers[pos] = magicNumber;
+            for (int i = 0; i < 5; i++) {
+                if (i == pos)
+                    continue;
+                int j = rand.nextInt(256);
+                magicNumbers[i] = j;
             }
-        }).start();
+            for (int i = 0; i < 5; i++)
+                socket.getOutputStream().write(magicNumbers[i]);
+            Gdx.app.postRunnable(() -> onMagicNumberSent.run(magicNumber));
+            int chosenOne = socket.getInputStream().read();
+            if (chosenOne == magicNumber) {
+                socket.getOutputStream().write(0);
+                isTheServer = true;
+                setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
+                initConnection();
+            } else {
+                socket.getOutputStream().write(1);
+                socket.close();
+                acceptConnection();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void waitMagicNumber() {
-        new Thread(() ->
-        Gdx.app.postRunnable(() -> {
+        int[] numbers = new int[5];
+        for (int i = 0; i < 5; i++) {
             try {
-                onMagicNumberReceived.run(
-                        socket.getInputStream().read(),
-                        socket.getInputStream().read(),
-                        socket.getInputStream().read(),
-                        socket.getInputStream().read(),
-                        socket.getInputStream().read());
+                numbers[i] = socket.getInputStream().read();
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
-        })).start();
+        }
+        Gdx.app.postRunnable(() -> onMagicNumberReceived.run(
+                numbers[0],
+                numbers[1],
+                numbers[2],
+                numbers[3],
+                numbers[4]));
     }
 
     public boolean checkMagicNumber(int i) { // TODO : Bug with the wrong one
@@ -364,7 +369,9 @@ public class NetworkManager {
             if (socket.getInputStream().read() == 0) {
                 initConnection();
                 return true;
-            }
+            } else
+                if(onWrongMagicNumber != null)
+                    Gdx.app.postRunnable(onWrongMagicNumber);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -878,6 +885,10 @@ public class NetworkManager {
 
     public void setOnMagicNumberReceived(OnMagicNumberReceivedRunnable onMagicNumberReceived) {
         this.onMagicNumberReceived = onMagicNumberReceived;
+    }
+
+    public void setOnWrongMagicNumber(Runnable onWrongMagicNumber) {
+        this.onWrongMagicNumber = onWrongMagicNumber;
     }
 
     /**

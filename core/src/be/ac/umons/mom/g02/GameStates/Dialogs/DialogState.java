@@ -103,8 +103,6 @@ public abstract class DialogState extends GameState {
             }
             if (gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed)) {
                 buttons.get(selectedButtonIndex).getOnClick().run();
-                if (mustQuitWhenAnswered)
-                    gsm.removeFirstState();
             }
         }
     }
@@ -144,8 +142,8 @@ public abstract class DialogState extends GameState {
         b.setOnClick(() -> {
             if (run != null)
                 run.run();
-            if (mustQuitWhenAnswered && ! gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
-                gsm.removeFirstState();
+            if (mustQuitWhenAnswered)
+                gsm.removeFirstStateFromStack();
         });
         b.setFont(gs.getSmallFont());
         buttons.add(b);
