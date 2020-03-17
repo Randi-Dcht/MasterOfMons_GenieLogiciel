@@ -1,6 +1,16 @@
 package be.ac.umons.mom.g02.Regulator;
 
-import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Difficulty;
+import be.ac.umons.mom.g02.Enums.Gender;
+import be.ac.umons.mom.g02.Enums.Lesson;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.Enums.State;
+import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
@@ -10,7 +20,6 @@ import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
 import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
 import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
@@ -37,7 +46,6 @@ import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
