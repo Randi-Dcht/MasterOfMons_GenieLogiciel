@@ -42,7 +42,7 @@ public class Player extends Character {
      * @param gs Game's graphical settings
      */
     public Player(GraphicalSettings gs) {
-        super(gs, Supervisor.getSupervisor().getPeople());
+        super(gs, Supervisor.getPeople());
     }
 
     /**

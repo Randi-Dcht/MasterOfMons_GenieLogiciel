@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
@@ -38,8 +39,9 @@ public class FinalisingConnectionState extends MenuState {
         nm.setOnPlayerDetected(secondPlayer -> {
             LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
             ls.setAfterLoadingState(PlayingState.class);
+            SupervisorMultiPlayer.setPlayerTwo(secondPlayer);
         });
-        nm.sendPlayerInformation(Supervisor.getSupervisor().getPeople());
+        nm.sendPlayerInformation(SupervisorMultiPlayer.getPeople());
     }
 
     @Override

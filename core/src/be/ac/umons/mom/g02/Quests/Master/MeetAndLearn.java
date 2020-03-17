@@ -103,7 +103,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMeetLearn");
+        return SuperviserNormally.getGraphic().getStringFromId("nameMeetLearn");
     }
 
 

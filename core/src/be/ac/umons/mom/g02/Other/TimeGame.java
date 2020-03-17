@@ -52,7 +52,7 @@ public class TimeGame implements Observer
         this.min  = date.getMin();
         NByear    = leap(date.getYear());
         second    = 0;
-        Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+        Supervisor.getEvent().add(Events.ChangeQuest,this);
     }
 
 
@@ -113,7 +113,7 @@ public class TimeGame implements Observer
     {
         if(( day = (day+1)%years[NByear][NBmonth] )== 0)
             changeMonth();
-        Supervisor.getSupervisor().getEvent().notify(new ChangeDay());
+        Supervisor.getEvent().notify(new ChangeDay());
     }
 
 
@@ -124,7 +124,7 @@ public class TimeGame implements Observer
     {
         if((NBmonth =(NBmonth+1)%timeYr) == 0)
             changeYear();
-        Supervisor.getSupervisor().getEvent().notify(new ChangeMonth());
+        Supervisor.getEvent().notify(new ChangeMonth());
     }
 
 
@@ -169,7 +169,7 @@ public class TimeGame implements Observer
     {
         if((hour = (hour+1)%timeHour)==0)
             changeDay();
-        Supervisor.getSupervisor().getEvent().notify(new ChangeHour());
+        Supervisor.getEvent().notify(new ChangeHour());
     }
 
 
@@ -223,9 +223,9 @@ public class TimeGame implements Observer
         day  = (day+memH/24+addDay)%years[NByear][NBmonth];
 
         if(addHour != 0) //TODO
-            Supervisor.getSupervisor().getEvent().notify(new ChangeHour());
+            Supervisor.getEvent().notify(new ChangeHour());
         if(addDay != 0) //TODO
-            Supervisor.getSupervisor().getEvent().notify(new ChangeDay());
+            Supervisor.getEvent().notify(new ChangeDay());
     }
 
 

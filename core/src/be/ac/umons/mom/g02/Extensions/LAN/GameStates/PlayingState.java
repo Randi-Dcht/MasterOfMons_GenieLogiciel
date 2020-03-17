@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Events;
@@ -10,6 +9,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
+import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -19,6 +19,7 @@ import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -53,6 +54,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
     protected String secondPlayerMap;
 
+    protected boolean newParty = true;
     protected boolean mazeMode = false;
     protected boolean isTheMazePlayer = false;
 
@@ -69,10 +71,15 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
-//        supervisor = SupervisorMultiPlayer.getSupervisor();  //TODO
     }
 
+
     protected PlayingState() { }
+
+    @Override
+    protected void setSupervisor() {
+        supervisor = SupervisorLAN.getSupervisor();
+    }
 
     @Override
     public void init() {
@@ -83,7 +90,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             // TODO Go to an error page
         }
         idCharacterMap = new HashMap<>();
-        supervisor.getPeople().newQuest(new LearnToCooperate(null, supervisor.getPeople(), Difficulty.Easy));
         nm.setOnMapChanged((map) -> {
             if (nm.isTheServer())
                 refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
@@ -92,6 +98,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
 
         supervisor.setMustPlaceItem(false);
+        if (newParty)
+            SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
+                    SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
         super.init();
         nm.setOnPNJDetected((name, mob, x, y) -> {
             Character c = new Character(gs, mob);
@@ -122,7 +131,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
         nm.setOnPNJDeath((name) -> {
             if (idCharacterMap.containsKey(name))
-                supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
+                Supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
         });
 
         pauseButton.setOnClick(() -> {
@@ -133,7 +142,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnEndPause(() -> gsm.removeFirstState());
         nm.setOnMasterQuestFinished(() -> {
             timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
-            supervisor.getPeople().getQuest().passQuest();
+            SupervisorLAN.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> {
             DisconnectedMenuState dms = (DisconnectedMenuState) gsm.setState(DisconnectedMenuState.class);
@@ -196,7 +205,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (puzzleLayer != null)
                 puzzleObjects = puzzleLayer.getObjects();
             if (nm.isTheServer())
-                isTheMazePlayer = (new Random().nextInt() % 2 == 2);
+                isTheMazePlayer = (new Random().nextInt() % 2 == 1);
             nm.sendIsTheMazePlayer(! isTheMazePlayer);
             if (! isTheMazePlayer)
                 player.setNoMoving(true);

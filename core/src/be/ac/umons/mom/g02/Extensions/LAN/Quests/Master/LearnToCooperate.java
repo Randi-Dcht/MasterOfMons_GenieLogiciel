@@ -24,9 +24,9 @@ public class LearnToCooperate extends MasterQuest {
      */
     public LearnToCooperate(MasterQuest before, People people, Difficulty difficulty) {
         super(before, people, Bloc.BA1, difficulty);
-        addUnderQuest(new GoToPuzzle(this, Supervisor.getSupervisor().getPeople()),
-                new EndPuzzle(this, Supervisor.getSupervisor().getPeople()));
-        SuperviserNormally.getSupervisor().getEvent().add(this, Events.EntryPlace);
+        addUnderQuest(new GoToPuzzle(this, Supervisor.getPeople()),
+                new EndPuzzle(this, Supervisor.getPeople()));
+        SuperviserNormally.getEvent().add(this, Events.EntryPlace);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class LearnToCooperate extends MasterQuest {
 
     @Override
     public String getName() {
-        return Supervisor.getSupervisor().getGraphic().getStringFromId("learnToCooperate");
+        return Supervisor.getGraphic().getStringFromId("learnToCooperate");
     }
 
     @Override

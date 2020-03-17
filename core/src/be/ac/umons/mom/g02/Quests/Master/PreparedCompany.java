@@ -49,7 +49,7 @@ public class PreparedCompany extends MasterQuest
      */
     public String question()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMasterOne");
+        return SuperviserNormally.getGraphic().getStringFromId("answerMasterOne");
     }
 
     @Override
@@ -121,7 +121,7 @@ public class PreparedCompany extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMasterOne");
+        return SuperviserNormally.getGraphic().getStringFromId("nameMasterOne");
     }
 }
 

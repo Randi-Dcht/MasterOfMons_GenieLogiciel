@@ -318,7 +318,7 @@ public abstract class Character implements Attack, Social, Serializable
             actualLife -= lose;
 
         if (actualLife <= lifeMax()*0.1 && this.getClass().equals(People.class))
-            Supervisor.getSupervisor().getEvent().notify(new LowSomething(LowSomething.TypeLow.Life));
+            Supervisor.getEvent().notify(new LowSomething(LowSomething.TypeLow.Life));
 
         if (actualLife <= 0)
             dead();
@@ -369,7 +369,7 @@ public abstract class Character implements Attack, Social, Serializable
     public void dead()
     {
         living = false;
-        Supervisor.getSupervisor().getEvent().notify(new Dead(this));
+        Supervisor.getEvent().notify(new Dead(this));
     }
 
 

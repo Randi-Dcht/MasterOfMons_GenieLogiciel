@@ -26,6 +26,16 @@ public class SupervisorMultiPlayer extends Supervisor
         instance = new SupervisorMultiPlayer();
     }
 
+    protected static People playerTwo;
+
+
+    public static People getPeopleTwo() {
+        return playerTwo;
+    }
+
+    public static void setPlayerTwo(People playerTwo) {
+        SupervisorMultiPlayer.playerTwo = playerTwo;
+    }
 
     /**
      * This method to give the only instance of <code>SuperviserMultiPlayer</code>
@@ -41,11 +51,6 @@ public class SupervisorMultiPlayer extends Supervisor
 
 
     /*-----------------------------------------------------------------------------------------------*/
-
-    /**
-     * This is the instance of the second player
-     */
-    protected People playerTwo;
     /***/
     protected LogicSaving playerOneSave;
     /***/
@@ -70,9 +75,9 @@ public class SupervisorMultiPlayer extends Supervisor
     }
 
     @Override
-    public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
+    public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
-        super.newParty(namePlayer, type, graphic, gender, difficulty);
+        super.newParty(namePlayer, type, gender, difficulty);
         regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
     }
 

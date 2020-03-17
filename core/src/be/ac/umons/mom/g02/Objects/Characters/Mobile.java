@@ -122,7 +122,7 @@ public class Mobile extends Character implements Serializable, FrameTime
     {
         if(addFriend)
         {
-            Supervisor.getSupervisor().getEvent().notify(new AddFriend(this));
+            Supervisor.getEvent().notify(new AddFriend(this));
             addFriend = false;
             return true;
         }

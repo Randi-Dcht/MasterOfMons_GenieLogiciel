@@ -63,7 +63,7 @@ public abstract class Items implements Serializable, FrameTime
      */
     public void used(People pp)
     {
-        Supervisor.getSupervisor().getEvent().notify(new UseItem(this));
+        Supervisor.getEvent().notify(new UseItem(this));
     }
 
 

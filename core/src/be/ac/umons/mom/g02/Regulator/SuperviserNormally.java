@@ -71,9 +71,9 @@ public class SuperviserNormally extends Supervisor
 
     /***/
     @Override
-    public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
+    public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
-        super.newParty(namePlayer, type, graphic, gender, difficulty);
+        super.newParty(namePlayer, type, gender, difficulty);
         MasterQuest mQ = new MyFirstYear(playerOne,null,difficulty);
         playerOne.newQuest(mQ);
         save.setLogic(playerOne);

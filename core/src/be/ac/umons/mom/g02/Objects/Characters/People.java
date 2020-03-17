@@ -62,9 +62,9 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
         super(name,type);
-        Supervisor.getSupervisor().getEvent().add(Events.PlaceInMons,this);
-        Supervisor.getSupervisor().getEvent().add(Events.ChangeMonth,this);
-        Supervisor.getSupervisor().getEvent().add(Events.EntryPlace,this);
+        Supervisor.getEvent().add(Events.PlaceInMons,this);
+        Supervisor.getEvent().add(Events.ChangeMonth,this);
+        Supervisor.getEvent().add(Events.EntryPlace,this);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         this.threshold = minExperience(level+1);
         this.difficulty = difficulty;
@@ -161,7 +161,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         myQuest = quest;
         myCourse.addAll(quest.getLesson());
-        Supervisor.getSupervisor().getEvent().notify(new ChangeQuest(quest));
+        Supervisor.getEvent().notify(new ChangeQuest(quest));
         year = quest.getBloc() ;
         createPlanning();
     }
@@ -311,7 +311,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
             this.energy = 2;
 
         if (energy <= 10)
-            Supervisor.getSupervisor().getEvent().notify(new LowSomething(LowSomething.TypeLow.Energy));
+            Supervisor.getEvent().notify(new LowSomething(LowSomething.TypeLow.Energy));
     }
 
 
@@ -446,7 +446,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public void upLevel()
     {
         level++;
-        Supervisor.getSupervisor().getEvent().notify(new UpLevel());
+        Supervisor.getEvent().notify(new UpLevel());
     }
 
 

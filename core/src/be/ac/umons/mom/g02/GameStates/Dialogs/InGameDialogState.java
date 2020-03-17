@@ -92,7 +92,7 @@ public class InGameDialogState extends DialogState {
         if (gim.isKey(Input.Keys.SPACE, KeyStatus.Pressed) || gim.isKey(Input.Keys.ENTER, KeyStatus.Pressed))
             sa.finishNow();
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
-            Supervisor.getSupervisor().getEvent().notify(new Answer("ESC"));
+            Supervisor.getEvent().notify(new Answer("ESC"));
     }
 
     @Override
