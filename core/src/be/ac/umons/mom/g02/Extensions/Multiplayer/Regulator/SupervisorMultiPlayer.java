@@ -118,10 +118,7 @@ public class SupervisorMultiPlayer extends Supervisor
      */
     public void loadPlayer(String name, int player)//TODO approche naïve
     {
-        if (player == 1)
-            playerOne = Saving.getPlayer(name);//TODO delete
-        else
-            playerTwo = Saving.getPlayer(name);//TODO delete
+
     }
 
 

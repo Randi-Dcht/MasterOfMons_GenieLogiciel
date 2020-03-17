@@ -8,9 +8,11 @@ package be.ac.umons.mom.g02.Enums;
  */
 public enum NameDialog
 {
-    Lambda("Conversation.Lambda.id"),
-    Move("Conversation.Move.id"),
-    Seller("Conversation.Seller.id");
+    Lambda( "Conversation.Lambda.id"),
+    Move(   "Conversation.Move.id"),
+    Seller( "Conversation.Seller.id"),
+    Student("Conversation.Student.id");
+
 
     /**
      * The name of the file with conversation id
@@ -22,7 +24,7 @@ public enum NameDialog
      * This constructor define the dialog of the character
      * @param file is the name of the file
      */
-    private NameDialog(String file)
+    NameDialog(String file)
     {
         this.file = file;
     }
