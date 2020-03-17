@@ -10,6 +10,9 @@ import java.net.SocketException;
 
 public class MeetAndLearn extends be.ac.umons.mom.g02.Quests.Master.MeetAndLearn {
 
+    /**
+     * If we already sent the end of this MasterQuest or not
+     */
     protected boolean alreadySent = false;
 
     /**

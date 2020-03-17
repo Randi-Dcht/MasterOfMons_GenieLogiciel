@@ -1,6 +1,10 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextBoxMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
@@ -18,7 +22,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
     /**
      * The <code>MenuItem</code> showing the name.
      */
-    MenuItem nameMI;
+    TextBoxMenuItem nameMI;
 
     /**
      * @param gsm The game's state manager
@@ -36,19 +40,19 @@ public class SaveMenuState extends ChooseFolderMenuState {
     @Override
     public void init() {
         super.init();
-        nameMI = new MenuItem(gs.getStringFromId("name"), MenuItemType.TextBox);
+        nameMI = new TextBoxMenuItem(gim, gs, gs.getStringFromId("name"));
         setMenuItems(new MenuItem[]{
-                new MenuItem(gs.getStringFromId("save"), MenuItemType.Title),
+                new TitleMenuItem(gs, gs.getStringFromId("save")),
                 directoryMI,
                 nameMI,
-                new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, (Runnable) this::save),
-                new MenuItem(gs.getStringFromId("cancel"), MenuItemType.Button, () -> gsm.removeFirstState()),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), this::save),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState()),
                 chooseSaveSLC
         });
         setFolder(path);
-        ((TextBox)nameMI.control).setSuffix(".mom");
-        ((TextBox)nameMI.control).setText(String.format("MOM-%s", new SimpleDateFormat("dd_MM_yy_HH:mm:ss").format(new Date())));
-        nameMI.size.x = -2;
+        nameMI.getControl().setSuffix(".mom");
+        nameMI.getControl().setText(String.format("MOM-%s", new SimpleDateFormat("dd_MM_yy_HH:mm:ss").format(new Date())));
+        nameMI.getSize().x = -2;
     }
 
     @Override
@@ -65,7 +69,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
      * Initiate the saving mechanism.
      */
     protected void save() {
-        save(path + "/" + ((TextBox)nameMI.control).getText());
+        save(path + "/" + nameMI.getControl().getText());
     }
 
     /**

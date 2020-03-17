@@ -1,5 +1,8 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -22,10 +25,10 @@ public class DeadMenuState extends MenuState {
         transparentBackground = true;
         handleEscape = false;
         setMenuItems(new MenuItem[] {
-                new MenuItem(gs.getStringFromId("dead"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("loadPreviousGame"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
-                new MenuItem(gs.getStringFromId("gpBackMainMenu"), MenuItemType.Button, () -> gsm.removeAllStateAndAdd(MainMenuState.class)),
-                new MenuItem(gs.getStringFromId("quitTheGame"), MenuItemType.Button, () -> Gdx.app.exit())
+                new TitleMenuItem(gs, gs.getStringFromId("dead")),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("loadPreviousGame"), () -> gsm.setState(LoadMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("gpBackMainMenu"), () -> gsm.removeAllStateAndAdd(MainMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("quitTheGame"), () -> Gdx.app.exit())
         });
     }
 }

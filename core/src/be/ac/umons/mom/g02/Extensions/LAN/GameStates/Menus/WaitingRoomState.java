@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -25,7 +26,7 @@ public class WaitingRoomState extends MenuState {
     /**
      * The <code>TextBox</code>'s MenuItem where the user put the server's name.
      */
-    MenuItem TXT_ServerName;
+    TextBoxMenuItem TXT_ServerName;
 
     /**
      * @param gsm The game's state manager
@@ -58,17 +59,19 @@ public class WaitingRoomState extends MenuState {
 
         transparentBackground = false;
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem(gs.getStringFromId("waitingConnection"), MenuItemType.Title));
-        menuItems.add(new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text));
-        menuItems.add(TXT_ServerName = new MenuItem(gs.getStringFromId("servName"), MenuItemType.TextBox));
-        menuItems.add(new MenuItem(gs.getStringFromId("setName"), MenuItemType.Button, () -> nm.startBroadcastingMessage(
-                ((TextBox)TXT_ServerName.control).getText()
+        menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("waitingConnection")));
+        menuItems.add(new TextMenuItem(gs, gs.getStringFromId("servInfo")));
+        menuItems.add(TXT_ServerName =
+                new TextBoxMenuItem(gim, gs, gs.getStringFromId("servName")));
+        menuItems.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("setName"),
+                () -> nm.startBroadcastingMessage(
+                    TXT_ServerName.getControl().getText()
         )));
 
         for (InetAddress ia : nm.getAddressToBroadcast().keySet()) {
-            menuItems.add(new MenuItem("IP : " + ia.toString().replace("/", ""), MenuItemType.Text));
+            menuItems.add(new TextMenuItem(gs, "IP : " + ia.toString().replace("/", "")));
         }
-        menuItems.add(new MenuItem(gs.getStringFromId("multiplesIPInfo"), MenuItemType.Text));
+        menuItems.add(new TextMenuItem(gs, gs.getStringFromId("multiplesIPInfo")));
 
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }

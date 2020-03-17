@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -62,10 +63,10 @@ public class ConnectionRoomState extends MenuState {
 
         transparentBackground = false;
         setMenuItems(new MenuItem[]{
-                new MenuItem(gs.getStringFromId("automaticDetect"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("enterServerInfo"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text),
-                new MenuItem("IP : ", MenuItemType.TextBox, "TXT_IP"),
+                new TitleMenuItem(gs, gs.getStringFromId("automaticDetect")),
+                new TitleMenuItem(gs, gs.getStringFromId("enterServerInfo")),
+                new TextMenuItem(gs, gs.getStringFromId("servInfo")),
+                new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"),
         });
     }
 
@@ -74,15 +75,15 @@ public class ConnectionRoomState extends MenuState {
      */
     protected void refresh() {
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem(gs.getStringFromId("automaticDetect"), MenuItemType.Title));
+        menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("automaticDetect")));
         for (ServerInfo si : nm.getDetectedServers()) {
-            menuItems.add(new MenuItem(
+            menuItems.add(new ButtonMenuItem(gim, gs,
                     String.format("%s (%s)", si.getName(), si.getIp().toString().replace("/", "")),
-                    MenuItemType.Button, () -> connectToServer(si)));
+                    () -> connectToServer(si)));
         }
-        menuItems.add(new MenuItem(gs.getStringFromId("enterServerInfo"), MenuItemType.Title));
-        menuItems.add(new MenuItem(gs.getStringFromId("servInfo"), MenuItemType.Text));
-        menuItems.add(new MenuItem("IP : ", MenuItemType.TextBox, "TXT_IP"));
+        menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("enterServerInfo")));
+        menuItems.add(new TextMenuItem(gs, gs.getStringFromId("servInfo")));
+        menuItems.add(new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"));
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }
 
@@ -101,7 +102,10 @@ public class ConnectionRoomState extends MenuState {
         super.dispose();
     }
 
-
+    /**
+     * Check if the chosen magic number is the good one or not
+     * @param magicNumber The chosen magic number
+     */
     protected void checkMagicNumber(int magicNumber) {
         if (! nm.checkMagicNumber(magicNumber)) {
             OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);

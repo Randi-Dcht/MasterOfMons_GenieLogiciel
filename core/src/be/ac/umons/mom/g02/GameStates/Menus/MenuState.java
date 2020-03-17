@@ -3,8 +3,9 @@ package be.ac.umons.mom.g02.GameStates.Menus;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.*;
-import be.ac.umons.mom.g02.Helpers.StringHelper;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.Control;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
@@ -12,15 +13,10 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,23 +43,14 @@ public abstract class MenuState extends GameState {
      */
     protected MenuItem[] menuItems;
     /**
-     * A list of all <code>Button</code> used in this state.
+     * A list of all <code>Button</code>
      */
-    protected List<List<be.ac.umons.mom.g02.GraphicalObjects.Controls.Button>> buttons;
+    protected List<List<Button>> buttons;
 
     /**
-     * A list of all <code>TextBox</code> used in this state.
+     * A list of all <code>Control</code>
      */
-    protected List<List<TextBox>> textBoxes;
-
-    /**
-     * A list of all <code>ScrollListChooser</code>
-     */
-    protected List<List<ScrollListChooser>> scrollListChoosers;
-
-    protected List<List<ColorSelector>> colorSelectors;
-    protected List<List<KeySelector>> keySelectors;
-    protected List<List<CheckBox>> checkBoxes;
+    protected List<Control> controls;
 
     /**
      * If the background must be transparent or not.
@@ -79,8 +66,6 @@ public abstract class MenuState extends GameState {
      * If the state must be removed when escape is pressed.
      */
     protected boolean handleEscape;
-
-    protected double topMargin = HEIGHT / 100;
 
     protected int mouseScrolled = 0;
 
@@ -104,12 +89,8 @@ public abstract class MenuState extends GameState {
     @Override
     public void init() {
         super.init();
+        controls = new ArrayList<>();
         buttons = new ArrayList<>();
-        textBoxes = new ArrayList<>();
-        scrollListChoosers = new ArrayList<>();
-        colorSelectors = new ArrayList<>();
-        keySelectors = new ArrayList<>();
-        checkBoxes = new ArrayList<>();
         sb = new SpriteBatch();
 		sr = new ShapeRenderer();
 		sr.setAutoShapeType(true);
@@ -119,9 +100,8 @@ public abstract class MenuState extends GameState {
     @Override
     public void update(float dt) {
         handleInput();
-        for (List<TextBox> tbs : textBoxes)
-            for (TextBox tb : tbs)
-                tb.update(dt);
+        for (Control c : controls)
+            c.update(dt);
     }
 
     @Override
@@ -142,34 +122,25 @@ public abstract class MenuState extends GameState {
         }
 
         int alreadyUsed = (int)(.1 * HEIGHT);
-
-        BitmapFont font;
         int width = (int) leftMargin;
         for (int i = 0; i < menuItems.length; i++) {
             MenuItem menuItem = menuItems[i];
-            GlyphLayout layout = new GlyphLayout();
-            if (menuItem.mit.equals(MenuItemType.Title))
-                font = gs.getTitleFont();
-            else
-                font = gs.getNormalFont();
-            layout.setText(font, menuItem.header);
-            Point size = menuItem.size;
-            if (size.x == -1)
-                size.x = (int) (layout.width + 2 * leftMargin);
-            else if (size.x == -2)
-                size.x = (int) (MasterOfMonsGame.WIDTH - 2 * leftMargin);
-            if (size.y == -1)
-                size.y = (int) (font.getLineHeight() * menuItem.lineNumber + 2 * topMargin);
-            else if (size.y == -2)
-                size.y = (int) (MasterOfMonsGame.HEIGHT - alreadyUsed + 2 * topMargin);
 
-            menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed - (menuItem.control != null ? font.getLineHeight() + 4 * topMargin : topMargin) + mouseScrolled)), size);
-            if (i == menuItems.length - 1 || (menuItems.length > i + 1 && menuItems[i+1].drawUnderPreviousOne)) {
-                alreadyUsed += size.y + topMargin;
+            if (menuItem.getSize().y == -2) {
+                int ySize = (int) (MasterOfMonsGame.HEIGHT - alreadyUsed + 2 * topMargin);
+                if (ySize < gs.getNormalFont().getLineHeight())
+                    ySize = (int)Math.floor(gs.getNormalFont().getLineHeight());
+                menuItem.getSize().y = ySize;
+            }
+
+            menuItem.draw(sb, new Point(width, (int)(HEIGHT - alreadyUsed + mouseScrolled - topMargin)));
+
+            if (i == menuItems.length - 1 || (menuItems.length > i + 1 && menuItems[i+1].getDrawUnderPreviousOne())) {
+                alreadyUsed += menuItem.getSize().y + topMargin;
                 width = (int) leftMargin;
             }
             else
-                width += size.x + leftMargin;
+                width += menuItem.getSize().x + leftMargin;
         }
         maxScrolled = alreadyUsed - HEIGHT;
         if (maxScrolled < 0)
@@ -204,24 +175,8 @@ public abstract class MenuState extends GameState {
             }
         }
 
-        for (List<Button> lb : buttons)
-            for (Button b : lb)
-                b.handleInput();
-        for (List<TextBox> ltb : textBoxes)
-            for (TextBox tb : ltb)
-                tb.handleInput();
-        for (List<ScrollListChooser> lslc : scrollListChoosers)
-            for (ScrollListChooser slc : lslc)
-                slc.handleInput();
-        for (List<ColorSelector> csl : colorSelectors)
-            for (ColorSelector cs : csl)
-                cs.handleInput();
-        for (List<KeySelector> ksl : keySelectors)
-            for (KeySelector ks : ksl)
-                ks.handleInput();
-        for (List<CheckBox> cbl : checkBoxes)
-            for (CheckBox cb : cbl)
-                cb.handleInput();
+        for (Control c : controls)
+            c.handleInput();
 
         mouseScrolled += gim.getScrolledAmount() * 20;
         if (mouseScrolled < 0)
@@ -267,40 +222,21 @@ public abstract class MenuState extends GameState {
      */
     protected void setMenuItems(MenuItem[] menuItems, boolean selectFirstOne) {
         for (MenuItem mi : menuItems) {
-            Control c = null;
-            switch (mi.mit) {
-                case Button:
-                    Button b = createMenuItemControl(Button.class, mi, buttons);
-                    b.setText(mi.header);
-                    b.setOnClick(mi.toDoIfExecuted);
-                    c = b;
-                    break;
-                case TextBox:
-                case NumberTextBox:
-                    TextBox tb = createMenuItemControl(TextBox.class, mi, textBoxes);
-                    if (mi.mit.equals(MenuItemType.NumberTextBox))
-                        tb.setAcceptOnlyNumbers(true);
-                    c = tb;
-                    break;
-                case ScrollListChooser:
-                    c = createMenuItemControl(ScrollListChooser.class, mi, scrollListChoosers);
-                    break;
-                case ColorChooser:
-                    c = createMenuItemControl(ColorSelector.class, mi, colorSelectors);
-                    break;
-                case KeySelector:
-                    c = createMenuItemControl(KeySelector.class, mi, keySelectors);
-                    break;
-                case CheckBox:
-                    CheckBox cb = createMenuItemControl(CheckBox.class, mi, checkBoxes);
-                    cb.setOnStateChanged(mi.toDoIfStateChanged);
-                    cb.setText(mi.header);
-                    c = cb;
-                    break;
-                default:
-                    break;
+            if (mi instanceof ButtonMenuItem) {
+                ButtonMenuItem bmi = (ButtonMenuItem)mi;
+                if (bmi.getDrawUnderPreviousOne()) {
+                    ArrayList<Button> l = new ArrayList<>();
+                    l.add(bmi.getControl());
+                    buttons.add(l);
+                } else {
+                    if (buttons.isEmpty())
+                        buttons.add(new ArrayList<>());
+                    buttons.get(buttons.size() - 1).add(bmi.getControl());
+                }
             }
-            mi.control = c;
+            Control c = mi.getControl();
+            if (c != null)
+                controls.add(c);
         }
         if (! buttons.isEmpty() && selectFirstOne) {
             buttons.get(0).get(0).setSelected(true);
@@ -309,218 +245,8 @@ public abstract class MenuState extends GameState {
         this.menuItems = menuItems;
     }
 
-    /**
-     * Create a new control for the given menu's item.
-     * @param itemClass The class that the control must be.
-     * @param mi The menu's item.
-     * @param list The list in which the control must be put when created.
-     * @param <T> The type of class the control must be.
-     * @return The created control.
-     */
-    protected<T extends Control> T createMenuItemControl(Class<T> itemClass, MenuItem mi, List<List<T>> list) {
-        T t;
-        try {
-            Constructor<T> con = itemClass.getConstructor(GameInputManager.class, GraphicalSettings.class);
-            t = (T) con.newInstance(gim, gs);
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
-            return null;
-        }
-        if (mi.drawUnderPreviousOne) {
-            ArrayList<T> l = new ArrayList<>();
-            l.add(t);
-            list.add(l);
-        } else {
-            if (list.isEmpty())
-                list.add(new ArrayList<>());
-            list.get(list.size() - 1).add(t);
-        }
-        return t;
-    }
-
     @Override
     public void dispose() {
         sb.dispose();
-    }
-
-    /**
-     * An item.
-     */
-    public class MenuItem {
-        /**
-         * The name of the item.
-         */
-        private String header;
-        public int lineNumber;
-        /**
-         * The type of the item.
-         */
-        public MenuItemType mit;
-
-        /**
-         * The associated control for this item.
-         */
-        public Control control;
-
-        /**
-         * The action to do if the item is selected.
-         */
-        public Runnable toDoIfExecuted;
-        /**
-         * The action to do if the item is selected.
-         */
-        public CheckBox.OnStateChangedRunnable toDoIfStateChanged;
-
-        /**
-         * The item's id.
-         */
-        public String id;
-
-
-        /**
-         * The item's size. (-1 = automatic) (-2 = all available space with margin)
-         */
-        public Point size = new Point(-2,-1);
-        /**
-         * If this item must be drawn under the previous one (=true) or next to it (=false).
-         */
-        public boolean drawUnderPreviousOne = true;
-
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         */
-        public MenuItem(String header) {
-            this(header, MenuItemType.Text, "", null);
-        }
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         * @param toDoIfExecuted The action to do if the item is selected.
-         */
-        public MenuItem(String header, Runnable toDoIfExecuted) {
-            this(header, MenuItemType.Button, "", toDoIfExecuted);
-        }
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         * @param mit The item's type.
-         * @param toDoIfExecuted The action to do if the item is selected.
-         */
-        public MenuItem(String header, MenuItemType mit, Runnable toDoIfExecuted) {
-            this(header, mit, "", toDoIfExecuted);
-        }
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         * @param mit The item's type.
-         * @param toDoIfStateChanged The action to do if the item is selected.
-         */
-        public MenuItem(String header, MenuItemType mit, CheckBox.OnStateChangedRunnable toDoIfStateChanged) {
-            this(header, mit, "", null);
-            this.toDoIfStateChanged = toDoIfStateChanged;
-        }
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         * @param mit The item's type.
-         * @param toDoIfExecuted The action to do if the item is selected.
-         * @param drawUnderPreviousOne If this item must be drawn under the previous one (=true) or next to it (=false).
-         */
-        public MenuItem(String header, MenuItemType mit, Runnable toDoIfExecuted, boolean drawUnderPreviousOne) {
-            this(header, mit, "", toDoIfExecuted);
-            this.drawUnderPreviousOne = drawUnderPreviousOne;
-        }
-
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         * @param mit The item's type.
-         * @param id The item's id.
-         */
-        public MenuItem(String header, MenuItemType mit, String id) {
-            this(header, mit, id, null);
-        }
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         * @param mit The item's type.
-         */
-        public MenuItem(String header, MenuItemType mit) {
-            this(header, mit, "", null);
-        }
-        /**
-         * Construct a new item.
-         * @param header The item's name
-         * @param mit The item's type.
-         * @param id The item's id
-         * @param toDoIfExecuted The action to do if the item is selected.
-         */
-        public MenuItem(String header, MenuItemType mit, String id, Runnable toDoIfExecuted) {
-            this.mit = mit;
-            setHeader(header);
-            this.toDoIfExecuted = toDoIfExecuted;
-            this.id = id;
-        }
-
-        /**
-         * Draw the control associated with this item with the given parameters.
-         * @param batch The batch where the control must be drawn.
-         * @param pos The control's position.
-         * @param size The control's size.
-         */
-        public void draw(Batch batch, Point pos, Point size) {
-            switch (mit) {
-                case Title:
-                    batch.begin();
-                    gs.getTitleFont().draw(batch, header, pos.x, pos.y);
-                    batch.end();
-                    break;
-                case Text:
-                    batch.begin();
-                    gs.getNormalFont().draw(batch, header, pos.x, pos.y);
-                    batch.end();
-                    break;
-                case NumberTextBox:
-                case TextBox:
-                case ScrollListChooser:
-                case ColorChooser:
-                case KeySelector:
-                    GlyphLayout gl = new GlyphLayout();
-                    gl.setText(gs.getNormalFont(), header);
-                    batch.begin();
-                    gs.getNormalFont().draw(batch, header, pos.x, pos.y + (int)(gs.getNormalFont().getLineHeight()));
-                    batch.end();
-                    pos.x += gl.width + leftMargin;
-                    size = new Point((int)(size.x - gl.width - leftMargin), size.y);
-                case Button:
-                case CheckBox:
-                    if (control != null)
-                        control.draw(batch, pos, size);
-                    break;
-            }
-        }
-
-        public void setHeader(String header) {
-            if (gs.getNormalFont() != null) { // Test case
-                this.header = StringHelper.adaptTextToWidth(mit.equals(MenuItemType.Title) ? gs.getTitleFont() : gs.getNormalFont(), header, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
-                lineNumber = this.header.split("\n").length;
-            }
-        }
-    }
-
-    /**
-     * Enumerations of all possible type for an item.
-     */
-    public enum MenuItemType {
-        Title,
-        Text,
-        Button,
-        TextBox,
-        NumberTextBox,
-        ScrollListChooser,
-        ColorChooser,
-        KeySelector,
-        CheckBox
     }
 }

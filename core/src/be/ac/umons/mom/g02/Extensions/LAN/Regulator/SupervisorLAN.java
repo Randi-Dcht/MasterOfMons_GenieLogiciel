@@ -25,6 +25,12 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         super();
     }
 
+    /**
+     * Create a new game
+     * @param firstQuest The first quest of the game.
+     * @param playerOne The first player
+     * @param playerTwo The second player
+     */
     public void newParty(MasterQuest firstQuest, People playerOne, People playerTwo) {
         time      = new TimeGame(new Date(1,1,2020,9,0));
         regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);

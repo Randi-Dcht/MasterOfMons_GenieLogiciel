@@ -5,6 +5,8 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -51,7 +53,7 @@ public class FinalisingConnectionState extends MenuState {
         transparentBackground = false;
 
         setMenuItems(new MenuItem[]{
-                new MenuItem(gs.getStringFromId("finalisingConnection"), MenuItemType.Title)
+                new TitleMenuItem(gs, gs.getStringFromId("finalisingConnection"))
         });
     }
 }

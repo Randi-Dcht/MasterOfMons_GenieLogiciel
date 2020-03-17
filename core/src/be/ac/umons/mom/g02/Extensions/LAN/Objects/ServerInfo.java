@@ -7,6 +7,10 @@ public class ServerInfo {
     protected InetAddress ip;
     protected InetAddress myIPOnTheSameNetwork;
 
+    public ServerInfo(InetAddress ip) {
+        this("", ip, null);
+    }
+
     public ServerInfo(String name, InetAddress ip, InetAddress myIPOnTheSameNetwork) {
         this.name = name;
         this.ip = ip;

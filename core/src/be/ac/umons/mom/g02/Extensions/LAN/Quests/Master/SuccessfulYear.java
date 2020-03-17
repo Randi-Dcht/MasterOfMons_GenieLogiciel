@@ -10,6 +10,9 @@ import java.net.SocketException;
 
 public class SuccessfulYear extends be.ac.umons.mom.g02.Quests.Master.SuccessfulYear {
 
+    /**
+     * If we already sent the end of this MasterQuest or not
+     */
     protected boolean alreadySent = false;
 
     /**

@@ -1,6 +1,9 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ScrollListChooserMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -18,11 +21,11 @@ public abstract class ChooseFolderMenuState extends MenuState {
     /**
      * The <code>MenuItem</code> representing the <code>ScrollListChooser</code> that contains all the folder and files buttons.
      */
-    protected MenuItem chooseSaveSLC;
+    protected ScrollListChooserMenuItem chooseSaveSLC;
     /**
      * The <code>MenuItem</code> representing the <code>TextBox</code> with the directory.
      */
-    protected MenuItem directoryMI;
+    protected TextMenuItem directoryMI;
 
     /**
      * @param gsm The game's state manager
@@ -37,8 +40,8 @@ public abstract class ChooseFolderMenuState extends MenuState {
     public void init() {
         super.init();
         transparentBackground = false;
-        directoryMI = new MenuItem(gs.getStringFromId("directory") + " : " + path, MenuItemType.Text);
-        chooseSaveSLC = new MenuItem("", MenuItemType.ScrollListChooser);
+        directoryMI = new TextMenuItem(gs,gs.getStringFromId("directory") + " : " + path);
+        chooseSaveSLC = new ScrollListChooserMenuItem(gim, gs, "");
         path = new File(".").getAbsoluteFile().getParent(); //getParent() to remove the \.
     }
 
@@ -65,11 +68,11 @@ public abstract class ChooseFolderMenuState extends MenuState {
             else
                 slis.add(new ScrollListChooser.ScrollListItem(f.getName(), () -> onFileClick(f)));
         }
-        ((ScrollListChooser)chooseSaveSLC.control).setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
-        chooseSaveSLC.size.x = -2;
-        chooseSaveSLC.size.y = -2;
+        chooseSaveSLC.getControl().setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
+        chooseSaveSLC.getSize().x = -2;
+        chooseSaveSLC.getSize().y = -2;
         directoryMI.setHeader(gs.getStringFromId("directory") + " : " + path);
-        directoryMI.size.y = -1;
+        directoryMI.getSize().y = -1;
     }
 
     /**

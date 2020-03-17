@@ -99,6 +99,7 @@ public class TextBox extends Control {
 
     }
 
+    @Override
     public void update(double dt) {
         timeGone += dt;
         if (timeGone > .5) {

@@ -737,7 +737,7 @@ public class PlayingState extends GameState implements Observer {
             Gdx.app.postRunnable(() -> {
                 Quest q = ((People)player.getCharacteristics()).getQuest();
                 questShower.setQuest(q);
-                NewChapterMenuState ncms = (NewChapterMenuState) gsm.setState(NewChapterMenuState.class);
+                NewChapterState ncms = (NewChapterState) gsm.setState(NewChapterState.class);
                 ncms.setNewChapterName(q.getName());
             });
         } else if (notify.getEvents().equals(Events.Dialog) && notify.bufferNotEmpty()) {
