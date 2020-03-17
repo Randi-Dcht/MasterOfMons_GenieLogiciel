@@ -46,7 +46,7 @@ public class MyFirstYear extends MasterQuest
     {
         super(before,people, Bloc.BA1,difficulty);
         addUnderQuest(underQuest);
-        Supervisor.getSupervisor().getEvent().add(this, Events.MeetOther,Events.Dialog,Events.Attack,Events.UseItems,Events.AddFriend,Events.Dead);
+        Supervisor.getEvent().add(this, Events.MeetOther,Events.Dialog,Events.Attack,Events.UseItems,Events.AddFriend,Events.Dead);
     }
 
 

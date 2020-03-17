@@ -4,6 +4,8 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Quests.Quest;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
+
 import java.io.Serializable;
 
 /**
@@ -158,7 +160,7 @@ public abstract class UnderQuest implements Quest,Serializable
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId(name);
+        return Supervisor.getSupervisor().getGraphic().getStringFromId(name);
     }
 
 

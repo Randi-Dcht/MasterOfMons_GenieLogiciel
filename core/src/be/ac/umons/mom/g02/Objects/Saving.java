@@ -56,7 +56,7 @@ public class Saving implements Observer
      */
     public void setLogic(People people)
     {
-        Supervisor.getSupervisor().getEvent().add(Events.ChangeQuest,this);
+        Supervisor.getEvent().add(Events.ChangeQuest,this);
     }
 
 

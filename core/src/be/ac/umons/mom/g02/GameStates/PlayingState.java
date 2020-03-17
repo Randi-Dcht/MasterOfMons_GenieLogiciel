@@ -182,9 +182,13 @@ public class PlayingState extends GameState implements Observer {
      */
     public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
-        supervisor = Supervisor.getSupervisor();
+        setSupervisor();
     }
     protected PlayingState() {}
+
+    protected void setSupervisor() {
+        supervisor = Supervisor.getSupervisor();
+    }
 
     @Override
     public void init() {
@@ -204,7 +208,7 @@ public class PlayingState extends GameState implements Observer {
         inventoryShower = new InventoryShower(gim, gs, player);
 
 
-        supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
         initMap("Tmx/Umons_Nimy.tmx");
 

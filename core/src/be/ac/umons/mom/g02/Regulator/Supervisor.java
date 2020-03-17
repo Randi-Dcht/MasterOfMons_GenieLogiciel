@@ -54,6 +54,31 @@ public  abstract class Supervisor implements Observer
      */
     protected static Supervisor instance;
 
+    /**
+     * The people who play this party
+     */
+    protected static People playerOne;
+    /**
+     * This is the events instance
+     */
+    protected static Event event;
+    /**
+     * This is the instance of the Graphic
+     */
+    protected static GraphicalSettings graphic;
+    /**
+     * This methods allows to return the people of this game
+     * @return people of this game
+     */
+    public static People getPeople()
+    {
+        return playerOne;
+    }
+
+    public static void setPlayerOne(People playerOne) {
+        Supervisor.playerOne = playerOne;
+    }
+
 
     /**
      * This method return the supervisor instance
@@ -65,13 +90,35 @@ public  abstract class Supervisor implements Observer
           SuperviserNormally.initNormallyGame();  //Gdx.app.error("Error in the Supervisor by bad initialization", String.valueOf(new ExceptionInInitializerError()));
         return instance;
     }
-
-    /*--------------------------------------------------------------------------------------------------------*/
+    /**
+     * This method to give the event instance
+     * @return event
+     */
+    public static Event getEvent()
+    {
+        if (event == null) {
+            event = new Event();
+        }
+        return event;
+    }
 
     /**
-     * The people who play this party
+     * This method allows to give the graphical instance of Graphic
+     * @return graphic instance
      */
-    protected People playerOne;
+    public static GraphicalSettings getGraphic()
+    {
+        return graphic;
+    }
+    /**
+     * This method allows to set the graphical instance of Graphic
+     * @param graphic  graphic instance
+     */
+    public static void setGraphic(GraphicalSettings graphic) {
+        Supervisor.graphic = graphic;
+    }
+
+    /*--------------------------------------------------------------------------------------------------------*/
     /**
      * The all objects in all maps in this game
      */
@@ -97,17 +144,9 @@ public  abstract class Supervisor implements Observer
      */
     protected Saving save;
     /**
-     * This is the instance of the Graphic
-     */
-    protected GraphicalSettings graphic;
-    /**
      * This is the time in the game
      */
     protected TimeGame time;
-    /**
-     * This is the events instance
-     */
-    protected Event event;
     /**
      * Associate String to maps
      */
@@ -167,8 +206,7 @@ public  abstract class Supervisor implements Observer
     {
         for (Maps plt : Maps.values())
             listMap.put(plt.getMaps(),plt);
-        event = new Event();
-        event.add(this, Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons);
+        getEvent().add(this, Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons);
         save = new Saving();
         associateLesson();
         graphicalMob = new HashMap<>();
@@ -182,16 +220,6 @@ public  abstract class Supervisor implements Observer
     public Regulator getRegale()
     {
         return regulator;
-    }
-
-
-    /**
-     * This methods allows to return the people of this game
-     * @return people of this game
-     */
-    public  People getPeople()
-    {
-        return playerOne;
     }
 
 
@@ -294,12 +322,11 @@ public  abstract class Supervisor implements Observer
      * @param namePlayer who name of the player play game
      * @param type who is type of the people as defence,agility
      */
-    public void newParty(String namePlayer, Type type, GraphicalSettings graphic, Gender gender, Difficulty difficulty)
+    public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
         placePosition = new MyPlacePosition();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);
-        this.graphic = graphic;
         for (NameDialog name : NameDialog.values())
             listDialog.put(name,new DialogCharacter(name,this));
     }
@@ -387,16 +414,6 @@ public  abstract class Supervisor implements Observer
             }
             first = false;
         }
-    }
-
-
-    /**
-     * This method allows to give the graphical instance of Graphic
-     * @return graphic instance
-     */
-    public GraphicalSettings getGraphic()
-    {
-        return graphic;
     }
 
 
@@ -563,16 +580,6 @@ public  abstract class Supervisor implements Observer
             listMobile.get(mobile.getMaps()).add(mobile);
             listUpdate.add(mobile);
         }
-    }
-
-
-    /**
-     * This method to give the event instance
-     * @return event
-     */
-    public Event getEvent()
-    {
-        return event;
     }
 
 

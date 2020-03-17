@@ -10,6 +10,7 @@ import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -67,14 +68,15 @@ public class CreatePlayerMenuState extends MenuState {
                 difficultyMi,
                 new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Button, () -> {
                     if (mustUseMultiplayer)
-                        SupervisorMultiPlayer.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
-                                characterType, gs, playerGender, difficulty);
+                        SupervisorMultiPlayer.setPlayerOne(new People(((TextBox)nameMi.control).getText(), // Use getSupervisor just to set the instance !
+                                characterType, playerGender, difficulty));
                     else
                         Supervisor.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
-                                characterType, gs, playerGender, difficulty);
-                    GameState gs = gsm.setState(afterCreationState);
+                                characterType, playerGender, difficulty);
+                    Supervisor.setGraphic(gs);
+                    GameState g = gsm.setState(afterCreationState);
                     if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
-                        ((LoadingState)gs).setAfterLoadingState(afterLoadingState);
+                        ((LoadingState)g).setAfterLoadingState(afterLoadingState);
                 }),
                 new MenuItem(gs.getStringFromId("cancel"), MenuItemType.Button, () -> gsm.removeFirstState())
         });

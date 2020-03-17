@@ -117,7 +117,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             }
             else
             {
-                Supervisor.getSupervisor().getEvent().add(Events.UpLevel,this);
+                Supervisor.getEvent().add(Events.UpLevel,this);
                 memory = after;
             }
         }
