@@ -66,18 +66,6 @@ public  abstract class Supervisor implements Observer
      * This is the instance of the Graphic
      */
     protected static GraphicalSettings graphic;
-    /**
-     * This methods allows to return the people of this game
-     * @return people of this game
-     */
-    public static People getPeople()
-    {
-        return playerOne;
-    }
-
-    public static void setPlayerOne(People playerOne) {
-        Supervisor.playerOne = playerOne;
-    }
 
 
     /**
@@ -89,6 +77,19 @@ public  abstract class Supervisor implements Observer
         if (instance == null)//TODO
           SuperviserNormally.initNormallyGame();  //Gdx.app.error("Error in the Supervisor by bad initialization", String.valueOf(new ExceptionInInitializerError()));
         return instance;
+    }
+
+    /**
+     * This methods allows to return the people of this game
+     * @return people of this game
+     */
+    public static People getPeople()
+    {
+        return playerOne;
+    }
+
+    public static void setPlayerOne(People playerOne) {
+        Supervisor.playerOne = playerOne;
     }
     /**
      * This method to give the event instance

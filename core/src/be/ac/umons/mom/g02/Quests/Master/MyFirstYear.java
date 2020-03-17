@@ -121,7 +121,7 @@ public class MyFirstYear extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMyFirstYear");
+        return SuperviserNormally.getGraphic().getStringFromId("nameMyFirstYear");
     }
 
 

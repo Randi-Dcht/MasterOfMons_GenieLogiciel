@@ -13,6 +13,7 @@ import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Quests.Under.WriteMemory;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class FinishUniversity extends MasterQuest {
      * @return a question who is a string
      */
     public String question() {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("answerMasterSecond");
+        return Supervisor.getGraphic().getStringFromId("answerMasterSecond");
     }
 
     @Override
@@ -94,7 +95,7 @@ public class FinishUniversity extends MasterQuest {
      * @return name who is a string
      */
     public String getName() {
-        return SuperviserNormally.getSupervisor().getGraphic().getStringFromId("nameMasterSecond");
+        return Supervisor.getGraphic().getStringFromId("nameMasterSecond");
     }
 }
 

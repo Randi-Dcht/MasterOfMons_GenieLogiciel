@@ -76,9 +76,9 @@ public class Saving implements Observer
     public void signal()
     {
         if (defaltName == null)
-            newSave(Supervisor.getSupervisor().getPeople(),path);
+            newSave(Supervisor.getPeople(),path);
         else
-            newSave(Supervisor.getSupervisor().getPeople(),defaltName);
+            newSave(Supervisor.getPeople(),defaltName);
     }
 
 

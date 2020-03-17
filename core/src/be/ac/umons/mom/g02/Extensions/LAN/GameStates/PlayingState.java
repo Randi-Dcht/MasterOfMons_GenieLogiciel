@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Events;
@@ -132,7 +131,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
         nm.setOnPNJDeath((name) -> {
             if (idCharacterMap.containsKey(name))
-                supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
+                Supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
         });
 
         pauseButton.setOnClick(() -> {
