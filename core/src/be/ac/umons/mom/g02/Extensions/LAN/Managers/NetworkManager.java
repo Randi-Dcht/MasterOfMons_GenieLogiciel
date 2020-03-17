@@ -128,10 +128,17 @@ public class NetworkManager {
      * What to do when the second player is connected.
      */
     protected Runnable onConnected;
-
+    /**
+     * What to do when the five magics numbers are received.
+     */
     protected OnMagicNumberReceivedRunnable onMagicNumberReceived;
+    /**
+     * What to do when the magic number has been sent
+     */
     protected IntRunnable onMagicNumberSent;
-
+    /**
+     * What to do if the user chose the wrong magic number.
+     */
     protected Runnable onWrongMagicNumber;
     /**
      * What to do when the second player informations has been received.
@@ -181,8 +188,17 @@ public class NetworkManager {
      * What to do when the second player is disconnected
      */
     protected Runnable onDisconnected;
+    /**
+     * What to do when the second player's map change.
+     */
     protected StringRunnable onMapChanged;
+    /**
+     * What to do when we receive if we are the maze player or not.
+     */
     protected BooleanRunnable onMazePlayerDetected;
+    /**
+     * What to do when the second player level up
+     */
     protected Runnable onLevelUp;
     /**
      * On which map the PNJ's informations has been asked.
@@ -200,9 +216,13 @@ public class NetworkManager {
      * The list of all servers that was detected.
      */
     List<String> detected;
-
+    /**
+     * If we have to ignore the End of a Master Quest message
+     */
     protected boolean ignoreEMQ = false;
-
+    /**
+     * The time gone by since the last message received from the second player
+     */
     protected double msSinceLastMessage;
 
     /**
@@ -328,6 +348,9 @@ public class NetworkManager {
         acceptThread.start();
     }
 
+    /**
+     * Generate and send the 5 numbers (including the magic one) and wait for the answer of the second player.
+     */
     protected void sendMagicNumber() {
         int magicNumber = new Random().nextInt(256);
         try {
@@ -348,7 +371,7 @@ public class NetworkManager {
             if (chosenOne == magicNumber) {
                 socket.getOutputStream().write(0);
                 isTheServer = true;
-                setSelectedServer(new ServerInfo("", socket.getInetAddress(), null));
+                setSelectedServer(new ServerInfo(socket.getInetAddress()));
                 initConnection();
             } else {
                 socket.getOutputStream().write(1);
@@ -360,6 +383,9 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * Wait and read the 5 numbers including the magic one.
+     */
     protected void waitMagicNumber() {
         int[] numbers = new int[5];
         for (int i = 0; i < 5; i++) {
@@ -378,7 +404,12 @@ public class NetworkManager {
                 numbers[4]));
     }
 
-    public boolean checkMagicNumber(int i) { // TODO : Bug with the wrong one
+    /**
+     * Check if the chosen magic number is the good one.
+     * @param i The chosen number
+     * @return If it's the good one.
+     */
+    public boolean checkMagicNumber(int i) {
         try {
             socket.getOutputStream().write(i);
             if (socket.getInputStream().read() == 0) {
@@ -554,7 +585,7 @@ public class NetworkManager {
      * @param item The item to send
      * @throws IOException If the item couldn't be serialized.
      */
-    public void sendPNJInformation(Items item, Point pos) throws IOException {
+    public void sendItemInformation(Items item, Point pos) throws IOException {
         sendOnTCP(String.format("Item#%d#%d#%s", pos.x, pos.y, objectToString(item)));
     }
 
@@ -611,19 +642,33 @@ public class NetworkManager {
         sendOnTCP("getItemsPos#" + map);
     }
 
+    /**
+     * Send the end of a master quest
+     */
     public void sendEndOfMasterQuest() {
         sendOnTCP("EMQ");
         ignoreEMQ = true;
     }
 
+    /**
+     * Send the map changing event.
+     * @param map The new map on which the current player is.
+     */
     public void sendMapChanged(String map) {
         sendOnTCP("CM#" + map);
     }
 
+    /**
+     * Send if the second player is the maze player or not.
+     * @param isTheMazePlayer If the second player is the maze player or not.
+     */
     public void sendIsTheMazePlayer(boolean isTheMazePlayer) {
         sendOnTCP("ITMP#" + isTheMazePlayer);
     }
 
+    /**
+     * Send that the current player leveled up
+     */
     public void sendLevelUp() {
         sendOnTCP("LVLUP");
     }
@@ -769,6 +814,9 @@ public class NetworkManager {
         msSinceLastMessage = 0;
     }
 
+    /**
+     * Executed when the second player is disconnected from the game.
+     */
     protected void onDisconnected() {
         receiveOnTCPThread.interrupt();
         sendOnTCPThread.interrupt();
@@ -931,14 +979,23 @@ public class NetworkManager {
         this.onConnected = onConnected;
     }
 
+    /**
+     * @param onMagicNumberSent What to do when the magic number has been sent
+     */
     public void setOnMagicNumberSent(IntRunnable onMagicNumberSent) {
         this.onMagicNumberSent = onMagicNumberSent;
     }
 
+    /**
+     * @param onMagicNumberReceived What to do when the five magics numbers are received.
+     */
     public void setOnMagicNumberReceived(OnMagicNumberReceivedRunnable onMagicNumberReceived) {
         this.onMagicNumberReceived = onMagicNumberReceived;
     }
 
+    /**
+     * @param onWrongMagicNumber What to do if the user chose the wrong magic number.
+     */
     public void setOnWrongMagicNumber(Runnable onWrongMagicNumber) {
         this.onWrongMagicNumber = onWrongMagicNumber;
     }
@@ -1041,14 +1098,23 @@ public class NetworkManager {
         this.onDisconnected = onDisconnected;
     }
 
+    /**
+     * @param onMapChanged What to do when the second player's map change.
+     */
     public void setOnMapChanged(StringRunnable onMapChanged) {
         this.onMapChanged = onMapChanged;
     }
 
+    /**
+     * @param onMazePlayerDetected What to do when we receive if we are the maze player or not.
+     */
     public void setOnMazePlayerDetected(BooleanRunnable onMazePlayerDetected) {
         this.onMazePlayerDetected = onMazePlayerDetected;
     }
 
+    /**
+     * @param onLevelUp What to do when the second player level up
+     */
     public void setOnLevelUp(Runnable onLevelUp) {
         this.onLevelUp = onLevelUp;
     }

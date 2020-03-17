@@ -14,9 +14,17 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represent the state in which the game must be if a disconnection happens
+ */
 public class DisconnectedMenuState extends MenuState {
-
+    /**
+     * The network manager of the game.
+     */
     protected NetworkManager nm;
+    /**
+     * The playing's state of the game.
+     */
     protected PlayingState ps;
 
     /**
@@ -61,6 +69,9 @@ public class DisconnectedMenuState extends MenuState {
         }
     }
 
+    /**
+     * @param ps The playing's state of the game.
+     */
     public void setPlayingState(PlayingState ps) {
         this.ps = ps;
     }

@@ -52,15 +52,35 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     protected HashMap<String, Character> idCharacterMap;
 
+    /**
+     * The map on which the second player is.
+     */
     protected String secondPlayerMap;
-
+    /**
+     * If we must call <code>newParty</code> method or not
+     * @see SupervisorLAN
+     */
     protected boolean newParty = true;
+    /**
+     * If the state must applied the maze rule or not.
+     */
     protected boolean mazeMode = false;
+    /**
+     * If the player (one) is the one who can move in the maze
+     */
     protected boolean isTheMazePlayer = false;
-
+    /**
+     * The objects that are in the layer puzzle on the map.
+     */
     protected MapObjects puzzleObjects;
 
+    /**
+     * The color when we are on the good path in a puzzle.
+     */
     protected Color goodPuzzlePathColor;
+    /**
+     * The color when we are on the bad path in a puzzle.
+     */
     protected Color badPuzzlePathColor;
 
 
@@ -73,7 +93,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         super(gsm, gim, gs);
     }
 
-
+    /**
+     * Default constructor. USE IT ONLY FOR TESTS PURPOSES
+     */
     protected PlayingState() { }
 
     @Override
@@ -102,6 +124,22 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
                     SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
         super.init();
+
+        setNetworkManagerRunnables();
+
+        pauseButton.setOnClick(() -> {
+            gsm.setState(InGameMenuState.class);
+            nm.sendPause();
+        });
+
+        goodPuzzlePathColor = new Color(0x2E7D32);
+        badPuzzlePathColor = new Color(0xB71C1C);
+    }
+
+    /**
+     * Set all the needed network manager's runnables except the one for setting the map changing (must be done earlier)
+     */
+    protected void setNetworkManagerRunnables() {
         nm.setOnPNJDetected((name, mob, x, y) -> {
             Character c = new Character(gs, mob);
             pnjs.add(c);
@@ -133,11 +171,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (idCharacterMap.containsKey(name))
                 Supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
         });
-
-        pauseButton.setOnClick(() -> {
-            gsm.setState(InGameMenuState.class);
-            nm.sendPause();
-        });
         nm.setOnPause(() -> gsm.setState(PauseMenuState.class));
         nm.setOnEndPause(() -> gsm.removeFirstState());
         nm.setOnMasterQuestFinished(() -> {
@@ -160,10 +193,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnGetItem((map) -> {
             // TODO
         });
-
-
-        goodPuzzlePathColor = new Color(0x2E7D32);
-        badPuzzlePathColor = new Color(0xB71C1C);
     }
 
     @Override
@@ -212,6 +241,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
     }
 
+    /**
+     * @return If the player is in collision with an object on the puzzle layer.
+     */
     protected boolean checkForPuzzleCollision() {
         return checkForCollision(puzzleObjects, player) == null;
     }
@@ -354,6 +386,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         super.setSecondPlayerPosition(mapPos);
         if (mazeMode)
             player.setMapPos(mapPos);
+    }
+
+    /**
+     * @param newParty If this game is a new game or not.
+     */
+    public void setNewParty(boolean newParty) {
+        this.newParty = newParty;
     }
 
     @Override

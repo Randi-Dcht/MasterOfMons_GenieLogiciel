@@ -101,7 +101,10 @@ public class ConnectionRoomState extends MenuState {
         super.dispose();
     }
 
-
+    /**
+     * Check if the chosen magic number is the good one or not
+     * @param magicNumber The chosen magic number
+     */
     protected void checkMagicNumber(int magicNumber) {
         if (! nm.checkMagicNumber(magicNumber)) {
             OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
