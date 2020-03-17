@@ -36,16 +36,16 @@ public class DualChooseMenu extends MenuState
         super.init();
         transparentBackground = false;
 
-        setMenuItems(new MenuItem[]
-                {
-                        new MenuItem(gs.getStringFromId("menuDual")      ,MenuItemType.Title, () -> gsm.removeAllStateAndAdd(PlayDual.class)),
-                        new MenuItem(gs.getStringFromId("combat" )       ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
-                        new MenuItem(gs.getStringFromId("flag")          ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
-                        new MenuItem(gs.getStringFromId("survivor")      ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
-                        new MenuItem(gs.getStringFromId("occupation")    ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
-                        new MenuItem(gs.getStringFromId("gpBackMainMenu"),MenuItemType.Button,() -> gsm.removeAllStateAndAdd(MainMenuState.class)),
-                        new MenuItem(gs.getStringFromId("quit")          ,MenuItemType.Button,() -> Gdx.app.exit())
-                });
+//        setMenuItems(new MenuItem[]
+//                {
+//                        new MenuItem(gs.getStringFromId("menuDual")      ,MenuItemType.Title, () -> gsm.removeAllStateAndAdd(PlayDual.class)),
+//                        new MenuItem(gs.getStringFromId("combat" )       ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+//                        new MenuItem(gs.getStringFromId("flag")          ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+//                        new MenuItem(gs.getStringFromId("survivor")      ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+//                        new MenuItem(gs.getStringFromId("occupation")    ,MenuItemType.Button,() -> gsm.removeAllStateAndAdd(PlayDual.class)),
+//                        new MenuItem(gs.getStringFromId("gpBackMainMenu"),MenuItemType.Button,() -> gsm.removeAllStateAndAdd(MainMenuState.class)),
+//                        new MenuItem(gs.getStringFromId("quit")          ,MenuItemType.Button,() -> Gdx.app.exit())
+//                });
     }
 
     private void afterChoose()

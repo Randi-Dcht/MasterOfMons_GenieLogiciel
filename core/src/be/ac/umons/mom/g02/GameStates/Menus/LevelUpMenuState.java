@@ -1,11 +1,16 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,18 +53,18 @@ public class LevelUpMenuState extends MenuState {
         if (player == null)
             return;
         List<MenuItem> menuItemList = new ArrayList<>();
-        menuItemList.add(new MenuItem(String.format(gs.getStringFromId("youAreLevel"), player.getCharacteristics().getLevel()), MenuItemType.Title));
-        menuItemList.add(new MenuItem(String.format(gs.getStringFromId("youHavePoints"), pointToUse)));
+        menuItemList.add(new TitleMenuItem(gs, String.format(gs.getStringFromId("youAreLevel"), player.getCharacteristics().getLevel())));
+        menuItemList.add(new TextMenuItem(gs, String.format(gs.getStringFromId("youHavePoints"), pointToUse)));
         MenuItem mi;
         for (Characteristics ch : Characteristics.values()) {
-            menuItemList.add(mi = new MenuItem("---", MenuItemType.Button, () -> removePoint(ch)));
-            mi.size.x = -1;
-            menuItemList.add(mi = new MenuItem("+++", MenuItemType.Button, () -> addPoint(ch), false));
-            mi.size.x = -1;
-            menuItemList.add(mi = new MenuItem(String.format(gs.getStringFromId(ch.toString()) + " : %d (+%d)", getCharacteristics(ch), pointsAttributed[ch.ordinal()]), MenuItemType.Text, () -> {},false));
-            mi.size.x = -2;
+            menuItemList.add(mi = new ButtonMenuItem(gim, gs, "---", () -> removePoint(ch)));
+            mi.getSize().x = -1;
+            menuItemList.add(mi = new ButtonMenuItem(gim, gs,"+++", () -> addPoint(ch), false));
+            mi.getSize().x = -1;
+            menuItemList.add(mi = new TextMenuItem(gs, String.format(gs.getStringFromId(ch.toString()) + " : %d (+%d)", getCharacteristics(ch), pointsAttributed[ch.ordinal()])));
+            mi.getSize().x = -2;
         }
-        menuItemList.add(new MenuItem(gs.getStringFromId("confirm"), MenuItemType.Button, this::confirm));
+        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("confirm"), this::confirm));
         setMenuItems(menuItemList.toArray(new MenuItem[0]), false);
     }
 
@@ -116,7 +121,7 @@ public class LevelUpMenuState extends MenuState {
      * Executed when the "Confirm" button is pressed
      */
     public void confirm() {
-        SuperviserNormally.getSupervisor().getPeople().updateUpLevel(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
+        Supervisor.getPeople().updateUpLevel(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
         gsm.removeFirstState();
         if (onPointsAttributed != null)
             onPointsAttributed.run();

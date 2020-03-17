@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Enums.Difficulty;
@@ -56,34 +57,34 @@ public class CreatePlayerMenuState extends MenuState {
     @Override
     public void init() {
         super.init();
-        MenuItem nameMi = new MenuItem(gs.getStringFromId("charName"), MenuItemType.TextBox);
-        MenuItem genderMi = new MenuItem(gs.getStringFromId("charGender"), MenuItemType.ScrollListChooser);
-        MenuItem typeMi = new MenuItem(gs.getStringFromId("charType"), MenuItemType.ScrollListChooser);
-        MenuItem difficultyMi = new MenuItem(gs.getStringFromId("difficulty"), MenuItemType.ScrollListChooser);
+        TextBoxMenuItem nameMi = new TextBoxMenuItem(gim, gs, gs.getStringFromId("charName"));
+        ScrollListChooserMenuItem genderMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charGender"));
+        ScrollListChooserMenuItem typeMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charType"));
+        ScrollListChooserMenuItem difficultyMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("difficulty"));
         setMenuItems(new MenuItem[] {
-                new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Title),
+                new TitleMenuItem(gs, gs.getStringFromId("newGame")),
                 nameMi,
                 genderMi,
                 typeMi,
                 difficultyMi,
-                new MenuItem(gs.getStringFromId("newGame"), MenuItemType.Button, () -> {
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> {
                     if (mustUseMultiplayer)
-                        SupervisorMultiPlayer.setPlayerOne(new People(((TextBox)nameMi.control).getText(), // Use getSupervisor just to set the instance !
+                        SupervisorMultiPlayer.setPlayerOne(new People(nameMi.getControl().getText(), // Use getSupervisor just to set the instance !
                                 characterType, playerGender, difficulty));
                     else
-                        Supervisor.getSupervisor().newParty(((TextBox)nameMi.control).getText(),
+                        Supervisor.getSupervisor().newParty(nameMi.getControl().getText(),
                                 characterType, playerGender, difficulty);
                     Supervisor.setGraphic(gs);
                     GameState g = gsm.setState(afterCreationState);
                     if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
                         ((LoadingState)g).setAfterLoadingState(afterLoadingState);
                 }),
-                new MenuItem(gs.getStringFromId("cancel"), MenuItemType.Button, () -> gsm.removeFirstState())
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState())
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
         for (Gender s : Gender.values())
             slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(s.toString()), () -> playerGender = s, slil.isEmpty()));
-        ((ScrollListChooser)genderMi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
+        genderMi.getControl().setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
         setScrollListProperties(genderMi, slil);
         slil = new LinkedList<>();
         for (Type t : Type.values())
@@ -100,9 +101,9 @@ public class CreatePlayerMenuState extends MenuState {
      * @param mi The <code>MenuItem</code> containing the <code>ScrollListChooser</code>
      * @param slil The list in which the <code>ScrollListChooser</code> must be added.
      */
-    private void setScrollListProperties(MenuItem mi, List<ScrollListChooser.ScrollListItem> slil) {
-        ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
-        mi.size.y = (int)((slil.size() + 1) * (gs.getNormalFont().getLineHeight()) + topMargin);
+    private void setScrollListProperties(ScrollListChooserMenuItem mi, List<ScrollListChooser.ScrollListItem> slil) {
+        mi.getControl().setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
+        mi.getSize().y = (int)((slil.size() + 1) * (gs.getNormalFont().getLineHeight()) + topMargin);
     }
 
     /**

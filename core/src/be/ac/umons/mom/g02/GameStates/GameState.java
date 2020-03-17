@@ -57,7 +57,7 @@ public abstract class GameState {
      */
     public void init() {
         topMargin = MasterOfMonsGame.HEIGHT / 100;
-        leftMargin = MasterOfMonsGame.WIDTH / 100;
+        leftMargin = MasterOfMonsGame.WIDTH / 200;
     }
 
     /**

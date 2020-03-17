@@ -65,6 +65,8 @@ public abstract class Control {
         this.height = size.y;
     }
 
+    public void update(double dt) {}
+
     public int getX() {
         return x;
     }

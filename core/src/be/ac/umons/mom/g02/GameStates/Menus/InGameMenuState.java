@@ -3,6 +3,9 @@ package be.ac.umons.mom.g02.GameStates.Menus;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -37,15 +40,16 @@ public class InGameMenuState extends MenuState {
         sr.setProjectionMatrix(sb.getProjectionMatrix());
         sr.setAutoShapeType(true);
         transparentBackground = true;
-        setMenuItems(new MenuItem[] { new MenuItem(gs.getStringFromId("gameName"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("continue"), MenuItemType.Button, () -> gsm.removeFirstState()),
-                new MenuItem(gs.getStringFromId("player"), MenuItemType.Button, () -> gsm.setState(LevelUpMenuState.class)),
-                new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, () -> gsm.setState(SaveMenuState.class)),
-                new MenuItem(gs.getStringFromId("load"), MenuItemType.Button, () -> gsm.setState(LoadMenuState.class)),
-                new MenuItem(gs.getStringFromId("quickSave"), MenuItemType.Button, PlayingState::quickSave),
-                new MenuItem(gs.getStringFromId("quickLoad"), MenuItemType.Button, () -> PlayingState.quickLoad(gsm, gs)),
-                new MenuItem(gs.getStringFromId("settings"), MenuItemType.Button, () -> gsm.setState(SettingsMenuState.class)),
-                new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button, this::exit)});
+        setMenuItems(new MenuItem[] {
+                new TitleMenuItem(gs, gs.getStringFromId("gameName")),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("player"), () -> gsm.setState(LevelUpMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("quickSave"), PlayingState::quickSave),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("quickLoad"), () -> PlayingState.quickLoad(gsm, gs)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), this::exit)});
     }
 
     @Override

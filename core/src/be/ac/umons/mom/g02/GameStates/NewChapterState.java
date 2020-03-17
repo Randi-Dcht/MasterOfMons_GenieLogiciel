@@ -1,13 +1,12 @@
-package be.ac.umons.mom.g02.GameStates.Menus;
+package be.ac.umons.mom.g02.GameStates;
 
-import be.ac.umons.mom.g02.GameStates.GameState;
+import be.ac.umons.mom.g02.Animations.StringAnimation;
 import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Animations.StringAnimation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class NewChapterMenuState extends GameState {
+public class NewChapterState extends GameState {
 
     /**
      * The name of the new chapter.
@@ -40,7 +39,7 @@ public class NewChapterMenuState extends GameState {
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public NewChapterMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+    public NewChapterState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
         init();
     }

@@ -4,6 +4,10 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.SaveMenuState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -42,12 +46,12 @@ public class DisconnectedMenuState extends MenuState {
         handleEscape = false;
         transparentBackground = true;
         List<MenuItem> menuItemList = new ArrayList<>();
-        menuItemList.add(new MenuItem(gs.getStringFromId("disconnected"), MenuItemType.Title));
+        menuItemList.add(new TitleMenuItem(gs, gs.getStringFromId("disconnected")));
 
-        menuItemList.add(new MenuItem(gs.getStringFromId("waitingReconnection")));
+        menuItemList.add(new TextMenuItem(gs, gs.getStringFromId("waitingReconnection")));
 
-        menuItemList.add(new MenuItem(gs.getStringFromId("saveTheGame"), MenuItemType.Button, () -> gsm.setState(SaveMenuState.class)));
-        menuItemList.add(new MenuItem(gs.getStringFromId("quit"), MenuItemType.Button));
+        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("saveTheGame"), () -> gsm.setState(SaveMenuState.class)));
+        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"))); // TODO
         setMenuItems(menuItemList.toArray(new MenuItem[0]));
 
         try {

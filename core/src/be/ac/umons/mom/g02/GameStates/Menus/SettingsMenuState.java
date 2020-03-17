@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Enums.Languages;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
@@ -35,24 +36,24 @@ public class SettingsMenuState extends MenuState {
         super.init();
         transparentBackground = false;
         setMenuItems(new MenuItem[] {
-                new MenuItem(gs.getStringFromId("settings"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("keyChoosing"), MenuItemType.Button, () -> gsm.setState(KeyChoosingMenuState.class)),
-                new MenuItem(gs.getStringFromId("gameResolutionWidth"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Width"),
-                new MenuItem(gs.getStringFromId("gameResolutionHeight"), MenuItemType.NumberTextBox, "TXT_Game_Resolution_Height"),
-                new MenuItem(gs.getStringFromId("maximumAutomaticSaves"), MenuItemType.NumberTextBox, "TXT_Maximum_Automatic_Saves"),
-                new MenuItem(gs.getStringFromId("language"), MenuItemType.ScrollListChooser, "SLC_Language"),
-                new MenuItem(gs.getStringFromId("foregroundColor"), MenuItemType.ColorChooser, "CS_Foreground"),
-                new MenuItem(gs.getStringFromId("backgroundColor"), MenuItemType.ColorChooser, "CS_Background"),
-                new MenuItem(gs.getStringFromId("transparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Transparent_Background"),
-                new MenuItem(gs.getStringFromId("controlBackgroundColor"), MenuItemType.ColorChooser, "CS_Control_Background"),
-                new MenuItem(gs.getStringFromId("controlTransparentBackgroundColor"), MenuItemType.ColorChooser, "CS_Control_Transparent_Background"),
-                new MenuItem(gs.getStringFromId("controlSelectedBackgroundColor"), MenuItemType.ColorChooser, "CS_Control_Selected_Background"),
-                new MenuItem(gs.getStringFromId("attackRangeColor"), MenuItemType.ColorChooser, "CS_Attack_Range_Color"),
-                new MenuItem(gs.getStringFromId("recoveringAttackRangeColor"), MenuItemType.ColorChooser, "CS_Recovering_Attack_Range_Color"),
-                new MenuItem(gs.getStringFromId("lifeBarColor"), MenuItemType.ColorChooser, "CS_Life_Bar_Color"),
-                new MenuItem(gs.getStringFromId("experienceBarColor"), MenuItemType.ColorChooser, "CS_Experience_Bar_Color"),
-                new MenuItem(gs.getStringFromId("energyBarColor"), MenuItemType.ColorChooser, "CS_Energy_Bar_Color"),
-                new MenuItem(gs.getStringFromId("save"), MenuItemType.Button, this::save)
+                new TitleMenuItem(gs, gs.getStringFromId("settings")),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("keyChoosing"), () -> gsm.setState(KeyChoosingMenuState.class)),
+                new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("gameResolutionWidth"), "TXT_Game_Resolution_Width"),
+                new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("gameResolutionHeight"), "TXT_Game_Resolution_Height"),
+                new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("maximumAutomaticSaves"), "TXT_Maximum_Automatic_Saves"),
+                new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("language"), "SLC_Language"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("foregroundColor"), "CS_Foreground"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("backgroundColor"), "CS_Background"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("transparentBackgroundColor"), "CS_Transparent_Background"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("controlBackgroundColor"), "CS_Control_Background"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("controlTransparentBackgroundColor"), "CS_Control_Transparent_Background"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("controlSelectedBackgroundColor"), "CS_Control_Selected_Background"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("attackRangeColor"), "CS_Attack_Range_Color"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("recoveringAttackRangeColor"), "CS_Recovering_Attack_Range_Color"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("lifeBarColor"), "CS_Life_Bar_Color"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("experienceBarColor"), "CS_Experience_Bar_Color"),
+                new ColorSelectorMenuItem(gim, gs, gs.getStringFromId("energyBarColor"), "CS_Energy_Bar_Color"),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), this::save)
         });
         initDefaultValue(); // TODO : Remove the switch
     }
@@ -63,15 +64,15 @@ public class SettingsMenuState extends MenuState {
     public void initDefaultValue() {
         Settings settings = MasterOfMonsGame.settings;
         for (MenuItem mi : menuItems) {
-            switch (mi.id) {
+            switch (mi.getId()) {
                 case "TXT_Game_Resolution_Width":
-                    ((TextBox)mi.control).setText("" + settings.getGameResolutionWidth());
+                    ((TextBox)mi.getControl()).setText("" + settings.getGameResolutionWidth());
                     break;
                 case "TXT_Game_Resolution_Height":
-                    ((TextBox)mi.control).setText("" + settings.getGameResolutionHeight());
+                    ((TextBox)mi.getControl()).setText("" + settings.getGameResolutionHeight());
                     break;
                 case "TXT_Maximum_Automatic_Saves":
-                    ((TextBox)mi.control).setText("" + settings.getMaximumAutomaticSaves());
+                    ((TextBox)mi.getControl()).setText("" + settings.getMaximumAutomaticSaves());
                     break;
                 case "SLC_Language":
                     List<ScrollListChooser.ScrollListItem> slil = new ArrayList<>();
@@ -81,8 +82,8 @@ public class SettingsMenuState extends MenuState {
                             gs.setLanguage(l);
                             init();
                         }, l == MasterOfMonsGame.settings.getLanguage()));
-                    ((ScrollListChooser)mi.control).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
-                    mi.size.y = (int)(3 * (gs.getNormalFont().getLineHeight() + 2 * topMargin));
+                    ((ScrollListChooser)mi.getControl()).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
+                    mi.getSize().y = (int)(3 * (gs.getNormalFont().getLineHeight() + 2 * topMargin));
                     break;
                 case "CS_Foreground":
                     setColorSelectorDefaultValue(mi, settings.getForegroundColor());
@@ -127,8 +128,8 @@ public class SettingsMenuState extends MenuState {
      * @param color The default color.
      */
     protected void setColorSelectorDefaultValue(MenuItem mi, String color) {
-        ((ColorSelector)mi.control).setSelectedColor(StringHelper.getColorFromString(color));
-        mi.size.y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
+        ((ColorSelector)mi.getControl()).setSelectedColor(StringHelper.getColorFromString(color));
+        mi.getSize().y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
     }
 
     /**
@@ -137,48 +138,48 @@ public class SettingsMenuState extends MenuState {
     public void save() {
         Settings settings = new Settings();
         for (MenuItem mi : menuItems) {  // No need to add SCLs because done at each click !
-            switch (mi.id) {
+            switch (mi.getId()) {
                 case "TXT_Game_Resolution_Width":
-                    settings.setGameResolutionWidth(Integer.parseInt(((TextBox)mi.control).getText()));
+                    settings.setGameResolutionWidth(Integer.parseInt(((TextBox)mi.getControl()).getText()));
                     break;
                 case "TXT_Game_Resolution_Height":
-                    settings.setGameResolutionHeight(Integer.parseInt(((TextBox)mi.control).getText()));
+                    settings.setGameResolutionHeight(Integer.parseInt(((TextBox)mi.getControl()).getText()));
                     break;
                 case "TXT_Maximum_Automatic_Saves":
-                    settings.setMaximumAutomaticSaves(Integer.parseInt(((TextBox)mi.control).getText()));
+                    settings.setMaximumAutomaticSaves(Integer.parseInt(((TextBox)mi.getControl()).getText()));
                     break;
                 case "CS_Foreground":
-                    settings.setForegroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setForegroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Background":
-                    settings.setBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Transparent_Background":
-                    settings.setTransparentBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setTransparentBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Control_Background":
-                    settings.setControlBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setControlBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Control_Transparent_Background":
-                    settings.setControlTransparentBackgroundColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setControlTransparentBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Control_Selected_Background":
-                    settings.setControlSelectedColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setControlSelectedColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Attack_Range_Color":
-                    settings.setAttackRangeColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setAttackRangeColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Recovering_Attack_Range_Color":
-                    settings.setRecoveringAttackRangeColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setRecoveringAttackRangeColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Life_Bar_Color":
-                    settings.setLifeBarColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setLifeBarColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Experience_Bar_Color":
-                    settings.setExperienceBarColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setExperienceBarColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
                 case "CS_Energy_Bar_Color":
-                    settings.setEnergyBarColor(((ColorSelector)mi.control).getSelectedColor().toString());
+                    settings.setEnergyBarColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
                     break;
             }
         }

@@ -28,12 +28,12 @@ public class IaExplicationMenu extends MenuState {
         super.init();
         transparentBackground = false;
 
-        setMenuItems(new MenuItem[]
-                {
-                        //TODO mettre les explications des differents types d'ia qu'on peut trouver sur la map s
-                        new MenuItem("Welcome in the IA's extension ! "+"\n\n"+"I'll explain you the different type of ia",MenuItemType.Text, () -> gsm.removeAllStateAndAdd(PlayDual.class)),
-                        new MenuItem("Play",MenuItemType.Button, () ->gsm.removeAllStateAndAdd(PlayIa.class)) //TODO mettre ma classe qui lancera le jeu avec mon extension
-                });
+//        setMenuItems(new MenuItem[]
+//                {
+//                        //TODO mettre les explications des differents types d'ia qu'on peut trouver sur la map s
+//                        new MenuItem("Welcome in the IA's extension ! "+"\n\n"+"I'll explain you the different type of ia",MenuItemType.Text, () -> gsm.removeAllStateAndAdd(PlayDual.class)),
+//                        new MenuItem("Play",MenuItemType.Button, () ->gsm.removeAllStateAndAdd(PlayIa.class)) //TODO mettre ma classe qui lancera le jeu avec mon extension
+//                });
     }
 }
 

@@ -2,6 +2,9 @@ package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -24,9 +27,9 @@ public class LoadMenuState extends ChooseFolderMenuState {
     public void init() {
         super.init();
         setMenuItems(new MenuItem[] {
-                new MenuItem(gs.getStringFromId("load"), MenuItemType.Title),
+                new TitleMenuItem(gs, gs.getStringFromId("load")),
                 directoryMI,
-                new MenuItem(gs.getStringFromId("cancel"), MenuItemType.Button, () -> gsm.removeFirstState()),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState()),
                 chooseSaveSLC,
         });
         setFolder(path);

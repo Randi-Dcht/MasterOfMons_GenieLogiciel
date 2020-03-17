@@ -1,6 +1,9 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -20,9 +23,9 @@ public class WaitingOrConnectionState extends MenuState {
     public void init() {
         super.init();
         setMenuItems(new MenuItem[]{
-                new MenuItem(gs.getStringFromId("chooseAState"), MenuItemType.Title),
-                new MenuItem(gs.getStringFromId("waitingRoom"), MenuItemType.Button, () -> gsm.setState(WaitingRoomState.class)),
-                new MenuItem(gs.getStringFromId("connectionRoom"), MenuItemType.Button, () -> gsm.setState(ConnectionRoomState.class)),
+                new TitleMenuItem(gs, gs.getStringFromId("chooseAState")),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("waitingRoom"), () -> gsm.setState(WaitingRoomState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("connectionRoom"), () -> gsm.setState(ConnectionRoomState.class)),
         });
     }
 }
