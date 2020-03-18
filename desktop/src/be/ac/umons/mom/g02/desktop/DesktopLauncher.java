@@ -7,10 +7,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		MasterOfMonsGame.settings = Saving.getSavingGraphic();
+		MasterOfMonsGame.setSettings(Saving.getSavingGraphic());
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = MasterOfMonsGame.settings.getGameResolutionWidth();
-		config.height = MasterOfMonsGame.settings.getGameResolutionHeight();
+		config.width = MasterOfMonsGame.getSettings().getGameResolutionWidth();
+		config.height = MasterOfMonsGame.getSettings().getGameResolutionHeight();
 		config.samples = 3;
 		new LwjglApplication(new MasterOfMonsGame(), config);
 	}

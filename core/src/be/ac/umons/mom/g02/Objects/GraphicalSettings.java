@@ -118,17 +118,17 @@ public class GraphicalSettings {
      * Refresh all the colors by taking the one in the settings.
      */
     public void refreshColors() {
-        foregroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getForegroundColor());
-        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getBackgroundColor());
-        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getTransparentBackgroundColor());
-        controlBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlBackgroundColor());
-        controlTransparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlTransparentBackgroundColor());
-        controlSelectedColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getControlSelectedColor());
-        attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getAttackRangeColor());
-        recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getRecoveringAttackRangeColor());
-        lifeBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getLifeBarColor());
-        energyBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getEnergyBarColor());
-        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.settings.getExperienceBarColor());
+        foregroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getForegroundColor());
+        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getBackgroundColor());
+        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getTransparentBackgroundColor());
+        controlBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getControlBackgroundColor());
+        controlTransparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getControlTransparentBackgroundColor());
+        controlSelectedColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getControlSelectedColor());
+        attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getAttackRangeColor());
+        recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getRecoveringAttackRangeColor());
+        lifeBarColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getLifeBarColor());
+        energyBarColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getEnergyBarColor());
+        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getExperienceBarColor());
         if (smallFont != null)
             smallFont.setColor(foregroundColor);
         if (normalFont != null)

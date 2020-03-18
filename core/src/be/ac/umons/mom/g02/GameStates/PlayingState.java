@@ -210,6 +210,7 @@ public class PlayingState extends GameState implements Observer {
 
         Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
+
         initMap("Tmx/Umons_Nimy.tmx");
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);
@@ -801,7 +802,7 @@ public class PlayingState extends GameState implements Observer {
         Saving save = SuperviserNormally.getSupervisor().getSave();
         save.setNameSave(newName);
         save.signal();
-        MasterOfMonsGame.settings.setLastSavePath(newName);
+        MasterOfMonsGame.getSettings().setLastSavePath(newName);
     }
 
     /**
@@ -826,7 +827,7 @@ public class PlayingState extends GameState implements Observer {
         OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
         ogds.setText(gs.getStringFromId("sureLoad"));
         ogds.addAnswer("yes", () ->
-                SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.settings.getLastSavePath(),gs));
+                SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.getSettings().getLastSavePath(),gs));
         ogds.addAnswer("no");
     }
 

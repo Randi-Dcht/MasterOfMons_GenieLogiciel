@@ -42,7 +42,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	 */
 	protected GraphicalSettings gs;
 
-	public static Settings settings;
+	protected static Settings settings;
 
 	/**
 	 * S'éxécute quand l'application est crée.
@@ -77,6 +77,14 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gim.update();
 		gsm.draw();
+	}
+
+	public static Settings getSettings() {
+		return settings;
+	}
+
+	public static void setSettings(Settings settings) {
+		MasterOfMonsGame.settings = settings;
 	}
 
 	/**

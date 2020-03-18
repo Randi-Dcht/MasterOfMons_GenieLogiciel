@@ -62,7 +62,7 @@ public class SettingsMenuState extends MenuState {
      * Init the default value of each <code>MenuItem</code> higher.
      */
     public void initDefaultValue() {
-        Settings settings = MasterOfMonsGame.settings;
+        Settings settings = MasterOfMonsGame.getSettings();
         for (MenuItem mi : menuItems) {
             switch (mi.getId()) {
                 case "TXT_Game_Resolution_Width":
@@ -78,10 +78,10 @@ public class SettingsMenuState extends MenuState {
                     List<ScrollListChooser.ScrollListItem> slil = new ArrayList<>();
                     for (Languages l : Languages.values())
                         slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(l.toString()), () -> {
-                            MasterOfMonsGame.settings.setLanguage(l);
+                            MasterOfMonsGame.getSettings().setLanguage(l);
                             gs.setLanguage(l);
                             init();
-                        }, l == MasterOfMonsGame.settings.getLanguage()));
+                        }, l == MasterOfMonsGame.getSettings().getLanguage()));
                     ((ScrollListChooser)mi.getControl()).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
                     mi.getSize().y = (int)(3 * (gs.getNormalFont().getLineHeight() + 2 * topMargin));
                     break;
@@ -183,7 +183,7 @@ public class SettingsMenuState extends MenuState {
                     break;
             }
         }
-        MasterOfMonsGame.settings = settings;
+        MasterOfMonsGame.setSettings(settings);
         SuperviserNormally.getSupervisor().getSave().savingGraphic(settings);
         gsm.removeFirstState();
         gs.refreshColors();

@@ -96,7 +96,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
             Saving save = SuperviserNormally.getSupervisor().getSave();
             save.setNameSave(saveFilePath);
             save.signal();
-            MasterOfMonsGame.settings.setLastSavePath(saveFilePath);
+            MasterOfMonsGame.getSettings().setLastSavePath(saveFilePath);
             gsm.removeFirstState();
         }
     }
