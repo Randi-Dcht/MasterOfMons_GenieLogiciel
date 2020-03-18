@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.GameStates.Menus;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;

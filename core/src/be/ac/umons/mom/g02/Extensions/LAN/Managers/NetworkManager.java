@@ -15,7 +15,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.List;
-import java.util.*;
 
 /**
  * Manage all the networking for the extension LAN.
@@ -147,7 +146,13 @@ public class NetworkManager {
     /**
      * What to do when the second player position has been received.
      */
-    protected OnPositionDetectedRunnable onPositionDetected;
+    protected PointRunnable onPositionDetected;
+
+    /**
+     * What to do when the second player want to set the position of the first one.
+     */
+    protected PointRunnable onSecondPlayerPositionDetected;
+
     /**
      * What to do when the second player is in pause.
      */
@@ -192,6 +197,10 @@ public class NetworkManager {
      * What to do when the second player's map change.
      */
     protected StringRunnable onMapChanged;
+    /**
+     * What to do when the second player want to change our map.
+     */
+    protected StringRunnable onSecondPlayerMapChanged;
     /**
      * What to do when we receive if we are the maze player or not.
      */
@@ -597,6 +606,10 @@ public class NetworkManager {
         sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
     }
 
+    public void sendSecondPlayerPosition(Point secondPlayerPosition) {
+        sendOnTCP(String.format("SPP#%d#%d", secondPlayerPosition.x, secondPlayerPosition.y));
+    }
+
     /**
      * Send that a hit has been made on the character <code>c</code> and its life.
      * @param c The character hit.
@@ -656,6 +669,10 @@ public class NetworkManager {
      */
     public void sendMapChanged(String map) {
         sendOnTCP("CM#" + map);
+    }
+
+    public void sendSecondPlayerMapChanged(String map) {
+        sendOnTCP(String.format("SPMC#%s", map));
     }
 
     /**
@@ -718,6 +735,19 @@ public class NetworkManager {
                                         Integer.parseInt(y.trim()))));
                 } catch (NumberFormatException e) {
                     Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
+                }
+                break;
+            case "SPP":
+                String sx = tab[1];
+                String sy = tab[2];
+                try {
+                    if (onSecondPlayerPositionDetected != null)
+                        Gdx.app.postRunnable(() ->
+                                onSecondPlayerPositionDetected.run(new Point(
+                                        Integer.parseInt(sx),
+                                        Integer.parseInt(sy.trim()))));
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing the second player position (ignoring message)", e);
                 }
                 break;
             case "Pause":
@@ -785,15 +815,19 @@ public class NetworkManager {
                 if (onPNJDeath != null)
                     Gdx.app.postRunnable(() -> onPNJDeath.run(tab[1].trim()));
                 break;
-            case "EMQ":
+            case "EMQ": // End of Master Quest
                 if (ignoreEMQ)
                     ignoreEMQ = false;
                 else
                     Gdx.app.postRunnable(onMasterQuestFinished);
                 break;
-            case "CM":
+            case "CM": // Map changed
                 if (onMapChanged != null)
-                    Gdx.app.postRunnable(() -> onMapChanged.run(tab[1]));
+                    Gdx.app.postRunnable(() -> onMapChanged.run(tab[1].trim()));
+                break;
+            case "SPMC": // Second player map changed
+                if (onSecondPlayerMapChanged != null)
+                    Gdx.app.postRunnable(() -> onSecondPlayerMapChanged.run(tab[1].trim()));
                 break;
             case "ITMP":
                 if (onMazePlayerDetected != null)
@@ -1010,7 +1044,7 @@ public class NetworkManager {
     /**
      * @param onPositionDetected What to do when the second player position has been received.
      */
-    public void setOnPositionDetected(OnPositionDetectedRunnable onPositionDetected) {
+    public void setOnPositionDetected(PointRunnable onPositionDetected) {
         this.onPositionDetected = onPositionDetected;
     }
 
@@ -1142,7 +1176,7 @@ public class NetworkManager {
     /**
      * Represent the runnable executed when the second player position has been received.
      */
-    public interface OnPositionDetectedRunnable {
+    public interface PointRunnable {
         void run(Point pos);
     }
 

@@ -10,7 +10,6 @@ import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
-import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.LoadFile;
 import com.badlogic.gdx.Gdx;

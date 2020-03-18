@@ -92,10 +92,12 @@ public class SuperviserNormally extends Supervisor
         {
             listUpdate = new ArrayList<>();
             time = new TimeGame(saving.getDate());
-            this.playerOne = saving.getPlayer();
+            playerOne = saving.getPlayer();
             playerOne.setMaps(saving.getMap());
             listCourse = playerOne.getPlanning().get(time.getDate().getDay());
-            this.graphic = graphic;
+            if (listCourse == null)
+                listCourse = new ArrayList<>();
+            Supervisor.graphic = graphic;
             regulator= new Regulator(playerOne,time);
             refreshQuest();
             checkPlanning();
@@ -141,22 +143,6 @@ public class SuperviserNormally extends Supervisor
     }
 
 
-    /**
-     * This method allows to check the actual course of the player in the game
-     */
-    public void checkPlanning()
-    {
-        Date actu = time.getDate();
-        if (actualCourse == null || actualCourse.getDate().getHour() + 2 <= actu.getHour())
-        {
-            actualCourse = null;
-            for (Course crs : listCourse)
-            {
-                if (crs.getDate().getHour()<= actu.getHour() && (crs.getDate().getHour()+2) > actu.getHour())
-                    actualCourse = crs;
-            }
-        }
-    }
 
 
     /**

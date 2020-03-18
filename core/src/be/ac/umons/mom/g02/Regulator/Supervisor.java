@@ -734,6 +734,25 @@ public  abstract class Supervisor implements Observer
         playerOne.reinitialization();
     }
 
+
+    /**
+     * This method allows to check the actual course of the player in the game
+     */
+    public void checkPlanning()
+    {
+        Date actu = time.getDate();
+        if (actualCourse == null || actualCourse.getDate().getHour() + 2 <= actu.getHour())
+        {
+            actualCourse = null;
+            for (Course crs : listCourse)
+            {
+                if (crs.getDate().getHour()<= actu.getHour() && (crs.getDate().getHour()+2) > actu.getHour())
+                    actualCourse = crs;
+            }
+        }
+    }
+
+
     /**
      * @param mustPlaceItem If the items must be added to the map.
      */

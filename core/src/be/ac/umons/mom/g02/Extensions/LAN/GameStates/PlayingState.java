@@ -395,6 +395,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         this.newParty = newParty;
     }
 
+    public String getSecondPlayerMap() {
+        return secondPlayerMap;
+    }
+
+    public Point getSecondPlayerPosition() {
+        return new Point(playerTwo.getPosX(), playerTwo.getPosY());
+    }
+
     @Override
     public void dispose() {
         super.dispose();
