@@ -81,7 +81,7 @@ public class CheckBoxMenuItem extends MenuItem<CheckBox> {
     @Override
     public void draw(Batch batch, Point pos) {
         super.draw(batch, pos);
-        pos.y -= gs.getNormalFont().getLineHeight() + 4 * topMargin;
+        pos.y -= gs.getNormalFont().getLineHeight() + 2 * topMargin;
         drawIfNonNull(batch, pos, size);
     }
 }

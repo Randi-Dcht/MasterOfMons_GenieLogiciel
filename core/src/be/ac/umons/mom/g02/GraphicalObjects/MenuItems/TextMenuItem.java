@@ -26,7 +26,7 @@ public class TextMenuItem extends MenuItem {
     public void draw(Batch batch, Point pos) {
         size.y = (int)(gs.getNormalFont().getLineHeight() * lineNumber + 2 * topMargin);
         batch.begin();
-        gs.getNormalFont().draw(batch, header, pos.x, pos.y);
+        gs.getNormalFont().draw(batch, header, pos.x, (int)(pos.y - topMargin));
         batch.end();
     }
 }
