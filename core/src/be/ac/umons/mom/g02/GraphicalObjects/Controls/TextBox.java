@@ -134,7 +134,7 @@ public class TextBox extends Control {
                     continue;
                 if (acceptOnlyHexadecimal && ((c < '0' || c > '9') && (c < 'a' || c > 'f') && (c < 'A' || c > 'F')))
                     continue;
-                if (Character.isLetterOrDigit(c)) {
+                if (c != '/') {
                     if (selectedPosition == actualText.length())
                         actualText += c;
                     else if (selectedPosition == 0)
