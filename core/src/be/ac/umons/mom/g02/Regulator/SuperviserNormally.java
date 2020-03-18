@@ -105,6 +105,7 @@ public class SuperviserNormally extends Supervisor
             play.initMap(saving.getMap().getMaps());
             play.setPlayerPosition(saving.getPlayerPosition());
             play.addItemsToMap(saving.getItemPosition());
+            play.getPlayer().setCharacteristics(playerOne);
         }
     }
 

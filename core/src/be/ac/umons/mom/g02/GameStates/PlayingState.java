@@ -201,19 +201,19 @@ public class PlayingState extends GameState implements Observer {
         agendaShower = new AgendaShower(gim, gs);
         timeShower = new TimeShower(gs);
         notificationRappel = new NotificationRappel(gs);
-
-        supervisor.setGraphic(questShower,this);
-
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
-        inventoryShower = new InventoryShower(gim, gs, player);
-
-
-        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
         if (MasterOfMonsGame.getGameToLoad() != null)
             SuperviserNormally.getSupervisor().oldGame(MasterOfMonsGame.getGameToLoad(), this, gs);
-        else
+
+        supervisor.setGraphic(questShower,this);
+
+        if (MasterOfMonsGame.getGameToLoad() == null)
             initMap("Tmx/Umons_Nimy.tmx");
+
+        inventoryShower = new InventoryShower(gim, gs, player);
+
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);
         cam.position.x = player.getPosX();

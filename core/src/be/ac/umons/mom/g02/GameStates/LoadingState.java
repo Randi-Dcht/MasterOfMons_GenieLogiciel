@@ -1,12 +1,16 @@
 package be.ac.umons.mom.g02.GameStates;
 
+import be.ac.umons.mom.g02.GameStates.Menus.CreatePlayerMenuState;
+import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.LoadFile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -95,6 +99,7 @@ public class LoadingState extends GameState {
         gmm = GameMapManager.getInstance();
         am = gs.getAssetManager();
         font = gs.getTitleFont();
+        initGame();
     }
 
     @Override
@@ -136,6 +141,15 @@ public class LoadingState extends GameState {
         sr.circle(MasterOfMonsGame.WIDTH / 2 + fromCenterX, MasterOfMonsGame.HEIGHT / 2 + fromCenterY, 10);
         sr.circle(MasterOfMonsGame.WIDTH / 2 - fromCenterX, MasterOfMonsGame.HEIGHT / 2 - fromCenterY, 10);
         sr.end();
+    }
+
+    public void initGame() {
+        ExtensionsManager em = ExtensionsManager.getInstance();
+        em.generateLoadLists();
+        for (FileHandle f : Gdx.files.internal("Tmx/").list())
+            GameMapManager.getInstance().addMapsToLoad(f.path());
+        GameMapManager.getInstance().addMapsToLoad(em.getMapsToLoad().toArray(new String[0]));
+        gs.addFilesToLoad(em.getFilesToLoad().toArray(new LoadFile[0]));
     }
 
     @Override

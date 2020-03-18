@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.GameStates.GameState;
+import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.CheckBox;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.CheckBoxMenuItem;
@@ -78,19 +79,13 @@ public class MainMenuState extends MenuState {
         setMenuItems(menuItemList.toArray(new MenuItem[0]));
     }
 
-    public void initGame() {
-        em.generateLoadLists();
-        for (FileHandle f : Gdx.files.internal("Tmx/").list())
-            GameMapManager.getInstance().addMapsToLoad(f.path());
-        GameMapManager.getInstance().addMapsToLoad(em.getMapsToLoad().toArray(new String[0]));
-        gs.addFilesToLoad(em.getFilesToLoad().toArray(new LoadFile[0]));
+    protected void initGame() {
         ExtensionsManager.Extension mainExt = em.getMainExtension();
         if (mainExt != null && mainExt.mainClassBeforeCharacterCreation != null) {
             try {
                 gsm.setState(mainExt.getMainClassBeforeCharacterCreation());
             } catch (ClassNotFoundException e) {
                 Gdx.app.error("ExtensionsFile", String.format("The class %s wasn't found", mainExt.mainClassBeforeCharacterCreation), e);
-                return;
             }
         } else {
             CreatePlayerMenuState cpms = (CreatePlayerMenuState) gsm.setState(CreatePlayerMenuState.class, false);
