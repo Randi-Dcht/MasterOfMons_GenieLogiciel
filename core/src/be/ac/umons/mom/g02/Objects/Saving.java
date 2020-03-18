@@ -99,7 +99,7 @@ public class Saving implements Observer
      */
     private void newSave(People people, String file)
     {
-        SuperviserNormally.getSupervisor().saveGame(file); //TODO delete
+        Supervisor.getSupervisor().saveGame(file); //TODO delete
     }
 
 

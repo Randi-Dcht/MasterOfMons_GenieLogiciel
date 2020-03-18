@@ -5,13 +5,12 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextBoxMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Saving;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -93,7 +92,7 @@ public class SaveMenuState extends ChooseFolderMenuState {
             g.addAnswer(gs.getStringFromId("yes"), () -> save(saveFilePath, true));
             g.addAnswer(gs.getStringFromId("no"));
         } else {
-            Saving save = SuperviserNormally.getSupervisor().getSave();
+            Saving save = Supervisor.getSupervisor().getSave();
             save.setNameSave(saveFilePath);
             save.signal();
             MasterOfMonsGame.getSettings().setLastSavePath(saveFilePath);
