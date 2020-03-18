@@ -26,6 +26,7 @@ public class TitleMenuItem extends MenuItem {
      */
     @Override
     public void draw(Batch batch, Point pos) {
+        size.y = (int)(gs.getNormalFont().getLineHeight() + 2 * topMargin);
         batch.begin();
         gs.getTitleFont().draw(batch, header, pos.x, pos.y);
         batch.end();

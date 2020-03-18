@@ -84,7 +84,16 @@ public abstract class MenuItem<T extends Control> {
      * @param batch The batch where the control must be drawn.
      * @param pos The control's position.
      */
-    public abstract void draw(Batch batch, Point pos);
+    public void draw(Batch batch, Point pos) {
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(gs.getNormalFont(), header);
+        if (size.x == -1)
+            size.x = (int) (layout.width + 2 * leftMargin);
+        else if (size.x == -2)
+            size.x = (int) (MasterOfMonsGame.WIDTH - 2 * leftMargin);
+        if (size.y == -1)
+            size.y = (int) (gs.getNormalFont().getLineHeight() * lineNumber + 2 * topMargin);
+    }
 
     protected void drawNextToHeader(Batch batch, Point pos) {
         GlyphLayout gl = new GlyphLayout();
