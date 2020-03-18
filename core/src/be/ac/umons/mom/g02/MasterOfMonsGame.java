@@ -44,6 +44,8 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 
 	protected static Settings settings;
 
+	protected static String gameToLoad;
+
 	/**
 	 * S'éxécute quand l'application est crée.
 	 */
@@ -85,6 +87,14 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 
 	public static void setSettings(Settings settings) {
 		MasterOfMonsGame.settings = settings;
+	}
+
+	public static void setGameToLoad(String gameToLoad) {
+		MasterOfMonsGame.gameToLoad = gameToLoad;
+	}
+
+	public static String getGameToLoad() {
+		return gameToLoad;
 	}
 
 	/**

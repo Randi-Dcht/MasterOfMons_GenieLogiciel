@@ -1,13 +1,12 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.GameStates.LoadingState;
-import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
 import java.io.File;
@@ -51,6 +50,6 @@ public class LoadMenuState extends ChooseFolderMenuState {
      */
     private void load(String loadFilePath) {
         gsm.removeAllStateAndAdd(LoadingState.class);
-        SuperviserNormally.getSupervisor().getSave().playOldParty(loadFilePath,gs);
+        MasterOfMonsGame.setGameToLoad(loadFilePath);
     }
 }

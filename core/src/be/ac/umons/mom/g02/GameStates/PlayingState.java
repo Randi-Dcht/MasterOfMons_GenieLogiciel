@@ -210,8 +210,10 @@ public class PlayingState extends GameState implements Observer {
 
         Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
-
-        initMap("Tmx/Umons_Nimy.tmx");
+        if (MasterOfMonsGame.getGameToLoad() != null)
+            SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.getGameToLoad(), gs);
+        else
+            initMap("Tmx/Umons_Nimy.tmx");
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);
         cam.position.x = player.getPosX();
