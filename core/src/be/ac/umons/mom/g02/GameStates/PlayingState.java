@@ -211,7 +211,7 @@ public class PlayingState extends GameState implements Observer {
         Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
         if (MasterOfMonsGame.getGameToLoad() != null)
-            SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.getGameToLoad(), gs);
+            SuperviserNormally.getSupervisor().oldGame(MasterOfMonsGame.getGameToLoad(), this, gs);
         else
             initMap("Tmx/Umons_Nimy.tmx");
 
