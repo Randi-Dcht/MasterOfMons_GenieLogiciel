@@ -12,6 +12,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.MyPlacePosition;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.LogicSaving;
@@ -85,11 +86,12 @@ public class SuperviserNormally extends Supervisor
 
     /***/
     @Override
-    public void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic)
+    public void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic)//TODO see same line
     {
         LogicSaving saving =  (LogicSaving) Saving.getSaveObject(pathAndFile);
         if (saving != null && saving.getClass().equals(LogicSaving.class))
         {
+            placePosition = new MyPlacePosition();
             listUpdate = new ArrayList<>();
             time = new TimeGame(saving.getDate());
             playerOne = saving.getPlayer();
@@ -101,6 +103,7 @@ public class SuperviserNormally extends Supervisor
             regulator= new Regulator(playerOne,time);
             refreshQuest();
             checkPlanning();
+            playGraphic  = play;
 
             play.initMap(saving.getMap().getMaps());
             play.setPlayerPosition(saving.getPlayerPosition());

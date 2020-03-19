@@ -87,6 +87,7 @@ public  abstract class Supervisor implements Observer
         return instance;
     }
 
+
     /**
      * This methods allows to return the people of this game
      * @return people of this game
@@ -95,6 +96,7 @@ public  abstract class Supervisor implements Observer
     {
         return playerOne;
     }
+
 
     public static void setPlayerOne(People playerOne) {
         Supervisor.playerOne = playerOne;
@@ -119,13 +121,17 @@ public  abstract class Supervisor implements Observer
     {
         return graphic;
     }
+
+
     /**
      * This method allows to set the graphical instance of Graphic
      * @param graphic  graphic instance
      */
-    public static void setGraphic(GraphicalSettings graphic) {
+    public static void setGraphic(GraphicalSettings graphic)
+    {
         Supervisor.graphic = graphic;
     }
+
 
     /*--------------------------------------------------------------------------------------------------------*/
     /**

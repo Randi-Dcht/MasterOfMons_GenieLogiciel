@@ -206,6 +206,7 @@ public class PlayingState extends GameState implements Observer {
         if (MasterOfMonsGame.getGameToLoad() != null)
             SuperviserNormally.getSupervisor().oldGame(MasterOfMonsGame.getGameToLoad(), this, gs);
 
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
         supervisor.setGraphic(questShower,this);
 
         if (MasterOfMonsGame.getGameToLoad() == null)
@@ -213,7 +214,6 @@ public class PlayingState extends GameState implements Observer {
 
         inventoryShower = new InventoryShower(gim, gs, player);
 
-        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);
         cam.position.x = player.getPosX();
