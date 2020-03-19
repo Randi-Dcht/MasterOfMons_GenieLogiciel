@@ -39,6 +39,11 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         super();
     }
 
+    @Override
+    public void oldGame(String pathAndFile, be.ac.umons.mom.g02.GameStates.PlayingState play, GraphicalSettings graphic) {
+        //TODO implement this abstract method
+    }
+
     /**
      * Create a new game
      * @param firstQuest The first quest of the game.

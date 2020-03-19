@@ -9,44 +9,23 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
-
 /**
  * This class defines the logic for two players on a map that can help or compete
  * This class allows to integrate the Dual and network extensions
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public class SupervisorMultiPlayer extends Supervisor
+public abstract class SupervisorMultiPlayer extends Supervisor
 {
 
-    /**
-     * This method allows to initialize the instance of multiPlayer
-     */
-    public static void initMultiPlayerGame()
-    {
-        instance = new SupervisorMultiPlayer();
-    }
-
     protected static People playerTwo;
-
 
     public static People getPeopleTwo() {
         return playerTwo;
     }
 
-    public static void setPlayerTwo(People playerTwo) {
-        SupervisorMultiPlayer.playerTwo = playerTwo;
-    }
-
-    /**
-     * This method to give the only instance of <code>SuperviserMultiPlayer</code>
-     */
-    public static SupervisorMultiPlayer getSupervisor()
+    public static void setPlayerTwo(People playerTwo)
     {
-        if (instance == null)
-            initMultiPlayerGame();
-        if(instance.getClass().equals(SupervisorMultiPlayer.class))
-            return (SupervisorMultiPlayer) instance;
-        return null;
+        SupervisorMultiPlayer.playerTwo = playerTwo;
     }
 
 
@@ -81,39 +60,21 @@ public class SupervisorMultiPlayer extends Supervisor
         regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
     }
 
+
     /**
      * @param pathAndFile
      * @param play
      * @param graphic
      */
     @Override
-    public void oldGame(String pathAndFile, PlayingState play, GraphicalSettings graphic)
-    {
-        //TODO
-    }
+    public abstract void oldGame(String pathAndFile, PlayingState play, GraphicalSettings graphic);
 
 
     /**
      * @param pathAndFile
      */
     @Override
-    public void saveGame(String pathAndFile)//TODO upgrade simple player
-    {
-        LogicSaving saveOne,saveTwo=null;
-
-        if (playerOneSave != null)
-            saveOne = new LogicSaving(playerOne,playerOneSave.getMap(),playerOneSave.getDate(),playerOneSave.getPlayerPosition(),playerOneSave.getItemPosition());
-        else//TODO update
-            saveOne = new LogicSaving(playerOne,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
-
-        if (playerTwoSave != null)
-            saveTwo = new LogicSaving(playerTwo,playerTwoSave.getMap(),playerTwoSave.getDate(),playerTwoSave.getPlayerPosition(),playerTwoSave.getItemPosition());
-        else//TODO update
-            saveOne = new LogicSaving(playerTwo,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
-
-        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveOne);
-        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveTwo);
-    }
+    public abstract void saveGame(String pathAndFile);
 
 
     /**
