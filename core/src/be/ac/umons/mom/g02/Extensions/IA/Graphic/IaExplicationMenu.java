@@ -1,7 +1,9 @@
 package be.ac.umons.mom.g02.Extensions.IA.Graphic;
 
-import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayDual;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -31,8 +33,9 @@ public class IaExplicationMenu extends MenuState {
         setMenuItems(new MenuItem[]
                 {
                         //TODO mettre les explications des differents types d'ia qu'on peut trouver sur la map s
-                        new MenuItem("Welcome in the IA's extension ! "+"\n\n"+"I'll explain you the different type of ia",MenuItemType.Text, () -> gsm.removeAllStateAndAdd(PlayDual.class)),
-                        new MenuItem("Play",MenuItemType.Button, () ->gsm.removeAllStateAndAdd(PlayIa.class)) //TODO mettre ma classe qui lancera le jeu avec mon extension
+                        //new TextMenuItem(gs,gs.getStringFromId("Welcome in the IA's extension ! "+"\n\n"+"I'll explain you the different type of ia")),
+                        new ButtonMenuItem(gim,gs,gs.getStringFromId("Play"),() ->gsm.removeAllStateAndAdd(PlayIa.class)) //TODO mettre ma classe qui lancera le jeu avec mon extension
+
                 });
     }
 }
