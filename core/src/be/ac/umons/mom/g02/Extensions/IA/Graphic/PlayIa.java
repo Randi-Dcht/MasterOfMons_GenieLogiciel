@@ -15,5 +15,6 @@ public class PlayIa extends PlayingState {
     public PlayIa(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs)
         {
             super(gsm, gim, gs);
+            System.out.println("on est dans mon extension");
         }
 }
