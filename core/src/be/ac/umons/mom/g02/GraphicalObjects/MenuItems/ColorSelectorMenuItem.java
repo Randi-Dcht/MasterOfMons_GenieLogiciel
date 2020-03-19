@@ -27,7 +27,7 @@ public class ColorSelectorMenuItem extends MenuItem<ColorSelector> {
      * @param id     The item's id.
      * @param header The item's name
      */
-    public ColorSelectorMenuItem(GameInputManager gim, GraphicalSettings gs, String id, String header) {
+    public ColorSelectorMenuItem(GameInputManager gim, GraphicalSettings gs, String header, String id) {
         super(gim, gs, header, id);
         control = getControl(ColorSelector.class);
     }

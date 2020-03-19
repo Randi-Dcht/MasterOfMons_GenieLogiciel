@@ -14,6 +14,8 @@ import java.util.List;
 
 public abstract class ChooseFolderMenuState extends MenuState {
 
+    protected final String DEFAULT_PATH="Saves";
+
     /**
      * The path represented by the state.
      */
@@ -42,7 +44,10 @@ public abstract class ChooseFolderMenuState extends MenuState {
         transparentBackground = false;
         directoryMI = new TextMenuItem(gs,gs.getStringFromId("directory") + " : " + path);
         chooseSaveSLC = new ScrollListChooserMenuItem(gim, gs, "");
-        path = new File(".").getAbsoluteFile().getParent(); //getParent() to remove the \.
+        File defaultPath = new File(DEFAULT_PATH);
+        if (! defaultPath.exists())
+            defaultPath.mkdirs();
+        path = defaultPath.getAbsolutePath();
     }
 
     /**
