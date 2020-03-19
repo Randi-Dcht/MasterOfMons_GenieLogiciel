@@ -33,8 +33,10 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     @Override
     public void init() {
         super.init();
-        playerTwo = new Player(gs);
-        playerTwo.setMapPos(new Point(player.getPosX(), player.getPosY()));
+        if (playerTwo == null) {
+            playerTwo = new Player(gs);
+            playerTwo.setMapPos(new Point(player.getPosX(), player.getPosY()));
+        }
     }
 
     @Override
@@ -50,6 +52,8 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     }
 
     public void setSecondPlayerPosition(Point mapPos) {
+        if (playerTwo == null)
+            playerTwo = new Player(gs);
         playerTwo.setMapPos(mapPos);
     }
 

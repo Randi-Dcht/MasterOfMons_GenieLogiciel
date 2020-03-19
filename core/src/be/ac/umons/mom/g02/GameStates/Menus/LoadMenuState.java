@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
+import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
@@ -49,7 +50,7 @@ public class LoadMenuState extends ChooseFolderMenuState {
      * @param loadFilePath The load file's path.
      */
     private void load(String loadFilePath) {
-        gsm.removeAllStateAndAdd(LoadingState.class);
+        ExtensionsManager.getInstance().initGameFromLoad(gsm);
         MasterOfMonsGame.setGameToLoad(loadFilePath);
     }
 }

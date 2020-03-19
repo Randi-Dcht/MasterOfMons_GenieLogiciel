@@ -747,7 +747,7 @@ public  abstract class Supervisor implements Observer
     public void checkPlanning()
     {
         Date actu = time.getDate();
-        if (actualCourse == null || actualCourse.getDate().getHour() + 2 <= actu.getHour())
+        if ((listCourse != null) && (actualCourse == null || actualCourse.getDate().getHour() + 2 <= actu.getHour()))
         {
             actualCourse = null;
             for (Course crs : listCourse)

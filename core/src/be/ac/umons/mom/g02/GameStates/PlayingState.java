@@ -204,7 +204,7 @@ public class PlayingState extends GameState implements Observer {
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
 
         if (MasterOfMonsGame.getGameToLoad() != null)
-            SuperviserNormally.getSupervisor().oldGame(MasterOfMonsGame.getGameToLoad(), this, gs);
+            loadOldGame();
 
         Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
         supervisor.setGraphic(questShower,this);
@@ -232,6 +232,10 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setText("||");
         pauseButton.setOnClick(() -> gsm.setState(InGameMenuState.class));
         pauseButton.setFont(gs.getSmallFont());
+    }
+
+    protected void loadOldGame() {
+        supervisor.oldGame(MasterOfMonsGame.getGameToLoad(), this, gs);
     }
 
     /**

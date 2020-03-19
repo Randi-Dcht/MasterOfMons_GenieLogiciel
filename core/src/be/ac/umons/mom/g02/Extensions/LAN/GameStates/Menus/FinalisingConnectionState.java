@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
@@ -9,6 +10,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
@@ -41,9 +43,11 @@ public class FinalisingConnectionState extends MenuState {
         nm.setOnPlayerDetected(secondPlayer -> {
             LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
             ls.setAfterLoadingState(PlayingState.class);
-            SupervisorMultiPlayer.setPlayerTwo(secondPlayer);
+            SupervisorLAN.setPlayerTwo(secondPlayer);
         });
-        nm.sendPlayerInformation(SupervisorMultiPlayer.getPeople());
+        if (MasterOfMonsGame.getGameToLoad() != null)
+            SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getGameToLoad());
+        nm.sendPlayerInformation(SupervisorLAN.getPeople());
     }
 
     @Override

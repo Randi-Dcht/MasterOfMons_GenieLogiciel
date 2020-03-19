@@ -15,6 +15,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -124,6 +125,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
                     SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
         super.init();
+        secondPlayerMap = gmm.getActualMapName();
 
         setNetworkManagerRunnables();
 
@@ -134,6 +136,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         goodPuzzlePathColor = new Color(0x2E7D32);
         badPuzzlePathColor = new Color(0xB71C1C);
+    }
+
+    @Override
+    protected void loadOldGame() {
+        ((SupervisorLAN)supervisor).oldGameLAN(MasterOfMonsGame.getGameToLoad(), this, gs);
     }
 
     /**
