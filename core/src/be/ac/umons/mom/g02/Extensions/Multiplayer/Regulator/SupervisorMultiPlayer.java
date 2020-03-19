@@ -30,6 +30,8 @@ public abstract class SupervisorMultiPlayer extends Supervisor
 
 
     /*-----------------------------------------------------------------------------------------------*/
+
+
     /***/
     protected LogicSaving playerOneSave;
     /***/
@@ -53,7 +55,7 @@ public abstract class SupervisorMultiPlayer extends Supervisor
 
     }
 
-    @Override
+    @Override//TODO delete
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
         super.newParty(namePlayer, type, gender, difficulty);
@@ -82,24 +84,9 @@ public abstract class SupervisorMultiPlayer extends Supervisor
      * @param name   is the name of the saving
      * @param player is the number of player
      */
-    public void loadPlayer(String name, int player)//TODO approche naïve
+    public void loadPlayer(String name, int player)//TODO implement
     {
 
-    }
-
-
-    /**
-     * This methods allows to create the second player on the maps
-     * @param namePlayer is the name of player
-     * @param type       is the type of the character
-     * @param gender     is the gender of the player (Men or Women)
-     */
-    public void createPlayerTwo(String namePlayer, Type type, GraphicalSettings graphic, Gender gender)
-    {
-        if (playerOne != null)
-            playerTwo = new People(namePlayer,type,gender,playerOne.getDifficulty());
-        else
-            playerTwo = new People(namePlayer,type,gender, Difficulty.Easy);
     }
 
 

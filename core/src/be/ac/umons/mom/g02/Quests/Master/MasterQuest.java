@@ -125,7 +125,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /***/
-    public ArrayList<Mobile> createRdMobile(Mobile[] list, int[] number) throws ExceptionInInitializerError//TODO
+    public ArrayList<Mobile> createRdMobile(Mobile[] list, int[] number) throws ExceptionInInitializerError//TODO finish this
     {
         if (list.length != number.length)
             throw new ExceptionInInitializerError();
@@ -153,9 +153,9 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /***/
-    protected ArrayList<Items> createListItems(Class<Items>[] list, int[] cmb) throws Exception
+    protected ArrayList<Items> createListItems(Class<Items>[] list, int[] cmb, Maps[] maps) throws Exception
     {
-        if (list.length != cmb.length)
+        if (list.length != cmb.length && maps.length != list.length)
             throw new Exception();
         else
         {
@@ -163,7 +163,16 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             for (int j = 0; j < list.length; j++)
             {
                 for (int i=0; i <cmb[j];i++ )
-                    listI.add(list[j].getConstructor().newInstance());
+                {
+                    if (maps[j] == null)
+                        listI.add(list[j].getConstructor().newInstance());
+                    else
+                    {
+                        Items itm;
+                        listI.add(itm = list[j].getConstructor().newInstance());
+                        itm.setMaps(maps[j]);
+                    }
+                }
             }
             return listI ;
         }
