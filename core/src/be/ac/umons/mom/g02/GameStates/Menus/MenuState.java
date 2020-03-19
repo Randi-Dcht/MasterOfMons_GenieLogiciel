@@ -167,9 +167,9 @@ public abstract class MenuState extends GameState {
                 selectedItem.x--;
             if (gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed))
                 selectedItem.y--;
+            checkSelectedItem();
             if (! oldSelectedItem.equals(selectedItem)) {
                 buttons.get(oldSelectedItem.x).get(oldSelectedItem.y).setSelected(false);
-                checkSelectedItem();
                 checkSelectedItemDrawingPosition();
                 buttons.get(selectedItem.x).get(selectedItem.y).setSelected(true);
             }
