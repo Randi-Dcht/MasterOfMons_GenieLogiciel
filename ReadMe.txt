@@ -1,25 +1,34 @@
-Ce projet est privé, toute divulgation ,avant le 1e avril 2020,sera dénoncée.
-Ce projet est créé pour le Cours de Génie Logiciel de M Mens (Umons).
+_______________________________________________Umons_______________________________________________
 
-____________________________________________________________________________
-
-Pour compiler, ce projet en ligne de commande : ./gradlew run --> pour lancer.
-Pour pouvoir éxécuter les tests Junit : ./gradlew test        --> pour test.
-
-____________________________________________________________________________
-
-Personne pouvant modifier ce projet : Randy D. ; Guillaume C. ; Maxime R.
-Implémentation de la GUI   : Guillaume C. (pour le 29-02-2020)
-Implémentation code source : Randy D. (pour 28-12-2019)
-Implémentation quete bach  : Randy D. (pour le 18-02-2020)
-Implémentation quete master: Maxime R. (pour le 18-02-2020)
-Implémentation dual        : Randy D. (pour le 20-03-2020)
-Implémentation reseau      : Guillaume C. (pour le 20-03-2020)
-Implémentation enviro      : Maxime R. (pour le 20-03-2020)
-
-____________________________________________________________________________
-
-Le code source et le code GUI se base sur les diagrammes de CLasses rendu 
-  a M Mens lors du rapport de décembre.
-Le planning de ce projet se base sur le diagramme de Gant rendu lors de la phase
-  de réflexion dans le rapport.
+            Note introduction :
+            -------------------
+            
+            Ce projet a été réalisé pour le cours de génie logiciel (Bachelier 2 Umons).
+                               Le titulaire de ce cours est M Mens.
+                 Ce projet se base sur les diagrammes UML rendus au mois de décembre.
+                 
+                 
+            Note pour lancer le jeu:
+            ------------------------
+            
+            Pour compiler, ce projet en ligne de commande : ./gradlew run --> pour lancer.
+            Pour pouvoir éxécuter les tests Junit : ./gradlew test        --> pour test.
+            
+            Note sur le jeu principale:
+            ---------------------------
+            
+            Ce jeu de RPG s'inspire de la vie estudiantine des élèves de l'Umons en bachelier 
+            sciences informatiques. Le personnage devra réaliser des quêtes dans la vie d'un
+            étudiant mais aussi allez visiter les infrastructures du jeu qui s'inspirent du
+            campus de l'Umons.
+            
+            Note sur les extensions:
+            ------------------------
+            
+            Dans ce jeu, on retrouve quatres modes de jeu:
+              * Jeu principale qui se joue seul
+              * Extension Dual qui se joue à deux sur le même ordinateur
+              * Extension Lan qui permet à deux joueurs de jouer ensemble sur des pc distant.
+              * Extension IA [...]
+              
+_______________________________________________Umons_______________________________________________
