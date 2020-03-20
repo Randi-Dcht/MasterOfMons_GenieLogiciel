@@ -2,8 +2,8 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.Extensions.LAN.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
@@ -11,9 +11,14 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Gdx;
 
+import java.awt.*;
+import java.io.IOException;
 import java.net.SocketException;
 
 /**
@@ -40,14 +45,39 @@ public class FinalisingConnectionState extends MenuState {
             return;
         }
 
-        nm.setOnPlayerDetected(secondPlayer -> {
-            LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-            ls.setAfterLoadingState(PlayingState.class);
+        nm.setOnSecondPlayerDetected(secondPlayer -> {
+            if (MasterOfMonsGame.getGameToLoad() == null) {
+                LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+                ls.setAfterLoadingState(PlayingState.class);
+            }
             SupervisorLAN.setPlayerTwo(secondPlayer);
         });
-        if (MasterOfMonsGame.getGameToLoad() != null)
-            SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getGameToLoad());
-        nm.sendPlayerInformation(SupervisorLAN.getPeople());
+        nm.setOnPlayerDetected(player -> {
+            LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+            ls.setAfterLoadingState(PlayingState.class);
+            SupervisorLAN.setPlayerOne(player);
+        });
+        nm.setOnSaveDetected((save -> {
+            invertPlayerOneAndTwo(save);
+            SupervisorLAN.getSupervisor().oldGameLAN(save);
+            LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+            ls.setAfterLoadingState(PlayingState.class);
+        }));
+        if (MasterOfMonsGame.getGameToLoad() == null)
+            nm.sendPlayerInformation(SupervisorLAN.getPeople());
+
+    }
+
+    protected void invertPlayerOneAndTwo(Save save) {
+        String fs = save.getFirstPlayerMap();
+        People p = save.getPlayer();
+        Point pos = save.getPlayerPosition();
+        save.setFirstPlayerMap(save.getSecondPlayerMap());
+        save.setPlayer(save.getSecondPlayer());
+        save.setPlayerPosition(save.getSecondPlayerPosition());
+        save.setSecondPlayer(p);
+        save.setPositionTwo(pos);
+        save.setSecondPlayerMap(fs);
     }
 
     @Override
@@ -59,5 +89,26 @@ public class FinalisingConnectionState extends MenuState {
         setMenuItems(new MenuItem[]{
                 new TitleMenuItem(gs, gs.getStringFromId("finalisingConnection"))
         });
+
+        Gdx.app.postRunnable(() -> {
+            if (MasterOfMonsGame.getGameToLoad() != null) {
+                Save save = SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getGameToLoad());
+                if (nm.isTheServer()) {
+                    try {
+                        nm.sendSave(save);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Gdx.app.error("FinalisingConnectionState", "The save object hasn't been sent !", e);
+                    }
+                    LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+                    ls.setAfterLoadingState(PlayingState.class);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
     }
 }

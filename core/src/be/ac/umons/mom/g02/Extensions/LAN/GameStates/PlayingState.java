@@ -113,18 +113,20 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             // TODO Go to an error page
         }
         idCharacterMap = new HashMap<>();
-        nm.setOnMapChanged((map) -> {
+        nm.setOnSecondPlayerMapChanged((map) -> {
             if (nm.isTheServer())
                 refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
             secondPlayerMap = map;
             mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
         });
-        nm.setOnSecondPlayerMapChanged(this::initMap);
+        nm.setOnFirstPlayerMapChanged(this::initMap);
 
         supervisor.setMustPlaceItem(false);
+        newParty = (MasterOfMonsGame.getGameToLoad() == null);
         if (newParty)
             SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
                     SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
+        Supervisor.setGraphic(gs);
         super.init();
         secondPlayerMap = gmm.getActualMapName();
 
@@ -142,6 +144,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     protected void loadOldGame() {
         ((SupervisorLAN)supervisor).oldGameLAN(MasterOfMonsGame.getGameToLoad(), this, gs);
+        nm.sendSecondPlayerPosition(new Point(playerTwo.getPosX(), playerTwo.getPosY()));
     }
 
     /**
@@ -163,10 +166,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (nm.getMustSendPNJPos() != null) {
                 sendPNJsPositions(nm.getMustSendPNJPos());
             } else {
-                nm.setOnGetPNJ((map) -> {
-                    sendPNJsPositions(map);
-                    nm.sendSecondPlayerPosition(new Point(playerTwo.getPosX(), playerTwo.getPosY()));
-                });
+                nm.setOnGetPNJ((map) -> sendPNJsPositions(map));
             }
         } else
             nm.askPNJsPositions(gmm.getActualMapName());

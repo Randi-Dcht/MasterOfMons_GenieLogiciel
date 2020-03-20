@@ -64,7 +64,7 @@ public class DisconnectedMenuState extends MenuState {
                 nm.stopBroadcastingServerInfo();
                 gsm.removeFirstState();
             });
-            nm.setOnPlayerDetected((player) -> {
+            nm.setOnSecondPlayerDetected((player) -> {
                 ps.setSecondPlayerCharacteristics(player);
                 nm.sendMapChanged(GameMapManager.getInstance().getActualMapName());
             });

@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GameStates;
 
-import be.ac.umons.mom.g02.GameStates.Menus.CreatePlayerMenuState;
 import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
@@ -21,6 +20,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  * @author Guillaume Cardoen
  */
 public class LoadingState extends GameState {
+    protected static boolean isLoading = false;
+
     /**
      * The margin the circles needs to have horizontally.
      */
@@ -84,6 +85,7 @@ public class LoadingState extends GameState {
     public LoadingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
         afterLoadingState = PlayingState.class;
+        isLoading = true;
     }
 
     /**
@@ -129,6 +131,7 @@ public class LoadingState extends GameState {
                     Gdx.app.postRunnable(() ->
                             gsm.removeAllStateAndAdd(afterLoadingState));
                     changedCalled = true;
+                    isLoading = false;
                 }
                 return;
             }
@@ -165,5 +168,9 @@ public class LoadingState extends GameState {
      */
     public void setAfterLoadingState(Class<? extends GameState> state) {
         this.afterLoadingState = state;
+    }
+
+    public static boolean isLoading() {
+        return isLoading;
     }
 }

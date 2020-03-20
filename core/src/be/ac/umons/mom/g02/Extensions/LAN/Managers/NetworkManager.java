@@ -1,8 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Managers;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Extensions.LAN.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -13,8 +11,8 @@ import com.badlogic.gdx.Gdx;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * Manage all the networking for the extension LAN.
@@ -142,6 +140,10 @@ public class NetworkManager {
     /**
      * What to do when the second player informations has been received.
      */
+    protected OnPlayerDetectedRunnable onSecondPlayerDetected;
+    /**
+     * What to do when the player informations has been received.
+     */
     protected OnPlayerDetectedRunnable onPlayerDetected;
     /**
      * What to do when the second player position has been received.
@@ -196,11 +198,11 @@ public class NetworkManager {
     /**
      * What to do when the second player's map change.
      */
-    protected StringRunnable onMapChanged;
+    protected StringRunnable onSecondPlayerMapChanged;
     /**
      * What to do when the second player want to change our map.
      */
-    protected StringRunnable onSecondPlayerMapChanged;
+    protected StringRunnable onFirstPlayerMapChanged;
     /**
      * What to do when we receive if we are the maze player or not.
      */
@@ -209,6 +211,8 @@ public class NetworkManager {
      * What to do when the second player level up
      */
     protected Runnable onLevelUp;
+
+    protected SaveRunnable onSaveDetected;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -579,7 +583,20 @@ public class NetworkManager {
      * @param player The player to send
      */
     public void sendPlayerInformation(People player) {
-        sendOnTCP(String.format("PI#%s#%d#%d#%d", player.toString(), player.getType().ordinal(), player.getGender().ordinal(), player.getDifficulty().ordinal()));
+        try {
+            sendOnTCP(String.format("PI#%s", objectToString(player)));
+        } catch (IOException e) {
+            Gdx.app.error("NetworkManager", "Cannot serialize the player !", e);
+            e.printStackTrace();
+        }
+    }
+    public void sendSecondPlayerInformation(People player) {
+        try {
+            sendOnTCP(String.format("SPI#%s", objectToString(player)));
+        } catch (IOException e) {
+            Gdx.app.error("NetworkManager", "Cannot serialize the player !", e);
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -691,6 +708,10 @@ public class NetworkManager {
         sendOnTCP("LVLUP");
     }
 
+    public void sendSave(Save save) throws IOException {
+        sendOnTCP("SAVE#" + objectToString(save));
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -713,16 +734,31 @@ public class NetworkManager {
                 addADetectedServer(tab, serverAddress);
                 break;
             case "PI": // Player info
-                String name = tab[1];
                 try {
-                    Type type = Type.values()[Integer.parseInt(tab[2])];
-                    Gender gender = Gender.values()[Integer.parseInt(tab[3])];
-                    Difficulty difficulty = Difficulty.values()[Integer.parseInt(tab[4])];
-                    if (onPlayerDetected != null)
+                    People p = (People) objectFromString(tab[1]);
+                    if (onSecondPlayerDetected != null)
                         Gdx.app.postRunnable(() ->
-                                onPlayerDetected.run(new People(name, type, gender, difficulty)));
+                                onSecondPlayerDetected.run(p));
                 } catch (NumberFormatException e) {
                     Gdx.app.error("NetworkManager", "Error detected while parsing player informations (ignoring message)", e);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "SPI": // Player info
+                try {
+                    People p = (People) objectFromString(tab[1]);
+                    if (onPlayerDetected != null)
+                        Gdx.app.postRunnable(() ->
+                                onPlayerDetected.run(p));
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing player informations (ignoring message)", e);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
                 break;
             case "PP": // Player Position
@@ -823,12 +859,12 @@ public class NetworkManager {
                     Gdx.app.postRunnable(onMasterQuestFinished);
                 break;
             case "CM": // Map changed
-                if (onMapChanged != null)
-                    Gdx.app.postRunnable(() -> onMapChanged.run(tab[1].trim()));
-                break;
-            case "SPMC": // Second player map changed
                 if (onSecondPlayerMapChanged != null)
                     Gdx.app.postRunnable(() -> onSecondPlayerMapChanged.run(tab[1].trim()));
+                break;
+            case "SPMC": // Second player map changed
+                if (onFirstPlayerMapChanged != null)
+                    Gdx.app.postRunnable(() -> onFirstPlayerMapChanged.run(tab[1].trim()));
                 break;
             case "ITMP":
                 if (onMazePlayerDetected != null)
@@ -844,8 +880,20 @@ public class NetworkManager {
                     }
                 }
                 break;
+            case "SAVE":
+                try {
+                    Save s = (Save) objectFromString(tab[1]);
+                    if (onSaveDetected != null)
+                        Gdx.app.postRunnable(() -> onSaveDetected.run(s));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
 
         }
+        if (received != "")
         msSinceLastMessage = 0;
     }
 
@@ -1036,11 +1084,15 @@ public class NetworkManager {
         this.onWrongMagicNumber = onWrongMagicNumber;
     }
 
-    /**
-     * @param onPlayerDetected What to do when the second player informations has been received.
-     */
     public void setOnPlayerDetected(OnPlayerDetectedRunnable onPlayerDetected) {
         this.onPlayerDetected = onPlayerDetected;
+    }
+
+    /**
+     * @param onSecondPlayerDetected What to do when the second player informations has been received.
+     */
+    public void setOnSecondPlayerDetected(OnPlayerDetectedRunnable onSecondPlayerDetected) {
+        this.onSecondPlayerDetected = onSecondPlayerDetected;
     }
 
     /**
@@ -1139,14 +1191,14 @@ public class NetworkManager {
     }
 
     /**
-     * @param onMapChanged What to do when the second player's map change.
+     * @param onSecondPlayerMapChanged What to do when the second player's map change.
      */
-    public void setOnMapChanged(StringRunnable onMapChanged) {
-        this.onMapChanged = onMapChanged;
-    }
-
     public void setOnSecondPlayerMapChanged(StringRunnable onSecondPlayerMapChanged) {
         this.onSecondPlayerMapChanged = onSecondPlayerMapChanged;
+    }
+
+    public void setOnFirstPlayerMapChanged(StringRunnable onFirstPlayerMapChanged) {
+        this.onFirstPlayerMapChanged = onFirstPlayerMapChanged;
     }
 
     /**
@@ -1161,6 +1213,10 @@ public class NetworkManager {
      */
     public void setOnLevelUp(Runnable onLevelUp) {
         this.onLevelUp = onLevelUp;
+    }
+
+    public void setOnSaveDetected(SaveRunnable onSaveDetected) {
+        this.onSaveDetected = onSaveDetected;
     }
 
     /**
@@ -1221,5 +1277,9 @@ public class NetworkManager {
      */
     public interface OnHitPNJRunnable {
         void run(String name, double life);
+    }
+
+    public interface SaveRunnable {
+        void run(Save save);
     }
 }

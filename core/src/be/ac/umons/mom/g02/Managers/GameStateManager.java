@@ -73,6 +73,7 @@ public class GameStateManager {
 
     public void animateForChangingState(Runnable onBetweenAnimation) {
         isChangingState = true;
+        AnimationManager.getInstance().remove("changingState");
         DoubleAnimation da = new DoubleAnimation(0, 1, CHANGING_TIME);
         da.setRunningAction(() -> sr.setColor(0,0,0, da.getActual().floatValue()));
         da.setEndingAction(() -> {
@@ -154,11 +155,9 @@ public class GameStateManager {
      */
     public GameState removeAllStateAndAdd(Class<? extends GameState> gst) {
         GameState g = getState(gst);
-        animateForChangingState(() -> {
-            while (! gameStateStack.empty())
-                gameStateStack.pop().dispose();
-            addStateToStack(g, false);
-        });
+        while (! gameStateStack.empty())
+            gameStateStack.pop().dispose();
+        addStateToStack(g, false);
         return g;
     }
 

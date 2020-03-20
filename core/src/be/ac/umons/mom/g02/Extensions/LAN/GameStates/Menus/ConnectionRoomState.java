@@ -94,7 +94,6 @@ public class ConnectionRoomState extends MenuState {
     protected void connectToServer(ServerInfo serverInfo) {
         nm.selectAServer(serverInfo);
         nm.tryToConnect();
-        gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
     }
 
     @Override

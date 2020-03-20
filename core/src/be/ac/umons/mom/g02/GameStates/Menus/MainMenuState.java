@@ -58,7 +58,7 @@ public class MainMenuState extends MenuState {
         List<MenuItem> menuItemList = new ArrayList<>();
         menuItemList.add(new TitleMenuItem(gs, gs.getStringFromId("gameName")));
         menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> em.initGame(gsm)));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)));
+        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("load"), this::initLoad));
         menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)));
         menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), () -> Gdx.app.exit()));
         menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("about"), () -> gsm.setState(AboutMenuState.class)));
@@ -77,6 +77,22 @@ public class MainMenuState extends MenuState {
         }
 
         setMenuItems(menuItemList.toArray(new MenuItem[0]));
+    }
+
+    protected void initLoad() {
+        ExtensionsManager.Extension mainExt = em.getMainExtension();
+        if (mainExt != null) {
+            Class<? extends GameState> gs;
+            try {
+                if ((gs = mainExt.getClassBeforeOldGameSelection()) != null)
+                    gsm.setState(gs);
+                else
+                    gsm.setState(LoadMenuState.class);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else
+            gsm.setState(LoadMenuState.class);
     }
 
     @Override

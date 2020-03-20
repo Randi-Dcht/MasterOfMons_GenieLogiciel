@@ -110,4 +110,12 @@ public class LogicSaving implements Serializable
     {
         return playerPosition;
     }
+
+    public void setPlayer(People playerGame) {
+        this.playerGame = playerGame;
+    }
+
+    public void setPlayerPosition(Point playerPosition) {
+        this.playerPosition = playerPosition;
+    }
 }

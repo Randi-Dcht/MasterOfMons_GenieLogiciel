@@ -99,6 +99,18 @@ public class ExtensionsManager {
                         else
                             ext.mainClassBeforeCharacterCreation = lineTab[1];
                         break;
+                    case ".classBeforeOldGameSelection":
+                        if (lineTab.length < 2)
+                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .classBeforeOldGameSelection needs a class", actualLine));
+                        else
+                            ext.classBeforeOldGameSelection = lineTab[1];
+                        break;
+                    case ".classAfterOldGameSelection":
+                        if (lineTab.length < 2)
+                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .classAfterOldGameSelection needs a class", actualLine));
+                        else
+                            ext.classAfterOldGameSelection = lineTab[1];
+                        break;
                     case ".load":
                         if (lineTab.length < 3)
                             Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .load needs a file path and his type", actualLine));
@@ -233,14 +245,12 @@ public class ExtensionsManager {
 
     public void initGameFromLoad(GameStateManager gsm) {
         ExtensionsManager.Extension mainExt = getMainExtension();
-        if (mainExt != null && mainExt.mainClassBeforeCharacterCreation != null) {
-            try {
+        try {
+            if (mainExt != null && mainExt.getClassAfterOldGameSelection() != null) {
+                gsm.setState(mainExt.getClassAfterOldGameSelection());
+            } else if (mainExt != null && mainExt.mainClassBeforeCharacterCreation != null) {
                 gsm.setState(mainExt.getMainClassBeforeCharacterCreation());
-            } catch (ClassNotFoundException e) {
-                Gdx.app.error("ExtensionsFile", String.format("The class %s wasn't found", mainExt.mainClassBeforeCharacterCreation), e);
-            }
-        } else if (mainExt != null) {
-            try {
+            } else if (mainExt != null) {
                 Class<? extends GameState> gs = mainExt.getMainClassBeforeLoading();
                 if (gs != null)
                     gsm.setState(gs);
@@ -250,12 +260,11 @@ public class ExtensionsManager {
                 }
                 else
                     gsm.setState(LoadingState.class);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                Gdx.app.error("Critical error", e.getMessage());
-            }
-        } else
-            gsm.setState(LoadingState.class);
+            } else
+                gsm.setState(LoadingState.class);
+        } catch (ClassNotFoundException e) {
+            Gdx.app.error("ExtensionsFile", String.format("The class %s wasn't found", mainExt.mainClassBeforeCharacterCreation), e);
+        }
     }
 
 
@@ -305,6 +314,10 @@ public class ExtensionsManager {
          * The class to launch in first for this extension (before the character creation).
          */
         public String mainClassBeforeCharacterCreation;
+
+        public String classAfterOldGameSelection;
+
+        public String classBeforeOldGameSelection;
         /**
          * The maps to load for this extension.
          */
@@ -331,6 +344,13 @@ public class ExtensionsManager {
 
         public Class<? extends GameState> getMainClassBeforeCharacterCreation() throws ClassNotFoundException {
             return mainClassBeforeCharacterCreation == null ? null : (Class<? extends GameState>) Class.forName(mainClassBeforeCharacterCreation);
+        }
+        public Class<? extends GameState> getClassAfterOldGameSelection() throws ClassNotFoundException {
+            return classAfterOldGameSelection == null ? null : (Class<? extends GameState>) Class.forName(classAfterOldGameSelection);
+        }
+
+        public Class<? extends GameState> getClassBeforeOldGameSelection() throws ClassNotFoundException {
+            return classBeforeOldGameSelection == null ? null : (Class<? extends GameState>) Class.forName(classBeforeOldGameSelection);
         }
     }
 }

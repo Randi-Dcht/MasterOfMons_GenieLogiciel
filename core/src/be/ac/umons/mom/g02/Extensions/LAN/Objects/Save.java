@@ -52,4 +52,20 @@ public class Save extends LogicSaving implements Serializable {
     public String getSecondPlayerMap() {
         return mapTwo;
     }
+
+    public void setPositionTwo(Point positionTwo) {
+        this.positionTwo = positionTwo;
+    }
+
+    public void setFirstPlayerMap(String mapOne) {
+        this.mapOne = mapOne;
+    }
+
+    public void setSecondPlayerMap(String mapTwo) {
+        this.mapTwo = mapTwo;
+    }
+
+    public void setSecondPlayer(People secondPlayer) {
+        this.secondPlayer = secondPlayer;
+    }
 }

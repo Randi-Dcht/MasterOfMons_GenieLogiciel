@@ -73,44 +73,51 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         }
     }
 
-    public void oldGameLAN(String path, PlayingState play, GraphicalSettings graphic) {
+    public Save oldGameLAN(String path, PlayingState play, GraphicalSettings graphic) {
         if (save == null)
             save =  (Save) Saving.getSaveObject(path);
         if (save != null)
-        {
-            play.setNewParty(false);
-            Supervisor.setGraphic(graphic);
-            oldGameLAN(path);
-            refreshQuest();
-            checkPlanning();
-
-            play.initMap(save.getMap().getMaps());
-            play.setPlayerPosition(save.getPlayerPosition());
-            play.setSecondPlayerMap(save.getSecondPlayerMap());
-            play.setSecondPlayerPosition(save.getSecondPlayerPosition());
-            play.addItemsToMap(save.getItemPosition());
-            try {
-                NetworkManager.getInstance().sendSecondPlayerMapChanged(save.getSecondPlayerMap());
-                NetworkManager.getInstance().sendSecondPlayerPosition(save.getSecondPlayerPosition());
-            } catch (SocketException e) {
-                Gdx.app.error("SupervisorLAN", "Error while getting the NetworkManager", e);
-            }
-        }
+            oldGameLAN(save, play, graphic);
+        return save;
     }
 
-    public void oldGameLAN(String path) {
+    public Save oldGameLAN(String path) {
         if (save == null)
             save =  (Save) Saving.getSaveObject(path);
         if (save != null)
-        {
-            listUpdate = new ArrayList<>();
-            time = new TimeGame(save.getDate());
-            playerOne = save.getPlayer();
-            playerOne.setMaps(Supervisor.getSupervisor().getMaps(save.getFirstPlayerMap()));
-            playerTwo = save.getSecondPlayer();
-            playerTwo.setMaps(Supervisor.getSupervisor().getMaps(save.getSecondPlayerMap()));
-            listCourse = playerOne.getPlanning().get(time.getDate().getDay());
-            regulator= new Regulator(playerOne,time);
+            oldGameLAN(save);
+        return save;
+    }
+
+    public void oldGameLAN(Save save) {
+
+        listUpdate = new ArrayList<>();
+        time = new TimeGame(save.getDate());
+        playerOne = save.getPlayer();
+        playerOne.setMaps(Supervisor.getSupervisor().getMaps(save.getFirstPlayerMap()));
+        playerTwo = save.getSecondPlayer();
+        playerTwo.setMaps(Supervisor.getSupervisor().getMaps(save.getSecondPlayerMap()));
+        listCourse = playerOne.getPlanning().get(time.getDate().getDay());
+        regulator= new Regulator(playerOne,time);
+    }
+
+    public void oldGameLAN(Save save, PlayingState play, GraphicalSettings gs) {
+        play.setNewParty(false);
+        Supervisor.setGraphic(gs);
+        oldGameLAN(save);
+        refreshQuest();
+        checkPlanning();
+
+        play.initMap(save.getMap().getMaps());
+        play.setPlayerPosition(save.getPlayerPosition());
+        play.setSecondPlayerMap(save.getSecondPlayerMap());
+        play.setSecondPlayerPosition(save.getSecondPlayerPosition());
+        play.addItemsToMap(save.getItemPosition());
+        try {
+            NetworkManager.getInstance().sendSecondPlayerMapChanged(save.getSecondPlayerMap());
+            NetworkManager.getInstance().sendSecondPlayerPosition(save.getSecondPlayerPosition());
+        } catch (SocketException e) {
+            Gdx.app.error("SupervisorLAN", "Error while getting the NetworkManager", e);
         }
     }
 }
