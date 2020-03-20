@@ -71,7 +71,7 @@ public class SuccessfulYear extends MasterQuest
     public void createListItems() throws Exception
     {
         listItems = new ArrayList<>();
-        listItems.addAll(createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class,PaperHelp.class},new int[]{6,1,6,3}));
+        listItems.addAll(createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class,PaperHelp.class},new int[]{6,1,6,3}, new Maps[]{null,null,null,null}));
     }
 
 
