@@ -84,24 +84,17 @@ public class MyFirstYear extends MasterQuest
      * This method return the mobile for this quest
      */
     @Override
-    protected void createListMobiles() //TODO optimiser cela
+    protected void createListMobiles() throws Exception
     {
         listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
-        for(int i=0; i < 10;i++)
-            listMobs.add(new Mobile("Student",getBloc(),type[new Random().nextInt(type.length)], Actions.Dialog,NameDialog.Lambda));
-        for(int i = 0; i < 10; i++)
-            listMobs.add(new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda));
-        for(int i = 0; i < 25; i++)
-            listMobs.add(new Mobile("LambdaStudent",getBloc(),MobileType.Athletic, Actions.Dialog,NameDialog.Student));
-        for (int i = 0; i < 45;i++)
-        {
-            Mobile mb = new Mobile("Fight",getBloc(),MobileType.Athletic, Actions.Attack,NameDialog.Lambda);
-            mb.setMaps(Maps.GrandAmphi);
-            listMobs.add(mb);
-        }
-        //TODO delete this:
-        for (Mobile m : listMobs)
+        listMobs.addAll(createRdMobile(new int[]{10,10,25,45},
+                new MobileType[]{MobileType.Lambda,MobileType.Athletic,MobileType.Loser,MobileType.Strong},
+                new Actions[]{Actions.Dialog,Actions.Attack,Actions.Dialog,Actions.Attack},
+                new NameDialog[]{NameDialog.Lambda,NameDialog.Lambda,NameDialog.Student,NameDialog.Lambda},
+                new Maps[]{null,null,null,Maps.GrandAmphi}));
+
+        for (Mobile m : listMobs)//TODO delete
             m.addObject(new Pen(),new Pen(),new Pen());
     }
 

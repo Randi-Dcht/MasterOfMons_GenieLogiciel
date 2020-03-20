@@ -60,7 +60,7 @@ public class Mobile extends Character implements Serializable, FrameTime
      */
     public Mobile(String name, Bloc playerBloc, MobileType type,Actions myAction,NameDialog nameDialog)
     {
-        super(RandomName.giveName(),type.getType());
+        super(name,type.getType());
         this.level = calculus(playerBloc);
         this.playerBloc  = playerBloc;
         this.type = type;
@@ -68,6 +68,13 @@ public class Mobile extends Character implements Serializable, FrameTime
         action = myAction;
         calculusPoint(type);
         myMoney = new Random().nextInt(10-1) + 1;
+    }
+
+
+    /***/
+    public Mobile( Bloc playerBloc, MobileType type,Actions myAction,NameDialog nameDialog)
+    {
+        this(RandomName.giveName(),playerBloc,type,myAction,nameDialog);
     }
 
 

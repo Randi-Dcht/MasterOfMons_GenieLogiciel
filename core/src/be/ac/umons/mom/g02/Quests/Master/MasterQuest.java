@@ -1,12 +1,9 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
-import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Lesson;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
@@ -125,17 +122,25 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /***/
-    public ArrayList<Mobile> createRdMobile(Mobile[] list, int[] number) throws ExceptionInInitializerError//TODO finish this
+    public ArrayList<Mobile> createRdMobile(int[] number, MobileType[] listT,Actions[] listAc,NameDialog[] listDia,Maps[] listMaps) throws Exception
     {
-        if (list.length != number.length)
-            throw new ExceptionInInitializerError();
-        ArrayList<Mobile> mob = new ArrayList<>();
-        for (int j=0; j < list.length; j++)
+        if (listT.length != number.length && listT.length != listAc.length && listAc.length != listDia.length && listDia.length != listMaps.length)
+            throw new Exception();
+        ArrayList<Mobile> listMb = new ArrayList<>();Mobile mbl;
+        for (int i = 0 ; i < number.length ; i++)
         {
-            for (int i=0; i < number[1];i++)
-                mob.add(null);
+            for (int  j = 0; j < number[i]; j++)
+            {
+                if (listMaps[i] == null)
+                    listMb.add(new Mobile(getBloc(),listT[i],listAc[i],listDia[i]));
+                else
+                {
+                    listMb.add(mbl = new Mobile(getBloc(),listT[i],listAc[i],listDia[i]));
+                    mbl.setMaps(listMaps[i]);
+                }
+            }
         }
-        return mob;
+        return listMb;
     }
 
 
@@ -159,7 +164,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             throw new Exception();
         else
         {
-            ArrayList<Items> listI = new ArrayList<>();
+            ArrayList<Items> listI = new ArrayList<>();Items itm;
             for (int j = 0; j < list.length; j++)
             {
                 for (int i=0; i <cmb[j];i++ )
@@ -168,7 +173,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
                         listI.add(list[j].getConstructor().newInstance());
                     else
                     {
-                        Items itm;
                         listI.add(itm = list[j].getConstructor().newInstance());
                         itm.setMaps(maps[j]);
                     }
@@ -400,7 +404,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     /**
      * This method allows to create the list of the mobiles
      */
-    protected abstract void createListMobiles();
+    protected abstract void createListMobiles() throws Exception;
 
 
     /**
@@ -430,8 +434,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      */
     public ArrayList<Mobile> getListPnj()
     {
-        if (listMobs == null)
-            createListMobiles();
+        if (listMobs == null) {
+            try {
+                createListMobiles();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return listMobs;
     }
 
