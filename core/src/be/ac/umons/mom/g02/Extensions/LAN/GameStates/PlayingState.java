@@ -119,6 +119,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             secondPlayerMap = map;
             mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
         });
+        nm.setOnSecondPlayerMapChanged(this::initMap);
 
         supervisor.setMustPlaceItem(false);
         if (newParty)
@@ -162,11 +163,15 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (nm.getMustSendPNJPos() != null) {
                 sendPNJsPositions(nm.getMustSendPNJPos());
             } else {
-                nm.setOnGetPNJ(this::sendPNJsPositions);
+                nm.setOnGetPNJ((map) -> {
+                    sendPNJsPositions(map);
+                    nm.sendSecondPlayerPosition(new Point(playerTwo.getPosX(), playerTwo.getPosY()));
+                });
             }
         } else
             nm.askPNJsPositions(gmm.getActualMapName());
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
+        nm.setOnSecondPlayerPositionDetected((pos) -> player.setMapPos(pos));
         nm.setOnHitPNJ((name, life) -> {
             Character c = idCharacterMap.get(name);
             if (c != null) {
@@ -393,6 +398,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         super.setSecondPlayerPosition(mapPos);
         if (mazeMode)
             player.setMapPos(mapPos);
+    }
+
+    public void setSecondPlayerMap(String secondPlayerMap) {
+        this.secondPlayerMap = secondPlayerMap;
     }
 
     /**

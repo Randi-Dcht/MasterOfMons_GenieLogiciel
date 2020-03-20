@@ -7,7 +7,7 @@ import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -117,8 +117,8 @@ public class AgendaShower extends Control {
      * Begin the animation that will be showing the control.
      */
     protected void show() {
-        courses = SuperviserNormally.getSupervisor().getPeople().getPlanning().get(
-                SuperviserNormally.getSupervisor().getTime().getDate().getDay()
+        courses = Supervisor.getSupervisor().getPeople().getPlanning().get(
+                Supervisor.getSupervisor().getTime().getDate().getDay()
         );
         if (courses == null)
             return;

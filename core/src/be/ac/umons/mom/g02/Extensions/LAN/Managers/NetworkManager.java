@@ -500,7 +500,8 @@ public class NetworkManager {
      * @param messages The message(s)
      */
     public void sendOnTCP(String... messages) {
-        toSendOnTCP.addAll(Arrays.asList(messages));
+        for (String mes : messages)
+            toSendOnTCP.push(mes);
     }
 
     /**
@@ -737,7 +738,7 @@ public class NetworkManager {
                     Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
                 }
                 break;
-            case "SPP":
+            case "SPP": // Second Player Position
                 String sx = tab[1];
                 String sy = tab[2];
                 try {
@@ -961,7 +962,8 @@ public class NetworkManager {
         try {
             br.close();
             socket.close();
-            serverSocket.close();
+            if (serverSocket != null)
+                serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1046,6 +1048,10 @@ public class NetworkManager {
      */
     public void setOnPositionDetected(PointRunnable onPositionDetected) {
         this.onPositionDetected = onPositionDetected;
+    }
+
+    public void setOnSecondPlayerPositionDetected(PointRunnable onSecondPlayerPositionDetected) {
+        this.onSecondPlayerPositionDetected = onSecondPlayerPositionDetected;
     }
 
     /**
@@ -1137,6 +1143,10 @@ public class NetworkManager {
      */
     public void setOnMapChanged(StringRunnable onMapChanged) {
         this.onMapChanged = onMapChanged;
+    }
+
+    public void setOnSecondPlayerMapChanged(StringRunnable onSecondPlayerMapChanged) {
+        this.onSecondPlayerMapChanged = onSecondPlayerMapChanged;
     }
 
     /**

@@ -78,6 +78,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
             save =  (Save) Saving.getSaveObject(path);
         if (save != null)
         {
+            play.setNewParty(false);
             Supervisor.setGraphic(graphic);
             oldGameLAN(path);
             refreshQuest();
@@ -85,6 +86,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
             play.initMap(save.getMap().getMaps());
             play.setPlayerPosition(save.getPlayerPosition());
+            play.setSecondPlayerMap(save.getSecondPlayerMap());
             play.setSecondPlayerPosition(save.getSecondPlayerPosition());
             play.addItemsToMap(save.getItemPosition());
             try {

@@ -33,7 +33,7 @@ public class Settings implements Serializable {
     /**
      * The semi-transparent background color
      */
-    private String transparentBackgroundColor = "21212180";
+    private String transparentBackgroundColor = "212121AA";
     /**
      * The background's color of a control
      */
@@ -41,7 +41,7 @@ public class Settings implements Serializable {
     /**
      * The semi-transparent background's color of a control
      */
-    private String controlTransparentBackgroundColor = "11111180";
+    private String controlTransparentBackgroundColor = "111111AA";
     /**
      * The control's color when it's selected
      */
