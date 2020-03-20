@@ -33,6 +33,8 @@ public class Player extends Character {
         this.middleY = middleY;
         posX = middleX;
         posY = 0;
+        width = tileWidth;
+        height = 2 * tileHeight;
     }
     public Player() {}
 

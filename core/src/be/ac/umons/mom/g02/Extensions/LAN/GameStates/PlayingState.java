@@ -259,6 +259,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                 if (! isTheMazePlayer)
                     player.setNoMoving(true);
             }
+        } else {
+            mustDrawSecondPlayer = true;
+            puzzleObjects = null;
+            player.setIsATarget(false);
+            player.setNoMoving(false);
         }
     }
 

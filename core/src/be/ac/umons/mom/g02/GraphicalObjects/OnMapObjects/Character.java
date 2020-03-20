@@ -310,7 +310,7 @@ public class Character extends OnMapObject {
         int x = (int)((double)(-getPosY()) / tileHeight + (getPosX()) / tileWidth);
         int y = (int)(mapHeight / tileHeight - ((double)(getPosY()) / tileHeight + (getPosX()) / tileWidth));
 
-        return new Rectangle(x , y, ((float)width / tileWidth), (float)height / tileHeight);
+        return new Rectangle(x , y, ((float)this.width / tileWidth), (float)this.height / tileHeight);
     }
 
     public void dispose() {

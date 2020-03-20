@@ -13,7 +13,8 @@ public enum Maps
     DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci",Places.OnTheMap),
     Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",   Places.OnTheMap),
     Kot(       "Tmx/Kot.tmx",             "InfoKot",    Places.OnTheMap),
-    Mons(      "Tmx/CityMons.tmx",        "InfoCity",   Places.OnTheMap);
+    Mons(      "Tmx/CityMons.tmx",        "InfoCity",   Places.OnTheMap),
+    LAN_Boss(  "Tmx/LAN_Boss.tmx",        "InfoLANBoss",Places.OnTheMap);
 
 
     /**The characteristic of the maps*/
