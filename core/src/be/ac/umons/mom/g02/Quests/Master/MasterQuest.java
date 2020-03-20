@@ -1,21 +1,23 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
-import be.ac.umons.mom.g02.Enums.*;
-import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Difficulty;
+import be.ac.umons.mom.g02.Enums.Lesson;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
+import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
-
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 
@@ -121,7 +123,16 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to create the number of mobile with the param
+     * @param number   is the number of mobile type
+     * @param listAc   is the action of mobile
+     * @param listDia  is the dialog of mobile
+     * @param listT    is the mobile type of mobile
+     * @param listMaps is the maps where the mobile is (Maps or null)
+     *
+     * @return a list with the all mobile
+     */
     public ArrayList<Mobile> createRdMobile(int[] number, MobileType[] listT,Actions[] listAc,NameDialog[] listDia,Maps[] listMaps) throws Exception
     {
         if (listT.length != number.length && listT.length != listAc.length && listAc.length != listDia.length && listDia.length != listMaps.length)
@@ -157,7 +168,14 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to create the number item
+     * @param list is a list of the item class to init
+     * @param cmb  is the number of the item
+     * @param maps is the maps of the item (Maps or null)
+     *
+     * @return a list with the all item instance
+     */
     protected ArrayList<Items> createListItems(Class<Items>[] list, int[] cmb, Maps[] maps) throws Exception
     {
         if (list.length != cmb.length && maps.length != list.length)
@@ -178,7 +196,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
                     }
                 }
             }
-            return listI ;
+            return listI;
         }
     }
 
@@ -228,16 +246,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     public double getProgress()
     {
         return (percent/maxPercent);
-    }
-
-
-    /**
-     *this method return the percent of advancement of this Quest
-     *@return percent of advancement
-     */
-    public double getAdvancement()
-    {
-        return percent;
     }
 
 
@@ -362,16 +370,6 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
 
 
     /**
-     * This method return the maximum percent of this Quest
-     * @return number of maximum percent
-     */
-    public double getMaximun()
-    {
-        return maxPercent;
-    }
-
-
-    /**
      * This method allows to receive the notification and update this quest
      * @param notify is the notification with event
      */
@@ -435,10 +433,13 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
     public ArrayList<Mobile> getListPnj()
     {
         if (listMobs == null) {
-            try {
+            try
+            {
                 createListMobiles();
-            } catch (Exception e) {
-                e.printStackTrace();
+            }
+            catch (Exception e)
+            {
+                Gdx.app.error("Error in the MasterQuest to init the list of Mobile",String.valueOf(e));
             }
         }
         return listMobs;

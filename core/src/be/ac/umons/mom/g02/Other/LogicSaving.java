@@ -78,11 +78,15 @@ public class LogicSaving implements Serializable
     }
 
 
-    /***/
+    /**
+     * This method returns the actual maps of player
+     * @return the maps of player
+     */
     public Maps getMap()
     {
         return actualMap;
     }
+
 
     /**
      * This method return a list of position of item in the game
@@ -105,17 +109,31 @@ public class LogicSaving implements Serializable
 
 
     /**
-     * This method return the position of the player */
+     * This method return the position of the player
+     * @return the point of position of player
+     */
     public Point getPlayerPosition()
     {
         return playerPosition;
     }
 
-    public void setPlayer(People playerGame) {
+
+    /**
+     * This method allows to give the actual player of game
+     * @param playerGame is the player of this game
+     */
+    public void setPlayer(People playerGame)
+    {
         this.playerGame = playerGame;
     }
 
-    public void setPlayerPosition(Point playerPosition) {
+
+    /**
+     * This method allows to give the actual position of the player in the maps
+     * @param playerPosition is the actual position of player
+     */
+    public void setPlayerPosition(Point playerPosition)
+    {
         this.playerPosition = playerPosition;
     }
 }

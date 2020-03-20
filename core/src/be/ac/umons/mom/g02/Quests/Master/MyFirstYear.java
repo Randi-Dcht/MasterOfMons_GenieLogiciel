@@ -87,7 +87,6 @@ public class MyFirstYear extends MasterQuest
     protected void createListMobiles() throws Exception
     {
         listMobs = new ArrayList<>();
-        MobileType[] type = MobileType.values();
         listMobs.addAll(createRdMobile(new int[]{10,10,25,45},
                 new MobileType[]{MobileType.Lambda,MobileType.Athletic,MobileType.Loser,MobileType.Strong},
                 new Actions[]{Actions.Dialog,Actions.Attack,Actions.Dialog,Actions.Attack},
