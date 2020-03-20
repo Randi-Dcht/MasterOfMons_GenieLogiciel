@@ -144,6 +144,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         goodPuzzlePathColor = new Color(0x2E7D32);
         badPuzzlePathColor = new Color(0xB71C1C);
+        if (newParty)
+            initMap("Tmx/LAN_Puzzle.tmx");
     }
 
     @Override
@@ -200,6 +202,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
         nm.setOnMazePlayerDetected((b) -> {
             isTheMazePlayer = b;
+            player.setIsATarget(! isTheMazePlayer);
             if (! b)
                 player.setNoMoving(true);
         });
@@ -246,15 +249,16 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             mazeMode = false;
         if (mazeMode) {
             mustDrawSecondPlayer = false;
-            player.setIsATarget(true);
             MapLayer puzzleLayer = gmm.getActualMap().getLayers().get("Puzzle");
             if (puzzleLayer != null)
                 puzzleObjects = puzzleLayer.getObjects();
-            if (nm.isTheServer())
+            if (nm.isTheServer()) {
                 isTheMazePlayer = (new Random().nextInt() % 2 == 1);
-            nm.sendIsTheMazePlayer(! isTheMazePlayer);
-            if (! isTheMazePlayer)
-                player.setNoMoving(true);
+                player.setIsATarget(! isTheMazePlayer);
+                nm.sendIsTheMazePlayer(! isTheMazePlayer);
+                if (! isTheMazePlayer)
+                    player.setNoMoving(true);
+            }
         }
     }
 
@@ -292,7 +296,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void handleInput() {
         super.handleInput();
-        nm.sendPlayerPosition(player);
+        if (! mazeMode || isTheMazePlayer )
+            nm.sendPlayerPosition(player);
 
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             nm.sendPause();
