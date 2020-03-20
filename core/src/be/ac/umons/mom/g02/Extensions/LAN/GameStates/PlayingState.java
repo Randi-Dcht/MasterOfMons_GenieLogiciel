@@ -10,6 +10,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
+import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -144,6 +145,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         goodPuzzlePathColor = new Color(0x2E7D32);
         badPuzzlePathColor = new Color(0xB71C1C);
+        if (newParty)
+            initMap("Tmx/LAN_Puzzle.tmx");
     }
 
     @Override
@@ -200,6 +203,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
         nm.setOnMazePlayerDetected((b) -> {
             isTheMazePlayer = b;
+            player.setIsATarget(! isTheMazePlayer);
             if (! b)
                 player.setNoMoving(true);
         });
@@ -209,6 +213,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
         nm.setOnGetItem((map) -> {
             // TODO
+        });
+        nm.setOnDeath(() -> {
+            DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
+            dms.setText(gs.getStringFromId("partnerDead"));
         });
     }
 
@@ -246,15 +254,21 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             mazeMode = false;
         if (mazeMode) {
             mustDrawSecondPlayer = false;
-            player.setIsATarget(true);
             MapLayer puzzleLayer = gmm.getActualMap().getLayers().get("Puzzle");
             if (puzzleLayer != null)
                 puzzleObjects = puzzleLayer.getObjects();
-            if (nm.isTheServer())
+            if (nm.isTheServer()) {
                 isTheMazePlayer = (new Random().nextInt() % 2 == 1);
-            nm.sendIsTheMazePlayer(! isTheMazePlayer);
-            if (! isTheMazePlayer)
-                player.setNoMoving(true);
+                player.setIsATarget(! isTheMazePlayer);
+                nm.sendIsTheMazePlayer(! isTheMazePlayer);
+                if (! isTheMazePlayer)
+                    player.setNoMoving(true);
+            }
+        } else {
+            mustDrawSecondPlayer = true;
+            puzzleObjects = null;
+            player.setIsATarget(false);
+            player.setNoMoving(false);
         }
     }
 
@@ -292,7 +306,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void handleInput() {
         super.handleInput();
-        nm.sendPlayerPosition(player);
+        if (! mazeMode || isTheMazePlayer )
+            nm.sendPlayerPosition(player);
 
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
             nm.sendPause();
@@ -383,7 +398,12 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void update(Notification notify) {
         super.update(notify);
-        if (notify.getEvents().equals(Events.Dead)) {
+        if (notify.getEvents().equals(Events.Dead) &&
+                (notify.getBuffer().equals(player.getCharacteristics()))) {
+            gsm.setState(DeadMenuState.class);
+            nm.sendDeath();
+        }
+        else if (notify.getEvents().equals(Events.Dead)) {
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendPNJDeath(m.getName());
             idCharacterMap.remove(m.getName());

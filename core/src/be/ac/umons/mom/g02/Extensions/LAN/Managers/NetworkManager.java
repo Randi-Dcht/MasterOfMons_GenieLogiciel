@@ -183,6 +183,7 @@ public class NetworkManager {
      * What to do when the second player hit a PNJ.
      */
     protected OnHitPNJRunnable onHitPNJ;
+    protected Runnable onDeath;
     /**
      * What to do when the second player killed a PNJ.
      */
@@ -652,6 +653,9 @@ public class NetworkManager {
         sendOnTCP("EndPause");
     }
 
+    public void sendDeath() {
+        sendOnTCP("Death");
+    }
     /**
      * Send the death of a PNJ.
      * @param name The name of the PNJ
@@ -849,6 +853,10 @@ public class NetworkManager {
                         Gdx.app.error("NetworkManager", "Error detected while parsing damage in hitPNJ message (ignoring it)", e);
                     }
                 }
+                break;
+            case "Death":
+                if (onDeath != null)
+                    Gdx.app.postRunnable(onDeath);
                 break;
             case "PNJDeath":
                 if (onPNJDeath != null)
@@ -1164,6 +1172,10 @@ public class NetworkManager {
      */
     public void setOnHitPNJ(OnHitPNJRunnable onHitPNJ) {
         this.onHitPNJ = onHitPNJ;
+    }
+
+    public void setOnDeath(Runnable onDeath) {
+        this.onDeath = onDeath;
     }
 
     /**
