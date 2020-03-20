@@ -37,6 +37,18 @@ public class Save extends LogicSaving implements Serializable {
         this.mapTwo = mapTwo;
     }
 
+    public void invertPlayerOneAndTwo() {
+        String fs = getFirstPlayerMap();
+        People p = getPlayer();
+        Point pos = getPlayerPosition();
+        setFirstPlayerMap(getSecondPlayerMap());
+        setPlayer(getSecondPlayer());
+        setPlayerPosition(getSecondPlayerPosition());
+        setSecondPlayer(p);
+        setPositionTwo(pos);
+        setSecondPlayerMap(fs);
+    }
+
     public People getSecondPlayer() {
         return secondPlayer;
     }

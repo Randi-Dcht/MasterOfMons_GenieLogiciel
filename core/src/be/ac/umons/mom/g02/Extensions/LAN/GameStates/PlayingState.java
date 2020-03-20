@@ -84,6 +84,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     protected Color badPuzzlePathColor;
 
+    protected boolean ignoreUPLevel = false;
+
 
     /**
      * @param gsm The game's state manager
@@ -122,12 +124,15 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnFirstPlayerMapChanged(this::initMap);
 
         supervisor.setMustPlaceItem(false);
-        newParty = (MasterOfMonsGame.getGameToLoad() == null);
+        newParty = (MasterOfMonsGame.getGameToLoad() == null && ! nm.hasReceivedASave());
         if (newParty)
             SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
                     SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
+
         Supervisor.setGraphic(gs);
         super.init();
+        if (! newParty && ! nm.isTheServer())
+            ((SupervisorLAN)supervisor).oldGameLAN(nm.getSaveReceived(), this, gs);
         secondPlayerMap = gmm.getActualMapName();
 
         setNetworkManagerRunnables();
@@ -171,7 +176,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         } else
             nm.askPNJsPositions(gmm.getActualMapName());
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
-        nm.setOnSecondPlayerPositionDetected((pos) -> player.setMapPos(pos));
+//        nm.setOnSecondPlayerPositionDetected((pos) -> player.setMapPos(pos));
         nm.setOnHitPNJ((name, life) -> {
             Character c = idCharacterMap.get(name);
             if (c != null) {
@@ -383,7 +388,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendPNJDeath(m.getName());
             idCharacterMap.remove(m.getName());
         } else if (notify.getEvents().equals(Events.UpLevel)) {
-            nm.sendLevelUp();
+            if (! ignoreUPLevel) {
+                nm.sendLevelUp();
+                ignoreUPLevel = true;
+            } else
+                ignoreUPLevel = false;
         }
     }
 

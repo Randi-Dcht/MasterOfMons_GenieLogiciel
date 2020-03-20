@@ -58,7 +58,6 @@ public class FinalisingConnectionState extends MenuState {
             SupervisorLAN.setPlayerOne(player);
         });
         nm.setOnSaveDetected((save -> {
-            invertPlayerOneAndTwo(save);
             SupervisorLAN.getSupervisor().oldGameLAN(save);
             LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
             ls.setAfterLoadingState(PlayingState.class);
@@ -66,18 +65,6 @@ public class FinalisingConnectionState extends MenuState {
         if (MasterOfMonsGame.getGameToLoad() == null)
             nm.sendPlayerInformation(SupervisorLAN.getPeople());
 
-    }
-
-    protected void invertPlayerOneAndTwo(Save save) {
-        String fs = save.getFirstPlayerMap();
-        People p = save.getPlayer();
-        Point pos = save.getPlayerPosition();
-        save.setFirstPlayerMap(save.getSecondPlayerMap());
-        save.setPlayer(save.getSecondPlayer());
-        save.setPlayerPosition(save.getSecondPlayerPosition());
-        save.setSecondPlayer(p);
-        save.setPositionTwo(pos);
-        save.setSecondPlayerMap(fs);
     }
 
     @Override

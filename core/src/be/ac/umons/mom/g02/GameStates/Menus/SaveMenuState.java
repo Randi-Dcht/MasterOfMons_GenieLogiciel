@@ -89,8 +89,8 @@ public class SaveMenuState extends ChooseFolderMenuState {
         if (f.exists() && ! verified) {
             OutGameDialogState g = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
             g.setText(String.format(gs.getStringFromId("saveOverwriteQuestion"), f.getName()));
-            g.addAnswer(gs.getStringFromId("yes"), () -> save(saveFilePath, true));
-            g.addAnswer(gs.getStringFromId("no"));
+            g.addAnswer("yes", () -> save(saveFilePath, true));
+            g.addAnswer("no");
         } else {
             Saving save = Supervisor.getSupervisor().getSave();
             save.setNameSave(saveFilePath);

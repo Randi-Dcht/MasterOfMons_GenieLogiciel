@@ -225,6 +225,8 @@ public  abstract class Supervisor implements Observer
         save = new Saving();
         associateLesson();
         graphicalMob = new HashMap<>();
+        listMoving = new HashMap<>();
+        listMobile = new HashMap<>();
     }
 
 

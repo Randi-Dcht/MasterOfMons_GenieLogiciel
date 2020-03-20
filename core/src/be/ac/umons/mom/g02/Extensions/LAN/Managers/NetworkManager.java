@@ -238,6 +238,8 @@ public class NetworkManager {
      */
     protected double msSinceLastMessage;
 
+    protected Save saveReceived;
+
     /**
      * @throws SocketException If the port used (32516) is already used
      */
@@ -883,8 +885,10 @@ public class NetworkManager {
             case "SAVE":
                 try {
                     Save s = (Save) objectFromString(tab[1]);
+                    s.invertPlayerOneAndTwo();
                     if (onSaveDetected != null)
                         Gdx.app.postRunnable(() -> onSaveDetected.run(s));
+                    saveReceived = s;
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
@@ -1217,6 +1221,14 @@ public class NetworkManager {
 
     public void setOnSaveDetected(SaveRunnable onSaveDetected) {
         this.onSaveDetected = onSaveDetected;
+    }
+
+    public boolean hasReceivedASave() {
+        return saveReceived != null;
+    }
+
+    public Save getSaveReceived() {
+        return saveReceived;
     }
 
     /**

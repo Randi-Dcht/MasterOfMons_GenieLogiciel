@@ -36,7 +36,6 @@ public class LearnToCooperate extends MasterQuest {
 
     @Override
     public String getName() {
-        System.out.println("Test" + Supervisor.getGraphic());
         return Supervisor.getGraphic().getStringFromId("learnToCooperate");
     }
 
