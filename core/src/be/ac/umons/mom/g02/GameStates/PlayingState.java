@@ -287,7 +287,7 @@ public class PlayingState extends GameState implements Observer {
 
         initPNJsPositions(pnjs);
         initPlayerPosition(spawnX, spawnY);
-        supervisor.getEvent().notify(new PlaceInMons(map));
+        Supervisor.getEvent().notify(new PlaceInMons(map));
 
     }
 

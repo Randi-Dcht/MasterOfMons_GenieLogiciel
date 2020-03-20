@@ -10,6 +10,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
+import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -213,6 +214,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnGetItem((map) -> {
             // TODO
         });
+        nm.setOnDeath(() -> {
+            DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
+            dms.setText(gs.getStringFromId("partnerDead"));
+        });
     }
 
     @Override
@@ -393,7 +398,12 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void update(Notification notify) {
         super.update(notify);
-        if (notify.getEvents().equals(Events.Dead)) {
+        if (notify.getEvents().equals(Events.Dead) &&
+                (notify.getBuffer().equals(player.getCharacteristics()))) {
+            gsm.setState(DeadMenuState.class);
+            nm.sendDeath();
+        }
+        else if (notify.getEvents().equals(Events.Dead)) {
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendPNJDeath(m.getName());
             idCharacterMap.remove(m.getName());

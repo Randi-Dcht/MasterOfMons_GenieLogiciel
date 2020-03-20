@@ -25,7 +25,8 @@ public class LearnToCooperate extends MasterQuest {
         super(before, people, Bloc.BA1, difficulty);
         addUnderQuest(new EndPuzzle(this, Supervisor.getPeople()),
                 new Boss(this, Supervisor.getPeople()));
-        Supervisor.getEvent().add(this, Events.EntryPlace);
+        Supervisor.getEvent().add(this, Events.PlaceInMons);
+        maxPercent = 2;
     }
 
     @Override

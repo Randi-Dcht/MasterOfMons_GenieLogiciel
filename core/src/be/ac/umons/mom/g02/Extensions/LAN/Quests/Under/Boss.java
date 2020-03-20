@@ -24,7 +24,7 @@ public class Boss extends UnderQuest {
      */
     @Override
     public void evenActivity(Notification notify) {
-        if (notify.getEvents().equals(Events.PlaceInMons))
+        if (notify.getEvents().equals(Events.PlaceInMons) && notify.getBuffer() != null && notify.getBuffer().equals("Tmx/Umons_Nimy.tmx")) // TODO
             addProgress(1);
     }
 
