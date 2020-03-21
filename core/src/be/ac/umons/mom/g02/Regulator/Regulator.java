@@ -70,7 +70,7 @@ public class Regulator implements Observer
         this.player = people;
         this.time   = time;
         this.manager= Supervisor.getSupervisor();
-        manager.getEvent().add(this,Events.ChangeHour,Events.PlaceInMons,Events.MeetOther,Events.EntryPlace,Events.ChangeQuest,Events.UseItems,Events.LowSomething);
+        Supervisor.getEvent().add(this,Events.ChangeHour,Events.PlaceInMons,Events.MeetOther,Events.EntryPlace,Events.ChangeQuest,Events.UseItems,Events.LowSomething);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
         createPlaceAssociation();
@@ -142,7 +142,7 @@ public class Regulator implements Observer
             changeQuest();
             chgQuest = false;
         }
-        if (informPlace && this.maps.contains(maps))
+        if (informPlace && this.maps.contains(maps)) // TODO : informPlace --> this.maps.size() != 0 ??? Une variable en moins :)
         {
             push(maps.getInformation());
             this.maps.remove(maps);
@@ -318,5 +318,103 @@ public class Regulator implements Observer
         if (notify.getEvents().equals(Events.LowSomething) && notify.bufferNotEmpty() && notify.getBuffer().equals(LowSomething.TypeLow.Energy))
             lowEnergizing();
 
+    }
+
+    /**
+     * @return If we must display the information about the current quest
+     */
+    public boolean mustChangeQuest() {
+        return chgQuest;
+    }
+
+    /**
+     * @param chgQuest If we must display the information about the current quest
+     */
+    public void setChangeQuest(boolean chgQuest) {
+        this.chgQuest = chgQuest;
+    }
+
+    /**
+     * @return If the is the first time the player go to a course
+     */
+    public boolean isTheFirstCourse() {
+        return firstCourse;
+    }
+
+    /**
+     * @param firstCourse If the is the first time the player go to a course
+     */
+    public void setFirstCourse(boolean firstCourse) {
+        this.firstCourse = firstCourse;
+    }
+
+    /**
+     * @return If this a the first time the user start the game
+     */
+    public boolean isTheFirstStart() {
+        return firstStart;
+    }
+
+    /**
+     * @param firstStart If this a the first time the user start the game
+     */
+    public void setFirstStart(boolean firstStart) {
+        this.firstStart = firstStart;
+    }
+
+    /**
+     * @return If this is the first time the user study
+     */
+    public boolean isTheFirstStudy() {
+        return firstStudy;
+    }
+
+    /**
+     * @param firstStudy If this is the first time the user study
+     */
+    public void setFirstStudy(boolean firstStudy) {
+        this.firstStudy = firstStudy;
+    }
+
+    /**
+     * @return If we must show informations about the energizing item
+     */
+    public boolean mustShowEnergizingInformation() {
+        return informEnergizing;
+    }
+
+    /**
+     * @param informEnergizing If we must show informations about the energizing item
+     */
+    public void setShowEnergizingInformation(boolean informEnergizing) {
+        this.informEnergizing = informEnergizing;
+    }
+
+    /**
+     * @return If we must display informations about places or not
+     */
+    public boolean mustDisplayPlaceInformations() {
+        return informPlace;
+    }
+
+    /**
+     * @param informPlace If we must display informations about places or not
+     */
+    public void setDisplayPlaceInformations(boolean informPlace) {
+        this.informPlace = informPlace;
+    }
+
+    /**
+     * @return The maps where we need to display informations about them.
+     */
+    public ArrayList<Maps> getRemainingMaps() {
+        return maps;
+    }
+
+    /**
+     * @param maps The maps where we need to display informations about them.
+     */
+    public void setRemainingMaps(ArrayList<Maps> maps) {
+        this.maps = maps;
     }
 }

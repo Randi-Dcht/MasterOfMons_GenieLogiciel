@@ -1,7 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Regulator;
 
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
-import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
@@ -17,7 +16,6 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 import java.io.*;
-import java.net.SocketException;
 import java.util.ArrayList;
 
 public class SupervisorLAN extends SupervisorMultiPlayer {
@@ -66,6 +64,13 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
                 time.getDate(),
                 ps.getPlayerPosition(), ps.getSecondPlayerPosition(),
                 ps.getItemsOnMap());
+
+        save.setDisplayPlaceInformations(regulator.mustDisplayPlaceInformations());
+        save.setFirstCourse(regulator.isTheFirstCourse());
+        save.setFirstStudy(regulator.isTheFirstStudy());
+        save.setRemainingMaps(regulator.getRemainingMaps());
+        save.setShowEnergizingInformation(regulator.mustShowEnergizingInformation());
+
         try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path))))) {
             sortie.writeObject(save);
         } catch (IOException e) {
@@ -99,6 +104,13 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         playerTwo.setMaps(Supervisor.getSupervisor().getMaps(save.getSecondPlayerMap()));
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
         regulator= new Regulator(playerOne,time);
+        regulator.setFirstStart(false);
+        regulator.setChangeQuest(false);
+        regulator.setDisplayPlaceInformations(save.mustDisplayPlaceInformations());
+        regulator.setFirstCourse(save.isTheFirstCourse());
+        regulator.setFirstStudy(save.isTheFirstStudy());
+        regulator.setRemainingMaps(save.getRemainingMaps());
+        regulator.setShowEnergizingInformation(save.mustShowEnergizingInformation());
     }
 
     public void oldGameLAN(Save save, PlayingState play, GraphicalSettings gs) {
