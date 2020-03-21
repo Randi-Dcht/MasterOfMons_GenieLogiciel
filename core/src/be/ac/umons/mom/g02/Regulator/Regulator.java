@@ -13,9 +13,7 @@ import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.mom.g02.Other.TimeGame;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * This class allows to regular the people during the game as pass the night, up the energizing and etc
@@ -47,7 +45,7 @@ public class Regulator implements Observer
     /**
      * This list allows to save the dialog when the dialog is use by other
      */
-    protected ArrayList<String> waitingLine = new ArrayList<>();
+    protected Queue<String> waitingLine = new LinkedList<>();
     /**
      * This variable allows to know if the dialog is use
      */
@@ -108,7 +106,7 @@ public class Regulator implements Observer
      */
     public void push(String newDialog)
     {
-        if(waitingLine.size() == 0 && displayQuestion)
+        if(waitingLine.isEmpty() && displayQuestion)
         {
             manager.getEvent().add(Events.Answer,this);
             manager.getEvent().notify(new Dialog(newDialog,"OK"));
@@ -276,10 +274,9 @@ public class Regulator implements Observer
         if (answer.equals("OK"))
             displayQuestion = true;
 
-        if (waitingLine.size() != 0)
+        if (!waitingLine.isEmpty())
         {
-            manager.getEvent().notify(new Dialog(waitingLine.get(0),"OK"));
-            waitingLine.remove(0);
+            manager.getEvent().notify(new Dialog(waitingLine.remove(),"OK"));
             displayQuestion = false;
         }
         else
