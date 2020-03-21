@@ -495,7 +495,11 @@ public class NetworkManager {
                 processMessage(message = br.readLine());
                 if (message == null)
                     break;
-            } catch (IOException e) {
+            } catch (SocketException e) {
+                Gdx.app.error("NetworkManager", "Disconnected from distant partner !", e);
+                onDisconnected();
+            }
+            catch (IOException e) {
                 e.printStackTrace();
                 break;
             }
