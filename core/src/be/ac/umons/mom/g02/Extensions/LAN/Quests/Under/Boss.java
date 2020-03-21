@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.Quests.Under;
 
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
@@ -14,7 +15,7 @@ public class Boss extends UnderQuest {
      * @param people is the people who play the game
      */
     public Boss(Quest master, People people) {
-        super("boss", 1, master, people);
+        super("boss", 50, master, people);
     }
 
     /**
@@ -24,8 +25,8 @@ public class Boss extends UnderQuest {
      */
     @Override
     public void evenActivity(Notification notify) {
-        if (notify.getEvents().equals(Events.PlaceInMons) && notify.getBuffer() != null && notify.getBuffer().equals("Tmx/Umons_Nimy.tmx")) // TODO
-            addProgress(1);
+        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer() != null && ! notify.getBuffer().equals(SupervisorLAN.getPeople()) && ! notify.getBuffer().equals(SupervisorLAN.getPeopleTwo())) // TODO
+            addProgress(50f / 37);
     }
 
     /**

@@ -15,13 +15,13 @@ public class EndPuzzle extends UnderQuest {
      * @param people is the people who play the game
      */
     public EndPuzzle(Quest master, People people) {
-        super("endPuzzle", 1, master, people);
+        super("endPuzzle", 50, master, people);
     }
 
     @Override
     public void evenActivity(Notification notify) {
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.getBuffer() != null && notify.getBuffer().equals(Maps.LAN_Boss))
-            addProgress(1);
+            addProgress(50);
     }
 
     @Override
