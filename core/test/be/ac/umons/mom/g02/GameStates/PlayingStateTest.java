@@ -78,7 +78,7 @@ public class PlayingStateTest extends PlayingState {
         SHOWED_MAP_WIDTH = 17;
         SHOWED_MAP_HEIGHT = 31;
         player.setPosX(25);
-        SuperviserNormally.getSupervisor().newParty("Test", Type.normal, gs, Gender.Men, Difficulty.Easy);
+        SuperviserNormally.getSupervisor().newParty("Test", Type.normal, Gender.Men, Difficulty.Easy);
 
         collisionObjects = new MapObjects();
     }
