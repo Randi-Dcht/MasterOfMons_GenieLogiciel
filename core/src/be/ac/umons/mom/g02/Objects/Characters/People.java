@@ -455,8 +455,11 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     public void upLevel()
     {
-        level++;
-        Supervisor.getEvent().notify(new UpLevel());
+        if (level < 40)
+        {
+            level++;
+            Supervisor.getEvent().notify(new UpLevel());
+        }
     }
 
 
