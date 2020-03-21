@@ -28,7 +28,7 @@ public class RegulatorMultiPlayer extends Regulator
         if (firstStart)
         {
             firstStart = false;
-            push("HelloExt");
+//            push("HelloExt");
         }
     }
 }

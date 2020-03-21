@@ -159,10 +159,20 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     public void newQuest(MasterQuest quest)
     {
+        newQuest(quest, true);
+    }
+
+    /**
+     *This method allows the change the actually MasterQuest
+     *@param quest who is the new masterQuest
+     */
+    public void newQuest(MasterQuest quest, boolean showDialog)
+    {
         myQuest = quest;
         myCourse.addAll(quest.getLesson());
-        Supervisor.getEvent().notify(new ChangeQuest(quest));
-        year = quest.getBloc() ;
+        if (showDialog)
+            Supervisor.getEvent().notify(new ChangeQuest(quest));
+        year = quest.getBloc();
         createPlanning();
     }
 

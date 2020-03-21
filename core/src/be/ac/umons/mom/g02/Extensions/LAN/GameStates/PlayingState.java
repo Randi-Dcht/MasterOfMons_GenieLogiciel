@@ -86,6 +86,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     protected Color badPuzzlePathColor;
 
     protected boolean ignoreUPLevel = false;
+    protected boolean pauseSent = false;
 
 
     /**
@@ -125,6 +126,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnFirstPlayerMapChanged(this::initMap);
 
         supervisor.setMustPlaceItem(false);
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
         newParty = (MasterOfMonsGame.getGameToLoad() == null && ! nm.hasReceivedASave());
         if (newParty)
             SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
@@ -143,10 +145,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendPause();
         });
 
-        goodPuzzlePathColor = new Color(0x2E7D32);
-        badPuzzlePathColor = new Color(0xB71C1C);
+        goodPuzzlePathColor = new Color(0x2E7D32FF);
+        badPuzzlePathColor = new Color(0xD50000FF);
         if (newParty)
             initMap("Tmx/LAN_Puzzle.tmx");
+        SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
     }
 
     @Override
@@ -309,8 +312,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (! mazeMode || isTheMazePlayer )
             nm.sendPlayerPosition(player);
 
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
             nm.sendPause();
+            pauseSent = true;
+        }
     }
 
     @Override
@@ -419,7 +424,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void getFocus() {
         super.getFocus();
-        nm.sendEndPause();
+        if (pauseSent) {
+            nm.sendEndPause();
+            pauseSent = false;
+        }
     }
 
     @Override
