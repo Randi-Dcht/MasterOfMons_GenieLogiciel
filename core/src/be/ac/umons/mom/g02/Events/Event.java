@@ -93,8 +93,8 @@ public class Event implements Observable
 
         if(list.containsKey(notify.getEvents()))
         {
-            for (Observer obs : list.get(notify.getEvents()))
-                obs.update(notify);
+            for (int i = 0; i < list.get(notify.getEvents()).size(); i++)
+                list.get(notify.getEvents()).get(i).update(notify);
         }
     }
 
