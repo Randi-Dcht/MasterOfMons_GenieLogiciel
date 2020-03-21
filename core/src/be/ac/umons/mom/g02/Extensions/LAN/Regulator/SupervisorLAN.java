@@ -108,16 +108,10 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         refreshQuest();
         checkPlanning();
 
-        play.initMap(save.getMap().getMaps());
+        play.initMap(save.getFirstPlayerMap());
         play.setPlayerPosition(save.getPlayerPosition());
         play.setSecondPlayerMap(save.getSecondPlayerMap());
         play.setSecondPlayerPosition(save.getSecondPlayerPosition());
         play.addItemsToMap(save.getItemPosition());
-        try {
-            NetworkManager.getInstance().sendSecondPlayerMapChanged(save.getSecondPlayerMap());
-            NetworkManager.getInstance().sendSecondPlayerPosition(save.getSecondPlayerPosition());
-        } catch (SocketException e) {
-            Gdx.app.error("SupervisorLAN", "Error while getting the NetworkManager", e);
-        }
     }
 }
