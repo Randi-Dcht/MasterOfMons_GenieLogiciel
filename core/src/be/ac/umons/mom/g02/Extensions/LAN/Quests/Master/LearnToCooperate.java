@@ -67,6 +67,6 @@ public class LearnToCooperate extends MasterQuest {
 
     @Override
     public Maps[] getListMaps() {
-        return new Maps[] {Maps.LAN_Boss, Maps.LAN_Puzzle};
+        return new Maps[] {Maps.LAN_Boss};
     }
 }

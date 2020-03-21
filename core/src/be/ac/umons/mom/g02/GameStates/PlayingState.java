@@ -429,7 +429,7 @@ public class PlayingState extends GameState implements Observer {
         player.move(toMoveX, toMoveY);
         if (checkForCollision(player)) {
             player.move(-toMoveX, -toMoveY);
-            return;
+//            return;
         }
         checkForMapChanging(player);
         checkForNearSelectable(player);

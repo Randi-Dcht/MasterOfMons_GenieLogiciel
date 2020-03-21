@@ -211,7 +211,7 @@ public class NetworkManager {
     /**
      * What to do when the second player level up
      */
-    protected Runnable onLevelUp;
+    protected IntRunnable onLevelUp;
 
     protected SaveRunnable onSaveDetected;
     /**
@@ -714,8 +714,8 @@ public class NetworkManager {
     /**
      * Send that the current player leveled up
      */
-    public void sendLevelUp() {
-        sendOnTCP("LVLUP");
+    public void sendLevelUp(int newLevel) {
+        sendOnTCP(String.format("LVLUP#%d", newLevel));
     }
 
     public void sendSave(Save save) throws IOException {
@@ -888,7 +888,9 @@ public class NetworkManager {
             case "LVLUP":
                 if (onLevelUp != null) {
                     try {
-                        Gdx.app.postRunnable(onLevelUp);
+                        Gdx.app.postRunnable(
+                                () -> onLevelUp.run(Integer.parseInt(tab[1]))
+                        );
                     } catch (NumberFormatException e) {
                         Gdx.app.error("NetworkManager", "Error detected while parsing level in Leveling up message (ignoring it)", e);
                     }
@@ -1231,7 +1233,7 @@ public class NetworkManager {
     /**
      * @param onLevelUp What to do when the second player level up
      */
-    public void setOnLevelUp(Runnable onLevelUp) {
+    public void setOnLevelUp(IntRunnable onLevelUp) {
         this.onLevelUp = onLevelUp;
     }
 

@@ -85,7 +85,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     protected Color badPuzzlePathColor;
 
-    protected boolean ignoreUPLevel = false;
     protected boolean pauseSent = false;
 
 
@@ -147,9 +146,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
         badPuzzlePathColor = new Color(0xD50000FF);
-        if (newParty)
+        if (newParty) {
             initMap("Tmx/LAN_Puzzle.tmx");
-        SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
+            SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
+        }
     }
 
     @Override
@@ -210,9 +210,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (! b)
                 player.setNoMoving(true);
         });
-        nm.setOnLevelUp(() -> {
-            ((People)playerTwo.getCharacteristics()).upLevel();
-            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
+        nm.setOnLevelUp((newLevel) -> {
+            while (newLevel > playerTwo.getCharacteristics().getLevel())
+                ((People)playerTwo.getCharacteristics()).upLevel();
+            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), newLevel));
         });
         nm.setOnGetItem((map) -> {
             // TODO
@@ -414,12 +415,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendPNJDeath(m.getName());
             idCharacterMap.remove(m.getName());
-        } else if (notify.getEvents().equals(Events.UpLevel)) {
-            if (! ignoreUPLevel) {
-                nm.sendLevelUp();
-                ignoreUPLevel = true;
-            } else
-                ignoreUPLevel = false;
+        } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(player.getCharacteristics())) {
+            nm.sendLevelUp(player.getCharacteristics().getLevel());
         }
     }
 

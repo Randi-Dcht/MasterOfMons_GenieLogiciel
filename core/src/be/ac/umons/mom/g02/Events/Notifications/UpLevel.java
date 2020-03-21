@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Events.Notifications;
 
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 
 
 /**
@@ -10,7 +11,7 @@ import be.ac.umons.mom.g02.Events.Events;
 public class UpLevel implements Notification
 {
     private Events evt;
-    private int buffer;
+    private People buffer;
     private boolean empty;
 
 
@@ -18,12 +19,13 @@ public class UpLevel implements Notification
      * This constructor define a notification when people up level with buffer
      * @param buffer is a buffer with integer (specific to events)
      */
-    public UpLevel(int buffer)
+    public UpLevel(People buffer)
     {
         evt = Events.UpLevel;
         this.buffer = buffer;
         empty = false;
     }
+
 
 
     /**
@@ -52,7 +54,7 @@ public class UpLevel implements Notification
      * @return integer
      */
     @Override
-    public Integer getBuffer()
+    public People getBuffer()
     {
         return buffer;
     }
