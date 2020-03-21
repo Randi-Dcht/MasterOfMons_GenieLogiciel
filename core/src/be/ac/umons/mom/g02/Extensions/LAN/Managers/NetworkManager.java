@@ -498,8 +498,8 @@ public class NetworkManager {
             } catch (SocketException e) {
                 Gdx.app.error("NetworkManager", "Disconnected from distant partner !", e);
                 onDisconnected();
-            }
-            catch (IOException e) {
+                break;
+            } catch (IOException e) {
                 e.printStackTrace();
                 break;
             }
@@ -757,14 +757,14 @@ public class NetworkManager {
                     e.printStackTrace();
                 }
                 break;
-            case "SPI": // Player info
+            case "SPI": // Second player info
                 try {
                     People p = (People) objectFromString(tab[1]);
                     if (onPlayerDetected != null)
                         Gdx.app.postRunnable(() ->
                                 onPlayerDetected.run(p));
                 } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing player informations (ignoring message)", e);
+                    Gdx.app.error("NetworkManager", "Error detected while parsing second player informations (ignoring message)", e);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {

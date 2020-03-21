@@ -239,6 +239,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void initMap(String mapPath, int spawnX, int spawnY) {
         refreshPNJsMap(gmm.getActualMapName(), mapPath, secondPlayerMap, secondPlayerMap);
+        if (mazeMode)
+            nm.sendSecondPlayerMapChanged(mapPath);
         super.initMap(mapPath, spawnX, spawnY);
         nm.sendMapChanged(mapPath);
         mustDrawSecondPlayer = gmm.getActualMapName().equals(secondPlayerMap);
