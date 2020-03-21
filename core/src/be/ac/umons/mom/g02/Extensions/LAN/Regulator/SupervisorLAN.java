@@ -54,7 +54,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         time      = new TimeGame(new Date(1,1,2020,9,0));
         regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
         playerOne.newQuest(firstQuest);
-        playerTwo.newQuest(firstQuest);
+        playerTwo.newQuest(firstQuest, false);
         refreshQuest();
     }
 
