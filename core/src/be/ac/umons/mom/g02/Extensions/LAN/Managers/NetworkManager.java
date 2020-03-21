@@ -615,7 +615,7 @@ public class NetworkManager {
      * @param item The item to send
      * @throws IOException If the item couldn't be serialized.
      */
-    public void sendItemInformation(Items item, Point pos) throws IOException {
+    public void sendItemInformation(Items item, Point pos) throws IOException { // TODO
         sendOnTCP(String.format("Item#%d#%d#%s", pos.x, pos.y, objectToString(item)));
     }
 

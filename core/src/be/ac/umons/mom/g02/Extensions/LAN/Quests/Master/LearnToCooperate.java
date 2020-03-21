@@ -54,8 +54,8 @@ public class LearnToCooperate extends MasterQuest {
         Random rand = new Random();
         listMobs = new ArrayList<>();
         MobileType[] mobileTypes = MobileType.values();
-        for (int i = 0; i < 34; i++ ) {
-            listMobs.add(new Mobile(Bloc.BA2,
+        for (int i = 0; i < 34; i++ ) { // TODO Check the difficulty of that
+            listMobs.add(new Mobile(Bloc.BA1,
                     mobileTypes[rand.nextInt(mobileTypes.length)],
                     Actions.Attack, NameDialog.Lambda));
         }
@@ -67,6 +67,6 @@ public class LearnToCooperate extends MasterQuest {
 
     @Override
     public Maps[] getListMaps() {
-        return new Maps[] {Maps.LAN_Boss};
+        return new Maps[] {Maps.LAN_Boss, Maps.LAN_Puzzle};
     }
 }

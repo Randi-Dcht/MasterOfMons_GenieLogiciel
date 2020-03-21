@@ -64,7 +64,7 @@ public class Player extends Character {
     }
 
     @Override
-    public void move(int x, int y) { // TODO : Change the method
+    public void move(int x, int y) {
         super.move(x, y);
 
         Rectangle mr = getMapRectangle();

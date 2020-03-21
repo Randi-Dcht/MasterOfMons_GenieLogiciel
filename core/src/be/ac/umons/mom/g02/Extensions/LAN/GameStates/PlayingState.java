@@ -86,7 +86,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     protected Color badPuzzlePathColor;
 
     protected boolean ignoreUPLevel = false;
-    protected boolean pauseSent = true;
+    protected boolean pauseSent = false;
 
 
     /**
@@ -145,10 +145,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendPause();
         });
 
-        goodPuzzlePathColor = new Color(0x2E7D32);
-        badPuzzlePathColor = new Color(0xB71C1C);
+        goodPuzzlePathColor = new Color(0x2E7D32FF);
+        badPuzzlePathColor = new Color(0xD50000FF);
         if (newParty)
             initMap("Tmx/LAN_Puzzle.tmx");
+        SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
     }
 
     @Override

@@ -14,6 +14,7 @@ public enum Maps
     Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",   Places.OnTheMap),
     Kot(       "Tmx/Kot.tmx",             "InfoKot",    Places.OnTheMap),
     Mons(      "Tmx/CityMons.tmx",        "InfoCity",   Places.OnTheMap),
+    LAN_Puzzle("Tmx/LAN_Puzzle",          "InfoPuzzle", Places.OnTheMap),
     LAN_Boss(  "Tmx/LAN_Boss.tmx",        "InfoLANBoss",Places.OnTheMap);
 
 
