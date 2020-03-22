@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Items.*;
+import be.ac.umons.mom.g02.Quests.Under.CheckStudy;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
@@ -27,7 +28,7 @@ public class MeetAndLearn extends MasterQuest
     /**
      * This is the goals of this quest
      */
-    final UnderQuest[] underQuest = {new LookSoulMate(this,50,people), new GoToPriorityLesson(this,50,people)};
+    final UnderQuest[] underQuest = {new LookSoulMate(this,25,people),new CheckStudy(this,25,people), new GoToPriorityLesson(this,50,people)};
 
 
     /**
