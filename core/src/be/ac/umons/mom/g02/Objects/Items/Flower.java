@@ -27,17 +27,6 @@ public class Flower extends Items
 
 
     /**
-     * This method allows to decrease the life of this items
-     * @param time is the time between two frames
-     */
-    @Override
-    public void update(double time)
-    {
-
-    }
-
-
-    /**
      * This method allows to said if the items is obsolete
      * @return number
      */

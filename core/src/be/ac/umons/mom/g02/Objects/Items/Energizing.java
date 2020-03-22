@@ -2,11 +2,12 @@ package be.ac.umons.mom.g02.Objects.Items;
 
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 /***/
-public class Energizing extends Items
+public class Energizing extends Items implements FrameTime
 {
     private double obsolete = 31536000;
     private double reVisible = 0;//TODO for all item

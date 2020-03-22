@@ -28,10 +28,5 @@ public class Sportswear extends Items {
     }
     // Il ne me faut pas cette methode car ça reste tout le temps vsible et ça ne casse pas
 
-    @Override
-    public void update(double dt) {
-        //Je n'ai pas besoin de cette methode car mon objet ne s'use pas avec le temps
-    }
-
 
 }

@@ -29,17 +29,6 @@ public class TheKillBoot extends Items implements Guns
 
     }
 
-
-    /**
-     * This method allows to decrease the life of this items
-     * @param time is the time between two frames
-     */
-    @Override
-    public void update(double time)
-    {
-
-    }
-
     public int buy()
     {
         return 200;

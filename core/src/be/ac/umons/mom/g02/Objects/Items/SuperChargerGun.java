@@ -30,13 +30,6 @@ public class SuperChargerGun extends Items
 
     /***/
     @Override
-    public void update(double time)
-    {
-    }
-
-
-    /***/
-    @Override
     public boolean getObsolete()
     {
         return true;

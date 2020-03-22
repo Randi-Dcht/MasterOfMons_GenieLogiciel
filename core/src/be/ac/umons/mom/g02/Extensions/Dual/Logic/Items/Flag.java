@@ -53,16 +53,4 @@ public class Flag extends Items
     {
         return false;
     }
-
-
-    /**
-     * This method allows to give the time between two frames
-     * This method allows to refresh the class every call
-     * @param dt us the time between two frame
-     */
-    @Override
-    public void update(double dt)
-    {
-
-    }
 }

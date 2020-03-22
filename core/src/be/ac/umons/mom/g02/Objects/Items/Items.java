@@ -13,7 +13,7 @@ import java.io.Serializable;
  * Every Item is associated to Maps and a Quest (SupervisorNormally)
  *@author Randy Dauchot (étudiant en Sciences informatique)
  */
-public abstract class Items implements Serializable, FrameTime
+public abstract class Items implements Serializable
 {
     /**
      * The maps of this items
