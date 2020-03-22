@@ -3,7 +3,7 @@ package be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator;
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MovingInMons;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.SurvivorVsMobile;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -41,7 +41,7 @@ public class SupervisorDual extends SuperviserNormally
     {
         playerOne = new People(namePlayerOne,typeOne,genderOne,difficulty);
         playerTwo = new People(namePlayerTwo,typeTwo,genderTwo,difficulty);
-        dualQuest = new MovingInMons(playerOne,playerTwo,difficulty);
+        dualQuest = new SurvivorVsMobile(playerOne,playerTwo,difficulty);
         time      = new TimeGame(new Date(1,1,2020,9,0));
         playerOne.newQuest(dualQuest);
         playerTwo.newQuest(dualQuest);

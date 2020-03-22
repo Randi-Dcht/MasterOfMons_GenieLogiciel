@@ -7,15 +7,16 @@ package be.ac.umons.mom.g02.Enums;
  */
 public enum Maps
 {
-    Nimy(      "Tmx/Umons_Nimy.tmx",      "InfoNimy",   Places.OnTheMap),
-    Warocque(  "Tmx/Umons_Warocque.tmx",  "InfoWaroc",  Places.OnTheMap),
-    GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA",     Places.OnTheMap),
-    DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci",Places.OnTheMap),
-    Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",   Places.OnTheMap),
-    Kot(       "Tmx/Kot.tmx",             "InfoKot",    Places.OnTheMap),
-    Mons(      "Tmx/CityMons.tmx",        "InfoCity",   Places.OnTheMap),
-    LAN_Puzzle("Tmx/LAN_Puzzle.tmx",      "InfoPuzzle", Places.OnTheMap),
-    LAN_Boss(  "Tmx/LAN_Boss.tmx",        "InfoLANBoss",Places.OnTheMap);
+    Nimy(      "Tmx/Umons_Nimy.tmx",      "InfoNimy",    Places.OnTheMap),
+    Warocque(  "Tmx/Umons_Warocque.tmx",  "InfoWaroc",   Places.OnTheMap),
+    GrandAmphi("Tmx/Umons_GrandAmphi.tmx","InfoGA",      Places.OnTheMap),
+    DeVinci(   "Tmx/Umons_DeVinci.tmx",   "InfoDeVinci", Places.OnTheMap),
+    Poly(      "Tmx/Umons_Polytech.tmx",  "InfoPoly",    Places.OnTheMap),
+    Kot(       "Tmx/Kot.tmx",             "InfoKot",     Places.OnTheMap),
+    Mons(      "Tmx/CityMons.tmx",        "InfoCity",    Places.OnTheMap),
+    LAN_Puzzle("Tmx/LAN_Puzzle.tmx",      "InfoPuzzle",  Places.OnTheMap),
+    LAN_Boss(  "Tmx/LAN_Boss.tmx",        "InfoLANBoss", Places.OnTheMap),
+    DualPark(  "Tmx/DualPark",            "InfoDualPark",Places.OnTheMap );
 
 
     /**The characteristic of the maps*/
