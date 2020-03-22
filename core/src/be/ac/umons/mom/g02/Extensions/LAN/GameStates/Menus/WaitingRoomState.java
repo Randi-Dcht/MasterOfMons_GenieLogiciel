@@ -24,11 +24,15 @@ public class WaitingRoomState extends MenuState {
     /**
      * The network manager
      */
-    NetworkManager nm;
+    protected NetworkManager nm;
     /**
      * The <code>TextBox</code>'s MenuItem where the user put the server's name.
      */
-    TextBoxMenuItem TXT_ServerName;
+    protected TextBoxMenuItem TXT_ServerName;
+    /**
+     * If we must send the player's characteristics to the second player
+     */
+    protected boolean sendPlayer;
 
     /**
      * @param gsm The game's state manager
@@ -52,7 +56,8 @@ public class WaitingRoomState extends MenuState {
                 ogds.addAnswer("OK");
             });
             nm.setOnConnected(() -> {
-                gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
+                FinalisingConnectionState fcs = (FinalisingConnectionState) gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
+                fcs.setSendPlayer(sendPlayer);
             });
         } catch (SocketException e) {
             e.printStackTrace();
@@ -82,5 +87,12 @@ public class WaitingRoomState extends MenuState {
     public void dispose() {
         super.dispose();
         nm.stopBroadcastingServerInfo();
+    }
+
+    /**
+     * @param sendPlayer If we must send the player's characteristics to the second player
+     */
+    public void setSendPlayer(boolean sendPlayer) {
+        this.sendPlayer = sendPlayer;
     }
 }

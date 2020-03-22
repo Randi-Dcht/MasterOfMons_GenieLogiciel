@@ -1,6 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Managers;
 
-import be.ac.umons.mom.g02.Extensions.LAN.Objects.Save;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -183,6 +183,9 @@ public class NetworkManager {
      * What to do when the second player hit a PNJ.
      */
     protected OnHitPNJRunnable onHitPNJ;
+    /**
+     * What to do when the second player die
+     */
     protected Runnable onDeath;
     /**
      * What to do when the second player killed a PNJ.
@@ -212,7 +215,9 @@ public class NetworkManager {
      * What to do when the second player level up
      */
     protected IntRunnable onLevelUp;
-
+    /**
+     * What to do when the second player send a save file
+     */
     protected SaveRunnable onSaveDetected;
     /**
      * On which map the PNJ's informations has been asked.
@@ -238,7 +243,9 @@ public class NetworkManager {
      * The time gone by since the last message received from the second player
      */
     protected double msSinceLastMessage;
-
+    /**
+     * The received save from the other player (first and second is already inverted)
+     */
     protected Save saveReceived;
 
     /**
@@ -597,6 +604,11 @@ public class NetworkManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Send the second player information on the TCP socket.
+     * @param player The player to send
+     */
     public void sendSecondPlayerInformation(People player) {
         try {
             sendOnTCP(String.format("SPI#%s", objectToString(player)));
@@ -631,6 +643,10 @@ public class NetworkManager {
         sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
     }
 
+    /**
+     * Send the second player's position.
+     * @param secondPlayerPosition The second player's position
+     */
     public void sendSecondPlayerPosition(Point secondPlayerPosition) {
         sendOnTCP(String.format("SPP#%d#%d", secondPlayerPosition.x, secondPlayerPosition.y));
     }
@@ -657,6 +673,9 @@ public class NetworkManager {
         sendOnTCP("EndPause");
     }
 
+    /**
+     * Send the death of the first player.
+     */
     public void sendDeath() {
         sendOnTCP("Death");
     }
@@ -699,6 +718,10 @@ public class NetworkManager {
         sendOnTCP("CM#" + map);
     }
 
+    /**
+     * Send the signal to the second player that he need to change his map.
+     * @param map The map on which the second player have to be
+     */
     public void sendSecondPlayerMapChanged(String map) {
         sendOnTCP(String.format("SPMC#%s", map));
     }
@@ -718,6 +741,11 @@ public class NetworkManager {
         sendOnTCP(String.format("LVLUP#%d", newLevel));
     }
 
+    /**
+     * Send the save object to the second player
+     * @param save The save object
+     * @throws IOException If there was an error serializing the object
+     */
     public void sendSave(Save save) throws IOException {
         sendOnTCP("SAVE#" + objectToString(save));
     }
@@ -1102,6 +1130,9 @@ public class NetworkManager {
         this.onWrongMagicNumber = onWrongMagicNumber;
     }
 
+    /**
+     * @param onPlayerDetected What to do when the player information is detected
+     */
     public void setOnPlayerDetected(OnPlayerDetectedRunnable onPlayerDetected) {
         this.onPlayerDetected = onPlayerDetected;
     }
@@ -1120,6 +1151,9 @@ public class NetworkManager {
         this.onPositionDetected = onPositionDetected;
     }
 
+    /**
+     * @param onSecondPlayerPositionDetected What to do when the first player position has been received.
+     */
     public void setOnSecondPlayerPositionDetected(PointRunnable onSecondPlayerPositionDetected) {
         this.onSecondPlayerPositionDetected = onSecondPlayerPositionDetected;
     }
@@ -1180,6 +1214,9 @@ public class NetworkManager {
         this.onHitPNJ = onHitPNJ;
     }
 
+    /**
+     * @param onDeath What to do when the second player is dead.
+     */
     public void setOnDeath(Runnable onDeath) {
         this.onDeath = onDeath;
     }
@@ -1219,6 +1256,9 @@ public class NetworkManager {
         this.onSecondPlayerMapChanged = onSecondPlayerMapChanged;
     }
 
+    /**
+     * @param onFirstPlayerMapChanged What to do when the first player have to change which map he is on.
+     */
     public void setOnFirstPlayerMapChanged(StringRunnable onFirstPlayerMapChanged) {
         this.onFirstPlayerMapChanged = onFirstPlayerMapChanged;
     }
@@ -1237,14 +1277,23 @@ public class NetworkManager {
         this.onLevelUp = onLevelUp;
     }
 
+    /**
+     * @param onSaveDetected What to do when the second player has sent an save object
+     */
     public void setOnSaveDetected(SaveRunnable onSaveDetected) {
         this.onSaveDetected = onSaveDetected;
     }
 
+    /**
+     * @return If a save has been received
+     */
     public boolean hasReceivedASave() {
         return saveReceived != null;
     }
 
+    /**
+     * @return The received save if one has been received
+     */
     public Save getSaveReceived() {
         return saveReceived;
     }
@@ -1309,6 +1358,9 @@ public class NetworkManager {
         void run(String name, double life);
     }
 
+    /**
+     * Represent a runnable taking a save object as parameter.
+     */
     public interface SaveRunnable {
         void run(Save save);
     }

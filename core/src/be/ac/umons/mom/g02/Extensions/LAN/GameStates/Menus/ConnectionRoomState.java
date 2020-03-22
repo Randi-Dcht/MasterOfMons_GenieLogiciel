@@ -21,7 +21,12 @@ public class ConnectionRoomState extends MenuState {
     /**
      * The network manager
      */
-    NetworkManager nm;
+    protected NetworkManager nm;
+
+    /**
+     * If we must send the player's characteristics to the second player
+     */
+    protected boolean sendPlayer;
 
     /**
      * @param gsm The game's state manager
@@ -49,7 +54,10 @@ public class ConnectionRoomState extends MenuState {
                 ogds.addNonInternationalizedAnswer("" + l, () -> checkMagicNumber(l));
                 ogds.addNonInternationalizedAnswer("" + m, () -> checkMagicNumber(m));
             });
-            nm.setOnConnected(() -> gsm.removeAllStateAndAdd(FinalisingConnectionState.class));
+            nm.setOnConnected(() -> {
+                FinalisingConnectionState fcs = (FinalisingConnectionState) gsm.removeAllStateAndAdd(FinalisingConnectionState.class);
+                fcs.setSendPlayer(sendPlayer);
+            });
             nm.setOnWrongMagicNumber(() -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
                 ogds.setText(gs.getStringFromId("wrongOne"));
@@ -112,4 +120,10 @@ public class ConnectionRoomState extends MenuState {
         }
     }
 
+    /**
+     * @param sendPlayer If we must send the player's characteristics to the second player
+     */
+    public void setSendPlayer(boolean sendPlayer) {
+        this.sendPlayer = sendPlayer;
+    }
 }

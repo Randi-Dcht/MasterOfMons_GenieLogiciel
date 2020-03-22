@@ -1,8 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Regulator;
 
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
-import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Objects.Save;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
@@ -17,7 +16,6 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 import java.io.*;
-import java.net.SocketException;
 import java.util.ArrayList;
 
 public class SupervisorLAN extends SupervisorMultiPlayer {
@@ -60,17 +58,28 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
     @Override
     public void saveGame(String path) {
+
+        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path))))) {
+            sortie.writeObject(createSave());
+        } catch (IOException e) {
+            Gdx.app.error("Error in the saving the game (out)", e.getMessage());
+        }
+    }
+
+    public Save createSave() {
         PlayingState ps = ((PlayingState)playGraphic); // Not in the same package
         Save save = new Save(playerOne, playerTwo,
                 GameMapManager.getInstance().getActualMapName(), ps.getSecondPlayerMap(),
                 time.getDate(),
                 ps.getPlayerPosition(), ps.getSecondPlayerPosition(),
                 ps.getItemsOnMap());
-        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path))))) {
-            sortie.writeObject(save);
-        } catch (IOException e) {
-            Gdx.app.error("Error in the saving the game (out)", e.getMessage());
-        }
+
+        save.setDisplayPlaceInformations(regulator.mustDisplayPlaceInformations());
+        save.setFirstCourse(regulator.isTheFirstCourse());
+        save.setFirstStudy(regulator.isTheFirstStudy());
+        save.setRemainingMaps(regulator.getRemainingMaps());
+        save.setShowEnergizingInformation(regulator.mustShowEnergizingInformation());
+        return save;
     }
 
     public Save oldGameLAN(String path, PlayingState play, GraphicalSettings graphic) {
@@ -99,6 +108,13 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         playerTwo.setMaps(Supervisor.getSupervisor().getMaps(save.getSecondPlayerMap()));
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
         regulator= new Regulator(playerOne,time);
+        regulator.setFirstStart(false);
+        regulator.setChangeQuest(false);
+        regulator.setDisplayPlaceInformations(save.mustDisplayPlaceInformations());
+        regulator.setFirstCourse(save.isTheFirstCourse());
+        regulator.setFirstStudy(save.isTheFirstStudy());
+        regulator.setRemainingMaps(save.getRemainingMaps());
+        regulator.setShowEnergizingInformation(save.mustShowEnergizingInformation());
     }
 
     public void oldGameLAN(Save save, PlayingState play, GraphicalSettings gs) {
@@ -108,16 +124,10 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         refreshQuest();
         checkPlanning();
 
-        play.initMap(save.getMap().getMaps());
+        play.initMap(save.getFirstPlayerMap());
         play.setPlayerPosition(save.getPlayerPosition());
         play.setSecondPlayerMap(save.getSecondPlayerMap());
         play.setSecondPlayerPosition(save.getSecondPlayerPosition());
         play.addItemsToMap(save.getItemPosition());
-        try {
-            NetworkManager.getInstance().sendSecondPlayerMapChanged(save.getSecondPlayerMap());
-            NetworkManager.getInstance().sendSecondPlayerPosition(save.getSecondPlayerPosition());
-        } catch (SocketException e) {
-            Gdx.app.error("SupervisorLAN", "Error while getting the NetworkManager", e);
-        }
     }
 }

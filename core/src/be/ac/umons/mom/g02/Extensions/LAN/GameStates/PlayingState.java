@@ -66,11 +66,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     /**
      * If the state must applied the maze rule or not.
      */
-    protected boolean mazeMode = false;
+    protected boolean mazeMode;
     /**
      * If the player (one) is the one who can move in the maze
      */
-    protected boolean isTheMazePlayer = false;
+    protected boolean isTheMazePlayer;
     /**
      * The objects that are in the layer puzzle on the map.
      */
@@ -84,7 +84,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * The color when we are on the bad path in a puzzle.
      */
     protected Color badPuzzlePathColor;
-
+    /**
+     * If a pause signal has been sent to the second player
+     */
     protected boolean pauseSent = false;
 
 
@@ -135,7 +137,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         super.init();
         if (! newParty && ! nm.isTheServer())
             ((SupervisorLAN)supervisor).oldGameLAN(nm.getSaveReceived(), this, gs);
-        secondPlayerMap = gmm.getActualMapName();
 
         setNetworkManagerRunnables();
 
@@ -148,6 +149,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         badPuzzlePathColor = new Color(0xD50000FF);
         if (newParty) {
             initMap("Tmx/LAN_Puzzle.tmx");
+            secondPlayerMap = gmm.getActualMapName();
             SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
         }
     }
@@ -427,6 +429,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendEndPause();
             pauseSent = false;
         }
+        if (mazeMode) // If second player was disconnected
+            nm.sendIsTheMazePlayer(! isTheMazePlayer);
     }
 
     @Override
@@ -447,10 +451,16 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         this.newParty = newParty;
     }
 
+    /**
+     * @return The map on which the second player is
+     */
     public String getSecondPlayerMap() {
         return secondPlayerMap;
     }
 
+    /**
+     * @return The current position of the second player
+     */
     public Point getSecondPlayerPosition() {
         return new Point(playerTwo.getPosX(), playerTwo.getPosY());
     }

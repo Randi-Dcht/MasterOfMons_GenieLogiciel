@@ -2,17 +2,25 @@ package be.ac.umons.mom.g02.Extensions.LAN.Quests.Master;
 
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.Boss;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.EndPuzzle;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Gdx;
 
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class LearnToCooperate extends MasterQuest {
+
+    /**
+     * If we already sent the end of this MasterQuest or not
+     */
+    protected boolean alreadySent = false;
 
     /**
      * This constructor allows to define a masterQuest
@@ -25,13 +33,21 @@ public class LearnToCooperate extends MasterQuest {
         super(before, people, Bloc.BA1, difficulty);
         addUnderQuest(new EndPuzzle(this, Supervisor.getPeople()),
                 new Boss(this, Supervisor.getPeople()));
-        Supervisor.getEvent().add(this, Events.PlaceInMons);
-        maxPercent = 2;
+        Supervisor.getEvent().add(this, Events.PlaceInMons, Events.Dead);
+        maxPercent = 100; // finish puzzle + 36 mobs
     }
 
     @Override
     public void nextQuest() {
         newQuest(new MyFirstYear(people,this,difficulty));
+        if (! alreadySent) {
+            try {
+                NetworkManager.getInstance().sendEndOfMasterQuest();
+            } catch (SocketException e) {
+                Gdx.app.error("MasterQuest", "Unable to get the NetworkManager", e);
+            }
+            alreadySent = true;
+        }
     }
 
     @Override

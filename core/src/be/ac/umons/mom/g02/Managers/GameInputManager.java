@@ -41,8 +41,14 @@ public class GameInputManager implements InputProcessor {
      * The last chars that has been typed.
      */
     private List<Character> lastChars;
-
+    /**
+     * The code of the last pressed key
+     */
     private int lastKeyCode;
+    /**
+     * The game's key manager
+     * @see GameKeyManager
+     */
     private GameKeyManager gkm;
 
     public GameInputManager() {
@@ -170,6 +176,9 @@ public class GameInputManager implements InputProcessor {
         return lastChars;
     }
 
+    /**
+     * @return The code of the last pressed key
+     */
     public int getLastKeyPressedCode() {
         return lastKeyCode;
     }

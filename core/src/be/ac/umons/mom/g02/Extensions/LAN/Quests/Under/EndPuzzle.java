@@ -1,12 +1,11 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Quests.Under;
 
-import be.ac.umons.mom.g02.Events.Event;
+import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 public class EndPuzzle extends UnderQuest {
     /**
@@ -16,13 +15,13 @@ public class EndPuzzle extends UnderQuest {
      * @param people is the people who play the game
      */
     public EndPuzzle(Quest master, People people) {
-        super("endPuzzle", 1, master, people);
+        super("endPuzzle", 50, master, people);
     }
 
     @Override
     public void evenActivity(Notification notify) {
-        if (notify.getEvents().equals(Events.PlaceInMons) && notify.getBuffer() != null && notify.getBuffer().equals("Tmx/LAN_Boss.tmx"))
-            addProgress(1);
+        if (notify.getEvents().equals(Events.PlaceInMons) && notify.getBuffer() != null && notify.getBuffer().equals(Maps.LAN_Boss))
+            addProgress(50);
     }
 
     @Override

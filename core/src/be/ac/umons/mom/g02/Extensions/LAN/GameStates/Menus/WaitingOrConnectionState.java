@@ -8,6 +8,9 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
+/**
+ * Represent the state where the player have to choose between becoming the server or connecting to a server
+ */
 public class WaitingOrConnectionState extends MenuState {
 
     /**
@@ -24,8 +27,14 @@ public class WaitingOrConnectionState extends MenuState {
         super.init();
         setMenuItems(new MenuItem[]{
                 new TitleMenuItem(gs, gs.getStringFromId("chooseAState")),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("waitingRoom"), () -> gsm.setState(WaitingRoomState.class)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("connectionRoom"), () -> gsm.setState(ConnectionRoomState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("waitingRoom"), () -> {
+                    WaitingRoomState wrs = (WaitingRoomState) gsm.setState(WaitingRoomState.class);
+                    wrs.setSendPlayer(true);
+                }),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("connectionRoom"), () -> {
+                    ConnectionRoomState crs = (ConnectionRoomState) gsm.setState(ConnectionRoomState.class);
+                    crs.setSendPlayer(true);
+                }),
         });
     }
 }

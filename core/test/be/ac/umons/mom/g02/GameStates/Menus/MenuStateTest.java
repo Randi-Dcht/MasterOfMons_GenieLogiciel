@@ -2,7 +2,9 @@ package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.ExtensionsSelector;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -18,30 +20,27 @@ import java.util.ArrayList;
 /**
  * Classe réprésente la classe MainMenuState. Cette classe de test a principalement pour but de tester la méthode handleInput, en évitant d'allouer trop de ressources.
  */
-public class MenuStateTest extends MainMenuState {
+public class MenuStateTest extends MenuState {
 
     private MenuStateTest() {
         super();
         gim = Mockito.mock(GameInputManager.class);
         gsm = Mockito.mock(GameStateManager.class);
         gs = Mockito.mock(GraphicalSettings.class);
-        extSel = Mockito.mock(ExtensionsSelector.class);
         buttons = new ArrayList<>();
         buttons.add(new ArrayList<>());
         buttons.add(new ArrayList<>());
         buttons.get(0).add(Mockito.mock(Button.class));
         buttons.get(1).add(Mockito.mock(Button.class));
         buttons.get(0).add(Mockito.mock(Button.class));
-        textBoxes = new ArrayList<>();
-        scrollListChoosers = new ArrayList<>();
-        colorSelectors = new ArrayList<>();
+        controls = new ArrayList<>();
     }
 
     @BeforeEach
     public void init() {
-        menuItems = new MenuItem[] { new MenuItem("Master Of Mons", MenuItemType.Text),
-                new MenuItem("Play", MenuItemType.Button),
-                new MenuItem("Settings", MenuItemType.Button)};
+        menuItems = new MenuItem[] { Mockito.mock(TextMenuItem.class),
+                Mockito.mock(ButtonMenuItem.class),
+                Mockito.mock(ButtonMenuItem.class)};
         //setMenuItems(menuItems);
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
     }

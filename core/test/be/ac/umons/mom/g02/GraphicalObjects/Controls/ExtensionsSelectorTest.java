@@ -1,7 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.CheckBox;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.ExtensionsSelector;
+import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
@@ -12,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.File;
-import java.util.HashMap;
 
-public class ExtensionsSelectorTest extends ExtensionsSelector {
+public class ExtensionsSelectorTest {
+    ExtensionsManager em;
 
     @BeforeEach
     public void init() {
@@ -23,15 +22,15 @@ public class ExtensionsSelectorTest extends ExtensionsSelector {
         Mockito.when(fh.file()).thenReturn(new File("testAssets/extensions"));
         Mockito.when(Gdx.files.getFileHandle("extensions", Files.FileType.Internal)).thenReturn(fh);
         Gdx.app = Mockito.mock(Application.class);
-        extensions = parseExtensionFile();
-        checkBoxList = new HashMap<>();
+
+        em = ExtensionsManager.getInstance();
     }
 
     @Test
     public void parseExtensionFileTest() {
-        Assertions.assertEquals(2, extensions.size());
-        Extension ext1 = extensions.get(0);
-        Extension ext2 = extensions.get(1);
+        Assertions.assertEquals(2, em.getExtensions().size());
+        ExtensionsManager.Extension ext1 = em.getExtensions().get(0);
+        ExtensionsManager.Extension ext2 = em.getExtensions().get(1);
         Assertions.assertEquals("Test", ext1.extensionName);
         Assertions.assertEquals("Test2", ext2.extensionName);
         Assertions.assertEquals(1, ext1.dirsFileToLoad.size());
@@ -46,17 +45,12 @@ public class ExtensionsSelectorTest extends ExtensionsSelector {
 
     @Test
     public void searchMainExtensionTest() {
-        Extension ext1 = extensions.get(0);
-        Extension ext2 = extensions.get(1);
-        checkBoxList.put(ext1, Mockito.mock(CheckBox.class));
-        checkBoxList.put(ext2, Mockito.mock(CheckBox.class));
-        searchMainExtension();
-        Assertions.assertNull(mainExtension);
-        ext2.activated = true;
-        searchMainExtension();
-        Assertions.assertEquals(ext2, mainExtension);
-        ext1.activated = true;
-        searchMainExtension();
-        Assertions.assertEquals(ext1, mainExtension);
+        ExtensionsManager.Extension ext1 = em.getExtensions().get(0);
+        ExtensionsManager.Extension ext2 = em.getExtensions().get(1);
+        Assertions.assertNull(em.getMainExtension());
+        em.onExtensionActivated(ext2);
+        Assertions.assertEquals(ext2, em.getMainExtension());
+        em.onExtensionActivated(ext1);
+        Assertions.assertEquals(ext1, em.getMainExtension());
     }
 }

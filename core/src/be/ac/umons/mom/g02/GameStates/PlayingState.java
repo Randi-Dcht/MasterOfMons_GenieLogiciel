@@ -214,7 +214,6 @@ public class PlayingState extends GameState implements Observer {
 
         inventoryShower = new InventoryShower(gim, gs, player);
 
-
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();

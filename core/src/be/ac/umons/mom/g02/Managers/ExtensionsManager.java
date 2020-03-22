@@ -14,8 +14,14 @@ import java.util.List;
 
 public class ExtensionsManager {
 
+    /**
+     * The instance of ExtensionsManager
+     */
     protected static ExtensionsManager instance;
 
+    /**
+     * @return The instance of ExtensionsManager
+     */
     public static ExtensionsManager getInstance() {
         if (instance == null)
             instance = new ExtensionsManager();
@@ -44,6 +50,9 @@ public class ExtensionsManager {
         extensions = parseExtensionFile();
     }
 
+    /**
+     * Search the main extension in the activated one
+     */
     protected void searchMainExtension() {
         mainExtension = null;
         for (Extension e1 : extensions) {
@@ -178,6 +187,10 @@ public class ExtensionsManager {
         }
     }
 
+    /**
+     * Do the necessary action when an extension is activated
+     * @param activatedExtension The activated extension
+     */
     public void onExtensionActivated(Extension activatedExtension) {
         boolean launch = true;
         for (Extension e : extensions) {
@@ -195,6 +208,10 @@ public class ExtensionsManager {
         }
     }
 
+    /**
+     * Do the necessary actions when an extension is deactivated
+     * @param deactivatedExtension The deactivated extension
+     */
     public void onExtensionDeactivated(Extension deactivatedExtension) {
         deactivatedExtension.activated = false;
         if (mainExtension == deactivatedExtension) {
@@ -212,6 +229,10 @@ public class ExtensionsManager {
         }
     }
 
+    /**
+     * Change the state and set its settings to correspond to the activated extensions one
+     * @param gsm The game's state manager
+     */
     public void initGame(GameStateManager gsm) {
         ExtensionsManager.Extension mainExt = getMainExtension();
         if (mainExt != null && mainExt.mainClassBeforeCharacterCreation != null) {
@@ -243,6 +264,10 @@ public class ExtensionsManager {
         }
     }
 
+    /**
+     * Change the state and set its settings to correspond to the activated extensions one when we want to load an old game
+     * @param gsm The game's state manager
+     */
     public void initGameFromLoad(GameStateManager gsm) {
         ExtensionsManager.Extension mainExt = getMainExtension();
         try {
@@ -286,6 +311,9 @@ public class ExtensionsManager {
         return mainExtension;
     }
 
+    /**
+     * @return A list of all detected extensions
+     */
     public List<Extension> getExtensions() {
         return extensions;
     }
@@ -303,52 +331,82 @@ public class ExtensionsManager {
          */
         public ArrayList<LoadFile> dirsFileToLoad = new ArrayList<>();
         /**
-         * The class to launch in first for this extension.
+         * The state to launch in first for this extension.
          */
         public String mainClass;
         /**
-         * The class to launch in first for this extension.
+         * The state to launch before the loading the state
          */
         public String mainClassBeforeLoading;
         /**
-         * The class to launch in first for this extension (before the character creation).
+         * The state to launch in first for this extension (before the character creation).
          */
         public String mainClassBeforeCharacterCreation;
-
+        /**
+         * The state to be in when an old game is about to be loaded
+         */
         public String classAfterOldGameSelection;
-
+        /**
+         * The state to launch before we select an old game file
+         */
         public String classBeforeOldGameSelection;
         /**
          * The maps to load for this extension.
          */
         public ArrayList<String> mapsToLoad = new ArrayList<>();
-
+        /**
+         * Represent with with extensions this extension can be active with
+         */
         public ArrayList<String> canActivateWith = new ArrayList<>();
-
+        /**
+         * If the extension is a multiplayer one or not
+         */
         public boolean isMultiplayer = false;
-
         /**
          * If the extension is activated or not.
          */
         public boolean activated = false;
-
+        /**
+         * If this extension can be activated following other activated extension
+         */
         public boolean canBeActivated = true;
 
+        /**
+         * @return The state to launch in first for this extension.
+         * @throws ClassNotFoundException If the specified class wasn't found
+         */
         public Class<? extends GameState> getMainClass() throws ClassNotFoundException {
             return mainClass == null ? null : (Class<? extends GameState>) Class.forName(mainClass);
         }
 
+        /**
+         * @return The state to launch before the loading the state
+         * @throws ClassNotFoundException If the specified class wasn't found
+         */
         public Class<? extends GameState> getMainClassBeforeLoading() throws ClassNotFoundException {
             return mainClassBeforeLoading == null ? null : (Class<? extends GameState>) Class.forName(mainClassBeforeLoading);
         }
 
+        /**
+         * @return The state to launch in first for this extension (before the character creation).
+         * @throws ClassNotFoundException If the specified class wasn't found
+         */
         public Class<? extends GameState> getMainClassBeforeCharacterCreation() throws ClassNotFoundException {
             return mainClassBeforeCharacterCreation == null ? null : (Class<? extends GameState>) Class.forName(mainClassBeforeCharacterCreation);
         }
+
+        /**
+         * @return The state to be in when an old game is about to be loaded
+         * @throws ClassNotFoundException If the specified class wasn't found
+         */
         public Class<? extends GameState> getClassAfterOldGameSelection() throws ClassNotFoundException {
             return classAfterOldGameSelection == null ? null : (Class<? extends GameState>) Class.forName(classAfterOldGameSelection);
         }
 
+        /**
+         * @return The state to launch before we select an old game file
+         * @throws ClassNotFoundException If the specified class wasn't found
+         */
         public Class<? extends GameState> getClassBeforeOldGameSelection() throws ClassNotFoundException {
             return classBeforeOldGameSelection == null ? null : (Class<? extends GameState>) Class.forName(classBeforeOldGameSelection);
         }
