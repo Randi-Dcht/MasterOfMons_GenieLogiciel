@@ -1,7 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Regulator;
 
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
-import be.ac.umons.mom.g02.Extensions.LAN.Objects.Save;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Managers.GameMapManager;

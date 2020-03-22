@@ -2,7 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Objects.Save;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
@@ -11,13 +11,9 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
-import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Saving;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -30,7 +26,9 @@ public class FinalisingConnectionState extends MenuState {
      * The network manager.
      */
     protected NetworkManager nm;
-
+    /**
+     * If we must send the player's characteristics to the second player
+     */
     protected boolean sendPlayer;
 
     /**
@@ -101,6 +99,9 @@ public class FinalisingConnectionState extends MenuState {
         super.update(dt);
     }
 
+    /**
+     * @param sendPlayer If we must send the player's characteristics to the second player
+     */
     public void setSendPlayer(boolean sendPlayer) {
         this.sendPlayer = sendPlayer;
         if (sendPlayer)

@@ -8,6 +8,9 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
+/**
+ * Represent the state where the player have to choose between becoming the server or connecting to a server
+ */
 public class WaitingOrConnectionState extends MenuState {
 
     /**

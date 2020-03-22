@@ -23,6 +23,9 @@ public class ConnectionRoomState extends MenuState {
      */
     protected NetworkManager nm;
 
+    /**
+     * If we must send the player's characteristics to the second player
+     */
     protected boolean sendPlayer;
 
     /**
@@ -117,6 +120,9 @@ public class ConnectionRoomState extends MenuState {
         }
     }
 
+    /**
+     * @param sendPlayer If we must send the player's characteristics to the second player
+     */
     public void setSendPlayer(boolean sendPlayer) {
         this.sendPlayer = sendPlayer;
     }

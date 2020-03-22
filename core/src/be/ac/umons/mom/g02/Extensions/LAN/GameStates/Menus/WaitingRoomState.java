@@ -29,6 +29,9 @@ public class WaitingRoomState extends MenuState {
      * The <code>TextBox</code>'s MenuItem where the user put the server's name.
      */
     protected TextBoxMenuItem TXT_ServerName;
+    /**
+     * If we must send the player's characteristics to the second player
+     */
     protected boolean sendPlayer;
 
     /**
@@ -86,6 +89,9 @@ public class WaitingRoomState extends MenuState {
         nm.stopBroadcastingServerInfo();
     }
 
+    /**
+     * @param sendPlayer If we must send the player's characteristics to the second player
+     */
     public void setSendPlayer(boolean sendPlayer) {
         this.sendPlayer = sendPlayer;
     }

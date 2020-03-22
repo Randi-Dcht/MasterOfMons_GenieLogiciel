@@ -1,4 +1,4 @@
-package be.ac.umons.mom.g02.Extensions.LAN.Objects;
+package be.ac.umons.mom.g02.Extensions.Multiplayer.Objects;
 
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -11,9 +11,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Save extends LogicSaving implements Serializable {
+    /**
+     * The second player's characteristics
+     */
     People secondPlayer;
+    /**
+     * The second player position
+     */
     Point positionTwo;
+    /**
+     * The first player map
+     */
     String mapOne;
+    /**
+     * The second player map
+     */
     String mapTwo;
 
     /**
@@ -60,6 +72,9 @@ public class Save extends LogicSaving implements Serializable {
         this.mapTwo = mapTwo;
     }
 
+    /**
+     * Invert the informations of the first and the second player
+     */
     public void invertPlayerOneAndTwo() {
         String fs = getFirstPlayerMap();
         People p = getPlayer();
@@ -72,34 +87,58 @@ public class Save extends LogicSaving implements Serializable {
         setSecondPlayerMap(fs);
     }
 
+    /**
+     * @return The second player's characteristics
+     */
     public People getSecondPlayer() {
         return secondPlayer;
     }
 
+    /**
+     * @return The second player's position
+     */
     public Point getSecondPlayerPosition() {
         return positionTwo;
     }
 
+    /**
+     * @return The first player's map
+     */
     public String getFirstPlayerMap() {
         return mapOne;
     }
 
+    /**
+     * @return The second player's map
+     */
     public String getSecondPlayerMap() {
         return mapTwo;
     }
 
+    /**
+     * @param positionTwo The second player's position
+     */
     public void setPositionTwo(Point positionTwo) {
         this.positionTwo = positionTwo;
     }
 
+    /**
+     * @param mapOne The first player's map
+     */
     public void setFirstPlayerMap(String mapOne) {
         this.mapOne = mapOne;
     }
 
+    /**
+     * @param mapTwo The second player's map
+     */
     public void setSecondPlayerMap(String mapTwo) {
         this.mapTwo = mapTwo;
     }
 
+    /**
+     * @param secondPlayer The second player's characteristics
+     */
     public void setSecondPlayer(People secondPlayer) {
         this.secondPlayer = secondPlayer;
     }

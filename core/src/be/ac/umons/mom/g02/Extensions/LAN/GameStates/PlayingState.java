@@ -84,7 +84,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * The color when we are on the bad path in a puzzle.
      */
     protected Color badPuzzlePathColor;
-
+    /**
+     * If a pause signal has been sent to the second player
+     */
     protected boolean pauseSent = false;
 
 
@@ -449,10 +451,16 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         this.newParty = newParty;
     }
 
+    /**
+     * @return The map on which the second player is
+     */
     public String getSecondPlayerMap() {
         return secondPlayerMap;
     }
 
+    /**
+     * @return The current position of the second player
+     */
     public Point getSecondPlayerPosition() {
         return new Point(playerTwo.getPosX(), playerTwo.getPosY());
     }
