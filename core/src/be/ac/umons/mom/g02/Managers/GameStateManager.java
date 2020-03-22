@@ -20,8 +20,17 @@ import java.util.Stack;
  * @author Guillaume Cardoen
  */
 public class GameStateManager {
-    private static int CHANGING_TIME = 150;
+    /**
+     * The time of the animation.
+     */
+    private static int CHANGING_TIME = 125;
+    /**
+     * Allow to draw the rectangle for the animation
+     */
     private ShapeRenderer sr;
+    /**
+     * If we are currently changing from state.
+     */
     private boolean isChangingState = false;
     /**
      * The stack containing every <code>GameState</code> to be drawn.
@@ -71,6 +80,9 @@ public class GameStateManager {
         return g;
     }
 
+    /**
+     * Launch the animation before changing a state
+     */
     public void animateForChangingState(Runnable onBetweenAnimation) {
         isChangingState = true;
         AnimationManager.getInstance().remove("changingState");
@@ -85,6 +97,9 @@ public class GameStateManager {
 
     }
 
+    /**
+     * Launch the animation after changing a state
+     */
     public void animateAfterChangingState() {
         DoubleAnimation da = new DoubleAnimation(1, 0, CHANGING_TIME);
         da.setRunningAction(() -> sr.setColor(0,0,0, da.getActual().floatValue()));
@@ -113,6 +128,10 @@ public class GameStateManager {
         return g;
     }
 
+    /**
+     * @param gst The class of the state to return.
+     * @return An instance of the given state
+     */
     private GameState getState(Class<? extends GameState> gst) {
         GameState g;
         try {
@@ -125,7 +144,12 @@ public class GameStateManager {
         return g;
     }
 
-    private void addStateToStack(GameState gs, boolean popPreviousOne) {
+    /**
+     * Add the given state to the stack without animating
+     * @param gs The <code>GameState</code> to add
+     * @param popPreviousOne If the previous one has to be removed from the stack
+     */
+    protected void addStateToStack(GameState gs, boolean popPreviousOne) {
         if (popPreviousOne)
             gameStateStack.pop().dispose();
         else if (! gameStateStack.empty())
@@ -136,12 +160,15 @@ public class GameStateManager {
     }
 
     /**
-     * Remove the first state in the stack.
+     * Remove the first state from the stack with an animation.
      */
     public void removeFirstState() {
         animateForChangingState(this::removeFirstStateFromStack);
     }
 
+    /**
+     * Remove the first state from the stack.
+     */
     public void removeFirstStateFromStack() {
         if (gameStateStack.size() == 1)
             return;

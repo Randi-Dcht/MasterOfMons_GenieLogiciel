@@ -8,15 +8,23 @@ import java.io.*;
 import java.util.HashMap;
 
 public class GameKeyManager {
-
+    /**
+     * The instance of the GameKeyManager
+     */
     private static GameKeyManager instance;
 
+    /**
+     * @return The instance of the GameKeyManager
+     */
     public static GameKeyManager getInstance() {
         if (instance == null)
             instance = new GameKeyManager();
         return instance;
     }
 
+    /**
+     * The map making the link between an id and the keycode of the key associated
+     */
     protected HashMap<String, Integer> keysMap;
 
     protected GameKeyManager() {
@@ -24,6 +32,9 @@ public class GameKeyManager {
         loadKeyFile();
     }
 
+    /**
+     * Read the file <code>keys</code> and add the id and keycode to the map
+     */
     protected void loadKeyFile() {
         BufferedReader br;
         int actualLine = 0;
@@ -43,6 +54,9 @@ public class GameKeyManager {
         }
     }
 
+    /**
+     * Save the current map into the file <code>keys</code>
+     */
     public void saveKeysMap() {
         try {
             FileHandle ef = Gdx.files.getFileHandle("keys", Files.FileType.Internal);
@@ -55,10 +69,17 @@ public class GameKeyManager {
         }
     }
 
+    /**
+     * @param id The id
+     * @return The key code associated with the given id
+     */
     public int getKeyCodeFor(String id) {
         return keysMap.get(id);
     }
 
+    /**
+     * @return The map making the link between an id and the keycode of the key associated
+     */
     public HashMap<String, Integer> getKeysMap() {
         return keysMap;
     }
