@@ -25,7 +25,7 @@ public class Boss extends UnderQuest {
      */
     @Override
     public void evenActivity(Notification notify) {
-        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer() != null && ! notify.getBuffer().equals(SupervisorLAN.getPeople()) && ! notify.getBuffer().equals(SupervisorLAN.getPeopleTwo())) // TODO
+        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer() != null && ! notify.getBuffer().equals(SupervisorLAN.getPeople()) && ! notify.getBuffer().equals(SupervisorLAN.getPeopleTwo()))
             addProgress(50f / 37);
     }
 

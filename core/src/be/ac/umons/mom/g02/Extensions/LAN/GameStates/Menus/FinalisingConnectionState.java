@@ -29,7 +29,9 @@ public class FinalisingConnectionState extends MenuState {
     /**
      * The network manager.
      */
-    NetworkManager nm;
+    protected NetworkManager nm;
+
+    protected boolean sendPlayer;
 
     /**
      * @param gsm The game's state manager
@@ -62,8 +64,6 @@ public class FinalisingConnectionState extends MenuState {
             LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
             ls.setAfterLoadingState(PlayingState.class);
         }));
-        if (MasterOfMonsGame.getGameToLoad() == null)
-            nm.sendPlayerInformation(SupervisorLAN.getPeople());
 
     }
 
@@ -92,10 +92,18 @@ public class FinalisingConnectionState extends MenuState {
                 }
             }
         });
+        if (sendPlayer)
+            nm.sendPlayerInformation(SupervisorLAN.getPeople());
     }
 
     @Override
     public void update(float dt) {
         super.update(dt);
+    }
+
+    public void setSendPlayer(boolean sendPlayer) {
+        this.sendPlayer = sendPlayer;
+        if (sendPlayer)
+            nm.sendPlayerInformation(SupervisorLAN.getPeople());
     }
 }

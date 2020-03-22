@@ -58,6 +58,15 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
     @Override
     public void saveGame(String path) {
+
+        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path))))) {
+            sortie.writeObject(createSave());
+        } catch (IOException e) {
+            Gdx.app.error("Error in the saving the game (out)", e.getMessage());
+        }
+    }
+
+    public Save createSave() {
         PlayingState ps = ((PlayingState)playGraphic); // Not in the same package
         Save save = new Save(playerOne, playerTwo,
                 GameMapManager.getInstance().getActualMapName(), ps.getSecondPlayerMap(),
@@ -70,12 +79,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         save.setFirstStudy(regulator.isTheFirstStudy());
         save.setRemainingMaps(regulator.getRemainingMaps());
         save.setShowEnergizingInformation(regulator.mustShowEnergizingInformation());
-
-        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path))))) {
-            sortie.writeObject(save);
-        } catch (IOException e) {
-            Gdx.app.error("Error in the saving the game (out)", e.getMessage());
-        }
+        return save;
     }
 
     public Save oldGameLAN(String path, PlayingState play, GraphicalSettings graphic) {

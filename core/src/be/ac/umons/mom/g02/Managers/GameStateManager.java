@@ -162,6 +162,17 @@ public class GameStateManager {
     }
 
     /**
+     * Remove all the state until <code>gs</code>. <code>gs</code> is removed too.
+     * If <code>gs</code> doesn't exist, nothing is done !
+     * @param gs A state
+     */
+    public void removeAllStateUntil(GameState gs) {
+        if (gameStateStack.contains(gs)) {
+            while (gameStateStack.pop() != gs) {}
+        }
+    }
+
+    /**
      * Update the first state.
      * @param dt The time between this call and the previous one (delta-time).
      */
