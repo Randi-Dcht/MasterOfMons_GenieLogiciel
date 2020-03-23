@@ -3,7 +3,6 @@ package be.ac.umons.mom.g02.Objects.Items;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
-
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -14,25 +13,26 @@ import java.util.Random;
 
 
 /***/
-public class MyPlacePosition
+public class PositionOnMaps
 {
     /***/
-    private HashMap<Maps, ArrayList<Point>> listPoint;
+    private HashMap<Maps, HashMap<String, ArrayList<Point>>> listPoint;
     /***/
-    private static final String PATH = "ResourceObjects/PositionRandomOfItem";
+    private static final String PATH = "ResourceObjects/PositionItemsOnMaps";
     /***/
     private Maps actually;
+    /***/
+    private String ID;
 
 
     /***/
-    public MyPlacePosition()
+    public PositionOnMaps()
     {
         listPoint = new HashMap<>();
         for (Maps map : Maps.values())
-            listPoint.put(map,new ArrayList<>());
+            listPoint.put(map,new HashMap<>());
 
         createList();
-        new PositionOnMaps();
     }
 
 
@@ -48,13 +48,18 @@ public class MyPlacePosition
 
                 if (vertical.charAt(0) == '%')
                     actually = Supervisor.getSupervisor().getMaps(vertical.substring(1));
+                else if (vertical.charAt(0) == '+')
+                {
+                    listPoint.get(actually).put(ID=vertical.substring(1),new ArrayList<>());
+                }
                 else
                 {
                     String[] lst = vertical.split("-");
-                    listPoint.get(actually).add(new Point(Integer.parseInt(lst[0]),Integer.parseInt(lst[1])));
+                    listPoint.get(actually).get(ID).add(new Point(Integer.parseInt(lst[0]),Integer.parseInt(lst[1])));
                 }
             }
             line.close();
+            System.out.println(listPoint);
         }
         catch (Exception e)
         {
@@ -64,8 +69,10 @@ public class MyPlacePosition
 
 
     /***/
-    public Point getPosition(Maps maps)
+    public Point getPosition(Maps maps,String id)
     {
-        return listPoint.get(maps).get(new Random().nextInt(listPoint.get(maps).size()));
+        if (listPoint.get(maps).containsKey(id))//TODO one list
+            return listPoint.get(maps).get(id).get(new Random().nextInt(listPoint.get(maps).size()));
+        return listPoint.get(maps).get("OTHER").get(new Random().nextInt(listPoint.get(maps).size()));
     }
 }
