@@ -307,7 +307,7 @@ public class Regulator implements Observer
             soulMateMeet((SaoulMatePNJ) notify.getBuffer());
 
         if (notify.getEvents().equals(Events.UseItems))
-            timeOfDay(player.getPlace());
+            timeOfDay(Places.OnTheMap/*player.getPlace()*/);
 
         if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty())
             regulateDialog((String)notify.getBuffer());
