@@ -687,14 +687,19 @@ public class PlayingState extends GameState implements Observer {
                 supervisor.meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
             else {
                 if (supervisor.getPeople().pushObject(((MapObject)selectedOne).getItem())) {
-                    inventoryShower.addAnItem(((MapObject)selectedOne).getItem());
-                    mapObjects.remove(selectedOne);
+                    pickUpAnObject();
                 }
             }
         }
         inventoryShower.handleInput();
         pauseButton.handleInput();
         agendaShower.handleInput();
+    }
+
+    protected void pickUpAnObject() {
+        inventoryShower.addAnItem(((MapObject)selectedOne).getItem());
+        mapObjects.remove(selectedOne);
+        selectedOne = null;
     }
 
     /**

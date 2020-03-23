@@ -228,6 +228,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
             dms.setText(gs.getStringFromId("partnerDead"));
         });
+        nm.setOnItemPickUp((omi) -> {
+            for (int i = 0; i < mapObjects.size(); i++)
+                if (mapObjects.get(i).getCharacteristics().equals(omi))
+                    mapObjects.remove(i);
+        });
     }
 
     @Override
@@ -406,6 +411,16 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             e.printStackTrace();
         }
         return mo;
+    }
+
+    @Override
+    protected void pickUpAnObject() {
+        try {
+            nm.sendItemPickUp(((MapObject) selectedOne).getCharacteristics());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.pickUpAnObject();
     }
 
     /**

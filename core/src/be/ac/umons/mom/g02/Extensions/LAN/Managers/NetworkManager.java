@@ -6,7 +6,6 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 
 import java.awt.*;
@@ -171,7 +170,11 @@ public class NetworkManager {
     /**
      * What to do when the informations of an item has been received.
      */
-    protected OnItemDetectedRunnable onItemDetected;
+    protected OnMapItemRunnable onItemDetected;
+    /**
+     * What to do when the informations of an item has been received.
+     */
+    protected OnMapItemRunnable onItemPickUp;
     /**
      * What to do when the second player ask informations about the PNJs on the map.
      */
@@ -702,6 +705,10 @@ public class NetworkManager {
         sendOnTCP("getItemsPos");
     }
 
+    public void sendItemPickUp(MapObject.OnMapItem omi) throws IOException {
+        sendOnTCP("IPU#" + objectToString(omi));
+    }
+
     /**
      * Send the end of a master quest
      */
@@ -862,6 +869,19 @@ public class NetworkManager {
                     Gdx.app.error("NetworkManager", "Error detected while parsing items position (ignoring message)", e);
                 }
                 break;
+            case "IPU": // Item pick up
+                if (onItemPickUp != null) {
+                    Gdx.app.postRunnable(() ->
+                    {
+                        try {
+                            onItemDetected.run((MapObject.OnMapItem) objectFromString(tab[1].trim()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
             case "getPNJsPos": // Get all PNJs and their positions
                 if (onGetPNJ != null)
                     Gdx.app.postRunnable(() -> onGetPNJ.run(tab[1].trim()));
@@ -937,8 +957,8 @@ public class NetworkManager {
                 break;
 
         }
-        if (received != "")
-        msSinceLastMessage = 0;
+        if (! received.equals(""))
+            msSinceLastMessage = 0;
     }
 
     /**
@@ -1166,7 +1186,7 @@ public class NetworkManager {
     /**
      * @param onItemDetected What to do when the informations of an item has been received.
      */
-    public void setOnItemDetected(OnItemDetectedRunnable onItemDetected) {
+    public void setOnItemDetected(OnMapItemRunnable onItemDetected) {
         this.onItemDetected = onItemDetected;
     }
 
@@ -1302,6 +1322,10 @@ public class NetworkManager {
         return saveReceived;
     }
 
+    public void setOnItemPickUp(OnMapItemRunnable onItemPickUp) {
+        this.onItemPickUp = onItemPickUp;
+    }
+
     /**
      * Represent the runnable executed when the second player informations has been received.
      */
@@ -1318,7 +1342,7 @@ public class NetworkManager {
     /**
      * Represent the runnable executed when the informations of a item has been received.
      */
-    public interface OnItemDetectedRunnable {
+    public interface OnMapItemRunnable {
         void run(MapObject.OnMapItem omi);
     }
 
