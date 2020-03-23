@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.SaveMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
@@ -14,6 +15,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -54,7 +56,7 @@ public class DisconnectedMenuState extends MenuState {
         menuItemList.add(new TextMenuItem(gs, gs.getStringFromId("searchInLoad")));
 
         menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("saveTheGame"), () -> gsm.setState(SaveMenuState.class)));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"))); // TODO
+        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), this::exit));
         setMenuItems(menuItemList.toArray(new MenuItem[0]));
 
         try {
@@ -81,6 +83,16 @@ public class DisconnectedMenuState extends MenuState {
         } catch (SocketException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Executed when the "quit" option is chosen
+     */
+    public void exit() {
+        GameState g = gsm.setState(OutGameDialogState.class);
+        ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));
+        ((OutGameDialogState)g).addAnswer("yes", () -> Gdx.app.exit());
+        ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
     }
 
     /**

@@ -21,7 +21,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
      * @param header The item's name
      */
     public ButtonMenuItem(GameInputManager gim, GraphicalSettings gs, String header) {
-        super(gim, gs, header);
+        this(gim, gs, header, "");
     }
 
     /**

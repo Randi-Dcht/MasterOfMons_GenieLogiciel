@@ -28,7 +28,7 @@ public class OutGameDialogState extends DialogState {
         gl.setText(gs.getNormalFont(), text);
         float width = (float) (gl.width + 2 * leftMargin);
         float height = (float) (whenSelectedActions.keySet().size() * (gs.getNormalFont().getLineHeight() + 2 * topMargin) + 2 * topMargin) + gl.height + (float)topMargin;
-        float x = (MasterOfMonsGame.WIDTH - gl.width) / 2;
+        float x = (MasterOfMonsGame.WIDTH - width) / 2;
         float y = ((float)MasterOfMonsGame.HEIGHT - height) / 2;
         sr.setColor(gs.getBackgroundColor());
         sr.begin(ShapeRenderer.ShapeType.Filled);
