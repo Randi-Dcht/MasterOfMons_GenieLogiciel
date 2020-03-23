@@ -22,6 +22,7 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  *This class allows to define a people with all characteristic.
@@ -49,6 +50,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private int actual = 0;
     private Places place;
     private Items use;
+    private int percentSuccess = 0;
 
 
     /**
@@ -294,11 +296,23 @@ public class People extends Character implements Serializable, Observer, FrameTi
      *This method allows to know the number of course to pass.
      *@return size of the list course
      */
-    public int numberCourse()
+    public int numberCourse()//TODO
     {
         return myCourse.size();
     }
-//TODO remove quand celui reu
+
+
+    /**
+     * This method allows to add the succes in the lesson to follow
+     * @param cmb is the percent to add in success
+     */
+    public void addSuccess(int cmb)
+    {
+        percentSuccess += cmb;
+        if (cmb <= 50)
+            myCourse.remove(new Random().nextInt(myCourse.size()));
+    }
+
 
     /**
      *This method allows to return the list of course where exams don't pass.
