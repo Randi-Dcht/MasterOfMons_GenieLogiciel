@@ -2,15 +2,16 @@ package be.ac.umons.mom.g02.Objects.Items;
 
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 /***/
 public class Energizing extends Items
 {
-    private double obsolete = 31536000;
+    private double obsolete = 100;
     private double reVisible = 0;//TODO for all item
-    private boolean useItem = false;
+    private boolean useItem = true;
 
 
     /***/
@@ -27,18 +28,7 @@ public class Energizing extends Items
         super.used(pp);
         pp.addEnergy(25);//TODO check
         visibly();
-        useItem = true;
-    }
-
-
-    /***/
-    @Override
-    public void update(double time) //TODO adpater pour être revisible
-    {
-        if (useItem)
-            obsolete -= time;
-        if(obsolete <= 0)
-            visibly();
+        useItem = false;
     }
 
 
@@ -46,7 +36,7 @@ public class Energizing extends Items
     @Override
     public boolean getObsolete()
     {
-        return obsolete<=0;
+        return useItem;
     }
 
 }

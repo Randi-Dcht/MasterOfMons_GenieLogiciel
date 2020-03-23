@@ -34,7 +34,7 @@ public class MyFirstYear extends MasterQuest
     /**
      * This is the goals of this MasterQuest
      */
-    final UnderQuest[] underQuest = {new LowEnergizing(this,10,people),new GoToLesson(this,23,people),new MeetManyPeople(this,34,people),new BattleForPlace(this,33,people)};
+    final UnderQuest[] underQuest = {new LowEnergizing(this,33,people),new GoToLesson(this,33,people),new MeetManyPeople(this,34,people)};
 
 
     /**

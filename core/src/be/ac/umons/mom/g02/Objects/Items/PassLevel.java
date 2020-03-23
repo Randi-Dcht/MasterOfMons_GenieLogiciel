@@ -22,16 +22,13 @@ public class PassLevel extends Items
         use = false;
     }
 
+    /**
+     * This method returns the price of this item
+     * @return the price of item
+     */
     public int buy()
     {
         return 300;
-    }
-
-
-    /***/
-    @Override
-    public void update(double time)
-    {
     }
 
 

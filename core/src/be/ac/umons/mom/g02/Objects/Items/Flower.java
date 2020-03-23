@@ -22,18 +22,8 @@ public class Flower extends Items
     @Override
     public void used(People pp)
     {
-
-    }
-
-
-    /**
-     * This method allows to decrease the life of this items
-     * @param time is the time between two frames
-     */
-    @Override
-    public void update(double time)
-    {
-
+        if (pp.getSoulMate() != null)
+        {}//TODO
     }
 
 

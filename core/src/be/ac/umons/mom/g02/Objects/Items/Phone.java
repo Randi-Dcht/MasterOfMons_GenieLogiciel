@@ -40,14 +40,6 @@ public class Phone extends Items
 
 
     /***/
-    @Override
-    public void update(double time)//TODO check if use
-    {
-
-    }
-
-
-    /***/
     public boolean getObsolete()
     {
         return batteryEnergizing <= 0;

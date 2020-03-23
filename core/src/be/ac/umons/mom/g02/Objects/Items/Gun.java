@@ -28,20 +28,14 @@ public class Gun extends Items implements Guns
     }
 
 
+    /**
+     * This method allows to recharge the gun
+     * @param ball is the number of the recharge
+     */
     @Override
     public void setBall(int ball)
     {
         this.ball += ball;
-    }
-
-    /**
-     * This method allows to decrease the life of this items
-     * @param time is the time between two frames
-     */
-    @Override
-    public void update(double time)
-    {
-
     }
 
 
@@ -63,7 +57,8 @@ public class Gun extends Items implements Guns
     }
 
     @Override
-    public void useGun() {
+    public void useGun()
+    {
 
     }
 }

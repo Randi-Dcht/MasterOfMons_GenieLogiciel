@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Quests.Under.*;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -12,10 +13,6 @@ import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.PaperHelp;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
-import be.ac.umons.mom.g02.Quests.Under.FreeTimeMons;
-import be.ac.umons.mom.g02.Quests.Under.HelpMe;
-import be.ac.umons.mom.g02.Quests.Under.SuccesfulYear;
-import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 
 import java.util.ArrayList;
 
@@ -30,7 +27,7 @@ public class SuccessfulYear extends MasterQuest
     /**
      * This is the goals of this Quest
      */
-    final UnderQuest[] underQuest = {new HelpMe(this,34,people),new FreeTimeMons(this,33,people)/*, new GoToLesson(this,25)*/, new SuccesfulYear(this,33,people)};
+    final UnderQuest[] underQuest = {new HelpMe(this,34,people),new FreeTimeMons(this,23,people),new BattleForPlace(this,20,people), new SuccesfulYear(this,23,people)};
 
 
     /**

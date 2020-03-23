@@ -14,7 +14,6 @@ import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Observer;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
@@ -45,7 +44,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private HashMap<Integer,ArrayList<Course>> myPlanning;
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
     private int friend = 0;
-    private Mobile saoulMate; //TODO check the type
+    private SaoulMatePNJ soulMate; //TODO check the type
     /*The point of the level*/
     private int actual = 0;
     private Places place;
@@ -202,8 +201,8 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     public void addFriend(Mobile mobile)
     {
-        if (saoulMate == null && mobile.getClass().equals(SaoulMatePNJ.class))
-            saoulMate = mobile;
+        if (soulMate == null && mobile.getClass().equals(SaoulMatePNJ.class))
+            soulMate = (SaoulMatePNJ) mobile;
 
         if (mobile.addFriend)
             friend++;
@@ -226,6 +225,11 @@ public class People extends Character implements Serializable, Observer, FrameTi
         return friend;
     }
 
+
+    public SaoulMatePNJ getSoulMate()
+    {
+        return soulMate;
+    }
 
     /**
      * This method return the MasterQuest actual for this people

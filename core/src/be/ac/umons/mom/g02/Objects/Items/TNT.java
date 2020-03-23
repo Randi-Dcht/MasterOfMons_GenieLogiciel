@@ -2,8 +2,10 @@ package be.ac.umons.mom.g02.Objects.Items;
 
 import be.ac.umons.mom.g02.Objects.Characters.People;
 
-public class TNT extends Items
+public class TNT extends Items implements Guns
 {
+
+    private boolean useTnt = true;
 
     /***/
     public TNT()
@@ -16,6 +18,8 @@ public class TNT extends Items
     @Override
     public void used(People pp)
     {
+        super.used(pp);
+        useTnt = false;
     }
 
     public int buy()
@@ -26,15 +30,23 @@ public class TNT extends Items
 
     /***/
     @Override
-    public void update(double time)
-    {
-    }
-
-
-    /***/
-    @Override
     public boolean getObsolete()
     {
-        return true;
+        return useTnt;
+    }
+
+    @Override
+    public int addDamageGun()
+    {
+        return 100;
+    }
+
+    @Override
+    public void useGun() {
+
+    }
+
+    @Override
+    public void setBall(int cmb) {
     }
 }
