@@ -69,6 +69,14 @@ public class MapObject extends OnMapObject {
         omi.mapPos = mapPos;
     }
 
+    public void setMap(String map) {
+        omi.map = map;
+    }
+
+    public String getMap() {
+        return omi.map;
+    }
+
     /**
      * @return The item represented by this object.
      */
@@ -92,5 +100,7 @@ public class MapObject extends OnMapObject {
          * The position if this object on the map.
          */
         Point mapPos;
+
+        String map;
     }
 }

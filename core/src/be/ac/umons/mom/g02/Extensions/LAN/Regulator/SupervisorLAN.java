@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlaye
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.MyPlacePosition;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
@@ -49,7 +50,8 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
      * @param playerTwo The second player
      */
     public void newParty(MasterQuest firstQuest, People playerOne, People playerTwo) {
-        time      = new TimeGame(new Date(1,1,2020,9,0));
+        placePosition = new MyPlacePosition();
+        time = new TimeGame(new Date(1,1,2020,9,0));
         regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
         playerOne.newQuest(firstQuest);
         playerTwo.newQuest(firstQuest, false);

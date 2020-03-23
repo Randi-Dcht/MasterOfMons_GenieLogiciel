@@ -46,6 +46,8 @@ import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -410,9 +412,8 @@ public  abstract class Supervisor implements Observer
      */
     public void setGraphic(QuestShower qs, PlayingState ps)
     {
-        if ( playerOne != null && qs != null && playerOne.getQuest() != null && ps != null)
+        if ( playerOne != null && qs != null && ps != null)
         {
-            qs.setQuest(playerOne.getQuest());
             save.setGraphic(ps);
             playGraphic = ps;
         }
@@ -427,7 +428,7 @@ public  abstract class Supervisor implements Observer
             for (Maps maps : Maps.values())
             {
                 for (Items it : listItems.get(maps))
-                   playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
+                   playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()), maps.getMaps());
             }
             first = false;
         }
@@ -774,4 +775,19 @@ public  abstract class Supervisor implements Observer
     public void setMustPlaceItem(boolean mustPlaceItem) {
         this.mustPlaceItem = mustPlaceItem;
     }
+
+    /**
+     * protected void placeItem()
+     *     {
+     *         if (playGraphic != null && mustPlaceItem)
+     *         {
+     *             for (Maps maps : Maps.values())
+     *             {
+     *                 for (Items it : listItems.get(maps))
+     *                    playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
+     *             }
+     *             first = false;
+     *         }
+     *     }
+     */
 }
