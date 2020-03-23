@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.Managers;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Items.Items;
@@ -178,7 +179,7 @@ public class NetworkManager {
     /**
      * What to do when the second player ask informations about the items on the map.
      */
-    protected StringRunnable onGetItem;
+    protected Runnable onGetItem;
     /**
      * What to do when the second player hit a PNJ.
      */
@@ -224,9 +225,9 @@ public class NetworkManager {
      */
     protected String mustSendPNJPos;
     /**
-     * On which map the item's informations has been asked.
+     * If the items' informations has been asked.
      */
-    protected String mustSendItemPos;
+    protected boolean mustSendItemPos;
     /**
      * The server on which we must connect.
      */
@@ -628,11 +629,11 @@ public class NetworkManager {
     }
     /**
      * Send the item's information on the TCP socket.
-     * @param item The item to send
+     * @param omi The item to send
      * @throws IOException If the item couldn't be serialized.
      */
-    public void sendItemInformation(Items item, Point pos) throws IOException { // TODO
-        sendOnTCP(String.format("Item#%d#%d#%s", pos.x, pos.y, objectToString(item)));
+    public void sendItemInformation(MapObject.OnMapItem omi) throws IOException { // TODO
+        sendOnTCP(String.format("Item#%s", objectToString(omi)));
     }
 
     /**
@@ -696,10 +697,9 @@ public class NetworkManager {
     }
     /**
      * Asks for all items informations and positions.
-     * @param map The map on which the items must be.
      */
-    public void askItemsPositions(String map) {
-        sendOnTCP("getItemsPos#" + map);
+    public void askItemsPositions() {
+        sendOnTCP("getItemsPos");
     }
 
     /**
@@ -851,11 +851,9 @@ public class NetworkManager {
                 break;
             case "Item": // Add an item to the map
                 try {
-                    int itemX = Integer.parseInt(tab[1]);
-                    int itemY = Integer.parseInt(tab[2]);
-                    Items item = (Items) objectFromString(tab[3]);
+                    MapObject.OnMapItem omi = (MapObject.OnMapItem) objectFromString(tab[1]);
                     if (onItemDetected != null)
-                        Gdx.app.postRunnable(() -> onItemDetected.run(item, itemX, itemY));
+                        Gdx.app.postRunnable(() -> onItemDetected.run(omi));
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
@@ -872,9 +870,9 @@ public class NetworkManager {
                 break;
             case "getItemsPos": // Get all PNJs and their positions
                 if (onGetItem != null)
-                    Gdx.app.postRunnable(() -> onGetItem.run(tab[1].trim()));
+                    Gdx.app.postRunnable(() -> onGetItem.run());
                 else
-                    mustSendItemPos = tab[1].trim();
+                    mustSendItemPos = true;
                 break;
             case "hitPNJ": // A PNJ has been hit by the other player.
                 if (onHitPNJ != null) {
@@ -1189,7 +1187,7 @@ public class NetworkManager {
     /**
      * @param onGetItem What to do when the second player ask informations about the items on the map.
      */
-    public void setOnGetItem(StringRunnable onGetItem) {
+    public void setOnGetItem(Runnable onGetItem) {
         this.onGetItem = onGetItem;
     }
 
@@ -1205,6 +1203,12 @@ public class NetworkManager {
      */
     public String getMustSendPNJPos() {
         return mustSendPNJPos;
+    }
+    /**
+     * @return On which map the PNJ's informations has been asked.
+     */
+    public boolean getMustSendItemPos() {
+        return mustSendItemPos;
     }
 
     /**
@@ -1315,7 +1319,7 @@ public class NetworkManager {
      * Represent the runnable executed when the informations of a item has been received.
      */
     public interface OnItemDetectedRunnable {
-        void run(Items item, int x, int y);
+        void run(MapObject.OnMapItem omi);
     }
 
     /**

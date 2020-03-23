@@ -9,10 +9,12 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
+import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.MyFirstYear;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -21,6 +23,7 @@ import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -126,14 +129,17 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
         nm.setOnFirstPlayerMapChanged(this::initMap);
 
-        supervisor.setMustPlaceItem(false);
+        supervisor.setMustPlaceItem(nm.isTheServer());
         Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
         newParty = (MasterOfMonsGame.getGameToLoad() == null && ! nm.hasReceivedASave());
-        if (newParty)
-            SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
-                    SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
-
         Supervisor.setGraphic(gs);
+        supervisor.setGraphic(questShower,this);
+        if (newParty)
+            SupervisorLAN.getSupervisor().newParty(new MyFirstYear(Supervisor.getPeople(), null, Supervisor.getPeople().getDifficulty()),
+                    SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
+//            SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
+//                    SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
+
         super.init();
         if (! newParty && ! nm.isTheServer())
             ((SupervisorLAN)supervisor).oldGameLAN(nm.getSaveReceived(), this, gs);
@@ -147,11 +153,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
         badPuzzlePathColor = new Color(0xD50000FF);
-        if (newParty) {
-            initMap("Tmx/LAN_Puzzle.tmx");
-            secondPlayerMap = gmm.getActualMapName();
-            SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
-        }
+//        if (newParty) {
+//            initMap("Tmx/LAN_Puzzle.tmx");
+//            secondPlayerMap = gmm.getActualMapName();
+//            SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
+//        }
     }
 
     @Override
@@ -174,17 +180,19 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             c.setTileWidth(tileWidth);
             c.setTileHeight(tileHeight);
         });
-        nm.setOnItemDetected((item, x, y) -> addItemToMap(item, new Point(x, y)));
+        nm.setOnItemDetected(this::addItemToMap);
+        nm.setOnGetPNJ(this::sendPNJsPositions);
         if (nm.isTheServer()) {
-            if (nm.getMustSendPNJPos() != null) {
+            if (nm.getMustSendPNJPos() != null)
                 sendPNJsPositions(nm.getMustSendPNJPos());
-            } else {
-                nm.setOnGetPNJ((map) -> sendPNJsPositions(map));
-            }
-        } else
+            if (nm.getMustSendItemPos())
+                sendItemsPositions();
+        } else {
             nm.askPNJsPositions(gmm.getActualMapName());
+            nm.askItemsPositions();
+        }
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
-//        nm.setOnSecondPlayerPositionDetected((pos) -> player.setMapPos(pos));
+        nm.setOnSecondPlayerPositionDetected((pos) -> player.setMapPos(pos));
         nm.setOnHitPNJ((name, life) -> {
             Character c = idCharacterMap.get(name);
             if (c != null) {
@@ -217,9 +225,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                 ((People)playerTwo.getCharacteristics()).upLevel();
             timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), newLevel));
         });
-        nm.setOnGetItem((map) -> {
-            // TODO
-        });
+        nm.setOnGetItem(this::sendItemsPositions);
         nm.setOnDeath(() -> {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
             dms.setText(gs.getStringFromId("partnerDead"));
@@ -387,6 +393,19 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {
                 nm.sendPNJInformation(idCharacterMap.get(mob.getName()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Send all the items positions to the second player.
+     */
+    protected void sendItemsPositions() {
+        for (MapObject mo : mapObjects) {
+            try {
+                nm.sendItemInformation(mo.getCharacteristics());
             } catch (IOException e) {
                 e.printStackTrace();
             }

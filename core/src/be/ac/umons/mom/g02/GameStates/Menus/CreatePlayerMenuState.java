@@ -59,27 +59,27 @@ public class CreatePlayerMenuState extends MenuState {
     public void init() {
         super.init();
         TextBoxMenuItem nameMi = new TextBoxMenuItem(gim, gs, gs.getStringFromId("charName"));
+        TextBoxMenuItem levelMi = new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("charLevel"));
+        levelMi.getControl().setText("" + 1);
+        levelMi.getControl().setOnTextChanged(() -> {
+            if (levelMi.getControl().getText().equals(""))
+                return;
+            if (Integer.parseInt(levelMi.getControl().getText()) < 1)
+                levelMi.getControl().setText("" + 1);
+            if (Integer.parseInt(levelMi.getControl().getText()) > 40)
+                levelMi.getControl().setText("" + 40);
+        });
         ScrollListChooserMenuItem genderMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charGender"));
         ScrollListChooserMenuItem typeMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charType"));
         ScrollListChooserMenuItem difficultyMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("difficulty"));
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, gs.getStringFromId("newGame")),
                 nameMi,
+                levelMi,
                 genderMi,
                 typeMi,
                 difficultyMi,
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> {
-                    if (mustUseMultiplayer)
-                        SupervisorMultiPlayer.setPlayerOne(new People(nameMi.getControl().getText(), // Use getSupervisor just to set the instance !
-                                characterType, playerGender, difficulty));
-                    else
-                        Supervisor.getSupervisor().newParty(nameMi.getControl().getText(),
-                                characterType, playerGender, difficulty);
-                    Supervisor.setGraphic(gs);
-                    GameState g = gsm.setState(afterCreationState);
-                    if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
-                        ((LoadingState)g).setAfterLoadingState(afterLoadingState);
-                }),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> initGame(nameMi.getControl().getText(), levelMi.getControl().getText())),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState())
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
@@ -97,6 +97,23 @@ public class CreatePlayerMenuState extends MenuState {
         setScrollListProperties(difficultyMi, slil);
     }
 
+    public void initGame(String name, String level) {
+        if (mustUseMultiplayer)
+            SupervisorMultiPlayer.setPlayerOne(new People(name, // Use getSupervisor just to set the instance !
+                    characterType, playerGender, difficulty));
+        else
+            Supervisor.getSupervisor().newParty(name,
+                    characterType, playerGender, difficulty);
+
+        if (! level.equals(""))
+            for (int i = 0; i < Integer.parseInt(level); i++)
+                Supervisor.getPeople().upLevel();
+        Supervisor.setGraphic(gs);
+        GameState g = gsm.setState(afterCreationState);
+        if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
+            ((LoadingState)g).setAfterLoadingState(afterLoadingState);
+    }
+
     /**
      * Set the <code>ScrollListChooser</code>'s properties for this state.
      * @param mi The <code>MenuItem</code> containing the <code>ScrollListChooser</code>
@@ -104,7 +121,7 @@ public class CreatePlayerMenuState extends MenuState {
      */
     private void setScrollListProperties(ScrollListChooserMenuItem mi, List<ScrollListChooser.ScrollListItem> slil) {
         mi.getControl().setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
-        mi.getSize().y = (int)((slil.size() + 1) * (gs.getNormalFont().getLineHeight()) + topMargin);
+        mi.getSize().y = (int)((slil.size()) * (gs.getNormalFont().getLineHeight()) + topMargin);
     }
 
     /**

@@ -202,6 +202,7 @@ public class PlayingState extends GameState implements Observer {
         timeShower = new TimeShower(gs);
         notificationRappel = new NotificationRappel(gs);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
+        mapObjects = new ArrayList<>();
 
         if (MasterOfMonsGame.getGameToLoad() != null)
             loadOldGame();
@@ -260,7 +261,6 @@ public class PlayingState extends GameState implements Observer {
     public void initMap(String mapPath, int spawnX, int spawnY) {
         gmm.setMap(mapPath);
         Maps map = supervisor.getMaps(mapPath);
-        mapObjects = new ArrayList<>();
         pnjs = getPNJsOnMap(mapPath);
 
 //        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
@@ -334,11 +334,19 @@ public class PlayingState extends GameState implements Observer {
      * @param item The item
      * @param pos The position
      */
-    public void addItemToMap(Items item, Point pos) {
+    public void addItemToMap(Items item, Point pos, String map) {
         MapObject mo = new MapObject(gs, item);
+        mo.setMap(map);
         mo.setMapPos(new Point((pos.x - pos.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
                 mapHeight * tileHeight / 2 - (pos.x + pos.y) * tileHeight / 2));
         mapObjects.add(mo);
+    }
+    /**
+     * Add the given item to the list of items to draw.
+     * @param omi The item to add.
+     */
+    public void addItemToMap(MapObject.OnMapItem omi) {
+        mapObjects.add(new MapObject(gs, omi));
     }
 
     /**
@@ -351,7 +359,7 @@ public class PlayingState extends GameState implements Observer {
     }
 
     /**
-     * @return An array representing all the items that are drawn on this map
+     * @return An array representing all the items that are drawn on all maps
      */
     public MapObject.OnMapItem[] getItemsOnMap() {
         List<MapObject.OnMapItem> res = new ArrayList<>();
@@ -606,7 +614,8 @@ public class PlayingState extends GameState implements Observer {
         for (Character pnj : pnjs)
             pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
         for (MapObject mo : mapObjects)
-            mo.draw(sb, mo.getPosX() - (int)cam.position.x + + MasterOfMonsGame.WIDTH / 2, mo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
+            if (mo.getMap().equals(gmm.getActualMapName()))
+                mo.draw(sb, mo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, mo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
 
         sb.begin();
         if (gs.mustShowMapCoordinates()) {
@@ -616,7 +625,7 @@ public class PlayingState extends GameState implements Observer {
         sb.end();
 
         int inventoryShowerHeight = tileHeight * 2;
-        // Dessine le HUD.
+        // Draw the HUD
         agendaShower.draw(sb);
         timeShower.draw(sb, new Point((int)(MasterOfMonsGame.WIDTH - timeShower.getWidth()), (int)topMargin * 2 + inventoryShowerHeight),
                 new Point((int)(timeShower.getWidth()), (int)(gs.getSmallFont().getLineHeight() + 2 * topMargin)));
