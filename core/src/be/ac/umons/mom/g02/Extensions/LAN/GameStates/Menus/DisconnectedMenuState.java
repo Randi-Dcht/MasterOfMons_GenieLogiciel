@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
+import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.SaveMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
@@ -62,6 +63,11 @@ public class DisconnectedMenuState extends MenuState {
             nm.acceptConnection();
             nm.startBroadcastingMessage("Game begun");
             nm.setOnSecondPlayerDetected(null);
+            nm.setOnMagicNumberSent((magicNumber) -> {
+                OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+                ogds.setText(String.format(gs.getStringFromId("magicNumber"), magicNumber));
+                ogds.addAnswer("OK");
+            });
             nm.setOnConnected(() -> {
                 Save save = SupervisorLAN.getSupervisor().createSave();
                 try {
