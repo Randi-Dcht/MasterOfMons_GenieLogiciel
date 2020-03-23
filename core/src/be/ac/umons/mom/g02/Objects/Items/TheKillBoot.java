@@ -9,6 +9,7 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 public class TheKillBoot extends Items implements Guns
 {
 
+    private int ball = 30;
 
     /**
      * this constructor define the items
@@ -26,7 +27,8 @@ public class TheKillBoot extends Items implements Guns
     @Override
     public void used(People pp)
     {
-
+        super.used(pp);
+        ball--;
     }
 
     public int buy()
@@ -49,16 +51,17 @@ public class TheKillBoot extends Items implements Guns
     @Override
     public int addDamageGun()
     {
-        return 0;
+        return 3;
     }
 
     @Override
-    public void useGun() {
-
+    public void useGun()
+    {
     }
 
     @Override
-    public void setBall(int cmb) {
-
+    public void setBall(int cmb)
+    {
+        ball += cmb;
     }
 }

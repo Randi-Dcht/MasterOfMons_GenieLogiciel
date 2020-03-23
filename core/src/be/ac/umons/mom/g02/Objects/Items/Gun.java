@@ -57,7 +57,8 @@ public class Gun extends Items implements Guns
     }
 
     @Override
-    public void useGun() {
+    public void useGun()
+    {
 
     }
 }

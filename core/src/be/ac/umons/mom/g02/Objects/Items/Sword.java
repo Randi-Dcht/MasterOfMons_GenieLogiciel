@@ -34,7 +34,7 @@ public class Sword extends Items implements Guns//TODO epee
     @Override
     public int addDamageGun()
     {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -44,8 +44,5 @@ public class Sword extends Items implements Guns//TODO epee
     }
 
     @Override
-    public void setBall(int cmb)
-    {
-
-    }
+    public void setBall(int cmb){}
 }

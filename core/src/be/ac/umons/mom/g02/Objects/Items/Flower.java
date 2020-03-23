@@ -22,7 +22,8 @@ public class Flower extends Items
     @Override
     public void used(People pp)
     {
-
+        if (pp.getSoulMate() != null)
+        {}//TODO
     }
 
 
