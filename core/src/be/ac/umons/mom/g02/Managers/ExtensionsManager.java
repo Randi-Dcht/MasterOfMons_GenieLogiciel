@@ -307,6 +307,9 @@ public class ExtensionsManager {
         return filesToLoad;
     }
 
+    /**
+     * @return The extension to launch between all the activated one.
+     */
     public Extension getMainExtension() {
         return mainExtension;
     }

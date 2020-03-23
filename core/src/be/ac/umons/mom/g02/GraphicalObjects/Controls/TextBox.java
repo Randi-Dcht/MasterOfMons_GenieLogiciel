@@ -58,6 +58,8 @@ public class TextBox extends Control {
      */
     protected double timeGone = 0;
 
+    protected Runnable onTextChanged;
+
     /**
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
@@ -143,6 +145,8 @@ public class TextBox extends Control {
                         actualText = actualText.substring(0, selectedPosition) + c + actualText.substring(selectedPosition);
                     }
                     selectedPosition++;
+                    if (onTextChanged != null)
+                        onTextChanged.run();
                 }
             }
             if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed) && actualText.length() > 0) {
@@ -159,7 +163,8 @@ public class TextBox extends Control {
                     selectedPosition = actualText.length();
                 else if (selectedPosition < 0)
                     selectedPosition = 0;
-
+                if (onTextChanged != null)
+                    onTextChanged.run();
             }
         }
     }
@@ -182,6 +187,7 @@ public class TextBox extends Control {
      */
     public void setText(String text) {
         this.actualText = text;
+        selectedPosition = actualText.length();
     }
 
     /**
@@ -204,5 +210,9 @@ public class TextBox extends Control {
      */
     public void setAcceptOnlyHexadecimal(boolean acceptOnlyHexadecimal) {
         this.acceptOnlyHexadecimal = acceptOnlyHexadecimal;
+    }
+
+    public void setOnTextChanged(Runnable onTextChanged) {
+        this.onTextChanged = onTextChanged;
     }
 }
