@@ -79,22 +79,7 @@ public class CreatePlayerMenuState extends MenuState {
                 genderMi,
                 typeMi,
                 difficultyMi,
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> {
-                    if (mustUseMultiplayer)
-                        SupervisorMultiPlayer.setPlayerOne(new People(nameMi.getControl().getText(), // Use getSupervisor just to set the instance !
-                                characterType, playerGender, difficulty));
-                    else
-                        Supervisor.getSupervisor().newParty(nameMi.getControl().getText(),
-                                characterType, playerGender, difficulty);
-
-                    if (! levelMi.getControl().getText().equals(""))
-                        for (int i = 0; i < Integer.parseInt(levelMi.getControl().getText()); i++)
-                            Supervisor.getPeople().upLevel();
-                    Supervisor.setGraphic(gs);
-                    GameState g = gsm.setState(afterCreationState);
-                    if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
-                        ((LoadingState)g).setAfterLoadingState(afterLoadingState);
-                }),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> initGame(nameMi.getControl().getText(), levelMi.getControl().getText())),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState())
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
@@ -110,6 +95,23 @@ public class CreatePlayerMenuState extends MenuState {
         for (Difficulty d : Difficulty.values())
             slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(d.toString()), () -> difficulty = d, slil.isEmpty()));
         setScrollListProperties(difficultyMi, slil);
+    }
+
+    public void initGame(String name, String level) {
+        if (mustUseMultiplayer)
+            SupervisorMultiPlayer.setPlayerOne(new People(name, // Use getSupervisor just to set the instance !
+                    characterType, playerGender, difficulty));
+        else
+            Supervisor.getSupervisor().newParty(name,
+                    characterType, playerGender, difficulty);
+
+        if (! level.equals(""))
+            for (int i = 0; i < Integer.parseInt(level); i++)
+                Supervisor.getPeople().upLevel();
+        Supervisor.setGraphic(gs);
+        GameState g = gsm.setState(afterCreationState);
+        if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
+            ((LoadingState)g).setAfterLoadingState(afterLoadingState);
     }
 
     /**
