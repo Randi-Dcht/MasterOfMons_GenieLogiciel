@@ -59,7 +59,7 @@ public abstract class SupervisorMultiPlayer extends Supervisor
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
         super.newParty(namePlayer, type, gender, difficulty);
-        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
+        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time,this);
     }
 
 

@@ -65,11 +65,11 @@ public class Regulator implements Observer
      * @param people is the player of the game
      * @param time   is the instance of the calculus time game
      */
-    public Regulator(People people, TimeGame time)
+    public Regulator(People people, TimeGame time,Supervisor manager)
     {
         this.player = people;
         this.time   = time;
-        this.manager= Supervisor.getSupervisor();
+        this.manager= manager;
         Supervisor.getEvent().add(this,Events.ChangeHour,Events.PlaceInMons,Events.MeetOther,Events.EntryPlace,Events.ChangeQuest,Events.UseItems,Events.LowSomething);
         maps = new ArrayList<>();
         maps.addAll(Arrays.asList(Maps.values()));
@@ -320,99 +320,123 @@ public class Regulator implements Observer
 
     }
 
+
     /**
      * @return If we must display the information about the current quest
      */
-    public boolean mustChangeQuest() {
+    public boolean mustChangeQuest()
+    {
         return chgQuest;
     }
+
 
     /**
      * @param chgQuest If we must display the information about the current quest
      */
-    public void setChangeQuest(boolean chgQuest) {
+    public void setChangeQuest(boolean chgQuest)
+    {
         this.chgQuest = chgQuest;
     }
+
 
     /**
      * @return If the is the first time the player go to a course
      */
-    public boolean isTheFirstCourse() {
+    public boolean isTheFirstCourse()
+    {
         return firstCourse;
     }
 
     /**
      * @param firstCourse If the is the first time the player go to a course
      */
-    public void setFirstCourse(boolean firstCourse) {
+    public void setFirstCourse(boolean firstCourse)
+    {
         this.firstCourse = firstCourse;
     }
 
     /**
      * @return If this a the first time the user start the game
      */
-    public boolean isTheFirstStart() {
+    public boolean isTheFirstStart()
+    {
         return firstStart;
     }
+
 
     /**
      * @param firstStart If this a the first time the user start the game
      */
-    public void setFirstStart(boolean firstStart) {
+    public void setFirstStart(boolean firstStart)
+    {
         this.firstStart = firstStart;
     }
+
 
     /**
      * @return If this is the first time the user study
      */
-    public boolean isTheFirstStudy() {
+    public boolean isTheFirstStudy()
+    {
         return firstStudy;
     }
+
 
     /**
      * @param firstStudy If this is the first time the user study
      */
-    public void setFirstStudy(boolean firstStudy) {
+    public void setFirstStudy(boolean firstStudy)
+    {
         this.firstStudy = firstStudy;
     }
 
+
     /**
-     * @return If we must show informations about the energizing item
+     * @return If we must show information about the energizing item
      */
-    public boolean mustShowEnergizingInformation() {
+    public boolean mustShowEnergizingInformation()
+    {
         return informEnergizing;
     }
 
+
     /**
-     * @param informEnergizing If we must show informations about the energizing item
+     * @param informEnergizing If we must show information about the energizing item
      */
-    public void setShowEnergizingInformation(boolean informEnergizing) {
+    public void setShowEnergizingInformation(boolean informEnergizing)
+    {
         this.informEnergizing = informEnergizing;
     }
 
+
     /**
-     * @return If we must display informations about places or not
+     * @return If we must display information about places or not
      */
-    public boolean mustDisplayPlaceInformations() {
+    public boolean mustDisplayPlaceInformations()
+    {
         return informPlace;
     }
+
 
     /**
      * @param informPlace If we must display informations about places or not
      */
-    public void setDisplayPlaceInformations(boolean informPlace) {
+    public void setDisplayPlaceInformations(boolean informPlace)
+    {
         this.informPlace = informPlace;
     }
 
+
     /**
-     * @return The maps where we need to display informations about them.
+     * @return The maps where we need to display information about them.
      */
-    public ArrayList<Maps> getRemainingMaps() {
+    public ArrayList<Maps> getRemainingMaps()
+    {
         return maps;
     }
 
     /**
-     * @param maps The maps where we need to display informations about them.
+     * @param maps The maps where we need to display information about them.
      */
     public void setRemainingMaps(ArrayList<Maps> maps) {
         this.maps = maps;

@@ -52,7 +52,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
     public void newParty(MasterQuest firstQuest, People playerOne, People playerTwo) {
         placePosition = new MyPlacePosition();
         time = new TimeGame(new Date(1,1,2020,9,0));
-        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time);
+        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time,this);
         playerOne.newQuest(firstQuest);
         playerTwo.newQuest(firstQuest, false);
         refreshQuest();
@@ -109,7 +109,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         playerTwo = save.getSecondPlayer();
         playerTwo.setMaps(Supervisor.getSupervisor().getMaps(save.getSecondPlayerMap()));
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
-        regulator= new Regulator(playerOne,time);
+        regulator= new Regulator(playerOne,time,this);
         regulator.setFirstStart(false);
         regulator.setChangeQuest(false);
         regulator.setDisplayPlaceInformations(save.mustDisplayPlaceInformations());

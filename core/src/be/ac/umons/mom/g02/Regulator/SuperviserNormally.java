@@ -79,7 +79,7 @@ public class SuperviserNormally extends Supervisor
         playerOne.newQuest(mQ);
         save.setLogic(playerOne);
         refreshQuest();
-        regulator = new Regulator(playerOne,time);
+        regulator = new Regulator(playerOne,time,this);
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
     }
 
@@ -100,7 +100,7 @@ public class SuperviserNormally extends Supervisor
             if (listCourse == null)
                 listCourse = new ArrayList<>();
             Supervisor.graphic = graphic;
-            regulator= new Regulator(playerOne,time);
+            regulator= new Regulator(playerOne,time,this);
             refreshQuest();
             checkPlanning();
             playGraphic  = play;
