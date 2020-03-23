@@ -19,6 +19,7 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -200,6 +201,23 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         }
     }
 
+
+    /**
+     * This method allows to give the item to the mobile
+     * @param min  is the minimum of the item for the mobile
+     * @param max  is the maximum of the item for the mobile
+     * @param list is a list of the mobile to give the item
+     */
+    protected void addItemToMobile(int min, int max,Mobile ... list)//TODO see
+    {
+        if (listItems == null)
+            getListItems();
+        for (Mobile mb : list)
+        {
+            for (int i = min; i <= max;i++)
+                mb.addObject(listItems.get(new Random().nextInt(listItems.size())));
+        }
+    }
 
 
     /**
