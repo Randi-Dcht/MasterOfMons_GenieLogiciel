@@ -32,7 +32,7 @@ public class DebugGetObject extends MenuState {
 
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("debugGetObject")));
-        for (Items it : SuperviserNormally.getSupervisor().getAllItems()) {
+        for (Items it : Supervisor.getSupervisor().getAllItems()) {
             menuItems.add(new ButtonMenuItem(gim, gs, gs.getStringFromId(it.getIdItems()), () -> {
                 Supervisor.getPeople().pushObject(it);
                 gsm.removeFirstState();

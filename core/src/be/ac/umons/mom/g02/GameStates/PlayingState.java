@@ -699,16 +699,20 @@ public class PlayingState extends GameState implements Observer {
 
     /**
      * Drop the selected item from the inventory on the map.
+     * @return The dropped item
      */
-    public void dropSelectedObject() {
+    public MapObject dropSelectedObject() {
         InventoryItem dropped = inventoryShower.dropSelectedItem();
         if (dropped != null) {
             MapObject mo = new MapObject(gs, dropped.getItem());
             mo.setMapPos(new Point(player.getPosX(), player.getPosY()));
+            mo.setMap(gmm.getActualMapName());
             mapObjects.add(mo);
             supervisor.getPeople().removeObject(dropped.getItem());
             dropped.getItem().setMaps(supervisor.getMaps(gmm.getActualMapName()));
+            return mo;
         }
+        return null;
     }
 
     /**
