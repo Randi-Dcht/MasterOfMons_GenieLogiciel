@@ -59,12 +59,23 @@ public class CreatePlayerMenuState extends MenuState {
     public void init() {
         super.init();
         TextBoxMenuItem nameMi = new TextBoxMenuItem(gim, gs, gs.getStringFromId("charName"));
+        TextBoxMenuItem levelMi = new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("charLevel"));
+        levelMi.getControl().setText("" + 1);
+        levelMi.getControl().setOnTextChanged(() -> {
+            if (levelMi.getControl().getText().equals(""))
+                return;
+            if (Integer.parseInt(levelMi.getControl().getText()) < 1)
+                levelMi.getControl().setText("" + 1);
+            if (Integer.parseInt(levelMi.getControl().getText()) > 40)
+                levelMi.getControl().setText("" + 40);
+        });
         ScrollListChooserMenuItem genderMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charGender"));
         ScrollListChooserMenuItem typeMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charType"));
         ScrollListChooserMenuItem difficultyMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("difficulty"));
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, gs.getStringFromId("newGame")),
                 nameMi,
+                levelMi,
                 genderMi,
                 typeMi,
                 difficultyMi,
@@ -75,6 +86,10 @@ public class CreatePlayerMenuState extends MenuState {
                     else
                         Supervisor.getSupervisor().newParty(nameMi.getControl().getText(),
                                 characterType, playerGender, difficulty);
+
+                    if (! levelMi.getControl().getText().equals(""))
+                        for (int i = 0; i < Integer.parseInt(levelMi.getControl().getText()); i++)
+                            Supervisor.getPeople().upLevel();
                     Supervisor.setGraphic(gs);
                     GameState g = gsm.setState(afterCreationState);
                     if (afterCreationState.equals(LoadingState.class) && afterLoadingState != null)
@@ -104,7 +119,7 @@ public class CreatePlayerMenuState extends MenuState {
      */
     private void setScrollListProperties(ScrollListChooserMenuItem mi, List<ScrollListChooser.ScrollListItem> slil) {
         mi.getControl().setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
-        mi.getSize().y = (int)((slil.size() + 1) * (gs.getNormalFont().getLineHeight()) + topMargin);
+        mi.getSize().y = (int)((slil.size()) * (gs.getNormalFont().getLineHeight()) + topMargin);
     }
 
     /**
