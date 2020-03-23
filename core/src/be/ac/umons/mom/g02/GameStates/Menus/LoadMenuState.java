@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
-import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
@@ -12,7 +11,7 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
 import java.io.File;
 
-public class LoadMenuState extends ChooseFolderMenuState {
+public class LoadMenuState extends ChoosePathMenuState {
 
     /**
      * @param gsm The game's state manager

@@ -16,7 +16,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SaveMenuState extends ChooseFolderMenuState {
+public class SaveMenuState extends ChoosePathMenuState {
 
     /**
      * The <code>MenuItem</code> showing the name.

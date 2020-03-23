@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ChooseFolderMenuState extends MenuState {
+public abstract class ChoosePathMenuState extends MenuState {
 
     protected final String DEFAULT_PATH="Saves";
 
@@ -34,7 +34,7 @@ public abstract class ChooseFolderMenuState extends MenuState {
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public ChooseFolderMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
+    public ChoosePathMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
         super(gsm, gim, gs);
     }
 
