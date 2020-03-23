@@ -23,7 +23,9 @@ public class Flower extends Items
     public void used(People pp)
     {
         if (pp.getSoulMate() != null)
-        {}//TODO
+        {
+            pp.getSoulMate().giveItem(this);
+        }
     }
 
 
