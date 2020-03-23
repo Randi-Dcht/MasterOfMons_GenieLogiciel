@@ -1,38 +1,46 @@
 package be.ac.umons.mom.g02.Objects.Items;
 
-import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.FrameTime;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
 
-/***/
+
+/**
+ * This class define the drink of energizing for the player
+ */
 public class Energizing extends Items
 {
-    private double obsolete = 100;
-    private double reVisible = 0;//TODO for all item
+    /**
+     * If the object is used
+     */
     private boolean useItem = true;
 
 
-    /***/
+    /**
+     * This constructor define the item of drink energizing
+     */
     public Energizing()
     {
         super("Drink");
     }
 
 
-    /***/
+    /**
+     * This method is called when the object is used by player
+     * @param pp is the player who uses the item
+     */
     @Override
     public void used(People pp)
     {
         super.used(pp);
-        pp.addEnergy(25);//TODO check
+        pp.addEnergy(20);
         visibly();
         useItem = false;
     }
 
 
-    /***/
+    /**
+     * This method return if the object can be use in the game
+     * @return a boolean if can to use
+     */
     @Override
     public boolean getObsolete()
     {

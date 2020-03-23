@@ -2,18 +2,26 @@ package be.ac.umons.mom.g02.Objects.Items;
 
 import be.ac.umons.mom.g02.Objects.Characters.People;
 
+/**
+ * This class define the pass to the level for the player
+ */
 public class PassLevel extends Items
 {
     private boolean use = false;
 
-    /***/
+    /**
+     * This constructor define the item of pass the level
+     */
     public PassLevel()
     {
         super("PassLevel");
     }
 
 
-    /***/
+    /**
+     * This method is called when the object is used by player
+     * @param pp is the player who uses the item
+     */
     @Override
     public void used(People pp)
     {
@@ -21,6 +29,7 @@ public class PassLevel extends Items
         pp.upLevel();
         use = false;
     }
+
 
     /**
      * This method returns the price of this item
@@ -32,7 +41,10 @@ public class PassLevel extends Items
     }
 
 
-    /***/
+    /**
+     * This method return if the object can be use in the game
+     * @return a boolean if can to use
+     */
     @Override
     public boolean getObsolete()
     {

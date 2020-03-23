@@ -32,7 +32,7 @@ public class Gun extends Items implements Guns
      * This method allows to recharge the gun
      * @param ball is the number of the recharge
      */
-    @Override
+    @Override//TODO 7
     public void setBall(int ball)
     {
         this.ball += ball;
@@ -56,9 +56,10 @@ public class Gun extends Items implements Guns
         return 2;
     }
 
-    @Override
+
+    @Override//TODO reflex on this if util with used(pp)
     public void useGun()
     {
-
+        ball--;
     }
 }

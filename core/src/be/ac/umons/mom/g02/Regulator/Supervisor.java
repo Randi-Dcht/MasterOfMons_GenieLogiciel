@@ -49,6 +49,7 @@ import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -508,6 +509,16 @@ public  abstract class Supervisor implements Observer
 
         if (mb.equals(memoryMobile))
             memoryMobile = null;
+    }
+
+
+    /**
+     * This method allows to add the object of frameTime in the list to receive the time
+     * @param refresh is a list of the frameTime
+     */
+    public void addRefresh(FrameTime ... refresh)
+    {
+        listUpdate.addAll(Arrays.asList(refresh));
     }
 
 

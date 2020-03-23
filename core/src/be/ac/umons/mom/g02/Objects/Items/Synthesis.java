@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 /**
  * Cet objet permet de monter de 1 niveau
@@ -24,6 +25,7 @@ public class Synthesis extends Items implements FrameTime
         super.used(pp);
         pp.upLevel();
         visibly();
+        Supervisor.getSupervisor().addRefresh(this);
     }
 
 
