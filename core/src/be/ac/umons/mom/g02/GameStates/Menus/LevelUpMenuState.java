@@ -61,26 +61,42 @@ public class LevelUpMenuState extends MenuState {
         menuItemList.add(pointsToUseMi = new TextMenuItem(gs, String.format(gs.getStringFromId("youHavePoints"), pointToUse)));
         MenuItem mi;
         for (Characteristics ch : Characteristics.values()) {
-            menuItemList.add(mi = new ButtonMenuItem(gim, gs, "---", () -> removePoint(ch)));
-            mi.getSize().x = -1;
-            menuItemList.add(mi = new ButtonMenuItem(gim, gs,"+++", () -> addPoint(ch), false));
-            mi.getSize().x = -1;
             menuItemList.add(mi = new NumberTextBoxMenuItem(gim, gs, String.format(gs.getStringFromId(ch.toString()) + " : %d + ", getCharacteristics(ch))));
             mi.getSize().x = -2;
             NumberTextBoxMenuItem ntmi = (NumberTextBoxMenuItem)mi;
             textBoxCharacteristicsMap.put(ntmi, ch);
             ntmi.getControl().setText("" + pointsAttributed[ch.ordinal()]);
             ntmi.getControl().setOnTextChanged(() -> onTextChanged(ntmi));
+
+            menuItemList.add(mi = new ButtonMenuItem(gim, gs,"---", () -> removeAllPoints(ch)));
+            mi.getSize().x = -1;
+            menuItemList.add(mi = new ButtonMenuItem(gim, gs, "-", () -> removePoint(ch), false));
+            mi.getSize().x = -1;
+            menuItemList.add(mi = new ButtonMenuItem(gim, gs,"+", () -> addPoint(ch), false));
+            mi.getSize().x = -1;
+            menuItemList.add(mi = new ButtonMenuItem(gim, gs,"+++", () -> addAllRemainingPoints(ch), false));
+            mi.getSize().x = -1;
         }
         menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("confirm"), this::confirm));
         setMenuItems(menuItemList.toArray(new MenuItem[0]), false);
+    }
+
+    protected void addAllRemainingPoints(Characteristics ch) {
+        pointsAttributed[ch.ordinal()] += pointToUse;
+        pointToUse = 0;
+        refresh();
+    }
+    protected void removeAllPoints(Characteristics ch) {
+        pointToUse += pointsAttributed[ch.ordinal()];
+        pointsAttributed[ch.ordinal()] = 0;
+        refresh();
     }
 
     /**
      * Add a point to the given characteristic.
      * @param ch The characteristic to which a point must be added.
      */
-    public void addPoint(Characteristics ch) {
+    protected void addPoint(Characteristics ch) {
         if (pointToUse > 0) {
             pointToUse--;
             pointsAttributed[ch.ordinal()]++;
@@ -92,7 +108,7 @@ public class LevelUpMenuState extends MenuState {
      * Remove a point to the given characteristic.
      * @param ch The characteristic to which a point must be removed.
      */
-    public void removePoint(Characteristics ch) {
+    protected void removePoint(Characteristics ch) {
         if (pointsAttributed[ch.ordinal()] > 0){
             pointToUse++;
             pointsAttributed[ch.ordinal()]--;
