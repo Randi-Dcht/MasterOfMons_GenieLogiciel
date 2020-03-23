@@ -494,6 +494,21 @@ public  abstract class Supervisor implements Observer
     }
 
 
+    public void deadMobile(Mobile mb)
+    {
+        listMobile.get(mb.getMaps()).remove(mb);
+        deadMobile.add(mb);
+        listUpdate.remove(mb);
+        playerOne.winExperience(mb);
+
+        for (Items it : mb.getInventory())
+            playerOne.pushObject(it);//TODO check !
+
+        if (mb.equals(memoryMobile))
+            memoryMobile = null;
+    }
+
+
     /**
      * This method allows to receive the notification of the other class
      * @param notify is a notification
@@ -502,15 +517,7 @@ public  abstract class Supervisor implements Observer
     public void update(Notification notify)
     {
         if (notify.getEvents().equals(Events.Dead) && ((Character)notify.getBuffer()).getType().equals(Character.TypePlayer.Computer))
-        {
-            Mobile mb = (Mobile)notify.getBuffer();
-            listMobile.get(mb.getMaps()).remove(mb);
-            deadMobile.add(mb);
-            listUpdate.remove(mb);
-            playerOne.winExperience(mb);
-            if (mb.equals(memoryMobile))
-                memoryMobile = null;
-        }
+            deadMobile((Mobile)notify.getBuffer());
 
         if (notify.getEvents().equals(Events.Dead) && ((Dead)notify).getBuffer().getType().equals(Character.TypePlayer.Human))
             refreshAndDelete();
