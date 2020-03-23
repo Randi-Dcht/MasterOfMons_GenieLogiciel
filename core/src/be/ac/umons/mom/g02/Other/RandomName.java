@@ -22,7 +22,7 @@ public class RandomName
     /**
      * This is tha path to read the file with name
      */
-    private static final String pathName= "NamePnj/Name.LambdaPNJ.txt";
+    private static final String pathName= "ResourceObjects/Name.LambdaPNJ.txt";
 
 
     /**

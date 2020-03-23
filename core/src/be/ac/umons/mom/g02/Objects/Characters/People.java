@@ -474,7 +474,6 @@ public class People extends Character implements Serializable, Observer, FrameTi
     @Override
     public void setMaps(Maps maps)
     {
-        //state = maps.getStart().getState();
         setPlaceMaps(maps.getStart());
         super.setMaps(maps);
     }

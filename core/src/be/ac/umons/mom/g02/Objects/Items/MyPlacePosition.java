@@ -19,7 +19,7 @@ public class MyPlacePosition
     /***/
     private HashMap<Maps, ArrayList<Point>> listPoint;
     /***/
-    private static final String PATH = "NamePnj/PositionOfItem";
+    private static final String PATH = "ResourceObjects/PositionRandomOfItem";
     /***/
     private Maps actually;
 
