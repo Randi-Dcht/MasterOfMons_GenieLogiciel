@@ -64,4 +64,14 @@ public class TheKillBoot extends Items implements Guns
     {
         ball += cmb;
     }
+
+
+    /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public String idOfPlace()
+    {
+        return "OTHER";//TODO
+    }
 }

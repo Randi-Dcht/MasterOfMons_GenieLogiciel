@@ -40,4 +40,14 @@ public class Synthesis extends Items implements FrameTime
         if(obsolete <= 0)
             visibly();
     }
+
+
+    /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public String idOfPlace()
+    {
+        return "OTHER";//TODO
+    }
 }

@@ -29,4 +29,14 @@ public class Sportswear extends Items {
     // Il ne me faut pas cette methode car ça reste tout le temps vsible et ça ne casse pas
 
 
+    /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public String idOfPlace()
+    {
+        return "OTHER";//TODO
+    }
+
+
 }

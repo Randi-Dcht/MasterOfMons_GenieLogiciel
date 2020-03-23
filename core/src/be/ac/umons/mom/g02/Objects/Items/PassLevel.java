@@ -50,4 +50,14 @@ public class PassLevel extends Items
     {
         return !use;
     }
+
+
+    /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public String idOfPlace()
+    {
+        return "OTHER";//TODO
+    }
 }

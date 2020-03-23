@@ -40,6 +40,16 @@ public class Gun extends Items implements Guns
 
 
     /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public String idOfPlace()
+    {
+        return "OTHER";//TODO
+    }
+
+
+    /**
      * This method allows to said if the items is obsolete
      * @return number
      */

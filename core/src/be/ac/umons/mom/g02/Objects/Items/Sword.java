@@ -45,4 +45,14 @@ public class Sword extends Items implements Guns//TODO epee
 
     @Override
     public void setBall(int cmb){}
+
+
+    /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public String idOfPlace()
+    {
+        return "OTHER";//TODO
+    }
 }

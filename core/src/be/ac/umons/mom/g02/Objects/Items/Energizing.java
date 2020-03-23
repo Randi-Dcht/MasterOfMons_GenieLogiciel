@@ -38,6 +38,16 @@ public class Energizing extends Items
 
 
     /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public String idOfPlace()
+    {
+        return "OTHER";//TODO
+    }
+
+
+    /**
      * This method return if the object can be use in the game
      * @return a boolean if can to use
      */

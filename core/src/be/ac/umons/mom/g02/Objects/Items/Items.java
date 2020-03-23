@@ -75,6 +75,13 @@ public abstract class Items implements Serializable
 
 
     /**
+     * This method returns the id to place the Item on the map
+     * @return id of place
+     */
+    public abstract String idOfPlace();
+
+
+    /**
      * This method returns the maps of this items
      * @return the maps of the items
      */
