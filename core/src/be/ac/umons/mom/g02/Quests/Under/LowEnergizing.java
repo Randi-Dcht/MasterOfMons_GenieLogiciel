@@ -19,6 +19,8 @@ public class LowEnergizing extends UnderQuest//TODO new to implement
      * This list memorise the old victim of the player
      */
     private ArrayList<Mobile> oldVictim = new ArrayList<>();
+    /***/
+    private boolean low = true;
 
 
     /**
@@ -51,12 +53,15 @@ public class LowEnergizing extends UnderQuest//TODO new to implement
      * This method checks if the player energizing is under ten percents
      * @param what is the type of the low
      */
-    private void analyseLow(LowSomething.TypeLow what)
+    private void analyseLow(LowSomething.TypeLow what)//TODO up energy
     {
         if (what.equals(LowSomething.TypeLow.Energy))
         {
-            if (people.getEnergy() <= 10)
-                addProgress(2);
+            if (people.getEnergy() <= 10 && low)
+            {
+                addProgress(percentMax*0.3);
+                low = false;
+            }
         }
     }
 
@@ -69,7 +74,7 @@ public class LowEnergizing extends UnderQuest//TODO new to implement
     {
         if (!oldVictim.contains(victim))
         {
-            addProgress(0.1);
+            addProgress(0.4);
             oldVictim.add(victim);
         }
     }

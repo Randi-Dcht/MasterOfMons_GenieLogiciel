@@ -23,6 +23,8 @@ public class MeetManyPeople extends UnderQuest
      * This is a list with the all character already meet on the all maps
      */
     private ArrayList<Mobile> myList = new ArrayList<>();
+    /***/
+    private boolean memoryMobile = false;
 
 
     /**
@@ -59,10 +61,12 @@ public class MeetManyPeople extends UnderQuest
      */
     private void meetPNJ(Mobile mobile)
     {
+        memoryMobile = false;
         if (!myList.contains(mobile))
         {
             myList.add(mobile);
             addProgress(0.5);
+            memoryMobile = true;
         }
     }
 
@@ -73,7 +77,7 @@ public class MeetManyPeople extends UnderQuest
      */
     private void goToSpeak(String answer)
     {
-        if (answer.equals("Hello"))
+        if ((answer.equals("Hello")||answer.equals("HelloYou")) && memoryMobile)
             addProgress(2);
     }
 
@@ -84,7 +88,7 @@ public class MeetManyPeople extends UnderQuest
      */
     private void helpByPhone(Items items)
     {
-        if (items.getClass().equals(Phone.class) /*&& items.getObsolete() != 0*/)
+        if (items.getClass().equals(Phone.class) && items.getObsolete())
             addProgress(2);
     }
 

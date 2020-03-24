@@ -27,7 +27,7 @@ public class SuccessfulYear extends MasterQuest
     /**
      * This is the goals of this Quest
      */
-    final UnderQuest[] underQuest = {new HelpMe(this,34,people),new FreeTimeMons(this,23,people),new BattleForPlace(this,20,people), new SuccesfulYear(this,23,people)};
+    final UnderQuest[] underQuest = {new HelpMe(this,24,people),new FreeTimeMons(this,23,people),new BattleForPlace(this,30,people),new FollowLesson(this,23,people)};
 
 
     /**

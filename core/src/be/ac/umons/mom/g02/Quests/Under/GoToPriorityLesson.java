@@ -7,7 +7,7 @@ import be.ac.umons.mom.g02.Quests.Quest;
 
 /**
  * This class define the goals when the people go to the priority lesson of this years
- * @author Umons_Group_2_ComputerScience_RandyDauchot
+ * @author Umons_Group_2_ComputerScience
  */
 public class GoToPriorityLesson extends UnderQuest
     {
