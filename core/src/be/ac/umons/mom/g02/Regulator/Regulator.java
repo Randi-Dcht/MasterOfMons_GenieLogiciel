@@ -205,7 +205,7 @@ public class Regulator implements Observer
      */
     private void soulMateMeet(SaoulMatePNJ pnj)
     {
-        System.out.println("oh il y a une chance que je lui face l'*** à " + pnj );
+        System.out.println("oh il y a une chance que je lui face l'*** à " + pnj );  // TODO
     }
 
 

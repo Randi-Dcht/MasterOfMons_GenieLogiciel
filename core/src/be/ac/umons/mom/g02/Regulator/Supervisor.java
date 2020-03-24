@@ -11,12 +11,7 @@ import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Events.Notifications.Dead;
-import be.ac.umons.mom.g02.Events.Notifications.Dialog;
-import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
-import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
 import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
@@ -215,6 +210,10 @@ public  abstract class Supervisor implements Observer
      * Boolean representing if the items must be added to the map.
      */
     protected boolean mustPlaceItem = true;
+    /**
+     * This the actual variable of the Id on the maps
+     */
+    protected String actualID;
 
 
     /***/
@@ -292,6 +291,23 @@ public  abstract class Supervisor implements Observer
 
     /***/
     public abstract void analyseIdMap(String id)throws Exception;
+
+    protected void analyseNormalGameIdMap(String id) throws Exception {
+        if (!id.equals(actualID))
+        {
+            actualID = id;
+            String[] word = id.split("_");
+            if (word[0].equals("Room") && word.length >= 3)
+                regulator.placeInOut(word[2],word[1]);
+            else if (word[0].equals("Info") && word.length >= 2)
+            {
+                regulator.push(word[1]);
+                event.notify(new OtherInformation(word[1]));
+            }
+            else
+                throw new Exception();
+        }
+    }
 
 
     /***/

@@ -230,6 +230,8 @@ public class NetworkManager {
      * What to do when the second player send a date object
      */
     protected DateRunnable onDateDetected;
+
+    protected IntRunnable onTimeSpeedReceived;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -773,6 +775,10 @@ public class NetworkManager {
         sendOnUDP(String.format("TIME#%d#%d#%d#%d#%d", d.getMin(), d.getHour(), d.getDay(), d.getMonth(), d.getYear()));
     }
 
+    public void sendTimeSpeed(int speed) {
+        sendOnTCP(String.format("TS#%d", speed));
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -969,7 +975,7 @@ public class NetworkManager {
                     e.printStackTrace();
                 }
                 break;
-            case "TIME": //  sendOnUDP(String.format("TIME#%d#%d#%d#%d#%d", d.getMin(), d.getHour(), d.getDay(), d.getMonth(), d.getYear()));
+            case "TIME":
                 try {
                     Date d = new Date(Integer.parseInt(tab[3]),
                             Integer.parseInt(tab[4]),
@@ -980,6 +986,15 @@ public class NetworkManager {
                         Gdx.app.postRunnable(() -> onDateDetected.run(d));
                 } catch (NumberFormatException e) {
                     Gdx.app.error("NetworkManager", "There was an error parsing the time ! (ignoring it)", e);
+                }
+                break;
+            case "TS": // Time Speed
+                try {
+                    int speed = Integer.parseInt(tab[1].trim());
+                    if (onTimeSpeedReceived != null)
+                        Gdx.app.postRunnable(() -> onTimeSpeedReceived.run(speed));
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Unable to parse the time' speed ! (ignoring message)", e);
                 }
                 break;
         }
@@ -1354,6 +1369,10 @@ public class NetworkManager {
 
     public void setOnItemPickUp(OnMapItemRunnable onItemPickUp) {
         this.onItemPickUp = onItemPickUp;
+    }
+
+    public void setOnTimeSpeedReceived(IntRunnable onTimeSpeedReceived) {
+        this.onTimeSpeedReceived = onTimeSpeedReceived;
     }
 
     /**

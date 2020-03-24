@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Regulator;
 
+import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
@@ -33,7 +34,6 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         return (SupervisorLAN) instance;
     }
 
-
     protected SupervisorLAN() {
         super();
     }
@@ -52,7 +52,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
     public void newParty(MasterQuest firstQuest, People playerOne, People playerTwo) {
         placePosition = new PositionOnMaps();
         time = new TimeGame(new Date(1,1,2020,9,0));
-        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time,this);
+        regulator = new RegulatorLAN(playerOne, playerTwo, time,this);
         playerOne.newQuest(firstQuest);
         playerTwo.newQuest(firstQuest, false);
         refreshQuest();
@@ -109,7 +109,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         playerTwo = save.getSecondPlayer();
         playerTwo.setMaps(Supervisor.getSupervisor().getMaps(save.getSecondPlayerMap()));
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
-        regulator= new Regulator(playerOne,time,this);
+        regulator = new RegulatorLAN(playerOne, playerTwo, time,this);
         regulator.setFirstStart(false);
         regulator.setChangeQuest(false);
         regulator.setDisplayPlaceInformations(save.mustDisplayPlaceInformations());
@@ -132,4 +132,12 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         play.setSecondPlayerPosition(save.getSecondPlayerPosition());
         play.addItemsToMap(save.getItemPosition());
     }
+
+    @Override
+    public void analyseIdMap(String id) throws Exception {
+        super.analyseIdMap(id);
+        analyseNormalGameIdMap(id);
+    }
+
+
 }
