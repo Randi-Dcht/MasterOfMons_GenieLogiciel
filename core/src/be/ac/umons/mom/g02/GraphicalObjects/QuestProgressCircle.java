@@ -97,7 +97,7 @@ public class QuestProgressCircle {
         else if (quest.isActive() || degrees != 0)
             sr.setColor(ACTIVATED_QUEST_CIRCLE_COLOR);
 
-        if (quest.isActive() && quest.getProgress() == 0) {
+        if (quest.isActive() && degrees == 0) {
             sr.set(ShapeRenderer.ShapeType.Line); // Ce n'est pas dérangeant qu'il s'éxécute en dernier comme le end est appelé juste après.
             if (isBeingAnimated)
                 sr.arc(x, y, radius, 0, degrees); // Evite une ligne en plein milieu de tout !!!
