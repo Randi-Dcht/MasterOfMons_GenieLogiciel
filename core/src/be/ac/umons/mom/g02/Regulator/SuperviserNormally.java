@@ -72,6 +72,7 @@ public class SuperviserNormally extends Supervisor
         refreshQuest();
         regulator = new Regulator(playerOne,time,this);
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
+        checkPlanning();
     }
 
 
