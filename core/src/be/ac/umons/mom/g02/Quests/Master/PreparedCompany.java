@@ -76,11 +76,8 @@ public class PreparedCompany extends MasterQuest
             listItems.add(gun);
             listItems.add(new PaperHelp());
         }
-        Items synthesis=new Synthesis();
         Items sport=new Sportswear();
         sport.setMaps(type[new Random().nextInt(type.length)]);
-        synthesis.setMaps(type[new Random().nextInt(type.length)]);
-        listItems.add(synthesis);
         listItems.add(sport);
     }
 
