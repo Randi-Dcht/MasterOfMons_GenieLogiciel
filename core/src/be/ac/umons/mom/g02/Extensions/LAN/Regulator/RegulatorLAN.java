@@ -4,13 +4,18 @@ import be.ac.umons.mom.g02.Enums.Places;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
-public class RegulatorLAN extends RegulatorMultiPlayer {
+public class RegulatorLAN extends RegulatorMultiPlayer { // TODO Same agenda
+
+    protected boolean secondPlayerInCourseRoom;
+
+    protected Course currentCourse;
 
     NetworkManager nm;
 
@@ -27,6 +32,12 @@ public class RegulatorLAN extends RegulatorMultiPlayer {
         try {
             nm = NetworkManager.getInstance();
             nm.setOnTimeSpeedReceived((speed) -> TimeGame.FASTER = speed);
+            nm.setOnPlayerInCourseRoomReceived((b) -> {
+                secondPlayerInCourseRoom = b;
+                if (b)
+                    timeOfDay(player.getPlace());
+            });
+            nm.setOnPlayerWentToCourse(() -> currentCourse.goCourse());
         } catch (SocketException e) {
             Gdx.app.error("RegulatorLAN", "Unable to get the instance of NetworkManager", e);
         }
@@ -34,7 +45,26 @@ public class RegulatorLAN extends RegulatorMultiPlayer {
 
     @Override
     public void timeOfDay(Places place) {
+
+        if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom))) {
+            if (!secondPlayerInCourseRoom)
+                nm.sendPlayerInCourseRoom(true);
+            currentCourse = manager.getActualCourse();
+        } else
+            nm.sendPlayerInCourseRoom(false);
+
         super.timeOfDay(place);
         nm.sendTimeSpeed(TimeGame.FASTER);
+    }
+
+    @Override
+    public boolean advanceTime() {
+        return super.advanceTime() && secondPlayerInCourseRoom;
+    }
+
+    @Override
+    protected void goToCourse() {
+        super.goToCourse();
+        nm.sendPlayerWentToCourse();
     }
 }

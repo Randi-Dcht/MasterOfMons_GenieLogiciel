@@ -227,10 +227,7 @@ public class Regulator implements Observer
             }
 
             if (advanceTime())
-            {
-                manager.getActualCourse().goCourse();
-                time.refreshTime(0,2,0);
-            }
+                goToCourse();
         }
 
 
@@ -246,6 +243,11 @@ public class Regulator implements Observer
         if (place.equals(Places.OnTheMap))
             TimeGame.FASTER = 10;
 
+    }
+
+    protected void goToCourse() {
+        manager.getActualCourse().goCourse();
+        time.refreshTime(0,2,0);
     }
 
 

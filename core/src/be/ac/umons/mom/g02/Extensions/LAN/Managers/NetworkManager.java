@@ -232,6 +232,10 @@ public class NetworkManager {
     protected DateRunnable onDateDetected;
 
     protected IntRunnable onTimeSpeedReceived;
+
+    protected BooleanRunnable onPlayerInCourseRoomReceived;
+
+    protected Runnable onPlayerWentToCourse;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -779,6 +783,13 @@ public class NetworkManager {
         sendOnTCP(String.format("TS#%d", speed));
     }
 
+    public void sendPlayerInCourseRoom(boolean playerInCourseRoom) {
+        sendOnTCP("PCR#" + playerInCourseRoom);
+    }
+    public void sendPlayerWentToCourse() {
+        sendOnTCP("PWC");
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -997,6 +1008,14 @@ public class NetworkManager {
                     Gdx.app.error("NetworkManager", "Unable to parse the time' speed ! (ignoring message)", e);
                 }
                 break;
+            case "PCR": // Player in Course Room
+                if (onPlayerInCourseRoomReceived != null)
+                    Gdx.app.postRunnable(() -> onPlayerInCourseRoomReceived.run(
+                            Boolean.parseBoolean(tab[1].trim())));
+                break;
+            case "PWC":
+                if (onPlayerWentToCourse != null)
+                    Gdx.app.postRunnable(onPlayerWentToCourse);
         }
         if (! received.equals(""))
             msSinceLastMessage = 0;
@@ -1373,6 +1392,14 @@ public class NetworkManager {
 
     public void setOnTimeSpeedReceived(IntRunnable onTimeSpeedReceived) {
         this.onTimeSpeedReceived = onTimeSpeedReceived;
+    }
+
+    public void setOnPlayerInCourseRoomReceived(BooleanRunnable onPlayerInCourseRoomReceived) {
+        this.onPlayerInCourseRoomReceived = onPlayerInCourseRoomReceived;
+    }
+
+    public void setOnPlayerWentToCourse(Runnable onPlayerWentToCourse) {
+        this.onPlayerWentToCourse = onPlayerWentToCourse;
     }
 
     /**
