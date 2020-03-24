@@ -1,9 +1,9 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Regulator;
 
-import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -13,7 +13,6 @@ import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
-import be.ac.umons.mom.g02.Regulator.Regulator;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
@@ -36,6 +35,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
     protected SupervisorLAN() {
         super();
+        getEvent().add(Events.ChangeHour, this);
     }
 
     @Override
@@ -139,5 +139,11 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         analyseNormalGameIdMap(id);
     }
 
+    @Override
+    public void update(Notification notify) {
+        super.update(notify);
 
+        if (notify.getEvents().equals(Events.ChangeHour))
+            checkPlanning();
+    }
 }
