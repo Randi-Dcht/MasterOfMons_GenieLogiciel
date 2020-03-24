@@ -24,12 +24,10 @@ public class InGameMenuState extends MenuState {
     protected ShapeRenderer sr;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public InGameMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public InGameMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
 

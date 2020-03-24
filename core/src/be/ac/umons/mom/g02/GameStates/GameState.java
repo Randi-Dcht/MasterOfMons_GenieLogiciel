@@ -40,9 +40,9 @@ public abstract class GameState {
      * @param gim Game's input manager
      * @param gs Game's graphical settings
      */
-    protected GameState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        this.gim = gim;
-        this.gsm = gsm;
+    protected GameState(GraphicalSettings gs) {
+        this.gim = GameInputManager.getInstance();
+        this.gsm = GameStateManager.getInstance();
         this.gs = gs;
     }
 

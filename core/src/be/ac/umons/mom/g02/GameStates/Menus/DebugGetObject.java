@@ -17,12 +17,10 @@ public class DebugGetObject extends MenuState {
 
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The graphical settings
      */
-    public DebugGetObject(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public DebugGetObject(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

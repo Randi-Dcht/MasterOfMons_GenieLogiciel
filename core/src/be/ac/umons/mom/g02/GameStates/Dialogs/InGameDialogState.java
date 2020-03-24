@@ -39,12 +39,10 @@ public class InGameDialogState extends DialogState {
 
     /**
      *
-     * @param gsm The GameStateManager to use.
-     * @param gim The GameInputManager to use.
      * @param gs The GraphicalSettings to use.
      */
-    public InGameDialogState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public InGameDialogState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

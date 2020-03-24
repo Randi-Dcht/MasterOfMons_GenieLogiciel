@@ -41,12 +41,10 @@ public class LevelUpMenuState extends MenuState {
     protected TextMenuItem pointsToUseMi;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public LevelUpMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public LevelUpMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

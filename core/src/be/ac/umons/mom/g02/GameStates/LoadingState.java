@@ -78,12 +78,10 @@ public class LoadingState extends GameState {
     private boolean changedCalled = false;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
-    public LoadingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public LoadingState(GraphicalSettings gs) {
+        super(gs);
         afterLoadingState = PlayingState.class;
         isLoading = true;
     }

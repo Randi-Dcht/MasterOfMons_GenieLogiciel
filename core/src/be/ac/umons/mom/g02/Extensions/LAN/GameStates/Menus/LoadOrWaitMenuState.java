@@ -15,12 +15,10 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 public class LoadOrWaitMenuState extends MenuState {
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public LoadOrWaitMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public LoadOrWaitMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

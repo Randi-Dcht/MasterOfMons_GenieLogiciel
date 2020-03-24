@@ -35,12 +35,10 @@ public class MainMenuState extends MenuState {
     HashMap<ExtensionsManager.Extension, MenuItem> extensionCheckBoxHashMap;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public MainMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public MainMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     /**

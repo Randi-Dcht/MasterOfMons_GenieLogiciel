@@ -24,12 +24,10 @@ public class SaveMenuState extends ChoosePathMenuState {
     TextBoxMenuItem nameMI;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public SaveMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public SaveMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     /**

@@ -14,12 +14,10 @@ import java.io.File;
 public class LoadMenuState extends ChoosePathMenuState {
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public LoadMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public LoadMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

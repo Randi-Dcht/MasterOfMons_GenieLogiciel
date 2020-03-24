@@ -35,12 +35,10 @@ public class WaitingRoomState extends MenuState {
     protected boolean sendPlayer;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public WaitingRoomState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public WaitingRoomState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

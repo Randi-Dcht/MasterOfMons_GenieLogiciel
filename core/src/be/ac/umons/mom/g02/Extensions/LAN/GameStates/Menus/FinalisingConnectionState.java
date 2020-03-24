@@ -36,8 +36,8 @@ public class FinalisingConnectionState extends MenuState {
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public FinalisingConnectionState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public FinalisingConnectionState(GraphicalSettings gs) {
+        super(gs);
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {

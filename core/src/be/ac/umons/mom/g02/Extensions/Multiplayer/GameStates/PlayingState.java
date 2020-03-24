@@ -20,12 +20,10 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
     /**
      * Create a new game state.
      *
-     * @param gsm The GameStateManager of the game.
-     * @param gim The GameInputManager of the game.
      * @param gs  The graphic parameters to use.
      */
-    public PlayingState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public PlayingState(GraphicalSettings gs) {
+        super(gs);
     }
 
     public PlayingState() { }

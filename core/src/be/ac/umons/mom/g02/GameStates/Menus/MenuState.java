@@ -73,12 +73,10 @@ public abstract class MenuState extends GameState {
 
     /**
      * Create a new menu
-     * @param gsm Game's state manager
-     * @param gim Game's input manager
      * @param gs Game's graphical settings
      */
-    protected MenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    protected MenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     /**

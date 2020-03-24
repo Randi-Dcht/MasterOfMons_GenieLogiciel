@@ -16,6 +16,16 @@ import java.util.List;
  * @author Guillaume Cardoen
  */
 public class GameInputManager implements InputProcessor {
+
+    protected static GameInputManager instance;
+
+    public static GameInputManager getInstance() {
+        if (instance == null)
+            instance = new GameInputManager();
+        return instance;
+    }
+
+
     /**
      * The number of keys available.
      */
@@ -51,7 +61,7 @@ public class GameInputManager implements InputProcessor {
      */
     private GameKeyManager gkm;
 
-    public GameInputManager() {
+    protected GameInputManager() {
         keys = new KeyStatus[AVAILABLE_INPUT_KEYS];
         lastMousePosition = new Point();
         recentClicks = new LinkedList<>();

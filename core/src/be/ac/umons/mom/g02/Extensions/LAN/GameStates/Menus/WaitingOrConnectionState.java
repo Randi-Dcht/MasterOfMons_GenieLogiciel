@@ -18,8 +18,8 @@ public class WaitingOrConnectionState extends MenuState {
      * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public WaitingOrConnectionState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public WaitingOrConnectionState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

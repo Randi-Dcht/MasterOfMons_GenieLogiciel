@@ -11,12 +11,10 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 public class AboutMenuState extends MenuState {
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The graphical settings
      */
-    public AboutMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public AboutMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

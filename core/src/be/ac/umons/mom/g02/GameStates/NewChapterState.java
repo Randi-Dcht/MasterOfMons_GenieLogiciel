@@ -35,13 +35,10 @@ public class NewChapterState extends GameState {
     protected int numberOfLines = 1;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public NewChapterState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
-        init();
+    public NewChapterState(GraphicalSettings gs) {
+        super(gs);
     }
 
     /**

@@ -25,12 +25,10 @@ public class DebugMenuState extends MenuState {
     private PlayingState ps;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The graphical settings
      */
-    public DebugMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public DebugMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

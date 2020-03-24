@@ -25,12 +25,10 @@ public class KeyChoosingMenuState extends MenuState {
     HashMap<String, Integer> keysMap;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
-    public KeyChoosingMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public KeyChoosingMenuState( GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

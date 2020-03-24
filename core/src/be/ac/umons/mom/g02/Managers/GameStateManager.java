@@ -20,6 +20,20 @@ import java.util.Stack;
  * @author Guillaume Cardoen
  */
 public class GameStateManager {
+
+    protected static GameStateManager instance;
+
+    public static void createInstance(GraphicalSettings gs) {
+        instance = new GameStateManager(gs);
+    }
+
+    public static GameStateManager getInstance() {
+        if (instance == null)
+            throw new NullPointerException("Instance must first be created !");
+        return instance;
+    }
+
+
     /**
      * The time of the animation.
      */
@@ -37,25 +51,18 @@ public class GameStateManager {
      */
     private Stack<GameState> gameStateStack;
     /**
-     * The game's input manager.
-     */
-    private GameInputManager gim;
-    /**
      * The game's graphical settings.
      */
     protected GraphicalSettings gs;
 
     /**
-     * @param gim The game's input manager.
      * @param gs The game's graphical settings.
      */
-    public GameStateManager(GameInputManager gim, GraphicalSettings gs) {
+    protected GameStateManager(GraphicalSettings gs) {
         gameStateStack = new Stack<>();
-        this.gim = gim;
         this.gs = gs;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        setStateWithoutAnimation(MainMenuState.class);
     }
 
     /**
@@ -135,8 +142,8 @@ public class GameStateManager {
     private GameState getState(Class<? extends GameState> gst) {
         GameState g;
         try {
-            Constructor con = gst.getConstructor(GameStateManager.class, GameInputManager.class, GraphicalSettings.class);
-            g = (GameState) con.newInstance(this, gim, gs);
+            Constructor con = gst.getConstructor(GraphicalSettings.class);
+            g = (GameState) con.newInstance(gs);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
             return null;

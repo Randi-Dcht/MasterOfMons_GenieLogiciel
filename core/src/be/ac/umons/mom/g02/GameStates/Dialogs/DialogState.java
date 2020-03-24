@@ -56,12 +56,10 @@ public abstract class DialogState extends GameState {
 
     /**
      * Create a new dialog.
-     * @param gsm Game's state manager
-     * @param gim Game's input manager
      * @param gs Game's graphical settings
      */
-    public DialogState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public DialogState(GraphicalSettings gs) {
+        super(gs);
         whenSelectedActions = new HashMap<>();
         buttons = new ArrayList<>();
     }

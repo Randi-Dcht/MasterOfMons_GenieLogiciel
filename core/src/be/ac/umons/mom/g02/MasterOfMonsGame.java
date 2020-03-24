@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02;
 
+import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -60,8 +61,11 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		gs.setTitleFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.1 * (float)HEIGHT));
 		gs.setQuestFont("Fonts/Comfortaa/Comfortaa-Light.ttf", (int)(0.015 * (float)HEIGHT));
 		gs.setLanguage(settings.getLanguage());
-		gim = new GameInputManager();
-		gsm = new GameStateManager(gim, gs);
+		GameStateManager.createInstance(gs);
+		gim = GameInputManager.getInstance();
+		gsm = GameStateManager.getInstance();
+
+		gsm.setStateWithoutAnimation(MainMenuState.class);
 
 		Gdx.input.setInputProcessor(gim);
 	}
@@ -101,7 +105,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	 * S'éxécute quand l'application se détruit.
 	 */
 	@Override
-	public void dispose () {
+	public void dispose() {
 		gs.dispose();
 		gsm.dispose();
 	}

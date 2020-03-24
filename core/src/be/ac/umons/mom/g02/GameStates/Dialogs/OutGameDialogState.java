@@ -14,12 +14,10 @@ public class OutGameDialogState extends DialogState {
     /**
      * Create a new dialog.
      *
-     * @param gsm Game's state manager
-     * @param gim Game's input manager
      * @param gs  Game's graphical settings
      */
-    public OutGameDialogState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public OutGameDialogState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override

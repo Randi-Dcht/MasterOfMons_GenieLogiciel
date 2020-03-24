@@ -46,12 +46,10 @@ public class CreatePlayerMenuState extends MenuState {
     protected boolean mustUseMultiplayer = false;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public CreatePlayerMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public CreatePlayerMenuState(GraphicalSettings gs) {
+        super(gs);
         afterCreationState = LoadingState.class;
     }
 

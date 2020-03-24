@@ -36,12 +36,10 @@ public class DisconnectedMenuState extends MenuState {
     protected PlayingState ps;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public DisconnectedMenuState(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs) {
-        super(gsm, gim, gs);
+    public DisconnectedMenuState(GraphicalSettings gs) {
+        super(gs);
     }
 
     @Override
