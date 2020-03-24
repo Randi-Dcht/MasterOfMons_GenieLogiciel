@@ -788,6 +788,10 @@ public  abstract class Supervisor implements Observer
         this.mustPlaceItem = mustPlaceItem;
     }
 
+    public void setDate(Date d) {
+        time.setDate(d);
+    }
+
     /**
      * protected void placeItem()
      *     {

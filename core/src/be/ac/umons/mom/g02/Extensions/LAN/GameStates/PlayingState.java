@@ -233,6 +233,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                 if (mapObjects.get(i).getCharacteristics().equals(omi))
                     mapObjects.remove(i);
         });
+        nm.setOnDateDetected((date) -> Supervisor.getSupervisor().setDate(date));
     }
 
     @Override
@@ -246,6 +247,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             else
                 player.setIsATargetColor(badPuzzlePathColor);
         }
+        if (nm.isTheServer())
+            nm.sendTime(Supervisor.getSupervisor().getTime());
     }
 
     @Override

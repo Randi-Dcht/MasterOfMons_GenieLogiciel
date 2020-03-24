@@ -6,11 +6,14 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Other.Date;
+import be.ac.umons.mom.g02.Other.TimeGame;
 import com.badlogic.gdx.Gdx;
 
 import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.time.Instant;
 import java.util.List;
 import java.util.*;
 
@@ -223,6 +226,10 @@ public class NetworkManager {
      * What to do when the second player send a save file
      */
     protected SaveRunnable onSaveDetected;
+    /**
+     * What to do when the second player send a date object
+     */
+    protected DateRunnable onDateDetected;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -575,7 +582,7 @@ public class NetworkManager {
             if (toSendOnUDP.size() > 0) {
                 sendUDPMessage(toSendOnUDP.pop());
             } else {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
         }
     }
@@ -755,6 +762,15 @@ public class NetworkManager {
      */
     public void sendSave(Save save) throws IOException {
         sendOnTCP("SAVE#" + objectToString(save));
+    }
+
+    /**
+     * Send the time to the second player
+     * @param tg The current time
+     */
+    public void sendTime(TimeGame tg) {
+        Date d = tg.getDate();
+        sendOnUDP(String.format("TIME#%d#%d#%d#%d#%d", d.getMin(), d.getHour(), d.getDay(), d.getMonth(), d.getYear()));
     }
 
     /**
@@ -949,13 +965,23 @@ public class NetworkManager {
                     if (onSaveDetected != null)
                         Gdx.app.postRunnable(() -> onSaveDetected.run(s));
                     saveReceived = s;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
                 break;
-
+            case "TIME": //  sendOnUDP(String.format("TIME#%d#%d#%d#%d#%d", d.getMin(), d.getHour(), d.getDay(), d.getMonth(), d.getYear()));
+                try {
+                    Date d = new Date(Integer.parseInt(tab[3]),
+                            Integer.parseInt(tab[4]),
+                            Integer.parseInt(tab[5].trim()),
+                            Integer.parseInt(tab[2]),
+                            Integer.parseInt(tab[1]));
+                    if (onDateDetected != null)
+                        Gdx.app.postRunnable(() -> onDateDetected.run(d));
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "There was an error parsing the time ! (ignoring it)", e);
+                }
+                break;
         }
         if (! received.equals(""))
             msSinceLastMessage = 0;
@@ -1308,6 +1334,10 @@ public class NetworkManager {
         this.onSaveDetected = onSaveDetected;
     }
 
+    public void setOnDateDetected(DateRunnable onDateDetected) {
+        this.onDateDetected = onDateDetected;
+    }
+
     /**
      * @return If a save has been received
      */
@@ -1391,5 +1421,11 @@ public class NetworkManager {
      */
     public interface SaveRunnable {
         void run(Save save);
+    }
+    /**
+     * Represent a runnable taking a date object as parameter.
+     */
+    public interface DateRunnable {
+        void run(Date date);
     }
 }

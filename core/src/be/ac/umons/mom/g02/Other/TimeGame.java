@@ -9,13 +9,14 @@ import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Events.Notifications.ChangeDay;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * This class is the time in the game who changed with the refresh frame.
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public class TimeGame implements Observer
+public class TimeGame implements Observer, Serializable
 {
     /***/
     public static int FASTER = 10;
@@ -45,6 +46,11 @@ public class TimeGame implements Observer
      */
     public TimeGame(Date date)
     {
+        setDate(date);
+        Supervisor.getEvent().add(Events.ChangeQuest,this);
+    }
+
+    public void setDate(Date date) {
         NBmonth   = date.getMonth()-1;
         this.day  = date.getDay()-1;
         this.hour = date.getHour();
@@ -52,7 +58,6 @@ public class TimeGame implements Observer
         this.min  = date.getMin();
         NByear    = leap(date.getYear());
         second    = 0;
-        Supervisor.getEvent().add(Events.ChangeQuest,this);
     }
 
 
