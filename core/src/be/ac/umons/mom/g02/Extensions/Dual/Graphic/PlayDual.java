@@ -5,7 +5,7 @@ import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
-public class PlayDual extends PlayingState
+public class PlayDual// extends PlayingState
 {
     /**
      * Create a new game state.
@@ -15,7 +15,7 @@ public class PlayDual extends PlayingState
      */
     public PlayDual(GameStateManager gsm, GameInputManager gim, GraphicalSettings gs)
     {
-        super(gsm, gim, gs);
+        //super(gsm, gim, gs);
     }
 }
 //TODO fichier 166FRE5
