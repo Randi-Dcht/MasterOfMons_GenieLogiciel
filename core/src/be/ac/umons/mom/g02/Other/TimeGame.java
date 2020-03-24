@@ -50,7 +50,10 @@ public class TimeGame implements Observer, Serializable
         Supervisor.getEvent().add(Events.ChangeQuest,this);
     }
 
-    public void setDate(Date date) {
+
+    /***/
+    public void setDate(Date date)
+    {
         NBmonth   = date.getMonth()-1;
         this.day  = date.getDay()-1;
         this.hour = date.getHour();

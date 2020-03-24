@@ -782,26 +782,18 @@ public  abstract class Supervisor implements Observer
     /**
      * @param mustPlaceItem If the items must be added to the map.
      */
-    public void setMustPlaceItem(boolean mustPlaceItem) {
+    public void setMustPlaceItem(boolean mustPlaceItem)
+    {
         this.mustPlaceItem = mustPlaceItem;
     }
 
-    public void setDate(Date d) {
-        time.setDate(d);
-    }
 
     /**
-     * protected void placeItem()
-     *     {
-     *         if (playGraphic != null && mustPlaceItem)
-     *         {
-     *             for (Maps maps : Maps.values())
-     *             {
-     *                 for (Items it : listItems.get(maps))
-     *                    playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()));
-     *             }
-     *             first = false;
-     *         }
-     *     }
+     * This method allows to set the date
+     * @param date is the date
      */
+    public void setDate(Date date)
+    {
+        time.setDate(date);
+    }
 }
