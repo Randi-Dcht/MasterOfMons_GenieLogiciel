@@ -6,21 +6,15 @@ import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
-import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.MyPlacePosition;
+import be.ac.umons.mom.g02.Objects.Items.PositionOnMaps;
 import be.ac.umons.mom.g02.Objects.Saving;
-import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -91,7 +85,7 @@ public class SuperviserNormally extends Supervisor
         LogicSaving saving =  (LogicSaving) Saving.getSaveObject(pathAndFile);
         if (saving != null && saving.getClass().equals(LogicSaving.class))
         {
-            placePosition = new MyPlacePosition();
+            placePosition = new PositionOnMaps();
             listUpdate = new ArrayList<>();
             time = new TimeGame(saving.getDate());
             playerOne = saving.getPlayer();

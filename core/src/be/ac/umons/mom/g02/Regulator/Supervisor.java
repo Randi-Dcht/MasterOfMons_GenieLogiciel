@@ -36,18 +36,16 @@ import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.Flower;
 import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Items;
-import be.ac.umons.mom.g02.Objects.Items.MyPlacePosition;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.PaperHelp;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Objects.Items.Phone;
+import be.ac.umons.mom.g02.Objects.Items.PositionOnMaps;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -206,7 +204,7 @@ public  abstract class Supervisor implements Observer
      */
     protected PlayingState playGraphic;
     /***/
-    protected MyPlacePosition placePosition;
+    protected PositionOnMaps placePosition;
     /***/
     protected boolean first = true;
     /**
@@ -344,7 +342,7 @@ public  abstract class Supervisor implements Observer
      */
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
-        placePosition = new MyPlacePosition();
+        placePosition = new PositionOnMaps();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);
         for (NameDialog name : NameDialog.values())
@@ -430,7 +428,7 @@ public  abstract class Supervisor implements Observer
             for (Maps maps : Maps.values())
             {
                 for (Items it : listItems.get(maps))
-                   playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps()), maps.getMaps());
+                   playGraphic.addItemToMap(it, placePosition.getPosition(it.getMaps(),it.idOfPlace()), maps.getMaps());
             }
             first = false;
         }
