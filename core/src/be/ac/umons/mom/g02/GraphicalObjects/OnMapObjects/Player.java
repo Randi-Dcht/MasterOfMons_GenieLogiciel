@@ -35,6 +35,7 @@ public class Player extends Character {
         posY = 0;
         width = tileWidth;
         height = 2 * tileHeight;
+
     }
     public Player() {}
 

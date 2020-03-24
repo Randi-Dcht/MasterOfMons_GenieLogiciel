@@ -104,7 +104,7 @@ public class CreatePlayerMenuState extends MenuState {
                     characterType, playerGender, difficulty);
 
         if (! level.equals(""))
-            for (int i = 0; i < Integer.parseInt(level); i++)
+            for (int i = 1; i < Integer.parseInt(level); i++)
                 Supervisor.getPeople().upLevel();
         Supervisor.setGraphic(gs);
         GameState g = gsm.setState(afterCreationState);

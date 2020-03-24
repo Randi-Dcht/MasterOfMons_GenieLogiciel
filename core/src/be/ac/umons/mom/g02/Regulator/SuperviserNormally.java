@@ -49,10 +49,7 @@ public class SuperviserNormally extends Supervisor
     /*-----------------------------------------------------------------------------------------------------------------*/
 
 
-    /**
-     * This the actual variable of the Id on the maps
-     */
-    protected String actualID;
+
 
 
     /**
@@ -124,20 +121,7 @@ public class SuperviserNormally extends Supervisor
     @Override
     public void analyseIdMap(String id) throws Exception
     {
-        if (!id.equals(actualID))
-        {
-            actualID = id;
-            String[] word = id.split("_");
-            if (word[0].equals("Room") && word.length >= 3)
-                regulator.placeInOut(word[2],word[1]);
-            else if (word[0].equals("Info") && word.length >= 2)
-            {
-                regulator.push(word[1]);
-                event.notify(new OtherInformation(word[1]));
-            }
-            else
-                throw new Exception();
-        }
+        analyseNormalGameIdMap(id);
     }
 
 

@@ -126,7 +126,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnFirstPlayerMapChanged(this::initMap);
 
         supervisor.setMustPlaceItem(nm.isTheServer());
-        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
+        Supervisor.getEvent().add(this, Events.Dialog); // Other events done in super.init()
         newParty = (MasterOfMonsGame.getGameToLoad() == null && ! nm.hasReceivedASave());
         Supervisor.setGraphic(gs);
         supervisor.setGraphic(questShower,this);

@@ -73,6 +73,8 @@ public class QuestShower {
      */
     private Quest questToShow;
 
+    protected Quest questInAnimation;
+
     /**
      * The progress circle mapped to their corresponding quest (under-quest).
      */
@@ -141,7 +143,7 @@ public class QuestShower {
      * @param q Quest to show.
      */
     public void setQuest(Quest q) {
-        if (q == null)
+        if (q == null || q == questToShow || q == questInAnimation)
             return;
         if (questToShow == null) {
             questToShow = q;
@@ -154,9 +156,11 @@ public class QuestShower {
             animateQuestRectangle(0, 1, 750);
             animateQuestItems(0,1,1500);
         } else {
+            questInAnimation = q;
             animateQuestRectangle(1, 0, 1500, () -> {
                 questToShow = null;
                 setQuest(q);
+                questInAnimation = null;
             });
             animateQuestItems(1,0,1500);
         }
