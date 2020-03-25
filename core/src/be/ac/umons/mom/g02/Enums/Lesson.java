@@ -84,7 +84,7 @@ public enum Lesson
      * @param year who is the year of the Lesson
      * @param number who is the number of this course for a month.
      */
-    private Lesson(char type, String name, Maps maps, Bloc year, int number)
+    Lesson(char type, String name, Maps maps, Bloc year, int number)
     {
         this.type  = type;
         this.name   = name;
@@ -93,6 +93,12 @@ public enum Lesson
         this.number = number;
     }
 
+
+    /***/
+    public String getName()
+    {
+        return name;
+    }
 
     /**
      *This method allows to say if the course is obligatory to succeed

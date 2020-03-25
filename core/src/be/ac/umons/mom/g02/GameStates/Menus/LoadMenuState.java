@@ -46,7 +46,7 @@ public class LoadMenuState extends ChoosePathMenuState {
      * Try to load the files and quit the state.
      * @param loadFilePath The load file's path.
      */
-    private void load(String loadFilePath) {
+    protected void load(String loadFilePath) {
         ExtensionsManager.getInstance().initGameFromLoad(gsm);
         MasterOfMonsGame.setGameToLoad(loadFilePath);
     }
