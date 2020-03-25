@@ -3,6 +3,9 @@ package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 import be.ac.umons.mom.g02.Animations.Animation;
 import be.ac.umons.mom.g02.Animations.DoubleAnimation;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Objects.Course;
@@ -16,11 +19,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * This represent the control the user can draw to check its agenda.
  */
-public class AgendaShower extends Control {
+public class AgendaShower extends Control implements Observer {
 
     /**
      * The courses to list in this control.
@@ -54,6 +58,8 @@ public class AgendaShower extends Control {
         sr.setColor(gs.getControlTransparentBackgroundColor());
 
         courses = new ArrayList<>();
+
+        Supervisor.getEvent().add(this, Events.ChangeDay);
     }
 
     /**
@@ -117,9 +123,8 @@ public class AgendaShower extends Control {
      * Begin the animation that will be showing the control.
      */
     protected void show() {
-        courses = Supervisor.getPeople().getPlanning().get(
-                Supervisor.getSupervisor().getTime().getDate().getDay()
-        );
+        if (courses == null)
+            refreshCourses();
         if (courses == null)
             return;
         isBeingAnimated = true;
@@ -145,5 +150,24 @@ public class AgendaShower extends Control {
     @Override
     public void dispose() {
         sr.dispose();
+    }
+
+    /**
+     * The method to receive the notification
+     *
+     * @param notify
+     */
+    @Override
+    public void update(Notification notify) {
+        if (notify.getEvents().equals(Events.ChangeDay))
+            refreshCourses();
+    }
+
+    public void refreshCourses() {
+        courses = Supervisor.getPeople().getPlanning().get(
+                Supervisor.getSupervisor().getTime().getDate().getDay()
+        );
+        if (courses != null)
+            courses.sort(Comparator.comparingInt(c0 -> c0.getDate().getHour()));
     }
 }

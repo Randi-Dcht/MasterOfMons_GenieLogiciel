@@ -15,8 +15,6 @@ import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
@@ -230,7 +228,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                     mapObjects.remove(i);
         });
         nm.setOnDateDetected((date) -> Supervisor.getSupervisor().setDate(date));
-        nm.setOnPlanningReceived((planning -> SupervisorLAN.getSupervisor().updatePlanning(planning)));
+        nm.setOnPlanningReceived((planning -> {
+            SupervisorLAN.getSupervisor().updatePlanning(planning);
+            agendaShower.refreshCourses();
+        }));
     }
 
     @Override
