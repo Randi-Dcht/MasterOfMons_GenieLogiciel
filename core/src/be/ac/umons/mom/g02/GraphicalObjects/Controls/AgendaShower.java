@@ -89,7 +89,7 @@ public class AgendaShower extends Control implements Observer {
 
         batch.begin();
         for (Course c : courses) {
-            gs.getQuestFont().draw(batch, c.toString(), pos.x + leftMargin, pos.y + size.y - alreadyUsed);
+            gs.getQuestFont().draw(batch, c.toString(gs), pos.x + leftMargin, pos.y + size.y - alreadyUsed);
             alreadyUsed += gs.getQuestFont().getLineHeight() + topMargin;
         }
         batch.end();
@@ -103,7 +103,7 @@ public class AgendaShower extends Control implements Observer {
         int maxX = 0, maxY = 2 * topMargin;
         for (Course c : courses) {
             GlyphLayout gl = new GlyphLayout();
-            gl.setText(gs.getQuestFont(), c.toString());
+            gl.setText(gs.getQuestFont(), c.toString(gs));
             if (gl.width + 2 * leftMargin > maxX)
                 maxX = (int)(gl.width + 2 * leftMargin);
             maxY += gs.getQuestFont().getLineHeight() + topMargin;
@@ -123,7 +123,7 @@ public class AgendaShower extends Control implements Observer {
      * Begin the animation that will be showing the control.
      */
     protected void show() {
-        if (courses == null)
+        if (courses == null || courses.size() == 0)
             refreshCourses();
         if (courses == null)
             return;

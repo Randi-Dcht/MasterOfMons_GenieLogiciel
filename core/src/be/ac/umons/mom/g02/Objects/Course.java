@@ -81,11 +81,11 @@ public class Course implements Serializable
      *  - date
      *  - lesson
      *  - maps
+     * @param gs The graphical settings to use
      * @return string of the course
      */
-    @Override
-    public String toString()
+    public String toString(GraphicalSettings gs)
     {
-        return date.getHour() + "H" + date.getMin() + " : " + lesson.getName() + " ("+lesson.location() + ")";
+        return date.getHour() + "H" + date.getMin() + " : " + gs.getStringFromId(lesson.getName()) + " ("+lesson.location() + ")";
     }
 }
