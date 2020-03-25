@@ -25,9 +25,9 @@ public class PassLevel extends Items
     @Override
     public void used(People pp)
     {
-        super.used(pp);
         pp.upLevel();
         use = false;
+        super.used(pp);
     }
 
 
