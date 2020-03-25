@@ -40,7 +40,10 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
     @Override
     public void oldGame(String pathAndFile, be.ac.umons.mom.g02.GameStates.PlayingState play, GraphicalSettings graphic) {
-        //TODO implement this abstract method
+        if (play instanceof PlayingState)
+            oldGameLAN(pathAndFile, (PlayingState)play, graphic);
+        else
+            throw new IllegalArgumentException("While using SupervisorLAN, the given PlayingState must be a subclass of the PlayingState in the package LAN.");
     }
 
     /**

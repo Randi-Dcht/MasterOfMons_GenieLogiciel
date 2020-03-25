@@ -648,7 +648,7 @@ public class NetworkManager {
      * @param omi The item to send
      * @throws IOException If the item couldn't be serialized.
      */
-    public void sendItemInformation(MapObject.OnMapItem omi) throws IOException { // TODO
+    public void sendItemInformation(MapObject.OnMapItem omi) throws IOException {
         sendOnTCP(String.format("Item#%s", objectToString(omi)));
     }
 
