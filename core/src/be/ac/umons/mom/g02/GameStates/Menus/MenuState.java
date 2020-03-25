@@ -103,7 +103,7 @@ public abstract class MenuState extends GameState {
     }
 
     @Override
-    public void draw() { // TODO : Clean this method a bit
+    public void draw() {
         if (transparentBackground) {
             Gdx.gl.glEnable(GL30.GL_BLEND);
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);

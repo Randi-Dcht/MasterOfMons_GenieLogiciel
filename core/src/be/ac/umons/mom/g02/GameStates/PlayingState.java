@@ -520,8 +520,7 @@ public class PlayingState extends GameState implements Observer {
         try {
             supervisor.analyseIdMap(rectangleMapObject.getName());
         } catch (Exception e) {
-            e.printStackTrace();
-            // TODO : Handle the exception
+            Gdx.app.error("PlayingState", "The following tag triggered an exception : " + rectangleMapObject.getName(), e);
         }
     }
 

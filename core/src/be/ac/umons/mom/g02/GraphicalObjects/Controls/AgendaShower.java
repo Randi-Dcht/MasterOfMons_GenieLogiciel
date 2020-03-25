@@ -117,7 +117,7 @@ public class AgendaShower extends Control {
      * Begin the animation that will be showing the control.
      */
     protected void show() {
-        courses = Supervisor.getSupervisor().getPeople().getPlanning().get(
+        courses = Supervisor.getPeople().getPlanning().get(
                 Supervisor.getSupervisor().getTime().getDate().getDay()
         );
         if (courses == null)
