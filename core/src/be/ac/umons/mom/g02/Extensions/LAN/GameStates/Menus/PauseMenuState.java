@@ -15,7 +15,7 @@ public class PauseMenuState extends MenuState {
     /**
      * @param gs The game's graphical settings.
      */
-    public PauseMenuState(GameStateManager gsm, GameInputManager gim,GraphicalSettings gs) {
+    public PauseMenuState(GraphicalSettings gs) {
         super(gs);
     }
 
