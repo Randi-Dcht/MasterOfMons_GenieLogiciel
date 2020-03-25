@@ -640,8 +640,10 @@ public class PlayingState extends GameState implements Observer {
 
     @Override
     public void handleInput() {
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed))
-            gsm.setState(InGameMenuState.class);
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
+            InGameMenuState igms = (InGameMenuState) gsm.setState(InGameMenuState.class);
+            igms.setPlayingState(this);
+        }
         if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
             DebugMenuState dms = (DebugMenuState) gsm.setState(DebugMenuState.class);
             dms.setPlayingState(this);
@@ -659,7 +661,7 @@ public class PlayingState extends GameState implements Observer {
         if (gim.isKey("useAnObject", KeyStatus.Pressed)) {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)
-                supervisor.getPeople().useObject(ii.getItem());
+                Supervisor.getPeople().useObject(ii.getItem());
         }
         if (gim.isKey("quickSave", KeyStatus.Pressed)) {
             timeShower.extendOnFullWidth(gs.getStringFromId("quickSaving"));
@@ -668,16 +670,7 @@ public class PlayingState extends GameState implements Observer {
         if (gim.isKey("quickLoad", KeyStatus.Pressed))
             quickLoad(gsm, gs);
         if (gim.isKey("pointsAttribution", KeyStatus.Pressed)) {
-            LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
-            lums.setPlayer(player);
-            lums.setOnPointsAttributed(() -> {
-                int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
-                if (pointLevel != 0)
-                    notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
-                            pointLevel, Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
-                else
-                    notificationRappel.removeANotification("pointsToAttribute");
-            });
+            goToLevelUpState();
         }
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
             if (selectedOne instanceof Character)
@@ -691,6 +684,19 @@ public class PlayingState extends GameState implements Observer {
         inventoryShower.handleInput();
         pauseButton.handleInput();
         agendaShower.handleInput();
+    }
+
+    public void goToLevelUpState() {
+        LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
+        lums.setPlayer(Supervisor.getPeople());
+        lums.setOnPointsAttributed(() -> {
+            int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
+            if (pointLevel != 0)
+                notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
+                        pointLevel, Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
+            else
+                notificationRappel.removeANotification("pointsToAttribute");
+        });
     }
 
     protected void pickUpAnObject() {

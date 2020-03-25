@@ -1,11 +1,7 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -23,7 +19,7 @@ public class LevelUpMenuState extends MenuState {
     /**
      * The human player.
      */
-    Player player;
+    protected People player;
     /**
      * The number of points that the user must attributes.
      */
@@ -55,7 +51,7 @@ public class LevelUpMenuState extends MenuState {
         if (player == null)
             return;
         List<MenuItem> menuItemList = new ArrayList<>();
-        menuItemList.add(new TitleMenuItem(gs, String.format(gs.getStringFromId("youAreLevel"), player.getCharacteristics().getLevel())));
+        menuItemList.add(new TitleMenuItem(gs, String.format(gs.getStringFromId("youAreLevel"), player.getLevel())));
         menuItemList.add(pointsToUseMi = new TextMenuItem(gs, String.format(gs.getStringFromId("youHavePoints"), pointToUse)));
         MenuItem mi;
         for (Characteristics ch : Characteristics.values()) {
@@ -121,11 +117,11 @@ public class LevelUpMenuState extends MenuState {
     public int getCharacteristics(Characteristics ch) {
         switch (ch) {
             case Strength:
-                return player.getCharacteristics().getStrength();
+                return player.getStrength();
             case Agility:
-                return player.getCharacteristics().getAgility();
+                return player.getAgility();
             case Defence:
-                return player.getCharacteristics().getDefence();
+                return player.getDefence();
         }
         return -1;
     }
@@ -133,9 +129,9 @@ public class LevelUpMenuState extends MenuState {
     /**
      * @param player The human player.
      */
-    public void setPlayer(Player player) {
+    public void setPlayer(People player) {
         this.player = player;
-        pointToUse = ((People)player.getCharacteristics()).getPointLevel();
+        pointToUse = player.getPointLevel();
         if (pointsToUseMi != null) // If null, init not executed yet => refresh useless
             refresh();
     }
@@ -165,7 +161,7 @@ public class LevelUpMenuState extends MenuState {
         else
             points[ch.ordinal()] = Integer.parseInt(tbmi.getControl().getText());
         int usedPoints = computerUsedPoints(points);
-        int availablePoints = ((People)player.getCharacteristics()).getPointLevel();
+        int availablePoints = player.getPointLevel();
         if (usedPoints > availablePoints)
             tbmi.getControl().setText("" + pointsAttributed[ch.ordinal()]);
         else {

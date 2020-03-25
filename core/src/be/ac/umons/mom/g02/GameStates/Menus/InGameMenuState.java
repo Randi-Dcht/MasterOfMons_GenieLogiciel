@@ -6,8 +6,6 @@ import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -22,6 +20,8 @@ public class InGameMenuState extends MenuState {
      * Allow to draw shapes.
      */
     protected ShapeRenderer sr;
+
+    protected PlayingState ps;
 
     /**
      * @param gs The game's graphical settings.
@@ -41,7 +41,9 @@ public class InGameMenuState extends MenuState {
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, gs.getStringFromId("gameName")),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("levelUp"), () -> gsm.setState(LevelUpMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("levelUp"), () -> {
+                    ps.goToLevelUpState();
+                }),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("quickSave"), PlayingState::quickSave),
@@ -69,5 +71,9 @@ public class InGameMenuState extends MenuState {
         ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));
         ((OutGameDialogState)g).addAnswer("yes", () -> Gdx.app.exit());
         ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
+    }
+
+    public void setPlayingState(PlayingState ps) {
+        this.ps = ps;
     }
 }
