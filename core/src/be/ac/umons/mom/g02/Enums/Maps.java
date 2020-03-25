@@ -16,7 +16,8 @@ public enum Maps
     Mons(      "Tmx/CityMons.tmx",        "InfoCity",    Places.OnTheMap),
     LAN_Puzzle("Tmx/LAN_Puzzle.tmx",      "InfoPuzzle",  Places.OnTheMap),
     LAN_Boss(  "Tmx/LAN_Boss.tmx",        "InfoLANBoss", Places.OnTheMap),
-    DualPark(  "Tmx/DualPark",            "InfoDualPark",Places.OnTheMap );
+    DualPark(  "Tmx/DualPark",            "InfoDualPark",Places.OnTheMap ),
+    DualKiosk( "Dual_LittleParkl.tmx",    "InfoDualPark",Places.OnTheMap);
 
 
     /**The characteristic of the maps*/
