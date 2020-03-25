@@ -77,6 +77,20 @@ public class Course implements Serializable
 
 
     /**
+     * This method allows to calculus the time before the finish course
+     * @param now is the actual time of the game
+     * @return a date with the time before end
+     */
+    public Date howTimeFinish(Date now)
+    {
+        double there = (date.getHour()+2)*60 + date.getMin();
+        double actu  = now.getHour()*60 + now.getMin();
+        double ccl   = there - actu;
+        return new Date(0,0,0,(int)(ccl/60),(int)(ccl%60));
+    }
+
+
+    /**
      * This method allows to give the full name of the course with:
      *  - date
      *  - lesson

@@ -12,9 +12,13 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
+import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * This class allows to regular the people during the game as pass the night, up the energizing and etc
@@ -246,9 +250,15 @@ public class Regulator implements Observer
 
     }
 
-    protected void goToCourse() {
+
+    /**
+     * This method allows to advance the time in the game and notify the course what the player is go to course
+     */
+    protected void goToCourse()
+    {
+        Date date = manager.getActualCourse().howTimeFinish(manager.getTime().getDate());
         manager.getActualCourse().goCourse();
-        time.refreshTime(0,2,0);
+        time.refreshTime(0,date.getHour(),date.getMin());
     }
 
 
