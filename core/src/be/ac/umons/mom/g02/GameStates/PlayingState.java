@@ -765,7 +765,7 @@ public class PlayingState extends GameState implements Observer {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
             Gdx.app.postRunnable(() -> updateDialog(diag));
         } else if (notify.getEvents().equals(Events.UpLevel)) {
-            timeShower.extendOnFullWidth(gs.getStringFromId("levelUp"));
+            timeShower.extendOnFullWidth(gs.getStringFromId("gainALevel"));
             notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
                     ((People)player.getCharacteristics()).getPointLevel(), Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
         }

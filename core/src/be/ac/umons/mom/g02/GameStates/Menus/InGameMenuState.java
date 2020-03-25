@@ -41,7 +41,7 @@ public class InGameMenuState extends MenuState {
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, gs.getStringFromId("gameName")),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("player"), () -> gsm.setState(LevelUpMenuState.class)),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("levelUp"), () -> gsm.setState(LevelUpMenuState.class)),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("quickSave"), PlayingState::quickSave),
