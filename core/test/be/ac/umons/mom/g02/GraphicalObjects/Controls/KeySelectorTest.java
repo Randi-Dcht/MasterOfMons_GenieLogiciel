@@ -11,6 +11,9 @@ import org.mockito.Mockito;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Testing class for <code>KeySelector</code>
+ */
 public class KeySelectorTest extends KeySelector {
 
     public KeySelectorTest() {
@@ -24,6 +27,9 @@ public class KeySelectorTest extends KeySelector {
         actualKey = "";
     }
 
+    /**
+     * Test if the method <code>handleInput</code> is working as expected
+     */
     @Test
     public void handleInputTest() {
         isSelected = true;

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * Cette classe représente les tests de la classe TextBox.
+ * Testing class for <code>TextBox</code>
  */
 public class TextBoxTest extends TextBox {
 
@@ -30,7 +30,7 @@ public class TextBoxTest extends TextBox {
     }
 
     /**
-     * Test si la variable isSelected se met à jour comme attendu.
+     * Test if the attribute <code>isSelected</code> is updated correctly
      */
     @Test
     public void isSelectedTest() {
@@ -49,7 +49,7 @@ public class TextBoxTest extends TextBox {
     }
 
     /**
-     * Test si la variable actualText se met à jour comme attendu.
+     * Test if the attribute <code>actualText</code> is updated correctly
      */
     @Test
     public void actualTextTest() {
@@ -82,6 +82,9 @@ public class TextBoxTest extends TextBox {
         Assertions.assertEquals("a", actualText);
     }
 
+    /**
+     * Test if only numbers are accepted when <code>acceptOnlyNumbers</code> is true
+     */
     @Test
     public void acceptOnlyNumberTest() {
         isSelected = true;
@@ -96,6 +99,10 @@ public class TextBoxTest extends TextBox {
         handleInput();
         Assertions.assertEquals("2", actualText);
     }
+
+    /**
+     * Test if only hexa-decimal characters are accepted when <code>acceptOnlyHexadecimal</code> is true
+     */
     @Test
     public void acceptOnlyHexaTest() {
         isSelected = true;
@@ -117,6 +124,9 @@ public class TextBoxTest extends TextBox {
         Assertions.assertEquals("A19", actualText);
     }
 
+    /**
+     * Test if the attribute <code>selectedPosition</code> is updated correctly
+     */
     @Test
     public void selectedPositionTest() {
         isSelected = true;

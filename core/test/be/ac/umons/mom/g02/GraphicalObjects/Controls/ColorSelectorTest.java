@@ -9,6 +9,9 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for the ColorSelector
+ */
 class ColorSelectorTest extends ColorSelector {
 
     public ColorSelectorTest() {
@@ -19,6 +22,9 @@ class ColorSelectorTest extends ColorSelector {
         gim = Mockito.mock(GameInputManager.class);
     }
 
+    /**
+     * Test if the ColorSelector updates itself in the good case (not when color is incorrect)
+     */
     @Test
     void updateSelectedColorTest() {
         Mockito.when(tb.getText()).thenReturn("00AF");

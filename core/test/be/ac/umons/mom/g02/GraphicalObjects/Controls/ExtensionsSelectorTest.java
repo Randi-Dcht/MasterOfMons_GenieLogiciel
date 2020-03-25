@@ -12,6 +12,9 @@ import org.mockito.Mockito;
 
 import java.io.File;
 
+/**
+ * Testing class for the choosing of the extension
+ */
 public class ExtensionsSelectorTest {
     ExtensionsManager em;
 
@@ -26,6 +29,9 @@ public class ExtensionsSelectorTest {
         em = ExtensionsManager.getInstance();
     }
 
+    /**
+     * Test if the <code>extensions</code>' file is correctly parsed
+     */
     @Test
     public void parseExtensionFileTest() {
         Assertions.assertEquals(2, em.getExtensions().size());
@@ -43,6 +49,9 @@ public class ExtensionsSelectorTest {
         Assertions.assertFalse(ext2.mapsToLoad.contains("testAssets/Maps/Map2"));
     }
 
+    /**
+     * Test if the main extension searching is done correctly
+     */
     @Test
     public void searchMainExtensionTest() {
         ExtensionsManager.Extension ext1 = em.getExtensions().get(0);

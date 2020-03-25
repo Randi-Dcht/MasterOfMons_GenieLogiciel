@@ -7,8 +7,17 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * Testing class for <code>TimeShower</code>
+ */
 public class TimeShowerTest{
 
+    /**
+     * Test if the method mustExpend returns the expected value
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     @Test
     public void mustExpendTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 

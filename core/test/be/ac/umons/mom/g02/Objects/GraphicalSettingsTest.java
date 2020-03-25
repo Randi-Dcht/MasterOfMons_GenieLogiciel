@@ -11,6 +11,9 @@ import org.mockito.Mockito;
 
 import java.io.File;
 
+/**
+ * Testing class for <code>GraphicalSettings</code>
+ */
 public class GraphicalSettingsTest {
 
     GraphicalSettings gs;
@@ -25,6 +28,9 @@ public class GraphicalSettingsTest {
         gs = new GraphicalSettings();
     }
 
+    /**
+     * Test if changing the language is effective
+     */
     @Test
     public void testBundle() { //TODO : Simulate the file handle.
         gs.setLanguage(Languages.English);

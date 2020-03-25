@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Testing class for <code>ScrollListChooser</code>
+ */
 public class ScrollListChooserTest extends ScrollListChooser {
 
     Button b1,b2;
@@ -22,6 +25,9 @@ public class ScrollListChooserTest extends ScrollListChooser {
         scrollListItems[1].button = b2;
     }
 
+    /**
+     * Check if the ScrollListChooser selects the good item in of them.
+     */
     @Test
     public void checkSelected() {
         canSelectMultipleItems = false;
@@ -46,13 +52,18 @@ public class ScrollListChooserTest extends ScrollListChooser {
         checkB1Selected();
     }
 
+    /**
+     * CHeck if the others items unselect themselves when another one is selected
+     */
     public void checkB1Selected() {
         Assertions.assertTrue(buttons.get(0).isSelected());
         Assertions.assertFalse(buttons.get(1).isSelected());
         Assertions.assertTrue(scrollListItems[0].isSelected);
         Assertions.assertFalse(scrollListItems[1].isSelected);
     }
-
+    /**
+     * CHeck if the others items unselect themselves when another one is selected
+     */
     public void checkB2Selected() {
         Assertions.assertFalse(buttons.get(0).isSelected());
         Assertions.assertTrue(buttons.get(1).isSelected());

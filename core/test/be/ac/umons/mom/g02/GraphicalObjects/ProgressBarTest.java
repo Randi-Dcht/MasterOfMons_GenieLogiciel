@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects;
 
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +9,8 @@ import org.mockito.Mockito;
 
 
 /**
- * Classe de tests de ProgressBar
- *//*
+ * Testing class for ProgressBar
+ */
 public class ProgressBarTest extends ProgressBar {
 
     public ProgressBarTest() {}
@@ -17,6 +18,7 @@ public class ProgressBarTest extends ProgressBar {
     @BeforeEach
     public void init() {
         sr = Mockito.mock(ShapeRenderer.class);
+        gs = Mockito.mock(GraphicalSettings.class);
     }
 
     @Test
@@ -28,4 +30,3 @@ public class ProgressBarTest extends ProgressBar {
         Assertions.assertEquals(.1, getPercent());
     }
 }
-*/

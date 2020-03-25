@@ -7,12 +7,12 @@ import be.ac.umons.mom.g02.Quests.Quest;
 import java.awt.*;
 
 /**
- * Cette classe représente les tests de la classe QuestShower.
+ * Testing class for QuestShower
  */
 public class QuestShowerTest extends QuestShower {
 
     /**
-     * Vérifie si getMaximumQuestWidth retourne la valeur attendue.
+     * Test if getMaximumQuestWidth returns the expected value
      */
     @Test
     public void questNameWidthTest() {
