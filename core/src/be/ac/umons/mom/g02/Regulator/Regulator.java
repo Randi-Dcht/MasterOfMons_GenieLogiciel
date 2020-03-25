@@ -262,7 +262,8 @@ public class Regulator implements Observer
             return false;
         if (!manager.getActualCourse().getLesson().location().equals(player.getMaps()))
             return false;
-        return player.getItems() != null && player.getItems().getClass().equals(Pen.class);
+//        return player.getItems() != null && player.getItems().getClass().equals(Pen.class);
+        return true;
     }
 
 
