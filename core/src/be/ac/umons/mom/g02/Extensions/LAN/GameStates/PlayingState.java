@@ -133,7 +133,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (newParty)
             SupervisorLAN.getSupervisor().newParty(new MyFirstYear(Supervisor.getPeople(), null, Supervisor.getPeople().getDifficulty()),
                     SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
-//            SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
+//            SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()), TODO
 //                    SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
 
         super.init();
@@ -149,11 +149,18 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
         badPuzzlePathColor = new Color(0xD50000FF);
-//        if (newParty) {
+//        if (newParty) { TODO
 //            initMap("Tmx/LAN_Puzzle.tmx");
 //            secondPlayerMap = gmm.getActualMapName();
 //            SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
 //        }
+
+        if (nm.isTheServer()) {
+            nm.sendPlanning(SupervisorLAN.getPeople().getPlanning());
+        } else {
+            nm.askPNJsPositions(gmm.getActualMapName());
+            nm.askItemsPositions();
+        }
     }
 
     @Override
@@ -178,15 +185,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         });
         nm.setOnItemDetected(this::addItemToMap);
         nm.setOnGetPNJ(this::sendPNJsPositions);
-        if (nm.isTheServer()) {
-            if (nm.getMustSendPNJPos() != null)
-                sendPNJsPositions(nm.getMustSendPNJPos());
-            if (nm.getMustSendItemPos())
-                sendItemsPositions();
-        } else {
-            nm.askPNJsPositions(gmm.getActualMapName());
-            nm.askItemsPositions();
-        }
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
         nm.setOnSecondPlayerPositionDetected((pos) -> player.setMapPos(pos));
         nm.setOnHitPNJ((name, life) -> {
@@ -232,6 +230,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                     mapObjects.remove(i);
         });
         nm.setOnDateDetected((date) -> Supervisor.getSupervisor().setDate(date));
+        nm.setOnPlanningReceived((planning -> SupervisorLAN.getSupervisor().updatePlanning(planning)));
     }
 
     @Override

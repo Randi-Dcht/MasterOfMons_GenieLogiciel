@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.PositionOnMaps;
 import be.ac.umons.mom.g02.Objects.Saving;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.Gdx;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SupervisorLAN extends SupervisorMultiPlayer {
 
@@ -148,5 +150,12 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
         if (notify.getEvents().equals(Events.ChangeHour))
             checkPlanning();
+    }
+
+    public void updatePlanning(HashMap<Integer, ArrayList<Course>> planning) {
+        SupervisorLAN.getPeople().setPlanning(planning);
+        SupervisorLAN.getPeopleTwo().setPlanning(planning);
+        listCourse = playerOne.getPlanning().get(time.getDate().getDay());
+        SupervisorLAN.getSupervisor().checkPlanning();
     }
 }

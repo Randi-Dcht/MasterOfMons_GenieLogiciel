@@ -42,7 +42,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private Difficulty difficulty;
     private Gender gender;
     /*other thing*/
-    private HashMap<Integer,ArrayList<Course>> myPlanning;
+    private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO Hashmap utile ? # Integer -> ArrayList = List d'Arraylist ?
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
     private int friend = 0;
     private SaoulMatePNJ soulMate; //TODO check the type
@@ -252,6 +252,12 @@ public class People extends Character implements Serializable, Observer, FrameTi
         return myPlanning;
     }
 
+    /**
+     * @param planning The planning for this character
+     */
+    public void setPlanning(HashMap<Integer, ArrayList<Course>> planning) {
+        this.myPlanning = planning;
+    }
 
     /**
      *This method allows to push a object in the bag of people.
@@ -553,7 +559,6 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         return Actions.Dialog;
     }
-
 
     /**
      * This method allows to see the notification in the game

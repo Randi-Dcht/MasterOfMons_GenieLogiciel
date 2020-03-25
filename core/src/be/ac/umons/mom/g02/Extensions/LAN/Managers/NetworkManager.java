@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import com.badlogic.gdx.Gdx;
@@ -236,6 +237,8 @@ public class NetworkManager {
     protected BooleanRunnable onPlayerInCourseRoomReceived;
 
     protected Runnable onPlayerWentToCourse;
+
+    protected OnPlanningReceivedRunnable onPlanningReceived;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -264,6 +267,8 @@ public class NetworkManager {
      * The received save from the other player (first and second is already inverted)
      */
     protected Save saveReceived;
+
+    protected HashMap<Integer,ArrayList<Course>> planningReceived;
 
     /**
      * @throws SocketException If the port used (32516) is already used
@@ -790,6 +795,14 @@ public class NetworkManager {
         sendOnTCP("PWC");
     }
 
+    public void sendPlanning(HashMap<Integer,ArrayList<Course>> planning) {
+        try {
+            sendOnTCP("PLAN#" + objectToString(planning));
+        } catch (IOException e) {
+            Gdx.app.error("NetworkManager", "Unable to send the planning", e);
+        }
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -1016,6 +1029,18 @@ public class NetworkManager {
             case "PWC":
                 if (onPlayerWentToCourse != null)
                     Gdx.app.postRunnable(onPlayerWentToCourse);
+                break;
+            case "PLAN":
+                try {
+                    planningReceived = (HashMap<Integer, ArrayList<Course>>) objectFromString(tab[1].trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                if (onPlanningReceived != null)
+                    Gdx.app.postRunnable(() -> onPlanningReceived.run(planningReceived));
+                break;
         }
         if (! received.equals(""))
             msSinceLastMessage = 0;
@@ -1261,6 +1286,8 @@ public class NetworkManager {
      * @param onGetPNJ What to do when the second player ask informations about the PNJs on the map.
      */
     public void setOnGetPNJ(StringRunnable onGetPNJ) {
+        if (mustSendPNJPos != null)
+            Gdx.app.postRunnable(() -> onGetPNJ.run(mustSendPNJPos));
         this.onGetPNJ = onGetPNJ;
     }
 
@@ -1268,6 +1295,8 @@ public class NetworkManager {
      * @param onGetItem What to do when the second player ask informations about the items on the map.
      */
     public void setOnGetItem(Runnable onGetItem) {
+        if (mustSendItemPos)
+            Gdx.app.postRunnable(onGetItem);
         this.onGetItem = onGetItem;
     }
 
@@ -1402,6 +1431,13 @@ public class NetworkManager {
         this.onPlayerWentToCourse = onPlayerWentToCourse;
     }
 
+    public void setOnPlanningReceived(OnPlanningReceivedRunnable onPlanningReceived) {
+        if (planningReceived != null)
+            Gdx.app.postRunnable(() ->
+                    onPlanningReceived.run(planningReceived));
+        this.onPlanningReceived = onPlanningReceived;
+    }
+
     /**
      * Represent the runnable executed when the second player informations has been received.
      */
@@ -1473,5 +1509,9 @@ public class NetworkManager {
      */
     public interface DateRunnable {
         void run(Date date);
+    }
+
+    public interface OnPlanningReceivedRunnable {
+        void run(HashMap<Integer,ArrayList<Course>> planning);
     }
 }
