@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Events.Notifications.EntryPlaces;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
+import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Other.TimeGame;
 
 import java.util.*;
@@ -261,9 +262,7 @@ public class Regulator implements Observer
             return false;
         if (!manager.getActualCourse().getLesson().location().equals(player.getMaps()))
             return false;
-        /*if (player.getItems() == null || !player.getItems().getClass().equals(Pen.class))
-            return false;*/
-        return true;
+        return player.getItems() != null && player.getItems().getClass().equals(Pen.class);
     }
 
 

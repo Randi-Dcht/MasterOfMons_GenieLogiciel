@@ -86,6 +86,6 @@ public class Course implements Serializable
     @Override
     public String toString()
     {
-        return date.getHour() + "H" + date.getMin() + " : " + lesson.toString() + " ("+lesson.location() + ")";
+        return date.getHour() + "H" + date.getMin() + " : " + lesson.getName() + " ("+lesson.location() + ")";
     }
 }
