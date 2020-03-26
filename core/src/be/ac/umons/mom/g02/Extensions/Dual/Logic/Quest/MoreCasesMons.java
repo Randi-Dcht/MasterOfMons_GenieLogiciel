@@ -1,16 +1,8 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
-import be.ac.umons.mom.g02.Quests.Quest;
-import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
-
-import java.util.ArrayList;
 
 
 /**

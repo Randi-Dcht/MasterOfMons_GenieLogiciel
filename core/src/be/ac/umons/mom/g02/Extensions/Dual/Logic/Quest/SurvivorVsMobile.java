@@ -1,9 +1,13 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
+import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import java.util.ArrayList;
@@ -12,91 +16,38 @@ import java.util.ArrayList;
 /**
  * This class define the survivor between two people with many Mobile to kill
  */
-public class SurvivorVsMobile extends MasterQuest
+public class SurvivorVsMobile extends DualUnderQuest
 {
 
     /**
-     * This constructor define the survivor people face to mobile
-     * @param playerOne  is the player of this quest
-     * @param difficulty is the difficulty of the game
+     * This constructor define the dual of the battle between two people
+     * @param people is the people of this Quest
+     * @param master is the difficulty of the game
      */
-    public SurvivorVsMobile(People playerOne, Difficulty difficulty)
+    public SurvivorVsMobile(People people,MasterQuest master)
     {
-        super(null,playerOne, Bloc.Extend,difficulty);
+        super("SurvivorInMons",master,people);
     }
 
 
     /**
-     * This is the end of this Quest
-     * This method allows to switch after this dual
+     * This method is called when the action occurs
+     * @param notify is the notification of the game
      */
     @Override
-    public void nextQuest()
+    public void evenActivity(Notification notify)
     {
 
     }
 
 
-    /**
-     * This method return the name of this quest
-     * @return the name of this quest
-     */
     @Override
-    public String getName()
+    public ArrayList<Mobile> getListMobile()
     {
-        return "DualSurvivor";//TODO
-    }
+        ArrayList<Mobile> list = new ArrayList<>();
+        for (int i=0; i<100;i++)
+            list.add(new ZombiePNJ(MobileType.Lambda,TypeDual.Survivor.getStartMaps()));
 
-
-
-    /**
-     * This method return the question of this Quest
-     * @return a question of this Quest
-     */
-    @Override
-    public String question()
-    {
-        return "QuestionSurvivor";//TODO
-    }
-
-
-    /**
-     * This method allows to create the list of the items
-     */
-    @Override
-    protected void createListItems()
-    {
-        listItems = new ArrayList<>();
-    }
-
-
-    /**
-     * This method allows to create the list of the mobiles
-     */
-    @Override
-    protected void createListMobiles()
-    {
-        listMobs = new ArrayList<>();
-    }
-
-
-    /**
-     * This method return the maps for this Quest
-     * @return list of the maps
-     */
-    @Override
-    public Maps[] getListMaps()
-    {
-        return new Maps[0];
-    }
-
-
-    /**
-     * This method allows to receive the notification of the all class in the game
-     * @param notify is the notification
-     */
-    @Override
-    public void update(Notification notify)
-    {
+        return list;
     }
 }
