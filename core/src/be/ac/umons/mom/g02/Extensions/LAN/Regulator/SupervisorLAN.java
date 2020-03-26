@@ -61,6 +61,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         playerOne.newQuest(firstQuest);
         playerTwo.newQuest(firstQuest, false);
         refreshQuest();
+        updatePlanning(playerOne.getPlanning());
     }
 
     @Override

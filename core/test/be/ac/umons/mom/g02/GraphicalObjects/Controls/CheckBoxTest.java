@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.CheckBox;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Cette classe représente les tests pour CheckBox.
+ * Testing class for CheckBox
  */
 public class CheckBoxTest extends CheckBox {
     @BeforeEach
@@ -21,6 +20,9 @@ public class CheckBoxTest extends CheckBox {
         MasterOfMonsGame.HEIGHT = 50; // Redéfini pour les biens du tests
     }
 
+    /**
+     * Test if the method <code>handleInput</code> works as expected
+     */
     @Test
     public void handleInputTest() {
         x = 1; y = 10;
@@ -52,6 +54,5 @@ public class CheckBoxTest extends CheckBox {
         l.add(new Point(20,45)); // Dehors
         handleInput();
         Assertions.assertFalse(checked);
-
     }
 }

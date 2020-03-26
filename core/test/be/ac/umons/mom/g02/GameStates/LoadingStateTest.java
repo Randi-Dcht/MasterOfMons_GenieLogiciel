@@ -21,7 +21,7 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.when;
 
 /**
- * Cette classe représente les tests pour la classe LoadingState. Elle sera utilisée pour tester que l'angle est correct ainsi que toutes les ressources ont été chargées correctement.
+ * Testing class for LoadingState
  */
 public class LoadingStateTest extends LoadingState {
 
@@ -46,6 +46,9 @@ public class LoadingStateTest extends LoadingState {
 //        when(gmm.getProgress()).thenReturn(0d);
     }
 
+    /**
+     * Test if the end of the loading happens at the right time
+     */
     @Test
     public void testAssets() {
         Assertions.assertFalse(assetsLoaded);
@@ -69,6 +72,9 @@ public class LoadingStateTest extends LoadingState {
         Assertions.assertTrue(mapsLoaded);
     }
 
+    /**
+     * Test if the computed angle is the good one
+     */
     @Test
     public void testAngle() {
         Assertions.assertEquals(0, actualAngle);

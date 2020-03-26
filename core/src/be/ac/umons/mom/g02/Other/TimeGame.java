@@ -55,7 +55,7 @@ public class TimeGame implements Observer, Serializable
     public void setDate(Date date)
     {
         NBmonth   = date.getMonth()-1;
-        this.day  = date.getDay()-1;
+        this.day  = date.getDay();
         this.hour = date.getHour();
         this.year = date.getYear();
         this.min  = date.getMin();

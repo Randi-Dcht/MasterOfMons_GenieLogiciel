@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -14,7 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Cette classe représente les tests liés à la classe Button
+ * Testing class for Button
  */
 public class ButtonTest extends Button {
 
@@ -28,6 +27,9 @@ public class ButtonTest extends Button {
         MasterOfMonsGame.HEIGHT = 50; // Redéfini pour les biens du tests
     }
 
+    /**
+     * Test if the button monitor the click correctly
+     */
     @Test
     public void clickTest() {
         setOnClick(() -> clicked = true);
@@ -62,6 +64,9 @@ public class ButtonTest extends Button {
         Assertions.assertFalse(clicked);
     }
 
+    /**
+     * Test if the method to check if the mouse is over works correctly
+     */
     @Test
     public void isMouseOverTest() {
         x = 1; y = 1;
