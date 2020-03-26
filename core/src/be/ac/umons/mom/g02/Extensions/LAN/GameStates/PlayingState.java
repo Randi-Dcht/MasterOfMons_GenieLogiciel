@@ -215,7 +215,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.setOnLevelUp((newLevel) -> {
             while (newLevel > playerTwo.getCharacteristics().getLevel())
                 ((People)playerTwo.getCharacteristics()).upLevel();
-            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), newLevel));
+            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
         nm.setOnGetItem(this::sendItemsPositions);
         nm.setOnDeath(() -> {
