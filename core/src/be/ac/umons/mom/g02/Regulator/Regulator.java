@@ -163,7 +163,7 @@ public class Regulator implements Observer
      */
     protected void changeQuest()
     {
-        push(player.getQuest().question());
+        push(manager.actualQuest().question());
     }
 
 
