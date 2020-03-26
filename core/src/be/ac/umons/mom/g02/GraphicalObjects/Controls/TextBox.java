@@ -134,7 +134,7 @@ public class TextBox extends Control {
                     continue;
                 if (acceptOnlyHexadecimal && ((c < '0' || c > '9') && (c < 'a' || c > 'f') && (c < 'A' || c > 'F')))
                     continue;
-                if (c != '/') {
+                if (c != '/' && c != '\b' && Character.isLetterOrDigit(c)) {
                     if (selectedPosition == actualText.length())
                         actualText += c;
                     else if (selectedPosition == 0)
@@ -147,24 +147,28 @@ public class TextBox extends Control {
                         onTextChanged.run();
                 }
             }
-            if (gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed) && actualText.length() > 0) {
-                if (selectedPosition == 0)
-                    return;
-                else if (selectedPosition == 1)
-                    actualText = actualText.substring(1);
-                else if (selectedPosition == actualText.length())
-                    actualText = actualText.substring(0, actualText.length() - 1);
-                else
-                    actualText = actualText.substring(0, selectedPosition - 1) + actualText.substring(selectedPosition);
-                selectedPosition--;
-                if (selectedPosition > actualText.length())
-                    selectedPosition = actualText.length();
-                else if (selectedPosition < 0)
-                    selectedPosition = 0;
-                if (onTextChanged != null)
-                    onTextChanged.run();
+            if ((gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed)) && actualText.length() > 0) {
+                removeACharacter();
             }
         }
+    }
+
+    protected void removeACharacter() {
+        if (selectedPosition == 0)
+            return;
+        else if (selectedPosition == 1)
+            actualText = actualText.substring(1);
+        else if (selectedPosition == actualText.length() + 1)
+            actualText = actualText.substring(0, actualText.length() - 1);
+        else
+            actualText = actualText.substring(0, selectedPosition - 1) + actualText.substring(selectedPosition);
+        selectedPosition--;
+        if (selectedPosition > actualText.length())
+            selectedPosition = actualText.length();
+        else if (selectedPosition < 0)
+            selectedPosition = 0;
+        if (onTextChanged != null)
+            onTextChanged.run();
     }
 
     @Override
