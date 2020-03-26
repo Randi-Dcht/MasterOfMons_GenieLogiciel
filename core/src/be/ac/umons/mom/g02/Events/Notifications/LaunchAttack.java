@@ -11,16 +11,18 @@ public class LaunchAttack implements Notification
 {
     private Events evt;
     private Character buffer;
+    private Character secondBuffer;
 
 
     /**
      * This constructor define a notification when launch attack with buffer
-     * @param buffer is a buffer with character(specific to events)
+     * @param victim is a buffer with character(specific to events)
      */
-    public LaunchAttack(Character buffer)
+    public LaunchAttack(Character victim,Character attacker)
     {
         evt = Events.Attack;
-        this.buffer = buffer;
+        this.buffer = victim;
+        secondBuffer = attacker;
     }
 
 
@@ -29,7 +31,7 @@ public class LaunchAttack implements Notification
      */
     public LaunchAttack()
     {
-        this(null);
+        this(null,null);
     }
 
 
@@ -52,6 +54,17 @@ public class LaunchAttack implements Notification
     {
         return buffer;
     }
+
+
+    /**
+     * This method return the buffer of this notification if it isn't empty
+     * @return character
+     */
+    public Character getBufferSecond()
+    {
+        return secondBuffer;
+    }
+
 
 
     /**

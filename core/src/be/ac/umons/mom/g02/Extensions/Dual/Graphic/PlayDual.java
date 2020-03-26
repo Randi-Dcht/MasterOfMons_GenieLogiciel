@@ -19,7 +19,6 @@ import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.graphics.Color;
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;

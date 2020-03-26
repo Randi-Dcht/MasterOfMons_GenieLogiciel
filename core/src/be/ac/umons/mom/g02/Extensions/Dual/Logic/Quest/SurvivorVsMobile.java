@@ -1,12 +1,12 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
@@ -37,7 +37,22 @@ public class SurvivorVsMobile extends DualUnderQuest
     @Override
     public void evenActivity(Notification notify)
     {
+        if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty())
+            analyseAttack((LaunchAttack)notify);
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().equals(SupervisorDual.getSupervisorDual().getAdversary(people)));
+            winGame();
 
+    }
+
+    private void winGame()
+    {
+        addProgress(100-progress);
+    }
+
+    private void analyseAttack(LaunchAttack notify)
+    {
+        if (notify.getBufferSecond().equals(people))
+            addProgress(0.1);
     }
 
 
