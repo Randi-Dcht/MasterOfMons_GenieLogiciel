@@ -2,8 +2,11 @@ package be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum;
 
 
 import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.*;
-import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.BattlePeople;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualUnderQuest;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MoreCasesMons;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.SurvivorVsMobile;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.TakeFlag;
 
 public enum TypeDual
 {
