@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator;
 
+import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.CreatePlayerDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
@@ -102,7 +103,17 @@ public class SupervisorDual extends SupervisorMultiPlayer
 
     public boolean startLoading()
     {
-        return playerOne != null && playerTwo != null;
+        if (playerOne == null)
+        {
+            CreatePlayerDual.setError("Player 1 doesn't create");
+            return false;
+        }
+        if (playerTwo == null)
+        {
+            CreatePlayerDual.setError("Player 2 doesn't create");
+            return false;
+        }
+        return true;
     }
 
     public People getAdversary(People people)

@@ -25,11 +25,17 @@ import java.util.List;
 public class CreatePlayerDual extends MenuState
 {
 
+    private static String seeError = " ";
     /**
      * The state to launch when the creation is done.
      */
     protected Class<? extends GameState> afterCreationState;
 
+
+    public static void setError(String error)
+    {
+        seeError = error;
+    }
 
     /**
      * @param gs The game's graphical settings.
@@ -78,7 +84,7 @@ public class CreatePlayerDual extends MenuState
                             gsm.setState(LoadPlayerDual.class);
                         }),
 
-                        new TitleMenuItem(gs," "),
+                        new TextMenuItem(gs,seeError),
 
                         new ButtonMenuItem(gim,gs,gs.getStringFromId("newGame"), () ->
                         {
@@ -88,6 +94,8 @@ public class CreatePlayerDual extends MenuState
                                 GameState a = gsm.setState(afterCreationState);
                                 ((LoadingState)a).setAfterLoadingState(DualChooseMenu.class);
                             }
+                            else
+                                init();
                         }),
                 });
     }
