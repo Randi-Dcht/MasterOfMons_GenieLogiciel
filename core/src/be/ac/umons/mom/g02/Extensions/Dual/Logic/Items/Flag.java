@@ -13,6 +13,7 @@ public class Flag extends Items
      * This variable id the people who behove the flag
      */
     private People myCamp;
+    private String id;
 
 
     /**
@@ -28,9 +29,10 @@ public class Flag extends Items
      * This method allows to give the people who behove this
      * @param people is the people
      */
-    public void setPeople(People people)
+    public void setPeople(People people,String id)
     {
-        myCamp = people;
+        myCamp  = people;
+        this.id = id;
     }
 
 
@@ -60,6 +62,6 @@ public class Flag extends Items
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return id;
     }
 }

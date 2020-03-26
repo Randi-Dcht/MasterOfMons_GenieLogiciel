@@ -45,7 +45,7 @@ public class SurvivorVsMobile extends DualUnderQuest
     public ArrayList<Mobile> getListMobile()
     {
         ArrayList<Mobile> list = new ArrayList<>();
-        for (int i=0; i<100;i++)
+        for (int i=0; i<50;i++)
             list.add(new ZombiePNJ(MobileType.Lambda,TypeDual.Survivor.getStartMaps()));
 
         return list;

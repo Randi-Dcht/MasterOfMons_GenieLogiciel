@@ -101,7 +101,8 @@ public class DualMasterQuest extends MasterQuest
     @Override
     protected void createListMobiles() throws Exception
     {
-        listMobs = ll[0].getListMobile();//TODO pass static
+        listMobs = ll[0].getListMobile();
+        listMobs.addAll(ll[1].getListMobile());//TODO pass static
     }
 
 

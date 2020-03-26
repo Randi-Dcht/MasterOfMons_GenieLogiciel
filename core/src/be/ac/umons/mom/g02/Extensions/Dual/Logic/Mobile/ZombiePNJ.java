@@ -1,17 +1,19 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile;
 
 import be.ac.umons.mom.g02.Enums.*;
-import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
-import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
-public class ZombiePNJ extends Mobile
+public class ZombiePNJ extends Mobile implements Observer
 {
 
+    private static double SPEED = 0.23;
+    private static int number = 0;
 
     /**
      * Distance between people and this PNJ on X
@@ -61,6 +63,7 @@ public class ZombiePNJ extends Mobile
         myGraphic = character;
         setVictim(victim);
         Supervisor.getSupervisor().addRefresh(this);
+        Supervisor.getEvent().add(Events.Dead,this);
     }
 
 
@@ -115,7 +118,7 @@ public class ZombiePNJ extends Mobile
     private void moving(double dt)
     {
         int x=0,y=0;
-        int toMove = (int)Math.round(0.23 * dt * tileSize);
+        int toMove = (int)Math.round(SPEED * dt * tileSize);
 
 
         if(tileXbetween > toMove || tileXbetween < -toMove || tileYbetween > toMove || tileYbetween < -toMove)
@@ -145,10 +148,24 @@ public class ZombiePNJ extends Mobile
         {
             Supervisor.getSupervisor().meetCharacter(this,victim.getCharacteristics());
             meet=true;
+            emplaceAdd();
         }
         myGraphic.move(x,y);
     }
 
+    public void emplaceAdd()
+    {
+        number++;
+        if (number >= 10)
+            speed = 0.12;
+    }
+
+    public void emplaceRemove()
+    {
+        number--;
+        if (number < 10)
+            speed = 0.22;
+    }
 
     /**
      * This method allows to give the instance of graphic Character
@@ -157,5 +174,17 @@ public class ZombiePNJ extends Mobile
     public Character getCharacter()
     {
         return myGraphic;
+    }
+
+
+    /**
+     * The method to receive the notification
+     * @param notify
+     */
+    @Override
+    public void update(Notification notify)
+    {
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().equals(this))
+            emplaceRemove();
     }
 }
