@@ -943,8 +943,9 @@ public class NetworkManager {
             case "hitPNJ": // A PNJ has been hit by the other player.
                 if (onHitPNJ != null) {
                     try {
+                        double d = Double.parseDouble(tab[2]);
                         Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1],
-                                Double.parseDouble(tab[2])));
+                                d));
                     } catch (NumberFormatException e) {
                         Gdx.app.error("NetworkManager", "Error detected while parsing damage in hitPNJ message (ignoring it)", e);
                     }
