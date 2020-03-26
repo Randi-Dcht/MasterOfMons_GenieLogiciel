@@ -74,6 +74,12 @@ public abstract class Items implements Serializable
     public abstract boolean getObsolete();
 
 
+    public int buy()
+    {
+        return 0;
+    }
+
+
     /**
      * This method returns the id to place the Item on the map
      * @return id of place

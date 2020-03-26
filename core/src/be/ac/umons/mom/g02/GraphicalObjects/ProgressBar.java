@@ -59,6 +59,8 @@ public class ProgressBar {
         init();
     }
 
+    protected ProgressBar() {}
+
     /**
      * Initialize a new progress bar.
      */

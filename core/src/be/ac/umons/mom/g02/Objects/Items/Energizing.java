@@ -30,10 +30,10 @@ public class Energizing extends Items
     @Override
     public void used(People pp)
     {
-        super.used(pp);
         pp.addEnergy(20);
         visibly();
         useItem = false;
+        super.used(pp);
     }
 
 

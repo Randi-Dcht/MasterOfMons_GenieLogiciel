@@ -23,6 +23,8 @@ public class Course implements Serializable
      * If the people go to the lesson
      */
     private boolean go = false;
+    /***/
+    private int late = 0;
 
 
     /**
@@ -73,6 +75,46 @@ public class Course implements Serializable
     public Date getDate()
     {
         return date;
+    }
+
+
+    /**
+     * This method allows to calculus the time before the finish course
+     * @param now is the actual time of the game
+     * @return a date with the time before end
+     */
+    public Date howTimeFinish(Date now)
+    {
+        double ccl = difference(date,now,2);
+        return new Date(0,0,0,(int)(ccl/60),(int)(ccl%60));
+    }
+
+
+    private double difference(Date time,Date now,int many)
+    {
+        double there = (time.getHour()+many)*60 + time.getMin();
+        double actu  = now.getHour()*60 + now.getMin();
+        return there - actu;
+    }
+
+
+    public void arrivedAtCourse(Date now)//TODO
+    {
+        Double ccl = difference(date,now,0);
+    }
+
+
+    /***/
+    public boolean isLate()
+    {
+        return late >= 30;
+    }
+
+
+    /***/
+    public double getLate()
+    {
+        return late;
     }
 
 

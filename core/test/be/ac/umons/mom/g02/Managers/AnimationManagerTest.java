@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
 /**
- * Test si AnimationManager se comporte comme il devrait.
+ * Testing class for <code>AnimationManager</code>
  */
 public class AnimationManagerTest extends AnimationManager {
 
@@ -17,6 +17,9 @@ public class AnimationManagerTest extends AnimationManager {
         animations = new HashMap<>();
     }
 
+    /**
+     * Test if the update method works as expected
+     */
     @Test
     public void updateTest() {
         DoubleAnimation da = new DoubleAnimation(0,1,1000);

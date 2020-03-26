@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 
 /**
- * Cette classe représente les tests unitaires de la classe InventoryShower.
+ * Testing class for <code>InventoryShower</code>
  */
 public class InventoryShowerTest extends InventoryShower {
 
@@ -23,6 +23,9 @@ public class InventoryShowerTest extends InventoryShower {
         inventoryItemList = new ArrayList<>();
     }
 
+    /**
+     * Test if the method handleInput is working as expected
+     */
     @Test
     public void handleInputTest() {
         InventoryItem ii1, ii2;
@@ -50,7 +53,5 @@ public class InventoryShowerTest extends InventoryShower {
         Mockito.verify(ii1, Mockito.times(1)).unselect();
         Mockito.verify(ii2, Mockito.times(1)).select();
         Assertions.assertEquals(selectedItem, ii2);
-
-
     }
 }
