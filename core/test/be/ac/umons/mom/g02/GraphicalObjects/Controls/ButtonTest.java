@@ -15,16 +15,19 @@ import java.util.ArrayList;
 /**
  * Testing class for Button
  */
-public class ButtonTest extends Button {
+public class ButtonTest {
+
+    Button b;
 
     private boolean clicked = false;
 
     @BeforeEach
     public void init() {
-        gim = Mockito.mock(GameInputManager.class);
-        gs = Mockito.mock(GraphicalSettings.class);
-        sr = Mockito.mock(ShapeRenderer.class);
-        MasterOfMonsGame.HEIGHT = 50; // Redéfini pour les biens du tests
+        b = new Button();
+        b.gim = Mockito.mock(GameInputManager.class);
+        b.gs = Mockito.mock(GraphicalSettings.class);
+        b.sr = Mockito.mock(ShapeRenderer.class);
+        MasterOfMonsGame.HEIGHT = 50; // Redefined for tests purposes
     }
 
     /**
@@ -32,35 +35,35 @@ public class ButtonTest extends Button {
      */
     @Test
     public void clickTest() {
-        setOnClick(() -> clicked = true);
-        x = 1; y = 1;
-        width = 10; height = 10;
+        b.setOnClick(() -> clicked = true);
+        b.x = 1; b.y = 1;
+        b.width = 10; b.height = 10;
         ArrayList<Point> l = new ArrayList<>();
-        l.add(new Point(5,45)); // Dedans car le y est inversé
-        Mockito.when(gim.getRecentClicks()).thenReturn(l);
-        Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(0,0)); // Sans importance ici vu l'implémentation
-        handleInput();
+        l.add(new Point(5,45));
+        Mockito.when(b.gim.getRecentClicks()).thenReturn(l);
+        Mockito.when(b.gim.getLastMousePosition()).thenReturn(new Point(0,0)); // Without any importance here
+        b.handleInput();
         Assertions.assertTrue(clicked);
         l.clear();
         clicked = false;
-        l.add(new Point(0,5)); // Dehors
-        handleInput();
+        l.add(new Point(0,5)); // Out
+        b.handleInput();
         Assertions.assertFalse(clicked);
         l.clear();
         clicked = false;
-        l.add(new Point(5,45)); // Dedans
-        l.add(new Point(0,5)); // Dehors
-        handleInput();
+        l.add(new Point(5,45)); // In
+        l.add(new Point(0,5)); // Out
+        b.handleInput();
         Assertions.assertTrue(clicked);
         l.clear();
         clicked = false;
-        l.add(new Point(5,0)); // Dehors
-        handleInput();
+        l.add(new Point(5,0)); // Out
+        b.handleInput();
         Assertions.assertFalse(clicked);
         l.clear();
         clicked = false;
-        l.add(new Point(20,45)); // Dehors
-        handleInput();
+        l.add(new Point(20,45)); // Out
+        b.handleInput();
         Assertions.assertFalse(clicked);
     }
 
@@ -69,19 +72,19 @@ public class ButtonTest extends Button {
      */
     @Test
     public void isMouseOverTest() {
-        x = 1; y = 1;
-        width = 10; height = 10;
-        Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(0,0));
-        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>()); // Sans importance ici.
-        Assertions.assertFalse(isMouseOver);
-        Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(5,45)); // Dedans (y inversé)
-        handleInput();
-        Assertions.assertTrue(isMouseOver);
-        Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(15,45)); // Dehors
-        handleInput();
-        Assertions.assertFalse(isMouseOver);
-        Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(5,5)); // Dehors
-        handleInput();
-        Assertions.assertFalse(isMouseOver);
+        b.x = 1; b.y = 1;
+        b.width = 10; b.height = 10;
+        Mockito.when(b.gim.getLastMousePosition()).thenReturn(new Point(0,0));
+        Mockito.when(b.gim.getRecentClicks()).thenReturn(new ArrayList<>()); // Sans importance ici.
+        Assertions.assertFalse(b.isMouseOver);
+        Mockito.when(b.gim.getLastMousePosition()).thenReturn(new Point(5,45)); // Dedans (y inversé)
+        b.handleInput();
+        Assertions.assertTrue(b.isMouseOver);
+        Mockito.when(b.gim.getLastMousePosition()).thenReturn(new Point(15,45)); // Dehors
+        b.handleInput();
+        Assertions.assertFalse(b.isMouseOver);
+        Mockito.when(b.gim.getLastMousePosition()).thenReturn(new Point(5,5)); // Dehors
+        b.handleInput();
+        Assertions.assertFalse(b.isMouseOver);
     }
 }

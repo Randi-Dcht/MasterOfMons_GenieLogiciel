@@ -9,13 +9,26 @@ import java.awt.*;
 /**
  * Testing class for QuestShower
  */
-public class QuestShowerTest extends QuestShower {
+public class QuestShowerTest {
+
+    QuestShower qs;
 
     /**
      * Test if getMaximumQuestWidth returns the expected value
      */
     @Test
     public void questNameWidthTest() {
+        qs = new QuestShower() {
+            /**
+             * Overrided to avoid an error during the test. It doesn't change anything for the test.
+             * @param text The text
+             * @return The length of the text.
+             */
+            @Override
+            protected Point getTextSize(String text) {
+                return new Point(text.length(), 10);
+            }
+        };
         Quest q2 = new Quest() {
             @Override
             public double getProgress() {
@@ -86,17 +99,7 @@ public class QuestShowerTest extends QuestShower {
                 return false;
             }
         };
-        Assertions.assertEquals(4 + 4 + BETWEEN_CIRCLE_AND_TEXT_MARGIN, getMaximumQuestNameWidth(q1, 4));
-        Assertions.assertEquals(4, getMaximumQuestNameWidth(q2, 0));
-    }
-
-    /**
-     * Overrided to avoid an error during the test. It doesn't change anything for the test.
-     * @param text The text
-     * @return The length of the text.
-     */
-    @Override
-    protected Point getTextSize(String text) {
-        return new Point(text.length(), 10);
+        Assertions.assertEquals(4 + 4 + qs.BETWEEN_CIRCLE_AND_TEXT_MARGIN, qs.getMaximumQuestNameWidth(q1, 4));
+        Assertions.assertEquals(4, qs.getMaximumQuestNameWidth(q2, 0));
     }
 }

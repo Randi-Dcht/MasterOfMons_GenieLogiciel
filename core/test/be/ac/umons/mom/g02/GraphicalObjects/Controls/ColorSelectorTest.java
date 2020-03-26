@@ -12,14 +12,17 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Testing class for the ColorSelector
  */
-class ColorSelectorTest extends ColorSelector {
+class ColorSelectorTest {
+
+    ColorSelector cs;
 
     public ColorSelectorTest() {
-        selectedColor = new Color(0x21212142);
-        tb = Mockito.mock(TextBox.class);
-        sr = Mockito.mock(ShapeRenderer.class);
-        gs = Mockito.mock(GraphicalSettings.class);
-        gim = Mockito.mock(GameInputManager.class);
+        cs = new ColorSelector();
+        cs.selectedColor = new Color(0x21212142);
+        cs.tb = Mockito.mock(TextBox.class);
+        cs.sr = Mockito.mock(ShapeRenderer.class);
+        cs.gs = Mockito.mock(GraphicalSettings.class);
+        cs.gim = Mockito.mock(GameInputManager.class);
     }
 
     /**
@@ -27,17 +30,17 @@ class ColorSelectorTest extends ColorSelector {
      */
     @Test
     void updateSelectedColorTest() {
-        Mockito.when(tb.getText()).thenReturn("00AF");
-        updateSelectedColor();
-        assertEquals(new Color(0x21212142), selectedColor);
-        Mockito.when(tb.getText()).thenReturn("FFFFFF");
-        updateSelectedColor();
-        assertEquals(new Color(0xFFFFFFFF), selectedColor);
-        Mockito.when(tb.getText()).thenReturn("000F00AF");
-        updateSelectedColor();
-        assertEquals(new Color(0x000F00AF), selectedColor);
-        Mockito.when(tb.getText()).thenReturn("00AF");
-        updateSelectedColor();
-        assertEquals(new Color(0x000F00AF), selectedColor);
+        Mockito.when(cs.tb.getText()).thenReturn("00AF");
+        cs.updateSelectedColor();
+        assertEquals(new Color(0x21212142), cs.selectedColor);
+        Mockito.when(cs.tb.getText()).thenReturn("FFFFFF");
+        cs.updateSelectedColor();
+        assertEquals(new Color(0xFFFFFFFF), cs.selectedColor);
+        Mockito.when(cs.tb.getText()).thenReturn("000F00AF");
+        cs.updateSelectedColor();
+        assertEquals(new Color(0x000F00AF), cs.selectedColor);
+        Mockito.when(cs.tb.getText()).thenReturn("00AF");
+        cs.updateSelectedColor();
+        assertEquals(new Color(0x000F00AF), cs.selectedColor);
     }
 }

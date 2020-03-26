@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 /**
  * Testing class for <code>TimeShower</code>
  */
-public class TimeShowerTest{
+public class TimeShowerTest {
 
     /**
      * Test if the method mustExpend returns the expected value

@@ -23,27 +23,32 @@ import static org.mockito.Mockito.when;
 /**
  * Testing class for LoadingState
  */
-public class LoadingStateTest extends LoadingState {
+public class LoadingStateTest {
+
+    protected LoadingState ls;
 
     @BeforeEach
     public void init() {
-        gim = Mockito.mock(GameInputManager.class);
-        gsm = Mockito.mock(GameStateManager.class);
-        gs = Mockito.mock(GraphicalSettings.class);
-        Mockito.when(gs.getBackgroundColor()).thenReturn(new Color());
-        am = Mockito.mock(AssetManager.class);
-        sb = Mockito.mock(SpriteBatch.class);
-        gmm = Mockito.mock(GameMapManager.class);
-        sr = Mockito.mock(ShapeRenderer.class);
-        font = Mockito.mock(BitmapFont.class);
-        MockitoAnnotations.initMocks(this);
-        when(gs.getAssetManager()).thenReturn(am);
-        when(am.update()).thenReturn(false);
-        when(gs.getStringFromId("loading")).thenReturn("Loading...");
-        Gdx.gl = Mockito.mock(GL20.class);
-        Gdx.app = Mockito.mock(Application.class);
-//        when(am.getProgress()).thenReturn(0f);
-//        when(gmm.getProgress()).thenReturn(0d);
+        ls = new LoadingState() {
+            @Override
+            public void init() {
+                gim = Mockito.mock(GameInputManager.class);
+                gsm = Mockito.mock(GameStateManager.class);
+                gs = Mockito.mock(GraphicalSettings.class);
+                Mockito.when(gs.getBackgroundColor()).thenReturn(new Color());
+                am = Mockito.mock(AssetManager.class);
+                sb = Mockito.mock(SpriteBatch.class);
+                gmm = Mockito.mock(GameMapManager.class);
+                sr = Mockito.mock(ShapeRenderer.class);
+                font = Mockito.mock(BitmapFont.class);
+                when(gs.getAssetManager()).thenReturn(am);
+                when(am.update()).thenReturn(false);
+                when(gs.getStringFromId("loading")).thenReturn("Loading...");
+                Gdx.gl = Mockito.mock(GL20.class);
+                Gdx.app = Mockito.mock(Application.class);
+            }
+        };
+        ls.init();
     }
 
     /**
@@ -51,25 +56,25 @@ public class LoadingStateTest extends LoadingState {
      */
     @Test
     public void testAssets() {
-        Assertions.assertFalse(assetsLoaded);
-        Assertions.assertEquals(0, Mockito.mockingDetails(am).getInvocations().size());
-        draw();
-        Assertions.assertFalse(assetsLoaded);
-        Assertions.assertEquals(2, Mockito.mockingDetails(am).getInvocations().size()); // 2 because update() and getProgress()
-        when(am.update()).thenReturn(true);
-        draw();
-        Assertions.assertTrue(assetsLoaded);
-        Assertions.assertFalse(mapsLoaded);
-        draw();
-        Assertions.assertTrue(assetsLoaded);
-        Assertions.assertFalse(mapsLoaded);
-        draw();
-        Assertions.assertTrue(assetsLoaded);
-        Assertions.assertFalse(mapsLoaded);
-        when(gmm.loadNextMap()).thenReturn(true);
-        draw();
-        Assertions.assertTrue(assetsLoaded);
-        Assertions.assertTrue(mapsLoaded);
+        Assertions.assertFalse(ls.assetsLoaded);
+        Assertions.assertEquals(0, Mockito.mockingDetails(ls.am).getInvocations().size());
+        ls.draw();
+        Assertions.assertFalse(ls.assetsLoaded);
+        Assertions.assertEquals(2, Mockito.mockingDetails(ls.am).getInvocations().size()); // 2 because update() and getProgress()
+        when(ls.am.update()).thenReturn(true);
+        ls.draw();
+        Assertions.assertTrue(ls.assetsLoaded);
+        Assertions.assertFalse(ls.mapsLoaded);
+        ls.draw();
+        Assertions.assertTrue(ls.assetsLoaded);
+        Assertions.assertFalse(ls.mapsLoaded);
+        ls.draw();
+        Assertions.assertTrue(ls.assetsLoaded);
+        Assertions.assertFalse(ls.mapsLoaded);
+        when(ls.gmm.loadNextMap()).thenReturn(true);
+        ls.draw();
+        Assertions.assertTrue(ls.assetsLoaded);
+        Assertions.assertTrue(ls.mapsLoaded);
     }
 
     /**
@@ -77,12 +82,12 @@ public class LoadingStateTest extends LoadingState {
      */
     @Test
     public void testAngle() {
-        Assertions.assertEquals(0, actualAngle);
-        update(1);
-        Assertions.assertEquals(Math.PI, actualAngle);
-        update(.5f);
-        Assertions.assertEquals(1.5 * Math.PI, actualAngle);
-        update(1);
-        Assertions.assertEquals(.5 * Math.PI, actualAngle);
+        Assertions.assertEquals(0, ls.actualAngle);
+        ls.update(1);
+        Assertions.assertEquals(Math.PI, ls.actualAngle);
+        ls.update(.5f);
+        Assertions.assertEquals(1.5 * Math.PI, ls.actualAngle);
+        ls.update(1);
+        Assertions.assertEquals(.5 * Math.PI, ls.actualAngle);
     }
 }

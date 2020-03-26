@@ -11,22 +11,23 @@ import org.mockito.Mockito;
 /**
  * Testing class for ProgressBar
  */
-public class ProgressBarTest extends ProgressBar {
+public class ProgressBarTest {
 
-    public ProgressBarTest() {}
+    ProgressBar pb;
 
     @BeforeEach
     public void init() {
-        sr = Mockito.mock(ShapeRenderer.class);
-        gs = Mockito.mock(GraphicalSettings.class);
+        pb = new ProgressBar();
+        pb.sr = Mockito.mock(ShapeRenderer.class);
+        pb.gs = Mockito.mock(GraphicalSettings.class);
     }
 
     @Test
     public void percentTest() {
-        setMaxValue(20);
-        setValue(5);
-        Assertions.assertEquals(.25, getPercent());
-        setMaxValue(50);
-        Assertions.assertEquals(.1, getPercent());
+        pb.setMaxValue(20);
+        pb.setValue(5);
+        Assertions.assertEquals(.25, pb.getPercent());
+        pb.setMaxValue(50);
+        Assertions.assertEquals(.1, pb.getPercent());
     }
 }

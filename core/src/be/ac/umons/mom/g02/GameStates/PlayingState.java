@@ -409,7 +409,7 @@ public class PlayingState extends GameState implements Observer {
      * @param dt The delta time
      */
     protected void makePlayerMove(float dt) {
-        double velocity = supervisor.getPeople().getSpeed();
+        double velocity = Supervisor.getPeople().getSpeed();
         int toMove = (int)Math.round(velocity * dt * tileWidth);
         int toMoveX = 0, toMoveY = 0;
 

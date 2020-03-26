@@ -14,17 +14,20 @@ import java.util.ArrayList;
 /**
  * Testing class for <code>KeySelector</code>
  */
-public class KeySelectorTest extends KeySelector {
+public class KeySelectorTest {
+
+    KeySelector ks;
 
     public KeySelectorTest() {
-        sr = Mockito.mock(ShapeRenderer.class);
-        gim = Mockito.mock(GameInputManager.class);
-        width = 20;
-        height = 20;
+        ks = new KeySelector();
+        ks.sr = Mockito.mock(ShapeRenderer.class);
+        ks.gim = Mockito.mock(GameInputManager.class);
+        ks.width = 20;
+        ks.height = 20;
         MasterOfMonsGame.WIDTH = 50;
         MasterOfMonsGame.HEIGHT = 50;
-        actualKeyCode = -1;
-        actualKey = "";
+        ks.actualKeyCode = -1;
+        ks.actualKey = "";
     }
 
     /**
@@ -32,18 +35,18 @@ public class KeySelectorTest extends KeySelector {
      */
     @Test
     public void handleInputTest() {
-        isSelected = true;
-        Mockito.when(gim.getLastKeyPressedCode()).thenReturn(Input.Keys.E);
-        handleInput();
-        Assertions.assertEquals(actualKeyCode, Input.Keys.E);
-        Mockito.when(gim.getLastKeyPressedCode()).thenReturn(Input.Keys.F);
-        handleInput();
-        Assertions.assertEquals(actualKeyCode, Input.Keys.E); // Not selected
-        isSelected = true;
-        Mockito.when(gim.getLastKeyPressedCode()).thenReturn(Input.Keys.R);
-        handleInput();
-        Assertions.assertEquals(actualKeyCode, Input.Keys.R); // Not selected
-        Assertions.assertEquals(actualKey, "R");
+        ks.isSelected = true;
+        Mockito.when(ks.gim.getLastKeyPressedCode()).thenReturn(Input.Keys.E);
+        ks.handleInput();
+        Assertions.assertEquals(ks.actualKeyCode, Input.Keys.E);
+        Mockito.when(ks.gim.getLastKeyPressedCode()).thenReturn(Input.Keys.F);
+        ks.handleInput();
+        Assertions.assertEquals(ks.actualKeyCode, Input.Keys.E); // Not selected
+        ks.isSelected = true;
+        Mockito.when(ks.gim.getLastKeyPressedCode()).thenReturn(Input.Keys.R);
+        ks.handleInput();
+        Assertions.assertEquals(ks.actualKeyCode, Input.Keys.R); // Not selected
+        Assertions.assertEquals(ks.actualKey, "R");
     }
 
     /**
@@ -51,18 +54,18 @@ public class KeySelectorTest extends KeySelector {
      */
     @Test
     public void isSelectedTest() {
-        handleInput();
-        Assertions.assertFalse(isSelected);
+        ks.handleInput();
+        Assertions.assertFalse(ks.isSelected);
         ArrayList<Point> l = new ArrayList<>();
         Point c = new Point(15, 35); // IN
         l.add(c);
-        Mockito.when(gim.getRecentClicks()).thenReturn(l);
-        handleInput();
-        Assertions.assertTrue(isSelected);
+        Mockito.when(ks.gim.getRecentClicks()).thenReturn(l);
+        ks.handleInput();
+        Assertions.assertTrue(ks.isSelected);
         Point c2 = new Point(15, 20); // OUT
         l.add(c2);
-        handleInput();
-        Assertions.assertFalse(isSelected);
+        ks.handleInput();
+        Assertions.assertFalse(ks.isSelected);
     }
 
 }

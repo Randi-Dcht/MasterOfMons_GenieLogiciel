@@ -10,11 +10,14 @@ import java.util.HashMap;
 /**
  * Testing class for <code>AnimationManager</code>
  */
-public class AnimationManagerTest extends AnimationManager {
+public class AnimationManagerTest {
+
+    AnimationManager am;
 
     @BeforeEach
     public void init() {
-        animations = new HashMap<>();
+        am = new AnimationManager();
+        am.animations = new HashMap<>();
     }
 
     /**
@@ -24,14 +27,14 @@ public class AnimationManagerTest extends AnimationManager {
     public void updateTest() {
         DoubleAnimation da = new DoubleAnimation(0,1,1000);
         DoubleAnimation da2 = new DoubleAnimation(1,1,1000);
-        animations.put("Test1", da);
-        animations.put("Test2", da2);
-        update(.5f);
-        Assertions.assertTrue(animations.containsKey("Test1"));
-        Assertions.assertFalse(animations.containsKey("Test2"));
-        update(.5f);
-        Assertions.assertFalse(animations.containsKey("Test1"));
-        Assertions.assertFalse(animations.containsKey("Test2"));
+        am.animations.put("Test1", da);
+        am.animations.put("Test2", da2);
+        am.update(.5f);
+        Assertions.assertTrue(am.animations.containsKey("Test1"));
+        Assertions.assertFalse(am.animations.containsKey("Test2"));
+        am.update(.5f);
+        Assertions.assertFalse(am.animations.containsKey("Test1"));
+        Assertions.assertFalse(am.animations.containsKey("Test2"));
     }
 
 

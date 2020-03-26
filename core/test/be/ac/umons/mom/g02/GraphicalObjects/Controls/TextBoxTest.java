@@ -17,14 +17,17 @@ import java.util.LinkedList;
 /**
  * Testing class for <code>TextBox</code>
  */
-public class TextBoxTest extends TextBox {
+public class TextBoxTest {
+
+    TextBox tb;
 
     @BeforeEach
     public void init() {
-        gim = Mockito.mock(GameInputManager.class);
-        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
-        width = 20;
-        height = 20;
+        tb = new TextBox();
+        tb.gim = Mockito.mock(GameInputManager.class);
+        Mockito.when(tb.gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        tb.width = 20;
+        tb.height = 20;
         MasterOfMonsGame.WIDTH = 50;
         MasterOfMonsGame.HEIGHT = 50;
     }
@@ -34,18 +37,18 @@ public class TextBoxTest extends TextBox {
      */
     @Test
     public void isSelectedTest() {
-        handleInput();
-        Assertions.assertFalse(isSelected);
+        tb.handleInput();
+        Assertions.assertFalse(tb.isSelected);
         ArrayList<Point> l = new ArrayList<>();
         Point c = new Point(15, 35); // IN
         l.add(c);
-        Mockito.when(gim.getRecentClicks()).thenReturn(l);
-        handleInput();
-        Assertions.assertTrue(isSelected);
+        Mockito.when(tb.gim.getRecentClicks()).thenReturn(l);
+        tb.handleInput();
+        Assertions.assertTrue(tb.isSelected);
         Point c2 = new Point(15, 20); // OUT
         l.add(c2);
-        handleInput();
-        Assertions.assertFalse(isSelected);
+        tb.handleInput();
+        Assertions.assertFalse(tb.isSelected);
     }
 
     /**
@@ -54,32 +57,35 @@ public class TextBoxTest extends TextBox {
     @Test
     public void actualTextTest() {
         LinkedList<java.lang.Character> ll = new LinkedList<>();
-        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
-        Mockito.when(gim.getLastChars()).thenReturn(ll);
-        suffix = ".txt";
-        handleInput();
-        isSelected = true;
-        Assertions.assertEquals("", actualText);
+        Mockito.when(tb.gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(tb.gim.getLastChars()).thenReturn(ll);
+        tb.suffix = ".txt";
+        tb.handleInput();
+        tb.isSelected = true;
+        Assertions.assertEquals("", tb.actualText);
         ll.add('a');
-        handleInput();
-        Assertions.assertEquals("a", actualText);
+        tb.handleInput();
+        Assertions.assertEquals("a", tb.actualText);
         ll.clear();
         ll.add('A');
-        handleInput();
-        Assertions.assertEquals("aA", actualText);
-        Mockito.when(gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed)).thenReturn(true);
+        tb.handleInput();
+        Assertions.assertEquals("aA", tb.actualText);
+        Assertions.assertEquals("aA.txt", tb.getText());
+        Mockito.when(tb.gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed)).thenReturn(true);
         ll.clear();
-        handleInput();
-        Assertions.assertEquals("a", actualText);
-        isSelected = false;
-        Assertions.assertEquals("a", actualText);
+        tb.handleInput();
+        Assertions.assertEquals("a", tb.actualText);
+        Assertions.assertEquals("a.txt", tb.getText());
+        tb.isSelected = false;
+        Assertions.assertEquals("a", tb.actualText);
         ll.add('A');
-        handleInput();
+        tb.handleInput();
         ll.clear();
-        Assertions.assertEquals("a", actualText);
-        Mockito.when(gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed)).thenReturn(true);
-        handleInput();
-        Assertions.assertEquals("a", actualText);
+        Assertions.assertEquals("a", tb.actualText);
+        Mockito.when(tb.gim.isKey(Input.Keys.BACKSPACE, KeyStatus.Pressed)).thenReturn(true);
+        tb.handleInput();
+        Assertions.assertEquals("a", tb.actualText);
+        Assertions.assertEquals("a.txt", tb.getText());
     }
 
     /**
@@ -87,17 +93,17 @@ public class TextBoxTest extends TextBox {
      */
     @Test
     public void acceptOnlyNumberTest() {
-        isSelected = true;
-        acceptOnlyNumbers = true;
+        tb.isSelected = true;
+        tb.acceptOnlyNumbers = true;
         LinkedList<java.lang.Character> ll = new LinkedList<>();
-        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
-        Mockito.when(gim.getLastChars()).thenReturn(ll);
+        Mockito.when(tb.gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(tb.gim.getLastChars()).thenReturn(ll);
         ll.add('a');
-        handleInput();
-        Assertions.assertEquals("", actualText);
+        tb.handleInput();
+        Assertions.assertEquals("", tb.actualText);
         ll.add('2');
-        handleInput();
-        Assertions.assertEquals("2", actualText);
+        tb.handleInput();
+        Assertions.assertEquals("2", tb.actualText);
     }
 
     /**
@@ -105,23 +111,23 @@ public class TextBoxTest extends TextBox {
      */
     @Test
     public void acceptOnlyHexaTest() {
-        isSelected = true;
-        acceptOnlyHexadecimal = true;
+        tb.isSelected = true;
+        tb.acceptOnlyHexadecimal = true;
         LinkedList<java.lang.Character> ll = new LinkedList<>();
-        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
-        Mockito.when(gim.getLastChars()).thenReturn(ll);
+        Mockito.when(tb.gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(tb.gim.getLastChars()).thenReturn(ll);
         ll.add('A');
-        handleInput();
-        Assertions.assertEquals("A", actualText);
+        tb.handleInput();
+        Assertions.assertEquals("A", tb.actualText);
         ll.clear();
         ll.add('1');
         ll.add('9');
-        handleInput();
+        tb.handleInput();
         ll.clear();
-        Assertions.assertEquals("A19", actualText);
+        Assertions.assertEquals("A19", tb.actualText);
         ll.add('G');
-        handleInput();
-        Assertions.assertEquals("A19", actualText);
+        tb.handleInput();
+        Assertions.assertEquals("A19", tb.actualText);
     }
 
     /**
@@ -129,32 +135,32 @@ public class TextBoxTest extends TextBox {
      */
     @Test
     public void selectedPositionTest() {
-        isSelected = true;
-        actualText = "ABCD";
-        selectedPosition = 4;
+        tb.isSelected = true;
+        tb.actualText = "ABCD";
+        tb.selectedPosition = 4;
         LinkedList<java.lang.Character> ll = new LinkedList<>();
-        Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
-        Mockito.when(gim.getLastChars()).thenReturn(ll);
+        Mockito.when(tb.gim.getRecentClicks()).thenReturn(new ArrayList<>());
+        Mockito.when(tb.gim.getLastChars()).thenReturn(ll);
         ll.add('E');
-        handleInput();
-        Assertions.assertEquals("ABCDE", actualText);
-        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
+        tb.handleInput();
+        Assertions.assertEquals("ABCDE", tb.actualText);
+        Mockito.when(tb.gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
         ll.clear();
         for (int i = 0; i < 3; i++)
-            handleInput();
+            tb.handleInput();
         ll.add('B');
-        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(false);
-        handleInput();
-        Assertions.assertEquals("ABBCDE", actualText);
+        Mockito.when(tb.gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(false);
+        tb.handleInput();
+        Assertions.assertEquals("ABBCDE", tb.actualText);
         ll.clear();
-        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
+        Mockito.when(tb.gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(true);
         for (int i = 0; i < 10; i++)
-            handleInput();
-        Assertions.assertEquals(0, selectedPosition);
-        Mockito.when(gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(false);
-        Mockito.when(gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed)).thenReturn(true);
+            tb.handleInput();
+        Assertions.assertEquals(0, tb.selectedPosition);
+        Mockito.when(tb.gim.isKey(Input.Keys.LEFT, KeyStatus.Pressed)).thenReturn(false);
+        Mockito.when(tb.gim.isKey(Input.Keys.RIGHT, KeyStatus.Pressed)).thenReturn(true);
         for (int i = 0; i < 10; i++)
-            handleInput();
-        Assertions.assertEquals(6, selectedPosition);
+            tb.handleInput();
+        Assertions.assertEquals(6, tb.selectedPosition);
     }
 }

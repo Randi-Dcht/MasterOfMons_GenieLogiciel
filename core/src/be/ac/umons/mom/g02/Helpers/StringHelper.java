@@ -70,6 +70,8 @@ public class StringHelper {
      * @return An array of int representing the given string.
      */
     protected static int[] decodeHexStringToInt(String hex) {
+        if (hex.length() % 2 != 0)
+            throw new IllegalArgumentException("The given value must be of a even length");
         int[] t = new int[hex.length() / 2];
         for (int i = 0; i < hex.length() / 2; i++) {
             t[i] = Integer.parseInt(hex.substring(i * 2, i * 2 + 2), 16);

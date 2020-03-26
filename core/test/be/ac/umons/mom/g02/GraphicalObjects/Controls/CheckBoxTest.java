@@ -13,11 +13,15 @@ import java.util.ArrayList;
 /**
  * Testing class for CheckBox
  */
-public class CheckBoxTest extends CheckBox {
+public class CheckBoxTest {
+
+    CheckBox cb;
+
     @BeforeEach
     public void init() {
-        gim = Mockito.mock(GameInputManager.class);
-        MasterOfMonsGame.HEIGHT = 50; // Redéfini pour les biens du tests
+        cb = new CheckBox();
+        cb.gim = Mockito.mock(GameInputManager.class);
+        MasterOfMonsGame.HEIGHT = 50; // Redefined for tests purposes
     }
 
     /**
@@ -25,34 +29,34 @@ public class CheckBoxTest extends CheckBox {
      */
     @Test
     public void handleInputTest() {
-        x = 1; y = 10;
-        width = 10; height = 10;
+        cb.x = 1; cb.y = 10;
+        cb.width = 10; cb.height = 10;
         ArrayList<Point> l = new ArrayList<>();
-        l.add(new Point(5,45)); // Dedans car le y est inversé
-        Mockito.when(gim.getRecentClicks()).thenReturn(l);
-        Mockito.when(gim.getLastMousePosition()).thenReturn(new Point(0,0)); // Sans importance ici vu l'implémentation
-        handleInput();
-        Assertions.assertTrue(checked);
+        l.add(new Point(5,35)); // In because the y is inverted with the mouse
+        Mockito.when(cb.gim.getRecentClicks()).thenReturn(l);
+        Mockito.when(cb.gim.getLastMousePosition()).thenReturn(new Point(0,0)); // Without any importance here
+        cb.handleInput();
+        Assertions.assertTrue(cb.checked);
         l.clear();
-        checked = false;
-        l.add(new Point(0,5)); // Dehors
-        handleInput();
-        Assertions.assertFalse(checked);
+        cb.checked = false;
+        l.add(new Point(0,5)); // Out
+        cb.handleInput();
+        Assertions.assertFalse(cb.checked);
         l.clear();
-        checked = false;
-        l.add(new Point(5,45)); // Dedans
-        l.add(new Point(0,5)); // Dehors
-        handleInput();
-        Assertions.assertTrue(checked);
+        cb.checked = false;
+        l.add(new Point(5,35)); // In
+        l.add(new Point(0,5)); // Out
+        cb.handleInput();
+        Assertions.assertTrue(cb.checked);
         l.clear();
-        checked = false;
-        l.add(new Point(5,0)); // Dehors
-        handleInput();
-        Assertions.assertFalse(checked);
+        cb.checked = false;
+        l.add(new Point(5,0)); // Out
+        cb.handleInput();
+        Assertions.assertFalse(cb.checked);
         l.clear();
-        checked = false;
-        l.add(new Point(20,45)); // Dehors
-        handleInput();
-        Assertions.assertFalse(checked);
+        cb.checked = false;
+        l.add(new Point(20,45)); // Out
+        cb.handleInput();
+        Assertions.assertFalse(cb.checked);
     }
 }

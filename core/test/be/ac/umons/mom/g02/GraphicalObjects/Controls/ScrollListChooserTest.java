@@ -9,20 +9,23 @@ import java.util.ArrayList;
 /**
  * Testing class for <code>ScrollListChooser</code>
  */
-public class ScrollListChooserTest extends ScrollListChooser {
+public class ScrollListChooserTest {
 
     Button b1,b2;
+    ScrollListChooser slc;
+
     @BeforeEach
     public void init() {
-        buttons = new ArrayList<>();
-        buttons.add(b1 = new ButtonTest());
-        buttons.add(b2 = new ButtonTest());
-        scrollListItems = new ScrollListItem[] {
-                new ScrollListItem("b1"),
-                new ScrollListItem("b2")
+        slc = new ScrollListChooser();
+        slc.buttons = new ArrayList<>();
+        slc.buttons.add(b1 = new Button());
+        slc.buttons.add(b2 = new Button());
+        slc.scrollListItems = new ScrollListChooser.ScrollListItem[] {
+                new ScrollListChooser.ScrollListItem("b1"),
+                new ScrollListChooser.ScrollListItem("b2")
         };
-        scrollListItems[0].button = b1;
-        scrollListItems[1].button = b2;
+        slc.scrollListItems[0].button = b1;
+        slc.scrollListItems[1].button = b2;
     }
 
     /**
@@ -30,25 +33,25 @@ public class ScrollListChooserTest extends ScrollListChooser {
      */
     @Test
     public void checkSelected() {
-        canSelectMultipleItems = false;
-        Assertions.assertEquals(2, buttons.size());
+        slc.canSelectMultipleItems = false;
+        Assertions.assertEquals(2, slc.buttons.size());
         b1.setSelected(true);
         b2.setSelected(true);
-        scrollListItems[0].isSelected = true;
-        scrollListItems[1].isSelected = true;
-        checkSelected(scrollListItems[0]);
+        slc.scrollListItems[0].isSelected = true;
+        slc.scrollListItems[1].isSelected = true;
+        slc.checkSelected(slc.scrollListItems[0]);
         checkB1Selected();
         b1.setSelected(true);
         b2.setSelected(true);
-        scrollListItems[0].isSelected = true;
-        scrollListItems[1].isSelected = true;
-        checkSelected(scrollListItems[1]);
+        slc.scrollListItems[0].isSelected = true;
+        slc.scrollListItems[1].isSelected = true;
+        slc.checkSelected(slc.scrollListItems[1]);
         checkB2Selected();
         b1.setSelected(true);
         b2.setSelected(false);
-        scrollListItems[0].isSelected = true;
-        scrollListItems[1].isSelected = false;
-        checkSelected(scrollListItems[0]);
+        slc.scrollListItems[0].isSelected = true;
+        slc.scrollListItems[1].isSelected = false;
+        slc.checkSelected(slc.scrollListItems[0]);
         checkB1Selected();
     }
 
@@ -56,18 +59,18 @@ public class ScrollListChooserTest extends ScrollListChooser {
      * CHeck if the others items unselect themselves when another one is selected
      */
     public void checkB1Selected() {
-        Assertions.assertTrue(buttons.get(0).isSelected());
-        Assertions.assertFalse(buttons.get(1).isSelected());
-        Assertions.assertTrue(scrollListItems[0].isSelected);
-        Assertions.assertFalse(scrollListItems[1].isSelected);
+        Assertions.assertTrue(slc.buttons.get(0).isSelected());
+        Assertions.assertFalse(slc.buttons.get(1).isSelected());
+        Assertions.assertTrue(slc.scrollListItems[0].isSelected);
+        Assertions.assertFalse(slc.scrollListItems[1].isSelected);
     }
     /**
      * CHeck if the others items unselect themselves when another one is selected
      */
     public void checkB2Selected() {
-        Assertions.assertFalse(buttons.get(0).isSelected());
-        Assertions.assertTrue(buttons.get(1).isSelected());
-        Assertions.assertTrue(scrollListItems[1].isSelected);
-        Assertions.assertFalse(scrollListItems[0].isSelected);
+        Assertions.assertFalse(slc.buttons.get(0).isSelected());
+        Assertions.assertTrue(slc.buttons.get(1).isSelected());
+        Assertions.assertTrue(slc.scrollListItems[1].isSelected);
+        Assertions.assertFalse(slc.scrollListItems[0].isSelected);
     }
 }
