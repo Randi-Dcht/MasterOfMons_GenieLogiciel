@@ -56,6 +56,7 @@ public class PlayDual extends PlayingState
         cam.position.y = player.getPosY();
         cam.update();
         initSizeOfMaps();
+        SupervisorDual.setGraphic(gs);
         if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.Survivor))
         {
             for (Character ch : pnjs)
