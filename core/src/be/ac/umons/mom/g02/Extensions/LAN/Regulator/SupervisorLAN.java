@@ -6,9 +6,11 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Objects.Items.PositionOnMaps;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
@@ -20,10 +22,17 @@ import com.badlogic.gdx.Gdx;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SupervisorLAN extends SupervisorMultiPlayer {
 
     protected Save save;
+
+    /**
+     * The list of the death of the second player to ignore while calculating the win of XP
+     */
+    protected List<Mobile> deathToIgnore;
 
     /**
      * This method to give the only instance of <code>SupervisorLAN</code> if no other instance of <code>Supervisor</code> exists.
@@ -38,6 +47,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
     protected SupervisorLAN() {
         super();
         getEvent().add(Events.ChangeHour, this);
+        deathToIgnore = new LinkedList<>();
     }
 
     @Override
@@ -158,5 +168,25 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         SupervisorLAN.getPeopleTwo().setPlanning(planning);
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
         SupervisorLAN.getSupervisor().checkPlanning();
+    }
+
+    @Override
+    public void deadMobile(Mobile mb) {
+        if (deathToIgnore.contains(mb)) {
+            listMobile.get(mb.getMaps()).remove(mb);
+            deadMobile.add(mb);
+            listUpdate.remove(mb);
+
+            if (mb.equals(memoryMobile))
+                memoryMobile = null;
+        }
+        else {
+            super.deadMobile(mb);
+            deathToIgnore.remove(mb);
+        }
+    }
+
+    public void addADeathToIgnore(Mobile mb) {
+        deathToIgnore.add(mb);
     }
 }

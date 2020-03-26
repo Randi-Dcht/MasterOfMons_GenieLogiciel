@@ -1,8 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates;
 
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -34,6 +33,7 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
         if (playerTwo == null) {
             playerTwo = new Player(gs);
             playerTwo.setMapPos(new Point(player.getPosX(), player.getPosY()));
+            playerTwo.setCharacteristics(SupervisorMultiPlayer.getPeopleTwo());
         }
     }
 

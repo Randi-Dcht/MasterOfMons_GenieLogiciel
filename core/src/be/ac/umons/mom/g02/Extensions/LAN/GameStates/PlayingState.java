@@ -32,10 +32,8 @@ import com.badlogic.gdx.utils.Array;
 import java.awt.*;
 import java.io.IOException;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 /**
  * The playing state. This state suppose that a connection has already been established.
@@ -193,8 +191,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             }
         });
         nm.setOnPNJDeath((name) -> {
-            if (idCharacterMap.containsKey(name))
+            if (idCharacterMap.containsKey(name)) {
+                SupervisorLAN.getSupervisor().addADeathToIgnore((Mobile)idCharacterMap.get(name).getCharacteristics());
                 Supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
+            }
         });
         nm.setOnPause(() -> gsm.setState(PauseMenuState.class));
         nm.setOnEndPause(() -> gsm.removeFirstState());
