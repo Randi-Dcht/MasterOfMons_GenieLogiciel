@@ -66,9 +66,13 @@ public abstract class MenuState extends GameState {
      * If the state must be removed when escape is pressed.
      */
     protected boolean handleEscape;
-
+    /**
+     * How much the user wants to go down the page
+     */
     protected int mouseScrolled = 0;
-
+    /**
+     * How much the user can go down the page
+     */
     protected int maxScrolled = 0;
 
     /**
