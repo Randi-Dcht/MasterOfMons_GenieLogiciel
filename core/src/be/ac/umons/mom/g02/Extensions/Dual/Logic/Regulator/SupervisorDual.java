@@ -1,31 +1,53 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.SurvivorVsMobile;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.Objects.Characters.Attack;
+import be.ac.umons.mom.g02.Objects.Characters.Character;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Other.Date;
+import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
+import java.util.HashMap;
 
 
 /**
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public class SupervisorDual extends SuperviserNormally
+public class SupervisorDual extends SupervisorMultiPlayer
 {
 
-    /**
-     * This us an instance of the player Two
-     */
-    private People playerTwo;
+    /***/
+    public static void initDual()
+    {
+        instance = new SupervisorDual();
+    }
+
+
+    /***/
+    public static SupervisorDual getSupervisorDual()
+    {
+        if (instance.getClass().equals(SupervisorDual.class))
+            return (SupervisorDual) instance;
+        return null;
+    }
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+
     /**
      * This is the actual MasterQuest of the extension Dual
      */
-    private MasterQuest dualQuest;
+    private DualMasterQuest dualQuest;
+    /***/
+    private TypeDual dual;
+    /***/
+    private HashMap<People,People> adv = new HashMap<>();
 
 
     /**
@@ -36,29 +58,110 @@ public class SupervisorDual extends SuperviserNormally
         super();
     }
 
-
-    public void newParty(String namePlayerOne,String namePlayerTwo,Type typeOne,Type typeTwo, GraphicalSettings graphic, Gender genderOne, Gender genderTwo, Difficulty difficulty)
+    /**
+     * @param pathAndFile
+     * @param play
+     * @param graphic
+     */
+    @Override
+    public void oldGame(String pathAndFile, PlayingState play, GraphicalSettings graphic)
     {
-        playerOne = new People(namePlayerOne,typeOne,genderOne,difficulty);
-        playerTwo = new People(namePlayerTwo,typeTwo,genderTwo,difficulty);
-        dualQuest = new SurvivorVsMobile(playerOne,difficulty);
-        time      = new TimeGame(new Date(1,1,2020,9,0));
-        playerOne.newQuest(dualQuest);
-        playerTwo.newQuest(dualQuest);
-        save.setLogic(playerOne);
-        save.setLogic(playerTwo);
-        this.graphic = graphic;
 
-        refreshQuest();
     }
 
-    private void launchNewQuest(People people)
-    {}
+    /**
+     * @param pathAndFile
+     */
+    @Override
+    public void saveGame(String pathAndFile)
+    {
+        LogicSaving saveOne,saveTwo=null;
 
-    private void addThisQuest(People people)
-    {}
+        if (playerOneSave != null)
+            saveOne = new LogicSaving(playerOne,playerOneSave.getMap(),playerOneSave.getDate(),playerOneSave.getPlayerPosition(),playerOneSave.getItemPosition());
+        else//TODO update
+            saveOne = new LogicSaving(playerOne,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
 
-    private void finishQuest()
-    {}
+        if (playerTwoSave != null)
+            saveTwo = new LogicSaving(playerTwo,playerTwoSave.getMap(),playerTwoSave.getDate(),playerTwoSave.getPlayerPosition(),playerTwoSave.getItemPosition());
+        else//TODO update
+            saveOne = new LogicSaving(playerTwo,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
 
+        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveOne);
+        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveTwo);
+    }
+
+
+    public void createNewPlayer(People people,int number)
+    {
+        if (number == 1)
+            playerOne = people;
+        else
+            playerTwo = people;
+    }
+
+    public boolean startLoading()
+    {
+        return playerOne != null && playerTwo != null;
+    }
+
+    public People getAdversary(People people)
+    {
+        return adv.get(people);
+    }
+
+    @Override
+    public MasterQuest actualQuest()
+    {
+        return dualQuest;
+    }
+
+    public void init(TypeDual dual)
+    {
+        this.dual = dual;
+
+        if (playerTwo != null && playerOne != null)
+        {
+            dualQuest = new DualMasterQuest(dual,playerOne,playerTwo);
+            time = new TimeGame(new Date(16,9,2019,8,15));
+            regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time,this);
+            refreshQuest();
+            adv.put(playerOne,playerTwo);
+            adv.put(playerOne,playerTwo);
+        }
+    }
+
+    public TypeDual getDual()
+    {
+        return dual;
+    }
+
+    @Override
+    public void attackMethod(Attack attacker, Attack victim)
+    {
+        if (attacker == null || victim == null)//TODO
+            return;
+        if (!dual.equals(TypeDual.Survivor) && !attacker.getType().equals(Character.TypePlayer.Human) || !victim.getType().equals(Character.TypePlayer.Human))
+            super.attackMethod(attacker, victim);
+    }
+
+
+    /**
+     * This method allows to load the old player in the extension Dual
+     * @param pathAndFile is the path with the name of the file saving
+     * @param why         is the number of the player
+     */
+    public void loadPeople(String pathAndFile,int why)
+    {
+        if (why == 1)
+        {
+            playerOneSave = (LogicSaving) Saving.getSaveObject(pathAndFile);
+            playerOne     = playerOneSave.getPlayer();
+        }
+        else
+        {
+            playerTwoSave = (LogicSaving) Saving.getSaveObject(pathAndFile);
+            playerTwo     = playerTwoSave.getPlayer();
+        }
+    }
 }
