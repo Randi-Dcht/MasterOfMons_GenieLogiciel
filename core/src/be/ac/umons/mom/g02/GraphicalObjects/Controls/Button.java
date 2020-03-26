@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
@@ -56,19 +55,18 @@ public class Button extends Control {
     protected boolean selected;
 
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
-    public Button(GameInputManager gim, GraphicalSettings gs) {
-        super(gim, gs);
+    public Button(GraphicalSettings gs) {
+        super(gs);
         sr = new ShapeRenderer();
         font = gs.getNormalFont();
-        backgroundColor = gs.getControlTransparentBackgroundColor();
+        backgroundColor = gcm.getColorFor("controlTransparentBackground");
         isMouseOverBackgroundColor = new Color(backgroundColor.r - 11 < 0 ? 0 : backgroundColor.r - 11,
                 backgroundColor.g - 11 < 0 ? 0 : backgroundColor.g - 11,
                 backgroundColor.b - 11 < 0 ? 0 : backgroundColor.b - 11,
                 backgroundColor.a);
-        isSelectedBackgroundColor = gs.getControlSelectedColor();
+        isSelectedBackgroundColor = gcm.getColorFor("controlSelected");
     }
 
     /**

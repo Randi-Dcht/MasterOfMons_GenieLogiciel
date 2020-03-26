@@ -3,23 +3,32 @@ package be.ac.umons.mom.g02.GameStates.Menus;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ColorSelector;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Helpers.StringHelper;
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Settings;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import com.badlogic.gdx.graphics.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColorChoosingMenuState extends MenuState {
+
+    protected GameColorManager gcm;
 
     /**
      * @param gs The game's graphical settings
      */
     public ColorChoosingMenuState(GraphicalSettings gs) {
         super(gs);
+        gcm = GameColorManager.getInstance();
     }
 
     @Override
     public void init() {
         super.init();
+        List<MenuItem> menuItemList = new ArrayList<>();
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, gs.getStringFromId("colorChoosing")),
                 new TextMenuItem(gs, gs.getStringFromId("colorHelp")),
@@ -47,37 +56,37 @@ public class ColorChoosingMenuState extends MenuState {
         for (MenuItem mi : menuItems) {
             switch (mi.getId()) {
                 case "CS_Foreground":
-                    setColorSelectorDefaultValue(mi, settings.getForegroundColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("foreground"));
                     break;
                 case "CS_Background":
-                    setColorSelectorDefaultValue(mi, settings.getBackgroundColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("background"));
                     break;
                 case "CS_Transparent_Background":
-                    setColorSelectorDefaultValue(mi, settings.getTransparentBackgroundColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("transparentBackground"));
                     break;
                 case "CS_Control_Background":
-                    setColorSelectorDefaultValue(mi, settings.getControlBackgroundColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("controlBackground"));
                     break;
                 case "CS_Control_Transparent_Background":
-                    setColorSelectorDefaultValue(mi, settings.getControlTransparentBackgroundColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("controlTransparentBackground"));
                     break;
                 case "CS_Control_Selected_Background":
-                    setColorSelectorDefaultValue(mi, settings.getControlSelectedColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("controlSelected"));
                     break;
                 case "CS_Attack_Range_Color":
-                    setColorSelectorDefaultValue(mi, settings.getAttackRangeColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("attackRange"));
                     break;
                 case "CS_Recovering_Attack_Range_Color":
-                    setColorSelectorDefaultValue(mi, settings.getRecoveringAttackRangeColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("recoveringAttackRange"));
                     break;
                 case "CS_Life_Bar_Color":
-                    setColorSelectorDefaultValue(mi, settings.getLifeBarColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("lifeBar"));
                     break;
                 case "CS_Experience_Bar_Color":
-                    setColorSelectorDefaultValue(mi, settings.getExperienceBarColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("experienceBar"));
                     break;
                 case "CS_Energy_Bar_Color":
-                    setColorSelectorDefaultValue(mi, settings.getEnergyBarColor());
+                    setColorSelectorDefaultValue(mi, gcm.getColorFor("energyBar"));
                     break;
             }
         }
@@ -88,8 +97,8 @@ public class ColorChoosingMenuState extends MenuState {
      * @param mi The <code>MenuItem</code> associated with the ColorSelector.
      * @param color The default color.
      */
-    protected void setColorSelectorDefaultValue(MenuItem mi, String color) {
-        ((ColorSelector)mi.getControl()).setSelectedColor(StringHelper.getColorFromString(color));
+    protected void setColorSelectorDefaultValue(MenuItem mi, Color color) {
+        ((ColorSelector)mi.getControl()).setSelectedColor(color);
         mi.getSize().y = (int)(gs.getNormalFont().getLineHeight() + 4 * topMargin);
     }
 
@@ -101,37 +110,37 @@ public class ColorChoosingMenuState extends MenuState {
         for (MenuItem mi : menuItems) {  // No need to add SCLs because done at each click !
             switch (mi.getId()) {
                 case "CS_Foreground":
-                    settings.setForegroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("foreground", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Background":
-                    settings.setBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("background", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Transparent_Background":
-                    settings.setTransparentBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("transparentBackground", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Control_Background":
-                    settings.setControlBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("controlBackground", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Control_Transparent_Background":
-                    settings.setControlTransparentBackgroundColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("controlTransparentBackground", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Control_Selected_Background":
-                    settings.setControlSelectedColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("controlSelected", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Attack_Range_Color":
-                    settings.setAttackRangeColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("attackRange", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Recovering_Attack_Range_Color":
-                    settings.setRecoveringAttackRangeColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("recoveringAttackRange", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Life_Bar_Color":
-                    settings.setLifeBarColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("lifeBar", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Experience_Bar_Color":
-                    settings.setExperienceBarColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("experienceBar", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
                 case "CS_Energy_Bar_Color":
-                    settings.setEnergyBarColor(((ColorSelector)mi.getControl()).getSelectedColor().toString());
+                    gcm.setColorFor("energyBar", ((ColorSelector)mi.getControl()).getSelectedColor());
                     break;
             }
         }

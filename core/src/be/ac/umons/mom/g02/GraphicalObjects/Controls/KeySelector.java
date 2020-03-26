@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
@@ -35,11 +34,10 @@ public class KeySelector extends Control {
     protected int actualKeyCode;
 
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public KeySelector(GameInputManager gim, GraphicalSettings gs) {
-        super(gim, gs);
+    public KeySelector(GraphicalSettings gs) {
+        super(gs);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
         actualKeyCode = -1;

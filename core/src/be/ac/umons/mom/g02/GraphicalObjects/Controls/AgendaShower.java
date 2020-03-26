@@ -7,7 +7,6 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -48,14 +47,13 @@ public class AgendaShower extends Control implements Observer {
     protected ShapeRenderer sr;
 
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public AgendaShower(GameInputManager gim, GraphicalSettings gs) {
-        super(gim, gs);
+    public AgendaShower(GraphicalSettings gs) {
+        super(gs);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        sr.setColor(gs.getControlTransparentBackgroundColor());
+        sr.setColor(gcm.getColorFor("controlTransparentBackground"));
 
         courses = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects;
 
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
@@ -72,8 +73,9 @@ public class InventoryItem {
      */
     public void init() {
         sr = new ShapeRenderer();
-        backgroundColor = new Color(gs.getControlTransparentBackgroundColor().r, gs.getControlTransparentBackgroundColor().g, gs.getControlTransparentBackgroundColor().b, BACKGROUND_RECTANGLE_OPACITY);
-        selectedBackgroundColor = gs.getControlSelectedColor();
+        Color c = GameColorManager.getInstance().getColorFor("controlTransparentBackground");
+        backgroundColor = new Color(c.r, c.g, c.b, BACKGROUND_RECTANGLE_OPACITY);
+        selectedBackgroundColor = GameColorManager.getInstance().getColorFor("controlSelected");
         backgroundColorToUse = backgroundColor;
     }
 

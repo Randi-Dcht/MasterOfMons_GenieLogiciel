@@ -5,12 +5,11 @@ import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.Phone;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -84,12 +83,11 @@ public class InventoryShower extends Control {
     protected boolean hided = false;
 
     /**
-     * @param gim The game's input manager.
      * @param gs The game's graphical settings.
      * @param inventoryOf The player.
      */
-    public InventoryShower(GameInputManager gim, GraphicalSettings gs, Player inventoryOf) {
-        super(gim, gs);
+    public InventoryShower(GraphicalSettings gs, Player inventoryOf) {
+        super(gs);
         inventory = inventoryOf.getInventory();
         this.am = AnimationManager.getInstance();
         init();
@@ -138,12 +136,13 @@ public class InventoryShower extends Control {
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
+        Color c = gcm.getColorFor("controlTransparentBackground");
         if (isBeingAnimated) {
-            sr.setColor(gs.getControlTransparentBackgroundColor().r, gs.getControlTransparentBackgroundColor().g, gs.getControlTransparentBackgroundColor().b, (float)duringAnimationBackgroundOpacity * BACKGROUND_RECTANGLE_OPACITY);
+            sr.setColor(c.r, c.g, c.b, (float)duringAnimationBackgroundOpacity * BACKGROUND_RECTANGLE_OPACITY);
             sr.rect(beginX, topMargin, duringAnimationWidth, duringAnimationHeight);
         }
         else {
-            sr.setColor(gs.getControlTransparentBackgroundColor().r, gs.getControlTransparentBackgroundColor().g, gs.getControlTransparentBackgroundColor().b, BACKGROUND_RECTANGLE_OPACITY);
+            sr.setColor(c.r, c.g, c.b, BACKGROUND_RECTANGLE_OPACITY);
             sr.rect(beginX, topMargin, getWidth(), height);
         }
         sr.end();

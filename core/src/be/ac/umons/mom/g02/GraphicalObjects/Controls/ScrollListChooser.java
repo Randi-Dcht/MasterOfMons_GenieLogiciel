@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -38,11 +37,10 @@ public class ScrollListChooser extends Control {
     protected int ySize;
 
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public ScrollListChooser(GameInputManager gim, GraphicalSettings gs) {
-        super(gim, gs);
+    public ScrollListChooser(GraphicalSettings gs) {
+        super(gs);
         buttons = new ArrayList<>();
         ySize = (int)Math.floor(gs.getNormalFont().getLineHeight());
     }
@@ -109,7 +107,7 @@ public class ScrollListChooser extends Control {
         this.scrollListItems = scrollListItems;
         buttons.clear();
         for (ScrollListItem sli : scrollListItems) {
-            Button b = new Button(gim, gs);
+            Button b = new Button(gs);
             b.setText(sli.header);
             b.setOnClick(() -> {
                 b.setSelected(! b.isSelected());

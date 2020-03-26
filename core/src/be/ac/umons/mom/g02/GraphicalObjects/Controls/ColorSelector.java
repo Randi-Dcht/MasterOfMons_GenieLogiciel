@@ -1,7 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
 import be.ac.umons.mom.g02.Helpers.StringHelper;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -29,13 +28,12 @@ public class ColorSelector extends Control {
     protected Color selectedColor;
 
     /**
-     * @param gim The game's input manager.
      * @param gs The game's graphical settings.
      */
-    public ColorSelector(GameInputManager gim, GraphicalSettings gs) {
-        super(gim, gs);
-        selectedColor = gs.getTransparentBackgroundColor();
-        tb = new TextBox(gim, gs);
+    public ColorSelector(GraphicalSettings gs) {
+        super(gs);
+        selectedColor = gcm.getColorFor("controlTransparentBackground");
+        tb = new TextBox(gs);
         tb.setAcceptOnlyHexadecimal(true);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);

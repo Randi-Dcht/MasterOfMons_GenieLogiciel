@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects;
 
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -51,11 +52,14 @@ public class ProgressBar {
      */
     protected GraphicalSettings gs;
 
+    protected GameColorManager gcm;
+
     /**
      * @param gs The graphical settings.
      */
     public ProgressBar(GraphicalSettings gs) {
         this.gs = gs;
+        gcm = GameColorManager.getInstance();
         init();
     }
 
@@ -67,7 +71,7 @@ public class ProgressBar {
     public void init() {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        backgroundColor = gs.getControlTransparentBackgroundColor();
+        backgroundColor = gcm.getColorFor("controlTransparentBackground");
     }
 
     /**

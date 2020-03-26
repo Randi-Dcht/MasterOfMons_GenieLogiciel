@@ -1,5 +1,7 @@
 package be.ac.umons.mom.g02.Managers;
 
+import be.ac.umons.mom.g02.Helpers.FileHelper;
+import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
@@ -37,27 +39,14 @@ public class GameKeyManager {
      * Read the file <code>keys</code> and add the id and keycode to the map
      */
     protected void loadKeyFile() {
-        BufferedReader br;
-        int actualLine = 0;
+        HashMap<String, String> map = FileHelper.readSettingsFile("keys");
+        keysMap = new HashMap<>();
         try {
-            FileHandle ef = Gdx.files.getFileHandle("keys", Files.FileType.Internal);
-            if (! ef.exists()) {
-                Gdx.app.error("GameKeyManager", "The keys' file wasn't found !");
-                MasterOfMonsGame.showAnError("The keys' file wasn't found !");
-                return;
-            }
-            br = new BufferedReader(new FileReader(ef.file()));
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] key = line.split("=");
-                keysMap.put(key[0], Integer.parseInt(key[1]));
-                actualLine++;
-            }
-        } catch (IOException e) {
-            MasterOfMonsGame.showAnError("The keys' file wasn't loaded due to an error !");
-            Gdx.app.error("GameKeyManager", "The keys' file wasn't loaded due to an error...", e);
+            for (String key : map.keySet())
+                keysMap.put(key, Integer.parseInt(map.get(key)));
+
         } catch (NumberFormatException e) {
-            Gdx.app.error("GameKeyManager", "An error has been detected line " + actualLine, e);
+            Gdx.app.error("GameKeyManager", "An error has been detected in the keys' file", e);
         }
     }
 

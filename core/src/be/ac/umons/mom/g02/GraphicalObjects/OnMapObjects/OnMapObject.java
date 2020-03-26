@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects;
 
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Managers.GameKeyManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
@@ -28,11 +29,14 @@ public abstract class OnMapObject {
      */
     protected GraphicalSettings gs;
 
+    protected GameColorManager gcm;
+
     /**
      * @param gs The game's graphical object.
      */
     public OnMapObject(GraphicalSettings gs) {
         this.gs = gs;
+        gcm = GameColorManager.getInstance();
         sr = new ShapeRenderer();
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
@@ -56,7 +60,7 @@ public abstract class OnMapObject {
             gl.setText(gs.getSmallFont(), String.format(gs.getStringFromId("pressToInteract"),
                     Input.Keys.toString(GameKeyManager.getInstance().getKeyCodeFor("interact"))));
             sr.begin(ShapeRenderer.ShapeType.Filled);
-            sr.setColor(gs.getTransparentBackgroundColor());
+            sr.setColor(gcm.getColorFor("controlTransparentBackground"));
             sr.rect(x, y - gs.getSmallFont().getLineHeight(), gl.width, gs.getSmallFont().getLineHeight());
             sr.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);

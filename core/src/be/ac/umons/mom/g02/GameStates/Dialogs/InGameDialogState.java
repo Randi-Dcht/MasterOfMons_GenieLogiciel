@@ -35,7 +35,7 @@ public class InGameDialogState extends DialogState {
     /**
      * Background's color
      */
-    protected Color backgroundColor = gs.getTransparentBackgroundColor();
+    protected Color backgroundColor = gcm.getColorFor("controlTransparentBackground");
 
     /**
      *

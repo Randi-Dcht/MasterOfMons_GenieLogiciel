@@ -137,7 +137,7 @@ public class Character extends OnMapObject {
             sb.append("Name : ").append(getCharacteristics().getName()).append('\n');
             sb.append("Level : ").append(getCharacteristics().getLevel());
             gl.setText(gs.getSmallFont(), sb.toString());
-            sr.setColor(gs.getControlTransparentBackgroundColor());
+            sr.setColor(gcm.getColorFor("controlTransparentBackground"));
             sr.begin(ShapeRenderer.ShapeType.Filled);
             sr.rect(x, y + height, (int)(gl.width + 2 * leftMargin), (int)(gl.height + 2 * topMargin));
             sr.end();

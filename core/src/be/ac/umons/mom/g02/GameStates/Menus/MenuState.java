@@ -112,13 +112,13 @@ public abstract class MenuState extends GameState {
             Gdx.gl.glEnable(GL30.GL_BLEND);
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             sr.begin(ShapeRenderer.ShapeType.Filled);
-            sr.setColor(gs.getTransparentBackgroundColor());
+            sr.setColor(gcm.getColorFor("transparentBackground"));
             sr.rect(0, 0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
             sr.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);
         } else {
             sr.begin(ShapeRenderer.ShapeType.Filled);
-            sr.setColor(gs.getBackgroundColor());
+            sr.setColor(gcm.getColorFor("background"));
             sr.rect(0, 0, MasterOfMonsGame.WIDTH, MasterOfMonsGame.HEIGHT);
             sr.end();
         }

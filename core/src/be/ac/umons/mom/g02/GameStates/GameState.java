@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GameStates;
 
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
@@ -25,6 +26,8 @@ public abstract class GameState {
      */
     protected GraphicalSettings gs;
 
+    protected GameColorManager gcm;
+
     /**
      * The vertical margin
      */
@@ -41,6 +44,7 @@ public abstract class GameState {
     protected GameState(GraphicalSettings gs) {
         this.gim = GameInputManager.getInstance();
         this.gsm = GameStateManager.getInstance();
+        this.gcm = GameColorManager.getInstance();
         this.gs = gs;
     }
 

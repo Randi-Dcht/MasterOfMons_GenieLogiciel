@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects;
 
 import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Enums.Languages;
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -54,50 +55,7 @@ public class GraphicalSettings {
      */
     private boolean showMapCoordinates = false;
 
-    /**
-     * The foreground's color (font color, ...)
-     */
-    protected Color foregroundColor;
-    /**
-     * The background's color
-     */
-    protected Color backgroundColor;
-    /**
-     * The semi-transparent background color
-     */
-    protected Color transparentBackgroundColor;
-    /**
-     * The background's color of a control
-     */
-    protected Color controlBackgroundColor;
-    /**
-     * The semi-transparent background's color for a control
-     */
-    protected Color controlTransparentBackgroundColor;
-    /**
-     * The control's color when it's selected
-     */
-    protected Color controlSelectedColor;
-    /**
-     * The color of the attack's circle.
-     */
-    protected Color attackRangeColor;
-    /**
-     * The color of the attack's circle when recovering
-     */
-    protected Color recoveringAttackRangeColor;
-    /**
-     * The life bar's color
-     */
-    protected Color lifeBarColor;
-    /**
-     * The energy bar's color
-     */
-    protected Color energyBarColor;
-    /**
-     * The experience bar's color
-     */
-    protected Color experienceBarColor;
+    GameColorManager gcm;
 
     public GraphicalSettings() {
         init();
@@ -107,6 +65,7 @@ public class GraphicalSettings {
      * Initialize the graphical settings.
      */
     public void init() {
+        gcm = GameColorManager.getInstance();
         assetManager = new AssetManager();
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
@@ -118,25 +77,14 @@ public class GraphicalSettings {
      * Refresh all the colors by taking the one in the settings.
      */
     public void refreshColors() {
-        foregroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getForegroundColor());
-        backgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getBackgroundColor());
-        transparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getTransparentBackgroundColor());
-        controlBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getControlBackgroundColor());
-        controlTransparentBackgroundColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getControlTransparentBackgroundColor());
-        controlSelectedColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getControlSelectedColor());
-        attackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getAttackRangeColor());
-        recoveringAttackRangeColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getRecoveringAttackRangeColor());
-        lifeBarColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getLifeBarColor());
-        energyBarColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getEnergyBarColor());
-        experienceBarColor = StringHelper.getColorFromString(MasterOfMonsGame.getSettings().getExperienceBarColor());
         if (smallFont != null)
-            smallFont.setColor(foregroundColor);
+            smallFont.setColor(gcm.getColorFor("foreground"));
         if (normalFont != null)
-            normalFont.setColor(foregroundColor);
+            normalFont.setColor(gcm.getColorFor("foreground"));
         if (titleFont != null)
-            titleFont.setColor(foregroundColor);
+            titleFont.setColor(gcm.getColorFor("foreground"));
         if (questFont != null)
-            questFont.setColor(foregroundColor);
+            questFont.setColor(gcm.getColorFor("foreground"));
     }
 
     /**
@@ -148,7 +96,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         smallFont = ftfg.generateFont(ftfp);
-        smallFont.setColor(foregroundColor);
+        smallFont.setColor(gcm.getColorFor("foreground"));
     }
 
     /**
@@ -167,7 +115,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         normalFont = ftfg.generateFont(ftfp);
-        normalFont.setColor(foregroundColor);
+        normalFont.setColor(gcm.getColorFor("foreground"));
     }
 
     /**
@@ -186,7 +134,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         titleFont = ftfg.generateFont(ftfp);
-        titleFont.setColor(foregroundColor);
+        titleFont.setColor(gcm.getColorFor("foreground"));
     }
 
     /**
@@ -205,7 +153,7 @@ public class GraphicalSettings {
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         ftfp.size = size;
         questFont = ftfg.generateFont(ftfp);
-        questFont.setColor(foregroundColor);
+        questFont.setColor(gcm.getColorFor("foreground"));
     }
 
     /**
@@ -306,82 +254,5 @@ public class GraphicalSettings {
      */
     public void setShowMapCoordinates(boolean showMapCoordinates) {
         this.showMapCoordinates = showMapCoordinates;
-    }
-
-    /**
-     * @return The foreground's color (font color, ...)
-     */
-    public Color getForegroundColor() {
-        return foregroundColor;
-    }
-
-    /**
-     * @return The background's color
-     */
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    /**
-     * @return The semi-transparent background color
-     */
-    public Color getTransparentBackgroundColor() {
-        return transparentBackgroundColor;
-    }
-
-    /**
-     * @return The background's color of a control
-     */
-    public Color getControlBackgroundColor() {
-        return controlBackgroundColor;
-    }
-
-    /**
-     * @return The semi-transparent background's color for a control
-     */
-    public Color getControlTransparentBackgroundColor() {
-        return controlTransparentBackgroundColor;
-    }
-
-    /**
-     * @return The control's color when it's selected
-     */
-    public Color getControlSelectedColor() {
-        return controlSelectedColor;
-    }
-
-    /**
-     * @return The color of the attack's circle.
-     */
-    public Color getAttackRangeColor() {
-        return attackRangeColor;
-    }
-
-    /**
-     * @return The color of the attack's circle when recovering
-     */
-    public Color getRecoveringAttackRangeColor() {
-        return recoveringAttackRangeColor;
-    }
-
-    /**
-     * @return The energy bar's color
-     */
-    public Color getEnergyBarColor() {
-        return energyBarColor;
-    }
-
-    /**
-     * @return The experience bar's color
-     */
-    public Color getExperienceBarColor() {
-        return experienceBarColor;
-    }
-
-    /**
-     * @return The life bar's color
-     */
-    public Color getLifeBarColor() {
-        return lifeBarColor;
     }
 }

@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.GraphicalObjects;
 import be.ac.umons.mom.g02.Animations.DoubleAnimation;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
@@ -70,7 +71,7 @@ public class AttackRangeCircle {
      * Init the circle expansion.
      */
     public void expand() {
-        sr.setColor(gs.getAttackRangeColor());
+        sr.setColor(GameColorManager.getInstance().getColorFor("attackRange"));
         DoubleAnimation da = new DoubleAnimation(0, attackRange, 200);
         isRecovering = true;
         AnimationManager.getInstance().remove("AttackRangeCircleExpandAnim" + character.getCharacteristics().getName());
@@ -90,7 +91,7 @@ public class AttackRangeCircle {
         AnimationManager.getInstance().addAnAnimation("AttackRangeCircleRetractingAnim" + character.getCharacteristics().getName(), da);
         da.setEndingAction(() -> isRecovering = false);
         da.setRunningAction(() -> animatingAttackRange = da.getActual().intValue());
-        sr.setColor(gs.getRecoveringAttackRangeColor());
+        sr.setColor(GameColorManager.getInstance().getColorFor("recoveringAttackRange"));
     }
 
     /**

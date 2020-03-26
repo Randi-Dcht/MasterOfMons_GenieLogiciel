@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
@@ -58,23 +57,21 @@ public class CheckBox extends Control {
     private boolean isSelected = false;
 
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
-    public CheckBox(GameInputManager gim, GraphicalSettings gs) {
-        this(gim, gs, "");
+    public CheckBox(GraphicalSettings gs) {
+        this(gs, "");
     }
     /**
      * Default constructor. USE IT ONLY FOR TEST.
      */
     protected CheckBox() {}
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings
      * @param text The text associated with the checkbox.
      */
-    protected CheckBox(GameInputManager gim, GraphicalSettings gs, String text) {
-        super(gim, gs);
+    protected CheckBox(GraphicalSettings gs, String text) {
+        super(gs);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
         this.text = text;

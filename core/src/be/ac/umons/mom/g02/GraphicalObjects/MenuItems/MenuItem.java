@@ -138,8 +138,8 @@ public abstract class MenuItem<T extends Control> {
     protected T getControl(Class<T> itemClass) {
         T t;
         try {
-            Constructor<T> con = itemClass.getConstructor(GameInputManager.class, GraphicalSettings.class);
-            t = (T) con.newInstance(gim, gs);
+            Constructor<T> con = itemClass.getConstructor(GraphicalSettings.class);
+            t = (T) con.newInstance(gs);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             MasterOfMonsGame.showAnError("There was an error trying to load the menu");
             Gdx.app.error(String.format("MenuItem(%s)", itemClass.getName()), "There was an error trying to load the menu", e);

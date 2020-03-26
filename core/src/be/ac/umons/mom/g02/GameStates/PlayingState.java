@@ -196,7 +196,7 @@ public class PlayingState extends GameState implements Observer {
         gmm = GameMapManager.getInstance();
         gkm = GameKeyManager.getInstance();
         questShower = new QuestShower(gsm, gs);
-        agendaShower = new AgendaShower(gim, gs);
+        agendaShower = new AgendaShower(gs);
         timeShower = new TimeShower(gs);
         notificationRappel = new NotificationRappel(gs);
         player = new Player(gs,MasterOfMonsGame.WIDTH / 2, MasterOfMonsGame.HEIGHT / 2);
@@ -211,7 +211,7 @@ public class PlayingState extends GameState implements Observer {
         if (MasterOfMonsGame.getGameToLoad() == null)
             initMap("Tmx/Umons_Nimy.tmx");
 
-        inventoryShower = new InventoryShower(gim, gs, player);
+        inventoryShower = new InventoryShower(gs, player);
 
         cam = new OrthographicCamera(SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);
         cam.position.x = player.getPosX();
@@ -220,13 +220,13 @@ public class PlayingState extends GameState implements Observer {
         cam.update();
 
         lifeBar = new LifeBar(gs);
-        lifeBar.setForegroundColor(gs.getLifeBarColor());
+        lifeBar.setForegroundColor(gcm.getColorFor("lifeBar"));
         expBar = new ProgressBar(gs);
-        expBar.setForegroundColor(gs.getExperienceBarColor());
+        expBar.setForegroundColor(gcm.getColorFor("experienceBar"));
         energyBar = new ProgressBar(gs);
-        energyBar.setForegroundColor(gs.getEnergyBarColor());
+        energyBar.setForegroundColor(gcm.getColorFor("energyBar"));
 
-        pauseButton = new Button(gim, gs);
+        pauseButton = new Button(gs);
         pauseButton.setText("||");
         pauseButton.setOnClick(() -> gsm.setState(InGameMenuState.class));
         pauseButton.setFont(gs.getSmallFont());

@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.GraphicalObjects;
 
 import be.ac.umons.mom.g02.Animations.DoubleAnimation;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Quests.Quest;
@@ -48,6 +49,8 @@ public class QuestShower {
      * The game's state manager.
      */
     protected GameStateManager gsm;
+
+    protected GameColorManager gcm;
     /**
      * The size while animating.
      */
@@ -91,6 +94,7 @@ public class QuestShower {
     public QuestShower(GameStateManager gsm, GraphicalSettings gs) {
         this.gs = gs;
         this.gsm = gsm;
+        this.gcm = GameColorManager.getInstance();
         this.am = AnimationManager.getInstance();
         init();
     }
@@ -127,7 +131,7 @@ public class QuestShower {
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(gs.getControlTransparentBackgroundColor());
+        sr.setColor(gcm.getColorFor("controlTransparentBackground"));
         if (isBeingAnimated)
             sr.rect(x - TEXT_AND_RECTANGLE_MARGIN, y  - duringAnimationQuestShowerHeight + TEXT_AND_RECTANGLE_MARGIN, duringAnimationQuestShowerWidth, duringAnimationQuestShowerHeight);
         else

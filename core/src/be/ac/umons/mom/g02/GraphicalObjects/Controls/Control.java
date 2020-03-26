@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -28,6 +29,8 @@ public abstract class Control {
      * The game's graphical settings.
      */
     protected GraphicalSettings gs;
+
+    protected GameColorManager gcm;
     /**
      * The horizontal margin
      */
@@ -38,12 +41,12 @@ public abstract class Control {
     protected int topMargin;
 
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings
      */
-    protected Control (GameInputManager gim, GraphicalSettings gs) {
-        this.gim = gim;
+    protected Control(GraphicalSettings gs) {
+        this.gim = GameInputManager.getInstance();
         this.gs = gs;
+        this.gcm = GameColorManager.getInstance();
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         topMargin = MasterOfMonsGame.HEIGHT / 100;
     }

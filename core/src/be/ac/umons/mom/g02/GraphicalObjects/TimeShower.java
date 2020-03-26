@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.GraphicalObjects;
 
 import be.ac.umons.mom.g02.Animations.DoubleAnimation;
 import be.ac.umons.mom.g02.Animations.StringAnimation;
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
@@ -73,7 +74,7 @@ public class TimeShower {
         this.gs = gs;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        sr.setColor(gs.getControlTransparentBackgroundColor());
+        sr.setColor(GameColorManager.getInstance().getColorFor("controlTransparentBackground"));
         leftMargin = MasterOfMonsGame.WIDTH / 100;
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         beginAnimation();

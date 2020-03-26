@@ -1,7 +1,6 @@
 package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
@@ -61,11 +60,10 @@ public class TextBox extends Control {
     protected Runnable onTextChanged;
 
     /**
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
-    public TextBox(GameInputManager gim, GraphicalSettings gs) {
-        super(gim, gs);
+    public TextBox(GraphicalSettings gs) {
+        super(gs);
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
     }
@@ -81,7 +79,7 @@ public class TextBox extends Control {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         if (isSelected)
-            sr.setColor(gs.getControlSelectedColor());
+            sr.setColor(gcm.getColorFor("controlSelected"));
         else
             sr.setColor(Color.WHITE);
         sr.begin();

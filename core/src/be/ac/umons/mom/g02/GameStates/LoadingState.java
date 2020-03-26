@@ -10,6 +10,7 @@ import be.ac.umons.mom.g02.Objects.LoadFile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -109,7 +110,8 @@ public class LoadingState extends GameState {
 
     @Override
     public void draw() {
-        Gdx.gl.glClearColor(gs.getBackgroundColor().r,gs.getBackgroundColor().g,gs.getBackgroundColor().b,1);
+        Color c = gcm.getColorFor("background");
+        Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.begin();
         String txt = gs.getStringFromId("loading");

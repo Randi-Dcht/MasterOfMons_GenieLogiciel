@@ -1,4 +1,6 @@
+pointsAttribution=42
 interact=33
+pickUpAnObject=33
 movingUpward=19
 movingLeftward=21
 quickSave=248
@@ -12,7 +14,5 @@ debugMakeInvincible=39
 attack=31
 quickLoad=249
 levelUp=42
-dropAnObject=40
-pointsAttribution=42
-pickUpAnObject=33
 showHideAgenda=29
+dropAnObject=40

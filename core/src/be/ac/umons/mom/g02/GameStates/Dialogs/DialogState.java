@@ -4,8 +4,6 @@ import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.Helpers.StringHelper;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Input;
@@ -135,7 +133,7 @@ public abstract class DialogState extends GameState {
      */
     public void addNonInternationalizedAnswer(String answer, Runnable run) {
         whenSelectedActions.put(answer, run);
-        Button b = new Button(gim, gs);
+        Button b = new Button(gs);
         b.setText(answer);
         b.setOnClick(() -> {
             if (run != null)

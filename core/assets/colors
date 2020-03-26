@@ -1,0 +1,11 @@
+foreground=FFFFFF
+background=161616
+transparentBackground=161616F2
+controlBackground=070707
+controlTransparentBackground=070707AA
+controlSelected=4527A0
+attackRange=FF212180
+recoveringAttackRange=63636380
+lifeBar=D50000AF
+energyBar=689F38AF
+experienceBar=01579BAF
