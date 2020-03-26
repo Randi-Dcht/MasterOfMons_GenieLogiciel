@@ -26,6 +26,7 @@ public class BattlePeople extends DualUnderQuest
     public BattlePeople(People people,MasterQuest master)
     {
         super("BattleDual",master,people);
+        victim = SupervisorDual.getSupervisorDual().getAdversary(people);
     }
 
 
@@ -44,13 +45,13 @@ public class BattlePeople extends DualUnderQuest
 
     private void attackOther(People victim)
     {
-        if (SupervisorDual.getSupervisorDual().getAdversary(people).equals(victim))
+        if (this.victim.equals(victim))
             addProgress(0.1);
     }
 
     private void finishQuest(People victim)
     {
-        if (SupervisorDual.getSupervisorDual().getAdversary(people).equals(victim))
+        if (this.victim.equals(victim))
             addProgress(100-progress);
     }
 }
