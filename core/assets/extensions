@@ -5,6 +5,7 @@ LAN
 .classAfterOldGameSelection be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitingRoomState
 .isMultiplayer
 Dual
+.mainClassBeforeCharacterCreation be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.CreatePlayerDual
 .mainClass be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu
 .isMultiplayer
 IA
