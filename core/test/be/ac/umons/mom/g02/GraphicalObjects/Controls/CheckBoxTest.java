@@ -54,6 +54,5 @@ public class CheckBoxTest extends CheckBox {
         l.add(new Point(20,45)); // Dehors
         handleInput();
         Assertions.assertFalse(checked);
-
     }
 }

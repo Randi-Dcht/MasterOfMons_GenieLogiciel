@@ -5,11 +5,11 @@ import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,11 +68,13 @@ public class ConnectionRoomState extends MenuState {
         }
 
         transparentBackground = false;
+        TextBoxMenuItem tbmi;
         setMenuItems(new MenuItem[]{
                 new TitleMenuItem(gs, gs.getStringFromId("automaticDetect")),
                 new TitleMenuItem(gs, gs.getStringFromId("enterServerInfo")),
                 new TextMenuItem(gs, gs.getStringFromId("servInfo")),
-                new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"),
+                tbmi = new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"),
+                new ButtonMenuItem(gim, gs, gs.getStringFromId("connect"), () ->  manualConnect(tbmi.getControl().getText()))
         });
     }
 
@@ -80,6 +82,7 @@ public class ConnectionRoomState extends MenuState {
      * Refresh the state with the detected server.
      */
     protected void refresh() {
+        TextBoxMenuItem tbmi;
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("automaticDetect")));
         for (ServerInfo si : nm.getDetectedServers()) {
@@ -89,8 +92,22 @@ public class ConnectionRoomState extends MenuState {
         }
         menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("enterServerInfo")));
         menuItems.add(new TextMenuItem(gs, gs.getStringFromId("servInfo")));
-        menuItems.add(new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"));
+        menuItems.add(tbmi = new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"));
+        menuItems.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("connect"), () -> manualConnect(tbmi.getControl().getText())));
         setMenuItems(menuItems.toArray(new MenuItem[0]));
+    }
+
+    protected void manualConnect(String ip) {
+        try {
+            connectToServer(
+                    new ServerInfo(InetAddress.getByName(ip))
+            );
+        } catch (UnknownHostException e) {
+            OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
+            ogds.setText(gs.getStringFromId("ipIncorrect"));
+            ogds.addAnswer("OK");
+            e.printStackTrace();
+        }
     }
 
     /**

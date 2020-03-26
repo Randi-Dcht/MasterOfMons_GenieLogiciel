@@ -219,6 +219,13 @@ public abstract class MenuState extends GameState {
      * @param selectFirstOne If the first item needs to be selected.
      */
     protected void setMenuItems(MenuItem[] menuItems, boolean selectFirstOne) {
+        if (this.menuItems != null) {
+            for (MenuItem mi : this.menuItems)
+                if (mi.getControl() != null)
+                    mi.getControl().dispose();
+            buttons.clear();
+            controls.clear();
+        }
         for (MenuItem mi : menuItems) {
             if (mi instanceof ButtonMenuItem) {
                 ButtonMenuItem bmi = (ButtonMenuItem)mi;
