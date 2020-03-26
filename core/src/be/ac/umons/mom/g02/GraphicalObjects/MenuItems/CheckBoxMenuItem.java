@@ -67,7 +67,7 @@ public class CheckBoxMenuItem extends MenuItem<CheckBox> {
         super(gim, gs, header, id);
         this.toDoIfStateChanged = toDoIfStateChanged;
         this.drawUnderPreviousOne = drawUnderPreviousOne;
-        control = getControl(CheckBox.class);
+        control = new CheckBox(gs);
         control.setOnStateChanged(toDoIfStateChanged);
         control.setText(header);
     }

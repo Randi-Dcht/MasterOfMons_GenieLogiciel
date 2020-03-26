@@ -70,7 +70,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
         super(gim, gs, header, id);
         this.toDoIfExecuted = toDoIfExecuted;
         this.drawUnderPreviousOne = drawUnderPreviousOne;
-        control = getControl(Button.class);
+        control = new Button(gs);
         control.setText(header);
         control.setOnClick(toDoIfExecuted);
     }

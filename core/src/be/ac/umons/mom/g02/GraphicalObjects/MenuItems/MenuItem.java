@@ -130,25 +130,6 @@ public abstract class MenuItem<T extends Control> {
         return size;
     }
 
-    /**
-     * Create a new control for the given menu's item.
-     * @param itemClass The class that the control must be.
-     * @return The created control.
-     */
-    protected T getControl(Class<T> itemClass) {
-        T t;
-        try {
-            Constructor<T> con = itemClass.getConstructor(GraphicalSettings.class);
-            t = (T) con.newInstance(gs);
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            MasterOfMonsGame.showAnError("There was an error trying to load the menu");
-            Gdx.app.error(String.format("MenuItem(%s)", itemClass.getName()), "There was an error trying to load the menu", e);
-            e.printStackTrace();
-            return null;
-        }
-        return t;
-    }
-
     public boolean getDrawUnderPreviousOne() {
         return drawUnderPreviousOne;
     }

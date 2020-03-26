@@ -27,7 +27,7 @@ public class ScrollListChooserMenuItem extends MenuItem<ScrollListChooser> {
      */
     public ScrollListChooserMenuItem(GameInputManager gim, GraphicalSettings gs, String header, String id) {
         super(gim, gs, header, id);
-        control = getControl(ScrollListChooser.class);
+        control = new ScrollListChooser(gs);
     }
 
     /**

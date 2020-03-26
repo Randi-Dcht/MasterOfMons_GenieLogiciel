@@ -27,7 +27,7 @@ public class TextBoxMenuItem extends MenuItem<TextBox> {
      */
     public TextBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header, String id) {
         super(gim, gs, header, id);
-        control = getControl(TextBox.class);
+        control = new TextBox(gs);
     }
 
     /**

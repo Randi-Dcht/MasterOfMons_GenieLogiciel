@@ -27,7 +27,7 @@ public class KeySelectorMenuItem extends MenuItem<KeySelector> {
      */
     public KeySelectorMenuItem(GameInputManager gim, GraphicalSettings gs, String header, String id) {
         super(gim, gs, header, id);
-        control = getControl(KeySelector.class);
+        control = new KeySelector();
     }
 
     /**

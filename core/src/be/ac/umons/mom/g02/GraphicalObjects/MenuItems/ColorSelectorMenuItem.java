@@ -29,7 +29,7 @@ public class ColorSelectorMenuItem extends MenuItem<ColorSelector> {
      */
     public ColorSelectorMenuItem(GameInputManager gim, GraphicalSettings gs, String header, String id) {
         super(gim, gs, header, id);
-        control = getControl(ColorSelector.class);
+        control = new ColorSelector(gs);
     }
 
     /**
