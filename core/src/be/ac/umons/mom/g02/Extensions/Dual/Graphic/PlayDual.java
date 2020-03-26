@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
@@ -17,7 +18,10 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.graphics.Color;
+
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -28,6 +32,9 @@ public class PlayDual extends PlayingState
     protected LifeBar lifeBarTwo;
     protected Button endDual;
     protected HashMap<Player,Player> adv = new HashMap<>();
+    protected HashMap<Player,Integer> cases = new HashMap<>();
+    protected ArrayList<Cases> drawCase = new ArrayList<>();
+    protected HashMap<Player,Point> old = new HashMap<>();
 
     /**
      * @param gs The game's graphical settings
@@ -98,7 +105,13 @@ public class PlayDual extends PlayingState
 
         for (Character pnj : pnjs)
             pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
-
+/*
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        {
+            for (Cases cc : drawCase)
+                cc.draw();
+        }TODO this
+ */
         sb.begin();
         if (gs.mustShowMapCoordinates())
         {
@@ -125,6 +138,21 @@ public class PlayDual extends PlayingState
         pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -ButtonSize.x-10, (int)(MasterOfMonsGame.HEIGHT - ButtonSize.y - topBarHeight - 2 * topMargin+25)),ButtonSize);
         endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +ButtonSize.x+10, (int)(MasterOfMonsGame.HEIGHT - ButtonSize.y - topBarHeight - 2 * topMargin+25)),ButtonSize);
     }
+
+
+    private void checkCase(Player player)
+    {
+        if (!old.get(player).equals(new Point(player.getPosX(),player.getPosY())))
+        {
+            old.replace(player,new Point(player.getPosX(),player.getPosY()));
+            if (player.equals(this.player))
+                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.BLUE));//TODO
+            else
+                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
+            cases.replace(player,cases.get(player)+1);
+        }
+    }
+
 
     @Override
     public void handleInput()
