@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,7 +70,7 @@ public class DualMasterQuest extends MasterQuest
     @Override
     public String getName()
     {
-        return "Dual";
+        return Supervisor.getGraphic().getStringFromId("StartDualQuest");
     }
 
 
