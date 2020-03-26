@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Other.Date;
@@ -366,7 +367,10 @@ public class NetworkManager {
                     socket.close();
                 socket = new Socket(selectedServer.getIp(), PORT);
                 waitMagicNumber();
-            } catch (IOException e) {
+            } catch (NoRouteToHostException e) {
+                MasterOfMonsGame.showAnError("The given IP is unreachable"); // TODO Inter
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         });
