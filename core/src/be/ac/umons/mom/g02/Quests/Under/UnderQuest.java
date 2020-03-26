@@ -159,7 +159,14 @@ public abstract class UnderQuest implements Quest,Serializable
      */
     public String getName()
     {
-        return Supervisor.getSupervisor().getGraphic().getStringFromId(name);
+        try
+        {
+            return Supervisor.getGraphic().getStringFromId(name);
+        }
+        catch (Exception i)
+        {
+            return "ERROR";
+        }
     }
 
 
