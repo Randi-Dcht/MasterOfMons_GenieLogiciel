@@ -73,4 +73,11 @@ public class GameColorManager {
     public void setColorFor(String id, Color color) {
         colorsMap.put(id, color);
     }
+    public void setColorFor(String id, String color) {
+        colorsMap.put(id, StringHelper.getColorFromString(color));
+    }
+
+    public HashMap<String, Color> getColorsMap() {
+        return colorsMap;
+    }
 }
