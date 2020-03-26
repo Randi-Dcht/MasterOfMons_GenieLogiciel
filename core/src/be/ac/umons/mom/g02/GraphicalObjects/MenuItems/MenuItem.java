@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
@@ -140,6 +141,8 @@ public abstract class MenuItem<T extends Control> {
             Constructor<T> con = itemClass.getConstructor(GameInputManager.class, GraphicalSettings.class);
             t = (T) con.newInstance(gim, gs);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            MasterOfMonsGame.showAnError("There was an error trying to load the menu");
+            Gdx.app.error(String.format("MenuItem(%s)", itemClass.getName()), "There was an error trying to load the menu", e);
             e.printStackTrace();
             return null;
         }

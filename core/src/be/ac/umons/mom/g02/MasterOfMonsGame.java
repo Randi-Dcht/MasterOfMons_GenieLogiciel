@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02;
 
+import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -99,6 +100,12 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 
 	public static String getGameToLoad() {
 		return gameToLoad;
+	}
+
+	public static void showAnError(String error) {
+		OutGameDialogState ogds = (OutGameDialogState) GameStateManager.getInstance().setState(OutGameDialogState.class);
+		ogds.setText(error);
+		ogds.addAnswer("OK");
 	}
 
 	/**

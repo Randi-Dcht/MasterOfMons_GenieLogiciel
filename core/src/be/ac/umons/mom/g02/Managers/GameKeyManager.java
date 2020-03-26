@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Managers;
 
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -40,6 +41,11 @@ public class GameKeyManager {
         int actualLine = 0;
         try {
             FileHandle ef = Gdx.files.getFileHandle("keys", Files.FileType.Internal);
+            if (! ef.exists()) {
+                Gdx.app.error("GameKeyManager", "The keys' file wasn't found !");
+                MasterOfMonsGame.showAnError("The keys' file wasn't found !");
+                return;
+            }
             br = new BufferedReader(new FileReader(ef.file()));
             String line;
             while ((line = br.readLine()) != null) {
@@ -48,9 +54,10 @@ public class GameKeyManager {
                 actualLine++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            MasterOfMonsGame.showAnError("The keys' file wasn't loaded due to an error !");
+            Gdx.app.error("GameKeyManager", "The keys' file wasn't loaded due to an error...", e);
         } catch (NumberFormatException e) {
-            Gdx.app.log("GameKeyManager", "An error has been detected line " + actualLine, e);
+            Gdx.app.error("GameKeyManager", "An error has been detected line " + actualLine, e);
         }
     }
 

@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Managers;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.CreatePlayerMenuState;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.LoadFile;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
@@ -288,6 +289,7 @@ public class ExtensionsManager {
             } else
                 gsm.setState(LoadingState.class);
         } catch (ClassNotFoundException e) {
+            MasterOfMonsGame.showAnError(String.format("The extension \"%s\" couldn't be loaded !", mainExt.extensionName));
             Gdx.app.error("ExtensionsFile", String.format("The class %s wasn't found", mainExt.mainClassBeforeCharacterCreation), e);
         }
     }

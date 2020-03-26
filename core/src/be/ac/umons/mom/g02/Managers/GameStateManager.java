@@ -145,7 +145,8 @@ public class GameStateManager {
             Constructor con = gst.getConstructor(GraphicalSettings.class);
             g = (GameState) con.newInstance(gs);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
+            MasterOfMonsGame.showAnError("There was an error while loading the next state...");
+            Gdx.app.error("GameStateManager", String.format("The state \"%s\" couldn't be loaded !", gst.getName()), e);
             return null;
         }
         return g;

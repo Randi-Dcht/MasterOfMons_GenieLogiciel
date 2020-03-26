@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.LoadFile;
 import com.badlogic.gdx.Gdx;
@@ -87,7 +88,8 @@ public class MainMenuState extends MenuState {
                 else
                     gsm.setState(LoadMenuState.class);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                MasterOfMonsGame.showAnError(String.format("The extension \"%s\" couldn't be loaded !", mainExt.extensionName));
+                Gdx.app.error("MainMenuState", String.format("The extension \"%s\" couldn't be loaded !", mainExt.extensionName), e);
             }
         } else
             gsm.setState(LoadMenuState.class);

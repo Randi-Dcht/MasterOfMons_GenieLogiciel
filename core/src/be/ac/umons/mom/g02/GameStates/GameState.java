@@ -36,8 +36,6 @@ public abstract class GameState {
 
     /**
      * Create a new game's state
-     * @param gsm Game's state manager
-     * @param gim Game's input manager
      * @param gs Game's graphical settings
      */
     protected GameState(GraphicalSettings gs) {
