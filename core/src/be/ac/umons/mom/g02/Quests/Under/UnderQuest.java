@@ -41,10 +41,6 @@ public abstract class UnderQuest implements Quest,Serializable
      * The people who play this game
      */
     protected People people;
-    /**
-     * This is the instance of the superNormally
-     */
-    //protected SuperviserNormally instance;
 
 
     /**
@@ -60,7 +56,6 @@ public abstract class UnderQuest implements Quest,Serializable
         percentMax  = max;
         this.master = master;
         this.people = people;
-        //instance    = SuperviserNormally.getSupervisor();
     }
 
 
@@ -74,11 +69,15 @@ public abstract class UnderQuest implements Quest,Serializable
     }
 
 
+    /**
+     * This method allows to pass this Quest for the particular item or #DEBUG#
+     */
     public void passQuest()
     {
         progress = percentMax;
         finish   = true;
     }
+
 
     /**
      * This method check if the actual Quest is finish with the percent

@@ -446,6 +446,10 @@ public  abstract class Supervisor implements Observer
 
 
     /***/
+    public abstract MasterQuest actualQuest();
+
+
+    /***/
     protected void placeItem()
     {
         if (playGraphic != null && mustPlaceItem)
@@ -514,9 +518,9 @@ public  abstract class Supervisor implements Observer
      */
     public void refreshQuest()
     {
-        createItems(playerOne.getQuest());
-        createMobil(playerOne.getQuest());
-        createMovingPnj(playerOne.getDifficulty());
+        createItems(actualQuest());
+        createMobil(actualQuest());
+        createMovingPnj(playerOne.getDifficulty());//TODO changed
     }
 
 

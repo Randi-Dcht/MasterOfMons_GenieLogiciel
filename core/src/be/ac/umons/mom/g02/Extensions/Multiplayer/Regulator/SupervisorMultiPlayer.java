@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.LogicSaving;
+import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 /**
@@ -55,11 +56,12 @@ public abstract class SupervisorMultiPlayer extends Supervisor
 
     }
 
-    @Override//TODO delete
-    public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
+
+    /***/
+    @Override
+    public MasterQuest actualQuest()
     {
-        super.newParty(namePlayer, type, gender, difficulty);
-        regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time,this);
+        return playerOne.getQuest();
     }
 
 

@@ -107,6 +107,13 @@ public class SuperviserNormally extends Supervisor
 
     /***/
     @Override
+    public MasterQuest actualQuest()
+    {
+        return playerOne.getQuest();
+    }
+
+    /***/
+    @Override
     public void saveGame(String pathAndFile)
     {
         LogicSaving save = new LogicSaving(playerOne,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
