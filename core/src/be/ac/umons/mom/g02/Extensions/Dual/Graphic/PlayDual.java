@@ -2,7 +2,6 @@ package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
@@ -16,11 +15,10 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /***/
@@ -29,6 +27,7 @@ public class PlayDual extends PlayingState
 {
     protected LifeBar lifeBarTwo;
     protected Button endDual;
+    protected HashMap<Player,Player> adv = new HashMap<>();
 
     /**
      * @param gs The game's graphical settings
@@ -57,6 +56,7 @@ public class PlayDual extends PlayingState
         cam.update();
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
+        adv.put(player,playerTwo);adv.put(playerTwo,player);
         if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.Survivor))
         {
             for (Character ch : pnjs)
@@ -148,9 +148,15 @@ public class PlayDual extends PlayingState
     }
 
     @Override
-    protected void checkForNearSelectable(Player player)
+    protected void checkForNearSelectable(Player player)//TODO upgrade
     {
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+            pnjs.add(adv.get(player));
+
         super.checkForNearSelectable(player);
+
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+            pnjs.remove(adv.get(player));
     }
 
     /**
