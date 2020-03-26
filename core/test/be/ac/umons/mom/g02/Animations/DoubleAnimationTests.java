@@ -8,7 +8,7 @@ public class DoubleAnimationTests {
     private int runningActionExecuted = 0;
 
     /**
-     * Test si les actions s'éxécute le nombre de fois attendue ainsi que si la valeur retourné par DoubleAnimation est celle attendue.
+     * Test if each actions is executed the expected number of times and if the returned value are correct
      */
     @Test
     public void test() {
@@ -32,7 +32,7 @@ public class DoubleAnimationTests {
     }
 
     /**
-     * Test si les actions s'éxécute le nombre de fois attendue ainsi que si la valeur retourné par DoubleAnimation est celle attendue.
+     * Test if the actions are executed the expected number of times and if the returned value is correct
      */
     @Test
     public void test2() {

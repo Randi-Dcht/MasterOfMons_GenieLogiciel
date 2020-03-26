@@ -18,7 +18,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Classe réprésente la classe MainMenuState. Cette classe de test a principalement pour but de tester la méthode handleInput, en évitant d'allouer trop de ressources.
+ * Testing class for MenuState
  */
 public class MenuStateTest extends MenuState {
 
@@ -45,6 +45,9 @@ public class MenuStateTest extends MenuState {
         Mockito.when(gim.getRecentClicks()).thenReturn(new ArrayList<>());
     }
 
+    /**
+     * Test if the down key is well interpreted and if the selected item is the one expected
+     */
     @Test
     public void testDown() {
         Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(true);
@@ -70,6 +73,9 @@ public class MenuStateTest extends MenuState {
         Assertions.assertEquals(new Point(1,0), selectedItem);
     }
 
+    /**
+     * Test if the up key is well interpreted and if the selected item is the one expected
+     */
     @Test
     public void testUp() {
         Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Pressed)).thenReturn(false);

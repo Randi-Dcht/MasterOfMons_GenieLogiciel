@@ -33,7 +33,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 
 /**
- * Cette classe correspond à la classe de test de la classe PLayingState.
+ * Testing class of PlayingState
  */
 public class PlayingStateTest extends PlayingState {
 
@@ -86,6 +86,9 @@ public class PlayingStateTest extends PlayingState {
     @Override
     protected void translateCamera(int x, int y) {}
 
+    /**
+     * Test if the movements done are the one expected
+     */
     @Test
     public void movementTest() {
         Mockito.when(gim.isKey(Input.Keys.DOWN, KeyStatus.Down)).thenReturn(true);
@@ -122,6 +125,9 @@ public class PlayingStateTest extends PlayingState {
         Assertions.assertEquals(4, player.getPosY()); // 2.5 arrondi à 3 pour éviter le "entre 2 pixels"
     }
 
+    /**
+     * Test if while moving, the player doesn't entre a collision area
+     */
     @Test
     public void collisionTest() {
         Mockito.when(gim.isKey(Input.Keys.UP, KeyStatus.Down)).thenReturn(false);
