@@ -678,11 +678,13 @@ public class PlayingState extends GameState implements Observer {
             goToLevelUpState();
         }
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
-            if (selectedOne instanceof Character)
-                supervisor.meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
-            else {
-                if (supervisor.getPeople().pushObject(((MapObject)selectedOne).getItem())) {
-                    pickUpAnObject();
+            if (selectedOne != null) {
+                if (selectedOne instanceof Character)
+                    supervisor.meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
+                else {
+                    if (Supervisor.getPeople().pushObject(((MapObject)selectedOne).getItem())) {
+                        pickUpAnObject();
+                    }
                 }
             }
         }
