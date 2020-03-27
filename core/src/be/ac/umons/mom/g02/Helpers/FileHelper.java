@@ -9,11 +9,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class FileHelper {
 
     public static HashMap<String, String> readSettingsFile(String file) {
-        HashMap<String, String> map = new HashMap<>();
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
         BufferedReader br;
         int actualLine = 0;
         try {

@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class GameColorManager {
     /**
@@ -30,10 +31,9 @@ public class GameColorManager {
     /**
      * The map making the link between an id and the color associated
      */
-    protected HashMap<String, Color> colorsMap;
+    protected LinkedHashMap<String, Color> colorsMap;
 
     protected GameColorManager() {
-        colorsMap = new HashMap<>();
         loadColorFile();
     }
 
@@ -41,8 +41,8 @@ public class GameColorManager {
      * Read the file <code>keys</code> and add the id and keycode to the map
      */
     protected void loadColorFile() {
+        colorsMap = new LinkedHashMap<>();
         HashMap<String, String> map = FileHelper.readSettingsFile("colors");
-        colorsMap = new HashMap<>();
         for (String key : map.keySet())
             colorsMap.put(key, StringHelper.getColorFromString(map.get(key)));
     }

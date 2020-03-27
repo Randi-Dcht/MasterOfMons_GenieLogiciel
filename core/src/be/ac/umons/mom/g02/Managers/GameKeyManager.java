@@ -9,6 +9,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class GameKeyManager {
     /**
@@ -28,10 +29,9 @@ public class GameKeyManager {
     /**
      * The map making the link between an id and the keycode of the key associated
      */
-    protected HashMap<String, Integer> keysMap;
+    protected LinkedHashMap<String, Integer> keysMap;
 
     protected GameKeyManager() {
-        keysMap = new HashMap<>();
         loadKeyFile();
     }
 
@@ -39,8 +39,8 @@ public class GameKeyManager {
      * Read the file <code>keys</code> and add the id and keycode to the map
      */
     protected void loadKeyFile() {
+        keysMap = new LinkedHashMap<>();
         HashMap<String, String> map = FileHelper.readSettingsFile("keys");
-        keysMap = new HashMap<>();
         try {
             for (String key : map.keySet())
                 keysMap.put(key, Integer.parseInt(map.get(key)));
