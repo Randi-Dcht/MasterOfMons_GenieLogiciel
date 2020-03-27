@@ -34,15 +34,25 @@ import java.util.HashMap;
 public class PlayDual extends PlayingState
 
 {
+    /***/
     protected LifeBar lifeBarTwo;
+    /***/
     protected Button endDual;
+    /***/
     protected HashMap<Player,Player> adv = new HashMap<>();
+    /***/
     protected HashMap<Player,Integer> cases = new HashMap<>();
+    /***/
     protected ArrayList<Cases> drawCase = new ArrayList<>();
+    /***/
     protected HashMap<Player,Point> old = new HashMap<>();
-
+    /***/
     protected TextBox player1Number;
+    /***/
     protected TextBox player2Number;
+    /***/
+    protected SupervisorDual supervisorDual;
+
 
     /**
      * @param gs The game's graphical settings
@@ -51,8 +61,11 @@ public class PlayDual extends PlayingState
     {
         super(gs);
         supervisor = Supervisor.getSupervisor();
+        supervisorDual = SupervisorDual.getSupervisorDual();
     }
 
+
+    /***/
     @Override
     public void init()
     {
@@ -61,10 +74,10 @@ public class PlayDual extends PlayingState
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
-        if (SupervisorDual.getSupervisorDual().getDual().getStartMaps().equals(Maps.DualKiosk)) //TODO found a solution for this -> delete the condition
-            initMap(SupervisorDual.getSupervisorDual().getDual().getStartMaps().getMaps(),15,15);//SupervisorDual.getSupervisorDual().getDual().getStartMaps().getMaps()
+        if (supervisorDual.getDual().getStartMaps().equals(Maps.DualKiosk)) //TODO found a solution for this -> delete the condition
+            initMap(supervisorDual.getDual().getStartMaps().getMaps(),15,15);
         else
-            initMap(SupervisorDual.getSupervisorDual().getDual().getStartMaps().getMaps(),8,24);
+            initMap(supervisorDual.getDual().getStartMaps().getMaps(),8,24);
         playerTwo.setMapPos(new Point(player.getPosX(),player.getPosY()));
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();
@@ -72,7 +85,7 @@ public class PlayDual extends PlayingState
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
         adv.put(player,playerTwo);adv.put(playerTwo,player);
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.Survivor))
+        if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
             for (Character ch : pnjs)
             {
@@ -82,10 +95,10 @@ public class PlayDual extends PlayingState
 
         }
 
-        initPNJsPositions(getPNJsOnMap(SupervisorDual.getSupervisorDual().getDual().getStartMaps().getMaps()));//TODO
+        initPNJsPositions(getPNJsOnMap(supervisorDual.getDual().getStartMaps().getMaps()));//TODO
         questShower.setQuest(Supervisor.getSupervisor().actualQuest());
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
         {
             player1Number = new TextBox(gs); player1Number.setText("0");
             player2Number = new TextBox(gs); player2Number.setText("0");
@@ -100,11 +113,13 @@ public class PlayDual extends PlayingState
         endDual.setOnClick(() -> gsm.removeAllStateAndAdd(DualChooseMenu.class));
         endDual.setFont(gs.getSmallFont());
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        if (supervisorDual.getDual().equals(TypeDual.CatchFlag) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
             changedCam();
 
     }
 
+
+    /***/
     @Override
     public void update(float dt)
     {
@@ -112,13 +127,13 @@ public class PlayDual extends PlayingState
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
         {
             checkCase(player);
             checkCase(playerTwo);
         }
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))//TODO upgrade
+        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO upgrade
         {
             player1Number.setText(cases.get(player).toString());
             player2Number.setText(cases.get(playerTwo).toString());
@@ -144,7 +159,7 @@ public class PlayDual extends PlayingState
         {
             for (Cases cc : drawCase)
                 cc.draw();
-        }TODO this
+        }//TODO this
  */
         sb.begin();
         if (gs.mustShowMapCoordinates())
@@ -172,7 +187,7 @@ public class PlayDual extends PlayingState
         pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -objectSize.x-10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
         endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +objectSize.x+10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
         {
             Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
             player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
@@ -191,6 +206,8 @@ public class PlayDual extends PlayingState
         cam.update();
     }
 
+
+    /***/
     private void checkCase(Player player)
     {
         if (!old.get(player).equals(new Point(player.getPosX(),player.getPosY())))
@@ -202,12 +219,13 @@ public class PlayDual extends PlayingState
                 drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
             cases.replace(player,cases.get(player)+1);
             old.replace(player,new Point(player.getPosX(),player.getPosY()));
-            if(SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))//TODO
+            if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
                 ((MoreCasesMons)((DualMasterQuest)SupervisorDual.getSupervisorDual().actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
         }
     }
 
 
+    /***/
     @Override
     public void handleInput()
     {
@@ -244,29 +262,34 @@ public class PlayDual extends PlayingState
         //inventoryShowerTwo.handleInput();TODO
     }
 
+
+    /***/
     @Override
     protected void attack(Player player)
     {
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
             pnjs.add(adv.get(player));
 
         super.attack(player);
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
             pnjs.remove(adv.get(player));
     }
 
+
+    /***/
     @Override
     protected void checkForNearSelectable(Player player)//TODO upgrade
     {
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
             pnjs.add(adv.get(player));
 
         super.checkForNearSelectable(player);
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
             pnjs.remove(adv.get(player));
     }
+
 
     /**
      * Make the player move and check that the position of the player is not out of the map.
@@ -310,6 +333,8 @@ public class PlayDual extends PlayingState
         checkForAboutCollision(playerTwo);
     }
 
+
+    /***/
     @Override
     public void update(Notification notify)
     {
@@ -318,6 +343,8 @@ public class PlayDual extends PlayingState
 
     }
 
+
+    /***/
     public void initSizeOfMaps()
     {
         playerTwo.setMapWidth(mapWidth * tileWidth);
@@ -326,6 +353,8 @@ public class PlayDual extends PlayingState
         playerTwo.setTileHeight(tileHeight);
     }
 
+
+    /***/
     @Override
     public void dispose()
     {
