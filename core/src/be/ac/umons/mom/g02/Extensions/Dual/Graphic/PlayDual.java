@@ -3,6 +3,8 @@ package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
@@ -16,6 +18,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.graphics.Color;
@@ -167,7 +170,11 @@ public class PlayDual extends PlayingState
             }
         }
         if (gim.isKey("attackTwo", KeyStatus.Pressed))
+        {
+            pnjs.add(player);
             attack(playerTwo);
+            pnjs.remove(player);
+        }
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed))
         {
             if (selectedOne instanceof Character)
@@ -183,6 +190,18 @@ public class PlayDual extends PlayingState
 
         endDual.handleInput();
         //inventoryShowerTwo.handleInput();TODO
+    }
+
+    @Override
+    protected void attack(Player player)
+    {
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+            pnjs.add(adv.get(player));
+
+        super.attack(player);
+
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+            pnjs.remove(adv.get(player));
     }
 
     @Override
@@ -237,6 +256,14 @@ public class PlayDual extends PlayingState
 
         checkForNearSelectable(playerTwo);
         checkForAboutCollision(playerTwo);
+    }
+
+    @Override
+    public void update(Notification notify)
+    {
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
+            gsm.removeAllStateAndAdd(DualChooseMenu.class);
+
     }
 
     public void initSizeOfMaps()

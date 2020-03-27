@@ -150,9 +150,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
     @Override
     public void attackMethod(Attack attacker, Attack victim)
     {
-        if (attacker == null || victim == null)//TODO
-            return;
-        if (!dual.equals(TypeDual.Survivor) && !attacker.getType().equals(Character.TypePlayer.Human) || !victim.getType().equals(Character.TypePlayer.Human))
+        if (attacker != null && victim != null)//TODO
             super.attackMethod(attacker, victim);
     }
 
