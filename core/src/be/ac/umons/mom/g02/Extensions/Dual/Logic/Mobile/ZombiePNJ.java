@@ -12,7 +12,7 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 public class ZombiePNJ extends Mobile implements Observer
 {
 
-    private static double SPEED = 0.23;
+    private static double SPEED = 0.18;
     private static int number = 0;
 
     /**
@@ -164,7 +164,7 @@ public class ZombiePNJ extends Mobile implements Observer
     {
         number--;
         if (number < 10)
-            speed = 0.22;
+            speed = 0.17;
     }
 
     /**
