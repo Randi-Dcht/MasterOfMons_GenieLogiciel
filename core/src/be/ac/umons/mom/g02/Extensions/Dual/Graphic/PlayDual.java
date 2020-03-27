@@ -74,10 +74,7 @@ public class PlayDual extends PlayingState
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
-        if (supervisorDual.getDual().getStartMaps().equals(Maps.DualKiosk)) //TODO found a solution for this -> delete the condition
-            initMap(supervisorDual.getDual().getStartMaps().getMaps(),15,15);
-        else
-            initMap(supervisorDual.getDual().getStartMaps().getMaps(),8,24);
+        initMap(supervisorDual.getDual().getStartMaps().getMaps(),supervisorDual.getDual().getPointPlayerOne().x,supervisorDual.getDual().getPointPlayerOne().y);
         playerTwo.setMapPos(new Point(player.getPosX(),player.getPosY()));
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();

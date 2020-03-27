@@ -7,15 +7,16 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualUnderQuest;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MoreCasesMons;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.SurvivorVsMobile;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.TakeFlag;
+import java.awt.Point;
 
-import java.awt.*;
 
+/***/
 public enum TypeDual
 {
-    DualPlayer(     "", BattlePeople.class   ,Maps.DualKiosk,new Point(0,0),new Point(0,0)),
-    CatchFlag(      "", TakeFlag.class        ,Maps.DualPark,new Point(0,0),new Point(0,0)),
-    Survivor(       "", SurvivorVsMobile.class,Maps.DualKiosk,new Point(0,0),new Point(0,0)),
-    OccupationFloor("", MoreCasesMons.class   ,Maps.DualPark,new Point(0,0),new Point(0,0));
+    DualPlayer(     "", BattlePeople.class    ,Maps.DualKiosk,new Point(15,15),new Point(15,15)),
+    CatchFlag(      "", TakeFlag.class        ,Maps.DualPark ,new Point(7,24),new Point(8,24)),
+    Survivor(       "", SurvivorVsMobile.class,Maps.DualKiosk,new Point(15,15),new Point(15,15)),
+    OccupationFloor("", MoreCasesMons.class   ,Maps.DualPark ,new Point(8,24),new Point(8,24));
 
 
     /***/
