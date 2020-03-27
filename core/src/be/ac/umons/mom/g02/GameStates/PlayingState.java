@@ -315,6 +315,8 @@ public class PlayingState extends GameState implements Observer {
     }
 
     protected void initPNJPosition(Character c, Array<RectangleMapObject> rmos) {
+        if (rmos.size <= 0)
+            return;
         Random random = new Random();
         int posIndex = random.nextInt(rmos.size);
         Rectangle mo = rmos.removeIndex(posIndex).getRectangle();
