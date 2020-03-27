@@ -773,7 +773,7 @@ public  abstract class Supervisor implements Observer
             event.notify(new Dialog("ESC"));
             //event.remove(Events.Answer,this);//TODO
         }
-        if (answer.equals("Attack"))
+        else if (answer.equals("Attack"))
         {
             attackMethod(playerOne,memoryMobile);
             event.notify(new Dialog("ESC"));

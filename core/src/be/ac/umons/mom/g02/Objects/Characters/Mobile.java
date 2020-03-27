@@ -265,4 +265,13 @@ public class Mobile extends Character implements Serializable, FrameTime
     {
         return "bh_H_sa_";
     }
+
+    public Bloc getPlayerBloc() {
+        return playerBloc;
+    }
+
+    public MobileType getMobileType() {
+        return type;
+    }
+
 }

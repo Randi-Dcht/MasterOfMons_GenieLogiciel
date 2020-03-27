@@ -9,7 +9,6 @@ import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
-import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
@@ -67,12 +66,11 @@ public class MovingPNJ extends Mobile
 
     /**
      * This class allows to create the instance graphic of this PNJ
-     * @param gs is the graphic setting
      * @param victim is the instance of graphic Player
      */
-    public Character initialisation(GraphicalSettings gs,PlayingState ps, Player victim)
+    public Character initialisation(Character graphic, PlayingState ps, Player victim)
     {
-        myGraphic = new Character(gs,this);
+        myGraphic = graphic;
         setVictim(victim);
         this.ps = ps;
         return myGraphic;

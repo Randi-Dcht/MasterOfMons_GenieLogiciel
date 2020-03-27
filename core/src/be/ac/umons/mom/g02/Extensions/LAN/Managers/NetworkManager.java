@@ -1,11 +1,16 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Managers;
 
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Other.Date;
@@ -15,7 +20,6 @@ import com.badlogic.gdx.Gdx;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.time.Instant;
 import java.util.List;
 import java.util.*;
 
@@ -171,7 +175,11 @@ public class NetworkManager {
     /**
      * What to do when the informations of a PNJ has been received.
      */
-    protected OnPNJDetectedRunnable onPNJDetected;
+    protected OnCharacterDetectedRunnable onPNJDetected;
+    /**
+     * What to do when the informations of a PNJ has been received.
+     */
+    protected OnCharacterDetectedRunnable onMovingPNJDetected;
     /**
      * What to do when the informations of an item has been received.
      */
@@ -807,6 +815,19 @@ public class NetworkManager {
         }
     }
 
+    public void sendAMovingPNJ(MovingPNJ mpnj, int x, int y) {
+        try {
+            sendOnTCP(String.format("MPNJ#%s#%s#%s#%s#%s#%d#%d", mpnj.getName(),
+                    objectToString(mpnj.getPlayerBloc()),
+                    objectToString(mpnj.getMobileType()),
+                    objectToString(mpnj.getMaps()),
+                    objectToString(mpnj.getAction()),
+                    x, y));
+        } catch (IOException e) {
+            Gdx.app.error("NetworkManager", "Unable to send the MovingPNJ", e);
+        }
+    }
+
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
@@ -904,6 +925,23 @@ public class NetworkManager {
                     e.printStackTrace();
                 } catch (NumberFormatException e) {
                     Gdx.app.error("NetworkManager", "Error detected while parsing PNJs position (ignoring message)", e);
+                }
+                break;
+            case "MPNJ":
+                try {
+                    MovingPNJ mpnj = new MovingPNJ((Bloc) objectFromString(tab[2]),
+                            (MobileType) objectFromString(tab[3]),
+                            (Maps) objectFromString(tab[4]),
+                            (Actions) objectFromString(tab[5]));
+                    int mx, my;
+                    mx = Integer.parseInt(tab[6]);
+                    my = Integer.parseInt(tab[7]);
+                    if (onMovingPNJDetected != null)
+                        Gdx.app.postRunnable(() -> onMovingPNJDetected.run(tab[1], mpnj, mx, my));
+                } catch (IOException | ClassNotFoundException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing a MovingPNJ message", e);
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("NetworkManager", "Error detected while parsing MovingPNJs position (ignoring message)", e);
                 }
                 break;
             case "Item": // Add an item to the map
@@ -1269,8 +1307,12 @@ public class NetworkManager {
     /**
      * @param onPNJDetected What to do when the informations of a PNJ has been received.
      */
-    public void setOnPNJDetected(OnPNJDetectedRunnable onPNJDetected) {
+    public void setOnPNJDetected(OnCharacterDetectedRunnable onPNJDetected) {
         this.onPNJDetected = onPNJDetected;
+    }
+
+    public void setOnMovingPNJDetected(OnCharacterDetectedRunnable onMovingPNJDetected) {
+        this.onMovingPNJDetected = onMovingPNJDetected;
     }
 
     /**
@@ -1453,7 +1495,7 @@ public class NetworkManager {
     /**
      * Represent the runnable executed when the informations of a PNJ has been received.
      */
-    public interface OnPNJDetectedRunnable {
+    public interface OnCharacterDetectedRunnable {
         void run(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y);
     }
     /**

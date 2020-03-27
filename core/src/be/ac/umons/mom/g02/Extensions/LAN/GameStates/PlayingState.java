@@ -169,16 +169,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * Set all the needed network manager's runnables except the one for setting the map changing (must be done earlier)
      */
     protected void setNetworkManagerRunnables() {
-        nm.setOnPNJDetected((name, mob, x, y) -> {
-            Character c = new Character(gs, mob);
-            pnjs.add(c);
-            idCharacterMap.put(name, c);
-            c.setMapPos(new Point(x, y));
-            c.setMapWidth(mapWidth * tileWidth);
-            c.setMapHeight(mapHeight * tileHeight);
-            c.setTileWidth(tileWidth);
-            c.setTileHeight(tileHeight);
-        });
+        nm.setOnPNJDetected(this::onCharacterDetected);
+        nm.setOnMovingPNJDetected((name, mob, x, y) ->
+                ((MovingPNJ)mob).initialisation(
+                        onCharacterDetected(name, mob, x, y), this, player
+                ));
         nm.setOnItemDetected(this::addItemToMap);
         nm.setOnGetPNJ(this::sendPNJsPositions);
         nm.setOnPositionDetected(this::setSecondPlayerPosition);
@@ -232,6 +227,18 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getSupervisor().updatePlanning(planning);
             agendaShower.refreshCourses();
         }));
+    }
+
+    private Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y) {
+        Character c = new Character(gs, mob);
+        pnjs.add(c);
+        idCharacterMap.put(name, c);
+        c.setMapPos(new Point(x, y));
+        c.setMapWidth(mapWidth * tileWidth);
+        c.setMapHeight(mapHeight * tileHeight);
+        c.setTileWidth(tileWidth);
+        c.setTileHeight(tileHeight);
+        return c;
     }
 
     @Override
@@ -315,8 +322,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         for (MovingPNJ mv : supervisor.getMovingPnj(map))
             if (idCharacterMap.containsKey(mv.getName()))
                 pnjs.add(idCharacterMap.get(mv.getName()));
-            else
-                pnjs.add(mv.initialisation(gs, this, player));
+            else {
+                Character c = new Character(gs, mv);
+                pnjs.add(c);
+                mv.initialisation(c, this, player);
+            }
 
         return pnjs;
     }
@@ -392,7 +402,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * Send all the PNJs positions to the second player.
      * @param map The map asked.
      */
-    protected void sendPNJsPositions(String map) { // TODO MovingPNJ
+    protected void sendPNJsPositions(String map) {
         initMobilesPositions(map);
         for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
             try {
@@ -400,6 +410,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        for (MovingPNJ mob : supervisor.getMovingPnj(supervisor.getMaps(map))) {
+            Character c = idCharacterMap.get(mob.getName());
+            nm.sendAMovingPNJ(mob, c.getPosX(), c.getPosY());
         }
     }
 

@@ -305,8 +305,8 @@ public class Character extends OnMapObject {
      * @return A rectangle representing the position of the player (in tiles) (originating from the tile (0,0) at the top of the map).
      */
     public com.badlogic.gdx.math.Rectangle getMapRectangle() {
-//        int x = (((-getPosY() + MasterOfMonsGame.HEIGHT / 2 - getHeight() / 2) * 2) - mapHeight + getPosX()) / 2 + 4276;
-//        int y = getPosX() - x;
+        if (tileWidth == 0 || tileHeight == 0)
+            return new Rectangle();
         int x = (int)((double)(-getPosY()) / tileHeight + (getPosX()) / tileWidth);
         int y = (int)(mapHeight / tileHeight - ((double)(getPosY()) / tileHeight + (getPosX()) / tileWidth));
 
