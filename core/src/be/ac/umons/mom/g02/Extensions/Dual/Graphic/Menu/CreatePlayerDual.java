@@ -1,26 +1,11 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.BattlePeople;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
-import be.ac.umons.mom.g02.GameStates.Menus.CreatePlayerMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
-import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import java.util.LinkedList;
-import java.util.List;
 
 public class CreatePlayerDual extends MenuState
 {

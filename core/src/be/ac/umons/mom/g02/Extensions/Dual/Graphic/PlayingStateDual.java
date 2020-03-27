@@ -30,7 +30,7 @@ import java.util.HashMap;
 
 
 /***/
-public class PlayDual extends PlayingState
+public class PlayingStateDual extends PlayingState
 
 {
     /***/
@@ -56,7 +56,7 @@ public class PlayDual extends PlayingState
     /**
      * @param gs The game's graphical settings
      */
-    public PlayDual(GraphicalSettings gs)
+    public PlayingStateDual(GraphicalSettings gs)
     {
         super(gs);
         supervisor = Supervisor.getSupervisor();
