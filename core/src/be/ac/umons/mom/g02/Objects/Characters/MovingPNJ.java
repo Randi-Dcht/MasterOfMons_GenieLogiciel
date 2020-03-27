@@ -161,7 +161,7 @@ public class MovingPNJ extends Mobile
         }
         else
         {
-            SuperviserNormally.getSupervisor().meetCharacter(this,victim.getCharacteristics());
+            Supervisor.getSupervisor().meetCharacter(this,victim.getCharacteristics());
             meet=true;
         }
         checkMove(x,y,dt);
