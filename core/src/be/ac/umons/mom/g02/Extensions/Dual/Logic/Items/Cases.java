@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Items;
 
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -40,8 +41,8 @@ public class Cases
         this.gs = gs;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        this.positionX = x;
-        this.positionY = y;
+        this.positionX =  MasterOfMonsGame.WIDTH/2  + x + 32;
+        this.positionY =  MasterOfMonsGame.HEIGHT/2 + y + 16;
         colorPlayer = color;
     }
 
@@ -53,7 +54,7 @@ public class Cases
     {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(colorPlayer);
-        sr.rect((int)(positionX/10.41), (int)(positionY/4.97), 64, 32);
+        sr.rect(positionX, positionY, 64, 32);
         sr.end();
 
         // System.out.println(positionX + ";" + positionY + "  /  " + MasterOfMonsGame.WIDTH/2 + ";" + MasterOfMonsGame.HEIGHT/2);

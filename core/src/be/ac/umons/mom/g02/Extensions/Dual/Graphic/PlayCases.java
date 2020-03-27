@@ -34,7 +34,7 @@ public class PlayCases extends PlayingStateDual
     /***/
     protected TextBox timerShow;
     /***/
-    protected double time = 10;//90;TODO
+    protected double time = 90;
 
 
     /**
@@ -92,13 +92,9 @@ public class PlayCases extends PlayingStateDual
     {
         int topBarHeight = 10;
 
-        /*
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
-        {
-            for (Cases cc : drawCase)
-                cc.draw();
-        }//TODO this
-        */
+        for (Cases cc : drawCase)
+               cc.draw();//TODO this
+
         super.draw();
 
         Point textSize = new Point(0,0);

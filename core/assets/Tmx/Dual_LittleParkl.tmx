@@ -238,10 +238,10 @@
  </objectgroup>
  <objectgroup name="Changer"/>
  <objectgroup name="Interdit">
-  <object id="1" x="146.667" y="226.667" width="58" height="571.333"/>
-  <object id="2" x="149.333" y="782" width="769.333" height="57.3333"/>
-  <object id="3" x="828.5" y="224.833" width="59.3333" height="568.667"/>
-  <object id="4" x="160.667" y="194" width="744.667" height="68.6667"/>
+  <object id="1" x="-66.333" y="-100.333" width="58" height="1691.33"/>
+  <object id="2" x="-56.167" y="1405.5" width="1656.33" height="189.333"/>
+  <object id="3" x="1475.5" y="-102.167" width="143.333" height="1693.67"/>
+  <object id="4" x="-70.333" y="-107" width="1686.67" height="68.6667"/>
   <object id="5" x="672.667" y="-352.667"/>
  </objectgroup>
 </map>
