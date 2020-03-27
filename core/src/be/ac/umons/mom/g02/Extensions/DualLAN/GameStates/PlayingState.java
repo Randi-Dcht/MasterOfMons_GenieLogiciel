@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
@@ -44,6 +45,7 @@ public class PlayingState extends PlayingStateDual {
         } catch (SocketException e) {
             e.printStackTrace();
         }
+        setNetworkManagerRunnables();
         super.init();
 
     }
@@ -165,7 +167,10 @@ public class PlayingState extends PlayingStateDual {
     @Override
     public void update(Notification notify) {
         super.update(notify);
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
             nm.sendDeath();
+            if (! nm.isTheServer())
+                gsm.removeAllStateAndAdd(WaitMenuState.class);
+        }
     }
 }

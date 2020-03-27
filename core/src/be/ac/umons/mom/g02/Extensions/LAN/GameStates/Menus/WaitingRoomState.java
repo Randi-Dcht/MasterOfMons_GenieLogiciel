@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
+import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
@@ -46,7 +47,10 @@ public class WaitingRoomState extends MenuState {
         super.init();
 
         try {
-            nm = NetworkManager.getInstance();
+            if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated)
+                nm = be.ac.umons.mom.g02.Extensions.DualLAN.Managers.NetworkManager.getInstance();
+            else
+                nm = NetworkManager.getInstance();
             nm.acceptConnection();
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);

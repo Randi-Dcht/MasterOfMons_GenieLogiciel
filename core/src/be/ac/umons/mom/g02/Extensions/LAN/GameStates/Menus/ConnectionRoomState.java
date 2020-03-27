@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
+import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
 import java.net.InetAddress;
@@ -40,7 +41,10 @@ public class ConnectionRoomState extends MenuState {
         super.init();
 
         try {
-            nm = NetworkManager.getInstance();
+            if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated)
+                nm = be.ac.umons.mom.g02.Extensions.DualLAN.Managers.NetworkManager.getInstance();
+            else
+                nm = NetworkManager.getInstance();
             nm.startListeningForServer();
             nm.setOnServerDetected(this::refresh);
             nm.setOnMagicNumberReceived((i, j, k, l, m) -> {

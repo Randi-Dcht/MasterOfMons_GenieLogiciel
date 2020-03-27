@@ -344,7 +344,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (! mazeMode || isTheMazePlayer )
             nm.sendPlayerPosition(player);
 
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) { // TODO : Second player life ?
             nm.sendPause();
             pauseSent = true;
         }
