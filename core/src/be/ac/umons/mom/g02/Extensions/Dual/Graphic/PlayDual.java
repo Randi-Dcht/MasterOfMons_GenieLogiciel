@@ -156,11 +156,10 @@ public class PlayDual extends PlayingState
     @Override
     public void handleInput()
     {
-        super.handleInput();
         if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed))
         {
             if (selectedOne instanceof Character)
-                supervisor.meetCharacter(playerTwo.getCharacteristics(), ((Character) selectedOne).getCharacteristics());
+                return;
             else
             {
                 if (SupervisorMultiPlayer.getPeopleTwo().pushObject(((MapObject) selectedOne).getItem()))
@@ -169,6 +168,18 @@ public class PlayDual extends PlayingState
         }
         if (gim.isKey("attackTwo", KeyStatus.Pressed))
             attack(playerTwo);
+        if (gim.isKey("pickUpAnObject", KeyStatus.Pressed))
+        {
+            if (selectedOne instanceof Character)
+                return;
+            else
+            {
+                if (SupervisorMultiPlayer.getPeopleTwo().pushObject(((MapObject) selectedOne).getItem()))
+                    pickUpAnObject();
+            }
+        }
+        else
+            super.handleInput();
 
         endDual.handleInput();
         //inventoryShowerTwo.handleInput();TODO
