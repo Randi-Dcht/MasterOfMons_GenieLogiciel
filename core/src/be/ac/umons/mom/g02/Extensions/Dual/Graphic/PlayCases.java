@@ -5,7 +5,6 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MoreCasesMons;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
@@ -83,7 +82,7 @@ public class PlayCases extends PlayingStateDual
         if (time <= 0)
             gsm.removeAllStateAndAdd(DualChooseMenu.class);//TODO
 
-        timerShow.setText(String.format("%2.0f",time));//TODO format
+        timerShow.setText(String.format("%2.0f",time));
     }
 
 
@@ -91,7 +90,6 @@ public class PlayCases extends PlayingStateDual
     @Override
     public void draw()
     {
-        int topBarWidth = (int)((MasterOfMonsGame.WIDTH - 4 * leftMargin) / 3);
         int topBarHeight = 10;
 
         /*
@@ -103,10 +101,10 @@ public class PlayCases extends PlayingStateDual
         */
         super.draw();
 
-        Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
+        Point textSize = new Point(0,0);
         timerShow.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 - timerShow.getWidth(),timerShow.getHeight() + 10),textSize);
-        player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
-        player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
+        player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
+        player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x , (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
     }
 
 
@@ -123,7 +121,7 @@ public class PlayCases extends PlayingStateDual
             cases.replace(player,cases.get(player)+1);
             old.replace(player,new Point(player.getPosX(),player.getPosY()));
             if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
-                ((MoreCasesMons)((DualMasterQuest) SupervisorDual.getSupervisorDual().actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
+                ((MoreCasesMons)((DualMasterQuest) supervisorDual.actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
         }
     }
 
@@ -134,5 +132,6 @@ public class PlayCases extends PlayingStateDual
         super.dispose();
         player1Number.dispose();
         player2Number.dispose();
+        timerShow.dispose();
     }
 }
