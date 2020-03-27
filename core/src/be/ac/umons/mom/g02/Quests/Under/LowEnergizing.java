@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Quests.Under;
 
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
 import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
@@ -44,7 +45,7 @@ public class LowEnergizing extends UnderQuest//TODO new to implement
     {
         if (notify.getEvents().equals(Events.LowSomething) && notify.bufferNotEmpty())
             analyseLow(((LowSomething)notify).getBuffer());
-        if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(Mobile.class))
+        if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(Mobile.class) && ((LaunchAttack)notify).getBufferSecond().equals(people))
             attackMobile((Mobile)notify.getBuffer());
     }
 

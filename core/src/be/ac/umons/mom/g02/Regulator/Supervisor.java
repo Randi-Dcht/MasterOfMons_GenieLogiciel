@@ -684,7 +684,6 @@ public  abstract class Supervisor implements Observer
         if (attacker.getType().equals(Character.TypePlayer.Human))
         {
             ((People)attacker).reduceEnergizing(State.attack);
-            event.notify(new LaunchAttack(memoryMobile,null));//TODO upgrade in the underQuest and changed this
         }
         if(victim.dodge() < 0.6 && attacker.canAttacker())
         {
@@ -695,6 +694,7 @@ public  abstract class Supervisor implements Observer
             }
             else
                 victim.loseAttack(calculateHits(attacker,victim,0));
+            event.notify(new LaunchAttack((Character)victim,(Character)attacker));
         }
         if(attacker.getType().equals(Character.TypePlayer.Computer) && ((Character)victim).isLiving())
         {

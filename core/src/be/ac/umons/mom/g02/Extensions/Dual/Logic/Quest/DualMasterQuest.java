@@ -2,6 +2,8 @@ package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
@@ -25,8 +27,8 @@ public class DualMasterQuest extends MasterQuest
         peopleSecond = second;
         this.dual = dual;
         createUnderQuest(dual.getStart());
+        //Supervisor.getEvent().add(Events.Attack,this);
     }
-
 
     private void createUnderQuest(Class<? extends DualUnderQuest> under)
     {
@@ -43,6 +45,8 @@ public class DualMasterQuest extends MasterQuest
             Gdx.app.error("Error fatal in init the underQuest of Dual :", String.valueOf(e));
         }
     }
+
+
 
 
     /***/

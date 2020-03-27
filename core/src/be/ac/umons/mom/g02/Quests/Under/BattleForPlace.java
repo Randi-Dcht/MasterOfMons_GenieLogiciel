@@ -42,7 +42,7 @@ public class BattleForPlace extends UnderQuest
     @Override
     public void evenActivity(Notification notify)
     {
-        if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty())
+        if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && ((LaunchAttack)notify).getBufferSecond().equals(people))
             attackOther(((LaunchAttack)notify).getBuffer());
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && ((Character)notify.getBuffer()).getType().equals(Character.TypePlayer.Computer))
             onlyOnPlace((Mobile) notify.getBuffer());

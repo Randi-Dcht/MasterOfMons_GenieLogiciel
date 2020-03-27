@@ -133,12 +133,12 @@ public class SupervisorDual extends SupervisorMultiPlayer
 
         if (playerTwo != null && playerOne != null)
         {
+            adv.put(playerOne,playerTwo);
+            adv.put(playerOne,playerTwo);
             dualQuest = new DualMasterQuest(dual,playerOne,playerTwo);
             time = new TimeGame(new Date(16,9,2019,8,15));
             regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time,this);
             refreshQuest();
-            adv.put(playerOne,playerTwo);
-            adv.put(playerOne,playerTwo);
         }
     }
 
