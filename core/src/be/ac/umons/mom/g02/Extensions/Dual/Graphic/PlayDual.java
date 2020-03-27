@@ -25,8 +25,6 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +100,9 @@ public class PlayDual extends PlayingState
         endDual.setOnClick(() -> gsm.removeAllStateAndAdd(DualChooseMenu.class));
         endDual.setFont(gs.getSmallFont());
 
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+            changedCam();
+
     }
 
     @Override
@@ -173,7 +174,6 @@ public class PlayDual extends PlayingState
 
         if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
         {
-            changedCam();
             Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
             player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
             player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
@@ -247,12 +247,12 @@ public class PlayDual extends PlayingState
     @Override
     protected void attack(Player player)
     {
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
             pnjs.add(adv.get(player));
 
         super.attack(player);
 
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
             pnjs.remove(adv.get(player));
     }
 
