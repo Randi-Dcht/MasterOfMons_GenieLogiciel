@@ -61,6 +61,7 @@ public class MovingPNJ extends Mobile
     {
         super("MovingPNJ",bloc,type,action, NameDialog.Move);
         setMaps(maps);
+        Supervisor.getSupervisor().addRefresh(this);
     }
 
 
@@ -118,7 +119,8 @@ public class MovingPNJ extends Mobile
         if (!meet)
         {
             calculusDistance();
-            moving(dt,false,false);
+            if (tileXbetween <= 1000 && tileYbetween <= 1000)
+                moving(dt,false,false);
         }
     }
 
@@ -126,12 +128,12 @@ public class MovingPNJ extends Mobile
     /**
      * This method allows to move the people in the maps with refresh
      */
-    private void moving(double dt, boolean onX, boolean onY)//TODO optimiser cela
+    private void moving(double dt, boolean onX, boolean onY)//TODO optimise this
     {
         int x=0,y=0;
         int toMove = 0;
         if (Supervisor.getSupervisor().getClass().equals(SuperviserNormally.class))
-            toMove = (int)Math.round(SuperviserNormally.getSupervisor().getPeople().getSpeed() * dt * tileSize);
+            toMove = (int)Math.round(Supervisor.getPeople().getSpeed() * dt * tileSize);
 
 
         if(tileXbetween > toMove || tileXbetween < -toMove || tileYbetween > toMove || tileYbetween < -toMove)
@@ -171,10 +173,11 @@ public class MovingPNJ extends Mobile
         myGraphic.move(x,y);
        if (!ps.checkForCollision(myGraphic))
         {
-            if (x == 0)
+            myGraphic.move(-x,-y);//back to old position
+            /*if (x == 0)TODO this (stack overflow !!)
                 moving(dtMemory,true,false);
             else
-                moving(dtMemory,false,true);
+                moving(dtMemory,false,true);*/
         }
     }
 
