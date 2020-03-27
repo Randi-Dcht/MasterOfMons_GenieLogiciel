@@ -59,7 +59,7 @@ public class PlayingStateDual extends PlayingState
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
         initMap(supervisorDual.getDual().getStartMaps().getMaps(),supervisorDual.getDual().getPointPlayerOne().x,supervisorDual.getDual().getPointPlayerOne().y);
-        playerTwo.setMapPos(new Point(player.getPosX(),player.getPosY()));
+        playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();
         cam.update();
@@ -160,7 +160,7 @@ public class PlayingStateDual extends PlayingState
     /***/
     private void changedCam()
     {
-        cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth/2, SHOWED_MAP_HEIGHT * tileHeight/2);//TODO changed
+        cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);//TODO changed
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();
         gmm.setView(cam);

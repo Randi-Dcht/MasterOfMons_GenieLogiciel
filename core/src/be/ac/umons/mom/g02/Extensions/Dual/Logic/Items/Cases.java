@@ -41,8 +41,8 @@ public class Cases
         this.gs = gs;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        this.positionX =  MasterOfMonsGame.WIDTH/2  + x + 32;
-        this.positionY =  MasterOfMonsGame.HEIGHT/2 + y + 16;
+        this.positionX =  x ;
+        this.positionY =  y ;
         colorPlayer = color;
     }
 
