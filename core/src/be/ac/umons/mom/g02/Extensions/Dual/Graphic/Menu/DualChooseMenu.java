@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu;
 
-import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
@@ -53,6 +52,6 @@ public class DualChooseMenu extends MenuState
     protected void checkChoose(TypeDual what)
     {
         SupervisorDual.getSupervisorDual().init(what);
-        gsm.removeAllStateAndAdd(PlayingStateDual.class);
+        gsm.removeAllStateAndAdd(what.getGraphic());
     }
 }

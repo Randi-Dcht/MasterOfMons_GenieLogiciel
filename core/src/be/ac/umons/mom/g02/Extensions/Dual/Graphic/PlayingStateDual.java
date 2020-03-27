@@ -40,18 +40,9 @@ public class PlayingStateDual extends PlayingState
     /***/
     protected HashMap<Player,Player> adv = new HashMap<>();
     /***/
-    protected HashMap<Player,Integer> cases = new HashMap<>();
-    /***/
-    protected ArrayList<Cases> drawCase = new ArrayList<>();
-    /***/
-    protected HashMap<Player,Point> old = new HashMap<>();
-    /***/
-    protected TextBox player1Number;
-    /***/
-    protected TextBox player2Number;
-    /***/
     protected SupervisorDual supervisorDual;
-
+    /***/
+    protected Point objectSize;
 
     /**
      * @param gs The game's graphical settings
@@ -94,15 +85,6 @@ public class PlayingStateDual extends PlayingState
         initPNJsPositions(getPNJsOnMap(supervisorDual.getDual().getStartMaps().getMaps()));//TODO
         questShower.setQuest(Supervisor.getSupervisor().actualQuest());
 
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            player1Number = new TextBox(gs); player1Number.setText("0");
-            player2Number = new TextBox(gs); player2Number.setText("0");
-        }
-
-        old.put(player,new Point(player.getPosX(),player.getPosY()));cases.put(player,0);
-        old.put(playerTwo,new Point(playerTwo.getPosX(),playerTwo.getPosY()));cases.put(playerTwo,0);
-
 
         endDual = new Button(gs);
         endDual.setText("X");
@@ -112,6 +94,7 @@ public class PlayingStateDual extends PlayingState
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
             changedCam();
 
+        objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
     }
 
 
@@ -133,18 +116,6 @@ public class PlayingStateDual extends PlayingState
         super.update(dt);
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
-
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            checkCase(player);
-            checkCase(playerTwo);
-        }
-
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO upgrade
-        {
-            player1Number.setText(cases.get(player).toString());
-            player2Number.setText(cases.get(playerTwo).toString());
-        }
     }
 
 
@@ -161,13 +132,7 @@ public class PlayingStateDual extends PlayingState
 
         for (Character pnj : pnjs)
             pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
-/*
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
-        {
-            for (Cases cc : drawCase)
-                cc.draw();
-        }//TODO this
- */
+
         sb.begin();
         if (gs.mustShowMapCoordinates())
         {
@@ -190,16 +155,10 @@ public class PlayingStateDual extends PlayingState
 
         questShower.draw(sb, MasterOfMonsGame.WIDTH / 2 - questShower.getWidth()/2, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight-40));//TODO
 
-        Point objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
         pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -objectSize.x-10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
         endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +objectSize.x+10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
 
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
-            player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
-            player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
-        }
+
     }
 
 
@@ -211,24 +170,6 @@ public class PlayingStateDual extends PlayingState
         cam.position.y = player.getPosY();
         gmm.setView(cam);
         cam.update();
-    }
-
-
-    /***/
-    protected void checkCase(Player player)
-    {
-        if (!old.get(player).equals(new Point(player.getPosX(),player.getPosY())))
-        {
-            old.replace(player,new Point(player.getPosX(),player.getPosY()));
-            if (player.equals(this.player))
-                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.BLUE));//TODO
-            else
-                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
-            cases.replace(player,cases.get(player)+1);
-            old.replace(player,new Point(player.getPosX(),player.getPosY()));
-            if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
-                ((MoreCasesMons)((DualMasterQuest)SupervisorDual.getSupervisorDual().actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
-        }
     }
 
 
@@ -356,10 +297,5 @@ public class PlayingStateDual extends PlayingState
        // super.dispose();TODO problem with multi dispose of lifeBar
         endDual.dispose();
         lifeBarTwo.dispose();
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            player1Number.dispose();
-            player2Number.dispose();
-        }
     }
 }
