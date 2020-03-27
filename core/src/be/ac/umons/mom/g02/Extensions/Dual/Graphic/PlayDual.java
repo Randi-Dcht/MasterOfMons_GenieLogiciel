@@ -25,6 +25,8 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,12 +173,23 @@ public class PlayDual extends PlayingState
 
         if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
         {
+            changedCam();
             Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
             player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
             player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
         }
     }
 
+
+    /***/
+    private void changedCam()
+    {
+        cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth/2, SHOWED_MAP_HEIGHT * tileHeight/2);//TODO changed
+        cam.position.x = player.getPosX();
+        cam.position.y = player.getPosY();
+        gmm.setView(cam);
+        cam.update();
+    }
 
     private void checkCase(Player player)
     {
