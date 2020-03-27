@@ -117,6 +117,17 @@ public class PlayDual extends PlayingState
 
 
     /***/
+    private void initMapAndPlayer(String maps,Point plOnePos, Point plTwoPos)
+    {
+        initMap(maps,plOnePos.x,plOnePos.y);
+        playerTwo.setMapPos(new Point(plTwoPos.x*64,plTwoPos.y*32));
+        cam.position.x = player.getPosX();
+        cam.position.y = player.getPosY();
+        cam.update();
+    }
+
+
+    /***/
     @Override
     public void update(float dt)
     {
