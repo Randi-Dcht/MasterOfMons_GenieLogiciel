@@ -611,21 +611,28 @@ public  abstract class Supervisor implements Observer
         int x=0,y=0;
         int toMove = (int)Math.round(memoryMobile.getSpeed() * dt * 64);
 
-        if(displaceX > toMove+128 || displaceX < -toMove-128 || displaceY > toMove+64 || displaceY < -toMove-64) {
+        if(Math.sqrt(Math.pow(displaceX, 2) + Math.pow(displaceY, 2)) / 2 > graphical.getAttackRange()) { // /2 just to be sure it isn't at one pixel
             if (displaceX < 0) {
                 x = -toMove;
-                graphical.setOrientation(Orientation.Left);
             } else {
                 x = toMove;
-                graphical.setOrientation(Orientation.Right);
             }
             if (displaceY < 0) {
                 y = -toMove;
-                graphical.setOrientation(Orientation.Bottom);
             } else {
                 y = toMove;
-                graphical.setOrientation(Orientation.Top);
             }
+        }
+        if (Math.abs(displaceX) >= Math.abs(displaceY)) {
+            if (displaceX >= 0)
+                graphical.setOrientation(Orientation.Right);
+            else
+                graphical.setOrientation(Orientation.Left);
+        } else {
+            if (displaceY >= 0)
+                graphical.setOrientation(Orientation.Top);
+            else
+                graphical.setOrientation(Orientation.Bottom);
         }
         graphical.move(x,y);
     }
@@ -669,7 +676,7 @@ public  abstract class Supervisor implements Observer
      */
     public void attackMethod(Attack attacker, Attack victim) //TODO ajout
     {
-        attackMethod(attacker,victim,true);
+        attackMethod(attacker, victim,true);
     }
 
 
