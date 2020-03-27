@@ -1,7 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
-import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
@@ -117,7 +116,7 @@ public class PlayDual extends PlayingState
 
 
     /***/
-    private void initMapAndPlayer(String maps,Point plOnePos, Point plTwoPos)
+    protected void initMapAndPlayer(String maps,Point plOnePos, Point plTwoPos)
     {
         initMap(maps,plOnePos.x,plOnePos.y);
         playerTwo.setMapPos(new Point(plTwoPos.x*64,plTwoPos.y*32));
@@ -187,7 +186,7 @@ public class PlayDual extends PlayingState
         inventoryShower.draw(sb, MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4, inventoryShowerHeight,pt);
 
         lifeBar.draw(sb, (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
-        lifeBar.draw(sb, (int)MasterOfMonsGame.WIDTH-(topBarWidth+20), MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
+        lifeBarTwo.draw(sb, (int)MasterOfMonsGame.WIDTH-(topBarWidth+20), MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
 
         questShower.draw(sb, MasterOfMonsGame.WIDTH / 2 - questShower.getWidth()/2, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight-40));//TODO
 
@@ -216,7 +215,7 @@ public class PlayDual extends PlayingState
 
 
     /***/
-    private void checkCase(Player player)
+    protected void checkCase(Player player)
     {
         if (!old.get(player).equals(new Point(player.getPosX(),player.getPosY())))
         {
@@ -353,7 +352,7 @@ public class PlayDual extends PlayingState
 
 
     /***/
-    public void initSizeOfMaps()
+    protected void initSizeOfMaps()
     {
         playerTwo.setMapWidth(mapWidth * tileWidth);
         playerTwo.setMapHeight(mapHeight * tileHeight);
@@ -366,7 +365,7 @@ public class PlayDual extends PlayingState
     @Override
     public void dispose()
     {
-        super.dispose();
+       // super.dispose();TODO problem with multi dispose of lifeBar
         endDual.dispose();
         lifeBarTwo.dispose();
         if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
