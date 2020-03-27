@@ -11,6 +11,8 @@ import com.badlogic.gdx.files.FileHandle;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExtensionsManager {
@@ -32,7 +34,7 @@ public class ExtensionsManager {
     /**
      * The list of the extensions to show.
      */
-    protected List<Extension> extensions;
+    protected HashMap<String, Extension> extensions;
     /**
      * A list of all the maps that need to be loaded.
      */
@@ -56,11 +58,11 @@ public class ExtensionsManager {
      */
     protected void searchMainExtension() {
         mainExtension = null;
-        for (Extension e1 : extensions) {
+        for (Extension e1 : getExtensions()) {
             if (! e1.activated)
                 continue;
             boolean mainOne = true;
-            for (Extension e2 : extensions) {
+            for (Extension e2 : getExtensions()) {
                 if (e2.activated && e2.canActivateWith.contains(e1)) {
                     mainOne = false;
                     break;
@@ -78,8 +80,8 @@ public class ExtensionsManager {
      * Return a list of all extensions present in file "extensions". Returns <code>null</code> if an error occurred.
      * @return A list of all extensions present in file "extensions"
      */
-    public List<Extension> parseExtensionFile() {
-        ArrayList<Extension> extensionList = new ArrayList<>();
+    public HashMap<String, Extension> parseExtensionFile() {
+        HashMap<String, Extension> extensionList = new HashMap<>();
         BufferedReader br;
         try {
             FileHandle ef = Gdx.files.getFileHandle("extensions", Files.FileType.Internal);
@@ -157,9 +159,9 @@ public class ExtensionsManager {
                     default:
                         if (! line.startsWith(".")) {
                             ext = new Extension();
-                            extensionList.add(ext);
                             ext.extensionName = line;
                             ext.canActivateWith.add(line);
+                            extensionList.put(ext.extensionName, ext);
                         }
                 }
             }
@@ -180,7 +182,7 @@ public class ExtensionsManager {
     public void generateLoadLists() {
         mapsToLoad = new ArrayList<>();
         filesToLoad = new ArrayList<>();
-        for (Extension ext : extensions) {
+        for (Extension ext : getExtensions()) {
             if (ext.activated) {
                 mapsToLoad.addAll(ext.mapsToLoad);
                 filesToLoad.addAll(ext.dirsFileToLoad);
@@ -194,7 +196,7 @@ public class ExtensionsManager {
      */
     public void onExtensionActivated(Extension activatedExtension) {
         boolean launch = true;
-        for (Extension e : extensions) {
+        for (Extension e : getExtensions()) {
             activatedExtension.activated = true;
             if (! activatedExtension.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(activatedExtension.extensionName)) {
                 e.activated = false;
@@ -218,9 +220,9 @@ public class ExtensionsManager {
         if (mainExtension == deactivatedExtension) {
             searchMainExtension();
         }
-        for (Extension e : extensions) {
+        for (Extension e : getExtensions()) {
             boolean mustActivate = true;
-            for (Extension e2 : extensions) {
+            for (Extension e2 : getExtensions()) {
                 if (e2.activated && ! e2.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(e2.extensionName)) {
                     mustActivate = false;
                     break;
@@ -320,6 +322,10 @@ public class ExtensionsManager {
      * @return A list of all detected extensions
      */
     public List<Extension> getExtensions() {
+        return Arrays.asList(extensions.values().toArray(new Extension[0]));
+    }
+
+    public HashMap<String, Extension> getExtensionsMap() {
         return extensions;
     }
 
