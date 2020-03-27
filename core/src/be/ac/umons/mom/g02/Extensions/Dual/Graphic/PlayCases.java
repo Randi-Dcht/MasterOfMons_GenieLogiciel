@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 
+import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
@@ -31,6 +32,10 @@ public class PlayCases extends PlayingStateDual
     protected TextBox player1Number;
     /***/
     protected TextBox player2Number;
+    /***/
+    protected TextBox timerShow;
+    /***/
+    protected double time = 10;//90;TODO
 
 
     /**
@@ -48,9 +53,13 @@ public class PlayCases extends PlayingStateDual
         super.init();
 
 
-        player1Number = new TextBox(gs); player1Number.setText("0");
-        player2Number = new TextBox(gs); player2Number.setText("0");
+        player1Number = new TextBox(gs);
+        player1Number.setText("0");
+        player2Number = new TextBox(gs);
+        player2Number.setText("0");
 
+        timerShow = new TextBox(gs);
+        timerShow.setText(String.valueOf(time));
 
         old.put(player,new Point(player.getPosX(),player.getPosY()));cases.put(player,0);
         old.put(playerTwo,new Point(playerTwo.getPosX(),playerTwo.getPosY()));cases.put(playerTwo,0);
@@ -69,6 +78,12 @@ public class PlayCases extends PlayingStateDual
 
         player1Number.setText(cases.get(player).toString());
         player2Number.setText(cases.get(playerTwo).toString());
+
+        time -= dt;
+        if (time <= 0)
+            gsm.removeAllStateAndAdd(DualChooseMenu.class);//TODO
+
+        timerShow.setText(String.format("%2.0f",time));//TODO format
     }
 
 
@@ -89,6 +104,7 @@ public class PlayCases extends PlayingStateDual
         super.draw();
 
         Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
+        timerShow.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 - timerShow.getWidth(),timerShow.getHeight() + 10),textSize);
         player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
         player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
     }

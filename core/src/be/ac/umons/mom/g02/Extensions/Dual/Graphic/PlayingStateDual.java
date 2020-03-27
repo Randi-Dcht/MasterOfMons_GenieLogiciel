@@ -6,15 +6,11 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MoreCasesMons;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -23,9 +19,7 @@ import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-import com.badlogic.gdx.graphics.Color;
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -72,6 +66,7 @@ public class PlayingStateDual extends PlayingState
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
         adv.put(player,playerTwo);adv.put(playerTwo,player);
+
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
             for (Character ch : pnjs)
@@ -204,12 +199,12 @@ public class PlayingStateDual extends PlayingState
     @Override
     protected void attack(Player player)
     {
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
             pnjs.add(adv.get(player));
 
         super.attack(player);
 
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
             pnjs.remove(adv.get(player));
     }
 
