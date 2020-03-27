@@ -15,6 +15,7 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -39,6 +40,9 @@ public class PlayDual extends PlayingState
     protected HashMap<Player,Integer> cases = new HashMap<>();
     protected ArrayList<Cases> drawCase = new ArrayList<>();
     protected HashMap<Player,Point> old = new HashMap<>();
+
+    protected TextBox player1Number;
+    protected TextBox player2Number;
 
     /**
      * @param gs The game's graphical settings
@@ -81,6 +85,11 @@ public class PlayDual extends PlayingState
         initPNJsPositions(getPNJsOnMap(SupervisorDual.getSupervisorDual().getDual().getStartMaps().getMaps()));//TODO
         questShower.setQuest(Supervisor.getSupervisor().actualQuest());
 
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        {
+            player1Number = new TextBox(gs); player1Number.setText("0");
+            player2Number = new TextBox(gs); player2Number.setText("0");
+        }
         endDual = new Button(gs);
         endDual.setText("X");
         endDual.setOnClick(() -> gsm.removeAllStateAndAdd(DualChooseMenu.class));
@@ -93,6 +102,12 @@ public class PlayDual extends PlayingState
         super.update(dt);
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
+
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))//TODO upgrade
+        {
+            player1Number.setText("0");
+            player2Number.setText("0");
+        }
     }
 
 
@@ -138,9 +153,16 @@ public class PlayDual extends PlayingState
 
         questShower.draw(sb, MasterOfMonsGame.WIDTH / 2 - questShower.getWidth()/2, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight-40));//TODO
 
-        Point ButtonSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
-        pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -ButtonSize.x-10, (int)(MasterOfMonsGame.HEIGHT - ButtonSize.y - topBarHeight - 2 * topMargin+25)),ButtonSize);
-        endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +ButtonSize.x+10, (int)(MasterOfMonsGame.HEIGHT - ButtonSize.y - topBarHeight - 2 * topMargin+25)),ButtonSize);
+        Point objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
+        pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -objectSize.x-10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
+        endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +objectSize.x+10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
+
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        {
+            Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
+            player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
+            player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
+        }
     }
 
 
