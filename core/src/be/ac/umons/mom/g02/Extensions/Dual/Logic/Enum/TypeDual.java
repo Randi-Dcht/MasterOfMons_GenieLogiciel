@@ -16,9 +16,9 @@ import java.awt.Point;
 public enum TypeDual
 {
     DualPlayer(     "", BattlePeople.class    , PlayingStateDual.class,Maps.DualKiosk,new Point(15,15),new Point(15,15)),
-    CatchFlag(      "", TakeFlag.class        , PlayingStateDual.class,Maps.DualPark ,new Point(7,24),new Point(8,24)),
+    CatchFlag(      "", TakeFlag.class        , PlayingStateDual.class,Maps.DualPark ,new Point(7,24) ,new Point(8,24)),
     Survivor(       "", SurvivorVsMobile.class, PlayingStateDual.class,Maps.DualKiosk,new Point(15,15),new Point(15,15)),
-    OccupationFloor("", MoreCasesMons.class   , PlayingStateDual.class,Maps.DualPark ,new Point(8,24),new Point(8,24));
+    OccupationFloor("", MoreCasesMons.class   , PlayingStateDual.class,Maps.DualPark ,new Point(8,24) ,new Point(8,24));
 
 
     /***/
