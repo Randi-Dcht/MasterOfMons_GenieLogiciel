@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * A personal text field adapted to the purpose of the game.
@@ -134,7 +135,7 @@ public class TextBox extends Control {
                     continue;
                 if (acceptOnlyHexadecimal && ((c < '0' || c > '9') && (c < 'a' || c > 'f') && (c < 'A' || c > 'F')))
                     continue;
-                if (c != '/' && c != '\b' && Character.isLetterOrDigit(c)) {
+                if (isPrintableChar(c)) {
                     if (selectedPosition == actualText.length())
                         actualText += c;
                     else if (selectedPosition == 0)
@@ -151,6 +152,19 @@ public class TextBox extends Control {
                 removeACharacter();
             }
         }
+    }
+
+    /**
+     * Took from https://stackoverflow.com/a/418560 by OscarRyz
+     * @param c The character
+     * @return If the character is printable or not
+     */
+    public boolean isPrintableChar( char c ) {
+        Character.UnicodeBlock block = Character.UnicodeBlock.of( c );
+        return (!Character.isISOControl(c)) &&
+                c != KeyEvent.CHAR_UNDEFINED &&
+                block != null &&
+                block != Character.UnicodeBlock.SPECIALS;
     }
 
     protected void removeACharacter() {

@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextBoxMenuItem;
@@ -12,6 +13,7 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
+import javax.xml.soap.Text;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,8 +49,11 @@ public class SaveMenuState extends ChoosePathMenuState {
                 chooseSaveSLC
         });
         setFolder(path);
-        nameMI.getControl().setSuffix(".mom");
-        nameMI.getControl().setText(String.format("MOM-%s", new SimpleDateFormat("dd_MM_yy_HH:mm:ss").format(new Date())));
+        TextBox nameTextBox = nameMI.getControl();
+        nameTextBox.setOnTextChanged(() ->
+                nameTextBox.setText(nameTextBox.getText().replace("/", "")));
+        nameTextBox.setSuffix(".mom");
+        nameTextBox.setText(String.format("MOM-%s", new SimpleDateFormat("dd_MM_yy_HH:mm:ss").format(new Date())));
         nameMI.getSize().x = -2;
     }
 
