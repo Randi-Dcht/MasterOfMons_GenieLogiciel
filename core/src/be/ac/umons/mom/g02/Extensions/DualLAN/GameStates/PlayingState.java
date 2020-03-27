@@ -1,6 +1,9 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
+import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
@@ -14,6 +17,7 @@ import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Input;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,8 +26,9 @@ import java.util.HashMap;
 
 public class PlayingState extends PlayingStateDual {
 
-    NetworkManager nm;
+    protected NetworkManager nm;
     protected HashMap<String, Character> idCharacterMap;
+    protected boolean pauseSent;
 
     /**
      * @param gs The game's graphical settings
@@ -41,6 +46,12 @@ public class PlayingState extends PlayingStateDual {
         }
         super.init();
 
+    }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        nm.update(dt);
     }
 
     /**
@@ -88,6 +99,17 @@ public class PlayingState extends PlayingStateDual {
                 if (mapObjects.get(i).getCharacteristics().equals(omi))
                     mapObjects.remove(i);
         });
+    }
+
+    @Override
+    public void handleInput() {
+        super.handleInput();
+        nm.sendPlayerPosition(player);
+
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
+            nm.sendPause();
+            pauseSent = true;
+        }
     }
 
     /**
@@ -138,5 +160,12 @@ public class PlayingState extends PlayingStateDual {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void update(Notification notify) {
+        super.update(notify);
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
+            nm.sendDeath();
     }
 }
