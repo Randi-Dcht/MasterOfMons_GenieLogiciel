@@ -1,6 +1,11 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile;
 
-import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
@@ -9,6 +14,8 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
+
+/***/
 public class ZombiePNJ extends Mobile implements Observer
 {
 

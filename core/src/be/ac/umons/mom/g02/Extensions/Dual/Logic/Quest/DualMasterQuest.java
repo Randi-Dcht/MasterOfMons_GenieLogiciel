@@ -62,6 +62,11 @@ public class DualMasterQuest extends MasterQuest
         //TODO call
     }
 
+    /**/
+    public UnderQuest getUnderQuest(People player)
+    {
+        return list.get(player);
+    }
 
     /**
      * This method returns the name of this Quest

@@ -9,6 +9,8 @@ import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MoreCasesMons;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
@@ -152,6 +154,8 @@ public class PlayDual extends PlayingState
             else
                 drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
             cases.replace(player,cases.get(player)+1);
+            if(SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))//TODO
+                ((MoreCasesMons)((DualMasterQuest)SupervisorDual.getSupervisorDual().actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
         }
     }
 
