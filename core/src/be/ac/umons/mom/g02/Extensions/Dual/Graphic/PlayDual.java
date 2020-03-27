@@ -361,5 +361,10 @@ public class PlayDual extends PlayingState
         super.dispose();
         endDual.dispose();
         lifeBarTwo.dispose();
+        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
+        {
+            player1Number.dispose();
+            player2Number.dispose();
+        }
     }
 }

@@ -45,8 +45,8 @@ public class BattlePeople extends DualUnderQuest
 
     private void attackOther(People victim)
     {
-        if (this.victim.equals(victim))
-            addProgress(0.1);
+        if (this.victim != null && this.victim.equals(victim))
+            addProgress(5);
     }
 
     private void finishQuest(People victim)

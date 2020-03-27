@@ -27,7 +27,7 @@ public class DualMasterQuest extends MasterQuest
         peopleSecond = second;
         this.dual = dual;
         createUnderQuest(dual.getStart());
-        //Supervisor.getEvent().add(Events.Attack,this);
+        Supervisor.getEvent().add(Events.Attack,this);
     }
 
     private void createUnderQuest(Class<? extends DualUnderQuest> under)
