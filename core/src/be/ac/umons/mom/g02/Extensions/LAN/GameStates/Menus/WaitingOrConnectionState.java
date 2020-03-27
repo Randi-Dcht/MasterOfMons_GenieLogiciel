@@ -14,8 +14,6 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 public class WaitingOrConnectionState extends MenuState {
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
     public WaitingOrConnectionState(GraphicalSettings gs) {

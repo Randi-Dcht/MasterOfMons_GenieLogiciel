@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
@@ -112,7 +113,10 @@ public class FinalisingConnectionState extends MenuState {
         LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
         if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated) {
             SupervisorDual.initDual();
-            ls.setAfterLoadingState(DualChooseMenu.class);
+            if (nm.isTheServer())
+                ls.setAfterLoadingState(DualChooseMenu.class);
+            else
+                ls.setAfterLoadingState(WaitMenuState.class);
         }
         else
             ls.setAfterLoadingState(PlayingState.class);
