@@ -252,18 +252,7 @@ public class PlayingStateDual extends PlayingState
             attack(playerTwo);
             pnjs.remove(player);
         }
-        if (gim.isKey("pickUpAnObject", KeyStatus.Pressed))
-        {
-            if (selectedOne instanceof Character)
-                return;
-            else
-            {
-                if (SupervisorMultiPlayer.getPeopleTwo().pushObject(((MapObject) selectedOne).getItem()))
-                    pickUpAnObject();
-            }
-        }
-        else
-            super.handleInput();
+        super.handleInput();
 
         endDual.handleInput();
         //inventoryShowerTwo.handleInput();TODO
