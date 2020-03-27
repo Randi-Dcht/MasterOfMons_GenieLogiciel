@@ -13,7 +13,7 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
-import javax.xml.soap.Text;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
