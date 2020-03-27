@@ -8,12 +8,14 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MoreCasesMons;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.SurvivorVsMobile;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.TakeFlag;
 
+import java.awt.*;
+
 public enum TypeDual
 {
-    DualPlayer(     "", BattlePeople.class   ,Maps.DualKiosk),
-    CatchFlag(      "", TakeFlag.class        ,Maps.DualPark),
-    Survivor(       "", SurvivorVsMobile.class,Maps.DualKiosk),
-    OccupationFloor("", MoreCasesMons.class   ,Maps.DualPark);
+    DualPlayer(     "", BattlePeople.class   ,Maps.DualKiosk,new Point(0,0),new Point(0,0)),
+    CatchFlag(      "", TakeFlag.class        ,Maps.DualPark,new Point(0,0),new Point(0,0)),
+    Survivor(       "", SurvivorVsMobile.class,Maps.DualKiosk,new Point(0,0),new Point(0,0)),
+    OccupationFloor("", MoreCasesMons.class   ,Maps.DualPark,new Point(0,0),new Point(0,0));
 
 
     /***/
@@ -29,11 +31,35 @@ public enum TypeDual
 
 
     /***/
-    TypeDual(String nameQuest, Class<? extends DualUnderQuest> startClass, Maps map)
+    final Point pointOne;
+
+
+    /***/
+    final Point pointTwo;
+
+
+    /***/
+    TypeDual(String nameQuest, Class<? extends DualUnderQuest> startClass, Maps map, Point playerOnePos, Point playerTwoPos)
     {
         name  = nameQuest;
         start = startClass;
         maps  = map;
+        pointOne = playerOnePos;
+        pointTwo = playerTwoPos;
+    }
+
+
+    /***/
+    public Point getPointPlayerOne()
+    {
+        return pointOne;
+    }
+
+
+    /***/
+    public Point getPointPlayerTwo()
+    {
+        return pointTwo;
     }
 
 
