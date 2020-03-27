@@ -18,9 +18,13 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 
 /***/
@@ -53,7 +57,11 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void init()
     {
+        Supervisor.getSupervisor().setMustPlaceItem(false);
         super.init();
+
+        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
+            deleteFlag(new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
@@ -92,6 +100,12 @@ public class PlayingStateDual extends PlayingState
         objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
     }
 
+    public void deleteFlag(Point ... pt)
+    {
+        ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
+        for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
+            addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
+    }
 
     /***/
     protected void initMapAndPlayer(String maps,Point plOnePos, Point plTwoPos)
@@ -127,6 +141,10 @@ public class PlayingStateDual extends PlayingState
 
         for (Character pnj : pnjs)
             pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+
+        for (MapObject mo : mapObjects)
+            if (mo.getMap().equals(gmm.getActualMapName()))
+                mo.draw(sb, mo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, mo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
 
         sb.begin();
         if (gs.mustShowMapCoordinates())

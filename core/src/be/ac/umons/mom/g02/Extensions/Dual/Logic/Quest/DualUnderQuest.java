@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 
@@ -51,6 +52,12 @@ public abstract class DualUnderQuest extends UnderQuest
 
     /***/
     public ArrayList<Mobile> getListMobile()
+    {
+        return new ArrayList<>();
+    }
+
+    /***/
+    public ArrayList<Items> getListItems()
     {
         return new ArrayList<>();
     }
