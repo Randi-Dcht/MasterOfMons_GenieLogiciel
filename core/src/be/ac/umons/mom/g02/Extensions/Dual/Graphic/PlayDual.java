@@ -90,10 +90,16 @@ public class PlayDual extends PlayingState
             player1Number = new TextBox(gs); player1Number.setText("0");
             player2Number = new TextBox(gs); player2Number.setText("0");
         }
+
+        old.put(player,new Point(player.getPosX(),player.getPosY()));cases.put(player,0);
+        old.put(playerTwo,new Point(playerTwo.getPosX(),playerTwo.getPosY()));cases.put(playerTwo,0);
+
+
         endDual = new Button(gs);
         endDual.setText("X");
         endDual.setOnClick(() -> gsm.removeAllStateAndAdd(DualChooseMenu.class));
         endDual.setFont(gs.getSmallFont());
+
     }
 
     @Override
@@ -103,10 +109,16 @@ public class PlayDual extends PlayingState
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
 
+        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
+        {
+            checkCase(player);
+            checkCase(playerTwo);
+        }
+
         if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))//TODO upgrade
         {
-            player1Number.setText("0");
-            player2Number.setText("0");
+            player1Number.setText(cases.get(player).toString());
+            player2Number.setText(cases.get(playerTwo).toString());
         }
     }
 
@@ -176,6 +188,7 @@ public class PlayDual extends PlayingState
             else
                 drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
             cases.replace(player,cases.get(player)+1);
+            old.replace(player,new Point(player.getPosX(),player.getPosY()));
             if(SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))//TODO
                 ((MoreCasesMons)((DualMasterQuest)SupervisorDual.getSupervisorDual().actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
         }
