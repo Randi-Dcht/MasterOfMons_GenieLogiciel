@@ -28,7 +28,7 @@ public class MeetAndLearn extends be.ac.umons.mom.g02.Quests.Master.MeetAndLearn
 
     @Override
     public void nextQuest() {
-//        newQuest(new MeetAndLearn(people,this,difficulty)); // TODO Change it to MasterQuests (that doesn't work at the moment)
+        super.nextQuest();
         if (! alreadySent) {
             try {
                 NetworkManager.getInstance().sendEndOfMasterQuest();

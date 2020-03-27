@@ -28,7 +28,7 @@ public class MyFirstYear extends be.ac.umons.mom.g02.Quests.Master.MyFirstYear {
 
     @Override
     public void nextQuest() {
-        newQuest(new SuccessfulYear(people,this,difficulty));
+        super.nextQuest();
         if (! alreadySent) {
             try {
                 NetworkManager.getInstance().sendEndOfMasterQuest();
