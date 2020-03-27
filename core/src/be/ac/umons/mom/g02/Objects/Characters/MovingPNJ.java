@@ -136,33 +136,33 @@ public class MovingPNJ extends Mobile
             toMove = (int)Math.round(Supervisor.getPeople().getSpeed() * dt * tileSize);
 
 
-        if(tileXbetween > toMove || tileXbetween < -toMove || tileYbetween > toMove || tileYbetween < -toMove)
+        if(Math.sqrt(Math.pow(tileXbetween, 2) + Math.pow(tileYbetween, 2)) / 2 > myGraphic.getAttackRange())
         {
             if (tileXbetween < 0 || onX)
-            {
                 x = toMove;
-                myGraphic.setOrientation(Orientation.Right);
-            }
             else
-            {
                 x = -toMove;
-                myGraphic.setOrientation(Orientation.Left);
-            }
             if (tileYbetween < 0 || onY)
-            {
                 y = toMove;
-                myGraphic.setOrientation(Orientation.Top);
-            }
             else
-            {
                 y = -toMove;
-                myGraphic.setOrientation(Orientation.Bottom);
-            }
         }
         else
         {
             SuperviserNormally.getSupervisor().meetCharacter(this,victim.getCharacteristics());
             meet=true;
+        }
+
+        if (Math.abs(tileXbetween) >= Math.abs(tileYbetween)) {
+            if (tileXbetween >= 0)
+                myGraphic.setOrientation(Orientation.Right);
+            else
+                myGraphic.setOrientation(Orientation.Left);
+        } else {
+            if (tileYbetween >= 0)
+                myGraphic.setOrientation(Orientation.Top);
+            else
+                myGraphic.setOrientation(Orientation.Bottom);
         }
         checkMove(x,y,dt);
     }

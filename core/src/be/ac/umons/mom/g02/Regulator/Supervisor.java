@@ -612,16 +612,14 @@ public  abstract class Supervisor implements Observer
         int toMove = (int)Math.round(memoryMobile.getSpeed() * dt * 64);
 
         if(Math.sqrt(Math.pow(displaceX, 2) + Math.pow(displaceY, 2)) / 2 > graphical.getAttackRange()) { // /2 just to be sure it isn't at one pixel
-            if (displaceX < 0) {
+            if (displaceX < 0)
                 x = -toMove;
-            } else {
+            else
                 x = toMove;
-            }
-            if (displaceY < 0) {
+            if (displaceY < 0)
                 y = -toMove;
-            } else {
+            else
                 y = toMove;
-            }
         }
         if (Math.abs(displaceX) >= Math.abs(displaceY)) {
             if (displaceX >= 0)
