@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
-import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
@@ -8,6 +7,7 @@ import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.SaveMenuState;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
@@ -30,10 +30,6 @@ public class DisconnectedMenuState extends MenuState {
      * The network manager of the game.
      */
     protected NetworkManager nm;
-    /**
-     * The playing's state of the game.
-     */
-    protected PlayingState ps;
 
     /**
      * @param gs The game's graphical settings.
@@ -91,12 +87,5 @@ public class DisconnectedMenuState extends MenuState {
         ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));
         ((OutGameDialogState)g).addAnswer("yes", () -> Gdx.app.exit());
         ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
-    }
-
-    /**
-     * @param ps The playing's state of the game.
-     */
-    public void setPlayingState(PlayingState ps) {
-        this.ps = ps;
     }
 }

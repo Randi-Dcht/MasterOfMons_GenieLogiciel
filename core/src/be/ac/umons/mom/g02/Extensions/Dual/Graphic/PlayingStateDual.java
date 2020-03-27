@@ -347,7 +347,6 @@ public class PlayingStateDual extends PlayingState
     {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
             gsm.removeAllStateAndAdd(DualChooseMenu.class);
-
     }
 
 

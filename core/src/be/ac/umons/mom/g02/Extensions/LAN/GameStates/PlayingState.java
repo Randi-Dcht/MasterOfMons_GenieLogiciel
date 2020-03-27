@@ -198,8 +198,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> {
-            DisconnectedMenuState dms = (DisconnectedMenuState) gsm.setState(DisconnectedMenuState.class);
-            dms.setPlayingState(this);
+            gsm.setState(DisconnectedMenuState.class);
         });
         nm.setOnMazePlayerDetected((b) -> {
             isTheMazePlayer = b;
@@ -229,6 +228,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }));
     }
 
+    /**
+     * Executed when the second player sends a character characteristics. It adds the character to the map.
+     * @param name The character's name
+     * @param mob The character's characteristics
+     * @param x The horizontal position on the map (pixel)
+     * @param y The vertical position on the map (pixel)
+     * @return The graphical object associated with the character
+     */
     private Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y) {
         Character c = new Character(gs, mob);
         pnjs.add(c);
@@ -348,8 +355,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (nm.isTheServer()) {
             Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
             for (Character c : pnjs) {
-                if (! idCharacterMap.containsKey(c.getCharacteristics().getName()))
+                if (! idCharacterMap.containsKey(c.getCharacteristics().getName())) {
                     initPNJPosition(c, rmos);
+                    idCharacterMap.put(c.getCharacteristics().getName(), c);
+                }
             }
         }
     }

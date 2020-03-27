@@ -50,7 +50,7 @@ public class DualChooseMenu extends MenuState
                 });
     }
 
-    private void checkChoose(TypeDual what)
+    protected void checkChoose(TypeDual what)
     {
         SupervisorDual.getSupervisorDual().init(what);
         gsm.removeAllStateAndAdd(PlayingStateDual.class);

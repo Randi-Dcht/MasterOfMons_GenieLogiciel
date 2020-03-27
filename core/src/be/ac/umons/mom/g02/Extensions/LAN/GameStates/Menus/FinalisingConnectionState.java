@@ -1,17 +1,22 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
+import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 import java.io.IOException;
@@ -32,8 +37,6 @@ public class FinalisingConnectionState extends MenuState {
     protected boolean sendPlayer;
 
     /**
-     * @param gsm The game's state manager
-     * @param gim The game's input manager
      * @param gs The game's graphical settings.
      */
     public FinalisingConnectionState(GraphicalSettings gs) {
@@ -46,21 +49,18 @@ public class FinalisingConnectionState extends MenuState {
         }
 
         nm.setOnSecondPlayerDetected(secondPlayer -> {
-            if (MasterOfMonsGame.getGameToLoad() == null) {
-                LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-                ls.setAfterLoadingState(PlayingState.class);
-            }
-            SupervisorLAN.setPlayerTwo(secondPlayer);
+            if (MasterOfMonsGame.getGameToLoad() == null)
+                goToLoading();
+            SupervisorMultiPlayer.setPlayerTwo(secondPlayer);
         });
         nm.setOnPlayerDetected(player -> {
-            LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-            ls.setAfterLoadingState(PlayingState.class);
-            SupervisorLAN.setPlayerOne(player);
+            goToLoading();
+            SupervisorMultiPlayer.setPlayerOne(player);
         });
         nm.setOnSaveDetected((save -> {
-            SupervisorLAN.getSupervisor().oldGameLAN(save);
-            LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-            ls.setAfterLoadingState(PlayingState.class);
+            if (ExtensionsManager.getInstance().getExtensionsMap().get("LAN").activated)
+                SupervisorLAN.getSupervisor().oldGameLAN(save);
+            goToLoading();
         }));
 
     }
@@ -76,7 +76,7 @@ public class FinalisingConnectionState extends MenuState {
         });
 
         Gdx.app.postRunnable(() -> {
-            if (MasterOfMonsGame.getGameToLoad() != null) {
+            if (MasterOfMonsGame.getGameToLoad() != null && ExtensionsManager.getInstance().getExtensionsMap().get("LAN").activated) {
                 Save save = SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getGameToLoad());
                 if (nm.isTheServer()) {
                     try {
@@ -91,7 +91,7 @@ public class FinalisingConnectionState extends MenuState {
             }
         });
         if (sendPlayer)
-            nm.sendPlayerInformation(SupervisorLAN.getPeople());
+            nm.sendPlayerInformation(Supervisor.getPeople());
     }
 
     @Override
@@ -105,6 +105,16 @@ public class FinalisingConnectionState extends MenuState {
     public void setSendPlayer(boolean sendPlayer) {
         this.sendPlayer = sendPlayer;
         if (sendPlayer)
-            nm.sendPlayerInformation(SupervisorLAN.getPeople());
+            nm.sendPlayerInformation(Supervisor.getPeople());
+    }
+
+    private void goToLoading() {
+        LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+        if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated) {
+            SupervisorDual.initDual();
+            ls.setAfterLoadingState(DualChooseMenu.class);
+        }
+        else
+            ls.setAfterLoadingState(PlayingState.class);
     }
 }

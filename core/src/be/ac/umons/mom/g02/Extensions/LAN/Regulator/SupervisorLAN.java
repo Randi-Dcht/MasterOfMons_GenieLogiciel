@@ -30,11 +30,6 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
     protected Save save;
 
     /**
-     * The list of the death of the second player to ignore while calculating the win of XP
-     */
-    protected List<Mobile> deathToIgnore;
-
-    /**
      * This method to give the only instance of <code>SupervisorLAN</code> if no other instance of <code>Supervisor</code> exists.
      */
     public static SupervisorLAN getSupervisor()
@@ -47,7 +42,6 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
     protected SupervisorLAN() {
         super();
         getEvent().add(Events.ChangeHour, this);
-        deathToIgnore = new LinkedList<>();
     }
 
     @Override
@@ -168,25 +162,5 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         SupervisorLAN.getPeopleTwo().setPlanning(planning);
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
         SupervisorLAN.getSupervisor().checkPlanning();
-    }
-
-    @Override
-    public void deadMobile(Mobile mb) {
-        if (deathToIgnore.contains(mb)) {
-            listMobile.get(mb.getMaps()).remove(mb);
-            deadMobile.add(mb);
-            listUpdate.remove(mb);
-
-            if (mb.equals(memoryMobile))
-                memoryMobile = null;
-        }
-        else {
-            super.deadMobile(mb);
-            deathToIgnore.remove(mb);
-        }
-    }
-
-    public void addADeathToIgnore(Mobile mb) {
-        deathToIgnore.add(mb);
     }
 }
