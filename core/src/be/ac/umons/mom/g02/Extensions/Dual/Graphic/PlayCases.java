@@ -123,8 +123,7 @@ public class PlayCases extends PlayingStateDual
             else
                 drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
 
-            if (cases.get(adv.get(player)).contains(new Point(player.getPosX()/64,player.getPosY()/32)))
-                cases.get(adv.get(player)).remove(new Point(player.getPosX()/64,player.getPosY()/32));
+            cases.get(adv.get(player)).remove(new Point(player.getPosX()/64,player.getPosY()/32));
             cases.get(player).add(new Point(player.getPosX()/64,player.getPosY()/32));
 
             if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
