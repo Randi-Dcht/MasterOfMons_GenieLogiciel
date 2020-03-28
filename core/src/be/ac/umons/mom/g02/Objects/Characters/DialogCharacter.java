@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
+import be.ac.umons.mom.g02.Events.Notifications.Shop;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -57,7 +58,7 @@ public class DialogCharacter
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
-        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON");
+        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP");
     }
 
 
@@ -237,6 +238,8 @@ public class DialogCharacter
             else
                 supervisor.getEvent().notify(new Dialog("ESC"));
         }
+        if (specificID.equals("SHOP"))
+            supervisor.getEvent().notify(new Shop());
         specificID = null;
     }
 

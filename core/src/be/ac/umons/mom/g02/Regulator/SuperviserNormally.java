@@ -58,6 +58,7 @@ public class SuperviserNormally extends Supervisor
     protected SuperviserNormally()
     {
         super();
+        setMoneyGame(true);
     }
 
 

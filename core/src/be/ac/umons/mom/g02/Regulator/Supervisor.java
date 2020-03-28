@@ -372,7 +372,7 @@ public  abstract class Supervisor implements Observer
      * @param type who is type of the people as defence,agility
      */
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
-    {dealerOnMap = new Dealer(Bloc.BA1);
+    {
         placePosition = new PositionOnMaps();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);
@@ -504,6 +504,13 @@ public  abstract class Supervisor implements Observer
             if (mb.getMaps() == null)
                 mb.setMaps(maps[new Random().nextInt(maps.length)]);
             listMobile.get(mb.getMaps()).add(mb);
+        }
+
+        if (haveMoney)
+        {
+            dealerOnMap = new Dealer(playerOne.getBloc());
+            dealerOnMap.setMaps(Maps.Nimy);
+            listMobile.get(Maps.Nimy).add(dealerOnMap);
         }
     }
 

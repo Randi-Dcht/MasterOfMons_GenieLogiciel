@@ -40,7 +40,7 @@ public class Dealer extends Mobile
 
     public boolean buyItem(Items buy,int money)
     {
-        if (buy.buy() == money && myObject.contains(buy))
+        if (buy.buy() <= money && myObject.contains(buy))
         {
             myObject.remove(buy);
             return true;

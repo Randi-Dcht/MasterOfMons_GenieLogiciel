@@ -4,5 +4,4 @@
 % Comments have '%' before and will be ignored by the program.
 %By Randy Dauchot
 Start/Start/HelloSeller/ESC
-HelloSeller/SellerStart/ESC/GoBag
-GoBag/ChooseIts/SELLER
+HelloSeller/SellerStart/ESC/SHOP
