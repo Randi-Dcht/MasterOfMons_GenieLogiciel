@@ -108,6 +108,7 @@ public class FinalisingConnectionState extends MenuState {
 
     private void goToLoading() {
         LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
+        ls.setOnLoaded(() -> nm.sendOnTCP("Loaded"));
         if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated) {
             SupervisorDual.initDual();
             if (nm.isTheServer())

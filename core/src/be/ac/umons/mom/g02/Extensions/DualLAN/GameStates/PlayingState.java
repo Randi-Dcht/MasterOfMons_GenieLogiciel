@@ -5,9 +5,9 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
-import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
@@ -101,7 +101,10 @@ public class PlayingState extends PlayingStateDual {
             timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
-        nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
+        nm.setOnDisconnected(() -> {
+            DisconnectedMenuState dms = (DisconnectedMenuState) gsm.setState(DisconnectedMenuState.class);
+            dms.setSecondPlayerPosition(playerTwo.getMapPos());
+        });
         nm.whenMessageReceivedDo("LVLUP", (objects) -> {
             int newLevel = (int)objects[0];
             while (newLevel > playerTwo.getCharacteristics().getLevel())
