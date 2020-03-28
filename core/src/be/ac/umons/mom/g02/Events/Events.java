@@ -23,7 +23,10 @@ public enum Events
     Answer("answerQuestion"),                 /*This event notify when the player answer to the dialog*/
     Dead("characterDead"),                    /*This event notify when the character is dead*/
     UpLevel("UpLevel"),                       /*This event notify when the people up the level*/
-    UseItems("PeopleUseItem");                /*This event notify when the people uses an item*/
+    UseItems("PeopleUseItem"),                /*This event notify when the people uses an item*/
+    LifeChanged("LifeChanged"),
+    ExperienceChanged("ExperienceChanged"),
+    EnergyChanged("EnergyChanged");
 
 
     /**The name of the events*/

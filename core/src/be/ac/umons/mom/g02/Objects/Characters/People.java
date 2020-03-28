@@ -352,6 +352,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
         if (energy <= 10)
             Supervisor.getEvent().notify(new LowSomething(LowSomething.TypeLow.Energy));
+        Supervisor.getEvent().notify(new EnergyChanged(this, energy));
     }
 
 
@@ -424,6 +425,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         experience += win;
         calculusWinXp();
+        Supervisor.getEvent().notify(new ExperienceChanged(this, experience));
     }
 
 
@@ -560,6 +562,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     public void setEnergy(double energy) {
         this.energy = energy;
+        Supervisor.getEvent().notify(new EnergyChanged(this, energy));
     }
 
     /**
@@ -567,6 +570,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     public void setExperience(double experience) {
         this.experience = experience;
+        Supervisor.getEvent().notify(new ExperienceChanged(this, experience));
     }
 
     /**

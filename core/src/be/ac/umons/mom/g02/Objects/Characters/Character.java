@@ -3,10 +3,9 @@ package be.ac.umons.mom.g02.Objects.Characters;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Events.Notifications.LifeChanged;
 import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
-import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
@@ -104,6 +103,7 @@ public abstract class Character implements Attack, Social, Serializable
             actualLife = lifeMax();
         else
             actualLife += cmb;
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
 
@@ -176,6 +176,7 @@ public abstract class Character implements Attack, Social, Serializable
     public void setActualLife(double actualLife)
     {
         this.actualLife = actualLife;
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
     /**
@@ -264,6 +265,7 @@ public abstract class Character implements Attack, Social, Serializable
 
         if (actualLife == 0)
             actualLife = lifeMax();
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
 
@@ -324,6 +326,7 @@ public abstract class Character implements Attack, Social, Serializable
 
         if (actualLife <= 0)
             dead();
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
 
