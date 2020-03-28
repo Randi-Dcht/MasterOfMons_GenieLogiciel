@@ -751,15 +751,15 @@ public  abstract class Supervisor implements Observer
      */
     public void meetCharacter(Character player1, Character player2)//TODO upgrade pour moins de clss
     {
-        if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
+        if ((player1).getType().equals(Character.TypePlayer.Computer))
         {
             event.notify(new MeetOther(memoryMobile = (Mobile)player1));
-            dialog= listDialog.get(((Mobile)player1).getDialog());//TODO
+            dialog= listDialog.get(((Mobile)player1).getDialog());
         }
-        if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
+        if ((player2).getType().equals(Character.TypePlayer.Computer))
         {
             event.notify(new MeetOther(memoryMobile = (Mobile)player2));
-            dialog= listDialog.get(((Mobile)player2).getDialog());//TODO
+            dialog= listDialog.get(((Mobile)player2).getDialog());
         }
         Actions action = player1.getAction().comparable(player2.getAction());
         if (action.equals(Actions.Attack))
