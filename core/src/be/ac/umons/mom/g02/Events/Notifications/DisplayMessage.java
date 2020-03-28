@@ -7,16 +7,18 @@ public class DisplayMessage implements Notification
 
     private Events evt;
     private String buffer;
+    private String id;
 
 
     /**
      * This constructor define a notification when change quest with buffer
      * @param buffer is a buffer with quest (specific to events)
      */
-    public DisplayMessage(String buffer)
+    public DisplayMessage(String buffer,String id)
     {
         evt = Events.DisplayMessage;
         this.buffer = buffer;
+        this.id = id;
     }
 
 
@@ -25,9 +27,14 @@ public class DisplayMessage implements Notification
      */
     public DisplayMessage()
     {
-        this(null);
+        this(null,null);
     }
 
+
+    public String getId()
+    {
+        return id;
+    }
 
     /**
      * This method return the event of this notification

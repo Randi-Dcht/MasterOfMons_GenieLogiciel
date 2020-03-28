@@ -11,13 +11,7 @@ import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
-import be.ac.umons.mom.g02.Events.Notifications.Dead;
-import be.ac.umons.mom.g02.Events.Notifications.Dialog;
-import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
-import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
-import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
 import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
@@ -533,6 +527,9 @@ public  abstract class Supervisor implements Observer
 
         for (Items it : mb.getInventory())
             playerOne.pushObject(it);//TODO check !
+
+        playerOne.addMoney(mb.getMyMoney());
+        event.notify(new DisplayMessage("You are + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
 
         if (mb.equals(memoryMobile))
             memoryMobile = null;
