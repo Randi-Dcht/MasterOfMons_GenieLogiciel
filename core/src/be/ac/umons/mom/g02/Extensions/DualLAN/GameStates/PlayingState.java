@@ -12,6 +12,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
+import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
@@ -47,6 +48,16 @@ public class PlayingState extends PlayingStateDual {
         }
         setNetworkManagerRunnables();
         super.init();
+
+        pauseButton.setOnClick(() -> {
+            gsm.setState(InGameMenuState.class);
+            nm.sendMessageOnTCP("Pause");
+            pauseSent = true;
+        });
+        endDual.setOnClick(() -> {
+            goToPreviousMenu();
+            nm.sendOnTCP("EndDual");
+        });
 
     }
 
@@ -105,6 +116,10 @@ public class PlayingState extends PlayingStateDual {
                 if (mapObjects.get(i).getCharacteristics().equals(objects[0]))
                     mapObjects.remove(i);
         });
+        nm.whenMessageReceivedDo("PL", (objects -> {
+            lifeBarTwo.setValue((int)(objects[0]));
+        }));
+        nm.whenMessageReceivedDo("EndDual", objects -> goToPreviousMenu());
     }
 
     @Override
@@ -119,7 +134,7 @@ public class PlayingState extends PlayingStateDual {
         nm.sendMessageOnUDP("PP", player.getMapPos());
 
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            nm.sendOnTCP("PAUSE");
+            nm.sendOnTCP("Pause");
             pauseSent = true;
         }
     }
@@ -150,6 +165,8 @@ public class PlayingState extends PlayingStateDual {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
             nm.sendOnTCP("Death");
             goToPreviousMenu();
+        } else if (notify.getEvents().equals(Events.Attack)) {
+            nm.sendMessageOnUDP("PL", player.getCharacteristics().getActualLife());
         }
     }
 

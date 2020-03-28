@@ -144,7 +144,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
-            nm.sendMessageOnTCP("PAUSE");
+            nm.sendMessageOnTCP("Pause");
+            pauseSent = true;
         });
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
@@ -357,7 +358,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendMessageOnUDP("PP", player.getMapPos());
 
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) { // TODO : Second player life ?
-            nm.sendOnTCP("PAUSE");
+            nm.sendOnTCP("Pause");
             pauseSent = true;
         }
     }
