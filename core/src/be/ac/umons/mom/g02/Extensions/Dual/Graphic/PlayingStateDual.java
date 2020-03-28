@@ -6,15 +6,11 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.MoreCasesMons;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -22,11 +18,13 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-import com.badlogic.gdx.graphics.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 
 /***/
@@ -40,18 +38,9 @@ public class PlayingStateDual extends PlayingState
     /***/
     protected HashMap<Player,Player> adv = new HashMap<>();
     /***/
-    protected HashMap<Player,Integer> cases = new HashMap<>();
-    /***/
-    protected ArrayList<Cases> drawCase = new ArrayList<>();
-    /***/
-    protected HashMap<Player,Point> old = new HashMap<>();
-    /***/
-    protected TextBox player1Number;
-    /***/
-    protected TextBox player2Number;
-    /***/
     protected SupervisorDual supervisorDual;
-
+    /***/
+    protected Point objectSize;
 
     /**
      * @param gs The game's graphical settings
@@ -68,19 +57,24 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void init()
     {
+        Supervisor.getSupervisor().setMustPlaceItem(false);
         super.init();
+
+        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
+            deleteFlag(new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
         initMap(supervisorDual.getDual().getStartMaps().getMaps(),supervisorDual.getDual().getPointPlayerOne().x,supervisorDual.getDual().getPointPlayerOne().y);
-        playerTwo.setMapPos(new Point(player.getPosX(),player.getPosY()));
+        playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();
         cam.update();
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
         adv.put(player,playerTwo);adv.put(playerTwo,player);
+
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
             for (Character ch : pnjs)
@@ -94,15 +88,6 @@ public class PlayingStateDual extends PlayingState
         initPNJsPositions(getPNJsOnMap(supervisorDual.getDual().getStartMaps().getMaps()));//TODO
         questShower.setQuest(Supervisor.getSupervisor().actualQuest());
 
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            player1Number = new TextBox(gs); player1Number.setText("0");
-            player2Number = new TextBox(gs); player2Number.setText("0");
-        }
-
-        old.put(player,new Point(player.getPosX(),player.getPosY()));cases.put(player,0);
-        old.put(playerTwo,new Point(playerTwo.getPosX(),playerTwo.getPosY()));cases.put(playerTwo,0);
-
 
         endDual = new Button(gs);
         endDual.setText("X");
@@ -112,8 +97,15 @@ public class PlayingStateDual extends PlayingState
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
             changedCam();
 
+        objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
     }
 
+    public void deleteFlag(Point ... pt)
+    {
+        ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
+        for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
+            addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
+    }
 
     /***/
     protected void initMapAndPlayer(String maps,Point plOnePos, Point plTwoPos)
@@ -133,18 +125,6 @@ public class PlayingStateDual extends PlayingState
         super.update(dt);
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
-
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            checkCase(player);
-            checkCase(playerTwo);
-        }
-
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO upgrade
-        {
-            player1Number.setText(cases.get(player).toString());
-            player2Number.setText(cases.get(playerTwo).toString());
-        }
     }
 
 
@@ -161,13 +141,11 @@ public class PlayingStateDual extends PlayingState
 
         for (Character pnj : pnjs)
             pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
-/*
-        if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
-        {
-            for (Cases cc : drawCase)
-                cc.draw();
-        }//TODO this
- */
+
+        for (MapObject mo : mapObjects)
+            if (mo.getMap().equals(gmm.getActualMapName()))
+                mo.draw(sb, mo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, mo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
+
         sb.begin();
         if (gs.mustShowMapCoordinates())
         {
@@ -190,45 +168,21 @@ public class PlayingStateDual extends PlayingState
 
         questShower.draw(sb, MasterOfMonsGame.WIDTH / 2 - questShower.getWidth()/2, (int)(MasterOfMonsGame.HEIGHT - 2 * topMargin - topBarHeight-40));//TODO
 
-        Point objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
         pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -objectSize.x-10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
         endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +objectSize.x+10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
 
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            Point textSize = new Point((int)( gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(topMargin + gs.getSmallFont().getLineHeight()));
-            player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
-            player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin)),textSize);
-        }
+
     }
 
 
     /***/
     private void changedCam()
     {
-        cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth/2, SHOWED_MAP_HEIGHT * tileHeight/2);//TODO changed
+        cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);//TODO changed
         cam.position.x = player.getPosX();
         cam.position.y = player.getPosY();
         gmm.setView(cam);
         cam.update();
-    }
-
-
-    /***/
-    protected void checkCase(Player player)
-    {
-        if (!old.get(player).equals(new Point(player.getPosX(),player.getPosY())))
-        {
-            old.replace(player,new Point(player.getPosX(),player.getPosY()));
-            if (player.equals(this.player))
-                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.BLUE));//TODO
-            else
-                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
-            cases.replace(player,cases.get(player)+1);
-            old.replace(player,new Point(player.getPosX(),player.getPosY()));
-            if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
-                ((MoreCasesMons)((DualMasterQuest)SupervisorDual.getSupervisorDual().actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
-        }
     }
 
 
@@ -263,12 +217,12 @@ public class PlayingStateDual extends PlayingState
     @Override
     protected void attack(Player player)
     {
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
             pnjs.add(adv.get(player));
 
         super.attack(player);
 
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.CatchFlag))
+        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
             pnjs.remove(adv.get(player));
     }
 
@@ -356,10 +310,5 @@ public class PlayingStateDual extends PlayingState
        // super.dispose();TODO problem with multi dispose of lifeBar
         endDual.dispose();
         lifeBarTwo.dispose();
-        if (supervisorDual.getDual().equals(TypeDual.OccupationFloor))
-        {
-            player1Number.dispose();
-            player2Number.dispose();
-        }
     }
 }

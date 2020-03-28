@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
+import be.ac.umons.mom.g02.Objects.Items.Guns;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Items;
@@ -53,7 +54,7 @@ public abstract class Character implements Attack, Social, Serializable
      * This is the specific object
      * This is the gun of the character
      */
-    protected Gun gun;
+    protected Guns gun;
     /**
      * This is the mobile living
      */
@@ -392,7 +393,7 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public boolean howGun()
     {
-        return (gun != null && gun.getObsolete());
+        return (gun != null /*&& ((Items)gun).getObsolete()*/);
     }
 
 
@@ -401,7 +402,7 @@ public abstract class Character implements Attack, Social, Serializable
      * @return gun of the attacker
      */
     @Override
-    public Gun getGun()
+    public Guns getGun()
     {
         return gun;
     }

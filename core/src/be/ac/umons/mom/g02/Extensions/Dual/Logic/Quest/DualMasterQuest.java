@@ -100,7 +100,8 @@ public class DualMasterQuest extends MasterQuest
     @Override
     protected void createListItems() throws Exception
     {
-        listItems = new ArrayList<>();
+        listItems = ll[0].getListItems();
+        listItems.addAll(ll[1].getListItems());//TODO pass static
     }
 
 

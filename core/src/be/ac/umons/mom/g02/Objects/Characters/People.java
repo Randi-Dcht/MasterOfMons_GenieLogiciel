@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.FrameTime;
+import be.ac.umons.mom.g02.Objects.Items.Guns;
 import be.ac.umons.mom.g02.Other.HyperPlanning;
 import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Bloc;
@@ -266,6 +267,11 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     public boolean pushObject(Items object)
     {
+        if (object instanceof Guns)
+        {
+            gun = (Guns)object;
+            return true;
+        }
         if(myObject.size() == difficulty.getManyItem())
             return false;
         myObject.add(object);

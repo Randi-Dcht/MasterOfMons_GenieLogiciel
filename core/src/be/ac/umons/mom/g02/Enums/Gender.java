@@ -7,8 +7,8 @@ package be.ac.umons.mom.g02.Enums;
  */
 public enum Gender
 {
-    Women('F',"Women"),
-    Men('H',"Men");
+    Men('H',"Men"),
+    Women('F',"Women");
 
     private char name;
     private String full;
@@ -19,7 +19,7 @@ public enum Gender
      * @param name is a char of gender
      * @param full is the name in english
      */
-    private Gender(char name,String full)
+    Gender(char name,String full)
     {
         this.name=name;
         this.full= full;
