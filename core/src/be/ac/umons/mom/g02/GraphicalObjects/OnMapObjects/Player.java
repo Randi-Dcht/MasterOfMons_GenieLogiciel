@@ -108,4 +108,8 @@ public class Player extends Character {
     public int getHeight() {
         return tileHeight;
     }
+
+    public Point getMapPos() {
+        return new Point(getPosX(), getPosY());
+    }
 }

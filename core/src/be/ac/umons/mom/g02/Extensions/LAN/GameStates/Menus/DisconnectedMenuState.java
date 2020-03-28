@@ -58,7 +58,7 @@ public class DisconnectedMenuState extends MenuState {
             nm.close();
             nm.acceptConnection();
             nm.startBroadcastingMessage("Game begun");
-            nm.setOnSecondPlayerDetected(null);
+            nm.whenMessageReceivedDo("PI", null);
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
                 ogds.setText(String.format(gs.getStringFromId("magicNumber"), magicNumber));
@@ -66,13 +66,9 @@ public class DisconnectedMenuState extends MenuState {
             });
             nm.setOnConnected(() -> {
                 Save save = SupervisorLAN.getSupervisor().createSave();
-                try {
-                    nm.sendSave(save);
-                    nm.stopBroadcastingServerInfo();
-                    gsm.removeAllStateUntil(this);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                nm.sendMessageOnTCP("SAVE", save);
+                nm.stopBroadcastingServerInfo();
+                gsm.removeAllStateUntil(this);
             });
         } catch (SocketException e) {
             e.printStackTrace();

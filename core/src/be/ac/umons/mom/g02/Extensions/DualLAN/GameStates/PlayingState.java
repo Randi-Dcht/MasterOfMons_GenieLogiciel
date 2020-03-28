@@ -1,16 +1,17 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
+import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
@@ -21,7 +22,6 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Input;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.SocketException;
 import java.util.HashMap;
 
@@ -50,66 +50,76 @@ public class PlayingState extends PlayingStateDual {
 
     }
 
+    /**
+     * Set all the needed network manager's runnables except the one for setting the map changing (must be done earlier)
+     */
+    public void setNetworkManagerRunnables() {
+        nm.whenMessageReceivedDo("PNJ", (objects) -> onCharacterDetected(
+                (String)objects[0],
+                (be.ac.umons.mom.g02.Objects.Characters.Character)objects[3],
+                (int)objects[1], (int)objects[2]
+        ));
+        nm.whenMessageReceivedDo("MPNJ", (objects) ->
+        {
+            MovingPNJ mpnj = new MovingPNJ((Bloc)objects[1], (MobileType) objects[2], (Maps) objects[3], (Actions) objects[4]);
+            mpnj.initialisation(onCharacterDetected((String) objects[0], mpnj, (int) objects[5], (int) objects[6]),
+                    this, player);
+        });
+        nm.whenMessageReceivedDo("Item", (objects) -> addItemToMap((MapObject.OnMapItem) objects[0]));
+        nm.whenMessageReceivedDo("getPNJsPos", (objects) ->
+                PlayingLANHelper.sendPNJsPositions((String) objects[0], idCharacterMap));
+        nm.whenMessageReceivedDo("PP", (objects -> setSecondPlayerPosition((Point) objects[0])));
+        nm.whenMessageReceivedDo("SPP", (objects) -> player.setMapPos((Point) objects[0]));
+        nm.whenMessageReceivedDo("hitPNJ", (objects) -> {
+            Character c = idCharacterMap.get(objects[0]);
+            if (c != null) {
+                c.getCharacteristics().setActualLife((double) objects[1]);
+                playerTwo.expandAttackCircle();
+            }
+        });
+        nm.whenMessageReceivedDo("PNJDeath", (objects) -> {
+            String name = (String) objects[0];
+            if (idCharacterMap.containsKey(name)) {
+                SupervisorLAN.getSupervisor().addADeathToIgnore((Mobile)idCharacterMap.get(name).getCharacteristics());
+                Supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
+            }
+        });
+        nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
+        nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
+        nm.whenMessageReceivedDo("EMQ", (objects) -> {
+            timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
+            SupervisorLAN.getPeople().getQuest().passQuest();
+        });
+        nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
+        nm.whenMessageReceivedDo("LVLUP", (objects) -> {
+            int newLevel = (int)objects[0];
+            while (newLevel > playerTwo.getCharacteristics().getLevel())
+                ((People)playerTwo.getCharacteristics()).upLevel();
+            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
+        });
+        nm.whenMessageReceivedDo("getItemsPos", (objects ->
+                PlayingLANHelper.sendItemsPositions(mapObjects)));
+        nm.whenMessageReceivedDo("Death", (objects) -> goToPreviousMenu());
+        nm.whenMessageReceivedDo("IPU", (objects) -> {
+            for (int i = 0; i < mapObjects.size(); i++)
+                if (mapObjects.get(i).getCharacteristics().equals(objects[0]))
+                    mapObjects.remove(i);
+        });
+    }
+
     @Override
     public void update(float dt) {
         super.update(dt);
         nm.update(dt);
     }
 
-    /**
-     * Set all the needed network manager's runnables except the one for setting the map changing (must be done earlier)
-     */
-    protected void setNetworkManagerRunnables() { // TODO : Find a way to remove copy-paste
-        nm.setOnPNJDetected(this::onCharacterDetected);
-        nm.setOnMovingPNJDetected((name, mob, x, y) ->
-                ((MovingPNJ)mob).initialisation(
-                        onCharacterDetected(name, mob, x, y), this, player
-                ));
-        nm.setOnItemDetected(this::addItemToMap);
-        nm.setOnGetPNJ(this::sendPNJsPositions);
-        nm.setOnPositionDetected(this::setSecondPlayerPosition);
-        nm.setOnSecondPlayerPositionDetected((pos) -> player.setMapPos(pos));
-        nm.setOnHitPNJ((name, life) -> {
-            Character c = idCharacterMap.get(name);
-            if (c != null) {
-                c.getCharacteristics().setActualLife(life);
-                playerTwo.expandAttackCircle();
-            }
-        });
-        nm.setOnPNJDeath((name) -> {
-            if (idCharacterMap.containsKey(name)) {
-                SupervisorDual.getSupervisorDual().addADeathToIgnore((Mobile)idCharacterMap.get(name).getCharacteristics());
-                Supervisor.getEvent().notify(new Dead(idCharacterMap.get(name).getCharacteristics()));
-            }
-        });
-        nm.setOnPause(() -> gsm.setState(PauseMenuState.class));
-        nm.setOnEndPause(() -> gsm.removeFirstState());
-        nm.setOnMasterQuestFinished(() -> {
-            timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
-            Supervisor.getPeople().getQuest().passQuest();
-        });
-        nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
-        nm.setOnLevelUp((newLevel) -> {
-            while (newLevel > playerTwo.getCharacteristics().getLevel())
-                ((People)playerTwo.getCharacteristics()).upLevel();
-            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
-        });
-        nm.setOnGetItem(this::sendItemsPositions);
-        nm.setOnDeath(() -> gsm.removeAllStateAndAdd(DualChooseMenu.class));
-        nm.setOnItemPickUp((omi) -> {
-            for (int i = 0; i < mapObjects.size(); i++)
-                if (mapObjects.get(i).getCharacteristics().equals(omi))
-                    mapObjects.remove(i);
-        });
-    }
-
     @Override
     public void handleInput() {
         super.handleInput();
-        nm.sendPlayerPosition(player);
+        nm.sendMessageOnUDP("PP", player.getMapPos());
 
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            nm.sendPause();
+            nm.sendOnTCP("PAUSE");
             pauseSent = true;
         }
     }
@@ -134,43 +144,19 @@ public class PlayingState extends PlayingStateDual {
         return c;
     }
 
-    /**
-     * Send all the PNJs positions to the second player.
-     * @param map The map asked.
-     */
-    protected void sendPNJsPositions(String map) {
-        for (Mobile mob : supervisor.getMobile(supervisor.getMaps(map))) {
-            try {
-                nm.sendPNJInformation(idCharacterMap.get(mob.getName()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        for (MovingPNJ mob : supervisor.getMovingPnj(supervisor.getMaps(map))) {
-            Character c = idCharacterMap.get(mob.getName());
-            nm.sendAMovingPNJ(mob, c.getPosX(), c.getPosY());
-        }
-    }
-    /**
-     * Send all the items positions to the second player.
-     */
-    protected void sendItemsPositions() {
-        for (MapObject mo : mapObjects) {
-            try {
-                nm.sendItemInformation(mo.getCharacteristics());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void update(Notification notify) {
         super.update(notify);
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
-            nm.sendDeath();
-            if (! nm.isTheServer())
-                gsm.removeAllStateAndAdd(WaitMenuState.class);
+            nm.sendOnTCP("Death");
+            goToPreviousMenu();
         }
+    }
+
+    protected void goToPreviousMenu() {
+        if (nm.isTheServer())
+            gsm.removeAllStateAndAdd(DualChooseMenu.class);
+        else
+            gsm.removeAllStateAndAdd(WaitMenuState.class);
     }
 }

@@ -41,10 +41,7 @@ public class ConnectionRoomState extends MenuState {
         super.init();
 
         try {
-            if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated)
-                nm = be.ac.umons.mom.g02.Extensions.DualLAN.Managers.NetworkManager.getInstance();
-            else
-                nm = NetworkManager.getInstance();
+            nm = NetworkManager.getInstance();
             nm.startListeningForServer();
             nm.setOnServerDetected(this::refresh);
             nm.setOnMagicNumberReceived((i, j, k, l, m) -> {

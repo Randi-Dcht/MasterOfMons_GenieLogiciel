@@ -42,7 +42,7 @@ public class LearnToCooperate extends MasterQuest {
         newQuest(new MyFirstYear(people,this,difficulty));
         if (! alreadySent) {
             try {
-                NetworkManager.getInstance().sendEndOfMasterQuest();
+                NetworkManager.getInstance().sendOnTCP("EMQ");
             } catch (SocketException e) {
                 Gdx.app.error("MasterQuest", "Unable to get the NetworkManager", e);
             }

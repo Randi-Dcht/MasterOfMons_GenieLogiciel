@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.RegulatorMultiPlayer;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
+import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
@@ -31,13 +32,14 @@ public class RegulatorLAN extends RegulatorMultiPlayer { // TODO Same agenda
         super(people, second, time, manager);
         try {
             nm = NetworkManager.getInstance();
-            nm.setOnTimeSpeedReceived((speed) -> TimeGame.FASTER = speed);
-            nm.setOnPlayerInCourseRoomReceived((b) -> {
+            nm.whenMessageReceivedDo("TS", (objects) -> TimeGame.FASTER = (int) objects[0]);
+            nm.whenMessageReceivedDo("PCR", (objects) -> {
+                boolean b = (boolean) objects[0];
                 secondPlayerInCourseRoom = b;
                 if (b)
                     timeOfDay(player.getPlace());
             });
-            nm.setOnPlayerWentToCourse(() -> currentCourse.goCourse());
+            nm.whenMessageReceivedDo("PWC", (objects) -> currentCourse.goCourse());
         } catch (SocketException e) {
             Gdx.app.error("RegulatorLAN", "Unable to get the instance of NetworkManager", e);
         }
@@ -48,13 +50,13 @@ public class RegulatorLAN extends RegulatorMultiPlayer { // TODO Same agenda
 
         if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom))) {
             if (!secondPlayerInCourseRoom)
-                nm.sendPlayerInCourseRoom(true);
+                nm.sendMessageOnTCP("PCR", true);
             currentCourse = manager.getActualCourse();
         } else
-            nm.sendPlayerInCourseRoom(false);
+            nm.sendMessageOnTCP("PCR", false);
 
         super.timeOfDay(place);
-        nm.sendTimeSpeed(TimeGame.FASTER);
+        nm.sendMessageOnTCP("TS", TimeGame.FASTER);
     }
 
     @Override
@@ -65,6 +67,6 @@ public class RegulatorLAN extends RegulatorMultiPlayer { // TODO Same agenda
     @Override
     protected void goToCourse() {
         super.goToCourse();
-        nm.sendPlayerWentToCourse();
+        nm.sendOnTCP("PWC");
     }
 }
