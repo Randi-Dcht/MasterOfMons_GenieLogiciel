@@ -57,7 +57,7 @@ public class DialogCharacter
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
-        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON");
+        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","Friendly");
     }
 
 
@@ -128,7 +128,7 @@ public class DialogCharacter
         ArrayList<String> newList = new ArrayList<>();
         for (String str : list)
         {
-            if (listID.contains(str))
+            if (listID.contains(str) && !str.equals("Friendly"))
                 newList.addAll(replaceId(str));
             else
                 newList.add(str);
@@ -236,6 +236,11 @@ public class DialogCharacter
                 supervisor.getEvent().notify(new Dialog(it.getIdUse(),"ESC"));
             else
                 supervisor.getEvent().notify(new Dialog("ESC"));
+        }
+        if (answer.equals("Friendly"))
+        {
+            Supervisor.getPeople().addFriend(mobile);
+            supervisor.getEvent().notify(new Dialog("ESC"));
         }
         specificID = null;
     }
