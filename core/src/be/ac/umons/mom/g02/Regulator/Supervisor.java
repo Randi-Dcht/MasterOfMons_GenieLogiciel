@@ -211,6 +211,8 @@ public  abstract class Supervisor implements Observer
     protected String actualID;
     /***/
     protected Dealer dealerOnMap;
+    /***/
+    protected boolean haveMoney = false;
 
 
     /***/
@@ -377,6 +379,14 @@ public  abstract class Supervisor implements Observer
 
 
     /**
+     * */
+    public void setMoneyGame(boolean haveMoney)
+    {
+        this.haveMoney = haveMoney;
+    }
+
+
+    /**
      * This method create the hashMap with mobile and the maps of this mobile
      * @param difficulty is the difficulty of the game
      */
@@ -525,8 +535,11 @@ public  abstract class Supervisor implements Observer
         for (Items it : mb.getInventory())
             playerOne.pushObject(it);//TODO check !
 
-        playerOne.addMoney(mb.getMyMoney());
-        event.notify(new DisplayMessage("You are + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
+        if (haveMoney)
+        {
+            playerOne.addMoney(mb.getMyMoney());
+            event.notify(new DisplayMessage("You are + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
+        }
 
         if (mb.equals(memoryMobile))
             memoryMobile = null;
