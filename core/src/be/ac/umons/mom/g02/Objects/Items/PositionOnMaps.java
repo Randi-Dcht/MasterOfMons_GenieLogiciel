@@ -59,7 +59,6 @@ public class PositionOnMaps
                 }
             }
             line.close();
-            System.out.println(listPoint);
         }
         catch (Exception e)
         {
