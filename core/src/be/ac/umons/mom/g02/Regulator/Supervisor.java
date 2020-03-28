@@ -12,18 +12,13 @@ import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.*;
-import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
+import be.ac.umons.mom.g02.Objects.Characters.*;
 import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
-import be.ac.umons.mom.g02.Objects.Characters.Attack;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
-import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
-import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Characters.Social;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -214,6 +209,8 @@ public  abstract class Supervisor implements Observer
      * This the actual variable of the Id on the maps
      */
     protected String actualID;
+    /***/
+    protected Dealer dealerOnMap;
 
 
     /***/
@@ -360,7 +357,7 @@ public  abstract class Supervisor implements Observer
      * @param type who is type of the people as defence,agility
      */
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
-    {
+    {dealerOnMap = new Dealer(Bloc.BA1);
         placePosition = new PositionOnMaps();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);

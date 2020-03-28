@@ -4,15 +4,18 @@ import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.NameDialog;
-import be.ac.umons.mom.g02.Objects.Items.*;
+import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Objects.Items.PassLevel;
+import be.ac.umons.mom.g02.Objects.Items.SuperChargerGun;
+import be.ac.umons.mom.g02.Objects.Items.Sword;
+import be.ac.umons.mom.g02.Objects.Items.TNT;
+import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 
-import java.util.ArrayList;
 
 /***/
 public class Dealer extends Mobile
 {
 
-    private ArrayList<Items> myItems;
     private int myMoney;
 
     /**
@@ -21,7 +24,7 @@ public class Dealer extends Mobile
      */
     public Dealer(Bloc playerBloc)
     {
-        super("Dealer Rocco", playerBloc,MobileType.Lambda, Actions.Dialog, NameDialog.Seller);
+        super("Dealer Game", playerBloc,MobileType.Lambda, Actions.Dialog, NameDialog.Seller);
         try {//TODO displace
             createList(getMyList());
         } catch (Exception e) {
@@ -37,9 +40,9 @@ public class Dealer extends Mobile
 
     public boolean buyItem(Items buy,int money)
     {
-        if (buy.buy() == money && myItems.contains(buy))
+        if (buy.buy() == money && myObject.contains(buy))
         {
-            myItems.remove(buy);
+            myObject.remove(buy);
             return true;
         }
         return false;
@@ -48,8 +51,7 @@ public class Dealer extends Mobile
 
     private void createList(Class<Items>[] list) throws Exception
     {
-        myItems = new ArrayList<>();
         for (Class<Items> clss : list)
-            myItems.add(clss.getConstructor().newInstance());
+            myObject.add(clss.getConstructor().newInstance());
     }
 }
