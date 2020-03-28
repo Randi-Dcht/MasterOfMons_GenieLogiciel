@@ -30,7 +30,6 @@ import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Characters.Social;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -750,7 +749,7 @@ public  abstract class Supervisor implements Observer
      * @param player1 is the first character
      * @param player2 is the second character
      */
-    public void meetCharacter(Social player1, Social player2)//TODO upgrade pour moins de clss
+    public void meetCharacter(Character player1, Character player2)//TODO upgrade pour moins de clss
     {
         if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
         {

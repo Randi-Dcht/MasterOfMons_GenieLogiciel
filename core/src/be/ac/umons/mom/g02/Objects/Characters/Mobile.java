@@ -229,7 +229,6 @@ public class Mobile extends Character implements Serializable, FrameTime
      * This method allows to give the action of the mobile
      * @return the action of the mobile
      */
-    @Override
     public Actions getAction()
     {
         return action;

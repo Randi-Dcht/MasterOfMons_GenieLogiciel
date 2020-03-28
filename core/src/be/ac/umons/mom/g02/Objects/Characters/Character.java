@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
+import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
@@ -18,7 +19,7 @@ import java.util.List;
  * This class define a character who have life,strength,agility,defence and level in the game
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public abstract class Character implements Attack, Social, Serializable
+public abstract class Character implements Attack, Serializable
 {
 
     /**
@@ -136,6 +137,8 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public abstract TypePlayer getType();
 
+
+    public abstract Actions getAction();
 
     /**
      * This method return the total of the money

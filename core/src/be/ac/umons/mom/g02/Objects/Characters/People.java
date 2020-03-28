@@ -567,7 +567,6 @@ public class People extends Character implements Serializable, Observer, FrameTi
      * This method return the type of the first action when he meet other character
      * @return action
      */
-    @Override
     public Actions getAction()
     {
         return Actions.Dialog;
