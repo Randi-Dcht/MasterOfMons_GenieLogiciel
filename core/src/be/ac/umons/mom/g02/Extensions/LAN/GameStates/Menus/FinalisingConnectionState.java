@@ -1,27 +1,19 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.ExtensionsManager;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
-import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
-import java.io.IOException;
 import java.net.SocketException;
 
 /**
@@ -49,24 +41,6 @@ public class FinalisingConnectionState extends MenuState {
             e.printStackTrace();
             return;
         }
-
-        nm.whenMessageReceivedDo("PI", objects -> {
-            if (MasterOfMonsGame.getGameToLoad() == null)
-                goToLoading();
-            SupervisorMultiPlayer.setPlayerTwo((People) objects[0]);
-        });
-        nm.whenMessageReceivedDo("SPI", objects -> {
-            goToLoading();
-            SupervisorMultiPlayer.setPlayerOne((People) objects[0]);
-        });
-        nm.whenMessageReceivedDo("SAVE", (objects -> {
-            Save save = (Save) objects[0];
-            save.invertPlayerOneAndTwo();
-            MasterOfMonsGame.setSaveToLoad(save);
-            if (ExtensionsManager.getInstance().getExtensionsMap().get("LAN").activated)
-                SupervisorLAN.getSupervisor().oldGameLAN(save);
-            goToLoading();
-        }));
 
     }
 
@@ -106,19 +80,5 @@ public class FinalisingConnectionState extends MenuState {
         this.sendPlayer = sendPlayer;
         if (sendPlayer)
             nm.sendMessageOnTCP("PI", Supervisor.getPeople());
-    }
-
-    private void goToLoading() {
-        LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-        ls.setOnLoaded(() -> nm.sendOnTCP("Loaded"));
-        if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated) {
-            SupervisorDual.initDual();
-            if (nm.isTheServer())
-                ls.setAfterLoadingState(DualChooseMenu.class);
-            else
-                ls.setAfterLoadingState(WaitMenuState.class);
-        }
-        else
-            ls.setAfterLoadingState(PlayingState.class);
     }
 }

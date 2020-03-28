@@ -529,7 +529,7 @@ public  abstract class Supervisor implements Observer
             playerOne.pushObject(it);//TODO check !
 
         playerOne.addMoney(mb.getMyMoney());
-        event.notify(new DisplayMessage("You are + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
+        event.notify(new DisplayMessage("You have + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
 
         if (mb.equals(memoryMobile))
             memoryMobile = null;
