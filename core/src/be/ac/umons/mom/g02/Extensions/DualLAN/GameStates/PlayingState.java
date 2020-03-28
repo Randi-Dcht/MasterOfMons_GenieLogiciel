@@ -48,6 +48,11 @@ public class PlayingState extends PlayingStateDual {
         setNetworkManagerRunnables();
         super.init();
 
+        endDual.setOnClick(() -> {
+            goToPreviousMenu();
+            nm.sendOnTCP("ENDDUAL");
+        });
+
     }
 
     /**
@@ -105,6 +110,10 @@ public class PlayingState extends PlayingStateDual {
                 if (mapObjects.get(i).getCharacteristics().equals(objects[0]))
                     mapObjects.remove(i);
         });
+        nm.whenMessageReceivedDo("PL", (objects -> {
+            lifeBarTwo.setValue((int)(objects[0]));
+        }));
+        nm.whenMessageReceivedDo("ENDDUAL", objects -> goToPreviousMenu());
     }
 
     @Override
@@ -150,6 +159,8 @@ public class PlayingState extends PlayingStateDual {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
             nm.sendOnTCP("Death");
             goToPreviousMenu();
+        } else if (notify.getEvents().equals(Events.Attack)) {
+            nm.sendMessageOnUDP("PL", player.getCharacteristics().getActualLife());
         }
     }
 
