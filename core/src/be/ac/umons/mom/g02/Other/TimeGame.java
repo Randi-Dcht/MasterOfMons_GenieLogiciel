@@ -71,7 +71,7 @@ public class TimeGame implements Observer, Serializable
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.ChangeQuest))//TODO check the years
+        if (notify.getEvents().equals(Events.ChangeQuest))
             newYear();
     }
 
@@ -128,7 +128,7 @@ public class TimeGame implements Observer, Serializable
     /**
      * This method allows to change month and create an event to change the month
      */
-    private void changeMonth()//TODO check month
+    private void changeMonth()
     {
         if((NBmonth =(NBmonth+1)%timeYr) == 0)
             changeYear();
@@ -150,7 +150,7 @@ public class TimeGame implements Observer, Serializable
      * This method allows to replay the time for a new year in the university
      * This method changes the timeGame !!!
      */
-    public void newYear()//TODO new quest
+    public void newYear()
     {
         this.hour = 8;
         this.min  = 0;

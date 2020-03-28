@@ -62,6 +62,6 @@ public class PlaceInMons implements Notification
      */
     public boolean bufferNotEmpty()
     {
-        return !(buffer == null);//TODO tester ce problème
+        return buffer != null;
     }
 }

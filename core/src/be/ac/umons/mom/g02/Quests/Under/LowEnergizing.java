@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * This class define the goal of the low energizing of the player during the attack
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public class LowEnergizing extends UnderQuest//TODO new to implement
+public class LowEnergizing extends UnderQuest
 {
 
     /**
@@ -54,7 +54,7 @@ public class LowEnergizing extends UnderQuest//TODO new to implement
      * This method checks if the player energizing is under ten percents
      * @param what is the type of the low
      */
-    private void analyseLow(LowSomething.TypeLow what)//TODO up energy
+    private void analyseLow(LowSomething.TypeLow what)
     {
         if (what.equals(LowSomething.TypeLow.Energy))
         {

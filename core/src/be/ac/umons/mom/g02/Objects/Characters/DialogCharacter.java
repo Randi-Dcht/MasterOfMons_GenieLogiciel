@@ -53,7 +53,7 @@ public class DialogCharacter
      * This constructor define the dialog of the character
      * @param nameDialog is the name of the dialog with the ID
      */
-    public DialogCharacter(NameDialog nameDialog, Supervisor supervisor)//TODO add sp
+    public DialogCharacter(NameDialog nameDialog, Supervisor supervisor)
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);

@@ -29,5 +29,5 @@ public interface Notification
      * This method return if the buffer is occupy
      * @return boolean if the buffer contains element
      */
-    public boolean bufferNotEmpty(); /*bufferNotEmpty*/ //TODO translate
+    public boolean bufferNotEmpty();
 }

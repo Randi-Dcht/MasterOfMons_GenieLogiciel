@@ -46,7 +46,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO Hashmap utile ? # Integer -> ArrayList = List d'Arraylist ?
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
     private int friend = 0;
-    private SaoulMatePNJ soulMate; //TODO check the type
+    private SaoulMatePNJ soulMate;
     /*The point of the level*/
     private int actual = 0;
     private Places place;
@@ -184,7 +184,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     private void createPlanning()
     {
-        myPlanning = HyperPlanning.createSchedule(myCourse,Supervisor.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
+        myPlanning = HyperPlanning.createSchedule(myCourse,Supervisor.getSupervisor().getTime().getDate());
     }
 
 
@@ -305,20 +305,10 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
 
     /**
-     *This method allows to know the number of course to pass.
-     *@return size of the list course
-     */
-    public int numberCourse()//TODO
-    {
-        return myCourse.size();
-    }
-
-
-    /**
      * This method allows to add the succes in the lesson to follow
      * @param cmb is the percent to add in success
      */
-    public void addSuccess(int cmb)
+    public void addSuccess(int cmb)//TODO add with penalise
     {
         percentSuccess += cmb;
         if (cmb <= 50)
@@ -389,7 +379,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     private double minExperience(int nb)
     {
-        if(nb <= 1) //TODO tester
+        if(nb <= 1)
             return 750;
         else
             return minExperience(nb-1) + 1000 * Math.pow(1.1,nb-1);
@@ -411,7 +401,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      * This method calculate the experience with the level of victim
      * @param victim who is dead
      */
-    public void winExperience(Attack victim)//TODO check
+    public void winExperience(Attack victim)
     {
         winExperience(calculateWin(victim));
     }

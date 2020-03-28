@@ -293,7 +293,7 @@ public abstract class Character implements Attack, Social, Serializable
 
 
     /***/
-    public int getPointType(int level)//TODO reprendre celui avec le mobile ou moving in people
+    public int getPointType(int level)
     {
         return (level-1)*3;
     }
