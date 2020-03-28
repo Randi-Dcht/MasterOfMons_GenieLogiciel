@@ -3,3 +3,6 @@
 % Here is the id which will be translated by the bundle in the language of the player.
 % Comments have '%' before and will be ignored by the program.
 %By Randy Dauchot
+Start/Start/HelloSeller/ESC
+HelloSeller/SellerStart/ESC/GoBag
+GoBag/ChooseIts/SELLER

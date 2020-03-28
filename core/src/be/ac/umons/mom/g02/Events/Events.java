@@ -15,6 +15,7 @@ public enum Events
     EntryPlace("PlaceOnMap"),                 /**/
     OtherInformation("OtherInfo"),            /**/
     LowSomething("low"),                      /**/
+    DisplayMessage("Display"),
     MeetOther("meetOther"),                   /*This event notify when the character meet an other character*/
     Attack("LaunchAttack"),                   /*This event notify when the character attack other character*/
     AddFriend("meetFriend"),                  /*This event notify when the people add friend*/
