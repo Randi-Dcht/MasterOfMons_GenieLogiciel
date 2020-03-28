@@ -124,7 +124,9 @@ public class PlayCases extends PlayingStateDual
                 drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
 
             cases.get(adv.get(player)).remove(new Point(player.getPosX()/64,player.getPosY()/32));
-            cases.get(player).add(new Point(player.getPosX()/64,player.getPosY()/32));
+
+            if (!cases.get(player).contains(new Point(player.getPosX()/64,player.getPosY()/32)))
+                cases.get(player).add(new Point(player.getPosX()/64,player.getPosY()/32));
 
             if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
                 ((MoreCasesMons)((DualMasterQuest) supervisorDual.actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
@@ -139,5 +141,7 @@ public class PlayCases extends PlayingStateDual
         player1Number.dispose();
         player2Number.dispose();
         timerShow.dispose();
+        for (Cases cc : drawCase)
+            cc.dispose();
     }
 }
