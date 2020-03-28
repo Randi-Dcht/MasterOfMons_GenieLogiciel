@@ -61,7 +61,7 @@ public class PlayingStateDual extends PlayingState
         super.init();
 
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-            deleteFlag(new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61),new Point(62,61));
+            deleteFlag(new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
