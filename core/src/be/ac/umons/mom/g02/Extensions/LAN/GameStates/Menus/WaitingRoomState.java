@@ -62,6 +62,7 @@ public class WaitingRoomState extends MenuState {
             e.printStackTrace();
             return;
         }
+        FinalisingConnectionState.setNetworkManagerRunnable();
 
         transparentBackground = false;
         List<MenuItem> menuItems = new ArrayList<>();

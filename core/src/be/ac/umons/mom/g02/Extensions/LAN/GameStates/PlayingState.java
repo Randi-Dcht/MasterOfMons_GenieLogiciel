@@ -130,7 +130,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.whenMessageReceivedDo("SPMC", (objects -> secondPlayerMap = (String)objects[0]));
 
         supervisor.setMustPlaceItem(nm.isTheServer());
-        Supervisor.getEvent().add(this, Events.Dialog, Events.LifeChanged, Events.EnergyChanged, Events.ExperienceChanged); // Other events done in super.init()
+        Supervisor.getEvent().add(this, Events.Dialog); // Other events done in super.init()
         newParty = (MasterOfMonsGame.getGameToLoad() == null && MasterOfMonsGame.getSaveToLoad() == null);
         Supervisor.setGraphic(gs);
         supervisor.setGraphic(questShower,this);
@@ -141,6 +141,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 //                    SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
 
         super.init();
+        Supervisor.getEvent().add(this, Events.LifeChanged, Events.EnergyChanged, Events.ExperienceChanged);
         if (! newParty && ! nm.isTheServer())
             ((SupervisorLAN)supervisor).oldGameLAN((Save)MasterOfMonsGame.getSaveToLoad(), this, gs);
 
