@@ -18,6 +18,7 @@ public class DisplayMessage implements Notification
     {
         evt = Events.DisplayMessage;
         this.buffer = buffer;
+        this.id = id;
     }
 
 
