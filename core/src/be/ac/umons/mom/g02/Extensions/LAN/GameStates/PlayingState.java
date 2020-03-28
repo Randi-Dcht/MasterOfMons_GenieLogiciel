@@ -244,6 +244,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getSupervisor().updatePlanning((HashMap<Integer, ArrayList<Course>>) objects[0]);
             agendaShower.refreshCourses();
         }));
+        nm.whenMessageReceivedDo("PL", (objects -> SupervisorLAN.getPeopleTwo().setActualLife((double) objects[0])));
+        nm.whenMessageReceivedDo("PXP", objects -> SupervisorLAN.getPeopleTwo().setExperience((double) objects[0]));
+        nm.whenMessageReceivedDo("PE", objects -> SupervisorLAN.getPeopleTwo().setEnergy((double) objects[0]));
         nm.whenMessageReceivedDo("AC", objects -> playerTwo.expandAttackCircle());
         nm.whenMessageReceivedDo("LVLPA", objects -> SupervisorMultiPlayer.getPeopleTwo().updateUpLevel((int) objects[0], (int) objects[1], (int) objects[2]));
     }
@@ -281,6 +284,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
         if (nm.isTheServer())
             nm.sendMessageOnUDP("TIME", Supervisor.getSupervisor().getTime().getDate());
+        nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
+        nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
+        nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
     }
 
     @Override
@@ -364,7 +370,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (! mazeMode || isTheMazePlayer )
             nm.sendMessageOnUDP("PP", player.getMapPos());
 
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) { // TODO : Second player life ?
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
             nm.sendOnTCP("Pause");
             pauseSent = true;
         }

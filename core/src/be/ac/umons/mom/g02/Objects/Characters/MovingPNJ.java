@@ -102,8 +102,10 @@ public class MovingPNJ extends Mobile
      */
     private void calculusDistance()
     {
-        tileXbetween = myGraphic.getPosX() - victim.getPosX();
-        tileYbetween = myGraphic.getPosY() - victim.getPosY();
+        if (myGraphic != null && victim != null) {
+            tileXbetween = myGraphic.getPosX() - victim.getPosX();
+            tileYbetween = myGraphic.getPosY() - victim.getPosY();
+        }
     }
 
 

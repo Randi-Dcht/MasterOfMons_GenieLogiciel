@@ -60,9 +60,11 @@ public class FinalisingConnectionState extends MenuState {
             SupervisorMultiPlayer.setPlayerOne((People) objects[0]);
         });
         nm.whenMessageReceivedDo("SAVE", (objects -> {
-            MasterOfMonsGame.setSaveToLoad((Save) objects[0]);
+            Save save = (Save) objects[0];
+            save.invertPlayerOneAndTwo();
+            MasterOfMonsGame.setSaveToLoad(save);
             if (ExtensionsManager.getInstance().getExtensionsMap().get("LAN").activated)
-                SupervisorLAN.getSupervisor().oldGameLAN((Save) objects[0]);
+                SupervisorLAN.getSupervisor().oldGameLAN(save);
             goToLoading();
         }));
 
