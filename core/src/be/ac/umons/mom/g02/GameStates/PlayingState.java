@@ -672,9 +672,8 @@ public class PlayingState extends GameState implements Observer {
         }
         if (gim.isKey("quickLoad", KeyStatus.Pressed))
             quickLoad(gsm, gs);
-        if (gim.isKey("pointsAttribution", KeyStatus.Pressed)) {
+        if (gim.isKey("pointsAttribution", KeyStatus.Pressed))
             goToLevelUpState();
-        }
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
             if (selectedOne != null) {
                 if (selectedOne instanceof Character)
@@ -691,17 +690,25 @@ public class PlayingState extends GameState implements Observer {
         agendaShower.handleInput();
     }
 
+    /**
+     * Go to the leveling up state.
+     */
     public void goToLevelUpState() {
         LevelUpMenuState lums = (LevelUpMenuState) gsm.setState(LevelUpMenuState.class);
         lums.setPlayer(Supervisor.getPeople());
-        lums.setOnPointsAttributed(() -> {
-            int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
-            if (pointLevel != 0)
-                notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
-                        pointLevel, Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
-            else
-                notificationRappel.removeANotification("pointsToAttribute");
-        });
+        lums.setOnPointsAttributed(this::onPointsAttributed);
+    }
+
+    /**
+     * What to do when the player has attributed his points
+     */
+    protected void onPointsAttributed(int strength, int defence, int agility) {
+        int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
+        if (pointLevel != 0)
+            notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
+                    pointLevel, Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
+        else
+            notificationRappel.removeANotification("pointsToAttribute");
     }
 
     protected void pickUpAnObject() {
@@ -750,7 +757,7 @@ public class PlayingState extends GameState implements Observer {
     }
 
     public void debugChangePlayerSpeed() {
-        supervisor.getPeople().setSpeed(20);
+        Supervisor.getPeople().setSpeed(5);
         notificationRappel.addANotification("speedChangedNotification", gs.getStringFromId("playerIsFaster"));
     }
 

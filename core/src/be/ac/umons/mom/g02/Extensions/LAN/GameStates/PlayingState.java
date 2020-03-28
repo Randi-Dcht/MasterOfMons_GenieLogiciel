@@ -11,8 +11,10 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.MyFirstYear;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
+import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -33,10 +35,11 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.Array;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.SocketException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The playing state. This state suppose that a connection has already been established.
@@ -112,8 +115,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
+            gsm.removeAllStateAndAdd(MainMenuState.class);
+            MasterOfMonsGame.showAnError("There was a fatal error !");
             Gdx.app.error("PlayingState", "The NetworkManager couldn't be retrieved !", e);
-            // TODO Go to an error page
+            return;
         }
         idCharacterMap = new HashMap<>();
         nm.whenMessageReceivedDo("CM", (objects) -> {
@@ -239,6 +244,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getSupervisor().updatePlanning((HashMap<Integer, ArrayList<Course>>) objects[0]);
             agendaShower.refreshCourses();
         }));
+        nm.whenMessageReceivedDo("AC", objects -> playerTwo.expandAttackCircle());
+        nm.whenMessageReceivedDo("LVLPA", objects -> SupervisorMultiPlayer.getPeopleTwo().updateUpLevel((int) objects[0], (int) objects[1], (int) objects[2]));
     }
 
     /**
@@ -361,6 +368,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendOnTCP("Pause");
             pauseSent = true;
         }
+        if (gim.isKey("attack", KeyStatus.Pressed))
+            nm.sendOnUDP("AC");
     }
 
     @Override
@@ -452,6 +461,12 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
             nm.sendMessageOnUDP("hitPNJ", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife());
         }
+    }
+
+    @Override
+    protected void onPointsAttributed(int strength, int defence, int agility) {
+        super.onPointsAttributed(strength, defence, agility);
+        nm.sendMessageOnTCP("LVLPA", strength, defence, agility);
     }
 
     @Override
