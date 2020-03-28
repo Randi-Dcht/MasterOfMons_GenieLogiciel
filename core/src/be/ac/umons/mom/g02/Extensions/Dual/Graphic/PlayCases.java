@@ -92,15 +92,15 @@ public class PlayCases extends PlayingStateDual
     {
         int topBarHeight = 10;
 
-        for (Cases cc : drawCase)
-               cc.draw();//TODO this
-
         super.draw();
+
+        for (Cases cc : drawCase)
+            cc.draw();//TODO this
 
         Point textSize = new Point(0,0);
         timerShow.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 - timerShow.getWidth(),timerShow.getHeight() + 10),textSize);
-        player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
-        player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x , (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
+        player1Number.draw(sb,new Point(MasterOfMonsGame.WIDTH/4-100, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
+        player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
     }
 
 
