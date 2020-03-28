@@ -2,8 +2,8 @@ package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayCases;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
-import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
@@ -62,7 +62,10 @@ public class PlayingCasesState extends PlayCases {
             timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
-        nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
+        nm.setOnDisconnected(() -> {
+            DisconnectedMenuState dms = (DisconnectedMenuState) gsm.setState(DisconnectedMenuState.class);
+            dms.setSecondPlayerPosition(playerTwo.getMapPos());
+        });
         nm.whenMessageReceivedDo("Death", objects -> goToPreviousMenu());
         nm.whenMessageReceivedDo("PL", objects -> lifeBarTwo.setValue((int)(objects[0])));
         nm.whenMessageReceivedDo("EndDual", objects -> goToPreviousMenu());

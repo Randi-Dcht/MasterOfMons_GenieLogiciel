@@ -1,23 +1,19 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.SaveMenuState;
-import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 
-import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,20 +55,25 @@ public class DisconnectedMenuState extends MenuState {
             nm.acceptConnection();
             nm.startBroadcastingMessage("Game begun");
             nm.whenMessageReceivedDo("PI", null);
+            nm.whenMessageReceivedDo("Loaded", (objects) -> gsm.removeAllStateUntil(this));
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
                 ogds.setText(String.format(gs.getStringFromId("magicNumber"), magicNumber));
                 ogds.addAnswer("OK");
             });
-            nm.setOnConnected(() -> {
-                Save save = SupervisorLAN.getSupervisor().createSave();
-                nm.sendMessageOnTCP("SAVE", save);
-                nm.stopBroadcastingServerInfo();
-                gsm.removeAllStateUntil(this);
-            });
+            nm.setOnConnected(this::onConnected);
         } catch (SocketException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Executed when a connection is established with the second player
+     */
+    protected void onConnected() {
+        Save save = SupervisorLAN.getSupervisor().createSave();
+        nm.sendMessageOnTCP("SAVE", save);
+        nm.stopBroadcastingServerInfo();
     }
 
     /**

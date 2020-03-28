@@ -23,16 +23,16 @@ public class LevelUpMenuState extends MenuState {
     /**
      * The number of points that the user must attributes.
      */
-    int pointToUse;
+    protected int pointToUse;
     /**
      * Where the points has been attributed.
      */
-    int[] pointsAttributed = new int[Characteristics.values().length];
-    HashMap<TextBoxMenuItem, Characteristics> textBoxCharacteristicsMap;
+    protected int[] pointsAttributed = new int[Characteristics.values().length];
+    protected HashMap<TextBoxMenuItem, Characteristics> textBoxCharacteristicsMap;
     /**
      * What to do when the points are attributed.
      */
-    protected Runnable onPointsAttributed;
+    protected OnPointsAttributedRunnable onPointsAttributed;
 
     protected TextMenuItem pointsToUseMi;
 
@@ -143,13 +143,13 @@ public class LevelUpMenuState extends MenuState {
         Supervisor.getPeople().updateUpLevel(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
         gsm.removeFirstState();
         if (onPointsAttributed != null)
-            onPointsAttributed.run();
+            onPointsAttributed.run(pointsAttributed[Characteristics.Strength.ordinal()], pointsAttributed[Characteristics.Defence.ordinal()], pointsAttributed[Characteristics.Agility.ordinal()]);
     }
 
     /**
      * @param onPointsAttributed What to do when the points are attributed.
      */
-    public void setOnPointsAttributed(Runnable onPointsAttributed) {
+    public void setOnPointsAttributed(OnPointsAttributedRunnable onPointsAttributed) {
         this.onPointsAttributed = onPointsAttributed;
     }
 
@@ -194,6 +194,10 @@ public class LevelUpMenuState extends MenuState {
         Strength,
         Agility,
         Defence
+    }
+
+    public interface OnPointsAttributedRunnable {
+        void run(int strength, int defence, int agility);
     }
 }
 

@@ -78,6 +78,8 @@ public class LoadingState extends GameState {
 
     private boolean changedCalled = false;
 
+    protected Runnable onLoaded;
+
     /**
      * @param gs The game's graphical settings
      */
@@ -130,6 +132,8 @@ public class LoadingState extends GameState {
                 if (! changedCalled) {
                     Gdx.app.postRunnable(() ->
                             gsm.removeAllStateAndAdd(afterLoadingState));
+                    if (onLoaded != null)
+                        Gdx.app.postRunnable(onLoaded);
                     changedCalled = true;
                     isLoading = false;
                 }
@@ -172,5 +176,9 @@ public class LoadingState extends GameState {
 
     public static boolean isLoading() {
         return isLoading;
+    }
+
+    public void setOnLoaded(Runnable onLoaded) {
+        this.onLoaded = onLoaded;
     }
 }

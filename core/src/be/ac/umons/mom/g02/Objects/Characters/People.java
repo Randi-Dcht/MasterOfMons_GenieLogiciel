@@ -555,6 +555,19 @@ public class People extends Character implements Serializable, Observer, FrameTi
         return invincible;
     }
 
+    /**
+     * @param energy The energy of this player
+     */
+    public void setEnergy(double energy) {
+        this.energy = energy;
+    }
+
+    /**
+     * @param experience The experience of this player
+     */
+    public void setExperience(double experience) {
+        this.experience = experience;
+    }
 
     /**
      * This method return the type of the first action when he meet other character

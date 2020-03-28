@@ -548,11 +548,13 @@ public  abstract class Supervisor implements Observer
         for (Items it : mb.getInventory())
             playerOne.pushObject(it);//TODO check !
 
+
         if (haveMoney)
         {
             playerOne.addMoney(mb.getMyMoney());
             event.notify(new DisplayMessage("You are + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
         }
+
 
         if (mb.equals(memoryMobile))
             memoryMobile = null;
