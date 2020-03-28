@@ -210,7 +210,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * @param max  is the maximum of the item for the mobile
      * @param mb is a list of the mobile to give the item
      */
-    protected void addItemToMobile(int min, int max,Mobile mb)//TODO see
+    protected void addItemToMobile(int min, int max,Mobile mb)
     {
         if (listItems == null)
             getListItems();
