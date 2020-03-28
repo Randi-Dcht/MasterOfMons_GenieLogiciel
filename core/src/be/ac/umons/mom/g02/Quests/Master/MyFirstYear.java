@@ -87,10 +87,8 @@ public class MyFirstYear extends MasterQuest
                 new MobileType[]{MobileType.Lambda,MobileType.Athletic,MobileType.Loser,MobileType.Strong},
                 new Actions[]{Actions.Dialog,Actions.Attack,Actions.Dialog,Actions.Attack},
                 new NameDialog[]{NameDialog.Lambda,NameDialog.Lambda,NameDialog.Student,NameDialog.Lambda},
-                new Maps[]{null,null,null,Maps.GrandAmphi}));
-
-        for (Mobile m : listMobs)//TODO delete
-            m.addObject(new Pen(),new Pen(),new Pen());
+                new Maps[]{null,null,null,Maps.GrandAmphi},
+                true));
     }
 
 

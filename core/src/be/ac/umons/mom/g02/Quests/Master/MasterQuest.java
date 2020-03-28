@@ -134,7 +134,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      *
      * @return a list with the all mobile
      */
-    public ArrayList<Mobile> createRdMobile(int[] number, MobileType[] listT,Actions[] listAc,NameDialog[] listDia,Maps[] listMaps) throws Exception
+    public ArrayList<Mobile> createRdMobile(int[] number, MobileType[] listT,Actions[] listAc,NameDialog[] listDia,Maps[] listMaps,boolean itm) throws Exception
     {
         if (listT.length != number.length && listT.length != listAc.length && listAc.length != listDia.length && listDia.length != listMaps.length)
             throw new Exception();
@@ -144,12 +144,14 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             for (int  j = 0; j < number[i]; j++)
             {
                 if (listMaps[i] == null)
-                    listMb.add(new Mobile(getBloc(),listT[i],listAc[i],listDia[i]));
+                    listMb.add(mbl=new Mobile(getBloc(),listT[i],listAc[i],listDia[i]));
                 else
                 {
                     listMb.add(mbl = new Mobile(getBloc(),listT[i],listAc[i],listDia[i]));
                     mbl.setMaps(listMaps[i]);
                 }
+                if (itm)
+                    addItemToMobile(0,2,mbl);
             }
         }
         return listMb;
@@ -206,17 +208,15 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method allows to give the item to the mobile
      * @param min  is the minimum of the item for the mobile
      * @param max  is the maximum of the item for the mobile
-     * @param list is a list of the mobile to give the item
+     * @param mb is a list of the mobile to give the item
      */
-    protected void addItemToMobile(int min, int max,Mobile ... list)//TODO see
+    protected void addItemToMobile(int min, int max,Mobile mb)//TODO see
     {
         if (listItems == null)
             getListItems();
-        for (Mobile mb : list)
-        {
-            for (int i = min; i <= max;i++)
-                mb.addObject(listItems.get(new Random().nextInt(listItems.size())));
-        }
+        for (int i = min; i <= max;i++)
+            mb.addObject(listItems.get(new Random().nextInt(listItems.size())));
+
     }
 
 
