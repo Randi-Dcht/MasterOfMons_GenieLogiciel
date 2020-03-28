@@ -1,14 +1,11 @@
 package be.ac.umons.mom.g02.Regulator;
 
-import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Places;
 import be.ac.umons.mom.g02.Enums.State;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Dialog;
-import be.ac.umons.mom.g02.Events.Notifications.EntryPlaces;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
@@ -196,6 +193,7 @@ public class Regulator implements Observer
         if (direction.equals(searchDirection))
         {
             manager.getEvent().notify(new EntryPlaces(associatePlace.get(place)));
+            manager.getEvent().notify(new DisplayMessage(place + "("+player.getMaps().name()+")","PlaceMaps"));//tODO remove
             if(searchDirection.equals("IN"))
                 searchDirection="OUT";
             else

@@ -4,9 +4,7 @@ import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Answer;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
@@ -205,7 +203,7 @@ public class PlayingState extends GameState implements Observer {
         if (MasterOfMonsGame.getGameToLoad() != null)
             loadOldGame();
 
-        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel);
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel,Events.DisplayMessage);
         supervisor.setGraphic(questShower,this);
 
         if (MasterOfMonsGame.getGameToLoad() == null)
@@ -760,6 +758,8 @@ public class PlayingState extends GameState implements Observer {
     public void update(Notification notify) {
         if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player.getCharacteristics()))
             gsm.setState(DeadMenuState.class);
+        else if (notify.getEvents().equals(Events.DisplayMessage) && notify.bufferNotEmpty())
+            notificationRappel.addANotification(((DisplayMessage)notify).getId(),((DisplayMessage)notify).getBuffer());
         else if (notify.getEvents().equals(Events.Dead)) {
             for (int i = 0; i < pnjs.size(); i++) {
                 if (pnjs.get(i).getCharacteristics().equals(notify.getBuffer())) {
