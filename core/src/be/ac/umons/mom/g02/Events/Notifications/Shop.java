@@ -2,6 +2,8 @@ package be.ac.umons.mom.g02.Events.Notifications;
 
 import be.ac.umons.mom.g02.Objects.Characters.Character;
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Objects.Characters.Dealer;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 
 /**
  * This class define the notification of the Attack
@@ -16,13 +18,13 @@ public class Shop implements Notification
 
     /**
      * This constructor define a notification when launch attack with buffer
-     * @param victim is a buffer with character(specific to events)
+     * @param player is a buffer with character(specific to events)
      */
-    public Shop(Character victim,Character attacker)
+    public Shop(People player, Dealer seller)
     {
-        evt = Events.Attack;
-        this.buffer = victim;
-        secondBuffer = attacker;
+        evt = Events.Shop;
+        this.buffer = player;
+        secondBuffer = seller;
     }
 
 

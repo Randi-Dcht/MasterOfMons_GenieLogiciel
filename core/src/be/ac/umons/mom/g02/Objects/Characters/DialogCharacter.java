@@ -129,7 +129,7 @@ public class DialogCharacter
         ArrayList<String> newList = new ArrayList<>();
         for (String str : list)
         {
-            if (listID.contains(str))
+            if (listID.contains(str) && !str.equals("SHOP"))
                 newList.addAll(replaceId(str));
             else
                 newList.add(str);
@@ -238,8 +238,9 @@ public class DialogCharacter
             else
                 supervisor.getEvent().notify(new Dialog("ESC"));
         }
-        if (specificID.equals("SHOP"))
+        if (specificID.equals("SHOP")){
             supervisor.getEvent().notify(new Shop());
+        supervisor.getEvent().notify(new Dialog("ESC"));}
         specificID = null;
     }
 
