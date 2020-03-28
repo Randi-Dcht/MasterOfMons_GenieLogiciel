@@ -13,6 +13,7 @@ import com.badlogic.gdx.Input;
 
 import java.awt.*;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 public class PlayingCasesState extends PlayCases {
 
@@ -70,8 +71,8 @@ public class PlayingCasesState extends PlayCases {
         nm.whenMessageReceivedDo("PL", objects -> lifeBarTwo.setValue((int)(objects[0])));
         nm.whenMessageReceivedDo("EndDual", objects -> goToPreviousMenu());
         nm.whenMessageReceivedDo("Time", objects -> time = (double)objects[0]);
-        nm.whenMessageReceivedDo("CP1", objects -> cases.put(playerTwo, (int)objects[0]));
-        nm.whenMessageReceivedDo("CP2", objects -> cases.put(player, (int)objects[0]));
+        nm.whenMessageReceivedDo("CP1", objects -> cases.put(playerTwo, (ArrayList<Point>) objects[0]));//TODO
+        nm.whenMessageReceivedDo("CP2", objects -> cases.put(player, (ArrayList<Point>) objects[0]));//TODO
     }
 
     @Override
