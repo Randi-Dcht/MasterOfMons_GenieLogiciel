@@ -5,7 +5,9 @@ import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Saving;
 import be.ac.umons.mom.g02.Objects.Settings;
+import be.ac.umons.mom.g02.Other.LogicSaving;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -47,6 +49,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	protected static Settings settings;
 
 	protected static String gameToLoad;
+	protected static LogicSaving saveToLoad;
 
 	/**
 	 * S'éxécute quand l'application est crée.
@@ -106,6 +109,14 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		OutGameDialogState ogds = (OutGameDialogState) GameStateManager.getInstance().setState(OutGameDialogState.class);
 		ogds.setText(error);
 		ogds.addAnswer("OK");
+	}
+
+	public static void setSaveToLoad(LogicSaving saveToLoad) {
+		MasterOfMonsGame.saveToLoad = saveToLoad;
+	}
+
+	public static LogicSaving getSaveToLoad() {
+		return saveToLoad;
 	}
 
 	/**

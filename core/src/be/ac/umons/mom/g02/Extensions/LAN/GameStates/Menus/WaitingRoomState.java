@@ -47,10 +47,7 @@ public class WaitingRoomState extends MenuState {
         super.init();
 
         try {
-            if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated)
-                nm = be.ac.umons.mom.g02.Extensions.DualLAN.Managers.NetworkManager.getInstance();
-            else
-                nm = NetworkManager.getInstance();
+            nm = NetworkManager.getInstance();
             nm.acceptConnection();
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);

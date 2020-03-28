@@ -16,6 +16,7 @@ import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
@@ -49,18 +50,19 @@ public class FinalisingConnectionState extends MenuState {
             return;
         }
 
-        nm.setOnSecondPlayerDetected(secondPlayer -> {
+        nm.whenMessageReceivedDo("PI", objects -> {
             if (MasterOfMonsGame.getGameToLoad() == null)
                 goToLoading();
-            SupervisorMultiPlayer.setPlayerTwo(secondPlayer);
+            SupervisorMultiPlayer.setPlayerTwo((People) objects[0]);
         });
-        nm.setOnPlayerDetected(player -> {
+        nm.whenMessageReceivedDo("SPI", objects -> {
             goToLoading();
-            SupervisorMultiPlayer.setPlayerOne(player);
+            SupervisorMultiPlayer.setPlayerOne((People) objects[0]);
         });
-        nm.setOnSaveDetected((save -> {
+        nm.whenMessageReceivedDo("SAVE", (objects -> {
+            MasterOfMonsGame.setSaveToLoad((Save) objects[0]);
             if (ExtensionsManager.getInstance().getExtensionsMap().get("LAN").activated)
-                SupervisorLAN.getSupervisor().oldGameLAN(save);
+                SupervisorLAN.getSupervisor().oldGameLAN((Save) objects[0]);
             goToLoading();
         }));
 
@@ -80,19 +82,14 @@ public class FinalisingConnectionState extends MenuState {
             if (MasterOfMonsGame.getGameToLoad() != null && ExtensionsManager.getInstance().getExtensionsMap().get("LAN").activated) {
                 Save save = SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getGameToLoad());
                 if (nm.isTheServer()) {
-                    try {
-                        nm.sendSave(save);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Gdx.app.error("FinalisingConnectionState", "The save object hasn't been sent !", e);
-                    }
+                    nm.sendMessageOnTCP("SAVE", save);
                     LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
                     ls.setAfterLoadingState(PlayingState.class);
                 }
             }
         });
         if (sendPlayer)
-            nm.sendPlayerInformation(Supervisor.getPeople());
+            nm.sendMessageOnTCP("PI", Supervisor.getPeople());
     }
 
     @Override
@@ -106,7 +103,7 @@ public class FinalisingConnectionState extends MenuState {
     public void setSendPlayer(boolean sendPlayer) {
         this.sendPlayer = sendPlayer;
         if (sendPlayer)
-            nm.sendPlayerInformation(Supervisor.getPeople());
+            nm.sendMessageOnTCP("PI", Supervisor.getPeople());
     }
 
     private void goToLoading() {

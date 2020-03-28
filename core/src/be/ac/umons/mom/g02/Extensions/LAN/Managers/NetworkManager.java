@@ -131,10 +131,6 @@ public class NetworkManager {
      */
     protected Runnable onServerSelected;
     /**
-     * What to do when the second player is connected.
-     */
-    protected Runnable onConnected;
-    /**
      * What to do when the five magics numbers are received.
      */
     protected OnMagicNumberReceivedRunnable onMagicNumberReceived;
@@ -147,107 +143,13 @@ public class NetworkManager {
      */
     protected Runnable onWrongMagicNumber;
     /**
-     * What to do when the second player informations has been received.
+     * What to do when the second player is connected.
      */
-    protected OnPlayerDetectedRunnable onSecondPlayerDetected;
-    /**
-     * What to do when the player informations has been received.
-     */
-    protected OnPlayerDetectedRunnable onPlayerDetected;
-    /**
-     * What to do when the second player position has been received.
-     */
-    protected PointRunnable onPositionDetected;
-
-    /**
-     * What to do when the second player want to set the position of the first one.
-     */
-    protected PointRunnable onSecondPlayerPositionDetected;
-
-    /**
-     * What to do when the second player is in pause.
-     */
-    protected Runnable onPause;
-    /**
-     * What to do when the second player isn't in pause anymore.
-     */
-    protected Runnable onEndPause;
-    /**
-     * What to do when the informations of a PNJ has been received.
-     */
-    protected OnCharacterDetectedRunnable onPNJDetected;
-    /**
-     * What to do when the informations of a PNJ has been received.
-     */
-    protected OnCharacterDetectedRunnable onMovingPNJDetected;
-    /**
-     * What to do when the informations of an item has been received.
-     */
-    protected OnMapItemRunnable onItemDetected;
-    /**
-     * What to do when the informations of an item has been received.
-     */
-    protected OnMapItemRunnable onItemPickUp;
-    /**
-     * What to do when the second player ask informations about the PNJs on the map.
-     */
-    protected StringRunnable onGetPNJ;
-    /**
-     * What to do when the second player ask informations about the items on the map.
-     */
-    protected Runnable onGetItem;
-    /**
-     * What to do when the second player hit a PNJ.
-     */
-    protected OnHitPNJRunnable onHitPNJ;
-    /**
-     * What to do when the second player die
-     */
-    protected Runnable onDeath;
-    /**
-     * What to do when the second player killed a PNJ.
-     */
-    protected StringRunnable onPNJDeath;
-    /**
-     * What to do when the second player finished the current <code>MasterQuest</code>
-     */
-    protected Runnable onMasterQuestFinished;
+    protected Runnable onConnected;
     /**
      * What to do when the second player is disconnected
      */
     protected Runnable onDisconnected;
-    /**
-     * What to do when the second player's map change.
-     */
-    protected StringRunnable onSecondPlayerMapChanged;
-    /**
-     * What to do when the second player want to change our map.
-     */
-    protected StringRunnable onFirstPlayerMapChanged;
-    /**
-     * What to do when we receive if we are the maze player or not.
-     */
-    protected BooleanRunnable onMazePlayerDetected;
-    /**
-     * What to do when the second player level up
-     */
-    protected IntRunnable onLevelUp;
-    /**
-     * What to do when the second player send a save file
-     */
-    protected SaveRunnable onSaveDetected;
-    /**
-     * What to do when the second player send a date object
-     */
-    protected DateRunnable onDateDetected;
-
-    protected IntRunnable onTimeSpeedReceived;
-
-    protected BooleanRunnable onPlayerInCourseRoomReceived;
-
-    protected Runnable onPlayerWentToCourse;
-
-    protected OnPlanningReceivedRunnable onPlanningReceived;
     /**
      * On which map the PNJ's informations has been asked.
      */
@@ -272,17 +174,16 @@ public class NetworkManager {
      * The time gone by since the last message received from the second player
      */
     protected double msSinceLastMessage;
-    /**
-     * The received save from the other player (first and second is already inverted)
-     */
-    protected Save saveReceived;
 
     protected HashMap<Integer,ArrayList<Course>> planningReceived;
+
+    protected HashMap<String, ObjectsRunnable> runnableMap;
 
     /**
      * @throws SocketException If the port used (32516) is already used
      */
     protected NetworkManager() throws SocketException {
+        runnableMap = new HashMap<>();
         ds = new DatagramSocket(PORT);
         detectedServers = new LinkedList<>();
         detected = new LinkedList<>();
@@ -295,6 +196,15 @@ public class NetworkManager {
         toSendOnTCP = new Stack<>();
         toSendOnUDP = new Stack<>();
         msSinceLastMessage = 1;
+        whenMessageReceivedDo("MOMServer", (objects) -> {
+            InetAddress serverAddress = null;
+            try {
+                serverAddress = InetAddress.getByName((String) objects[0]);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            addADetectedServer(objects, serverAddress);
+        });
     }
 
     /**
@@ -308,7 +218,8 @@ public class NetworkManager {
     }
 
     /**
-     * Start broadcasting the server's informations with the given server name.
+     * Start broadcasting the server's informations with
+     * the given server name.
      * @param servName The server name
      */
     public void startBroadcastingMessage(String servName) {
@@ -318,8 +229,11 @@ public class NetworkManager {
             try {
                 while (! connected) {
                     for (InetAddress address : addressToBroadcast.keySet())
-                        broadcastMessage("MOMServer" + address.toString().replace("/", "#")
-                                + addressToBroadcast.get(address).toString().replace("/", "#") + "#" + servName, addressToBroadcast.get(address));
+                        broadcastMessage("MOMServer#" + objectToString( new Object[] {
+                                address.toString().replace("/", ""),
+                                addressToBroadcast.get(address).toString().replace("/", ""),
+                                servName
+                        }), addressToBroadcast.get(address));
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -588,12 +502,14 @@ public class NetworkManager {
     }
     /**
      * Add a message to send on the UDP socket. Remove the older message if there is more than 10 messages waiting.
-     * @param message The message
+     * @param messages The messages
      */
-    public void sendOnUDP(String message) {
-        if (toSendOnUDP.size() > 10)
-            toSendOnUDP.pop();
-        toSendOnUDP.push(message);
+    public void sendOnUDP(String... messages) {
+        for (String mes : messages) {
+            if (toSendOnUDP.size() > 10)
+                toSendOnUDP.pop();
+            toSendOnUDP.push(mes);
+        }
     }
 
     /**
@@ -626,205 +542,22 @@ public class NetworkManager {
         }
     }
 
-    /**
-     * Send the player information on the TCP socket.
-     * @param player The player to send
-     */
-    public void sendPlayerInformation(People player) {
+    public void whenMessageReceivedDo(String message, ObjectsRunnable run) {
+        runnableMap.put(message, run);
+    }
+
+    public void sendMessageOnTCP(String message, Object... objects) {
         try {
-            sendOnTCP(String.format("PI#%s", objectToString(player)));
+            sendOnTCP(String.format("%s#%s", message, objectToString(objects)));
         } catch (IOException e) {
-            Gdx.app.error("NetworkManager", "Cannot serialize the player !", e);
-            e.printStackTrace();
+            Gdx.app.error("NetworkManager", "Couldn't send message !", e);
         }
     }
-
-    /**
-     * Send the second player information on the TCP socket.
-     * @param player The player to send
-     */
-    public void sendSecondPlayerInformation(People player) {
+    public void sendMessageOnUDP(String message, Object... objects) {
         try {
-            sendOnTCP(String.format("SPI#%s", objectToString(player)));
+            sendOnUDP(String.format("%s#%s", message, objectToString(objects)));
         } catch (IOException e) {
-            Gdx.app.error("NetworkManager", "Cannot serialize the player !", e);
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Send the mob information on the TCP socket.
-     * @param mob The PNJ to send
-     * @throws IOException If the PNJ couldn't be serialized.
-     */
-    public void sendPNJInformation(Character mob) throws IOException {
-        sendOnTCP(String.format("PNJ#%s#%d#%d#%s", mob.getCharacteristics().getName(), mob.getPosX(), mob.getPosY(), objectToString(mob.getCharacteristics())));
-    }
-    /**
-     * Send the item's information on the TCP socket.
-     * @param omi The item to send
-     * @throws IOException If the item couldn't be serialized.
-     */
-    public void sendItemInformation(MapObject.OnMapItem omi) throws IOException {
-        sendOnTCP(String.format("Item#%s", objectToString(omi)));
-    }
-
-    /**
-     * Send the player positions.
-     * @param player The player.
-     */
-    public void sendPlayerPosition(Player player) {
-        sendOnUDP(String.format("PP#%d#%d", player.getPosX(), player.getPosY()));
-    }
-
-    /**
-     * Send the second player's position.
-     * @param secondPlayerPosition The second player's position
-     */
-    public void sendSecondPlayerPosition(Point secondPlayerPosition) {
-        sendOnTCP(String.format("SPP#%d#%d", secondPlayerPosition.x, secondPlayerPosition.y));
-    }
-
-    /**
-     * Send that a hit has been made on the character <code>c</code> and its life.
-     * @param c The character hit.
-     */
-    public void sendHit(Character c) {
-        sendOnUDP(String.format("hitPNJ#%s#%f", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife()));
-    }
-
-    /**
-     * Send the pause signal.
-     */
-    public void sendPause() {
-        sendOnTCP("Pause");
-    }
-
-    /**
-     * Send the signal ending the pause.
-     */
-    public void sendEndPause() {
-        sendOnTCP("EndPause");
-    }
-
-    /**
-     * Send the death of the first player.
-     */
-    public void sendDeath() {
-        sendOnTCP("Death");
-    }
-    /**
-     * Send the death of a PNJ.
-     * @param name The name of the PNJ
-     */
-    public void sendPNJDeath(String name) {
-        sendOnTCP(String.format("PNJDeath#%s", name));
-    }
-
-    /**
-     * Asks for all PNJs informations and positions.
-     * @param map The map on which the PNJ must be.
-     */
-    public void askPNJsPositions(String map) {
-        sendOnTCP("getPNJsPos#" + map);
-    }
-    /**
-     * Asks for all items informations and positions.
-     */
-    public void askItemsPositions() {
-        sendOnTCP("getItemsPos");
-    }
-
-    public void sendItemPickUp(MapObject.OnMapItem omi) throws IOException {
-        sendOnTCP("IPU#" + objectToString(omi));
-    }
-
-    /**
-     * Send the end of a master quest
-     */
-    public void sendEndOfMasterQuest() {
-        sendOnTCP("EMQ");
-        ignoreEMQ = true;
-    }
-
-    /**
-     * Send the map changing event.
-     * @param map The new map on which the current player is.
-     */
-    public void sendMapChanged(String map) {
-        sendOnTCP("CM#" + map);
-    }
-
-    /**
-     * Send the signal to the second player that he need to change his map.
-     * @param map The map on which the second player have to be
-     */
-    public void sendSecondPlayerMapChanged(String map) {
-        sendOnTCP(String.format("SPMC#%s", map));
-    }
-
-    /**
-     * Send if the second player is the maze player or not.
-     * @param isTheMazePlayer If the second player is the maze player or not.
-     */
-    public void sendIsTheMazePlayer(boolean isTheMazePlayer) {
-        sendOnTCP("ITMP#" + isTheMazePlayer);
-    }
-
-    /**
-     * Send that the current player leveled up
-     */
-    public void sendLevelUp(int newLevel) {
-        sendOnTCP(String.format("LVLUP#%d", newLevel));
-    }
-
-    /**
-     * Send the save object to the second player
-     * @param save The save object
-     * @throws IOException If there was an error serializing the object
-     */
-    public void sendSave(Save save) throws IOException {
-        sendOnTCP("SAVE#" + objectToString(save));
-    }
-
-    /**
-     * Send the time to the second player
-     * @param tg The current time
-     */
-    public void sendTime(TimeGame tg) {
-        Date d = tg.getDate();
-        sendOnUDP(String.format("TIME#%d#%d#%d#%d#%d", d.getMin(), d.getHour(), d.getDay(), d.getMonth(), d.getYear()));
-    }
-
-    public void sendTimeSpeed(int speed) {
-        sendOnTCP(String.format("TS#%d", speed));
-    }
-
-    public void sendPlayerInCourseRoom(boolean playerInCourseRoom) {
-        sendOnTCP("PCR#" + playerInCourseRoom);
-    }
-    public void sendPlayerWentToCourse() {
-        sendOnTCP("PWC");
-    }
-
-    public void sendPlanning(HashMap<Integer,ArrayList<Course>> planning) {
-        try {
-            sendOnTCP("PLAN#" + objectToString(planning));
-        } catch (IOException e) {
-            Gdx.app.error("NetworkManager", "Unable to send the planning", e);
-        }
-    }
-
-    public void sendAMovingPNJ(MovingPNJ mpnj, int x, int y) {
-        try {
-            sendOnTCP(String.format("MPNJ#%s#%s#%s#%s#%s#%d#%d", mpnj.getName(),
-                    objectToString(mpnj.getPlayerBloc()),
-                    objectToString(mpnj.getMobileType()),
-                    objectToString(mpnj.getMaps()),
-                    objectToString(mpnj.getAction()),
-                    x, y));
-        } catch (IOException e) {
-            Gdx.app.error("NetworkManager", "Unable to send the MovingPNJ", e);
+            Gdx.app.error("NetworkManager", "Couldn't send message !", e);
         }
     }
 
@@ -839,251 +572,18 @@ public class NetworkManager {
             return;
         }
         String[] tab = received.split("#");
-        switch (tab[0]) {
-            case "MOMServer": // Broadcast of a server
-                InetAddress serverAddress = null;
-                try {
-                    serverAddress = InetAddress.getByName(tab[1]);
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
+        ObjectsRunnable run = runnableMap.get(tab[0]);
+        if (run != null) {
+            try {
+                if (tab.length > 1) {
+                    Object[] obj = (Object[]) objectFromString(tab[1].trim());
+                    Gdx.app.postRunnable(() -> run.run(obj));
                 }
-                addADetectedServer(tab, serverAddress);
-                break;
-            case "PI": // Player info
-                try {
-                    People p = (People) objectFromString(tab[1]);
-                    if (onSecondPlayerDetected != null)
-                        Gdx.app.postRunnable(() ->
-                                onSecondPlayerDetected.run(p));
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing player informations (ignoring message)", e);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "SPI": // Second player info
-                try {
-                    People p = (People) objectFromString(tab[1]);
-                    if (onPlayerDetected != null)
-                        Gdx.app.postRunnable(() ->
-                                onPlayerDetected.run(p));
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing second player informations (ignoring message)", e);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "PP": // Player Position
-                String x = tab[1];
-                String y = tab[2];
-                try {
-                    if (onPositionDetected != null)
-                        Gdx.app.postRunnable(() ->
-                                onPositionDetected.run(new Point(
-                                        Integer.parseInt(x),
-                                        Integer.parseInt(y.trim()))));
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing position (ignoring message)", e);
-                }
-                break;
-            case "SPP": // Second Player Position
-                String sx = tab[1];
-                String sy = tab[2];
-                try {
-                    if (onSecondPlayerPositionDetected != null)
-                        Gdx.app.postRunnable(() ->
-                                onSecondPlayerPositionDetected.run(new Point(
-                                        Integer.parseInt(sx),
-                                        Integer.parseInt(sy.trim()))));
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing the second player position (ignoring message)", e);
-                }
-                break;
-            case "Pause":
-                if (onPause != null)
-                    Gdx.app.postRunnable(onPause);
-                break;
-            case "EndPause":
-                if (onEndPause != null)
-                    Gdx.app.postRunnable(onEndPause);
-                break;
-            case "PNJ": // Add a PNJ to the map
-                String pnjName = tab[1];
-                try {
-                    int pnjX = Integer.parseInt(tab[2]);
-                    int pnjY = Integer.parseInt(tab[3]);
-                    be.ac.umons.mom.g02.Objects.Characters.Character mob = (be.ac.umons.mom.g02.Objects.Characters.Character) objectFromString(tab[4]);
-                    if (onPNJDetected != null)
-                        Gdx.app.postRunnable(() -> onPNJDetected.run(pnjName, mob, pnjX, pnjY));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing PNJs position (ignoring message)", e);
-                }
-                break;
-            case "MPNJ":
-                try {
-                    MovingPNJ mpnj = new MovingPNJ((Bloc) objectFromString(tab[2]),
-                            (MobileType) objectFromString(tab[3]),
-                            (Maps) objectFromString(tab[4]),
-                            (Actions) objectFromString(tab[5]));
-                    int mx, my;
-                    mx = Integer.parseInt(tab[6]);
-                    my = Integer.parseInt(tab[7]);
-                    if (onMovingPNJDetected != null)
-                        Gdx.app.postRunnable(() -> onMovingPNJDetected.run(tab[1], mpnj, mx, my));
-                } catch (IOException | ClassNotFoundException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing a MovingPNJ message", e);
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing MovingPNJs position (ignoring message)", e);
-                }
-                break;
-            case "Item": // Add an item to the map
-                try {
-                    MapObject.OnMapItem omi = (MapObject.OnMapItem) objectFromString(tab[1]);
-                    if (onItemDetected != null)
-                        Gdx.app.postRunnable(() -> onItemDetected.run(omi));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Error detected while parsing items position (ignoring message)", e);
-                }
-                break;
-            case "IPU": // Item pick up
-                if (onItemPickUp != null) {
-                    Gdx.app.postRunnable(() ->
-                    {
-                        try {
-                            onItemDetected.run((MapObject.OnMapItem) objectFromString(tab[1].trim()));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                }
-            case "getPNJsPos": // Get all PNJs and their positions
-                if (onGetPNJ != null)
-                    Gdx.app.postRunnable(() -> onGetPNJ.run(tab[1].trim()));
                 else
-                    mustSendPNJPos = tab[1].trim();
-                break;
-            case "getItemsPos": // Get all PNJs and their positions
-                if (onGetItem != null)
-                    Gdx.app.postRunnable(() -> onGetItem.run());
-                else
-                    mustSendItemPos = true;
-                break;
-            case "hitPNJ": // A PNJ has been hit by the other player.
-                if (onHitPNJ != null) {
-                    try {
-                        double d = Double.parseDouble(tab[2]);
-                        Gdx.app.postRunnable(() -> onHitPNJ.run(tab[1],
-                                d));
-                    } catch (NumberFormatException e) {
-                        Gdx.app.error("NetworkManager", "Error detected while parsing damage in hitPNJ message (ignoring it)", e);
-                    }
-                }
-                break;
-            case "Death":
-                if (onDeath != null)
-                    Gdx.app.postRunnable(onDeath);
-                break;
-            case "PNJDeath":
-                if (onPNJDeath != null)
-                    Gdx.app.postRunnable(() -> onPNJDeath.run(tab[1].trim()));
-                break;
-            case "EMQ": // End of Master Quest
-                if (ignoreEMQ)
-                    ignoreEMQ = false;
-                else
-                    Gdx.app.postRunnable(onMasterQuestFinished);
-                break;
-            case "CM": // Map changed
-                if (onSecondPlayerMapChanged != null)
-                    Gdx.app.postRunnable(() -> onSecondPlayerMapChanged.run(tab[1].trim()));
-                break;
-            case "SPMC": // Second player map changed
-                if (onFirstPlayerMapChanged != null)
-                    Gdx.app.postRunnable(() -> onFirstPlayerMapChanged.run(tab[1].trim()));
-                break;
-            case "ITMP":
-                if (onMazePlayerDetected != null)
-                    Gdx.app.postRunnable(() -> onMazePlayerDetected.run(
-                            Boolean.parseBoolean(tab[1])));
-                break;
-            case "LVLUP":
-                if (onLevelUp != null) {
-                    try {
-                        Gdx.app.postRunnable(
-                                () -> onLevelUp.run(Integer.parseInt(tab[1]))
-                        );
-                    } catch (NumberFormatException e) {
-                        Gdx.app.error("NetworkManager", "Error detected while parsing level in Leveling up message (ignoring it)", e);
-                    }
-                }
-                break;
-            case "SAVE":
-                try {
-                    Save s = (Save) objectFromString(tab[1]);
-                    s.invertPlayerOneAndTwo();
-                    if (onSaveDetected != null)
-                        Gdx.app.postRunnable(() -> onSaveDetected.run(s));
-                    saveReceived = s;
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "TIME":
-                try {
-                    Date d = new Date(Integer.parseInt(tab[3]),
-                            Integer.parseInt(tab[4]),
-                            Integer.parseInt(tab[5].trim()),
-                            Integer.parseInt(tab[2]),
-                            Integer.parseInt(tab[1]));
-                    if (onDateDetected != null)
-                        Gdx.app.postRunnable(() -> onDateDetected.run(d));
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "There was an error parsing the time ! (ignoring it)", e);
-                }
-                break;
-            case "TS": // Time Speed
-                try {
-                    int speed = Integer.parseInt(tab[1].trim());
-                    if (onTimeSpeedReceived != null)
-                        Gdx.app.postRunnable(() -> onTimeSpeedReceived.run(speed));
-                } catch (NumberFormatException e) {
-                    Gdx.app.error("NetworkManager", "Unable to parse the time' speed ! (ignoring message)", e);
-                }
-                break;
-            case "PCR": // Player in Course Room
-                if (onPlayerInCourseRoomReceived != null)
-                    Gdx.app.postRunnable(() -> onPlayerInCourseRoomReceived.run(
-                            Boolean.parseBoolean(tab[1].trim())));
-                break;
-            case "PWC":
-                if (onPlayerWentToCourse != null)
-                    Gdx.app.postRunnable(onPlayerWentToCourse);
-                break;
-            case "PLAN":
-                try {
-                    planningReceived = (HashMap<Integer, ArrayList<Course>>) objectFromString(tab[1].trim());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (onPlanningReceived != null)
-                    Gdx.app.postRunnable(() -> onPlanningReceived.run(planningReceived));
-                break;
+                    Gdx.app.postRunnable(() -> run.run(null));
+            } catch (IOException | ClassNotFoundException e) {
+                Gdx.app.error("NetworkManager", String.format("Couldn't read the message : %s !", received), e);
+            }
         }
         if (! received.equals(""))
             msSinceLastMessage = 0;
@@ -1114,13 +614,13 @@ public class NetworkManager {
      * @param tab The received message parts.
      * @param serverAddress The server address.
      */
-    protected void addADetectedServer(String[] tab, InetAddress serverAddress) {
+    protected void addADetectedServer(Object[] tab, InetAddress serverAddress) {
 //        Gdx.app.log("NetworkManager", String.format("Server detected : %s", tab[1]));
-        if (detected != null && ! detected.contains(tab[1])) {
-            detected.add(tab[1]);
+        if (detected != null && ! detected.contains(tab[0])) {
+            detected.add((String) tab[0]);
             try {
-                detectedServers.add(new ServerInfo(tab[3], serverAddress,
-                        getMyAddressFromBroadcast(InetAddress.getByName(tab[2]))));
+                detectedServers.add(new ServerInfo((String) tab[2], serverAddress,
+                        getMyAddressFromBroadcast(InetAddress.getByName((String) tab[1]))));
             } catch (UnknownHostException e) {
                 e.printStackTrace();
                 return;
@@ -1235,13 +735,6 @@ public class NetworkManager {
     }
 
     /**
-     * @param onServerDetected What to do when a server is detected
-     */
-    public void setOnServerDetected(Runnable onServerDetected) {
-        this.onServerDetected = onServerDetected;
-    }
-
-    /**
      * @return The map linking the ip address of the machine to the broadcast address.
      */
     public HashMap<InetAddress, InetAddress> getAddressToBroadcast() {
@@ -1276,75 +769,8 @@ public class NetworkManager {
         this.onWrongMagicNumber = onWrongMagicNumber;
     }
 
-    /**
-     * @param onPlayerDetected What to do when the player information is detected
-     */
-    public void setOnPlayerDetected(OnPlayerDetectedRunnable onPlayerDetected) {
-        this.onPlayerDetected = onPlayerDetected;
-    }
-
-    /**
-     * @param onSecondPlayerDetected What to do when the second player informations has been received.
-     */
-    public void setOnSecondPlayerDetected(OnPlayerDetectedRunnable onSecondPlayerDetected) {
-        this.onSecondPlayerDetected = onSecondPlayerDetected;
-    }
-
-    /**
-     * @param onPositionDetected What to do when the second player position has been received.
-     */
-    public void setOnPositionDetected(PointRunnable onPositionDetected) {
-        this.onPositionDetected = onPositionDetected;
-    }
-
-    /**
-     * @param onSecondPlayerPositionDetected What to do when the first player position has been received.
-     */
-    public void setOnSecondPlayerPositionDetected(PointRunnable onSecondPlayerPositionDetected) {
-        this.onSecondPlayerPositionDetected = onSecondPlayerPositionDetected;
-    }
-
-    /**
-     * @param onPNJDetected What to do when the informations of a PNJ has been received.
-     */
-    public void setOnPNJDetected(OnCharacterDetectedRunnable onPNJDetected) {
-        this.onPNJDetected = onPNJDetected;
-    }
-
-    public void setOnMovingPNJDetected(OnCharacterDetectedRunnable onMovingPNJDetected) {
-        this.onMovingPNJDetected = onMovingPNJDetected;
-    }
-
-    /**
-     * @param onItemDetected What to do when the informations of an item has been received.
-     */
-    public void setOnItemDetected(OnMapItemRunnable onItemDetected) {
-        this.onItemDetected = onItemDetected;
-    }
-
-    /**
-     * @param onPause What to do when the second player is in pause.
-     */
-    public void setOnPause(Runnable onPause) {
-        this.onPause = onPause;
-    }
-
-    /**
-     * @param onGetPNJ What to do when the second player ask informations about the PNJs on the map.
-     */
-    public void setOnGetPNJ(StringRunnable onGetPNJ) {
-        if (mustSendPNJPos != null)
-            Gdx.app.postRunnable(() -> onGetPNJ.run(mustSendPNJPos));
-        this.onGetPNJ = onGetPNJ;
-    }
-
-    /**
-     * @param onGetItem What to do when the second player ask informations about the items on the map.
-     */
-    public void setOnGetItem(Runnable onGetItem) {
-        if (mustSendItemPos)
-            Gdx.app.postRunnable(onGetItem);
-        this.onGetItem = onGetItem;
+    public void setOnServerDetected(Runnable onServerDetected) {
+        this.onServerDetected = onServerDetected;
     }
 
     /**
@@ -1368,166 +794,12 @@ public class NetworkManager {
     }
 
     /**
-     * @param onHitPNJ What to do when the second player hit a PNJ.
-     */
-    public void setOnHitPNJ(OnHitPNJRunnable onHitPNJ) {
-        this.onHitPNJ = onHitPNJ;
-    }
-
-    /**
-     * @param onDeath What to do when the second player is dead.
-     */
-    public void setOnDeath(Runnable onDeath) {
-        this.onDeath = onDeath;
-    }
-
-    /**
-     * @param onPNJDeath What to do when the second player killed a PNJ.
-     */
-    public void setOnPNJDeath(StringRunnable onPNJDeath) {
-        this.onPNJDeath = onPNJDeath;
-    }
-
-    /**
-     * @param onEndPause What to do when the second player isn't in pause anymore.
-     */
-    public void setOnEndPause(Runnable onEndPause) {
-        this.onEndPause = onEndPause;
-    }
-
-    /**
-     * @param onMasterQuestFinished What to do when the second player finished the current <code>MasterQuest</code>
-     */
-    public void setOnMasterQuestFinished(Runnable onMasterQuestFinished) {
-        this.onMasterQuestFinished = onMasterQuestFinished;
-    }
-
-    /**
      * @param onDisconnected What to do when the second player is disconnected
      */
     public void setOnDisconnected(Runnable onDisconnected) {
         this.onDisconnected = onDisconnected;
     }
 
-    /**
-     * @param onSecondPlayerMapChanged What to do when the second player's map change.
-     */
-    public void setOnSecondPlayerMapChanged(StringRunnable onSecondPlayerMapChanged) {
-        this.onSecondPlayerMapChanged = onSecondPlayerMapChanged;
-    }
-
-    /**
-     * @param onFirstPlayerMapChanged What to do when the first player have to change which map he is on.
-     */
-    public void setOnFirstPlayerMapChanged(StringRunnable onFirstPlayerMapChanged) {
-        this.onFirstPlayerMapChanged = onFirstPlayerMapChanged;
-    }
-
-    /**
-     * @param onMazePlayerDetected What to do when we receive if we are the maze player or not.
-     */
-    public void setOnMazePlayerDetected(BooleanRunnable onMazePlayerDetected) {
-        this.onMazePlayerDetected = onMazePlayerDetected;
-    }
-
-    /**
-     * @param onLevelUp What to do when the second player level up
-     */
-    public void setOnLevelUp(IntRunnable onLevelUp) {
-        this.onLevelUp = onLevelUp;
-    }
-
-    /**
-     * @param onSaveDetected What to do when the second player has sent an save object
-     */
-    public void setOnSaveDetected(SaveRunnable onSaveDetected) {
-        this.onSaveDetected = onSaveDetected;
-    }
-
-    public void setOnDateDetected(DateRunnable onDateDetected) {
-        this.onDateDetected = onDateDetected;
-    }
-
-    /**
-     * @return If a save has been received
-     */
-    public boolean hasReceivedASave() {
-        return saveReceived != null;
-    }
-
-    /**
-     * @return The received save if one has been received
-     */
-    public Save getSaveReceived() {
-        return saveReceived;
-    }
-
-    public void setOnItemPickUp(OnMapItemRunnable onItemPickUp) {
-        this.onItemPickUp = onItemPickUp;
-    }
-
-    public void setOnTimeSpeedReceived(IntRunnable onTimeSpeedReceived) {
-        this.onTimeSpeedReceived = onTimeSpeedReceived;
-    }
-
-    public void setOnPlayerInCourseRoomReceived(BooleanRunnable onPlayerInCourseRoomReceived) {
-        this.onPlayerInCourseRoomReceived = onPlayerInCourseRoomReceived;
-    }
-
-    public void setOnPlayerWentToCourse(Runnable onPlayerWentToCourse) {
-        this.onPlayerWentToCourse = onPlayerWentToCourse;
-    }
-
-    public void setOnPlanningReceived(OnPlanningReceivedRunnable onPlanningReceived) {
-        if (planningReceived != null)
-            Gdx.app.postRunnable(() ->
-                    onPlanningReceived.run(planningReceived));
-        this.onPlanningReceived = onPlanningReceived;
-    }
-
-    /**
-     * Represent the runnable executed when the second player informations has been received.
-     */
-    public interface OnPlayerDetectedRunnable {
-        void run(People secondPlayer);
-    }
-
-    /**
-     * Represent the runnable executed when the informations of a PNJ has been received.
-     */
-    public interface OnCharacterDetectedRunnable {
-        void run(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y);
-    }
-    /**
-     * Represent the runnable executed when the informations of a item has been received.
-     */
-    public interface OnMapItemRunnable {
-        void run(MapObject.OnMapItem omi);
-    }
-
-    /**
-     * Represent the runnable executed when the second player position has been received.
-     */
-    public interface PointRunnable {
-        void run(Point pos);
-    }
-
-    /**
-     * Represent a runnable with a String as parameter.
-     */
-    public interface StringRunnable {
-        void run(String s);
-    }
-
-    /**
-     * Represent a runnable with a boolean as parameter.
-     */
-    public interface BooleanRunnable {
-        void run(boolean b);
-    }
-    /**
-     * Represent a runnable with a int as parameter.
-     */
     public interface IntRunnable {
         void run(int i);
     }
@@ -1538,27 +810,7 @@ public class NetworkManager {
         void run(int i, int j, int k, int l, int m);
     }
 
-    /**
-     * Represent the runnable executed when the second player hit a PNJ.
-     */
-    public interface OnHitPNJRunnable {
-        void run(String name, double life);
-    }
-
-    /**
-     * Represent a runnable taking a save object as parameter.
-     */
-    public interface SaveRunnable {
-        void run(Save save);
-    }
-    /**
-     * Represent a runnable taking a date object as parameter.
-     */
-    public interface DateRunnable {
-        void run(Date date);
-    }
-
-    public interface OnPlanningReceivedRunnable {
-        void run(HashMap<Integer,ArrayList<Course>> planning);
+    public interface ObjectsRunnable {
+        void run(Object[] objects);
     }
 }

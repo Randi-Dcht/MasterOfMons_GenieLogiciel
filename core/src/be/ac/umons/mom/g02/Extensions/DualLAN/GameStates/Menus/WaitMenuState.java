@@ -1,8 +1,9 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus;
 
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.PlayingState;
-import be.ac.umons.mom.g02.Extensions.DualLAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
@@ -36,8 +37,8 @@ public class WaitMenuState extends MenuState {
     }
 
     protected void setNetworkManagerRunnables() {
-        nm.setOnTypeChosen((type -> {
-            SupervisorDual.getSupervisorDual().init(type);
+        nm.whenMessageReceivedDo("TC", (objects -> {
+            SupervisorDual.getSupervisorDual().init((TypeDual) objects[0]);
             gsm.removeAllStateAndAdd(PlayingState.class);
         }));
     }

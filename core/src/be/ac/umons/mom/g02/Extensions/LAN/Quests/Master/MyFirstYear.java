@@ -31,7 +31,7 @@ public class MyFirstYear extends be.ac.umons.mom.g02.Quests.Master.MyFirstYear {
         super.nextQuest();
         if (! alreadySent) {
             try {
-                NetworkManager.getInstance().sendEndOfMasterQuest();
+                NetworkManager.getInstance().sendOnTCP("EMQ");
             } catch (SocketException e) {
                 Gdx.app.error("MasterQuest", "Unable to get the NetworkManager", e);
             }
