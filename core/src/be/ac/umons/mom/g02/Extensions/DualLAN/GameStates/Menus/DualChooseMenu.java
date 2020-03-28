@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.PlayingCasesState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
@@ -36,7 +37,10 @@ public class DualChooseMenu extends be.ac.umons.mom.g02.Extensions.Dual.Graphic.
     protected void checkChoose(TypeDual what) {
         nm.sendMessageOnTCP("TC", what);
         SupervisorDual.getSupervisorDual().init(what);
-        gsm.removeAllStateAndAdd(PlayingState.class);
+        if (what == TypeDual.CatchFlag)
+            gsm.removeAllStateAndAdd(PlayingCasesState.class);
+        else
+            gsm.removeAllStateAndAdd(PlayingState.class);
     }
 
     @Override
