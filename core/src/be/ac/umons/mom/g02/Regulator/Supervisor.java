@@ -26,7 +26,6 @@ import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.Attack;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
-import be.ac.umons.mom.g02.Objects.Characters.Dealer;
 import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
@@ -223,8 +222,6 @@ public  abstract class Supervisor implements Observer
      */
     protected String actualID;
     /***/
-    protected Dealer dealerOnMap;
-    /***/
     protected boolean haveMoney = false;
 
 
@@ -372,7 +369,7 @@ public  abstract class Supervisor implements Observer
      * @param type who is type of the people as defence,agility
      */
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
-    {dealerOnMap = new Dealer(Bloc.BA1);
+    {
         placePosition = new PositionOnMaps();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);
