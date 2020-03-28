@@ -2,8 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Dead;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
@@ -131,7 +130,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.whenMessageReceivedDo("SPMC", (objects -> secondPlayerMap = (String)objects[0]));
 
         supervisor.setMustPlaceItem(nm.isTheServer());
-        Supervisor.getEvent().add(this, Events.Dialog); // Other events done in super.init()
+        Supervisor.getEvent().add(this, Events.Dialog, Events.LifeChanged, Events.EnergyChanged, Events.ExperienceChanged); // Other events done in super.init()
         newParty = (MasterOfMonsGame.getGameToLoad() == null && MasterOfMonsGame.getSaveToLoad() == null);
         Supervisor.setGraphic(gs);
         supervisor.setGraphic(questShower,this);
@@ -284,9 +283,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
         if (nm.isTheServer())
             nm.sendMessageOnUDP("TIME", Supervisor.getSupervisor().getTime().getDate());
-        nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
-        nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
-        nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
     }
 
     @Override
@@ -487,9 +483,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendMessageOnTCP("PNJDeath", m.getName());
             idCharacterMap.remove(m.getName());
-        } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(player.getCharacteristics())) {
+        } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(player.getCharacteristics()))
             nm.sendMessageOnTCP("LVLUP", player.getCharacteristics().getLevel());
-        }
+        else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+            nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
+        else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+            nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
+        else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+            nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
     }
 
     @Override
