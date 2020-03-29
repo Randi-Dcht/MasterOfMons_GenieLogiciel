@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -18,7 +19,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class PlayingStateDual extends PlayingState
     protected SupervisorDual supervisorDual;
     /***/
     protected Point objectSize;
+    /***/
+    protected InventoryShower inventoryShowerTwo;
 
     /**
      * @param gs The game's graphical settings
@@ -73,6 +76,12 @@ public class PlayingStateDual extends PlayingState
         cam.update();
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
+
+        ((People)player.getCharacteristics()).pushObject(new Phone());//TODO
+        ((People)playerTwo.getCharacteristics()).pushObject(new Pen());//TODO
+
+        inventoryShowerTwo = new InventoryShower(gs, playerTwo);
+
         adv.put(player,playerTwo);adv.put(playerTwo,player);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
@@ -125,7 +134,7 @@ public class PlayingStateDual extends PlayingState
 
         if (cam.position.x != MasterOfMonsGame.WIDTH/2+MasterOfMonsGame.WIDTH/4 || cam.position.y != MasterOfMonsGame.HEIGHT/2-MasterOfMonsGame.HEIGHT/4)
         {
-            cam.position.x = MasterOfMonsGame.WIDTH - MasterOfMonsGame.WIDTH/4;
+            cam.position.x = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
             cam.position.y = MasterOfMonsGame.HEIGHT - MasterOfMonsGame.HEIGHT/2;
             cam.update();
         }
@@ -168,7 +177,7 @@ public class PlayingStateDual extends PlayingState
         int inventoryShowerHeight = tileHeight * 2;Point pt = new Point(tileWidth, tileWidth);
 
         inventoryShower.draw(sb,    MasterOfMonsGame.WIDTH/2 - MasterOfMonsGame.WIDTH/4, inventoryShowerHeight,pt);
-        inventoryShower.draw(sb, MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4, inventoryShowerHeight,pt);
+        inventoryShowerTwo.draw(sb, MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4, inventoryShowerHeight,pt);
 
         lifeBar.draw(sb, (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         lifeBarTwo.draw(sb, (int)MasterOfMonsGame.WIDTH-(topBarWidth+20), MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
@@ -217,7 +226,7 @@ public class PlayingStateDual extends PlayingState
         super.handleInput();
 
         endDual.handleInput();
-        //inventoryShowerTwo.handleInput();TODO
+        inventoryShowerTwo.handleInput();//TODO
     }
 
 
@@ -318,5 +327,6 @@ public class PlayingStateDual extends PlayingState
        // super.dispose();TODO problem with multi dispose of lifeBar
         endDual.dispose();
         lifeBarTwo.dispose();
+        inventoryShowerTwo.dispose();
     }
 }
