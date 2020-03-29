@@ -136,7 +136,7 @@ public class MovingPNJ extends Mobile
             toMove = (int)Math.round(Supervisor.getPeople().getSpeed() * dt * tileSize);
 
 
-        if(Math.sqrt(Math.pow(tileXbetween, 2) + Math.pow(tileYbetween, 2)) / 2 > myGraphic.getAttackRange())
+        if(Math.sqrt(Math.pow(tileXbetween, 2) + Math.pow(tileYbetween, 2)) * 2 > myGraphic.getAttackRange())
         {
             if (tileXbetween < 0 || onX)
                 x = toMove;

@@ -63,7 +63,7 @@ public class Character extends OnMapObject {
     /**
      * The range in which the player can attack.
      */
-    protected int attackRange = 200;
+    protected int attackRange;
     /**
      * If the character is in the attack range of the player.
      */
@@ -89,7 +89,8 @@ public class Character extends OnMapObject {
     public Character(GraphicalSettings gs, be.ac.umons.mom.g02.Objects.Characters.Character characteristics) {
         super(gs);
         arc = new AttackRangeCircle(gs, this);
-        arc.setAttackRange(200);
+        attackRange = MasterOfMonsGame.HEIGHT / 10;
+        arc.setAttackRange(attackRange);
         assetManager = gs.getAssetManager();
         this.characteristics = characteristics;
         lifeBar = new LifeBar(gs);
