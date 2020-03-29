@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.Boss;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.EndPuzzle;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
@@ -54,7 +55,7 @@ public class LearnToCooperate extends MasterQuest {
 
     @Override
     public String getName() {
-        return Supervisor.getGraphic().getStringFromId("learnToCooperate");
+        return GraphicalSettings.getStringFromId("learnToCooperate");
     }
 
     @Override
@@ -72,7 +73,13 @@ public class LearnToCooperate extends MasterQuest {
         Random rand = new Random();
         listMobs = new ArrayList<>();
         MobileType[] mobileTypes = MobileType.values();
-        for (int i = 0; i < 34; i++ ) { // TODO Check the difficulty of that
+        int diff = 20;
+        if (difficulty.equals(Difficulty.Medium))
+            diff = 26;
+        else if (difficulty.equals(Difficulty.Hard))
+            diff = 34;
+
+        for (int i = 0; i < diff; i++ ) {
             listMobs.add(new Mobile(Bloc.BA1,
                     mobileTypes[rand.nextInt(mobileTypes.length)],
                     Actions.Attack, NameDialog.Lambda));
