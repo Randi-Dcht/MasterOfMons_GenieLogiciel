@@ -23,7 +23,7 @@ import java.util.Comparator;
 /**
  * This represent the control the user can draw to check its agenda.
  */
-public class AgendaShower extends Control implements Observer {
+public class AgendaShower extends Control {
 
     /**
      * The courses to list in this control.
@@ -56,8 +56,6 @@ public class AgendaShower extends Control implements Observer {
         sr.setColor(gcm.getColorFor("controlTransparentBackground"));
 
         courses = new ArrayList<>();
-
-        Supervisor.getEvent().add(this, Events.ChangeDay);
     }
 
     /**
@@ -121,8 +119,7 @@ public class AgendaShower extends Control implements Observer {
      * Begin the animation that will be showing the control.
      */
     protected void show() {
-        if (courses == null || courses.size() == 0)
-            refreshCourses();
+        refreshCourses();
         if (courses == null)
             return;
         isBeingAnimated = true;
@@ -148,17 +145,6 @@ public class AgendaShower extends Control implements Observer {
     @Override
     public void dispose() {
         sr.dispose();
-    }
-
-    /**
-     * The method to receive the notification
-     *
-     * @param notify
-     */
-    @Override
-    public void update(Notification notify) {
-        if (notify.getEvents().equals(Events.ChangeDay))
-            refreshCourses();
     }
 
     public void refreshCourses() {
