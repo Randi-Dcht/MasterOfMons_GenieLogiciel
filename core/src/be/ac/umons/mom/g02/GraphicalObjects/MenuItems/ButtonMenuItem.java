@@ -84,7 +84,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
     @Override
     public void draw(Batch batch, Point pos) {
         super.draw(batch, pos);
-        pos.y -= gs.getNormalFont().getLineHeight() + 2 * topMargin;
+        pos.y -= gs.getNormalFont().getLineHeight() + topMargin;
         drawIfNonNull(batch, pos, size);
     }
 }

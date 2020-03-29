@@ -63,7 +63,7 @@ public class ScrollListChooser extends Control {
             mouseScrolled = 0;
         for (Button b : buttons) {
             if (! (alreadyUsed - mouseScrolled < 0))
-                b.draw(batch, new Point(pos.x, pos.y - alreadyUsed - topMargin + mouseScrolled), new Point(size.x, ySize));
+                b.draw(batch, new Point(pos.x, pos.y - alreadyUsed + mouseScrolled), new Point(size.x, ySize));
             else if (alreadyUsed + ySize - mouseScrolled > size.y)
                 break;
             alreadyUsed += ySize;
