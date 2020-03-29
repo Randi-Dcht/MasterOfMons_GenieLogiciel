@@ -2,6 +2,9 @@ package be.ac.umons.mom.g02.Events.Notifications;
 
 import be.ac.umons.mom.g02.Events.Events;
 
+/**
+ * Event when the player need to be teleported on another map
+ */
 public class Teleport implements Notification {
 
     protected String buffer;

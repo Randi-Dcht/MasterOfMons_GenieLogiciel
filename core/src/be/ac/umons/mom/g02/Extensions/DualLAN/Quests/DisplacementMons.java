@@ -14,6 +14,11 @@ public class DisplacementMons extends be.ac.umons.mom.g02.Extensions.Dual.Logic.
      */
     protected boolean alreadySent = false;
 
+    /**
+     * @param people The player of this quest
+     * @param before The MasterQuest before this one
+     * @param difficulty The difficulty to use
+     */
     public DisplacementMons(People people, MasterQuest before, Difficulty difficulty) {
         super(people, before, difficulty);
     }

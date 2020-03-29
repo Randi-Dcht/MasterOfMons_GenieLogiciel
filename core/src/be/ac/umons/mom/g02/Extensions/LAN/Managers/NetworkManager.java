@@ -152,14 +152,6 @@ public class NetworkManager {
      */
     protected Runnable onDisconnected;
     /**
-     * On which map the PNJ's informations has been asked.
-     */
-    protected String mustSendPNJPos;
-    /**
-     * If the items' informations has been asked.
-     */
-    protected boolean mustSendItemPos;
-    /**
      * The server on which we must connect.
      */
     protected ServerInfo selectedServer;
@@ -170,14 +162,16 @@ public class NetworkManager {
     /**
      * If we have to ignore the End of a Master Quest message
      */
-    protected boolean ignoreEMQ = false;
+    protected boolean ignoreEMQ = false; // TODO
     /**
      * The time gone by since the last message received from the second player
      */
     protected double msSinceLastMessage;
 
-    protected HashMap<Integer,ArrayList<Course>> planningReceived;
-
+    protected HashMap<Integer,ArrayList<Course>> planningReceived; // TODO
+    /**
+     * The map making the link between a message and the action to execute
+     */
     protected HashMap<String, ObjectsRunnable> runnableMap;
 
     /**
@@ -544,10 +538,20 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * Link the action <code>run</code> to the message
+     * @param message The message
+     * @param run The action
+     */
     public void whenMessageReceivedDo(String message, ObjectsRunnable run) {
         runnableMap.put(message, run);
     }
 
+    /**
+     * Send the message and the given objects on the TCP link
+     * @param message The message to send
+     * @param objects The objects to send
+     */
     public void sendMessageOnTCP(String message, Object... objects) {
         try {
             sendOnTCP(String.format("%s#%s", message, objectToString(objects)));
@@ -555,6 +559,11 @@ public class NetworkManager {
             Gdx.app.error("NetworkManager", "Couldn't send message !", e);
         }
     }
+    /**
+     * Send the message and the given objects on the UDP link
+     * @param message The message to send
+     * @param objects The objects to send
+     */
     public void sendMessageOnUDP(String message, Object... objects) {
         try {
             sendOnUDP(String.format("%s#%s", message, objectToString(objects)));
@@ -780,19 +789,6 @@ public class NetworkManager {
      */
     public boolean isTheServer() {
         return isTheServer;
-    }
-
-    /**
-     * @return On which map the PNJ's informations has been asked.
-     */
-    public String getMustSendPNJPos() {
-        return mustSendPNJPos;
-    }
-    /**
-     * @return On which map the PNJ's informations has been asked.
-     */
-    public boolean getMustSendItemPos() {
-        return mustSendItemPos;
     }
 
     /**

@@ -16,8 +16,14 @@ import java.net.SocketException;
 
 public class PlayingCasesState extends PlayCases {
 
+    /**
+     * The NetworkManager to use
+     */
     protected NetworkManager nm;
-    protected boolean pauseSent = true;
+    /**
+     * If a pause signal has already been sent
+     */
+    protected boolean pauseSent = false;
     /**
      * The number of cases of each player (to show)
      */
@@ -109,6 +115,9 @@ public class PlayingCasesState extends PlayCases {
         translateCameraFollowingPlayer(x, y);
     }
 
+    /**
+     * Go back to the choosing menu or the wait menu
+     */
     protected void goToPreviousMenu() {
         if (nm.isTheServer())
             gsm.removeAllStateAndAdd(be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu.class);

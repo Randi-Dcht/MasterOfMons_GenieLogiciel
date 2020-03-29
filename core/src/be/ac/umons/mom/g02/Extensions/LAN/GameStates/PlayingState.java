@@ -512,6 +512,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             player.setMapPos(mapPos);
     }
 
+    /**
+     * @param secondPlayerMap The second player map
+     */
     public void setSecondPlayerMap(String secondPlayerMap) {
         this.secondPlayerMap = secondPlayerMap;
     }

@@ -29,7 +29,13 @@ import java.util.HashMap;
 public class PlayingState extends PlayingStateDual {
 
     protected NetworkManager nm;
+    /**
+     * The hashmap making the link between a character's name and its graphical object
+     */
     protected HashMap<String, Character> idCharacterMap;
+    /**
+     * If a pause signal has already been sent
+     */
     protected boolean pauseSent;
 
     /**
@@ -177,7 +183,9 @@ public class PlayingState extends PlayingStateDual {
             nm.sendMessageOnUDP("PL", player.getCharacteristics().getActualLife());
         }
     }
-
+    /**
+     * Go back to the choosing menu or the wait menu
+     */
     protected void goToPreviousMenu() {
         if (nm.isTheServer())
             gsm.removeAllStateAndAdd(DualChooseMenu.class);

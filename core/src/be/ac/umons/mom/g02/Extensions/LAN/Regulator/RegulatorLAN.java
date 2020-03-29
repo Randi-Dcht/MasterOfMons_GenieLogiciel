@@ -14,11 +14,20 @@ import java.net.SocketException;
 
 public class RegulatorLAN extends RegulatorMultiPlayer {
 
+    /**
+     * If the second player is in a course room or not
+     */
     protected boolean secondPlayerInCourseRoom;
 
+    /**
+     * The current course of this player
+     */
     protected Course currentCourse;
 
-    NetworkManager nm;
+    /**
+     * The network manager to use
+     */
+    protected NetworkManager nm;
 
     /**
      * This constructor define the regulator class during the game
