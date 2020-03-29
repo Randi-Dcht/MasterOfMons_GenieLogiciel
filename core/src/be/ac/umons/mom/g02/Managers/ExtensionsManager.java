@@ -98,60 +98,60 @@ public class ExtensionsManager {
                 switch (lineTab[0]) {
                     case ".mainClass":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClass needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .mainClass needs a class", actualLine));
                         else
                             ext.mainClass = lineTab[1];
                         break;
                     case ".mainClassBeforeLoading":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClassBeforeLoading needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .mainClassBeforeLoading needs a class", actualLine));
                         else
                             ext.mainClassBeforeLoading = lineTab[1];
                         break;
                     case ".mainClassBeforeCharacterCreation":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClassBeforeCharacterCreation needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .mainClassBeforeCharacterCreation needs a class", actualLine));
                         else
                             ext.mainClassBeforeCharacterCreation = lineTab[1];
                         break;
                     case ".classBeforeOldGameSelection":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .classBeforeOldGameSelection needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .classBeforeOldGameSelection needs a class", actualLine));
                         else
                             ext.classBeforeOldGameSelection = lineTab[1];
                         break;
                     case ".classAfterOldGameSelection":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .classAfterOldGameSelection needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .classAfterOldGameSelection needs a class", actualLine));
                         else
                             ext.classAfterOldGameSelection = lineTab[1];
                         break;
                     case ".file":
                         if (lineTab.length < 3)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .file needs a file path and his type", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .file needs a file path and his type", actualLine));
                         else {
                             try {
                                 ext.dirsFileToLoad.add(new LoadFile(lineTab[1], lineTab[2]));
                             } catch (ClassNotFoundException e) {
-                                Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : class %s doesn't exist !", actualLine, lineTab[2]), e);
+                                Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : class %s doesn't exist !", actualLine, lineTab[2]), e);
                             } catch (FileNotFoundException e) {
-                                Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : file %s doesn't exist !", actualLine, lineTab[1]), e);
+                                Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : file %s doesn't exist !", actualLine, lineTab[1]), e);
                             }
                         }
                         break;
                     case ".map":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .map needs a path to a tmx file !", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .map needs a path to a tmx file !", actualLine));
                         else {
-                            if (new File(lineTab[1]).exists())
+                            if (Gdx.files.internal(lineTab[1]).exists())
                                 ext.mapsToLoad.add(lineTab[1]);
                             else
-                                Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : the given file (%s) doesn't exist !", actualLine, lineTab[1]));
+                                Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : the given file (%s) doesn't exist !", actualLine, lineTab[1]));
                         }
                         break;
                     case ".canActivateWith":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .canActivateWith needs another extension's name !", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .canActivateWith needs another extension's name !", actualLine));
                         else {
                             ext.canActivateWith.add(lineTab[1]);
                         }

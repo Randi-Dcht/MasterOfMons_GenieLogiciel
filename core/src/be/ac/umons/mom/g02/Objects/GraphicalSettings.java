@@ -193,7 +193,7 @@ public class GraphicalSettings {
     @SuppressWarnings("unchecked")
     public void addFilesToLoad(LoadFile... files) {
         for (LoadFile f : files) {
-            assetManager.load(f.file.getPath(), f.typeOfFile);
+            assetManager.load(f.file.path(), f.getTypeOfFile());
         }
     }
 
