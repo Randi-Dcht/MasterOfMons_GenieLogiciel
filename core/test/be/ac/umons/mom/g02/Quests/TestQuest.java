@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
 import be.ac.umons.mom.g02.Quests.Master.SuccessfulYear;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +19,8 @@ public class TestQuest
     @Test
     void TestnextQuest()
     {
-        SuperviserNormally.getSupervisor().newParty("Test", Type.beefy, Gender.Men, Difficulty.Easy);
-        People p = SuperviserNormally.getSupervisor().getPeople();
+        Supervisor.getSupervisor().newParty("Test", Type.beefy, Gender.Men, Difficulty.Easy);
+        People p = SuperviserNormally.getPeople();
         MasterQuest mq = new MyFirstYear(p,null,Difficulty.Easy);
         mq.nextQuest();
         assertNull(mq.getChildren(),"quest after is null");
@@ -34,8 +35,8 @@ public class TestQuest
     @Test
     void TestNextWithLevel()
     {
-        SuperviserNormally.getSupervisor().newParty("Test",Type.beefy,Gender.Men,Difficulty.Easy);
-        People p = SuperviserNormally.getSupervisor().getPeople();
+        Supervisor.getSupervisor().newParty("Test",Type.beefy,Gender.Men,Difficulty.Easy);
+        People p = SuperviserNormally.getPeople();
         People pTest = new People("Tesst", Type.normal, Gender.Men ,Difficulty.Easy);
         SuccessfulYear quest = new SuccessfulYear(pTest,null,Difficulty.Easy);
         quest.addProgress(100);

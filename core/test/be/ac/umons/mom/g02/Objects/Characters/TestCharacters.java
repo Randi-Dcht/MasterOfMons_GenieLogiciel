@@ -1,11 +1,20 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
-import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.Difficulty;
+import be.ac.umons.mom.g02.Enums.Gender;
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.Phone;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -62,11 +71,22 @@ public class TestCharacters
         assertTrue(memory > p2.getActualLife(),"Chack the life after the attack (PNJ)");
     }
 
+
     @Test
     void testingDialog()
-    {}
+    {
+        SuperviserNormally.initNormallyGame();
+        DialogCharacter dialog = new DialogCharacter(NameDialog.Lambda,Supervisor.getSupervisor());
+        //TODO check
+    }
+
 
     @Test
     void createMobilTest()
-    {}
+    {
+        Mobile mobile = new Mobile("Test",Bloc.BA2,MobileType.Lambda,Actions.Attack,NameDialog.Lambda);
+        assertTrue(mobile.getLevel()<=10 && mobile.getLevel() >= 5, "Check the level of the mobile");
+        int total = (mobile.getLevel()-1)*3;
+        assertSame(total,mobile.getAgility()+mobile.getDefence()+mobile.getStrength(), "check the calculus the points of the mobile ");
+    }
 }
