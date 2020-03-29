@@ -21,7 +21,9 @@ public class RectDual
     protected int width;
     /***/
     protected boolean drawInt;
+    /***/
     protected int positionX;
+    /***/
     protected int positionY;
 
 
@@ -35,9 +37,17 @@ public class RectDual
         this.height    = height;
         this.positionX = positionX;
         this.positionY = positionY;
-        drawInt        = colorInt != null;
+        drawInt        = true;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
+    }
+
+
+    /***/
+    public RectDual(GraphicalSettings gs,Color colorExt,int width, int height,int positionX, int positionY)
+    {
+        this(gs,null,colorExt,width,height,positionX,positionY);
+        drawInt = false;
     }
 
 
