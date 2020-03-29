@@ -120,7 +120,7 @@ public class LoadingState extends GameState {
         Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.begin();
-        String txt = gs.getStringFromId("loading");
+        String txt = GraphicalSettings.getStringFromId("loading");
         font.draw(sb, txt, MasterOfMonsGame.WIDTH / 2 - font.getXHeight() * txt.length() / 2, MasterOfMonsGame.HEIGHT / 2 + font.getLineHeight() / 2);
         sb.end();
 

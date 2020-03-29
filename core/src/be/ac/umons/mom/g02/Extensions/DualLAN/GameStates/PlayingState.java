@@ -29,7 +29,13 @@ import java.util.HashMap;
 public class PlayingState extends PlayingStateDual {
 
     protected NetworkManager nm;
+    /**
+     * The hashmap making the link between a character's name and its graphical object
+     */
     protected HashMap<String, Character> idCharacterMap;
+    /**
+     * If a pause signal has already been sent
+     */
     protected boolean pauseSent;
 
     /**
@@ -98,7 +104,7 @@ public class PlayingState extends PlayingStateDual {
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> {
@@ -109,7 +115,7 @@ public class PlayingState extends PlayingStateDual {
             int newLevel = (int)objects[0];
             while (newLevel > playerTwo.getCharacteristics().getLevel())
                 ((People)playerTwo.getCharacteristics()).upLevel();
-            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
+            timeShower.extendOnFullWidth(String.format(GraphicalSettings.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
         nm.whenMessageReceivedDo("getItemsPos", (objects ->
                 PlayingLANHelper.sendItemsPositions(mapObjects)));
@@ -177,7 +183,9 @@ public class PlayingState extends PlayingStateDual {
             nm.sendMessageOnUDP("PL", player.getCharacteristics().getActualLife());
         }
     }
-
+    /**
+     * Go back to the choosing menu or the wait menu
+     */
     protected void goToPreviousMenu() {
         if (nm.isTheServer())
             gsm.removeAllStateAndAdd(DualChooseMenu.class);

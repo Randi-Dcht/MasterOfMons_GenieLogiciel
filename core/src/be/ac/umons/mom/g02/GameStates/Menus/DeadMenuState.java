@@ -22,15 +22,15 @@ public class DeadMenuState extends MenuState {
         super.init();
         transparentBackground = true;
         handleEscape = false;
-        setText(gs.getStringFromId("dead"));
+        setText(GraphicalSettings.getStringFromId("dead"));
     }
 
     public void setText(String text) {
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, text),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("loadPreviousGame"), () -> gsm.setState(LoadMenuState.class)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("gpBackMainMenu"), () -> gsm.removeAllStateAndAdd(MainMenuState.class)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("quitTheGame"), () -> Gdx.app.exit())
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("loadPreviousGame"), () -> gsm.setState(LoadMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("gpBackMainMenu"), () -> gsm.removeAllStateAndAdd(MainMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quitTheGame"), () -> Gdx.app.exit())
         });
     }
 }

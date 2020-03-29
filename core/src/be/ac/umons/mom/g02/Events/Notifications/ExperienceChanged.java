@@ -2,13 +2,19 @@ package be.ac.umons.mom.g02.Events.Notifications;
 
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
-
+/**
+ * Event when the experience of the player change
+ */
 public class ExperienceChanged implements Notification {
 
     private Character concernedOne;
     private Events evt;
     private double buffer;
 
+    /**
+     * @param concernedOne The concerned character
+     * @param buffer The new experience
+     */
     public ExperienceChanged(Character concernedOne, double buffer) {
         this.concernedOne = concernedOne;
         evt = Events.ExperienceChanged;

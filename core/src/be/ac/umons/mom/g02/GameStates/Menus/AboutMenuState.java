@@ -24,9 +24,9 @@ public class AboutMenuState extends MenuState {
         transparentBackground = false;
         handleEscape = true;
         setMenuItems(new MenuItem[]{
-                new TitleMenuItem(gs, gs.getStringFromId("about")),
-                new TextMenuItem(gs, gs.getStringFromId("aboutText")),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), () -> gsm.removeFirstState()),
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("about")),
+                new TextMenuItem(gs, GraphicalSettings.getStringFromId("aboutText")),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), () -> gsm.removeFirstState()),
                 new TextMenuItem(gs, Gdx.files.internal("Fonts/Comfortaa/OFL.txt").readString())
         });
     }

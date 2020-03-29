@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.Boss;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.EndPuzzle;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
@@ -22,6 +23,10 @@ public class LearnToCooperate extends MasterQuest {
      * If we already sent the end of this MasterQuest or not
      */
     protected boolean alreadySent = false;
+    /**
+     * The number of mobiles to spawn on this map
+     */
+    protected int mobileNumber;
 
     /**
      * This constructor allows to define a masterQuest
@@ -36,6 +41,11 @@ public class LearnToCooperate extends MasterQuest {
                 new Boss(this, Supervisor.getPeople()));
         Supervisor.getEvent().add(this, Events.PlaceInMons, Events.Dead);
         maxPercent = 100; // finish puzzle + 36 mobs
+        mobileNumber = 22;
+        if (difficulty.equals(Difficulty.Medium))
+            mobileNumber = 28;
+        else if (difficulty.equals(Difficulty.Hard))
+            mobileNumber = 36;
     }
 
     @Override
@@ -54,7 +64,7 @@ public class LearnToCooperate extends MasterQuest {
 
     @Override
     public String getName() {
-        return Supervisor.getGraphic().getStringFromId("learnToCooperate");
+        return GraphicalSettings.getStringFromId("learnToCooperate");
     }
 
     @Override
@@ -72,7 +82,8 @@ public class LearnToCooperate extends MasterQuest {
         Random rand = new Random();
         listMobs = new ArrayList<>();
         MobileType[] mobileTypes = MobileType.values();
-        for (int i = 0; i < 34; i++ ) { // TODO Check the difficulty of that
+
+        for (int i = 0; i < mobileNumber - 2; i++ ) {
             listMobs.add(new Mobile(Bloc.BA1,
                     mobileTypes[rand.nextInt(mobileTypes.length)],
                     Actions.Attack, NameDialog.Lambda));
@@ -86,5 +97,12 @@ public class LearnToCooperate extends MasterQuest {
     @Override
     public Maps[] getListMaps() {
         return new Maps[] {Maps.LAN_Boss};
+    }
+
+    /**
+     * @return The number of mobiles to spawn on this map
+     */
+    public int getMobileNumber() {
+        return mobileNumber;
     }
 }

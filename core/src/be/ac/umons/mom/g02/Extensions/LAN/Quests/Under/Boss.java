@@ -1,9 +1,12 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Quests.Under;
 
+import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 
@@ -14,7 +17,7 @@ public class Boss extends UnderQuest {
      * @param master is the quest who call this
      * @param people is the people who play the game
      */
-    public Boss(Quest master, People people) {
+    public Boss(LearnToCooperate master, People people) {
         super("boss", 50, master, people);
     }
 
@@ -26,7 +29,7 @@ public class Boss extends UnderQuest {
     @Override
     public void evenActivity(Notification notify) {
         if (notify.getEvents().equals(Events.Dead) && notify.getBuffer() != null && ! notify.getBuffer().equals(SupervisorLAN.getPeople()) && ! notify.getBuffer().equals(SupervisorLAN.getPeopleTwo()))
-            addProgress(50f / 37);
+            addProgress(50f / ((LearnToCooperate)master).getMobileNumber());
     }
 
     /**

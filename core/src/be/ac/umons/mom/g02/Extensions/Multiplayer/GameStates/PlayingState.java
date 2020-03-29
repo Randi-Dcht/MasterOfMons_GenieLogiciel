@@ -45,10 +45,16 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
     }
 
+    /**
+     * @param secondPlayerCharacteristics The second player characteristics
+     */
     public void setSecondPlayerCharacteristics(People secondPlayerCharacteristics) {
         playerTwo.setCharacteristics(secondPlayerCharacteristics);
     }
 
+    /**
+     * @param mapPos The second player position
+     */
     public void setSecondPlayerPosition(Point mapPos) {
         if (playerTwo == null)
             playerTwo = new Player(gs);

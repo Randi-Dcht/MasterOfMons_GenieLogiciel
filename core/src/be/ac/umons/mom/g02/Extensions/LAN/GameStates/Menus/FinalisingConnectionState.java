@@ -91,7 +91,9 @@ public class FinalisingConnectionState extends MenuState {
             nm.sendMessageOnTCP("PI", Supervisor.getPeople());
     }
 
-
+    /**
+     * Go to the loading state
+     */
     public static  void goToLoading() {
         GameStateManager gsm = GameStateManager.getInstance();
         try {
@@ -112,6 +114,9 @@ public class FinalisingConnectionState extends MenuState {
         }
     }
 
+    /**
+     * Set all the necessary actions in the NetworkManager
+     */
     public static void setNetworkManagerRunnable() {
         NetworkManager nm = null;
         try {

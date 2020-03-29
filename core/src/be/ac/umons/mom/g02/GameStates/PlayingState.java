@@ -675,7 +675,7 @@ public class PlayingState extends GameState implements Observer {
                 Supervisor.getPeople().useObject(ii.getItem());
         }
         if (gim.isKey("quickSave", KeyStatus.Pressed)) {
-            timeShower.extendOnFullWidth(gs.getStringFromId("quickSaving"));
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("quickSaving"));
             quickSave();
         }
         if (gim.isKey("quickLoad", KeyStatus.Pressed))
@@ -712,7 +712,7 @@ public class PlayingState extends GameState implements Observer {
     protected void onPointsAttributed(int strength, int defence, int agility) {
         int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
         if (pointLevel != 0)
-            notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
+            notificationRappel.addANotification("pointsToAttribute", String.format(GraphicalSettings.getStringFromId("pointsToAttribute"),
                     pointLevel, Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
         else
             notificationRappel.removeANotification("pointsToAttribute");
@@ -735,7 +735,7 @@ public class PlayingState extends GameState implements Observer {
             mo.setMapPos(new Point(player.getPosX(), player.getPosY()));
             mo.setMap(gmm.getActualMapName());
             mapObjects.add(mo);
-            supervisor.getPeople().removeObject(dropped.getItem());
+            Supervisor.getPeople().removeObject(dropped.getItem());
             dropped.getItem().setMaps(supervisor.getMaps(gmm.getActualMapName()));
             return mo;
         }
@@ -756,7 +756,7 @@ public class PlayingState extends GameState implements Observer {
         if (((People)player.getCharacteristics()).isInvincible()) {
             ((People)player.getCharacteristics()).invincible(false);
             lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
-            notificationRappel.addANotification("invincibleNotification", gs.getStringFromId("playerIsInvincible"));
+            notificationRappel.addANotification("invincibleNotification", GraphicalSettings.getStringFromId("playerIsInvincible"));
         } else {
             ((People)player.getCharacteristics()).invincible(true);
             lifeBar.setForegroundColor(new Color(0x212121AA));
@@ -765,7 +765,7 @@ public class PlayingState extends GameState implements Observer {
 
     public void debugChangePlayerSpeed() {
         Supervisor.getPeople().setSpeed(5);
-        notificationRappel.addANotification("speedChangedNotification", gs.getStringFromId("playerIsFaster"));
+        notificationRappel.addANotification("speedChangedNotification", GraphicalSettings.getStringFromId("playerIsFaster"));
     }
 
     @Override
@@ -794,8 +794,8 @@ public class PlayingState extends GameState implements Observer {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
             Gdx.app.postRunnable(() -> updateDialog(diag));
         } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer() == player.getCharacteristics()) {
-            timeShower.extendOnFullWidth(gs.getStringFromId("gainALevel"));
-            notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("gainALevel"));
+            notificationRappel.addANotification("pointsToAttribute", String.format(GraphicalSettings.getStringFromId("pointsToAttribute"),
                     ((People)player.getCharacteristics()).getPointLevel(), Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
         } else if (notify.getEvents().equals(Events.Teleport) && notify.bufferNotEmpty()) {
             initMap((String)notify.getBuffer());
@@ -876,7 +876,7 @@ public class PlayingState extends GameState implements Observer {
      */
     public static void quickLoad(GameStateManager gsm, GraphicalSettings gs) {
         OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
-        ogds.setText(gs.getStringFromId("sureLoad"));
+        ogds.setText(GraphicalSettings.getStringFromId("sureLoad"));
         ogds.addAnswer("yes", () ->
                 SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.getSettings().getLastSavePath(),gs));
         ogds.addAnswer("no");

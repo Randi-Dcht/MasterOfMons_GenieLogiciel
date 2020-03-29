@@ -35,6 +35,10 @@ public class PlayingLANHelper {
         }
     }
 
+    /**
+     * Send the given items to the second player
+     * @param mapObjects The items to send
+     */
     public static void sendItemsPositions(List<MapObject> mapObjects) {
         try {
             nm = NetworkManager.getInstance();

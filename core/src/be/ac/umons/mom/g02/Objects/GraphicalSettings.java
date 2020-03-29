@@ -27,38 +27,38 @@ public class GraphicalSettings {
     /**
      * The font used to draw titles.
      */
-    private BitmapFont titleFont;
+    protected BitmapFont titleFont;
     /**
      * The font used to draw text in general.
      */
-    private BitmapFont normalFont;
+    protected BitmapFont normalFont;
     /**
      * The font used to draw quest's name.
      */
-    private BitmapFont questFont;
+    protected BitmapFont questFont;
     /**
      * The font used to draw small text.
      */
-    private BitmapFont smallFont;
+    protected BitmapFont smallFont;
     /**
      * An asset manager to load assets.
      */
-    private AssetManager assetManager;
+    protected AssetManager assetManager;
     /**
      * A BitmapFont generator.
      */
-    private FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
+    protected FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
 
     /**
      * The bundle containing all the strings to use in the game in the chosen language.
      */
-    private I18NBundle bundle;
+    protected static I18NBundle bundle;
     /**
      * If the map coordinates needs to be showed to the user.
      */
-    private boolean showMapCoordinates = false;
+    protected boolean showMapCoordinates = false;
 
-    GameColorManager gcm;
+    protected GameColorManager gcm;
 
     public GraphicalSettings() {
         init();
@@ -202,8 +202,10 @@ public class GraphicalSettings {
      * @param id The string's id.
      * @return The string corresponding with the given id in the previously configured language (or the default one).
      */
-    public String getStringFromId(String id) {
+    public static String getStringFromId(String id) {
         try {
+            if (bundle == null) // Test case
+                return "Error";
             return bundle.get(id);
         } catch (MissingResourceException e) {
             Gdx.app.error("GraphicalSettings", "Bundle key not found", e);
@@ -215,7 +217,7 @@ public class GraphicalSettings {
      * Set the locale that need to be used and load the corresponding bundle.
      * @param loc The locale.
      */
-    public void setLocale(Locale loc) {
+    public static void setLocale(Locale loc) {
         bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc);
     }
 
@@ -223,7 +225,7 @@ public class GraphicalSettings {
      * Set the language that need to be used and change the local.
      * @param lang The language that need to be used.
      */
-    public void setLanguage(Languages lang) {
+    public static void setLanguage(Languages lang) {
         String loc = lang.getLocale();
         setLocale(new Locale(loc));
     }

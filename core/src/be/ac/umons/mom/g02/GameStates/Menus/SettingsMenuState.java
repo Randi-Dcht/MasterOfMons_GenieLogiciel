@@ -34,14 +34,14 @@ public class SettingsMenuState extends MenuState {
         super.init();
         transparentBackground = false;
         setMenuItems(new MenuItem[] {
-                new TitleMenuItem(gs, gs.getStringFromId("settings")),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("keyChoosing"), () -> gsm.setState(KeyChoosingMenuState.class)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("colorChoosing"), () -> gsm.setState(ColorChoosingMenuState.class)),
-                new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("gameResolutionWidth"), "TXT_Game_Resolution_Width"),
-                new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("gameResolutionHeight"), "TXT_Game_Resolution_Height"),
-                new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("maximumAutomaticSaves"), "TXT_Maximum_Automatic_Saves"),
-                new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("language"), "SLC_Language"),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), this::save)
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("settings")),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("keyChoosing"), () -> gsm.setState(KeyChoosingMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("colorChoosing"), () -> gsm.setState(ColorChoosingMenuState.class)),
+                new NumberTextBoxMenuItem(gim, gs, GraphicalSettings.getStringFromId("gameResolutionWidth"), "TXT_Game_Resolution_Width"),
+                new NumberTextBoxMenuItem(gim, gs, GraphicalSettings.getStringFromId("gameResolutionHeight"), "TXT_Game_Resolution_Height"),
+                new NumberTextBoxMenuItem(gim, gs, GraphicalSettings.getStringFromId("maximumAutomaticSaves"), "TXT_Maximum_Automatic_Saves"),
+                new ScrollListChooserMenuItem(gim, gs, GraphicalSettings.getStringFromId("language"), "SLC_Language"),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("save"), this::save)
         });
         initDefaultValue();
     }
@@ -65,9 +65,9 @@ public class SettingsMenuState extends MenuState {
                 case "SLC_Language":
                     List<ScrollListChooser.ScrollListItem> slil = new ArrayList<>();
                     for (Languages l : Languages.values())
-                        slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(l.toString()), () -> {
+                        slil.add(new ScrollListChooser.ScrollListItem(GraphicalSettings.getStringFromId(l.toString()), () -> {
                             MasterOfMonsGame.getSettings().setLanguage(l);
-                            gs.setLanguage(l);
+                            GraphicalSettings.setLanguage(l);
                             init();
                         }, l == MasterOfMonsGame.getSettings().getLanguage()));
                     ((ScrollListChooser)mi.getControl()).setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));

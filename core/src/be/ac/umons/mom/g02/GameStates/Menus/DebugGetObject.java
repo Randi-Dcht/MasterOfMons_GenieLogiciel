@@ -29,9 +29,9 @@ public class DebugGetObject extends MenuState {
         transparentBackground = true;
 
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("debugGetObject")));
+        menuItems.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("debugGetObject")));
         for (Items it : Supervisor.getSupervisor().getAllItems()) {
-            menuItems.add(new ButtonMenuItem(gim, gs, gs.getStringFromId(it.getIdItems()), () -> {
+            menuItems.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId(it.getIdItems()), () -> {
                 Supervisor.getPeople().pushObject(it);
                 gsm.removeFirstState();
             }));

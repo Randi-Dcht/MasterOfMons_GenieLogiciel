@@ -46,7 +46,7 @@ public class NewChapterState extends GameState {
      */
     public void init() {
         sb = new SpriteBatch();
-        StringAnimation sa = new StringAnimation(gs.getStringFromId("newChapter"), 1000);
+        StringAnimation sa = new StringAnimation(GraphicalSettings.getStringFromId("newChapter"), 1000);
         sa.setRunningAction(() -> {
             textToShow = StringHelper.adaptTextToWidth(gs.getTitleFont(), sa.getActual(), (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
             numberOfLines = textToShow.split("\n").length;

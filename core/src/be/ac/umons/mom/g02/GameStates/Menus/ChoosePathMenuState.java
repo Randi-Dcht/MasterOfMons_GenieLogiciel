@@ -40,7 +40,7 @@ public abstract class ChoosePathMenuState extends MenuState {
     public void init() {
         super.init();
         transparentBackground = false;
-        directoryMI = new TextMenuItem(gs,gs.getStringFromId("directory") + " : " + path);
+        directoryMI = new TextMenuItem(gs, GraphicalSettings.getStringFromId("directory") + " : " + path);
         chooseSaveSLC = new ScrollListChooserMenuItem(gim, gs, "");
         File defaultPath = new File(DEFAULT_PATH);
         if (! defaultPath.exists())
@@ -74,7 +74,7 @@ public abstract class ChoosePathMenuState extends MenuState {
         chooseSaveSLC.getControl().setScrollListItems(slis.toArray(new ScrollListChooser.ScrollListItem[0]));
         chooseSaveSLC.getSize().x = -2;
         chooseSaveSLC.getSize().y = -2;
-        directoryMI.setHeader(gs.getStringFromId("directory") + " : " + path);
+        directoryMI.setHeader(GraphicalSettings.getStringFromId("directory") + " : " + path);
         directoryMI.getSize().y = -1;
     }
 

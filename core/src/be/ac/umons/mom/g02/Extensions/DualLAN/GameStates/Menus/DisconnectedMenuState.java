@@ -11,6 +11,9 @@ import java.awt.*;
  */
 public class DisconnectedMenuState extends be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState {
 
+    /**
+     * The second player position to send later
+     */
     protected Point secondPlayerPosition;
 
     /**
@@ -38,6 +41,9 @@ public class DisconnectedMenuState extends be.ac.umons.mom.g02.Extensions.LAN.Ga
         nm.sendMessageOnTCP("PI", SupervisorMultiPlayer.getPeople());
     }
 
+    /**
+     * @param secondPlayerPosition The second player position to send on reconnection
+     */
     public void setSecondPlayerPosition(Point secondPlayerPosition) {
         this.secondPlayerPosition = secondPlayerPosition;
     }

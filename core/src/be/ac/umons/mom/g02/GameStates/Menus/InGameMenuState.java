@@ -39,15 +39,15 @@ public class InGameMenuState extends MenuState {
         sr.setAutoShapeType(true);
         transparentBackground = true;
         setMenuItems(new MenuItem[] {
-                new TitleMenuItem(gs, gs.getStringFromId("gameName")),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("continue"), () -> gsm.removeFirstState()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("levelUp"), () -> ps.goToLevelUpState()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("quickSave"), PlayingState::quickSave),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("quickLoad"), () -> PlayingState.quickLoad(gsm, gs)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), this::exit)});
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("gameName")),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("continue"), () -> gsm.removeFirstState()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("levelUp"), () -> ps.goToLevelUpState()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quickSave"), PlayingState::quickSave),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quickLoad"), () -> PlayingState.quickLoad(gsm, gs)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), this::exit)});
     }
 
     @Override
@@ -66,7 +66,7 @@ public class InGameMenuState extends MenuState {
      */
     public void exit() {
         GameState g = gsm.setState(OutGameDialogState.class);
-        ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));
+        ((OutGameDialogState)g).setText(GraphicalSettings.getStringFromId("sureQuitGame"));
         ((OutGameDialogState)g).addAnswer("yes", () -> Gdx.app.exit());
         ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
     }

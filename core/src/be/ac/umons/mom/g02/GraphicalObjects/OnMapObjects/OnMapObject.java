@@ -57,7 +57,7 @@ public abstract class OnMapObject {
             Gdx.gl.glEnable(GL30.GL_BLEND);
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             GlyphLayout gl = new GlyphLayout();
-            gl.setText(gs.getSmallFont(), String.format(gs.getStringFromId("pressToInteract"),
+            gl.setText(gs.getSmallFont(), String.format(GraphicalSettings.getStringFromId("pressToInteract"),
                     Input.Keys.toString(GameKeyManager.getInstance().getKeyCodeFor("interact"))));
             sr.begin(ShapeRenderer.ShapeType.Filled);
             sr.setColor(gcm.getColorFor("controlTransparentBackground"));
@@ -66,7 +66,7 @@ public abstract class OnMapObject {
             Gdx.gl.glDisable(GL30.GL_BLEND);
             if (isSelected) {
                 batch.begin();
-                gs.getSmallFont().draw(batch, String.format(gs.getStringFromId("pressToInteract"),
+                gs.getSmallFont().draw(batch, String.format(GraphicalSettings.getStringFromId("pressToInteract"),
                         Input.Keys.toString(GameKeyManager.getInstance().getKeyCodeFor("interact"))), x, y);
                 batch.end();
             }
