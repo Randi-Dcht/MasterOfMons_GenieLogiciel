@@ -13,12 +13,15 @@ import com.badlogic.gdx.Input;
 
 import java.awt.*;
 import java.net.SocketException;
-import java.util.ArrayList;
 
 public class PlayingCasesState extends PlayCases {
 
     protected NetworkManager nm;
     protected boolean pauseSent = true;
+    /**
+     * The number of cases of each player (to show)
+     */
+    protected int cp1, cp2;
 
     /**
      * @param gs The game's graphical settings
@@ -71,19 +74,23 @@ public class PlayingCasesState extends PlayCases {
         nm.whenMessageReceivedDo("PL", objects -> lifeBarTwo.setValue((int)(objects[0])));
         nm.whenMessageReceivedDo("EndDual", objects -> goToPreviousMenu());
         nm.whenMessageReceivedDo("Time", objects -> time = (double)objects[0]);
-        nm.whenMessageReceivedDo("CP1", objects -> cases.put(playerTwo, (ArrayList<Point>) objects[0]));//TODO
-        nm.whenMessageReceivedDo("CP2", objects -> cases.put(player, (ArrayList<Point>) objects[0]));//TODO
+        nm.whenMessageReceivedDo("CP1", objects -> cp2 = (int)objects[0]);
+        nm.whenMessageReceivedDo("CP2", objects -> cp1 = (int)objects[0]);
     }
 
     @Override
     public void update(float dt) {
         super.update(dt);
-
         if (nm.isTheServer()) {
             nm.sendMessageOnUDP("Time", time);
-            nm.sendMessageOnUDP("CP1", cases.get(player));
-            nm.sendMessageOnUDP("CP2", cases.get(playerTwo));
+            cp1 = cases.get(player).size();
+            cp2 = cases.get(playerTwo).size();
+            nm.sendMessageOnUDP("CP1", cp1);
+            nm.sendMessageOnUDP("CP2", cp2);
         }
+
+        player1Number.setText("" + cp1);
+        player2Number.setText("" + cp2);
     }
 
     @Override
@@ -95,6 +102,11 @@ public class PlayingCasesState extends PlayCases {
             nm.sendOnTCP("Pause");
             pauseSent = true;
         }
+    }
+
+    @Override
+    protected void translateCamera(int x, int y) {
+        translateCameraFollowingPlayer(x, y);
     }
 
     protected void goToPreviousMenu() {

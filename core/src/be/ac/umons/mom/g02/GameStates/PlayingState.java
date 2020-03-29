@@ -455,6 +455,15 @@ public class PlayingState extends GameState implements Observer {
      * @param y Vertical position of the player.
      */
     protected void translateCamera(int x, int y) {
+        translateCameraFollowingPlayer(x, y);
+    }
+
+    /**
+     * Move the camera in a way which follow the player.
+     * @param x Horizontal position of the player.
+     * @param y Vertical position of the player.
+     */
+    protected void translateCameraFollowingPlayer(int x, int y) { // Not direct in translateCamera for using later in extension
         double minX = (double)SHOWED_MAP_WIDTH / 2;
         double minY = (double)SHOWED_MAP_HEIGHT / 4;
 
@@ -464,6 +473,7 @@ public class PlayingState extends GameState implements Observer {
             cam.position.x = x;
         if (pmr.y > minY && pmr.y < mapHeight - minY)
             cam.position.y = y;
+
     }
 
     /**

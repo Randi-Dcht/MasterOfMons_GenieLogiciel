@@ -142,6 +142,11 @@ public class PlayingState extends PlayingStateDual {
         }
     }
 
+    @Override
+    protected void translateCamera(int x, int y) {
+        translateCameraFollowingPlayer(x, y);
+    }
+
     /**
      * Executed when the second player sends a character characteristics. It adds the character to the map.
      * @param name The character's name
