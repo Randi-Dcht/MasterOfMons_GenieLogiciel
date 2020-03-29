@@ -30,15 +30,15 @@ public class TakeFlag extends DualUnderQuest
 
     /**
      * This method is called when the action occurs
-     *
      * @param notify is the notification of the game
      */
     @Override
     public void evenActivity(Notification notify)
     {
-
     }
 
+
+    /***/
     @Override
     public ArrayList<Items> getListItems()
     {

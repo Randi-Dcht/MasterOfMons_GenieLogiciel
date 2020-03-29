@@ -149,8 +149,8 @@ public class PlayingStateDual extends PlayingState
         player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
         playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
-        for (Character pnj : pnjs)
-            pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        for (int i=0;i<Math.min(25,pnjs.size());i++)
+            pnjs.get(i).draw(sb, pnjs.get(i).getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnjs.get(i).getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
         for (MapObject mo : mapObjects)
             if (mo.getMap().equals(gmm.getActualMapName()))
@@ -185,9 +185,7 @@ public class PlayingStateDual extends PlayingState
 
 
     /***/
-    protected void drawAfterMaps()
-    {
-    }
+    protected void drawAfterMaps(){}
 
 
     /***/

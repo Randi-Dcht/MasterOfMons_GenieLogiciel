@@ -15,10 +15,15 @@ import java.util.Random;
 /***/
 public class PlayingFlag extends PlayingStateDual
 {
-    /***/
+    /**
+     * This is a base for the first people
+     */
     protected RectDual baseOne;
-    /***/
+    /**
+     * This is a base for the second people
+     */
     protected RectDual baseTwo;
+
 
     /***/
     public PlayingFlag(GraphicalSettings gs)
@@ -32,8 +37,8 @@ public class PlayingFlag extends PlayingStateDual
     public void init()
     {
         super.init();
-        baseOne = new RectDual(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+player.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()));
-        baseTwo = new RectDual(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+playerTwo.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY()));
+        baseOne = new RectDual(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
+        baseTwo = new RectDual(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
 
         PlaceFlag(new Point(10,33),new Point(10,32),new Point(10,31),new Point(11,33),new Point(12,33),new Point(13,33),new Point(14,33),new Point(15,33));
     }
