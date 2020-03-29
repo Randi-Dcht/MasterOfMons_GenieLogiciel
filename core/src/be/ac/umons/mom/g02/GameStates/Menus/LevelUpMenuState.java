@@ -28,7 +28,8 @@ public class LevelUpMenuState extends MenuState {
      * Where the points has been attributed.
      */
     protected int[] pointsAttributed = new int[Characteristics.values().length];
-    protected HashMap<TextBoxMenuItem, Characteristics> textBoxCharacteristicsMap;
+    protected HashMap<Characteristics, TextBoxMenuItem> textBoxCharacteristicsMap;
+    protected HashMap<Characteristics, SlidingBarMenuItem> slidingBarCharacteristicsMap;
     /**
      * What to do when the points are attributed.
      */
@@ -47,6 +48,7 @@ public class LevelUpMenuState extends MenuState {
     public void init() {
         super.init();
         textBoxCharacteristicsMap = new HashMap<>();
+        slidingBarCharacteristicsMap = new HashMap<>();
         transparentBackground = true;
         if (player == null)
             return;
@@ -58,9 +60,15 @@ public class LevelUpMenuState extends MenuState {
             menuItemList.add(mi = new NumberTextBoxMenuItem(gim, gs, String.format(gs.getStringFromId(ch.toString()) + " : %d + ", getCharacteristics(ch))));
             mi.getSize().x = -2;
             NumberTextBoxMenuItem ntmi = (NumberTextBoxMenuItem)mi;
-            textBoxCharacteristicsMap.put(ntmi, ch);
+            textBoxCharacteristicsMap.put(ch, ntmi);
             ntmi.getControl().setText("" + pointsAttributed[ch.ordinal()]);
-            ntmi.getControl().setOnTextChanged(() -> onTextChanged(ntmi));
+            ntmi.getControl().setOnTextChanged(() -> onTextChanged(ntmi, ch));
+
+            menuItemList.add(mi = new SlidingBarMenuItem(gim, gs, ""));
+            SlidingBarMenuItem sbmi = (SlidingBarMenuItem)mi;
+            sbmi.getControl().setMaxValue(pointToUse);
+            slidingBarCharacteristicsMap.put(ch, sbmi);
+            sbmi.getControl().setOnValueChanged(() -> onValueChanged(sbmi, ch));
 
             menuItemList.add(mi = new ButtonMenuItem(gim, gs,"---", () -> removeAllPoints(ch)));
             mi.getSize().x = -1;
@@ -153,22 +161,33 @@ public class LevelUpMenuState extends MenuState {
         this.onPointsAttributed = onPointsAttributed;
     }
 
-    protected void onTextChanged(TextBoxMenuItem tbmi) {
+    protected void onTextChanged(TextBoxMenuItem tbmi, Characteristics ch) {
         int[] points = Arrays.copyOf(pointsAttributed, pointsAttributed.length);
-        Characteristics ch = textBoxCharacteristicsMap.get(tbmi);
         if (tbmi.getControl().getText().equals(""))
             points[ch.ordinal()] = 0;
         else
             points[ch.ordinal()] = Integer.parseInt(tbmi.getControl().getText());
+        if (! checkPoints(points))
+            tbmi.getControl().setText("" + pointsAttributed[ch.ordinal()]);
+    }
+
+    protected void onValueChanged(SlidingBarMenuItem sbmi, Characteristics ch) {
+        int[] points = Arrays.copyOf(pointsAttributed, pointsAttributed.length);
+        points[ch.ordinal()] = sbmi.getControl().getActualValue();
+        if (! checkPoints(points))
+            sbmi.getControl().setActualValue(pointsAttributed[ch.ordinal()]);
+    }
+
+    protected boolean checkPoints(int[] points) {
         int usedPoints = computerUsedPoints(points);
         int availablePoints = player.getPointLevel();
-        if (usedPoints > availablePoints)
-            tbmi.getControl().setText("" + pointsAttributed[ch.ordinal()]);
-        else {
+        if (usedPoints - availablePoints <= 0) {
             pointsAttributed = points;
             pointToUse = availablePoints - usedPoints;
             refresh();
-        }
+            return true;
+        } else
+            return false;
     }
 
     protected int computerUsedPoints(int[] points) {
@@ -180,10 +199,15 @@ public class LevelUpMenuState extends MenuState {
 
     protected void refresh() {
         pointsToUseMi.setHeader(String.format(gs.getStringFromId("youHavePoints"), pointToUse));
-        for (TextBoxMenuItem tbmi : textBoxCharacteristicsMap.keySet()) {
-            Characteristics ch = textBoxCharacteristicsMap.get(tbmi);
+        for (Characteristics ch : Characteristics.values()) {
+            TextBoxMenuItem tbmi = textBoxCharacteristicsMap.get(ch);
             tbmi.setHeader(String.format(gs.getStringFromId(ch.toString()) + " : %d + ", getCharacteristics(ch)));
             tbmi.getControl().setText("" + pointsAttributed[ch.ordinal()]);
+
+            SlidingBarMenuItem sbmi = slidingBarCharacteristicsMap.get(ch);
+            if (sbmi.getControl().getActualValue() != pointsAttributed[ch.ordinal()])
+                sbmi.getControl().setActualValue(pointsAttributed[ch.ordinal()]);
+            sbmi.getControl().setMaxSlidingValue(pointToUse + pointsAttributed[ch.ordinal()]);
         }
     }
 

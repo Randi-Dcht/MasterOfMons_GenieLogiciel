@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.SlidingBar;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
@@ -58,15 +59,21 @@ public class CreatePlayerMenuState extends MenuState {
         super.init();
         TextBoxMenuItem nameMi = new TextBoxMenuItem(gim, gs, gs.getStringFromId("charName"));
         TextBoxMenuItem levelMi = new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("charLevel"));
+        SlidingBarMenuItem levelSBMI = new SlidingBarMenuItem(gim, gs,"");
         levelMi.getControl().setText("" + 1);
         levelMi.getControl().setOnTextChanged(() -> {
             if (levelMi.getControl().getText().equals(""))
                 return;
-            if (Integer.parseInt(levelMi.getControl().getText()) < 1)
+            int val = Integer.parseInt(levelMi.getControl().getText());
+            if (val < 1)
                 levelMi.getControl().setText("" + 1);
-            if (Integer.parseInt(levelMi.getControl().getText()) > 40)
+            if (val > 40)
                 levelMi.getControl().setText("" + 40);
+            levelSBMI.getControl().setActualValue(val);
         });
+        levelSBMI.getControl().setMinValue(1);
+        levelSBMI.getControl().setMaxValue(40);
+        levelSBMI.getControl().setOnValueChanged(() -> levelMi.getControl().setText("" + levelSBMI.getControl().getActualValue()));
         ScrollListChooserMenuItem genderMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charGender"));
         ScrollListChooserMenuItem typeMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charType"));
         ScrollListChooserMenuItem difficultyMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("difficulty"));
@@ -74,6 +81,7 @@ public class CreatePlayerMenuState extends MenuState {
                 new TitleMenuItem(gs, gs.getStringFromId("newGame")),
                 nameMi,
                 levelMi,
+                levelSBMI,
                 genderMi,
                 typeMi,
                 difficultyMi,

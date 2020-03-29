@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.GameStates;
 
+import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
@@ -35,7 +36,8 @@ public class LoadingStateTest {
                 gim = Mockito.mock(GameInputManager.class);
                 gsm = Mockito.mock(GameStateManager.class);
                 gs = Mockito.mock(GraphicalSettings.class);
-                Mockito.when(gs.getBackgroundColor()).thenReturn(new Color());
+                gcm = Mockito.mock(GameColorManager.class);
+                Mockito.when(gcm.getColorFor("background")).thenReturn(new Color());
                 am = Mockito.mock(AssetManager.class);
                 sb = Mockito.mock(SpriteBatch.class);
                 gmm = Mockito.mock(GameMapManager.class);
