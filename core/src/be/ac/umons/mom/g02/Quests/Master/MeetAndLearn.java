@@ -101,7 +101,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getGraphic().getStringFromId("nameMeetLearn");
+        return GraphicalSettings.getStringFromId("nameMeetLearn");
     }
 
 

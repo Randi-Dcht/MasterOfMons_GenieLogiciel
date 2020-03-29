@@ -104,7 +104,7 @@ public class SuccessfulYear extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getGraphic().getStringFromId("nameSuccessFulYear");
+        return GraphicalSettings.getStringFromId("nameSuccessFulYear");
     }
 
 
