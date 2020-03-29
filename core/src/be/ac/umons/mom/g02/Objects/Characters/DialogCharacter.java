@@ -5,7 +5,10 @@ import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -84,7 +87,7 @@ public class DialogCharacter
         HashMap<String,ArrayList<String>> list = new HashMap<>();
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal(PATH + name.getFile())))));
+            BufferedReader line = new BufferedReader(Gdx.files.internal(PATH + name.getFile()).reader());
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )

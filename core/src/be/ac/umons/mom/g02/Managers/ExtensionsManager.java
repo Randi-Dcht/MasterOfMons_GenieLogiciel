@@ -85,7 +85,7 @@ public class ExtensionsManager {
         BufferedReader br;
         try {
             FileHandle ef = Gdx.files.getFileHandle("extensions", Files.FileType.Internal);
-            br = new BufferedReader(new FileReader(ef.file()));
+            br = new BufferedReader(ef.reader());
             Extension ext = null;
             int actualLine = 0;
             String line;

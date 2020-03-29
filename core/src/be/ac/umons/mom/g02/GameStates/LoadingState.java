@@ -16,6 +16,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.Arrays;
+
 /**
  * The loading state where all resources are loaded for the further playing state.
  * @author Guillaume Cardoen
@@ -153,8 +157,10 @@ public class LoadingState extends GameState {
     public void initGame() {
         ExtensionsManager em = ExtensionsManager.getInstance();
         em.generateLoadLists();
-        for (FileHandle f : Gdx.files.internal("Tmx/").list())
+        System.out.println(Arrays.toString(Gdx.files.internal("Tmx").list()));
+        for (FileHandle f : Gdx.files.internal("Tmx/").list(file -> file.isFile() && file.getName().toLowerCase().endsWith(".tmx")))
             GameMapManager.getInstance().addMapsToLoad(f.path());
+        GameMapManager.getInstance().addMapsToLoad("Tmx/Umons_Nimy.tmx");
         GameMapManager.getInstance().addMapsToLoad(em.getMapsToLoad().toArray(new String[0]));
         gs.addFilesToLoad(em.getFilesToLoad().toArray(new LoadFile[0]));
     }

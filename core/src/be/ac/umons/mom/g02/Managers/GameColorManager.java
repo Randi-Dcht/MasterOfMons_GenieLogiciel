@@ -52,7 +52,7 @@ public class GameColorManager {
      */
     public void saveColorsMap() {
         try {
-            FileHandle ef = Gdx.files.getFileHandle("colors", Files.FileType.Internal);
+            FileHandle ef = Gdx.files.getFileHandle("colors", Files.FileType.External);
             BufferedWriter bw = new BufferedWriter(new FileWriter(ef.file()));
             for (String id : colorsMap.keySet())
                 bw.write(String.format("%s=%s\n", id, colorsMap.get(id).toString()));

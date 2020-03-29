@@ -1,6 +1,8 @@
 package be.ac.umons.mom.g02.Managers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.LocalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -57,7 +59,7 @@ public class GameMapManager {
 
     protected GameMapManager() {
         tiledMapsRenderer = new HashMap<>();
-        mapLoader = new TmxMapLoader(new LocalFileHandleResolver());
+        mapLoader = new TmxMapLoader();
         am = new AssetManager();
         am.setLoader(TiledMap.class, mapLoader);
     }
@@ -108,6 +110,7 @@ public class GameMapManager {
             for (String name : am.getAssetNames()) {
                 if (am.getAssetType(name).equals(TiledMap.class))
                     tiledMapsRenderer.put(name, new IsometricTiledMapRenderer(am.get(name)));
+                System.out.println("Loaded " + name);
             }
         }
         return finish;
@@ -118,8 +121,11 @@ public class GameMapManager {
      * @param mapsPath The path of the maps to load.
      */
     public void addMapsToLoad(String... mapsPath) {
-        for (String map : mapsPath)
-            am.load(map, TiledMap.class);
+        for (String map : mapsPath) {
+            am.load(Gdx.files.internal(map).path(), TiledMap.class);
+
+            System.out.println("To load : " + map);
+        }
     }
 
     /**

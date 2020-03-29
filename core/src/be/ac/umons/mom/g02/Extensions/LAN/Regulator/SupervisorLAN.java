@@ -17,7 +17,9 @@ import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -70,8 +72,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
     @Override
     public void saveGame(String path) {
-
-        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path))))) {
+        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(Gdx.files.external(path).write(false)))) {
             sortie.writeObject(createSave());
         } catch (IOException e) {
             Gdx.app.error("Error in the saving the game (out)", e.getMessage());

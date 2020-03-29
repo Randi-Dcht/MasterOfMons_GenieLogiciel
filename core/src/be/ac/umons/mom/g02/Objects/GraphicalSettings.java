@@ -1,11 +1,13 @@
 package be.ac.umons.mom.g02.Objects;
 
+import be.ac.umons.mom.g02.Helpers.FileHelper;
 import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Enums.Languages;
 import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Objects;
+import java.util.logging.FileHandler;
 
 /**
  * Represent the graphical settings of the game.
@@ -167,14 +170,13 @@ public class GraphicalSettings {
      * Prepare the asset managers to load every needed resources.
      */
     private void prepareAssetManagerForLoading() {
-        File[] fi = Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory);
-        for (File folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory))) {
-            for (File f : Objects.requireNonNull(folder.listFiles(File::isFile))) {
-                assetManager.load(f.getPath(), Texture.class);
+        for (FileHandle folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").list(File::isDirectory))) {
+            for (FileHandle f : Objects.requireNonNull(folder.list(File::isFile))) {
+                assetManager.load(f.path(), Texture.class);
             }
         }
-        for (File f : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isFile))) {
-            assetManager.load(f.getPath(), Texture.class);
+        for (FileHandle f : Objects.requireNonNull(Gdx.files.internal("Pictures/").list(File::isFile))) {
+            assetManager.load(f.path(), Texture.class);
         }
     }
 

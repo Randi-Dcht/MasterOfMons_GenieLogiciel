@@ -34,7 +34,7 @@ public class RandomName
        String vertical;
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal(pathName)))));
+            BufferedReader line = new BufferedReader(Gdx.files.internal(pathName).reader());
             while ((vertical = line.readLine()) != null)
             {
                 listName.add(vertical);
