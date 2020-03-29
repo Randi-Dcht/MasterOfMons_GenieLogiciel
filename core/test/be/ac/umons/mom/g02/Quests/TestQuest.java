@@ -18,7 +18,7 @@ public class TestQuest
     @Test
     void TestnextQuest()
     {
-        SuperviserNormally.getSupervisor().newParty("Test", Type.beefy,null, Gender.Men, Difficulty.Easy);
+        SuperviserNormally.getSupervisor().newParty("Test", Type.beefy, Gender.Men, Difficulty.Easy);
         People p = SuperviserNormally.getSupervisor().getPeople();
         MasterQuest mq = new MyFirstYear(p,null,Difficulty.Easy);
         mq.nextQuest();
@@ -34,12 +34,11 @@ public class TestQuest
     @Test
     void TestNextWithLevel()
     {
-        SuperviserNormally.getSupervisor().newParty("Test",Type.beefy,null,Gender.Men,Difficulty.Easy);
+        SuperviserNormally.getSupervisor().newParty("Test",Type.beefy,Gender.Men,Difficulty.Easy);
         People p = SuperviserNormally.getSupervisor().getPeople();
         People pTest = new People("Tesst", Type.normal, Gender.Men ,Difficulty.Easy);
         SuccessfulYear quest = new SuccessfulYear(pTest,null,Difficulty.Easy);
         quest.addProgress(100);
-        //assertSame(pTest.getQuest(),quest,"The level of people doesn't to give the child quest"); TODO pourquoi ?
         assertNull(quest.getChildren());
         for (int i = 0; i < 60;i++){pTest.upLevel();}
         Assertions.assertNotSame(pTest.getQuest(),quest,"The level of people is goog to give the child quest");

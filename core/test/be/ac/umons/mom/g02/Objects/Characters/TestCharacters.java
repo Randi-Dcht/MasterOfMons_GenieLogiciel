@@ -49,7 +49,7 @@ public class TestCharacters
     void testingAttack()
     {
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
-        sp.newParty("Test",Type.beefy,null,Gender.Men,Difficulty.Easy);
+        sp.newParty("Test",Type.beefy,Gender.Men,Difficulty.Easy);
         People p1 = sp.getPeople();
         Mobile p2 = new Mobile("Testing",Bloc.BA3, MobileType.Athletic, Actions.Never, NameDialog.Lambda);
 

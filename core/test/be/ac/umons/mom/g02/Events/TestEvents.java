@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.ChangeQuest;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,11 +36,11 @@ public class TestEvents
     @Test
     public void checkNewParty()
     {
+        SuperviserNormally.initNormallyGame();
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
-        //assertNull(sp.getPeople(),"the people doesn't create"); //TODO pourquoi?
-        assertNotNull(sp.getEvent(),"the event doesn't create");
-        sp.newParty("Test", Type.beefy,null, Gender.Men, Difficulty.Easy); /*doesn't test here the saving of graphic so gs == null*/
-        assertNotNull(sp.getPeople(),"check if the people instance is create");
+        assertNotNull(Supervisor.getEvent(),"the event doesn't create");
+        sp.newParty("Test", Type.beefy,Gender.Men,Difficulty.Easy); /*doesn't test here the saving of graphic so gs == null*/
+        assertNotNull(Supervisor.getPeople(),"check if the people instance is create");
         Assertions.assertNotNull(sp.getTime(),"check time is create ");
     }
 

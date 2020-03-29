@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Regulator;
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class SupervisorTest extends SuperviserNormally
         SuperviserNormally.initNormallyGame();
         assertEquals(Supervisor.getSupervisor().getClass(), SuperviserNormally.class,"Check if the supervisor class is the single people");
 
-        SupervisorMultiPlayer.initMultiPlayerGame();
+        SupervisorDual.initDual();
         assertEquals(Supervisor.getSupervisor().getClass(), SupervisorMultiPlayer.class,"Check if the supervisor class is the two peoples");
     }
 
@@ -31,7 +32,7 @@ public class SupervisorTest extends SuperviserNormally
         assertNull(listMoving);
         /*after init new party*/
         SuperviserNormally.initNormallyGame();
-        newParty("Test", Type.athletic,null, Gender.Men, Difficulty.Easy);
+        newParty("Test", Type.athletic,Gender.Men, Difficulty.Easy);
         assertNotNull(playerOne);
         assertNotNull(listItems);
         assertNotNull(listMobile);
