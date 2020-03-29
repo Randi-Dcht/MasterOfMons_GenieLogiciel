@@ -1,11 +1,11 @@
 Test
 .mainClass TestClass
-.load testAssets/File1 com.badlogic.gdx.graphics.Texture
-.load File2 com.badlogic.gdx.graphics.Texture
+.file testAssets/File1 com.badlogic.gdx.graphics.Texture
+.file File2 com.badlogic.gdx.graphics.Texture
 .map testAssets/Maps/Map1
 .map Maps/Map2
 .canActivateWith Test2
 Test2
 .mainClass Test2Class
-.load testAssets/File3 com.badlogic.gdx.graphics.Texture
+.file testAssets/File3 com.badlogic.gdx.graphics.Texture
 .map testAssets/Maps/Map1

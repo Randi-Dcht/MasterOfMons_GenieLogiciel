@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 /**
  * Testing class for the choosing of the extension
@@ -19,11 +21,26 @@ public class ExtensionsSelectorTest {
     ExtensionsManager em;
 
     @BeforeEach
-    public void init() {
+    public void init() throws FileNotFoundException {
         Gdx.files = Mockito.mock(Files.class);
         FileHandle fh = Mockito.mock(FileHandle.class);
         Mockito.when(fh.file()).thenReturn(new File("testAssets/extensions"));
         Mockito.when(Gdx.files.getFileHandle("extensions", Files.FileType.Internal)).thenReturn(fh);
+        Mockito.when(fh.reader()).thenReturn(new FileReader("testAssets/extensions"));
+        Mockito.when(Gdx.files.internal("testAssets/Maps/Map1")).thenReturn(fh = Mockito.mock(FileHandle.class));
+        Mockito.when(fh.exists()).thenReturn(true);
+        Mockito.when(Gdx.files.internal("Maps/Map2")).thenReturn(fh = Mockito.mock(FileHandle.class));
+        Mockito.when(fh.exists()).thenReturn(false);
+        Mockito.when(Gdx.files.internal("testAssets/File1")).thenReturn(fh = Mockito.mock(FileHandle.class));
+        Mockito.when(fh.exists()).thenReturn(true);
+        Mockito.when(fh.path()).thenReturn("testAssets/File1");
+        Mockito.when(Gdx.files.internal("File2")).thenReturn(fh = Mockito.mock(FileHandle.class));
+        Mockito.when(fh.exists()).thenReturn(false);
+        Mockito.when(Gdx.files.internal("testAssets/File3")).thenReturn(fh = Mockito.mock(FileHandle.class));
+        Mockito.when(fh.exists()).thenReturn(true);
+        Mockito.when(fh.path()).thenReturn("testAssets/File3");
+        Mockito.when(Gdx.files.internal("testAssets/Maps/Map1")).thenReturn(fh = Mockito.mock(FileHandle.class));
+        Mockito.when(fh.exists()).thenReturn(true);
         Gdx.app = Mockito.mock(Application.class);
 
         em = ExtensionsManager.getInstance();
@@ -41,8 +58,8 @@ public class ExtensionsSelectorTest {
         Assertions.assertEquals("Test2", ext2.extensionName);
         Assertions.assertEquals(1, ext1.dirsFileToLoad.size());
         Assertions.assertEquals(1, ext2.dirsFileToLoad.size());
-        Assertions.assertEquals("testAssets/File1", ext1.dirsFileToLoad.get(0).getFile().getPath().replace("\\", "/"));
-        Assertions.assertEquals("testAssets/File3", ext2.dirsFileToLoad.get(0).getFile().getPath().replace("\\", "/"));
+        Assertions.assertEquals("testAssets/File1", ext1.dirsFileToLoad.get(0).getFile().path().replace("\\", "/"));
+        Assertions.assertEquals("testAssets/File3", ext2.dirsFileToLoad.get(0).getFile().path().replace("\\", "/"));
         Assertions.assertTrue(ext1.mapsToLoad.contains("testAssets/Maps/Map1"));
         Assertions.assertFalse(ext1.mapsToLoad.contains("Maps/Map2"));
         Assertions.assertTrue(ext2.mapsToLoad.contains("testAssets/Maps/Map1"));

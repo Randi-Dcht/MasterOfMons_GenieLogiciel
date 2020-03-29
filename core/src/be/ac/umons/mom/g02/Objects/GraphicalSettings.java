@@ -27,38 +27,38 @@ public class GraphicalSettings {
     /**
      * The font used to draw titles.
      */
-    private BitmapFont titleFont;
+    protected BitmapFont titleFont;
     /**
      * The font used to draw text in general.
      */
-    private BitmapFont normalFont;
+    protected BitmapFont normalFont;
     /**
      * The font used to draw quest's name.
      */
-    private BitmapFont questFont;
+    protected BitmapFont questFont;
     /**
      * The font used to draw small text.
      */
-    private BitmapFont smallFont;
+    protected BitmapFont smallFont;
     /**
      * An asset manager to load assets.
      */
-    private AssetManager assetManager;
+    protected AssetManager assetManager;
     /**
      * A BitmapFont generator.
      */
-    private FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
+    protected FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
 
     /**
      * The bundle containing all the strings to use in the game in the chosen language.
      */
-    private static I18NBundle bundle;
+    protected static I18NBundle bundle;
     /**
      * If the map coordinates needs to be showed to the user.
      */
-    private boolean showMapCoordinates = false;
+    protected boolean showMapCoordinates = false;
 
-    GameColorManager gcm;
+    protected GameColorManager gcm;
 
     public GraphicalSettings() {
         init();
@@ -204,6 +204,8 @@ public class GraphicalSettings {
      */
     public static String getStringFromId(String id) {
         try {
+            if (bundle == null) // Test case
+                return "Error";
             return bundle.get(id);
         } catch (MissingResourceException e) {
             Gdx.app.error("GraphicalSettings", "Bundle key not found", e);
