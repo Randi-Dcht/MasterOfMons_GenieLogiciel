@@ -57,6 +57,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
     public SupervisorDual()
     {
         super();
+        setMustPlaceItem(false);
     }
 
     /**

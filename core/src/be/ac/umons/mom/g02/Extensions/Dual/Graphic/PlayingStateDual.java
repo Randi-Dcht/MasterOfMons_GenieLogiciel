@@ -14,6 +14,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.OnMapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -61,7 +62,7 @@ public class PlayingStateDual extends PlayingState
         super.init();
 
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-            deleteFlag(new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10));
+            deleteFlag(new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
@@ -104,7 +105,10 @@ public class PlayingStateDual extends PlayingState
     {
         ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
         for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
-            addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
+                addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
+
+       // for (OnMapObject m : mapObjects)
+       //     System.out.println(m.getPosX() + " " + m.getPosY());
     }
 
     /***/
@@ -136,6 +140,9 @@ public class PlayingStateDual extends PlayingState
         int topBarHeight = 10;
 
         gmm.render();
+
+        drawAfterMaps();
+
         player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
         playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
@@ -171,8 +178,11 @@ public class PlayingStateDual extends PlayingState
         pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -objectSize.x-10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
         endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +objectSize.x+10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
 
-
     }
+
+
+    /***/
+    protected void drawAfterMaps(){}
 
 
     /***/

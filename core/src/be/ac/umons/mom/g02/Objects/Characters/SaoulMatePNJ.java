@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * This class define the soul mate for the player in this quest
  */
-public class SaoulMatePNJ extends Mobile //TODO update this class
+public class SaoulMatePNJ extends Mobile
 {
     /**
      * This variable is the percent of the love the player

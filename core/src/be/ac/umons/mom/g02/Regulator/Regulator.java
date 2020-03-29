@@ -144,14 +144,11 @@ public class Regulator implements Observer
             changeQuest();
             chgQuest = false;
         }
-        if (informPlace && this.maps.contains(maps)) // TODO : informPlace --> this.maps.size() != 0 ??? Une variable en moins :)
+        if (this.maps.size() !=0 && this.maps.contains(maps))
         {
             push(maps.getInformation());
             this.maps.remove(maps);
         }
-
-        if (this.maps.size()==0)
-           informPlace = false;
     }
 
 
@@ -173,7 +170,7 @@ public class Regulator implements Observer
         if (time.getDate().getHour() >= 22 && player.getMaps().equals(Maps.Kot))
         {
             time.refreshTime(0,8,0);
-            player.addEnergy(90); //TODO calculer difference
+            player.addEnergy(90);
         }
         if (player.getMaps().equals(Maps.Kot) && player.getPlace().equals(Places.Bed))
         {
@@ -193,7 +190,7 @@ public class Regulator implements Observer
         if (direction.equals(searchDirection))
         {
             manager.getEvent().notify(new EntryPlaces(associatePlace.get(place)));
-            manager.getEvent().notify(new DisplayMessage(place + "("+player.getMaps().name()+")","PlaceMaps"));//tODO remove
+            manager.getEvent().notify(new DisplayMessage(place + "("+player.getMaps().name()+")","PlaceMaps"));
             if(searchDirection.equals("IN"))
                 searchDirection="OUT";
             else

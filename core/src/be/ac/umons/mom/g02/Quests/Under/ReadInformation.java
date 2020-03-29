@@ -54,7 +54,7 @@ public class ReadInformation extends UnderQuest
      * This method allows to check if the people go to read the information in the all Maps
      * @param id is the id of the other information
      */
-    private void checkRead(String id)//TODO analyse id
+    private void checkRead(String id)
     {
         if (!people.getMaps().equals(Maps.Kot) && !memoryIdRead.contains(id))
         {

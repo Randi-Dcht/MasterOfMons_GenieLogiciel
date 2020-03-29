@@ -41,8 +41,8 @@ public class Cases
         this.gs = gs;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
-        this.positionX =  x ;
-        this.positionY =  y ;
+        this.positionX = MasterOfMonsGame.WIDTH/2  +  x ;
+        this.positionY = MasterOfMonsGame.HEIGHT/2 +  y ;
         colorPlayer = color;
     }
 
@@ -50,16 +50,19 @@ public class Cases
     /**
      * Draw the cases on the maps with the color of the player
      */
-    public void draw()
+    public void draw(int camX, int camY)
     {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(colorPlayer);
-        sr.rect(positionX, positionY, 64, 32);
+        sr.rect(positionX-camX, positionY-camY, 64, 32);
         sr.end();
-
-        // System.out.println(positionX + ";" + positionY + "  /  " + MasterOfMonsGame.WIDTH/2 + ";" + MasterOfMonsGame.HEIGHT/2);
     }
 
+    @Override
+    public String toString()
+    {
+        return "Cases{"+  positionX + ";"+ positionY +"}";
+    }
 
     /**
      * This method allows to dispose the cases

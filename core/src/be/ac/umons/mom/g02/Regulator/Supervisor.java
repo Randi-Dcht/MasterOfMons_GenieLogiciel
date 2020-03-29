@@ -30,7 +30,6 @@ import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Characters.Social;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -545,14 +544,6 @@ public  abstract class Supervisor implements Observer
         for (Items it : mb.getInventory())
             playerOne.pushObject(it);//TODO check !
 
-
-        if (haveMoney)
-        {
-            playerOne.addMoney(mb.getMyMoney());
-            event.notify(new DisplayMessage("You are + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
-        }
-
-
         if (mb.equals(memoryMobile))
             memoryMobile = null;
     }
@@ -758,17 +749,17 @@ public  abstract class Supervisor implements Observer
      * @param player1 is the first character
      * @param player2 is the second character
      */
-    public void meetCharacter(Social player1, Social player2)//TODO upgrade pour moins de clss
+    public void meetCharacter(Character player1, Character player2)//TODO upgrade pour moins de clss
     {
-        if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
+        if ((player1).getType().equals(Character.TypePlayer.Computer))
         {
             event.notify(new MeetOther(memoryMobile = (Mobile)player1));
-            dialog= listDialog.get(((Mobile)player1).getDialog());//TODO
+            dialog= listDialog.get(((Mobile)player1).getDialog());
         }
-        if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
+        if ((player2).getType().equals(Character.TypePlayer.Computer))
         {
             event.notify(new MeetOther(memoryMobile = (Mobile)player2));
-            dialog= listDialog.get(((Mobile)player2).getDialog());//TODO
+            dialog= listDialog.get(((Mobile)player2).getDialog());
         }
         Actions action = player1.getAction().comparable(player2.getAction());
         if (action.equals(Actions.Attack))

@@ -76,7 +76,7 @@ public class MeetAndLearn extends MasterQuest
      * This method return the mobile for this quest
      */
     @Override
-    protected void createListMobiles() //TODO optimiser cela
+    protected void createListMobiles()
     {
         listMobs = new ArrayList<>();
         MobileType[] type = MobileType.values();
