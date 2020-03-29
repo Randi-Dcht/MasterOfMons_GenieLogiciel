@@ -55,7 +55,11 @@ public class DisconnectedMenuState extends MenuState {
             nm.acceptConnection();
             nm.startBroadcastingMessage("Game begun");
             nm.whenMessageReceivedDo("PI", null);
-            nm.whenMessageReceivedDo("Loaded", (objects) -> gsm.removeAllStateUntil(this));
+            nm.whenMessageReceivedDo("Loaded", (objects) -> {
+                gsm.removeAllStateUntil(this);
+                nm.sendOnTCP("Loaded");
+                nm.whenMessageReceivedDo("Loaded", null);
+            });
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
                 ogds.setText(String.format(GraphicalSettings.getStringFromId("magicNumber"), magicNumber));

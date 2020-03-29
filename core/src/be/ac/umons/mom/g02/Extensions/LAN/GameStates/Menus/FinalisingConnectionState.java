@@ -94,7 +94,7 @@ public class FinalisingConnectionState extends MenuState {
     /**
      * Go to the loading state
      */
-    public static  void goToLoading() {
+    public static void goToLoading() {
         GameStateManager gsm = GameStateManager.getInstance();
         try {
             NetworkManager nm = NetworkManager.getInstance();
