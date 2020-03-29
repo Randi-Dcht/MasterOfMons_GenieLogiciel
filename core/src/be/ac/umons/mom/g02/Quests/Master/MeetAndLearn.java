@@ -83,7 +83,7 @@ public class MeetAndLearn extends MasterQuest
                 new Actions[]{Actions.Dialog,Actions.Dialog,Actions.Attack},
                 new NameDialog[]{NameDialog.Lambda,NameDialog.Student,NameDialog.Lambda},
                 new Maps[]{null,null,Maps.Mons},
-                true));
+                false));
 
     }
 

@@ -1,9 +1,6 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Quests.Under.*;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
@@ -76,14 +73,15 @@ public class SuccessfulYear extends MasterQuest
      * This method return the mobile for this quest
      */
     @Override
-    protected void createListMobiles()
+    protected void createListMobiles() throws Exception
     {
         listMobs = new ArrayList<>();
-        MobileType[] type = MobileType.values();
-        /*for(int i=0; i < 30;i++)
-            list.add(new StudPNJ(getBloc(), type[new Random().nextInt(type.length)]));
-        for(int i = 30; i < 40; i++)
-            list.add(new FightPNJ(getBloc(), MobileType.Athletic));*/
+        listMobs.addAll(createRdMobile(new int[]{10,25,25,30,20},
+                new MobileType[]{MobileType.Lambda,MobileType.Loser,MobileType.Strong,MobileType.Loser,MobileType.Strong},
+                new Actions[]{Actions.Dialog,Actions.Dialog,Actions.Attack,Actions.Attack,Actions.Attack},
+                new NameDialog[]{NameDialog.Lambda,NameDialog.Student,NameDialog.Lambda,NameDialog.Lambda,NameDialog.Lambda},
+                new Maps[]{null,null,Maps.Mons,Maps.GrandAmphi,Maps.Warocque},
+                true));
     }
 
 
