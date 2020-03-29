@@ -191,7 +191,13 @@ public class PlayingStateDual extends PlayingState
 
 
     /***/
-    protected void drawAfterMaps(){}
+    protected void drawAfterMaps()
+    {
+        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
+        {
+            //TODO
+        }
+    }
 
 
     /***/

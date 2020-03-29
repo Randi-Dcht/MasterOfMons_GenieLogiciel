@@ -547,21 +547,26 @@ public class People extends Character implements Serializable, Observer, FrameTi
         return invincible;
     }
 
+
     /**
      * @param energy The energy of this player
      */
-    public void setEnergy(double energy) {
+    public void setEnergy(double energy)
+    {
         this.energy = energy;
         Supervisor.getEvent().notify(new EnergyChanged(this, energy));
     }
 
+
     /**
      * @param experience The experience of this player
      */
-    public void setExperience(double experience) {
+    public void setExperience(double experience)
+    {
         this.experience = experience;
         Supervisor.getEvent().notify(new ExperienceChanged(this, experience));
     }
+
 
     /**
      * This method return the type of the first action when he meet other character
@@ -571,6 +576,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         return Actions.Dialog;
     }
+
 
     /**
      * This method allows to see the notification in the game
