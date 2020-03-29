@@ -72,7 +72,6 @@ public class GraphicalSettings {
         assetManager = new AssetManager();
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
-        prepareAssetManagerForLoading();
         refreshColors();
     }
 
@@ -164,20 +163,6 @@ public class GraphicalSettings {
      */
     public BitmapFont getQuestFont() {
         return questFont;
-    }
-
-    /**
-     * Prepare the asset managers to load every needed resources.
-     */
-    private void prepareAssetManagerForLoading() {
-        for (FileHandle folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").list(File::isDirectory))) {
-            for (FileHandle f : Objects.requireNonNull(folder.list(File::isFile))) {
-                assetManager.load(f.path(), Texture.class);
-            }
-        }
-        for (FileHandle f : Objects.requireNonNull(Gdx.files.internal("Pictures/").list(File::isFile))) {
-            assetManager.load(f.path(), Texture.class);
-        }
     }
 
     /**
