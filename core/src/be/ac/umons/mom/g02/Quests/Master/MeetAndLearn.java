@@ -25,7 +25,7 @@ public class MeetAndLearn extends MasterQuest
     /**
      * This is the goals of this quest
      */
-    final UnderQuest[] underQuest = {new LookSoulMate(this,25,people),new CheckStudy(this,25,people), new GoToPriorityLesson(this,25,people),new SuccesfulYear(this,25,people)};
+    final UnderQuest[] underQuest = {new LookSoulMate(this,30,people),new CheckStudy(this,40,people),new SuccesfulYear(this,30,people)};
 
 
     /**
@@ -45,7 +45,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public void nextQuest()
     {
-        newQuest(new PreparedCompany(people,this,difficulty));
+        //TODO finish
     }
 
 
