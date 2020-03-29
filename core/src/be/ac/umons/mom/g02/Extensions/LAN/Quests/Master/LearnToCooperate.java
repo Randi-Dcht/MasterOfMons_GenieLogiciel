@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.Quests.Master;
 
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Teleport;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.Boss;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Under.EndPuzzle;
@@ -40,6 +41,7 @@ public class LearnToCooperate extends MasterQuest {
     @Override
     public void nextQuest() {
         newQuest(new MyFirstYear(people,this,difficulty));
+        Supervisor.getEvent().notify(new Teleport("Tmx/Umons_Nimy.tmx"));
         if (! alreadySent) {
             try {
                 NetworkManager.getInstance().sendOnTCP("EMQ");
