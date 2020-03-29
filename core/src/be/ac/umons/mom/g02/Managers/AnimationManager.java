@@ -43,6 +43,19 @@ public class AnimationManager {
     }
 
     /**
+     * Add the animation <code>anim</code> under a random name
+     * @param anim Animation to add.
+     */
+    public void addAnAnimation(Animation anim) {
+        String name = "a";
+        Random rand = new Random();
+        while (animations.containsKey(name)) {
+            name += (char)('a' + rand.nextInt('z'));
+        }
+        animations.put(name, anim);
+    }
+
+    /**
      * Update all the animations with the given delta-time.
      * @param dt The delta-time.
      */

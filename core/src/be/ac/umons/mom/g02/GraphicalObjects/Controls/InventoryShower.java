@@ -173,7 +173,8 @@ public class InventoryShower extends Control {
         setDuringAnimationWidth(getWidth() / 5);
         setDuringAnimationBackgroundOpacity(1);
         da.setRunningAction(() -> setDuringAnimationHeight((float)(getHeight() * da.getActual())));
-        am.addAnAnimation("InventoryShowerHeightAnimation", da);
+
+        am.addAnAnimation(da);
         DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
         da2.setEndingAction(this::finishAnimation);
         da2.setRunningAction(() ->  {
@@ -181,7 +182,7 @@ public class InventoryShower extends Control {
             setDuringAnimationItemWidth((float)(itemWidth * da2.getActual()));
             setDuringAnimationForegroundOpacity(da2.getActual());
         });
-        da.setEndingAction(() -> am.addAnAnimation("InventoryShowerWidthAnimation", da2));
+        da.setEndingAction(() -> am.addAnAnimation(da2));
     }
 
     @Override
