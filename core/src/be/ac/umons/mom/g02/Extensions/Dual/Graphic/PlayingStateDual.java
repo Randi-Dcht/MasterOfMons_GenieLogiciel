@@ -90,7 +90,10 @@ public class PlayingStateDual extends PlayingState
 
         inventoryShowerTwo = new InventoryShower(gs, playerTwo);
 
-        adv.put(player,playerTwo);adv.put(playerTwo,player);
+        System.out.println(player.getCharacteristics().getInventory() + " / " + playerTwo.getCharacteristics().getInventory());
+
+        adv.put(player,playerTwo);
+        adv.put(playerTwo,player);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {

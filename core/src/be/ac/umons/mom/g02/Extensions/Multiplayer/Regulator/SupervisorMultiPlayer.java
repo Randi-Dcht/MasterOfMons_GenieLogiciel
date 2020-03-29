@@ -1,8 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -10,7 +7,6 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -109,27 +105,6 @@ public abstract class SupervisorMultiPlayer extends Supervisor
 
     public void addADeathToIgnore(Mobile mb) {
         deathToIgnore.add(mb);
-    }
-
-
-    /**
-     * This method allows to load a old player in the extension game
-     * @param name   is the name of the saving
-     * @param player is the number of player
-     */
-    public void loadPlayer(String name, int player)//TODO implement
-    {
-
-    }
-
-
-    /**
-     * This method returns the second player in the game
-     * @return the second player
-     */
-    public People getSecondPeople()
-    {
-        return playerTwo;
     }
 
 }
