@@ -94,7 +94,7 @@ public class LifeBar extends ProgressBar {
                 textToShow = "-" + (int)((diffPercent - da.getActual()) * maxValue);
             });
             da.setEndingAction(() -> differenceToShow = 0);
-            AnimationManager.getInstance().addAnAnimation("LifeBarAnim" + new Random().nextInt(), da); // random for multiple bar possibility
+            AnimationManager.getInstance().addAnAnimation(da); // random for multiple bar possibility
             timeGone = 0;
         }
     }

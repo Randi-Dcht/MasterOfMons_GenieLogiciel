@@ -621,7 +621,7 @@ public  abstract class Supervisor implements Observer
         int x=0,y=0;
         int toMove = (int)Math.round(memoryMobile.getSpeed() * dt * 64);
 
-        if(Math.sqrt(Math.pow(displaceX, 2) + Math.pow(displaceY, 2)) / 2 > graphical.getAttackRange()) { // /2 just to be sure it isn't at one pixel
+        if(Math.sqrt(Math.pow(displaceX, 2) + Math.pow(displaceY, 2)) * 2 > graphical.getAttackRange()) { // *2 just to be sure it isn't at one pixel
             if (displaceX < 0)
                 x = -toMove;
             else
@@ -751,6 +751,8 @@ public  abstract class Supervisor implements Observer
      */
     public void meetCharacter(Character player1, Character player2)//TODO upgrade pour moins de clss
     {
+        if (player1 == null || player2 == null)
+            return;
         if ((player1).getType().equals(Character.TypePlayer.Computer))
         {
             event.notify(new MeetOther(memoryMobile = (Mobile)player1));

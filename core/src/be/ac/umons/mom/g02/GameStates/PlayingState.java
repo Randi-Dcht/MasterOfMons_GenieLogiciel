@@ -13,6 +13,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.mom.g02.GraphicalObjects.*;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.KeySelector;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.OnMapObject;
@@ -685,15 +686,14 @@ public class PlayingState extends GameState implements Observer {
         if (gim.isKey("pointsAttribution", KeyStatus.Pressed))
             goToLevelUpState();
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
-            if (selectedOne != null) {
-                if (selectedOne instanceof Character)
-                    supervisor.meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
-                else {
-                    if (Supervisor.getPeople().pushObject(((MapObject)selectedOne).getItem())) {
-                        pickUpAnObject();
-                    }
-                }
+            if (selectedOne != null && selectedOne instanceof MapObject) {
+                if (Supervisor.getPeople().pushObject(((MapObject)selectedOne).getItem()))
+                    pickUpAnObject();
             }
+        }
+        if (gim.isKey("interact", KeyStatus.Pressed)) {
+            if (selectedOne != null && selectedOne instanceof Character)
+                supervisor.meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
         }
         inventoryShower.handleInput();
         pauseButton.handleInput();
@@ -780,6 +780,8 @@ public class PlayingState extends GameState implements Observer {
         else if (notify.getEvents().equals(Events.Dead)) {
             for (int i = 0; i < pnjs.size(); i++) {
                 if (pnjs.get(i).getCharacteristics().equals(notify.getBuffer())) {
+                    if (selectedOne.equals(pnjs.get(i)))
+                        selectedOne = null;
                     pnjs.remove(i);
                     break;
                 }
@@ -820,7 +822,7 @@ public class PlayingState extends GameState implements Observer {
         dialogState.setText(diag.get(0));
         for (int i = 1; i < diag.size(); i++) {
             String s = diag.get(i);
-            dialogState.addAnswer(s, () -> supervisor.getEvent().notify(new Answer(s)));
+            dialogState.addAnswer(s, () -> Supervisor.getEvent().notify(new Answer(s)));
         }
     }
 
