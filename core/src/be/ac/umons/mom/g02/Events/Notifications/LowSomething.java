@@ -17,7 +17,7 @@ public class LowSomething implements Notification
      */
     public LowSomething(TypeLow buffer)
     {
-        evt = Events.ChangeQuest;
+        evt = Events.LowSomething;
         this.buffer = buffer;
     }
 
