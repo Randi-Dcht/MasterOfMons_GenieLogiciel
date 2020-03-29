@@ -329,7 +329,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * @return If the player is in collision with an object on the puzzle layer.
      */
     protected boolean checkForPuzzleCollision() {
-        return checkForCollision(puzzleObjects, player) == null;
+        return checkForCollision(puzzleObjects, player) != null;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class FinalisingConnectionState extends MenuState {
                 if (nm.isTheServer()) {
                     nm.sendMessageOnTCP("SAVE", save);
                     LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-                    ls.setAfterLoadingState(PlayingState.class);
+                    ls.setAfterLoadingState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitMenuState.class);
                 }
             }
         });
@@ -108,7 +108,7 @@ public class FinalisingConnectionState extends MenuState {
                     ls.setAfterLoadingState(WaitMenuState.class);
             }
             else
-                ls.setAfterLoadingState(PlayingState.class);
+                ls.setAfterLoadingState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitMenuState.class);
         } catch (SocketException e) {
             e.printStackTrace();
         }

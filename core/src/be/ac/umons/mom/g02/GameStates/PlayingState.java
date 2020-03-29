@@ -777,7 +777,7 @@ public class PlayingState extends GameState implements Observer {
         else if (notify.getEvents().equals(Events.Dead)) {
             for (int i = 0; i < pnjs.size(); i++) {
                 if (pnjs.get(i).getCharacteristics().equals(notify.getBuffer())) {
-                    if (selectedOne.equals(pnjs.get(i)))
+                    if (selectedOne != null && selectedOne.equals(pnjs.get(i)))
                         selectedOne = null;
                     pnjs.remove(i);
                     break;
