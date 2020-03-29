@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Helpers;
 
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -22,7 +23,7 @@ public class FileHelper {
                 ef = Gdx.files.getFileHandle(file, Files.FileType.Internal);
                 if (! ef.exists()) {
                     Gdx.app.error("FileHelper", String.format("The file \"%s\" wasn't found !", file));
-                    MasterOfMonsGame.showAnError(String.format("The file \"%s\" wasn't found !", file));
+                    MasterOfMonsGame.showAnError(String.format(GraphicalSettings.getStringFromId("fileNotFound"), file));
                     return null;
                 }
             }
@@ -37,7 +38,7 @@ public class FileHelper {
             }
         } catch (IOException e) {
             Gdx.app.error("FileHelper", String.format("The file \"%s\" wasn't loaded due to an error !", file), e);
-            MasterOfMonsGame.showAnError(String.format("The file \"%s\" wasn't loaded due to an error !", file));
+            MasterOfMonsGame.showAnError(String.format(GraphicalSettings.getStringFromId("fileNotLoaded"), file));
         } catch (NumberFormatException e) {
             Gdx.app.error("FileHelper", String.format("An error has been detected line %d of file \"%s\"", actualLine, file), e);
         }

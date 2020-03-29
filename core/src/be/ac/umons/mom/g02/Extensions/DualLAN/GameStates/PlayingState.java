@@ -98,7 +98,7 @@ public class PlayingState extends PlayingStateDual {
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> {
@@ -109,7 +109,7 @@ public class PlayingState extends PlayingStateDual {
             int newLevel = (int)objects[0];
             while (newLevel > playerTwo.getCharacteristics().getLevel())
                 ((People)playerTwo.getCharacteristics()).upLevel();
-            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
+            timeShower.extendOnFullWidth(String.format(GraphicalSettings.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
         nm.whenMessageReceivedDo("getItemsPos", (objects ->
                 PlayingLANHelper.sendItemsPositions(mapObjects)));

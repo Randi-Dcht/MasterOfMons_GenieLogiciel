@@ -115,7 +115,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
             gsm.removeAllStateAndAdd(MainMenuState.class);
-            MasterOfMonsGame.showAnError("There was a fatal error !");
+            MasterOfMonsGame.showAnError(GraphicalSettings.getStringFromId("fatalError"));
             Gdx.app.error("PlayingState", "The NetworkManager couldn't be retrieved !", e);
             return;
         }
@@ -211,7 +211,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
@@ -226,13 +226,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             int newLevel = (int)objects[0];
             while (newLevel > playerTwo.getCharacteristics().getLevel())
                 ((People)playerTwo.getCharacteristics()).upLevel();
-            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
+            timeShower.extendOnFullWidth(String.format(GraphicalSettings.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
         nm.whenMessageReceivedDo("getItemsPos", (objects ->
                 PlayingLANHelper.sendItemsPositions(mapObjects)));
         nm.whenMessageReceivedDo("Death", (objects) -> {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
-            dms.setText(gs.getStringFromId("partnerDead"));
+            dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
         });
         nm.whenMessageReceivedDo("IPU", (objects) -> {
             for (int i = 0; i < mapObjects.size(); i++)

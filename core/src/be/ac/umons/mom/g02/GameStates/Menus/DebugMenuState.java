@@ -36,16 +36,16 @@ public class DebugMenuState extends MenuState {
         super.init();
         transparentBackground = true;
         setMenuItems(new MenuItem[] {
-                new TitleMenuItem(gs, gs.getStringFromId("gameName")),
-                new TextMenuItem(gs, gs.getStringFromId("debugMenu")),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId(gs.mustShowMapCoordinates() ? "debugHidePlayerCoord" : "debugPlayerCoord"), () -> gs.setShowMapCoordinates(! gs.mustShowMapCoordinates())),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("debugLevelUp"), () -> ps.debugLevelUp()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("debugMakeInvincible"), () -> ps.debugMakeInvincible()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("debugReinitiatePlayer"), () -> SuperviserNormally.getSupervisor().reinitialisationPlayer()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("debugGetObject"), () -> gsm.setState(DebugGetObject.class, true)),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("debugNextQuest"), () -> SuperviserNormally.getSupervisor().getPeople().getQuest().passQuest()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("debugSpeedUp"), () -> ps.debugChangePlayerSpeed()),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), () -> gsm.removeFirstState())
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("gameName")),
+                new TextMenuItem(gs, GraphicalSettings.getStringFromId("debugMenu")),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId(gs.mustShowMapCoordinates() ? "debugHidePlayerCoord" : "debugPlayerCoord"), () -> gs.setShowMapCoordinates(! gs.mustShowMapCoordinates())),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugLevelUp"), () -> ps.debugLevelUp()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugMakeInvincible"), () -> ps.debugMakeInvincible()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugReinitiatePlayer"), () -> SuperviserNormally.getSupervisor().reinitialisationPlayer()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugGetObject"), () -> gsm.setState(DebugGetObject.class, true)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugNextQuest"), () -> SuperviserNormally.getSupervisor().getPeople().getQuest().passQuest()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugSpeedUp"), () -> ps.debugChangePlayerSpeed()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), () -> gsm.removeFirstState())
         });
     }
 

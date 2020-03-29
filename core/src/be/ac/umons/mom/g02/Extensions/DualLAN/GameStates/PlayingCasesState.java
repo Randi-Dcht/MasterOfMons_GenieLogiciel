@@ -63,7 +63,7 @@ public class PlayingCasesState extends PlayCases {
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> {

@@ -52,7 +52,7 @@ public class GraphicalSettings {
     /**
      * The bundle containing all the strings to use in the game in the chosen language.
      */
-    private I18NBundle bundle;
+    private static I18NBundle bundle;
     /**
      * If the map coordinates needs to be showed to the user.
      */
@@ -202,7 +202,7 @@ public class GraphicalSettings {
      * @param id The string's id.
      * @return The string corresponding with the given id in the previously configured language (or the default one).
      */
-    public String getStringFromId(String id) {
+    public static String getStringFromId(String id) {
         try {
             return bundle.get(id);
         } catch (MissingResourceException e) {
@@ -215,7 +215,7 @@ public class GraphicalSettings {
      * Set the locale that need to be used and load the corresponding bundle.
      * @param loc The locale.
      */
-    public void setLocale(Locale loc) {
+    public static void setLocale(Locale loc) {
         bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc);
     }
 
@@ -223,7 +223,7 @@ public class GraphicalSettings {
      * Set the language that need to be used and change the local.
      * @param lang The language that need to be used.
      */
-    public void setLanguage(Languages lang) {
+    public static void setLanguage(Languages lang) {
         String loc = lang.getLocale();
         setLocale(new Locale(loc));
     }

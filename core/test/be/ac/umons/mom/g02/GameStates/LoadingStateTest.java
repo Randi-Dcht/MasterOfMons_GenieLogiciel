@@ -45,7 +45,7 @@ public class LoadingStateTest {
                 font = Mockito.mock(BitmapFont.class);
                 when(gs.getAssetManager()).thenReturn(am);
                 when(am.update()).thenReturn(false);
-                when(gs.getStringFromId("loading")).thenReturn("Loading...");
+                when(GraphicalSettings.getStringFromId("loading")).thenReturn("Loading...");
                 Gdx.gl = Mockito.mock(GL20.class);
                 Gdx.app = Mockito.mock(Application.class);
             }

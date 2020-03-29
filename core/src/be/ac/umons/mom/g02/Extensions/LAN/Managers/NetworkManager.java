@@ -13,6 +13,7 @@ import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import com.badlogic.gdx.Gdx;
@@ -290,7 +291,8 @@ public class NetworkManager {
                 socket = new Socket(selectedServer.getIp(), PORT);
                 waitMagicNumber();
             } catch (NoRouteToHostException e) {
-                MasterOfMonsGame.showAnError("The given IP is unreachable"); // TODO Inter
+                MasterOfMonsGame.showAnError(GraphicalSettings.getStringFromId("ipUnreachable"));
+                Gdx.app.log("NetworkManager", "Unreachable IP !", e);
             }
             catch (IOException e) {
                 e.printStackTrace();
