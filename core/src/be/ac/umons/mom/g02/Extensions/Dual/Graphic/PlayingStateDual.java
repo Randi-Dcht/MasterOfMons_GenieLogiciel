@@ -14,7 +14,6 @@ import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.OnMapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -62,15 +61,15 @@ public class PlayingStateDual extends PlayingState
         super.init();
 
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-            deleteFlag(new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1),new Point(1,1));
+            deleteFlag(new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
         initMap(supervisorDual.getDual().getStartMaps().getMaps(),supervisorDual.getDual().getPointPlayerOne().x,supervisorDual.getDual().getPointPlayerOne().y);
         playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
-        cam.position.x = player.getPosX();
-        cam.position.y = player.getPosY();
+        cam.position.x = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
+        cam.position.y = MasterOfMonsGame.HEIGHT/2 - MasterOfMonsGame.HEIGHT/4;
         cam.update();
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
@@ -111,16 +110,10 @@ public class PlayingStateDual extends PlayingState
        //     System.out.println(m.getPosX() + " " + m.getPosY());
     }
 
-    /***/
-    protected void initMapAndPlayer(String maps,Point plOnePos, Point plTwoPos)
-    {
-        initMap(maps,plOnePos.x,plOnePos.y);
-        playerTwo.setMapPos(new Point(plTwoPos.x*64,plTwoPos.y*32));
-        cam.position.x = player.getPosX();
-        cam.position.y = player.getPosY();
-        cam.update();
-    }
+    @Override
+    protected void translateCamera(int x, int y) {
 
+    }
 
     /***/
     @Override
@@ -129,6 +122,13 @@ public class PlayingStateDual extends PlayingState
         super.update(dt);
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
+
+        if (cam.position.x != MasterOfMonsGame.WIDTH/2+MasterOfMonsGame.WIDTH/4 || cam.position.y != MasterOfMonsGame.HEIGHT/2-MasterOfMonsGame.HEIGHT/4)
+        {
+            cam.position.x = MasterOfMonsGame.WIDTH - MasterOfMonsGame.WIDTH/4;
+            cam.position.y = MasterOfMonsGame.HEIGHT - MasterOfMonsGame.HEIGHT/2;
+            cam.update();
+        }
     }
 
 
@@ -189,8 +189,6 @@ public class PlayingStateDual extends PlayingState
     private void changedCam()
     {
         cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);//TODO changed
-        cam.position.x = player.getPosX();
-        cam.position.y = player.getPosY();
         gmm.setView(cam);
         cam.update();
     }

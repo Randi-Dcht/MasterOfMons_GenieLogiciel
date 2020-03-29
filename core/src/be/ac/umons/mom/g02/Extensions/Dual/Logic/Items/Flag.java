@@ -21,7 +21,7 @@ public class Flag extends Items
      */
     public Flag()
     {
-        super("FlagDual");
+        super("FlagB");
     }
 
 
