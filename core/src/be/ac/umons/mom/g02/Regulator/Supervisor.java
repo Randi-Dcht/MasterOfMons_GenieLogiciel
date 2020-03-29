@@ -751,7 +751,7 @@ public  abstract class Supervisor implements Observer
      * @param player1 is the first character
      * @param player2 is the second character
      */
-    public void meetCharacter(Character player1, Character player2)//TODO upgrade pour moins de clss
+    public void meetCharacter(Character player1, Character player2)
     {
         if (player1 == null || player2 == null)
             return;

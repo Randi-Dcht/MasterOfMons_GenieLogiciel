@@ -197,8 +197,6 @@ public class DialogCharacter
      */
     public void analyzeAnswer(String answerID,Mobile mobile)
     {
-        if (!answerID.equals(before))
-        {
             this.mobile = mobile;
 
             if (specificID != null)
@@ -217,7 +215,6 @@ public class DialogCharacter
             else
                 supervisor.getEvent().notify(new Dialog(getDialog(answerID)));
             before = answerID;
-        }
     }
 
 
