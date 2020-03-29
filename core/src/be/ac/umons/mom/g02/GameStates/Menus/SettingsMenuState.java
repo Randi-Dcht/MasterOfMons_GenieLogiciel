@@ -43,7 +43,7 @@ public class SettingsMenuState extends MenuState {
                 new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("language"), "SLC_Language"),
                 new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), this::save)
         });
-        initDefaultValue(); // TODO : Remove the switch
+        initDefaultValue();
     }
 
     /**

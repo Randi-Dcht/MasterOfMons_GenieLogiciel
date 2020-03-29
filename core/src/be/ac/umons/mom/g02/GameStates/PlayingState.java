@@ -261,10 +261,6 @@ public class PlayingState extends GameState implements Observer {
         Maps map = supervisor.getMaps(mapPath);
         pnjs = getPNJsOnMap(mapPath);
 
-//        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
-//            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
-//        }
-
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
         mapWidth = (int)gmm.getActualMap().getProperties().get("width");
