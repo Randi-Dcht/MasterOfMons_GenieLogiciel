@@ -89,7 +89,7 @@ public class LearnToCooperate extends MasterQuest {
                     Actions.Attack, NameDialog.Lambda));
         }
         for (int i = 0; i < 2; i++)
-            listMobs.add(new Mobile(Bloc.BA3,
+            listMobs.add(new Mobile(Bloc.BA2,
                     mobileTypes[rand.nextInt(mobileTypes.length)],
                     Actions.Attack, NameDialog.Lambda));
     }

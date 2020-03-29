@@ -24,6 +24,7 @@ public class WaitMenuState extends MenuState {
         nm.whenMessageReceivedDo("Loaded", (objects) -> {
             gsm.setState(PlayingState.class, true);
             nm.sendOnTCP("Loaded");
+            nm.whenMessageReceivedDo("Loaded", null);
         });
     }
 

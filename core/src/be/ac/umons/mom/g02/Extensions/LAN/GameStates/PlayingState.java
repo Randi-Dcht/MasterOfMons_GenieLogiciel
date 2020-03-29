@@ -72,7 +72,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     /**
      * If the player (one) is the one who can move in the maze
      */
-    protected boolean isTheMazePlayer;
+    protected boolean isTheMazePlayer = true;
     /**
      * The objects that are in the layer puzzle on the map.
      */
@@ -230,6 +230,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                 PlayingLANHelper.sendItemsPositions(mapObjects)));
         nm.whenMessageReceivedDo("Death", (objects) -> {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
+            dms.init(); // NullPointer because text set too fast
             dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
         });
         nm.whenMessageReceivedDo("IPU", (objects) -> {
