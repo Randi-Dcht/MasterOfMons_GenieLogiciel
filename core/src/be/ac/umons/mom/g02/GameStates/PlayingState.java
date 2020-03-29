@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.GameStates;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Events.Observer;
@@ -204,7 +205,7 @@ public class PlayingState extends GameState implements Observer {
         if (MasterOfMonsGame.getGameToLoad() != null)
             loadOldGame();
 
-        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel,Events.DisplayMessage);
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel,Events.DisplayMessage, Events.Teleport);
         supervisor.setGraphic(questShower,this);
 
         if (MasterOfMonsGame.getGameToLoad() == null)
@@ -259,10 +260,6 @@ public class PlayingState extends GameState implements Observer {
         gmm.setMap(mapPath);
         Maps map = supervisor.getMaps(mapPath);
         pnjs = getPNJsOnMap(mapPath);
-
-//        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
-//            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
-//        }
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
@@ -800,6 +797,8 @@ public class PlayingState extends GameState implements Observer {
             timeShower.extendOnFullWidth(gs.getStringFromId("gainALevel"));
             notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
                     ((People)player.getCharacteristics()).getPointLevel(), Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
+        } else if (notify.getEvents().equals(Events.Teleport) && notify.bufferNotEmpty()) {
+            initMap((String)notify.getBuffer());
         }
     }
 

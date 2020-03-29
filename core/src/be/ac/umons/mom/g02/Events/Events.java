@@ -26,7 +26,8 @@ public enum Events
     UseItems("PeopleUseItem"),                /*This event notify when the people uses an item*/
     LifeChanged("LifeChanged"),
     ExperienceChanged("ExperienceChanged"),
-    EnergyChanged("EnergyChanged");
+    EnergyChanged("EnergyChanged"),
+    Teleport("Teleport"),;
 
 
     /**The name of the events*/

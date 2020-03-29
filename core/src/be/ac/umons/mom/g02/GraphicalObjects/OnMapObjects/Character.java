@@ -97,7 +97,7 @@ public class Character extends OnMapObject {
         lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
         topMargin = MasterOfMonsGame.HEIGHT / 100;
         leftMargin = MasterOfMonsGame.WIDTH / 200;
-        isATargetColor = new Color(0xB71C1CAA); // TODO
+        isATargetColor = gcm.getColorFor("characterIsATargetCircle");
     }
 
     protected Character() {}

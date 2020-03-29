@@ -12,7 +12,7 @@ import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
-public class RegulatorLAN extends RegulatorMultiPlayer { // TODO Same agenda
+public class RegulatorLAN extends RegulatorMultiPlayer {
 
     protected boolean secondPlayerInCourseRoom;
 
