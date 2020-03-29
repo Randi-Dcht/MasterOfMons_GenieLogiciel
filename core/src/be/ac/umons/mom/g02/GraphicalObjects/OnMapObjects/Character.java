@@ -233,7 +233,7 @@ public class Character extends OnMapObject {
      * @return Character's inventory
      */
     public List<Items> getInventory() {
-        return Supervisor.getPeople().getInventory();
+        return characteristics.getInventory();
     }
 
     /**
