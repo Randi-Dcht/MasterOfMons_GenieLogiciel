@@ -222,6 +222,8 @@ public  abstract class Supervisor implements Observer
     protected String actualID;
     /***/
     protected boolean haveMoney = false;
+    /***/
+    protected boolean startDialog = true;
 
 
     /***/
@@ -766,7 +768,8 @@ public  abstract class Supervisor implements Observer
             attackMethod(memoryMobile, playerOne);
         else if (action.equals(Actions.Dialog))
         {
-            event.add(Events.Answer,this);
+            if (startDialog)
+            {event.add(Events.Answer,this);startDialog = false;}
             switchingDialog("Start");
         }
     }
@@ -778,7 +781,7 @@ public  abstract class Supervisor implements Observer
      */
     public void switchingDialog(String answer)
     {
-        if(answer.equals("ESC") || dialog == null)
+        if( dialog == null)
         {
             event.notify(new Dialog("ESC"));
             //event.remove(Events.Answer,this);//TODO

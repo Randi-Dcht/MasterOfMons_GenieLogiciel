@@ -210,6 +210,8 @@ public class DialogCharacter
                 supervisor.getEvent().notify(new Dialog("ESC"));
                 //classSp.getEvent().remove(Events.Answer,classSp);TODO
             }
+            else if (answerID.equals("ESC"))
+                supervisor.getEvent().notify(new Dialog("ESC"));
             else if (check(getDialog(answerID)))
                 supervisor.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
             else
