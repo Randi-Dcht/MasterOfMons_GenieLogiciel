@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Characters.SaoulMatePNJ;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class MeetAndLearn extends MasterQuest
      */
     public void nextQuest()
     {
-        //TODO finish
+        Supervisor.getSupervisor().getRegale().finishQuest();
     }
 
 
