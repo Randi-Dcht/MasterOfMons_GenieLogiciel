@@ -21,32 +21,36 @@ public class RectDual
     protected int width;
     /***/
     protected boolean drawInt;
+    protected int positionX;
+    protected int positionY;
 
 
     /***/
-    public RectDual(GraphicalSettings gs, Color colorInt, Color colorExt,int width, int height)
+    public RectDual(GraphicalSettings gs, Color colorInt, Color colorExt,int width, int height,int positionX, int positionY)
     {
-        this.colorExt = colorExt;
-        this.colorInt = colorInt;
-        this.gs       = gs;
-        this.width    = width;
-        this.height   = height;
-        drawInt       = colorInt != null;
+        this.colorExt  = colorExt;
+        this.colorInt  = colorInt;
+        this.gs        = gs;
+        this.width     = width;
+        this.height    = height;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        drawInt        = colorInt != null;
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
     }
 
 
     /***/
-    public void draw(int positionX, int positionY)
+    public void draw(int camX, int camY)
     {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(colorExt);
-        sr.rect(positionX,positionY,width,height);
+        sr.rect(positionX-camX,positionY-camY,width,height);
         if (drawInt)
         {
             sr.setColor(colorInt);
-            sr.rect(positionX,positionY,width-10,height-10);
+            sr.rect(positionX+5-camX,positionY+5-camY,width-10,height-10);
         }
         sr.end();
     }

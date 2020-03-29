@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.RectDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
@@ -21,6 +22,8 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.graphics.Color;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +47,8 @@ public class PlayingStateDual extends PlayingState
     protected Point objectSize;
     /***/
     protected InventoryShower inventoryShowerTwo;
+    /***/
+    protected RectDual baseOne,baseTwo;
 
     /**
      * @param gs The game's graphical settings
@@ -80,9 +85,15 @@ public class PlayingStateDual extends PlayingState
         ((People)player.getCharacteristics()).pushObject(new Phone());//TODO
         ((People)playerTwo.getCharacteristics()).pushObject(new Pen());//TODO
 
+        baseOne = new RectDual(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+player.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()));
+        baseTwo = new RectDual(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+playerTwo.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY()));
+
         inventoryShowerTwo = new InventoryShower(gs, playerTwo);
 
-        adv.put(player,playerTwo);adv.put(playerTwo,player);
+        System.out.println(player.getCharacteristics().getInventory() + " / " + playerTwo.getCharacteristics().getInventory());
+
+        adv.put(player,playerTwo);
+        adv.put(playerTwo,player);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
@@ -195,7 +206,8 @@ public class PlayingStateDual extends PlayingState
     {
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
         {
-            //TODO
+            baseOne.draw((int)cam.position.x,(int)cam.position.y);
+            baseTwo.draw((int)cam.position.x,(int)cam.position.y);
         }
     }
 
@@ -334,5 +346,7 @@ public class PlayingStateDual extends PlayingState
         endDual.dispose();
         lifeBarTwo.dispose();
         inventoryShowerTwo.dispose();
+        baseOne.dispose();
+        baseTwo.dispose();
     }
 }
