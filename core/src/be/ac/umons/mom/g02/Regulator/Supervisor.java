@@ -420,7 +420,7 @@ public  abstract class Supervisor implements Observer
      * This method allows to give the character to refresh with the changed frame
      * @param maps is the actual maps of the player
      */
-    private void refreshList(Maps maps)
+    protected void refreshList(Maps maps)
     {
         listUpdate = new ArrayList<>();
         listUpdate.add(playerOne);

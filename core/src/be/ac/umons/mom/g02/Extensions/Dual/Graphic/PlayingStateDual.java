@@ -6,8 +6,6 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Flag;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.RectDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
@@ -19,17 +17,12 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-import com.badlogic.gdx.graphics.Color;
-
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 
 
 /***/
@@ -82,8 +75,6 @@ public class PlayingStateDual extends PlayingState
 
         inventoryShowerTwo = new InventoryShower(gs, playerTwo);
 
-        System.out.println(player.getCharacteristics().getInventory() + " / " + playerTwo.getCharacteristics().getInventory());
-
         adv.put(player,playerTwo);
         adv.put(playerTwo,player);
 
@@ -92,7 +83,7 @@ public class PlayingStateDual extends PlayingState
             for (Character ch : pnjs)
             {
                 if (ch.getCharacteristics().getClass().equals(ZombiePNJ.class))
-                    ((ZombiePNJ)ch.getCharacteristics()).initialisation(ch,player);
+                   ((ZombiePNJ)ch.getCharacteristics()).initialisation(ch,player);
             }
 
         }
@@ -301,6 +292,16 @@ public class PlayingStateDual extends PlayingState
     {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
             gsm.removeAllStateAndAdd(DualChooseMenu.class);
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
+            deadMobile(null);
+
+    }
+
+
+    /***/
+    public void deadMobile(Mobile mb)
+    {
+        pnjs.removeIf(chr -> chr.getCharacteristics().equals(mb));
     }
 
 
