@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Flag;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.RectDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
@@ -47,8 +48,7 @@ public class PlayingStateDual extends PlayingState
     protected Point objectSize;
     /***/
     protected InventoryShower inventoryShowerTwo;
-    /***/
-    protected RectDual baseOne,baseTwo;
+
 
     /**
      * @param gs The game's graphical settings
@@ -68,8 +68,6 @@ public class PlayingStateDual extends PlayingState
         Supervisor.getSupervisor().setMustPlaceItem(false);
         super.init();
 
-        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-            deleteFlag(new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
@@ -81,12 +79,6 @@ public class PlayingStateDual extends PlayingState
         cam.update();
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
-
-        ((People)player.getCharacteristics()).pushObject(new Phone());//TODO
-        ((People)playerTwo.getCharacteristics()).pushObject(new Pen());//TODO
-
-        baseOne = new RectDual(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+player.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()));
-        baseTwo = new RectDual(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+playerTwo.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY()));
 
         inventoryShowerTwo = new InventoryShower(gs, playerTwo);
 
@@ -120,15 +112,6 @@ public class PlayingStateDual extends PlayingState
         objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
     }
 
-    public void deleteFlag(Point ... pt)
-    {
-        ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
-        for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
-                addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
-
-       // for (OnMapObject m : mapObjects)
-       //     System.out.println(m.getPosX() + " " + m.getPosY());
-    }
 
     @Override
     protected void translateCamera(int x, int y) {
@@ -204,11 +187,6 @@ public class PlayingStateDual extends PlayingState
     /***/
     protected void drawAfterMaps()
     {
-        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-        {
-            baseOne.draw((int)cam.position.x,(int)cam.position.y);
-            baseTwo.draw((int)cam.position.x,(int)cam.position.y);
-        }
     }
 
 
@@ -346,7 +324,5 @@ public class PlayingStateDual extends PlayingState
         endDual.dispose();
         lifeBarTwo.dispose();
         inventoryShowerTwo.dispose();
-        baseOne.dispose();
-        baseTwo.dispose();
     }
 }

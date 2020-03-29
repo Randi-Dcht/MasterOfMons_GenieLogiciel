@@ -48,9 +48,9 @@ public class TakeFlag extends DualUnderQuest
         {
             list.add(flg = new Flag());flg.setMaps(TypeDual.CatchFlag.getStartMaps());
             if (people.equals(SupervisorDual.getPeople()))
-                flg.setPeople(people,"FlagR");
+                flg.setPeople(people,"R");
             else
-                flg.setPeople(people,"FlagB");
+                flg.setPeople(people,"B");
         }
         return list;
     }
