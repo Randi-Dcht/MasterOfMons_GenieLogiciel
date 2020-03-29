@@ -1,9 +1,6 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Quests.Under.*;
@@ -77,11 +74,17 @@ public class MeetAndLearn extends MasterQuest
      * This method return the mobile for this quest
      */
     @Override
-    protected void createListMobiles()
+    protected void createListMobiles() throws Exception
     {
         listMobs = new ArrayList<>();
-        MobileType[] type = MobileType.values();
-        listMobs.add(new SaoulMatePNJ(getBloc(),MobileType.Lambda));
+        listMobs.add(new SaoulMatePNJ(bloc,MobileType.Lambda));
+        listMobs.addAll(createRdMobile(new int[]{10,25,25},
+                new MobileType[]{MobileType.Lambda,MobileType.Loser,MobileType.Strong},
+                new Actions[]{Actions.Dialog,Actions.Dialog,Actions.Attack},
+                new NameDialog[]{NameDialog.Lambda,NameDialog.Student,NameDialog.Lambda},
+                new Maps[]{null,null,Maps.Mons},
+                true));
+
     }
 
 
