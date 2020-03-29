@@ -127,7 +127,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             secondPlayerMap = map;
             mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
         });
-        nm.whenMessageReceivedDo("SPMC", (objects -> secondPlayerMap = (String)objects[0]));
+        nm.whenMessageReceivedDo("SPMC", (objects -> initMap((String)objects[0])));
 
         supervisor.setMustPlaceItem(nm.isTheServer());
         Supervisor.getEvent().add(this, Events.Dialog); // Other events done in super.init()
@@ -506,7 +506,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void setSecondPlayerPosition(Point mapPos) {
         super.setSecondPlayerPosition(mapPos);
-        if (mazeMode)
+        if (mazeMode && ! isTheMazePlayer)
             player.setMapPos(mapPos);
     }
 

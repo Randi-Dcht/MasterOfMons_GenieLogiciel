@@ -23,6 +23,10 @@ public class LearnToCooperate extends MasterQuest {
      * If we already sent the end of this MasterQuest or not
      */
     protected boolean alreadySent = false;
+    /**
+     * The number of mobiles to spawn on this map
+     */
+    protected int mobileNumber;
 
     /**
      * This constructor allows to define a masterQuest
@@ -37,6 +41,11 @@ public class LearnToCooperate extends MasterQuest {
                 new Boss(this, Supervisor.getPeople()));
         Supervisor.getEvent().add(this, Events.PlaceInMons, Events.Dead);
         maxPercent = 100; // finish puzzle + 36 mobs
+        mobileNumber = 22;
+        if (difficulty.equals(Difficulty.Medium))
+            mobileNumber = 28;
+        else if (difficulty.equals(Difficulty.Hard))
+            mobileNumber = 36;
     }
 
     @Override
@@ -73,13 +82,8 @@ public class LearnToCooperate extends MasterQuest {
         Random rand = new Random();
         listMobs = new ArrayList<>();
         MobileType[] mobileTypes = MobileType.values();
-        int diff = 20;
-        if (difficulty.equals(Difficulty.Medium))
-            diff = 26;
-        else if (difficulty.equals(Difficulty.Hard))
-            diff = 34;
 
-        for (int i = 0; i < diff; i++ ) {
+        for (int i = 0; i < mobileNumber - 2; i++ ) {
             listMobs.add(new Mobile(Bloc.BA1,
                     mobileTypes[rand.nextInt(mobileTypes.length)],
                     Actions.Attack, NameDialog.Lambda));
@@ -93,5 +97,12 @@ public class LearnToCooperate extends MasterQuest {
     @Override
     public Maps[] getListMaps() {
         return new Maps[] {Maps.LAN_Boss};
+    }
+
+    /**
+     * @return The number of mobiles to spawn on this map
+     */
+    public int getMobileNumber() {
+        return mobileNumber;
     }
 }
