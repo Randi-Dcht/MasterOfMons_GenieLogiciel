@@ -110,7 +110,6 @@ public class GameMapManager {
             for (String name : am.getAssetNames()) {
                 if (am.getAssetType(name).equals(TiledMap.class))
                     tiledMapsRenderer.put(name, new IsometricTiledMapRenderer(am.get(name)));
-                System.out.println("Loaded " + name);
             }
         }
         return finish;
@@ -121,11 +120,8 @@ public class GameMapManager {
      * @param mapsPath The path of the maps to load.
      */
     public void addMapsToLoad(String... mapsPath) {
-        for (String map : mapsPath) {
+        for (String map : mapsPath)
             am.load(Gdx.files.internal(map).path(), TiledMap.class);
-
-            System.out.println("To load : " + map);
-        }
     }
 
     /**

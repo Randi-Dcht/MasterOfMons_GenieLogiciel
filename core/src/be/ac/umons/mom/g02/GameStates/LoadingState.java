@@ -157,10 +157,6 @@ public class LoadingState extends GameState {
     public void initGame() {
         ExtensionsManager em = ExtensionsManager.getInstance();
         em.generateLoadLists();
-        System.out.println(Arrays.toString(Gdx.files.internal("Tmx").list()));
-        for (FileHandle f : Gdx.files.internal("Tmx/").list(file -> file.isFile() && file.getName().toLowerCase().endsWith(".tmx")))
-            GameMapManager.getInstance().addMapsToLoad(f.path());
-        GameMapManager.getInstance().addMapsToLoad("Tmx/Umons_Nimy.tmx");
         GameMapManager.getInstance().addMapsToLoad(em.getMapsToLoad().toArray(new String[0]));
         gs.addFilesToLoad(em.getFilesToLoad().toArray(new LoadFile[0]));
     }

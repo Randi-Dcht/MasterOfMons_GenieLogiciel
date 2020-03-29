@@ -35,6 +35,9 @@ public class ExtensionsManager {
      * The list of the extensions to show.
      */
     protected HashMap<String, Extension> extensions;
+
+    protected Extension baseGame;
+
     /**
      * A list of all the maps that need to be loaded.
      */
@@ -157,11 +160,15 @@ public class ExtensionsManager {
                         ext.isMultiplayer = true;
                         break;
                     default:
-                        if (! line.startsWith(".")) {
+                        if (! line.startsWith(".") && ! line.trim().equals("")) {
                             ext = new Extension();
-                            ext.extensionName = line;
-                            ext.canActivateWith.add(line);
-                            extensionList.put(ext.extensionName, ext);
+                            if (line.equals("MasterOfMonsGame")) {
+                                baseGame = ext;
+                            } else {
+                                ext.extensionName = line;
+                                ext.canActivateWith.add(line);
+                                extensionList.put(ext.extensionName, ext);
+                            }
                         }
                 }
             }
@@ -182,6 +189,8 @@ public class ExtensionsManager {
     public void generateLoadLists() {
         mapsToLoad = new ArrayList<>();
         filesToLoad = new ArrayList<>();
+        mapsToLoad.addAll(baseGame.mapsToLoad);
+        filesToLoad.addAll(baseGame.dirsFileToLoad);
         for (Extension ext : getExtensions()) {
             if (ext.activated) {
                 mapsToLoad.addAll(ext.mapsToLoad);
@@ -198,7 +207,7 @@ public class ExtensionsManager {
         boolean launch = true;
         for (Extension e : getExtensions()) {
             activatedExtension.activated = true;
-            if (! activatedExtension.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(activatedExtension.extensionName)) {
+            if ((! activatedExtension.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(activatedExtension.extensionName))) {
                 e.activated = false;
                 e.canBeActivated = false;
             }
