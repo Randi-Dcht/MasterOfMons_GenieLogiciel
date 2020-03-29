@@ -1,24 +1,17 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Quests.Under.*;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
-import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
+import be.ac.umons.mom.g02.Quests.Under.*;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *This class define a MasterQuest who is 'My first Year' in the bachelor 1
@@ -109,7 +102,7 @@ public class MyFirstYear extends MasterQuest
      */
     public String getName()
     {
-        return SuperviserNormally.getGraphic().getStringFromId("nameMyFirstYear");
+        return GraphicalSettings.getStringFromId("nameMyFirstYear");
     }
 
 

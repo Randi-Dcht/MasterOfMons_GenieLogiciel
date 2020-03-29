@@ -843,6 +843,8 @@ public  abstract class Supervisor implements Observer
      */
     public void setDate(Date date)
     {
+        if (time == null)
+            time = new TimeGame(date);
         time.setDate(date);
     }
 }
