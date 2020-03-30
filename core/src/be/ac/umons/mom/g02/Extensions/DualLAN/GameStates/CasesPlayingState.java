@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayCases;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
+import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
@@ -13,16 +14,12 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import java.net.SocketException;
 import java.util.HashMap;
 
-public class PlayingCasesState extends PlayCases implements NetworkReady {
+public class CasesPlayingState extends PlayCases implements NetworkReady {
 
     /**
      * The NetworkManager to use
      */
     protected NetworkManager nm;
-    /**
-     * If a pause signal has already been sent
-     */
-    protected boolean pauseSent = false;
     /**
      * The number of cases of each player (to show)
      */
@@ -31,7 +28,7 @@ public class PlayingCasesState extends PlayCases implements NetworkReady {
     /**
      * @param gs The game's graphical settings
      */
-    public PlayingCasesState(GraphicalSettings gs) {
+    public CasesPlayingState(GraphicalSettings gs) {
         super(gs);
     }
 
@@ -50,7 +47,7 @@ public class PlayingCasesState extends PlayCases implements NetworkReady {
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
             nm.sendMessageOnTCP("Pause");
-            pauseSent = true;
+            PlayingLANHelper.pauseSent = true;
         });
 
         endDual.setOnClick(() -> {
