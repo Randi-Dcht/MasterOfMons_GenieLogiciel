@@ -45,14 +45,16 @@ public class AnimationManager {
     /**
      * Add the animation <code>anim</code> under a random name
      * @param anim Animation to add.
+     * @return The name on which the animation was added
      */
-    public void addAnAnimation(Animation anim) {
+    public String addAnAnimation(Animation anim) {
         String name = "a";
         Random rand = new Random();
         while (animations.containsKey(name)) {
             name += (char)('a' + rand.nextInt('z'));
         }
         animations.put(name, anim);
+        return name;
     }
 
     /**

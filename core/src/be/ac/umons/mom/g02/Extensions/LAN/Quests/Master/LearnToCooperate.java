@@ -37,8 +37,6 @@ public class LearnToCooperate extends MasterQuest {
      */
     public LearnToCooperate(MasterQuest before, People people, Difficulty difficulty) {
         super(before, people, Bloc.BA1, difficulty);
-        addUnderQuest(new EndPuzzle(this, Supervisor.getPeople()),
-                new Boss(this, Supervisor.getPeople()));
         Supervisor.getEvent().add(this, Events.PlaceInMons, Events.Dead);
         mobileNumber = 22;
         if (difficulty.equals(Difficulty.Medium))
@@ -46,11 +44,13 @@ public class LearnToCooperate extends MasterQuest {
         else if (difficulty.equals(Difficulty.Hard))
             mobileNumber = 36;
         maxPercent = mobileNumber * 2; // finish puzzle + 36 mobs
+        addUnderQuest(new EndPuzzle(this, Supervisor.getPeople()),
+                new Boss(this, Supervisor.getPeople()));
     }
 
     @Override
     public void nextQuest() {
-        newQuest(new MyFirstYear(people,this,difficulty));
+        newQuest(new MyFirstYear(people,this, difficulty));
         Supervisor.getEvent().notify(new Teleport("Tmx/Umons_Nimy.tmx"));
         if (! alreadySent) {
             try {

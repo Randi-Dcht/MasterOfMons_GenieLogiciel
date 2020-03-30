@@ -28,7 +28,7 @@ public class SuccessfulYear extends be.ac.umons.mom.g02.Quests.Master.Successful
 
     @Override
     public void nextQuest() {
-        super.nextQuest();
+        newQuest(new MeetAndLearn(people,this,difficulty));
         if (! alreadySent) {
             try {
                 NetworkManager.getInstance().sendOnTCP("EMQ");
