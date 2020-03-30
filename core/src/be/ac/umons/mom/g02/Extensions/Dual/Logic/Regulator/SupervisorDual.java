@@ -129,7 +129,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
     }
 
     @Override
-    public MasterQuest actualQuest()
+    public DualMasterQuest actualQuest()
     {
         return dualQuest;
     }

@@ -10,7 +10,7 @@ import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
  */
 public class MoreCasesMons extends DualUnderQuest
 {
-    private int number = 0;
+
     /**
      * This constructor define the dual of the battle between two people
      * @param people     is the people of this Quest
@@ -36,15 +36,10 @@ public class MoreCasesMons extends DualUnderQuest
     public void callMe(int cb)
     {
         if (cb < 0)
-        {
-            number--;
-            addProgress(0.2);
-        }
-        else
-        {
-            number++;
             addProgress(-0.2);
-        }
+
+        else
+            addProgress(0.3);
     }
 
 }

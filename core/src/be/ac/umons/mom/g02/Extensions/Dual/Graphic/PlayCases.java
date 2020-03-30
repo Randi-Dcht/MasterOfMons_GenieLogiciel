@@ -124,6 +124,7 @@ public class PlayCases extends PlayingStateDual
                 drawCase.add(new Cases(gs,Color.RED,tileWidth,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY()));//TODO
 
             cases.get(adv.get(player)).remove(new Point(player.getPosX()/64,player.getPosY()/32));
+            ((MoreCasesMons)supervisorDual.actualQuest().getUnderQuest((People)player.getCharacteristics())).callMe(+1);
 
             if (!cases.get(player).contains(new Point(player.getPosX()/64,player.getPosY()/32)))
                 cases.get(player).add(new Point(player.getPosX()/64,player.getPosY()/32));
