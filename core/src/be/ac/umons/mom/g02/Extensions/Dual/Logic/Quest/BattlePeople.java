@@ -17,6 +17,8 @@ public class BattlePeople extends DualUnderQuest
      * This is the other people in the dual
      */
     private People victim;
+    /***/
+    private double firstLife;
 
     /**
      * This constructor define the dual of the battle between two people
@@ -27,6 +29,7 @@ public class BattlePeople extends DualUnderQuest
     {
         super("BattleDual",master,people);
         victim = SupervisorDual.getSupervisorDual().getAdversary(people);
+        firstLife = victim.getActualLife();
     }
 
 
@@ -46,12 +49,15 @@ public class BattlePeople extends DualUnderQuest
     private void attackOther(People victim)
     {
         if (this.victim != null && this.victim.equals(victim))
-            addProgress(5);
+            {
+                double ccl = (firstLife - victim.getActualLife())/firstLife;
+                progress = 100- (1-ccl)*100;
+            }
     }
 
     private void finishQuest(People victim)
     {
         if (this.victim.equals(victim))
-            addProgress(100-progress);
+            addProgress(progress);
     }
 }
