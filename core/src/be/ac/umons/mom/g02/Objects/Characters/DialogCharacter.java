@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
+import be.ac.umons.mom.g02.Events.Notifications.Shop;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -60,7 +61,8 @@ public class DialogCharacter
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
-        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","Friendly");
+        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP","Friendly");
+
     }
 
 
@@ -131,7 +133,8 @@ public class DialogCharacter
         ArrayList<String> newList = new ArrayList<>();
         for (String str : list)
         {
-            if (listID.contains(str) && !str.equals("Friendly"))
+            if (listID.contains(str) && !str.equals("Friendly") && !str.equals("SHOP"))
+
                 newList.addAll(replaceId(str));
             else
                 newList.add(str);
@@ -239,6 +242,11 @@ public class DialogCharacter
             else
                 supervisor.getEvent().notify(new Dialog("ESC"));
         }
+
+        if (specificID.equals("SHOP")){
+            supervisor.getEvent().notify(new Shop());
+        supervisor.getEvent().notify(new Dialog("ESC"));}
+
         if (answer.equals("Friendly"))
         {
             Supervisor.getPeople().addFriend(mobile);

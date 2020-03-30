@@ -205,7 +205,8 @@ public class PlayingState extends GameState implements Observer {
         if (MasterOfMonsGame.getGameToLoad() != null)
             loadOldGame();
 
-        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel,Events.DisplayMessage, Events.Teleport);
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel,Events.DisplayMessage,Events.Shop,Events.Teleport);
+
         supervisor.setGraphic(questShower,this);
 
         if (MasterOfMonsGame.getGameToLoad() == null && MasterOfMonsGame.getSaveToLoad() == null)
@@ -771,6 +772,8 @@ public class PlayingState extends GameState implements Observer {
     public void update(Notification notify) {
         if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().equals(player.getCharacteristics()))
             gsm.setState(DeadMenuState.class);
+        else if (notify.getEvents().equals(Events.Shop))
+            gsm.setState(SellerMenuState.class);
         else if (notify.getEvents().equals(Events.DisplayMessage) && notify.bufferNotEmpty())
             notificationRappel.addANotification(((DisplayMessage)notify).getId(),((DisplayMessage)notify).getBuffer());
         else if (notify.getEvents().equals(Events.Dead)) {
