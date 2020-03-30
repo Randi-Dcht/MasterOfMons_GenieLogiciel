@@ -24,12 +24,8 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
-import be.ac.umons.mom.g02.Objects.Characters.Attack;
+import be.ac.umons.mom.g02.Objects.Characters.*;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
-import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
-import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
-import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -76,6 +72,8 @@ public  abstract class Supervisor implements Observer
      * This is the instance of the Graphic
      */
     protected static GraphicalSettings graphic;
+    /***/
+    protected Dealer dealerOnMap;
 
 
     /**
