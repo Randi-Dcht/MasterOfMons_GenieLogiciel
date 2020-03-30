@@ -51,7 +51,7 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
         });
 
         endDual.setOnClick(() -> {
-            goToPreviousMenu();
+            PlayingDualLANHelper.goToPreviousMenu();
             nm.sendOnTCP("EndDual");
         });
     }
@@ -84,7 +84,7 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
     @Override
     public void handleInput() {
         super.handleInput();
-        PlayingDualLANHelper.handleInput();
+        PlayingDualLANHelper.handleInput(this);
     }
 
     @Override
@@ -92,21 +92,16 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
         translateCameraFollowingPlayer(x, y);
     }
 
-    /**
-     * Go back to the choosing menu or the wait menu
-     */
-    protected void goToPreviousMenu() {
-        if (nm.isTheServer())
-            gsm.removeAllStateAndAdd(be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu.class);
-        else
-            gsm.removeAllStateAndAdd(WaitMenuState.class);
-    }
-
     @Override
     public MapObject dropSelectedObject() {
         MapObject mo = super.dropSelectedObject();
         nm.sendMessageOnTCP("Item", mo.getCharacteristics());
         return mo;
+    }
+    @Override
+    protected void pickUpAnObject() {
+        nm.sendMessageOnTCP("IPU", ((MapObject) selectedOne).getCharacteristics());
+        super.pickUpAnObject();
     }
 
     @Override

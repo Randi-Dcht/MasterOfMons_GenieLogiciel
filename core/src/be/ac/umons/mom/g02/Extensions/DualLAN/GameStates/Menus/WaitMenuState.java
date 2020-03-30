@@ -34,8 +34,8 @@ public class WaitMenuState extends MenuState {
         transparentBackground = true;
         setNetworkManagerRunnables();
         setMenuItems(new MenuItem[]{
-                new TitleMenuItem(gs, gs.getStringFromId("waiting")),
-                new TextMenuItem(gs, gs.getStringFromId("waitingForSecondPlayer"))
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("waiting")),
+                new TextMenuItem(gs, GraphicalSettings.getStringFromId("waitingForSecondPlayer"))
         });
     }
 

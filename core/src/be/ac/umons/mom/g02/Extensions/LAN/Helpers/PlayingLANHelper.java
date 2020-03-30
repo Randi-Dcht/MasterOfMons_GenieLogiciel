@@ -172,8 +172,12 @@ public class PlayingLANHelper {
                 (notify.getBuffer().equals(Supervisor.getPeople()))) {
             gsm.setState(DeadMenuState.class);
             nm.sendOnTCP("Death");
-        }
-        else if (notify.getEvents().equals(Events.Dead)) {
+        } else if (notify.getEvents().equals(Events.Dead) &&
+                (notify.getBuffer().equals(SupervisorMultiPlayer.getPeopleTwo()))) {
+            DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
+            dms.init(); // NullPointer because text set too fast
+            dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
+        } else if (notify.getEvents().equals(Events.Dead)) {
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendMessageOnTCP("PNJDeath", m.getName());
             ps.getIdCharacterMap().remove(m.getName());

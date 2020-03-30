@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
@@ -10,6 +11,7 @@ import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.awt.*;
 import java.net.SocketException;
@@ -32,12 +34,15 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
 
     @Override
     public void init() {
+
+        Supervisor.getEvent().add(this, Events.LifeChanged);
+
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        PlayingDualLANHelper.setNetworkManagerRunnable(this);
+
         super.init();
 
         pauseButton.setOnClick(() -> {
@@ -50,6 +55,8 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
             nm.sendOnTCP("EndDual");
         });
 
+        PlayingDualLANHelper.setNetworkManagerRunnable(this);
+
     }
 
     @Override
@@ -57,6 +64,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         MapObject mo = super.dropSelectedObject();
         nm.sendMessageOnTCP("Item", mo.getCharacteristics());
         return mo;
+    }
+    @Override
+    protected void pickUpAnObject() {
+        nm.sendMessageOnTCP("IPU", ((MapObject) selectedOne).getCharacteristics());
+        super.pickUpAnObject();
     }
 
     @Override
@@ -68,7 +80,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     @Override
     public void handleInput() {
         super.handleInput();
-        PlayingLANHelper.handleInput();
+        PlayingDualLANHelper.handleInput(this);
     }
 
     @Override
@@ -100,6 +112,12 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     public void update(Notification notify) {
         super.update(notify);
         PlayingDualLANHelper.update(this, notify);
+    }
+
+    @Override
+    public void getFocus() {
+        super.getFocus();
+        PlayingDualLANHelper.getFocus();
     }
 
     public HashMap<String, Character> getIdCharacterMap() {

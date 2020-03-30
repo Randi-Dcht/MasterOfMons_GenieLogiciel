@@ -148,10 +148,12 @@ public class AgendaShower extends Control {
     }
 
     public void refreshCourses() {
-        courses = Supervisor.getPeople().getPlanning().get(
-                Supervisor.getSupervisor().getTime().getDate().getDay()
-        );
-        if (courses != null)
-            courses.sort(Comparator.comparingInt(c0 -> c0.getDate().getHour()));
+        if (Supervisor.getPeople().getPlanning() != null) {
+            courses = Supervisor.getPeople().getPlanning().get(
+                    Supervisor.getSupervisor().getTime().getDate().getDay()
+            );
+            if (courses != null)
+                courses.sort(Comparator.comparingInt(c0 -> c0.getDate().getHour()));
+        }
     }
 }

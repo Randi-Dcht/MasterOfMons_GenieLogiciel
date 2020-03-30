@@ -175,11 +175,22 @@ public abstract class Character implements Attack, Serializable
     /**
      * This method sets the life of this character
      * @param actualLife  the life of character
+     * @param notify If a event must be raised
+     */
+    public void setActualLife(double actualLife, boolean notify)
+    {
+        this.actualLife = actualLife;
+        if (notify)
+            Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
+    }
+
+    /**
+     * This method sets the life of this character
+     * @param actualLife  the life of character
      */
     public void setActualLife(double actualLife)
     {
-        this.actualLife = actualLife;
-        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
+        setActualLife(actualLife, true);
     }
 
     /**
