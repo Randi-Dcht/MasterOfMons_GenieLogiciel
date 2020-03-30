@@ -40,7 +40,7 @@ public class PlayingFlag extends PlayingStateDual
         baseOne = new Cases(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
         baseTwo = new Cases(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
 
-        Point ptFirst  = new Point(player.getPosX()/tileWidth,player.getPosY()/tileHeight);
+        Point ptFirst  = new Point((int)(MasterOfMonsGame.WIDTH/2+player.getPosX()-cam.position.x)/tileWidth,(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()-cam.position.y)/tileHeight);
         Point ptSecond = new Point(playerTwo.getPosX()/tileWidth,playerTwo.getPosY()/tileHeight);
 
         PlaceFlag(new Point(ptFirst.x,ptFirst.y + 1),new Point(ptFirst.x,ptFirst.y + 2),new Point(ptFirst.x,ptFirst.y + 3),new Point(ptSecond.x,ptSecond.y + 1),new Point(ptSecond.x,ptSecond.y + 2),new Point(ptSecond.x,ptSecond.y + 3));
@@ -53,7 +53,6 @@ public class PlayingFlag extends PlayingStateDual
         ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
         for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
             addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
-
     }
 
 

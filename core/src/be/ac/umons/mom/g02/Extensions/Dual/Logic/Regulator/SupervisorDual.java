@@ -148,6 +148,9 @@ public class SupervisorDual extends SupervisorMultiPlayer
             refreshQuest();
             refreshList(dual.getStartMaps());
         }
+
+        playerOne.setActualLife(playerOne.lifeMax());
+        playerTwo.setActualLife(playerTwo.lifeMax());
     }
 
     public TypeDual getDual()
