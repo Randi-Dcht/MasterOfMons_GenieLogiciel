@@ -1,19 +1,19 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Helpers;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
@@ -21,6 +21,7 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Input;
 
 import java.awt.*;
 import java.net.SocketException;
@@ -28,7 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PlayingLANHelper {
-    protected static boolean ignoreEMQ;
+    public static boolean ignoreEMQ;
+    public static boolean pauseSent;
 
     /**
      * Send all the PNJs positions to the second player.
@@ -141,5 +143,61 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("AC", objects -> ps.getSecondPlayer().expandAttackCircle());
         nm.whenMessageReceivedDo("LVLPA", objects -> SupervisorMultiPlayer.getPeopleTwo().updateUpLevel((int) objects[0], (int) objects[1], (int) objects[2]));
         nm.whenMessageReceivedDo("TIME", (objects) -> Supervisor.getSupervisor().setDate((Date) objects[0]));
+    }
+
+    public static void handleInput() {
+        GameInputManager gim = GameInputManager.getInstance();
+        NetworkManager nm = null;
+        try {
+            nm = NetworkManager.getInstance();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
+            nm.sendOnTCP("Pause");
+            pauseSent = true;
+        }
+        if (gim.isKey("attack", KeyStatus.Pressed))
+            nm.sendOnUDP("AC");
+    }
+
+    public static void update(NetworkReady ps, Notification notify) {
+        NetworkManager nm = null;
+        try {
+            nm = NetworkManager.getInstance();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        GameStateManager gsm = GameStateManager.getInstance();
+        if (notify.getEvents().equals(Events.Dead) &&
+                (notify.getBuffer().equals(Supervisor.getPeople()))) {
+            gsm.setState(DeadMenuState.class);
+            nm.sendOnTCP("Death");
+        }
+        else if (notify.getEvents().equals(Events.Dead)) {
+            Mobile m = (Mobile) notify.getBuffer();
+            nm.sendMessageOnTCP("PNJDeath", m.getName());
+            ps.getIdCharacterMap().remove(m.getName());
+        } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(Supervisor.getPeople()))
+            nm.sendMessageOnTCP("LVLUP", Supervisor.getPeople().getLevel());
+        else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
+            nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
+        else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
+            nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
+        else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
+            nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
+    }
+
+    public static void getFocus() {
+        NetworkManager nm = null;
+        try {
+            nm = NetworkManager.getInstance();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        if (pauseSent) {
+            nm.sendOnTCP("EndPause");
+            pauseSent = false;
+        }
     }
 }

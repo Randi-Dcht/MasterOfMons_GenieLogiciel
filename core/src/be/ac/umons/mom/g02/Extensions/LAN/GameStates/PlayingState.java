@@ -3,15 +3,12 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.*;
-import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
-import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
@@ -21,13 +18,10 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
-import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
@@ -197,6 +191,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getSupervisor().updatePlanning((HashMap<Integer, ArrayList<Course>>) objects[0]);
             agendaShower.refreshCourses();
         }));
+        nm.whenMessageReceivedDo("getPNJsPos", (objects) ->
+                sendPNJsPositions((String) objects[0])); // Need to generate it first
     }
 
     /**
@@ -317,15 +313,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void handleInput() {
         super.handleInput();
+        PlayingLANHelper.handleInput();
         if (! mazeMode || isTheMazePlayer )
             nm.sendMessageOnUDP("PP", player.getMapPos());
-
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            nm.sendOnTCP("Pause");
-            pauseSent = true;
-        }
-        if (gim.isKey("attack", KeyStatus.Pressed))
-            nm.sendOnUDP("AC");
     }
 
     @Override
@@ -412,7 +402,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (player.isRecovering())
             return;
         player.expandAttackCircle();
-        for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
+        for (Character c : getCharacterInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
             supervisor.attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
             nm.sendMessageOnUDP("hitPNJ", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife());
@@ -428,32 +418,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void update(Notification notify) {
         super.update(notify);
-        if (notify.getEvents().equals(Events.Dead) &&
-                (notify.getBuffer().equals(player.getCharacteristics()))) {
-            gsm.setState(DeadMenuState.class);
-            nm.sendOnTCP("Death");
-        }
-        else if (notify.getEvents().equals(Events.Dead)) {
-            Mobile m = (Mobile) notify.getBuffer();
-            nm.sendMessageOnTCP("PNJDeath", m.getName());
-            idCharacterMap.remove(m.getName());
-        } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(player.getCharacteristics()))
-            nm.sendMessageOnTCP("LVLUP", player.getCharacteristics().getLevel());
-        else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
-            nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
-        else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
-            nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
-        else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
-            nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
+        PlayingLANHelper.update(this, notify);
     }
 
     @Override
     public void getFocus() {
         super.getFocus();
-        if (pauseSent) {
-            nm.sendOnTCP("EndPause");
-            pauseSent = false;
-        }
+        PlayingLANHelper.getFocus();
         if (mazeMode) // If second player was disconnected
             nm.sendMessageOnTCP("ITMP", ! isTheMazePlayer);
     }

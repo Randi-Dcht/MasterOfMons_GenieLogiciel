@@ -3,7 +3,6 @@ package be.ac.umons.mom.g02.GameStates;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Orientation;
-import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Events.Observer;
@@ -14,7 +13,6 @@ import be.ac.umons.mom.g02.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.mom.g02.GraphicalObjects.*;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.KeySelector;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.OnMapObject;
@@ -566,7 +564,7 @@ public class PlayingState extends GameState implements Observer {
      * @param inFrontOf If the PNJ must be in front of the player.
      * @return Return all the PNJs near enough from the player.
      */
-    protected List<Character> getPlayerInRange(Player player, double dist, boolean inFrontOf) {
+    protected List<Character> getCharacterInRange(Player player, double dist, boolean inFrontOf) {
         LinkedList<Character> res = new LinkedList<>();
         for (Character character : pnjs) {
             double d = Math.pow(player.getPosX() - character.getPosX(), 2) + Math.pow(player.getPosY() - character.getPosY(), 2);
@@ -606,7 +604,7 @@ public class PlayingState extends GameState implements Observer {
         if (player.isRecovering())
             return;
         player.expandAttackCircle();
-        for (Character c : getPlayerInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
+        for (Character c : getCharacterInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
             supervisor.attackMethod(player.getCharacteristics(), c.getCharacteristics());
             player.setTimeBeforeAttack(player.getCharacteristics().recovery());
         }

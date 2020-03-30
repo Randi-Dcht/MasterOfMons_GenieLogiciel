@@ -1,7 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.*;
-import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
@@ -10,9 +8,8 @@ import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
-import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import com.badlogic.gdx.Input;
 
 import java.awt.*;
 import java.net.SocketException;
@@ -25,10 +22,6 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
      * The hashmap making the link between a character's name and its graphical object
      */
     protected HashMap<String, Character> idCharacterMap;
-    /**
-     * If a pause signal has already been sent
-     */
-    protected boolean pauseSent;
 
     /**
      * @param gs The game's graphical settings
@@ -50,13 +43,20 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
             nm.sendMessageOnTCP("Pause");
-            pauseSent = true;
+            PlayingLANHelper.pauseSent = true;
         });
         endDual.setOnClick(() -> {
             PlayingDualLANHelper.goToPreviousMenu();
             nm.sendOnTCP("EndDual");
         });
 
+    }
+
+    @Override
+    public MapObject dropSelectedObject() {
+        MapObject mo = super.dropSelectedObject();
+        nm.sendMessageOnTCP("Item", mo.getCharacteristics());
+        return mo;
     }
 
     @Override
@@ -68,12 +68,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     @Override
     public void handleInput() {
         super.handleInput();
-        nm.sendMessageOnUDP("PP", player.getMapPos());
-
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            nm.sendOnTCP("Pause");
-            pauseSent = true;
-        }
+        PlayingLANHelper.handleInput();
     }
 
     @Override
@@ -104,12 +99,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     @Override
     public void update(Notification notify) {
         super.update(notify);
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
-            nm.sendOnTCP("Death");
-            PlayingDualLANHelper.goToPreviousMenu();
-        } else if (notify.getEvents().equals(Events.Attack)) {
-            nm.sendMessageOnUDP("PL", player.getCharacteristics().getActualLife());
-        }
+        PlayingDualLANHelper.update(this, notify);
     }
 
     public HashMap<String, Character> getIdCharacterMap() {

@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayCases;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
@@ -8,8 +7,8 @@ import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import com.badlogic.gdx.Input;
 
 import java.net.SocketException;
 import java.util.HashMap;
@@ -88,12 +87,7 @@ public class PlayingCasesState extends PlayCases implements NetworkReady {
     @Override
     public void handleInput() {
         super.handleInput();
-        nm.sendMessageOnUDP("PP", player.getMapPos());
-
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            nm.sendOnTCP("Pause");
-            pauseSent = true;
-        }
+        PlayingDualLANHelper.handleInput();
     }
 
     @Override
@@ -112,12 +106,16 @@ public class PlayingCasesState extends PlayCases implements NetworkReady {
     }
 
     @Override
+    public MapObject dropSelectedObject() {
+        MapObject mo = super.dropSelectedObject();
+        nm.sendMessageOnTCP("Item", mo.getCharacteristics());
+        return mo;
+    }
+
+    @Override
     public void getFocus() {
         super.getFocus();
-        if (pauseSent) {
-            pauseSent = false;
-            nm.sendOnTCP("EndPause");
-        }
+        PlayingDualLANHelper.getFocus();
     }
 
     @Override
