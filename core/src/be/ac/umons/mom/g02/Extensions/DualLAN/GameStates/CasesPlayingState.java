@@ -1,40 +1,34 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayCases;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
-import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
+import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
+import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
+import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import com.badlogic.gdx.Input;
 
-import java.awt.*;
 import java.net.SocketException;
+import java.util.HashMap;
 
-public class PlayingCasesState extends PlayCases {
+public class CasesPlayingState extends PlayCases implements NetworkReady {
 
     /**
      * The NetworkManager to use
      */
     protected NetworkManager nm;
     /**
-     * If a pause signal has already been sent
-     */
-    protected boolean pauseSent = false;
-    /**
      * The number of cases of each player (to show)
      */
     protected int cp1, cp2;
 
-    protected boolean ignoreEMQ = false;
-
     /**
      * @param gs The game's graphical settings
      */
-    public PlayingCasesState(GraphicalSettings gs) {
+    public CasesPlayingState(GraphicalSettings gs) {
         super(gs);
     }
 
@@ -53,7 +47,7 @@ public class PlayingCasesState extends PlayCases {
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
             nm.sendMessageOnTCP("Pause");
-            pauseSent = true;
+            PlayingLANHelper.pauseSent = true;
         });
 
         endDual.setOnClick(() -> {
@@ -66,24 +60,7 @@ public class PlayingCasesState extends PlayCases {
      * Set all the needed network manager's runnables except the one for setting the map changing (must be done earlier)
      */
     public void setNetworkManagerRunnables() {
-        nm.whenMessageReceivedDo("PP", (objects -> setSecondPlayerPosition((Point) objects[0])));
-        nm.whenMessageReceivedDo("SPP", (objects) -> player.setMapPos((Point) objects[0]));
-        nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
-        nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
-        nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            if (! ignoreEMQ) {
-                timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
-                SupervisorLAN.getPeople().getQuest().passQuest();
-            }
-            ignoreEMQ = ! ignoreEMQ;
-        });
-        nm.setOnDisconnected(() -> {
-            DisconnectedMenuState dms = (DisconnectedMenuState) gsm.setState(DisconnectedMenuState.class);
-            dms.setSecondPlayerPosition(playerTwo.getMapPos());
-        });
-        nm.whenMessageReceivedDo("Death", objects -> goToPreviousMenu());
-        nm.whenMessageReceivedDo("PL", objects -> lifeBarTwo.setValue((int)(objects[0])));
-        nm.whenMessageReceivedDo("EndDual", objects -> goToPreviousMenu());
+        PlayingDualLANHelper.setNetworkManagerRunnable(this);
         nm.whenMessageReceivedDo("Time", objects -> time = (double)objects[0]);
         nm.whenMessageReceivedDo("CP1", objects -> cp2 = (int)objects[0]);
         nm.whenMessageReceivedDo("CP2", objects -> cp1 = (int)objects[0]);
@@ -107,12 +84,7 @@ public class PlayingCasesState extends PlayCases {
     @Override
     public void handleInput() {
         super.handleInput();
-        nm.sendMessageOnUDP("PP", player.getMapPos());
-
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            nm.sendOnTCP("Pause");
-            pauseSent = true;
-        }
+        PlayingDualLANHelper.handleInput();
     }
 
     @Override
@@ -131,11 +103,25 @@ public class PlayingCasesState extends PlayCases {
     }
 
     @Override
+    public MapObject dropSelectedObject() {
+        MapObject mo = super.dropSelectedObject();
+        nm.sendMessageOnTCP("Item", mo.getCharacteristics());
+        return mo;
+    }
+
+    @Override
     public void getFocus() {
         super.getFocus();
-        if (pauseSent) {
-            pauseSent = false;
-            nm.sendOnTCP("EndPause");
-        }
+        PlayingDualLANHelper.getFocus();
+    }
+
+    @Override
+    public Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y) {
+        return null; // NO PNJ IN THIS MODE
+    }
+
+    @Override
+    public HashMap<String, Character> getIdCharacterMap() {
+        return null; // NO PNJ IN THIS MODE
     }
 }
