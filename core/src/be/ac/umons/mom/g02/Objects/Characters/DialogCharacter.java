@@ -6,7 +6,10 @@ import be.ac.umons.mom.g02.Events.Notifications.Shop;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -54,11 +57,12 @@ public class DialogCharacter
      * This constructor define the dialog of the character
      * @param nameDialog is the name of the dialog with the ID
      */
-    public DialogCharacter(NameDialog nameDialog, Supervisor supervisor)//TODO add sp
+    public DialogCharacter(NameDialog nameDialog, Supervisor supervisor)
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
-        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP");
+        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP","Friendly");
+
     }
 
 
@@ -85,7 +89,7 @@ public class DialogCharacter
         HashMap<String,ArrayList<String>> list = new HashMap<>();
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal(PATH + name.getFile())))));
+            BufferedReader line = new BufferedReader(Gdx.files.internal(PATH + name.getFile()).reader());
             while ((vertical = line.readLine()) != null)
             {
                 if(vertical.charAt(0) != '%' &&  (split = vertical.split("/")).length >= 2 )
@@ -129,7 +133,8 @@ public class DialogCharacter
         ArrayList<String> newList = new ArrayList<>();
         for (String str : list)
         {
-            if (listID.contains(str) && !str.equals("SHOP"))
+            if (listID.contains(str) && !str.equals("Friendly") && !str.equals("SHOP"))
+
                 newList.addAll(replaceId(str));
             else
                 newList.add(str);
@@ -195,8 +200,6 @@ public class DialogCharacter
      */
     public void analyzeAnswer(String answerID,Mobile mobile)
     {
-        if (!answerID.equals(before))
-        {
             this.mobile = mobile;
 
             if (specificID != null)
@@ -208,12 +211,13 @@ public class DialogCharacter
                 supervisor.getEvent().notify(new Dialog("ESC"));
                 //classSp.getEvent().remove(Events.Answer,classSp);TODO
             }
+            else if (answerID.equals("ESC"))
+                supervisor.getEvent().notify(new Dialog("ESC"));
             else if (check(getDialog(answerID)))
                 supervisor.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
             else
                 supervisor.getEvent().notify(new Dialog(getDialog(answerID)));
             before = answerID;
-        }
     }
 
 
@@ -238,9 +242,16 @@ public class DialogCharacter
             else
                 supervisor.getEvent().notify(new Dialog("ESC"));
         }
+
         if (specificID.equals("SHOP")){
             supervisor.getEvent().notify(new Shop());
         supervisor.getEvent().notify(new Dialog("ESC"));}
+
+        if (answer.equals("Friendly"))
+        {
+            Supervisor.getPeople().addFriend(mobile);
+            supervisor.getEvent().notify(new Dialog("ESC"));
+        }
         specificID = null;
     }
 

@@ -1,11 +1,13 @@
 package be.ac.umons.mom.g02.Objects;
 
+import be.ac.umons.mom.g02.Helpers.FileHelper;
 import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Enums.Languages;
 import be.ac.umons.mom.g02.Managers.GameColorManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Objects;
+import java.util.logging.FileHandler;
 
 /**
  * Represent the graphical settings of the game.
@@ -24,38 +27,38 @@ public class GraphicalSettings {
     /**
      * The font used to draw titles.
      */
-    private BitmapFont titleFont;
+    protected BitmapFont titleFont;
     /**
      * The font used to draw text in general.
      */
-    private BitmapFont normalFont;
+    protected BitmapFont normalFont;
     /**
      * The font used to draw quest's name.
      */
-    private BitmapFont questFont;
+    protected BitmapFont questFont;
     /**
      * The font used to draw small text.
      */
-    private BitmapFont smallFont;
+    protected BitmapFont smallFont;
     /**
      * An asset manager to load assets.
      */
-    private AssetManager assetManager;
+    protected AssetManager assetManager;
     /**
      * A BitmapFont generator.
      */
-    private FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
+    protected FreeTypeFontGenerator.FreeTypeFontParameter ftfp;
 
     /**
      * The bundle containing all the strings to use in the game in the chosen language.
      */
-    private I18NBundle bundle;
+    protected static I18NBundle bundle;
     /**
      * If the map coordinates needs to be showed to the user.
      */
-    private boolean showMapCoordinates = false;
+    protected boolean showMapCoordinates = false;
 
-    GameColorManager gcm;
+    protected GameColorManager gcm;
 
     public GraphicalSettings() {
         init();
@@ -69,7 +72,6 @@ public class GraphicalSettings {
         assetManager = new AssetManager();
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         ftfp.color = Color.WHITE;
-        prepareAssetManagerForLoading();
         refreshColors();
     }
 
@@ -164,21 +166,6 @@ public class GraphicalSettings {
     }
 
     /**
-     * Prepare the asset managers to load every needed resources.
-     */
-    private void prepareAssetManagerForLoading() {
-        File[] fi = Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory);
-        for (File folder : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isDirectory))) {
-            for (File f : Objects.requireNonNull(folder.listFiles(File::isFile))) {
-                assetManager.load(f.getPath(), Texture.class);
-            }
-        }
-        for (File f : Objects.requireNonNull(Gdx.files.internal("Pictures/").file().listFiles(File::isFile))) {
-            assetManager.load(f.getPath(), Texture.class);
-        }
-    }
-
-    /**
      * @return The asset manager.
      */
     public AssetManager getAssetManager() {
@@ -206,7 +193,7 @@ public class GraphicalSettings {
     @SuppressWarnings("unchecked")
     public void addFilesToLoad(LoadFile... files) {
         for (LoadFile f : files) {
-            assetManager.load(f.file.getPath(), f.typeOfFile);
+            assetManager.load(f.file.path(), f.getTypeOfFile());
         }
     }
 
@@ -215,8 +202,10 @@ public class GraphicalSettings {
      * @param id The string's id.
      * @return The string corresponding with the given id in the previously configured language (or the default one).
      */
-    public String getStringFromId(String id) {
+    public static String getStringFromId(String id) {
         try {
+            if (bundle == null) // Test case
+                return "Error";
             return bundle.get(id);
         } catch (MissingResourceException e) {
             Gdx.app.error("GraphicalSettings", "Bundle key not found", e);
@@ -228,7 +217,7 @@ public class GraphicalSettings {
      * Set the locale that need to be used and load the corresponding bundle.
      * @param loc The locale.
      */
-    public void setLocale(Locale loc) {
+    public static void setLocale(Locale loc) {
         bundle = I18NBundle.createBundle(Gdx.files.internal("Conversations/Conversations"), loc);
     }
 
@@ -236,7 +225,7 @@ public class GraphicalSettings {
      * Set the language that need to be used and change the local.
      * @param lang The language that need to be used.
      */
-    public void setLanguage(Languages lang) {
+    public static void setLanguage(Languages lang) {
         String loc = lang.getLocale();
         setLocale(new Locale(loc));
     }

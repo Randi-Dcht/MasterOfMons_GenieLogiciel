@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum;
 
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayCases;
+import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingFlag;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.BattlePeople;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualUnderQuest;
@@ -17,9 +18,9 @@ import java.awt.Point;
 public enum TypeDual
 {
     DualPlayer(     "", BattlePeople.class    , PlayingStateDual.class,Maps.DualKiosk,new Point(11,20),new Point(1690,586)),
-    CatchFlag(      "", TakeFlag.class        , PlayingStateDual.class,Maps.DualPark ,new Point(28,9) ,new Point(3020,856)),
+    CatchFlag(      "", TakeFlag.class        , PlayingFlag.class     ,Maps.DualPark ,new Point(10,33) ,new Point(1674,476)),
     Survivor(       "", SurvivorVsMobile.class, PlayingStateDual.class,Maps.DualKiosk,new Point(14,16),new Point(1570,496)),
-    OccupationFloor("", MoreCasesMons.class   , PlayCases.class,       Maps.DualPark ,new Point(28,9) ,new Point(3020,856));
+    OccupationFloor("", MoreCasesMons.class   , PlayCases.class,       Maps.DualPark ,new Point(10,33) ,new Point(1674,476));
 
 
     /***/

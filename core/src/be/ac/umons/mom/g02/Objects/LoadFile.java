@@ -1,6 +1,8 @@
 package be.ac.umons.mom.g02.Objects;
 
-import java.io.File;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
 import java.io.FileNotFoundException;
 
 /**
@@ -10,7 +12,7 @@ public class LoadFile {
     /**
      * The file to load.
      */
-    protected File file;
+    protected FileHandle file;
     /**
      * The type of that file.
      */
@@ -23,7 +25,7 @@ public class LoadFile {
      * @throws FileNotFoundException If the file isn't found.
      */
     public LoadFile(String path, String fileType) throws ClassNotFoundException, FileNotFoundException {
-        file = new File(path);
+        file = Gdx.files.internal(path);
         if (! file.exists())
             throw new FileNotFoundException(path + "not found !");
         typeOfFile = Class.forName(fileType);
@@ -32,7 +34,7 @@ public class LoadFile {
     /**
      * @return The file to load
      */
-    public File getFile() {
+    public FileHandle getFile() {
         return file;
     }
 

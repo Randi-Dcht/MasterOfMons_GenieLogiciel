@@ -37,10 +37,13 @@ public class WaitMenuState extends MenuState {
         });
     }
 
+    /**
+     * Set all the necessary action in the NetworkManager
+     */
     protected void setNetworkManagerRunnables() {
         nm.whenMessageReceivedDo("TC", (objects -> {
             SupervisorDual.getSupervisorDual().init((TypeDual) objects[0]);
-            if (objects[0] == TypeDual.CatchFlag)
+            if (objects[0] == TypeDual.OccupationFloor)
                 gsm.removeAllStateAndAdd(PlayingCasesState.class);
             else
                 gsm.removeAllStateAndAdd(PlayingState.class);

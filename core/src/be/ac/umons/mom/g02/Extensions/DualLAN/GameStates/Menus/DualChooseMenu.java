@@ -37,7 +37,7 @@ public class DualChooseMenu extends be.ac.umons.mom.g02.Extensions.Dual.Graphic.
     protected void checkChoose(TypeDual what) {
         nm.sendMessageOnTCP("TC", what);
         SupervisorDual.getSupervisorDual().init(what);
-        if (what == TypeDual.CatchFlag)
+        if (what == TypeDual.OccupationFloor)
             gsm.removeAllStateAndAdd(PlayingCasesState.class);
         else
             gsm.removeAllStateAndAdd(PlayingState.class);

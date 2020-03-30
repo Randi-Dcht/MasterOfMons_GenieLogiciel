@@ -72,23 +72,8 @@ public class ConnectionRoomState extends MenuState {
                 ogds.setText(gs.getStringFromId("wrongOne"));
                 ogds.addAnswer("OK");
             });
-            nm.whenMessageReceivedDo("PI", objects -> {
-                if (MasterOfMonsGame.getGameToLoad() == null)
-                    goToLoading();
-                SupervisorMultiPlayer.setPlayerTwo((People) objects[0]);
-            });
-            nm.whenMessageReceivedDo("SPI", objects -> {
-                goToLoading();
-                SupervisorMultiPlayer.setPlayerOne((People) objects[0]);
-            });
-            nm.whenMessageReceivedDo("SAVE", (objects -> {
-                Save save = (Save) objects[0];
-                save.invertPlayerOneAndTwo();
-                MasterOfMonsGame.setSaveToLoad(save);
-                if (ExtensionsManager.getInstance().getExtensionsMap().get("LAN").activated)
-                    SupervisorLAN.getSupervisor().oldGameLAN(save);
-                goToLoading();
-            }));
+
+            FinalisingConnectionState.setNetworkManagerRunnable();
 
         } catch (SocketException e) {
             e.printStackTrace();
@@ -161,21 +146,6 @@ public class ConnectionRoomState extends MenuState {
             OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
             ogds.setText("");
         }
-    }
-
-
-    private void goToLoading() {
-        LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
-        ls.setOnLoaded(() -> nm.sendOnTCP("Loaded"));
-        if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated) {
-            SupervisorDual.initDual();
-            if (nm.isTheServer())
-                ls.setAfterLoadingState(DualChooseMenu.class);
-            else
-                ls.setAfterLoadingState(WaitMenuState.class);
-        }
-        else
-            ls.setAfterLoadingState(PlayingState.class);
     }
 
     /**

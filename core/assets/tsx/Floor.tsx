@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Sol" tilewidth="256" tileheight="512" tilecount="60" columns="0">
+<tileset name="Sol" tilewidth="256" tileheight="512" tilecount="61" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="132" height="99" source="../Sprite/landscapeTiles_067.png"/>
@@ -180,5 +180,8 @@
  </tile>
  <tile id="59">
   <image width="132" height="99" source="../Sprite/information.png"/>
+ </tile>
+ <tile id="60">
+  <image width="99" height="110" source="../Sprite/detail_treeLarge_E.png"/>
  </tile>
 </tileset>

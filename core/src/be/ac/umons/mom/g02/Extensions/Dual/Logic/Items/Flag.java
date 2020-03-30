@@ -13,6 +13,9 @@ public class Flag extends Items
      * This variable id the people who behove the flag
      */
     private People myCamp;
+    /**
+     * This is the name of the camps
+     */
     private String id;
 
 
@@ -21,7 +24,7 @@ public class Flag extends Items
      */
     public Flag()
     {
-        super("FlagDual");
+        super("Flag");
     }
 
 
@@ -56,6 +59,7 @@ public class Flag extends Items
         return false;
     }
 
+
     /**
      * This method returns the id to place the Item on the map
      * @return id of place
@@ -63,5 +67,13 @@ public class Flag extends Items
     public String idOfPlace()
     {
         return id;
+    }
+
+
+    /***/
+    @Override
+    public String toString()
+    {
+        return super.toString()+id;
     }
 }

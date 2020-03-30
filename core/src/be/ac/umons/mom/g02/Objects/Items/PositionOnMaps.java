@@ -42,7 +42,7 @@ public class PositionOnMaps
         String vertical;
         try
         {
-            BufferedReader line = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(Gdx.files.internal(PATH)))));
+            BufferedReader line = new BufferedReader(Gdx.files.internal(PATH).reader());
             while ((vertical = line.readLine()) != null)
             {
 
@@ -59,7 +59,6 @@ public class PositionOnMaps
                 }
             }
             line.close();
-            System.out.println(listPoint);
         }
         catch (Exception e)
         {

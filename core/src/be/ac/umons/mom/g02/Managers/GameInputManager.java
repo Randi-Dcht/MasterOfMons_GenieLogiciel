@@ -61,6 +61,9 @@ public class GameInputManager implements InputProcessor {
      */
     private GameKeyManager gkm;
 
+    private boolean isMouseJustClicked = false;
+    private boolean isMouseJustUnclicked = false;
+
     protected GameInputManager() {
         keys = new KeyStatus[AVAILABLE_INPUT_KEYS];
         lastMousePosition = new Point();
@@ -95,6 +98,7 @@ public class GameInputManager implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        isMouseJustClicked = true;
         return true;
     }
 
@@ -102,11 +106,14 @@ public class GameInputManager implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT)
             recentClicks.add(new Point(screenX, screenY));
+        isMouseJustUnclicked = true;
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        lastMousePosition.x = screenX;
+        lastMousePosition.y = screenY;
         return false;
     }
 
@@ -156,6 +163,8 @@ public class GameInputManager implements InputProcessor {
         lastChars.clear();
         scrolledAmount = 0;
         lastKeyCode = -1;
+        isMouseJustClicked = false;
+        isMouseJustUnclicked = false;
     }
 
     /**
@@ -191,5 +200,13 @@ public class GameInputManager implements InputProcessor {
      */
     public int getLastKeyPressedCode() {
         return lastKeyCode;
+    }
+
+    public boolean isMouseJustClicked() {
+        return isMouseJustClicked;
+    }
+
+    public boolean isMouseJustUnclicked() {
+        return isMouseJustUnclicked;
     }
 }

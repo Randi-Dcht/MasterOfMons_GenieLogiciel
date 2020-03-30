@@ -3,10 +3,7 @@ package be.ac.umons.mom.g02.GameStates.Menus;
 import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.CheckBox;
-import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
-import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.CheckBoxMenuItem;
-import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
-import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Managers.ExtensionsManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
@@ -55,13 +52,13 @@ public class MainMenuState extends MenuState {
         handleEscape = false;
         transparentBackground = false;
         List<MenuItem> menuItemList = new ArrayList<>();
-        menuItemList.add(new TitleMenuItem(gs, gs.getStringFromId("gameName")));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> em.initGame(gsm)));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("load"), this::initLoad));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), () -> Gdx.app.exit()));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("about"), () -> gsm.setState(AboutMenuState.class)));
-        menuItemList.add(new TitleMenuItem(gs, gs.getStringFromId("extensions")));
+        menuItemList.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("gameName")));
+        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("newGame"), () -> em.initGame(gsm)));
+        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("load"), this::initLoad));
+        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)));
+        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), () -> Gdx.app.exit()));
+        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("about"), () -> gsm.setState(AboutMenuState.class)));
+        menuItemList.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("extensions")));
 
         for (ExtensionsManager.Extension ext : em.getExtensions()) {
             CheckBoxMenuItem mi = new CheckBoxMenuItem(gim, gs, ext.extensionName, (newState -> {
@@ -88,8 +85,8 @@ public class MainMenuState extends MenuState {
                 else
                     gsm.setState(LoadMenuState.class);
             } catch (ClassNotFoundException e) {
-                MasterOfMonsGame.showAnError(String.format("The extension \"%s\" couldn't be loaded !", mainExt.extensionName));
-                Gdx.app.error("MainMenuState", String.format("The extension \"%s\" couldn't be loaded !", mainExt.extensionName), e);
+                MasterOfMonsGame.showAnError(String.format( GraphicalSettings.getStringFromId("couldntLoadExt"), mainExt.extensionName));
+                Gdx.app.error("MainMenuState", String.format(GraphicalSettings.getStringFromId("couldntLoadExt"), mainExt.extensionName), e);
             }
         } else
             gsm.setState(LoadMenuState.class);

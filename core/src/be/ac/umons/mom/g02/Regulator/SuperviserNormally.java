@@ -5,7 +5,6 @@ import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.PositionOnMaps;
@@ -14,7 +13,6 @@ import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
-
 import java.util.ArrayList;
 
 
@@ -30,8 +28,8 @@ public class SuperviserNormally extends Supervisor
      */
     public static SuperviserNormally getSupervisor()
     {
-        if (instance == null)
-            initNormallyGame();//TODO delete go to other class
+        if (instance == null || !instance.getClass().equals(SuperviserNormally.class))
+            initNormallyGame();
         if (instance.getClass().equals(SuperviserNormally.class))
             return (SuperviserNormally)instance;
         return null;
@@ -112,6 +110,7 @@ public class SuperviserNormally extends Supervisor
     {
         return playerOne.getQuest();
     }
+
 
     /***/
     @Override

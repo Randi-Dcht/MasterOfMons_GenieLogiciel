@@ -4,8 +4,6 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.ExtensionsManager;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
@@ -24,9 +22,9 @@ public class LoadMenuState extends ChoosePathMenuState {
     public void init() {
         super.init();
         setMenuItems(new MenuItem[] {
-                new TitleMenuItem(gs, gs.getStringFromId("load")),
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("load")),
                 directoryMI,
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("cancel"), () -> gsm.removeFirstState()),
                 chooseSaveSLC,
         });
         setFolder(path);

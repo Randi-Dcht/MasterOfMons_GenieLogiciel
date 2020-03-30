@@ -2,11 +2,15 @@ package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 
 import be.ac.umons.mom.g02.Animations.DoubleAnimation;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -22,7 +26,7 @@ import java.util.List;
  * Show the player's inventory to the user.
  * @author Guillaume Cardoen
  */
-public class InventoryShower extends Control {
+public class InventoryShower extends Control implements Observer {
     /**
      * The margin between 2 inventory's item.
      */
@@ -108,6 +112,7 @@ public class InventoryShower extends Control {
         sr = new ShapeRenderer();
         sr.setAutoShapeType(true);
         animate();
+        Supervisor.getEvent().add(this, Events.UseItems);
     }
 
     /**
@@ -173,7 +178,8 @@ public class InventoryShower extends Control {
         setDuringAnimationWidth(getWidth() / 5);
         setDuringAnimationBackgroundOpacity(1);
         da.setRunningAction(() -> setDuringAnimationHeight((float)(getHeight() * da.getActual())));
-        am.addAnAnimation("InventoryShowerHeightAnimation", da);
+
+        am.addAnAnimation(da);
         DoubleAnimation da2 = new DoubleAnimation(0, 1, 750);
         da2.setEndingAction(this::finishAnimation);
         da2.setRunningAction(() ->  {
@@ -181,7 +187,7 @@ public class InventoryShower extends Control {
             setDuringAnimationItemWidth((float)(itemWidth * da2.getActual()));
             setDuringAnimationForegroundOpacity(da2.getActual());
         });
-        da.setEndingAction(() -> am.addAnAnimation("InventoryShowerWidthAnimation", da2));
+        da.setEndingAction(() -> am.addAnAnimation(da2));
     }
 
     @Override
@@ -305,5 +311,16 @@ public class InventoryShower extends Control {
      */
     public void setDuringAnimationItemWidth(float duringAnimationItemWidth) {
         this.duringAnimationItemWidth = duringAnimationItemWidth;
+    }
+
+    /**
+     * The method to receive the notification
+     *
+     * @param notify
+     */
+    @Override
+    public void update(Notification notify) {
+        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty())
+            inventory.remove(notify.getBuffer());
     }
 }

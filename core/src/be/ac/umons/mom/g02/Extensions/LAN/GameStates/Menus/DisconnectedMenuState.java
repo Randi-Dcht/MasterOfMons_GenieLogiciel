@@ -40,13 +40,13 @@ public class DisconnectedMenuState extends MenuState {
         handleEscape = false;
         transparentBackground = true;
         List<MenuItem> menuItemList = new ArrayList<>();
-        menuItemList.add(new TitleMenuItem(gs, gs.getStringFromId("disconnected")));
+        menuItemList.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("disconnected")));
 
-        menuItemList.add(new TextMenuItem(gs, gs.getStringFromId("waitingReconnection")));
-        menuItemList.add(new TextMenuItem(gs, gs.getStringFromId("searchInLoad")));
+        menuItemList.add(new TextMenuItem(gs, GraphicalSettings.getStringFromId("waitingReconnection")));
+        menuItemList.add(new TextMenuItem(gs, GraphicalSettings.getStringFromId("searchInLoad")));
 
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("saveTheGame"), () -> gsm.setState(SaveMenuState.class)));
-        menuItemList.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("quit"), this::exit));
+        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("saveTheGame"), () -> gsm.setState(SaveMenuState.class)));
+        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), this::exit));
         setMenuItems(menuItemList.toArray(new MenuItem[0]));
 
         try {
@@ -55,10 +55,14 @@ public class DisconnectedMenuState extends MenuState {
             nm.acceptConnection();
             nm.startBroadcastingMessage("Game begun");
             nm.whenMessageReceivedDo("PI", null);
-            nm.whenMessageReceivedDo("Loaded", (objects) -> gsm.removeAllStateUntil(this));
+            nm.whenMessageReceivedDo("Loaded", (objects) -> {
+                gsm.removeAllStateUntil(this);
+                nm.sendOnTCP("Loaded");
+                nm.whenMessageReceivedDo("Loaded", null);
+            });
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
-                ogds.setText(String.format(gs.getStringFromId("magicNumber"), magicNumber));
+                ogds.setText(String.format(GraphicalSettings.getStringFromId("magicNumber"), magicNumber));
                 ogds.addAnswer("OK");
             });
             nm.setOnConnected(this::onConnected);
@@ -81,7 +85,7 @@ public class DisconnectedMenuState extends MenuState {
      */
     public void exit() {
         GameState g = gsm.setState(OutGameDialogState.class);
-        ((OutGameDialogState)g).setText(gs.getStringFromId("sureQuitGame"));
+        ((OutGameDialogState)g).setText(GraphicalSettings.getStringFromId("sureQuitGame"));
         ((OutGameDialogState)g).addAnswer("yes", () -> Gdx.app.exit());
         ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
     }

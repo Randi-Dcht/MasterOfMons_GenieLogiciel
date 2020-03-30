@@ -31,4 +31,9 @@ _______________________________________________Umons____________________________
               * Extension Lan qui permet à deux joueurs de jouer ensemble sur des pc distant.
               * Extension IA [...]
               
+            Vidéo explicative du jeu:
+            -------------------------
+            
+                                           https://masterofmons.dchtrnd.be/
+            
 _______________________________________________Umons_______________________________________________

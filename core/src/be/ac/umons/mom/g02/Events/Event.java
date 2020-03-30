@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 /**
  * This class allows to add events to the list of Event
  * This class follows the design pattern Observable.

@@ -1,12 +1,12 @@
 package be.ac.umons.mom.g02.Helpers;
 
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,13 +18,16 @@ public class FileHelper {
         BufferedReader br;
         int actualLine = 0;
         try {
-            FileHandle ef = Gdx.files.getFileHandle(file, Files.FileType.Internal);
+            FileHandle ef = Gdx.files.getFileHandle(file, Files.FileType.External);
             if (! ef.exists()) {
-                Gdx.app.error("FileHelper", String.format("The file \"%s\" wasn't found !", file));
-                MasterOfMonsGame.showAnError(String.format("The file \"%s\" wasn't found !", file));
-                return null;
+                ef = Gdx.files.getFileHandle(file, Files.FileType.Internal);
+                if (! ef.exists()) {
+                    Gdx.app.error("FileHelper", String.format("The file \"%s\" wasn't found !", file));
+                    MasterOfMonsGame.showAnError(String.format(GraphicalSettings.getStringFromId("fileNotFound"), file));
+                    return null;
+                }
             }
-            br = new BufferedReader(new FileReader(ef.file()));
+            br = new BufferedReader(ef.reader());
             String line;
             while ((line = br.readLine()) != null) {
                 String[] color = line.split("=");
@@ -34,8 +37,8 @@ public class FileHelper {
                 actualLine++;
             }
         } catch (IOException e) {
-            MasterOfMonsGame.showAnError(String.format("The file \"%s\" wasn't loaded due to an error !", file));
             Gdx.app.error("FileHelper", String.format("The file \"%s\" wasn't loaded due to an error !", file), e);
+            MasterOfMonsGame.showAnError(String.format(GraphicalSettings.getStringFromId("fileNotLoaded"), file));
         } catch (NumberFormatException e) {
             Gdx.app.error("FileHelper", String.format("An error has been detected line %d of file \"%s\"", actualLine, file), e);
         }

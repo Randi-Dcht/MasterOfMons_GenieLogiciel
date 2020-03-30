@@ -51,7 +51,7 @@ public class WaitingRoomState extends MenuState {
             nm.acceptConnection();
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
-                ogds.setText(String.format(gs.getStringFromId("magicNumber"), magicNumber));
+                ogds.setText(String.format(GraphicalSettings.getStringFromId("magicNumber"), magicNumber));
                 ogds.addAnswer("OK");
             });
             nm.setOnConnected(() -> {
@@ -62,14 +62,15 @@ public class WaitingRoomState extends MenuState {
             e.printStackTrace();
             return;
         }
+        FinalisingConnectionState.setNetworkManagerRunnable();
 
         transparentBackground = false;
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("waitingConnection")));
-        menuItems.add(new TextMenuItem(gs, gs.getStringFromId("servInfo")));
+        menuItems.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("waitingConnection")));
+        menuItems.add(new TextMenuItem(gs, GraphicalSettings.getStringFromId("servInfo")));
         menuItems.add(TXT_ServerName =
-                new TextBoxMenuItem(gim, gs, gs.getStringFromId("servName")));
-        menuItems.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("setName"),
+                new TextBoxMenuItem(gim, gs, GraphicalSettings.getStringFromId("servName")));
+        menuItems.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("setName"),
                 () -> nm.startBroadcastingMessage(
                     TXT_ServerName.getControl().getText()
         )));
@@ -77,7 +78,7 @@ public class WaitingRoomState extends MenuState {
         for (InetAddress ia : nm.getAddressToBroadcast().keySet()) {
             menuItems.add(new TextMenuItem(gs, "IP : " + ia.toString().replace("/", "")));
         }
-        menuItems.add(new TextMenuItem(gs, gs.getStringFromId("multiplesIPInfo")));
+        menuItems.add(new TextMenuItem(gs, GraphicalSettings.getStringFromId("multiplesIPInfo")));
 
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }

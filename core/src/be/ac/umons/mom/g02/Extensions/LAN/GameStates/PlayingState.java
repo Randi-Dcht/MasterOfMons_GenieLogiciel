@@ -2,13 +2,12 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Dead;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.MyFirstYear;
+import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
@@ -73,7 +72,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     /**
      * If the player (one) is the one who can move in the maze
      */
-    protected boolean isTheMazePlayer;
+    protected boolean isTheMazePlayer = true;
     /**
      * The objects that are in the layer puzzle on the map.
      */
@@ -116,7 +115,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
             gsm.removeAllStateAndAdd(MainMenuState.class);
-            MasterOfMonsGame.showAnError("There was a fatal error !");
+            MasterOfMonsGame.showAnError(GraphicalSettings.getStringFromId("fatalError"));
             Gdx.app.error("PlayingState", "The NetworkManager couldn't be retrieved !", e);
             return;
         }
@@ -128,7 +127,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             secondPlayerMap = map;
             mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
         });
-        nm.whenMessageReceivedDo("SPMC", (objects -> secondPlayerMap = (String)objects[0]));
+        nm.whenMessageReceivedDo("SPMC", (objects -> initMap((String)objects[0])));
 
         supervisor.setMustPlaceItem(nm.isTheServer());
         Supervisor.getEvent().add(this, Events.Dialog); // Other events done in super.init()
@@ -136,12 +135,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         Supervisor.setGraphic(gs);
         supervisor.setGraphic(questShower,this);
         if (newParty)
-            SupervisorLAN.getSupervisor().newParty(new MyFirstYear(Supervisor.getPeople(), null, Supervisor.getPeople().getDifficulty()),
+            SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()),
                     SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
-//            SupervisorLAN.getSupervisor().newParty(new LearnToCooperate(null, Supervisor.getPeople(), Supervisor.getPeople().getDifficulty()), TODO
-//                    SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
 
         super.init();
+        Supervisor.getEvent().add(this, Events.LifeChanged, Events.EnergyChanged, Events.ExperienceChanged);
         if (! newParty && ! nm.isTheServer())
             ((SupervisorLAN)supervisor).oldGameLAN((Save)MasterOfMonsGame.getSaveToLoad(), this, gs);
 
@@ -155,11 +153,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
         badPuzzlePathColor = new Color(0xD50000FF);
-//        if (newParty) { TODO
-//            initMap("Tmx/LAN_Puzzle.tmx");
-//            secondPlayerMap = gmm.getActualMapName();
-//            SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
-//        }
+        if (newParty) {
+            initMap("Tmx/LAN_Puzzle.tmx");
+            secondPlayerMap = gmm.getActualMapName();
+            SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
+        }
 
         if (nm.isTheServer()) {
             nm.sendMessageOnTCP("PLAN", SupervisorLAN.getPeople().getPlanning());
@@ -211,7 +209,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            timeShower.extendOnFullWidth(gs.getStringFromId("secondPlayerFinishedQuest"));
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
             SupervisorLAN.getPeople().getQuest().passQuest();
         });
         nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
@@ -226,13 +224,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             int newLevel = (int)objects[0];
             while (newLevel > playerTwo.getCharacteristics().getLevel())
                 ((People)playerTwo.getCharacteristics()).upLevel();
-            timeShower.extendOnFullWidth(String.format(gs.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
+            timeShower.extendOnFullWidth(String.format(GraphicalSettings.getStringFromId("secondPlayerLVLUP"), playerTwo.getCharacteristics().getLevel()));
         });
         nm.whenMessageReceivedDo("getItemsPos", (objects ->
                 PlayingLANHelper.sendItemsPositions(mapObjects)));
         nm.whenMessageReceivedDo("Death", (objects) -> {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
-            dms.setText(gs.getStringFromId("partnerDead"));
+            dms.init(); // NullPointer because text set too fast
+            dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
         });
         nm.whenMessageReceivedDo("IPU", (objects) -> {
             for (int i = 0; i < mapObjects.size(); i++)
@@ -284,9 +283,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
         if (nm.isTheServer())
             nm.sendMessageOnUDP("TIME", Supervisor.getSupervisor().getTime().getDate());
-        nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
-        nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
-        nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
     }
 
     @Override
@@ -334,7 +330,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * @return If the player is in collision with an object on the puzzle layer.
      */
     protected boolean checkForPuzzleCollision() {
-        return checkForCollision(puzzleObjects, player) == null;
+        return checkForCollision(puzzleObjects, player) != null;
     }
 
     @Override
@@ -487,9 +483,14 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendMessageOnTCP("PNJDeath", m.getName());
             idCharacterMap.remove(m.getName());
-        } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(player.getCharacteristics())) {
+        } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(player.getCharacteristics()))
             nm.sendMessageOnTCP("LVLUP", player.getCharacteristics().getLevel());
-        }
+        else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+            nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
+        else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+            nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
+        else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+            nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
     }
 
     @Override
@@ -506,10 +507,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     @Override
     public void setSecondPlayerPosition(Point mapPos) {
         super.setSecondPlayerPosition(mapPos);
-        if (mazeMode)
+        if (mazeMode && ! isTheMazePlayer)
             player.setMapPos(mapPos);
     }
 
+    /**
+     * @param secondPlayerMap The second player map
+     */
     public void setSecondPlayerMap(String secondPlayerMap) {
         this.secondPlayerMap = secondPlayerMap;
     }

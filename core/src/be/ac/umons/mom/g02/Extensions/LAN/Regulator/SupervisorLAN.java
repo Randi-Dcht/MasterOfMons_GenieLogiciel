@@ -17,7 +17,9 @@ import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -70,14 +72,16 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
     @Override
     public void saveGame(String path) {
-
-        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(path))))) {
+        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(Gdx.files.external(path).write(false)))) {
             sortie.writeObject(createSave());
         } catch (IOException e) {
             Gdx.app.error("Error in the saving the game (out)", e.getMessage());
         }
     }
 
+    /**
+     * @return An object <code>Save</code> representing the important informations of the current game
+     */
     public Save createSave() {
         PlayingState ps = ((PlayingState)playGraphic); // Not in the same package
         Save save = new Save(playerOne, playerTwo,
@@ -94,6 +98,13 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         return save;
     }
 
+    /**
+     * Load an old game in the LAN Ext
+     * @param path The path to the file
+     * @param play The PlayingState which is drawing
+     * @param graphic The graphical settings of this game
+     * @return The save loaded
+     */
     public Save oldGameLAN(String path, PlayingState play, GraphicalSettings graphic) {
         if (save == null)
             save =  (Save) Saving.getSaveObject(path);
@@ -102,6 +113,11 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         return save;
     }
 
+    /**
+     * Load an old game
+     * @param path The path to the save file
+     * @return The save loaded
+     */
     public Save oldGameLAN(String path) {
         if (save == null)
             save =  (Save) Saving.getSaveObject(path);
@@ -110,6 +126,10 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         return save;
     }
 
+    /**
+     * Load the game represented by the <code>Save</code> object and set all the useful variables.
+     * @param save
+     */
     public void oldGameLAN(Save save) {
 
         listUpdate = new ArrayList<>();
@@ -128,7 +148,13 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         regulator.setRemainingMaps(save.getRemainingMaps());
         regulator.setShowEnergizingInformation(save.mustShowEnergizingInformation());
     }
-
+    /**
+     * Load an old game in the LAN Ext
+     * @param save The save representing the game to load
+     * @param play The PlayingState which is drawing
+     * @param gs The graphical settings of this game
+     * @return The save loaded
+     */
     public void oldGameLAN(Save save, PlayingState play, GraphicalSettings gs) {
         play.setNewParty(false);
         Supervisor.setGraphic(gs);
@@ -157,6 +183,10 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
             checkPlanning();
     }
 
+    /**
+     * Update the planning with the one given.
+     * @param planning The new planning
+     */
     public void updatePlanning(HashMap<Integer, ArrayList<Course>> planning) {
         SupervisorLAN.getPeople().setPlanning(planning);
         SupervisorLAN.getPeopleTwo().setPlanning(planning);

@@ -5,11 +5,6 @@ import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Objects.Items.Items;
-import be.ac.umons.mom.g02.Objects.Items.PassLevel;
-import be.ac.umons.mom.g02.Objects.Items.SuperChargerGun;
-import be.ac.umons.mom.g02.Objects.Items.Sword;
-import be.ac.umons.mom.g02.Objects.Items.TNT;
-import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
 
 
 /***/
@@ -34,7 +29,7 @@ public class Dealer extends Mobile
 
     private Class<Items>[] getMyList()
     {
-        return new Class[]{TNT.class, TheKillBoot.class, Sword.class, SuperChargerGun.class,PassLevel.class};
+        return new Class[]{};//{TNT.class, TheKillBoot.class, Sword.class, SuperChargerGun.class,PassLevel.class};
     }
 
 

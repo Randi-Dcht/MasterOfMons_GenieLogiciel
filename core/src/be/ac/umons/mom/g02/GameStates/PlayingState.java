@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.GameStates;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Events.Observer;
@@ -13,6 +14,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.Controls.AgendaShower;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.mom.g02.GraphicalObjects.*;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.KeySelector;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.OnMapObject;
@@ -203,7 +205,8 @@ public class PlayingState extends GameState implements Observer {
         if (MasterOfMonsGame.getGameToLoad() != null)
             loadOldGame();
 
-        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel,Events.DisplayMessage,Events.Shop);
+        Supervisor.getEvent().add(this, Events.Dead, Events.ChangeQuest, Events.Dialog, Events.UpLevel,Events.DisplayMessage,Events.Shop,Events.Teleport);
+
         supervisor.setGraphic(questShower,this);
 
         if (MasterOfMonsGame.getGameToLoad() == null)
@@ -258,10 +261,6 @@ public class PlayingState extends GameState implements Observer {
         gmm.setMap(mapPath);
         Maps map = supervisor.getMaps(mapPath);
         pnjs = getPNJsOnMap(mapPath);
-
-//        for (Items it : SuperviserNormally.getSupervisor().getItems(map)) {
-//            addItemToMap(it, new Point(player.getPosX(), player.getPosY())); // TODO Position :D
-//        }
 
         tileWidth = (int)gmm.getActualMap().getProperties().get("tilewidth");
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
@@ -455,6 +454,15 @@ public class PlayingState extends GameState implements Observer {
      * @param y Vertical position of the player.
      */
     protected void translateCamera(int x, int y) {
+        translateCameraFollowingPlayer(x, y);
+    }
+
+    /**
+     * Move the camera in a way which follow the player.
+     * @param x Horizontal position of the player.
+     * @param y Vertical position of the player.
+     */
+    protected void translateCameraFollowingPlayer(int x, int y) { // Not direct in translateCamera for using later in extension
         double minX = (double)SHOWED_MAP_WIDTH / 2;
         double minY = (double)SHOWED_MAP_HEIGHT / 4;
 
@@ -464,6 +472,7 @@ public class PlayingState extends GameState implements Observer {
             cam.position.x = x;
         if (pmr.y > minY && pmr.y < mapHeight - minY)
             cam.position.y = y;
+
     }
 
     /**
@@ -667,7 +676,7 @@ public class PlayingState extends GameState implements Observer {
                 Supervisor.getPeople().useObject(ii.getItem());
         }
         if (gim.isKey("quickSave", KeyStatus.Pressed)) {
-            timeShower.extendOnFullWidth(gs.getStringFromId("quickSaving"));
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("quickSaving"));
             quickSave();
         }
         if (gim.isKey("quickLoad", KeyStatus.Pressed))
@@ -675,15 +684,14 @@ public class PlayingState extends GameState implements Observer {
         if (gim.isKey("pointsAttribution", KeyStatus.Pressed))
             goToLevelUpState();
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
-            if (selectedOne != null) {
-                if (selectedOne instanceof Character)
-                    supervisor.meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
-                else {
-                    if (Supervisor.getPeople().pushObject(((MapObject)selectedOne).getItem())) {
-                        pickUpAnObject();
-                    }
-                }
+            if (selectedOne != null && selectedOne instanceof MapObject) {
+                if (Supervisor.getPeople().pushObject(((MapObject)selectedOne).getItem()))
+                    pickUpAnObject();
             }
+        }
+        if (gim.isKey("interact", KeyStatus.Pressed)) {
+            if (selectedOne != null && selectedOne instanceof Character)
+                supervisor.meetCharacter(player.getCharacteristics(), ((Character)selectedOne).getCharacteristics());
         }
         inventoryShower.handleInput();
         pauseButton.handleInput();
@@ -705,7 +713,7 @@ public class PlayingState extends GameState implements Observer {
     protected void onPointsAttributed(int strength, int defence, int agility) {
         int pointLevel = ((People)player.getCharacteristics()).getPointLevel();
         if (pointLevel != 0)
-            notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
+            notificationRappel.addANotification("pointsToAttribute", String.format(GraphicalSettings.getStringFromId("pointsToAttribute"),
                     pointLevel, Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
         else
             notificationRappel.removeANotification("pointsToAttribute");
@@ -728,7 +736,7 @@ public class PlayingState extends GameState implements Observer {
             mo.setMapPos(new Point(player.getPosX(), player.getPosY()));
             mo.setMap(gmm.getActualMapName());
             mapObjects.add(mo);
-            supervisor.getPeople().removeObject(dropped.getItem());
+            Supervisor.getPeople().removeObject(dropped.getItem());
             dropped.getItem().setMaps(supervisor.getMaps(gmm.getActualMapName()));
             return mo;
         }
@@ -749,7 +757,7 @@ public class PlayingState extends GameState implements Observer {
         if (((People)player.getCharacteristics()).isInvincible()) {
             ((People)player.getCharacteristics()).invincible(false);
             lifeBar.setForegroundColor(new Color(213f / 255, 0, 0, .8f));
-            notificationRappel.addANotification("invincibleNotification", gs.getStringFromId("playerIsInvincible"));
+            notificationRappel.addANotification("invincibleNotification", GraphicalSettings.getStringFromId("playerIsInvincible"));
         } else {
             ((People)player.getCharacteristics()).invincible(true);
             lifeBar.setForegroundColor(new Color(0x212121AA));
@@ -758,7 +766,7 @@ public class PlayingState extends GameState implements Observer {
 
     public void debugChangePlayerSpeed() {
         Supervisor.getPeople().setSpeed(5);
-        notificationRappel.addANotification("speedChangedNotification", gs.getStringFromId("playerIsFaster"));
+        notificationRappel.addANotification("speedChangedNotification", GraphicalSettings.getStringFromId("playerIsFaster"));
     }
 
     @Override
@@ -772,6 +780,8 @@ public class PlayingState extends GameState implements Observer {
         else if (notify.getEvents().equals(Events.Dead)) {
             for (int i = 0; i < pnjs.size(); i++) {
                 if (pnjs.get(i).getCharacteristics().equals(notify.getBuffer())) {
+                    if (selectedOne != null && selectedOne.equals(pnjs.get(i)))
+                        selectedOne = null;
                     pnjs.remove(i);
                     break;
                 }
@@ -787,9 +797,11 @@ public class PlayingState extends GameState implements Observer {
             ArrayList<String> diag = (ArrayList<String>)notify.getBuffer();
             Gdx.app.postRunnable(() -> updateDialog(diag));
         } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer() == player.getCharacteristics()) {
-            timeShower.extendOnFullWidth(gs.getStringFromId("gainALevel"));
-            notificationRappel.addANotification("pointsToAttribute", String.format(gs.getStringFromId("pointsToAttribute"),
+            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("gainALevel"));
+            notificationRappel.addANotification("pointsToAttribute", String.format(GraphicalSettings.getStringFromId("pointsToAttribute"),
                     ((People)player.getCharacteristics()).getPointLevel(), Input.Keys.toString(gkm.getKeyCodeFor("pointsAttribution"))));
+        } else if (notify.getEvents().equals(Events.Teleport) && notify.bufferNotEmpty()) {
+            initMap((String)notify.getBuffer());
         }
     }
 
@@ -812,7 +824,7 @@ public class PlayingState extends GameState implements Observer {
         dialogState.setText(diag.get(0));
         for (int i = 1; i < diag.size(); i++) {
             String s = diag.get(i);
-            dialogState.addAnswer(s, () -> supervisor.getEvent().notify(new Answer(s)));
+            dialogState.addAnswer(s, () -> Supervisor.getEvent().notify(new Answer(s)));
         }
     }
 
@@ -867,7 +879,7 @@ public class PlayingState extends GameState implements Observer {
      */
     public static void quickLoad(GameStateManager gsm, GraphicalSettings gs) {
         OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
-        ogds.setText(gs.getStringFromId("sureLoad"));
+        ogds.setText(GraphicalSettings.getStringFromId("sureLoad"));
         ogds.addAnswer("yes", () ->
                 SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.getSettings().getLastSavePath(),gs));
         ogds.addAnswer("no");

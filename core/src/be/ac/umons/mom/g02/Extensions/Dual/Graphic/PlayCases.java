@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class PlayCases extends PlayingStateDual
 {
     /***/
-    protected HashMap<Player,Integer> cases = new HashMap<>();
+    protected HashMap<Player,ArrayList<Point>> cases = new HashMap<>();
     /***/
     protected ArrayList<Cases> drawCase = new ArrayList<>();
     /***/
@@ -60,8 +60,10 @@ public class PlayCases extends PlayingStateDual
         timerShow = new TextBox(gs);
         timerShow.setText(String.valueOf(time));
 
-        old.put(player,new Point(player.getPosX(),player.getPosY()));cases.put(player,0);
-        old.put(playerTwo,new Point(playerTwo.getPosX(),playerTwo.getPosY()));cases.put(playerTwo,0);
+        old.put(player,new Point(player.getPosX()/64,player.getPosY()/32));
+        cases.put(player,new ArrayList<>());
+        old.put(playerTwo,new Point(playerTwo.getPosX()/64,playerTwo.getPosY()/32));
+        cases.put(playerTwo,new ArrayList<>());
 
     }
 
@@ -75,8 +77,8 @@ public class PlayCases extends PlayingStateDual
         checkCase(player);
         checkCase(playerTwo);
 
-        player1Number.setText(cases.get(player).toString());
-        player2Number.setText(cases.get(playerTwo).toString());
+        player1Number.setText(String.valueOf(cases.get(player).size()));
+        player2Number.setText(String.valueOf(cases.get(playerTwo).size()));
 
         time -= dt;
         if (time <= 0)
@@ -92,30 +94,40 @@ public class PlayCases extends PlayingStateDual
     {
         int topBarHeight = 10;
 
-        for (Cases cc : drawCase)
-               cc.draw();//TODO this
-
         super.draw();
 
         Point textSize = new Point(0,0);
         timerShow.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 - timerShow.getWidth(),timerShow.getHeight() + 10),textSize);
-        player1Number.draw(sb,new Point(objectSize.x, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
-        player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH - objectSize.x , (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
+        player1Number.draw(sb,new Point(MasterOfMonsGame.WIDTH/4-100, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
+        player2Number.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin-40)),textSize);
     }
 
 
     /***/
+    @Override
+    protected void drawAfterMaps()
+    {
+        for (Cases cc : drawCase)
+            cc.draw((int)cam.position.x,(int)cam.position.y);
+    }
+
+    /***/
     protected void checkCase(Player player)
     {
-        if (!old.get(player).equals(new Point(player.getPosX(),player.getPosY())))
+        if (!old.get(player).equals(new Point(player.getPosX()/64,player.getPosY()/32)))
         {
-            old.replace(player,new Point(player.getPosX(),player.getPosY()));
+            old.replace(player,new Point(player.getPosX()/64,player.getPosY()/32));
+
             if (player.equals(this.player))
                 drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), com.badlogic.gdx.graphics.Color.BLUE));//TODO
             else
                 drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
-            cases.replace(player,cases.get(player)+1);
-            old.replace(player,new Point(player.getPosX(),player.getPosY()));
+
+            cases.get(adv.get(player)).remove(new Point(player.getPosX()/64,player.getPosY()/32));
+
+            if (!cases.get(player).contains(new Point(player.getPosX()/64,player.getPosY()/32)))
+                cases.get(player).add(new Point(player.getPosX()/64,player.getPosY()/32));
+
             if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
                 ((MoreCasesMons)((DualMasterQuest) supervisorDual.actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
         }
@@ -129,5 +141,7 @@ public class PlayCases extends PlayingStateDual
         player1Number.dispose();
         player2Number.dispose();
         timerShow.dispose();
+        for (Cases cc : drawCase)
+            cc.dispose();
     }
 }

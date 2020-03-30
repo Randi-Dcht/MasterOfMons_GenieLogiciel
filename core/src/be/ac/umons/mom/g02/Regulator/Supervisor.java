@@ -26,12 +26,10 @@ import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.Attack;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
-import be.ac.umons.mom.g02.Objects.Characters.Dealer;
 import be.ac.umons.mom.g02.Objects.Characters.DialogCharacter;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Objects.Characters.Social;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -223,9 +221,9 @@ public  abstract class Supervisor implements Observer
      */
     protected String actualID;
     /***/
-    protected Dealer dealerOnMap;
-    /***/
     protected boolean haveMoney = false;
+    /***/
+    protected boolean startDialog = true;
 
 
     /***/
@@ -422,7 +420,7 @@ public  abstract class Supervisor implements Observer
      * This method allows to give the character to refresh with the changed frame
      * @param maps is the actual maps of the player
      */
-    private void refreshList(Maps maps)
+    protected void refreshList(Maps maps)
     {
         listUpdate = new ArrayList<>();
         listUpdate.add(playerOne);
@@ -555,14 +553,6 @@ public  abstract class Supervisor implements Observer
         for (Items it : mb.getInventory())
             playerOne.pushObject(it);//TODO check !
 
-
-        if (haveMoney)
-        {
-            playerOne.addMoney(mb.getMyMoney());
-            event.notify(new DisplayMessage("You are + " + playerOne.getMyMoney() + "€","MoneyPlayer"));//TODO format and remove
-        }
-
-
         if (mb.equals(memoryMobile))
             memoryMobile = null;
     }
@@ -640,7 +630,7 @@ public  abstract class Supervisor implements Observer
         int x=0,y=0;
         int toMove = (int)Math.round(memoryMobile.getSpeed() * dt * 64);
 
-        if(Math.sqrt(Math.pow(displaceX, 2) + Math.pow(displaceY, 2)) / 2 > graphical.getAttackRange()) { // /2 just to be sure it isn't at one pixel
+        if(Math.sqrt(Math.pow(displaceX, 2) + Math.pow(displaceY, 2)) * 2 > graphical.getAttackRange()) { // *2 just to be sure it isn't at one pixel
             if (displaceX < 0)
                 x = -toMove;
             else
@@ -768,24 +758,27 @@ public  abstract class Supervisor implements Observer
      * @param player1 is the first character
      * @param player2 is the second character
      */
-    public void meetCharacter(Social player1, Social player2)//TODO upgrade pour moins de clss
+    public void meetCharacter(Character player1, Character player2)
     {
-        if (((Character)player1).getType().equals(Character.TypePlayer.Computer))
+        if (player1 == null || player2 == null)
+            return;
+        if ((player1).getType().equals(Character.TypePlayer.Computer))
         {
             event.notify(new MeetOther(memoryMobile = (Mobile)player1));
-            dialog= listDialog.get(((Mobile)player1).getDialog());//TODO
+            dialog= listDialog.get(((Mobile)player1).getDialog());
         }
-        if (((Character)player2).getType().equals(Character.TypePlayer.Computer))
+        if ((player2).getType().equals(Character.TypePlayer.Computer))
         {
             event.notify(new MeetOther(memoryMobile = (Mobile)player2));
-            dialog= listDialog.get(((Mobile)player2).getDialog());//TODO
+            dialog= listDialog.get(((Mobile)player2).getDialog());
         }
         Actions action = player1.getAction().comparable(player2.getAction());
         if (action.equals(Actions.Attack))
             attackMethod(memoryMobile, playerOne);
         else if (action.equals(Actions.Dialog))
         {
-            event.add(Events.Answer,this);
+            if (startDialog)
+            {event.add(Events.Answer,this);startDialog = false;}
             switchingDialog("Start");
         }
     }
@@ -797,7 +790,7 @@ public  abstract class Supervisor implements Observer
      */
     public void switchingDialog(String answer)
     {
-        if(answer.equals("ESC") || dialog == null)
+        if( dialog == null)
         {
             event.notify(new Dialog("ESC"));
             //event.remove(Events.Answer,this);//TODO
@@ -857,6 +850,8 @@ public  abstract class Supervisor implements Observer
      */
     public void setDate(Date date)
     {
+        if (time == null)
+            time = new TimeGame(date);
         time.setDate(date);
     }
 }

@@ -81,7 +81,7 @@ public class FreeTimeMons extends UnderQuest
      */
     private void friendPnj(Mobile mobile)
     {
-        if (nothing)//TODO modif
+        if (nothing)
             addProgress(0.5);
     }
 

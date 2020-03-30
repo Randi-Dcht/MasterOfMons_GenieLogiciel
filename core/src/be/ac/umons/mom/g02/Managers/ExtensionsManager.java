@@ -35,6 +35,9 @@ public class ExtensionsManager {
      * The list of the extensions to show.
      */
     protected HashMap<String, Extension> extensions;
+
+    protected Extension baseGame;
+
     /**
      * A list of all the maps that need to be loaded.
      */
@@ -85,7 +88,7 @@ public class ExtensionsManager {
         BufferedReader br;
         try {
             FileHandle ef = Gdx.files.getFileHandle("extensions", Files.FileType.Internal);
-            br = new BufferedReader(new FileReader(ef.file()));
+            br = new BufferedReader(ef.reader());
             Extension ext = null;
             int actualLine = 0;
             String line;
@@ -95,60 +98,60 @@ public class ExtensionsManager {
                 switch (lineTab[0]) {
                     case ".mainClass":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClass needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .mainClass needs a class", actualLine));
                         else
                             ext.mainClass = lineTab[1];
                         break;
                     case ".mainClassBeforeLoading":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClassBeforeLoading needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .mainClassBeforeLoading needs a class", actualLine));
                         else
                             ext.mainClassBeforeLoading = lineTab[1];
                         break;
                     case ".mainClassBeforeCharacterCreation":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .mainClassBeforeCharacterCreation needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .mainClassBeforeCharacterCreation needs a class", actualLine));
                         else
                             ext.mainClassBeforeCharacterCreation = lineTab[1];
                         break;
                     case ".classBeforeOldGameSelection":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .classBeforeOldGameSelection needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .classBeforeOldGameSelection needs a class", actualLine));
                         else
                             ext.classBeforeOldGameSelection = lineTab[1];
                         break;
                     case ".classAfterOldGameSelection":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .classAfterOldGameSelection needs a class", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .classAfterOldGameSelection needs a class", actualLine));
                         else
                             ext.classAfterOldGameSelection = lineTab[1];
                         break;
-                    case ".load":
+                    case ".file":
                         if (lineTab.length < 3)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .load needs a file path and his type", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .file needs a file path and his type", actualLine));
                         else {
                             try {
                                 ext.dirsFileToLoad.add(new LoadFile(lineTab[1], lineTab[2]));
                             } catch (ClassNotFoundException e) {
-                                Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : class %s doesn't exist !", actualLine, lineTab[2]), e);
+                                Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : class %s doesn't exist !", actualLine, lineTab[2]), e);
                             } catch (FileNotFoundException e) {
-                                Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : file %s doesn't exist !", actualLine, lineTab[1]), e);
+                                Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : file %s doesn't exist !", actualLine, lineTab[1]), e);
                             }
                         }
                         break;
                     case ".map":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .map needs a path to a tmx file !", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .map needs a path to a tmx file !", actualLine));
                         else {
-                            if (new File(lineTab[1]).exists())
+                            if (Gdx.files.internal(lineTab[1]).exists())
                                 ext.mapsToLoad.add(lineTab[1]);
                             else
-                                Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : the given file (%s) doesn't exist !", actualLine, lineTab[1]));
+                                Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : the given file (%s) doesn't exist !", actualLine, lineTab[1]));
                         }
                         break;
                     case ".canActivateWith":
                         if (lineTab.length < 2)
-                            Gdx.app.log("ExtensionsSelector", String.format("Error in extension's file : line %d : .canActivateWith needs another extension's name !", actualLine));
+                            Gdx.app.log("ExtensionsManager", String.format("Error in extension's file : line %d : .canActivateWith needs another extension's name !", actualLine));
                         else {
                             ext.canActivateWith.add(lineTab[1]);
                         }
@@ -157,11 +160,15 @@ public class ExtensionsManager {
                         ext.isMultiplayer = true;
                         break;
                     default:
-                        if (! line.startsWith(".")) {
+                        if (! line.startsWith(".") && ! line.trim().equals("")) {
                             ext = new Extension();
-                            ext.extensionName = line;
-                            ext.canActivateWith.add(line);
-                            extensionList.put(ext.extensionName, ext);
+                            if (line.equals("MasterOfMonsGame")) {
+                                baseGame = ext;
+                            } else {
+                                ext.extensionName = line;
+                                ext.canActivateWith.add(line);
+                                extensionList.put(ext.extensionName, ext);
+                            }
                         }
                 }
             }
@@ -182,6 +189,8 @@ public class ExtensionsManager {
     public void generateLoadLists() {
         mapsToLoad = new ArrayList<>();
         filesToLoad = new ArrayList<>();
+        mapsToLoad.addAll(baseGame.mapsToLoad);
+        filesToLoad.addAll(baseGame.dirsFileToLoad);
         for (Extension ext : getExtensions()) {
             if (ext.activated) {
                 mapsToLoad.addAll(ext.mapsToLoad);
@@ -198,7 +207,7 @@ public class ExtensionsManager {
         boolean launch = true;
         for (Extension e : getExtensions()) {
             activatedExtension.activated = true;
-            if (! activatedExtension.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(activatedExtension.extensionName)) {
+            if ((! activatedExtension.canActivateWith.contains(e.extensionName) && ! e.canActivateWith.contains(activatedExtension.extensionName))) {
                 e.activated = false;
                 e.canBeActivated = false;
             }

@@ -1,12 +1,70 @@
+MasterOfMonsGame
+.map Tmx/CityMons.tmx
+.map Tmx/Kot.tmx
+.map Tmx/MicrosoftCompany.tmx
+.map Tmx/Umons_DeVinci.tmx
+.map Tmx/Umons_GrandAmphi.tmx
+.map Tmx/Umons_Nimy.tmx
+.map Tmx/Umons_Polytech.tmx
+.map Tmx/Umons_Warocque.tmx
+.file Pictures/Mobile/Dog.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_droite.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_haut.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_droite2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_bas2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_gauche2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_haut2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_droite2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_gauche2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_droite2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_gauche2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_gauche2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_bas2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_droite.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_droite.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_bas.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_haut.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_gauche.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_droite.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_droite2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_haut.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_bas.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_bas.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_gauche.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_haut.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_gauche.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_bas.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_sa_haut2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_bas2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_bas2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_sa_gauche.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_bas2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_H_aa_haut2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Characters/bh_F_aa_haut2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/Drink.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/Gun.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/ExamQuestion.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/FlowerLove.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/sword.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/ExamAnswer.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/Phone.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/Pen.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/Charger.png com.badlogic.gdx.graphics.Texture
 LAN
 .mainClassBeforeLoading be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitingOrConnectionState
 .canActivateWith Dual
 .classBeforeOldGameSelection be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.LoadOrWaitMenuState
 .classAfterOldGameSelection be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitingRoomState
 .isMultiplayer
+.map Tmx/LAN_Boss.tmx
+.map Tmx/LAN_Puzzle.tmx
 Dual
 .mainClassBeforeCharacterCreation be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.CreatePlayerDual
 .mainClass be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu
+.map Tmx/Dual_LittleParkl.tmx
+.map Tmx/Dual_parckNimy.tmx
+.file Pictures/Objects/FlagR.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/FlagB.png com.badlogic.gdx.graphics.Texture
 .isMultiplayer
 IA
 .mainClass be.ac.umons.mom.g02.Extensions.IA.Graphic.IaExplicationMenu

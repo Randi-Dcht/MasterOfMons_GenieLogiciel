@@ -5,7 +5,9 @@ import be.ac.umons.mom.g02.Enums.Gender;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.ChangeQuest;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,11 +37,11 @@ public class TestEvents
     @Test
     public void checkNewParty()
     {
+        SuperviserNormally.initNormallyGame();
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
-        //assertNull(sp.getPeople(),"the people doesn't create"); //TODO pourquoi?
-        assertNotNull(sp.getEvent(),"the event doesn't create");
-        sp.newParty("Test", Type.beefy,null, Gender.Men, Difficulty.Easy); /*doesn't test here the saving of graphic so gs == null*/
-        assertNotNull(sp.getPeople(),"check if the people instance is create");
+        assertNotNull(Supervisor.getEvent(),"the event doesn't create");
+        sp.newParty("Test", Type.beefy,Gender.Men,Difficulty.Easy); /*doesn't test here the saving of graphic so gs == null*/
+        assertNotNull(Supervisor.getPeople(),"check if the people instance is create");
         Assertions.assertNotNull(sp.getTime(),"check time is create ");
     }
 
@@ -60,5 +62,15 @@ public class TestEvents
         evt.notify(new ChangeQuest());
         assertTrue(obs.value,"the observer is notify");
         assertTrue(obs2.value,"the observer is notify");
+    }
+
+    @Test
+    public void checkNotification()
+    {
+        SuperviserNormally.initNormallyGame();
+        SuperviserNormally.getSupervisor().newParty("TestNotif",Type.athletic,Gender.Men,Difficulty.Easy);
+        Date oldDate = Supervisor.getSupervisor().getTime().getDate();
+        Supervisor.getEvent().notify(new ChangeQuest());
+        assertTrue(oldDate.getYear() < Supervisor.getSupervisor().getTime().getDate().getYear(),"Check if the date changed when the quest pass");
     }
 }

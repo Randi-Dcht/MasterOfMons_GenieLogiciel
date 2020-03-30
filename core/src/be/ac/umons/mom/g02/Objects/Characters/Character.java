@@ -1,12 +1,12 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
+import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Events.Notifications.LifeChanged;
 import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
-import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * This class define a character who have life,strength,agility,defence and level in the game
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public abstract class Character implements Attack, Social, Serializable
+public abstract class Character implements Attack, Serializable
 {
 
     /**
@@ -104,6 +104,7 @@ public abstract class Character implements Attack, Social, Serializable
             actualLife = lifeMax();
         else
             actualLife += cmb;
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
 
@@ -136,6 +137,8 @@ public abstract class Character implements Attack, Social, Serializable
     @Override
     public abstract TypePlayer getType();
 
+
+    public abstract Actions getAction();
 
     /**
      * This method return the total of the money
@@ -176,6 +179,7 @@ public abstract class Character implements Attack, Social, Serializable
     public void setActualLife(double actualLife)
     {
         this.actualLife = actualLife;
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
     /**
@@ -264,6 +268,7 @@ public abstract class Character implements Attack, Social, Serializable
 
         if (actualLife == 0)
             actualLife = lifeMax();
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
 
@@ -291,7 +296,7 @@ public abstract class Character implements Attack, Social, Serializable
 
 
     /***/
-    public int getPointType(int level)//TODO reprendre celui avec le mobile ou moving in people
+    public int getPointType(int level)
     {
         return (level-1)*3;
     }
@@ -324,6 +329,7 @@ public abstract class Character implements Attack, Social, Serializable
 
         if (actualLife <= 0)
             dead();
+        Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
 
 

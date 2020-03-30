@@ -11,20 +11,18 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.InventoryShower;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 
 
 /***/
@@ -41,6 +39,9 @@ public class PlayingStateDual extends PlayingState
     protected SupervisorDual supervisorDual;
     /***/
     protected Point objectSize;
+    /***/
+    protected InventoryShower inventoryShowerTwo;
+
 
     /**
      * @param gs The game's graphical settings
@@ -60,27 +61,29 @@ public class PlayingStateDual extends PlayingState
         Supervisor.getSupervisor().setMustPlaceItem(false);
         super.init();
 
-        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-            deleteFlag(new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10),new Point(10,10));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
         initMap(supervisorDual.getDual().getStartMaps().getMaps(),supervisorDual.getDual().getPointPlayerOne().x,supervisorDual.getDual().getPointPlayerOne().y);
         playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
-        cam.position.x = player.getPosX();
-        cam.position.y = player.getPosY();
+        cam.position.x = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
+        cam.position.y = MasterOfMonsGame.HEIGHT/2 - MasterOfMonsGame.HEIGHT/4;
         cam.update();
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
-        adv.put(player,playerTwo);adv.put(playerTwo,player);
+
+        inventoryShowerTwo = new InventoryShower(gs, playerTwo);
+
+        adv.put(player,playerTwo);
+        adv.put(playerTwo,player);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
             for (Character ch : pnjs)
             {
                 if (ch.getCharacteristics().getClass().equals(ZombiePNJ.class))
-                    ((ZombiePNJ)ch.getCharacteristics()).initialisation(ch,player);
+                   ((ZombiePNJ)ch.getCharacteristics()).initialisation(ch,player);
             }
 
         }
@@ -100,23 +103,11 @@ public class PlayingStateDual extends PlayingState
         objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
     }
 
-    public void deleteFlag(Point ... pt)
-    {
-        ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
-        for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
-            addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
-    }
 
-    /***/
-    protected void initMapAndPlayer(String maps,Point plOnePos, Point plTwoPos)
-    {
-        initMap(maps,plOnePos.x,plOnePos.y);
-        playerTwo.setMapPos(new Point(plTwoPos.x*64,plTwoPos.y*32));
-        cam.position.x = player.getPosX();
-        cam.position.y = player.getPosY();
-        cam.update();
-    }
+    @Override
+    protected void translateCamera(int x, int y) {
 
+    }
 
     /***/
     @Override
@@ -125,6 +116,13 @@ public class PlayingStateDual extends PlayingState
         super.update(dt);
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
+
+        if (cam.position.x != MasterOfMonsGame.WIDTH/2+MasterOfMonsGame.WIDTH/4 || cam.position.y != MasterOfMonsGame.HEIGHT/2-MasterOfMonsGame.HEIGHT/4)
+        {
+            cam.position.x = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
+            cam.position.y = MasterOfMonsGame.HEIGHT - MasterOfMonsGame.HEIGHT/2;
+            cam.update();
+        }
     }
 
 
@@ -136,11 +134,14 @@ public class PlayingStateDual extends PlayingState
         int topBarHeight = 10;
 
         gmm.render();
+
+        drawAfterMaps();
+
         player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
         playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
-        for (Character pnj : pnjs)
-            pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        for (int i=0;i<Math.min(25,pnjs.size());i++)
+            pnjs.get(i).draw(sb, pnjs.get(i).getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnjs.get(i).getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
         for (MapObject mo : mapObjects)
             if (mo.getMap().equals(gmm.getActualMapName()))
@@ -161,7 +162,7 @@ public class PlayingStateDual extends PlayingState
         int inventoryShowerHeight = tileHeight * 2;Point pt = new Point(tileWidth, tileWidth);
 
         inventoryShower.draw(sb,    MasterOfMonsGame.WIDTH/2 - MasterOfMonsGame.WIDTH/4, inventoryShowerHeight,pt);
-        inventoryShower.draw(sb, MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4, inventoryShowerHeight,pt);
+        inventoryShowerTwo.draw(sb, MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4, inventoryShowerHeight,pt);
 
         lifeBar.draw(sb, (int)leftMargin, MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
         lifeBarTwo.draw(sb, (int)MasterOfMonsGame.WIDTH-(topBarWidth+20), MasterOfMonsGame.HEIGHT - (int)topMargin - topBarHeight, topBarWidth, topBarHeight);
@@ -171,16 +172,17 @@ public class PlayingStateDual extends PlayingState
         pauseButton.draw(sb, new Point(MasterOfMonsGame.WIDTH/2 -objectSize.x-10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
         endDual.draw(sb,new Point(MasterOfMonsGame.WIDTH/2 +objectSize.x+10, (int)(MasterOfMonsGame.HEIGHT - objectSize.y - topBarHeight - 2 * topMargin+25)),objectSize);
 
-
     }
+
+
+    /***/
+    protected void drawAfterMaps(){}
 
 
     /***/
     private void changedCam()
     {
         cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);//TODO changed
-        cam.position.x = player.getPosX();
-        cam.position.y = player.getPosY();
         gmm.setView(cam);
         cam.update();
     }
@@ -209,7 +211,7 @@ public class PlayingStateDual extends PlayingState
         super.handleInput();
 
         endDual.handleInput();
-        //inventoryShowerTwo.handleInput();TODO
+        inventoryShowerTwo.handleInput();//TODO
     }
 
 
@@ -290,6 +292,16 @@ public class PlayingStateDual extends PlayingState
     {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
             gsm.removeAllStateAndAdd(DualChooseMenu.class);
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
+            deadMobile(null);
+
+    }
+
+
+    /***/
+    public void deadMobile(Mobile mb)
+    {
+        pnjs.removeIf(chr -> chr.getCharacteristics().equals(mb));
     }
 
 
@@ -310,5 +322,6 @@ public class PlayingStateDual extends PlayingState
        // super.dispose();TODO problem with multi dispose of lifeBar
         endDual.dispose();
         lifeBarTwo.dispose();
+        inventoryShowerTwo.dispose();
     }
 }

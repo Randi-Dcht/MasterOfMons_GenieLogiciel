@@ -40,7 +40,6 @@ public class MenuStateTest {
         ms = new MenuState() {
             @Override
             public void init() {
-                controls = new ArrayList<>();
                 buttons = new ArrayList<>();
                 gim = gimMock;
                 gsm = Mockito.mock(GameStateManager.class);

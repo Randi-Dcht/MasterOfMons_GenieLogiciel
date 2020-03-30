@@ -111,6 +111,23 @@ public abstract class MenuItem<T extends Control> {
             control.draw(batch, pos, size);
     }
 
+    /**
+     * Update the control
+     * @param dt The time between this call and the previous one
+     */
+    public void update(double dt) {
+        if (control != null)
+            control.update(dt);
+    }
+
+    /**
+     * Check for any input from the user and handle it if necessary
+     */
+    public void handleInput() {
+        if (control != null)
+            control.handleInput();
+    }
+
     public void setHeader(String header) {
         if (gs.getNormalFont() != null) { // Test case
             this.header = StringHelper.adaptTextToWidth(gs.getNormalFont(), header, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));

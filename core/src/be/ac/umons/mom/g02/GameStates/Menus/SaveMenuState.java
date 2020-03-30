@@ -39,13 +39,13 @@ public class SaveMenuState extends ChoosePathMenuState {
     @Override
     public void init() {
         super.init();
-        nameMI = new TextBoxMenuItem(gim, gs, gs.getStringFromId("name"));
+        nameMI = new TextBoxMenuItem(gim, gs, GraphicalSettings.getStringFromId("name"));
         setMenuItems(new MenuItem[]{
-                new TitleMenuItem(gs, gs.getStringFromId("save")),
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("save")),
                 directoryMI,
                 nameMI,
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("save"), this::save),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("save"), this::save),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("cancel"), () -> gsm.removeFirstState()),
                 chooseSaveSLC
         });
         setFolder(path);
@@ -91,7 +91,7 @@ public class SaveMenuState extends ChoosePathMenuState {
         File f = new File(saveFilePath);
         if (f.exists() && ! verified) {
             OutGameDialogState g = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
-            g.setText(String.format(gs.getStringFromId("saveOverwriteQuestion"), f.getName()));
+            g.setText(String.format(GraphicalSettings.getStringFromId("saveOverwriteQuestion"), f.getName()));
             g.addAnswer("yes", () -> save(saveFilePath, true));
             g.addAnswer("no");
         } else {

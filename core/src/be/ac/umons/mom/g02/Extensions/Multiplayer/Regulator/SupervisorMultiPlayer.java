@@ -1,8 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator;
 
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -10,7 +7,6 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,12 +18,26 @@ import java.util.List;
 public abstract class SupervisorMultiPlayer extends Supervisor
 {
 
+    /**
+     * This is the second player on the maps
+     */
     protected static People playerTwo;
 
-    public static People getPeopleTwo() {
+
+    /**
+     * This method returns the second player
+     * @return the second player
+     */
+    public static People getPeopleTwo()
+    {
         return playerTwo;
     }
 
+
+    /**
+     * This method allows to give a second player
+     * @param playerTwo is the second player
+     */
     public static void setPlayerTwo(People playerTwo)
     {
         SupervisorMultiPlayer.playerTwo = playerTwo;
@@ -37,11 +47,14 @@ public abstract class SupervisorMultiPlayer extends Supervisor
     /*-----------------------------------------------------------------------------------------------*/
 
 
-    /***/
+    /**
+     * This is the saving of the first player
+     */
     protected LogicSaving playerOneSave;
-    /***/
+    /**
+     * This is the saving of second player
+     */
     protected LogicSaving playerTwoSave;
-
     /**
      * The list of the death of the second player to ignore while calculating the win of XP
      */
@@ -57,17 +70,19 @@ public abstract class SupervisorMultiPlayer extends Supervisor
         deathToIgnore = new LinkedList<>();
     }
 
+
     /**
+     * This method allows to analyse the id to receive
      * @param id
      */
     @Override
-    public void analyseIdMap(String id) throws Exception
-    {
-
-    }
+    public void analyseIdMap(String id) throws Exception {}
 
 
-    /***/
+    /**
+     * This method allows to give the actual quest of the player one
+     * @return the masterQuest of player one
+     */
     @Override
     public MasterQuest actualQuest()
     {
@@ -76,23 +91,30 @@ public abstract class SupervisorMultiPlayer extends Supervisor
 
 
     /**
-     * @param pathAndFile
-     * @param play
-     * @param graphic
+     * This method allows to charge an old game
+     * @param pathAndFile is the name of file and the path
+     * @param play        is the playingState
+     * @param graphic     is the graphicalSettings
      */
     @Override
     public abstract void oldGame(String pathAndFile, PlayingState play, GraphicalSettings graphic);
 
 
     /**
-     * @param pathAndFile
+     * This method allows to save the actual game
+     * @param pathAndFile is the name of file and the path
      */
     @Override
     public abstract void saveGame(String pathAndFile);
 
 
+    /**
+     * This method allows to remove the dead mobile on the maps
+     * @param mb is the mobile dead
+     */
     @Override
-    public void deadMobile(Mobile mb) {
+    public void deadMobile(Mobile mb)
+    {
         if (deathToIgnore.contains(mb)) {
             listMobile.get(mb.getMaps()).remove(mb);
             deadMobile.add(mb);
@@ -107,29 +129,11 @@ public abstract class SupervisorMultiPlayer extends Supervisor
         }
     }
 
-    public void addADeathToIgnore(Mobile mb) {
+
+    /***/
+    public void addADeathToIgnore(Mobile mb)
+    {
         deathToIgnore.add(mb);
-    }
-
-
-    /**
-     * This method allows to load a old player in the extension game
-     * @param name   is the name of the saving
-     * @param player is the number of player
-     */
-    public void loadPlayer(String name, int player)//TODO implement
-    {
-
-    }
-
-
-    /**
-     * This method returns the second player in the game
-     * @return the second player
-     */
-    public People getSecondPeople()
-    {
-        return playerTwo;
     }
 
 }

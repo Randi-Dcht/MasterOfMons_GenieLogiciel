@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.FrameTime;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
 import be.ac.umons.mom.g02.Other.HyperPlanning;
 import be.ac.umons.mom.g02.Enums.Actions;
@@ -46,7 +47,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO Hashmap utile ? # Integer -> ArrayList = List d'Arraylist ?
     private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
     private int friend = 0;
-    private SaoulMatePNJ soulMate; //TODO check the type
+    private SaoulMatePNJ soulMate;
     /*The point of the level*/
     private int actual = 0;
     private Places place;
@@ -184,7 +185,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     private void createPlanning()
     {
-        myPlanning = HyperPlanning.createSchedule(myCourse,Supervisor.getSupervisor().getTime().getDate()); //TODO voir pour éviter les trois get
+        myPlanning = HyperPlanning.createSchedule(myCourse,Supervisor.getSupervisor().getTime().getDate());
     }
 
 
@@ -207,8 +208,12 @@ public class People extends Character implements Serializable, Observer, FrameTi
         if (soulMate == null && mobile.getClass().equals(SaoulMatePNJ.class))
             soulMate = (SaoulMatePNJ) mobile;
 
-        if (mobile.addFriend)
+        if (mobile.setFriend())
+        {
             friend++;
+            Supervisor.getEvent().notify(new DisplayMessage(String.format(GraphicalSettings.getStringFromId("friend"),friend),"NewFriend"));
+            Supervisor.getEvent().notify(new AddFriend(mobile));
+        }
     }
 
 
@@ -305,20 +310,10 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
 
     /**
-     *This method allows to know the number of course to pass.
-     *@return size of the list course
-     */
-    public int numberCourse()//TODO
-    {
-        return myCourse.size();
-    }
-
-
-    /**
      * This method allows to add the succes in the lesson to follow
      * @param cmb is the percent to add in success
      */
-    public void addSuccess(int cmb)
+    public void addSuccess(int cmb)//TODO add with penalise
     {
         percentSuccess += cmb;
         if (cmb <= 50)
@@ -352,6 +347,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
         if (energy <= 10)
             Supervisor.getEvent().notify(new LowSomething(LowSomething.TypeLow.Energy));
+        Supervisor.getEvent().notify(new EnergyChanged(this, energy));
     }
 
 
@@ -388,7 +384,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     private double minExperience(int nb)
     {
-        if(nb <= 1) //TODO tester
+        if(nb <= 1)
             return 750;
         else
             return minExperience(nb-1) + 1000 * Math.pow(1.1,nb-1);
@@ -410,7 +406,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      * This method calculate the experience with the level of victim
      * @param victim who is dead
      */
-    public void winExperience(Attack victim)//TODO check
+    public void winExperience(Attack victim)
     {
         winExperience(calculateWin(victim));
     }
@@ -424,6 +420,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         experience += win;
         calculusWinXp();
+        Supervisor.getEvent().notify(new ExperienceChanged(this, experience));
     }
 
 
@@ -555,29 +552,36 @@ public class People extends Character implements Serializable, Observer, FrameTi
         return invincible;
     }
 
+
     /**
      * @param energy The energy of this player
      */
-    public void setEnergy(double energy) {
+    public void setEnergy(double energy)
+    {
         this.energy = energy;
+        Supervisor.getEvent().notify(new EnergyChanged(this, energy));
     }
+
 
     /**
      * @param experience The experience of this player
      */
-    public void setExperience(double experience) {
+    public void setExperience(double experience)
+    {
         this.experience = experience;
+        Supervisor.getEvent().notify(new ExperienceChanged(this, experience));
     }
+
 
     /**
      * This method return the type of the first action when he meet other character
      * @return action
      */
-    @Override
     public Actions getAction()
     {
         return Actions.Dialog;
     }
+
 
     /**
      * This method allows to see the notification in the game

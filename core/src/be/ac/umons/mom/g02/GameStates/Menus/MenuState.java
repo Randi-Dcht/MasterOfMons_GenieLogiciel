@@ -48,11 +48,6 @@ public abstract class MenuState extends GameState {
     protected List<List<Button>> buttons;
 
     /**
-     * A list of all <code>Control</code>
-     */
-    protected List<Control> controls;
-
-    /**
      * If the background must be transparent or not.
      */
     protected boolean transparentBackground;
@@ -91,7 +86,6 @@ public abstract class MenuState extends GameState {
     @Override
     public void init() {
         super.init();
-        controls = new ArrayList<>();
         buttons = new ArrayList<>();
         sb = new SpriteBatch();
 		sr = new ShapeRenderer();
@@ -102,8 +96,8 @@ public abstract class MenuState extends GameState {
     @Override
     public void update(float dt) {
         handleInput();
-        for (Control c : controls)
-            c.update(dt);
+        for (MenuItem mi : menuItems)
+            mi.update(dt);
     }
 
     @Override
@@ -177,8 +171,8 @@ public abstract class MenuState extends GameState {
             }
         }
 
-        for (Control c : controls)
-            c.handleInput();
+        for (MenuItem mi : menuItems)
+            mi.handleInput();
 
         mouseScrolled += gim.getScrolledAmount() * 20;
         if (mouseScrolled < 0)
@@ -228,7 +222,6 @@ public abstract class MenuState extends GameState {
                 if (mi.getControl() != null)
                     mi.getControl().dispose();
             buttons.clear();
-            controls.clear();
         }
         for (MenuItem mi : menuItems) {
             if (mi instanceof ButtonMenuItem) {
@@ -243,9 +236,6 @@ public abstract class MenuState extends GameState {
                     buttons.get(buttons.size() - 1).add(bmi.getControl());
                 }
             }
-            Control c = mi.getControl();
-            if (c != null)
-                controls.add(c);
         }
         if (! buttons.isEmpty() && selectFirstOne) {
             buttons.get(0).get(0).setSelected(true);

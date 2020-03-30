@@ -57,7 +57,7 @@
   <object id="56" x="3036" y="4100" width="140" height="108"/>
   <object id="57" x="1538" y="2286" width="98" height="54"/>
  </objectgroup>
- <objectgroup id="6" name="Interdit" visible="0">
+ <objectgroup id="6" name="Interdit">
   <object id="3" x="3238.79" y="1246.06" width="1587.88" height="524.242"/>
   <object id="4" x="2496.36" y="635.455" width="183.333" height="559.091"/>
   <object id="5" x="2541.82" y="621.818" width="2171.21" height="210.606"/>
@@ -65,14 +65,14 @@
   <object id="7" x="-136.97" y="-135.758" width="6200.38" height="183.333"/>
   <object id="8" x="-140" y="49.0909" width="175.758" height="721.212"/>
   <object id="9" x="41.8182" y="727.879" width="1296.97" height="200"/>
-  <object id="10" x="1146.36" y="374.848" width="163.636" height="351.515"/>
+  <object id="10" x="1208.36" y="497.848" width="101.636" height="228.515"/>
   <object id="11" x="1205.45" y="6.66667" width="156.061" height="98.4848"/>
   <object id="12" x="-165" y="731.667" width="1483.33" height="5466.67"/>
   <object id="13" x="1330.83" y="5735.83" width="2566.67" height="350"/>
   <object id="14" x="3676.67" y="1745.33" width="1364.17" height="4307.17"/>
-  <object id="15" x="1901.67" y="1749.85" width="1783.33" height="198.485"/>
+  <object id="15" x="1999.67" y="1749.85" width="1685.33" height="198.485"/>
   <object id="16" x="2505.83" y="1394.17" width="183.333" height="416.667"/>
-  <object id="17" x="1151.67" y="1765" width="516.667" height="200"/>
+  <object id="17" x="1151.67" y="1858" width="562.667" height="75"/>
   <object id="18" x="5418.33" y="1733.19" width="681.818" height="395.455"/>
   <object id="19" x="5818.33" y="-105.833" width="270.833" height="1854.17"/>
   <object id="20" x="5040.12" y="2134.42" width="1062.12" height="2525.76"/>

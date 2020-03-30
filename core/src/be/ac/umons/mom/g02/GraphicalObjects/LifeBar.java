@@ -16,7 +16,7 @@ public class LifeBar extends ProgressBar {
     /**
      * The color to show when the life is changing.
      */
-    protected final Color changeColor = new Color(0xFB8C00FF); // TODO Put in Settings
+    protected final Color changeColor = new Color(0xFB8C00FF);
     /**
      * The difference of life to show at this instant.
      */
@@ -94,7 +94,7 @@ public class LifeBar extends ProgressBar {
                 textToShow = "-" + (int)((diffPercent - da.getActual()) * maxValue);
             });
             da.setEndingAction(() -> differenceToShow = 0);
-            AnimationManager.getInstance().addAnAnimation("LifeBarAnim" + new Random().nextInt(), da); // random for multiple bar possibility
+            AnimationManager.getInstance().addAnAnimation(da); // random for multiple bar possibility
             timeGone = 0;
         }
     }

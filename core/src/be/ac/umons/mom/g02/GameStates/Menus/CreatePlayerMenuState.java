@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.ScrollListChooser;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.SlidingBar;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
@@ -56,42 +57,49 @@ public class CreatePlayerMenuState extends MenuState {
     @Override
     public void init() {
         super.init();
-        TextBoxMenuItem nameMi = new TextBoxMenuItem(gim, gs, gs.getStringFromId("charName"));
-        TextBoxMenuItem levelMi = new NumberTextBoxMenuItem(gim, gs, gs.getStringFromId("charLevel"));
+        TextBoxMenuItem nameMi = new TextBoxMenuItem(gim, gs, GraphicalSettings.getStringFromId("charName"));
+        TextBoxMenuItem levelMi = new NumberTextBoxMenuItem(gim, gs, GraphicalSettings.getStringFromId("charLevel"));
+        SlidingBarMenuItem levelSBMI = new SlidingBarMenuItem(gim, gs,"");
         levelMi.getControl().setText("" + 1);
         levelMi.getControl().setOnTextChanged(() -> {
             if (levelMi.getControl().getText().equals(""))
                 return;
-            if (Integer.parseInt(levelMi.getControl().getText()) < 1)
+            int val = Integer.parseInt(levelMi.getControl().getText());
+            if (val < 1)
                 levelMi.getControl().setText("" + 1);
-            if (Integer.parseInt(levelMi.getControl().getText()) > 40)
+            if (val > 40)
                 levelMi.getControl().setText("" + 40);
+            levelSBMI.getControl().setActualValue(val);
         });
-        ScrollListChooserMenuItem genderMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charGender"));
-        ScrollListChooserMenuItem typeMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("charType"));
-        ScrollListChooserMenuItem difficultyMi = new ScrollListChooserMenuItem(gim, gs, gs.getStringFromId("difficulty"));
+        levelSBMI.getControl().setMinValue(1);
+        levelSBMI.getControl().setMaxValue(40);
+        levelSBMI.getControl().setOnValueChanged(() -> levelMi.getControl().setText("" + levelSBMI.getControl().getActualValue()));
+        ScrollListChooserMenuItem genderMi = new ScrollListChooserMenuItem(gim, gs, GraphicalSettings.getStringFromId("charGender"));
+        ScrollListChooserMenuItem typeMi = new ScrollListChooserMenuItem(gim, gs, GraphicalSettings.getStringFromId("charType"));
+        ScrollListChooserMenuItem difficultyMi = new ScrollListChooserMenuItem(gim, gs, GraphicalSettings.getStringFromId("difficulty"));
         setMenuItems(new MenuItem[] {
-                new TitleMenuItem(gs, gs.getStringFromId("newGame")),
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("newGame")),
                 nameMi,
                 levelMi,
+                levelSBMI,
                 genderMi,
                 typeMi,
                 difficultyMi,
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("newGame"), () -> initGame(nameMi.getControl().getText(), levelMi.getControl().getText())),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("cancel"), () -> gsm.removeFirstState())
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("newGame"), () -> initGame(nameMi.getControl().getText(), levelMi.getControl().getText())),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("cancel"), () -> gsm.removeFirstState())
         });
         List<ScrollListChooser.ScrollListItem> slil = new LinkedList<>();
         for (Gender s : Gender.values())
-            slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(s.toString()), () -> playerGender = s, slil.isEmpty()));
+            slil.add(new ScrollListChooser.ScrollListItem(GraphicalSettings.getStringFromId(s.toString()), () -> playerGender = s, slil.isEmpty()));
         genderMi.getControl().setScrollListItems(slil.toArray(new ScrollListChooser.ScrollListItem[0]));
         setScrollListProperties(genderMi, slil);
         slil = new LinkedList<>();
         for (Type t : Type.values())
-            slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(t.toString()), () -> characterType = t, slil.isEmpty()));
+            slil.add(new ScrollListChooser.ScrollListItem(GraphicalSettings.getStringFromId(t.toString()), () -> characterType = t, slil.isEmpty()));
         setScrollListProperties(typeMi, slil);
         slil = new LinkedList<>();
         for (Difficulty d : Difficulty.values())
-            slil.add(new ScrollListChooser.ScrollListItem(gs.getStringFromId(d.toString()), () -> difficulty = d, slil.isEmpty()));
+            slil.add(new ScrollListChooser.ScrollListItem(GraphicalSettings.getStringFromId(d.toString()), () -> difficulty = d, slil.isEmpty()));
         setScrollListProperties(difficultyMi, slil);
     }
 

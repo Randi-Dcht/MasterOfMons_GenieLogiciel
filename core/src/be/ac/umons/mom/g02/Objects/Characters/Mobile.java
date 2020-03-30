@@ -151,7 +151,7 @@ public class Mobile extends Character implements Serializable, FrameTime
      *This method allows to increase the life
      * @param dt is the time between two frame
      */
-    public void regeneration(double dt)//TODO displace
+    public void regeneration(double dt)
     {
         if (!living)
         {
@@ -229,7 +229,6 @@ public class Mobile extends Character implements Serializable, FrameTime
      * This method allows to give the action of the mobile
      * @return the action of the mobile
      */
-    @Override
     public Actions getAction()
     {
         return action;

@@ -16,6 +16,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.Arrays;
+
 /**
  * The loading state where all resources are loaded for the further playing state.
  * @author Guillaume Cardoen
@@ -116,7 +120,7 @@ public class LoadingState extends GameState {
         Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.begin();
-        String txt = gs.getStringFromId("loading");
+        String txt = GraphicalSettings.getStringFromId("loading");
         font.draw(sb, txt, MasterOfMonsGame.WIDTH / 2 - font.getXHeight() * txt.length() / 2, MasterOfMonsGame.HEIGHT / 2 + font.getLineHeight() / 2);
         sb.end();
 
@@ -153,8 +157,6 @@ public class LoadingState extends GameState {
     public void initGame() {
         ExtensionsManager em = ExtensionsManager.getInstance();
         em.generateLoadLists();
-        for (FileHandle f : Gdx.files.internal("Tmx/").list())
-            GameMapManager.getInstance().addMapsToLoad(f.path());
         GameMapManager.getInstance().addMapsToLoad(em.getMapsToLoad().toArray(new String[0]));
         gs.addFilesToLoad(em.getFilesToLoad().toArray(new LoadFile[0]));
     }
