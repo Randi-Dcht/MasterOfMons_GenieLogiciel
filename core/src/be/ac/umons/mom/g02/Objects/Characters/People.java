@@ -44,8 +44,8 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private Difficulty difficulty;
     private Gender gender;
     /*other thing*/
-    private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO Hashmap utile ? # Integer -> ArrayList = List d'Arraylist ?
-    private ArrayList<Lesson> myCourse = new ArrayList<Lesson>();
+    private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO pass to list
+    private ArrayList<Lesson> myCourse = new ArrayList<>();
     private int friend = 0;
     private SaoulMatePNJ soulMate;
     /*The point of the level*/
