@@ -18,6 +18,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -193,6 +194,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }));
         nm.whenMessageReceivedDo("getPNJsPos", (objects) ->
                 sendPNJsPositions((String) objects[0])); // Need to generate it first
+        nm.whenMessageReceivedDo("Money", (objects -> ((People)(playerTwo.getCharacteristics())).setMoney((int) objects[0])));
     }
 
     /**
@@ -419,6 +421,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     public void update(Notification notify) {
         super.update(notify);
         PlayingLANHelper.update(this, notify);
+        if (notify.getEvents().equals(Events.MoneyChanged) && ((MoneyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+            nm.sendMessageOnTCP("Money", player.getCharacteristics().getMyMoney());
     }
 
     @Override
