@@ -209,7 +209,7 @@ public class PlayingState extends GameState implements Observer {
 
         supervisor.setGraphic(questShower,this);
 
-        if (MasterOfMonsGame.getGameToLoad() == null)
+        if (MasterOfMonsGame.getGameToLoad() == null && MasterOfMonsGame.getSaveToLoad() == null)
             initMap("Tmx/Umons_Nimy.tmx");
 
         inventoryShower = new InventoryShower(gs, player);
@@ -282,7 +282,6 @@ public class PlayingState extends GameState implements Observer {
         initPNJsPositions(pnjs);
         initPlayerPosition(spawnX, spawnY);
         Supervisor.getEvent().notify(new PlaceInMons(map));
-
     }
 
     protected List<Character> getPNJsOnMap(String mapName) {
