@@ -18,7 +18,7 @@ public class Boss extends UnderQuest {
      * @param people is the people who play the game
      */
     public Boss(LearnToCooperate master, People people) {
-        super("boss", 50, master, people);
+        super("boss", master.getMobileNumber(), master, people);
     }
 
     /**
@@ -29,7 +29,7 @@ public class Boss extends UnderQuest {
     @Override
     public void evenActivity(Notification notify) {
         if (notify.getEvents().equals(Events.Dead) && notify.getBuffer() != null && ! notify.getBuffer().equals(SupervisorLAN.getPeople()) && ! notify.getBuffer().equals(SupervisorLAN.getPeopleTwo()))
-            addProgress(50f / ((LearnToCooperate)master).getMobileNumber());
+            addProgress(1);
     }
 
     /**

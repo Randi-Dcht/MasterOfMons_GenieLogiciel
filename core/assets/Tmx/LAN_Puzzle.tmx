@@ -125,15 +125,15 @@
   <object id="14" x="1041.5" y="941.333" width="399.5" height="73.6667"/>
   <object id="15" x="1173.5" y="946.667" width="137" height="318.333"/>
   <object id="16" x="849" y="925.5" width="63" height="342"/>
-  <object id="17" x="181" y="761" width="75" height="498.333"/>
-  <object id="19" x="365.167" y="776" width="107.833" height="159"/>
-  <object id="22" x="566.5" y="772.5" width="173.167" height="259.5"/>
-  <object id="23" x="526" y="343.5" width="95" height="353"/>
-  <object id="24" x="608" y="644" width="325.333" height="59.6667"/>
-  <object id="25" x="735" y="527.5" width="298" height="47.5"/>
+  <object id="17" x="181" y="787.667" width="75" height="471.666"/>
+  <object id="19" x="361.834" y="790" width="107.833" height="146.333"/>
+  <object id="22" x="563.167" y="786.5" width="173.167" height="259.5"/>
+  <object id="23" x="526" y="343.5" width="95" height="369"/>
+  <object id="24" x="608" y="638.667" width="325.333" height="75.6667"/>
+  <object id="25" x="734.333" y="491.5" width="298" height="76.1667"/>
   <object id="26" x="540" y="341" width="185.5" height="83"/>
   <object id="27" x="44.5" y="961.5" width="196.5" height="179.5"/>
-  <object id="29" x="186.333" y="773" width="547.167" height="55"/>
+  <object id="29" x="183" y="787" width="547.167" height="55"/>
   <object id="30" x="359.5" y="127.5" width="63.5" height="540.333"/>
   <object id="32" x="828" y="376" width="202" height="160"/>
   <object id="33" x="855" y="681.5" width="85.5" height="260"/>
@@ -156,7 +156,7 @@
   <object id="59" x="819.5" y="233" width="62.8333" height="232"/>
   <object id="60" x="354" y="1046.5" width="125.5" height="121.5"/>
  </objectgroup>
- <objectgroup id="3" name="Puzzle">
+ <objectgroup id="3" name="Puzzle" visible="0">
   <object id="61" x="247.334" y="1267.17" width="629.333" height="166.667"/>
   <object id="62" x="246.5" y="931.334" width="107.5" height="442"/>
   <object id="63" x="247" y="929.667" width="314.333" height="111.667"/>

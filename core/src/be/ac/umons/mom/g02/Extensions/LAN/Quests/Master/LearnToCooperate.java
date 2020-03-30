@@ -40,12 +40,12 @@ public class LearnToCooperate extends MasterQuest {
         addUnderQuest(new EndPuzzle(this, Supervisor.getPeople()),
                 new Boss(this, Supervisor.getPeople()));
         Supervisor.getEvent().add(this, Events.PlaceInMons, Events.Dead);
-        maxPercent = 100; // finish puzzle + 36 mobs
         mobileNumber = 22;
         if (difficulty.equals(Difficulty.Medium))
             mobileNumber = 28;
         else if (difficulty.equals(Difficulty.Hard))
             mobileNumber = 36;
+        maxPercent = mobileNumber * 2; // finish puzzle + 36 mobs
     }
 
     @Override
