@@ -125,7 +125,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
     /***/
     public String getNameWin()
     {
-        return dualQuest.getName();
+        return dualQuest.getWinner().getName();
     }
 
     @Override
