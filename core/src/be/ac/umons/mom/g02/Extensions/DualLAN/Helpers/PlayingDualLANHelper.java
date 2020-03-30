@@ -75,8 +75,15 @@ public class PlayingDualLANHelper {
         }
     }
 
-    public static void handleInput() {
+    public static void handleInput(NetworkReady ps) {
+        NetworkManager nm = null;
+        try {
+            nm = NetworkManager.getInstance();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
         PlayingLANHelper.handleInput();
+        nm.sendMessageOnUDP("PP", ps.getPlayer().getMapPos());
     }
 
     public static void getFocus() {

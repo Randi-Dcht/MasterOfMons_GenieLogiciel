@@ -7,8 +7,11 @@ import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
+import java.awt.*;
 import java.net.SocketException;
 import java.util.HashMap;
 
@@ -25,13 +28,13 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
 
     @Override
     public void init() {
-        super.init();
-
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
             e.printStackTrace();
         }
+
+        super.init();
 
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
@@ -45,6 +48,42 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         });
 
         PlayingDualLANHelper.setNetworkManagerRunnable(this);
+        nm.sendMessageOnTCP("getItemsPos");
+    }
+
+    @Override
+    protected void checkForNearSelectable(Player player) {
+        if (player == this.player)
+            super.checkForNearSelectable(player);
+    }
+
+    @Override
+    public void PlaceFlag(Point... pt) {
+        if (nm.isTheServer())
+            super.PlaceFlag(pt);
+    }
+
+    @Override
+    protected void translateCamera(int x, int y) {
+        translateCameraFollowingPlayer(x, y);
+    }
+
+    @Override
+    public void handleInput() {
+        super.handleInput();
+        PlayingDualLANHelper.handleInput(this);
+    }
+
+    @Override
+    public MapObject dropSelectedObject() {
+        MapObject mo = super.dropSelectedObject();
+        nm.sendMessageOnTCP("Item", mo.getCharacteristics());
+        return mo;
+    }
+    @Override
+    protected void pickUpAnObject() {
+        nm.sendMessageOnTCP("IPU", ((MapObject) selectedOne).getCharacteristics());
+        super.pickUpAnObject();
     }
 
     @Override

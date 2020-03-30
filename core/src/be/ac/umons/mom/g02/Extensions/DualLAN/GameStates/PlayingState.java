@@ -58,6 +58,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         nm.sendMessageOnTCP("Item", mo.getCharacteristics());
         return mo;
     }
+    @Override
+    protected void pickUpAnObject() {
+        nm.sendMessageOnTCP("IPU", ((MapObject) selectedOne).getCharacteristics());
+        super.pickUpAnObject();
+    }
 
     @Override
     public void update(float dt) {
@@ -68,7 +73,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     @Override
     public void handleInput() {
         super.handleInput();
-        PlayingLANHelper.handleInput();
+        PlayingDualLANHelper.handleInput(this);
     }
 
     @Override
