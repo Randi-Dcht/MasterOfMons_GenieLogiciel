@@ -1,7 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.RectDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
@@ -18,11 +18,11 @@ public class PlayingFlag extends PlayingStateDual
     /**
      * This is a base for the first people
      */
-    protected RectDual baseOne;
+    protected Cases baseOne;
     /**
      * This is a base for the second people
      */
-    protected RectDual baseTwo;
+    protected Cases baseTwo;
 
 
     /***/
@@ -37,8 +37,8 @@ public class PlayingFlag extends PlayingStateDual
     public void init()
     {
         super.init();
-        baseOne = new RectDual(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
-        baseTwo = new RectDual(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
+        baseOne = new Cases(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
+        baseTwo = new Cases(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
 
         PlaceFlag(new Point(10,33),new Point(10,32),new Point(10,31),new Point(11,33),new Point(12,33),new Point(13,33),new Point(14,33),new Point(15,33));
     }
