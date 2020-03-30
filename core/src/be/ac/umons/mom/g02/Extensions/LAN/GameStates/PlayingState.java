@@ -91,7 +91,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     protected boolean pauseSent = false;
 
-    protected boolean ignoreEMQ = false;
+    public static boolean ignoreEMQ = false;
 
 
     /**
@@ -214,9 +214,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (! ignoreEMQ) {
                 timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
                 SupervisorLAN.getPeople().getQuest().passQuest();
-            }
-            ignoreEMQ = ! ignoreEMQ;
+            } else
+                ignoreEMQ = false;
         });
+        nm.whenMessageSentDo("EMQ", () -> PlayingState.ignoreEMQ = true);
         nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
         nm.whenMessageReceivedDo("ITMP", (objects) -> {
             boolean b = (boolean) objects[0];

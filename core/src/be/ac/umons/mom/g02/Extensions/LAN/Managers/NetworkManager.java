@@ -1,24 +1,11 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Managers;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
-import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
-import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Other.Date;
-import be.ac.umons.mom.g02.Other.TimeGame;
 import com.badlogic.gdx.Gdx;
 
-import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.util.List;
@@ -65,7 +52,7 @@ public class NetworkManager {
     /**
      * The different broadcast addresses on which we should broadcast.
      */
-    HashMap<InetAddress, InetAddress> addressToBroadcast;
+    protected HashMap<InetAddress, InetAddress> addressToBroadcast;
     /**
      * The socket used for broadcasting / sending message if a server is selected.
      */
@@ -160,10 +147,6 @@ public class NetworkManager {
      */
     List<String> detected;
     /**
-     * If we have to ignore the End of a Master Quest message
-     */
-    protected boolean ignoreEMQ = false; // TODO
-    /**
      * The time gone by since the last message received from the second player
      */
     protected double msSinceLastMessage;
@@ -173,12 +156,17 @@ public class NetworkManager {
      * The map making the link between a message and the action to execute
      */
     protected HashMap<String, ObjectsRunnable> runnableMap;
+    /**
+     * The map making the link between a message (to send) and the action to execute
+     */
+    protected HashMap<String, Runnable> runnableSendMap;
 
     /**
      * @throws SocketException If the port used (32516) is already used
      */
     protected NetworkManager() throws SocketException {
         runnableMap = new HashMap<>();
+        runnableSendMap = new HashMap<>();
         ds = new DatagramSocket(PORT);
         detectedServers = new LinkedList<>();
         detected = new LinkedList<>();
@@ -462,8 +450,10 @@ public class NetworkManager {
      * @param messages The message(s)
      */
     public void sendOnTCP(String... messages) {
-        for (String mes : messages)
+        for (String mes : messages) {
             toSendOnTCP.push(mes);
+            checkSendRunnableMessage(mes);
+        }
     }
 
     /**
@@ -505,6 +495,7 @@ public class NetworkManager {
             if (toSendOnUDP.size() > 10)
                 toSendOnUDP.pop();
             toSendOnUDP.push(mes);
+            checkSendRunnableMessage(mes);
         }
     }
 
@@ -546,6 +537,14 @@ public class NetworkManager {
     public void whenMessageReceivedDo(String message, ObjectsRunnable run) {
         runnableMap.put(message, run);
     }
+    /**
+     * Link the action <code>run</code> to the message
+     * @param message The message
+     * @param run The action
+     */
+    public void whenMessageSentDo(String message, Runnable run) {
+        runnableSendMap.put(message, run);
+    }
 
     /**
      * Send the message and the given objects on the TCP link
@@ -555,6 +554,8 @@ public class NetworkManager {
     public void sendMessageOnTCP(String message, Object... objects) {
         try {
             sendOnTCP(String.format("%s#%s", message, objectToString(objects)));
+            checkSendRunnableMessage(message);
+
         } catch (IOException e) {
             Gdx.app.error("NetworkManager", "Couldn't send message !", e);
         }
@@ -567,9 +568,16 @@ public class NetworkManager {
     public void sendMessageOnUDP(String message, Object... objects) {
         try {
             sendOnUDP(String.format("%s#%s", message, objectToString(objects)));
+            checkSendRunnableMessage(message);
         } catch (IOException e) {
             Gdx.app.error("NetworkManager", "Couldn't send message !", e);
         }
+    }
+
+    protected void checkSendRunnableMessage(String mes) {
+        Runnable run;
+        if ((run = runnableSendMap.get(mes)) != null)
+            Gdx.app.postRunnable(run);
     }
 
     /**
