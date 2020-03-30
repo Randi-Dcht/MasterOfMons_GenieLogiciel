@@ -119,9 +119,9 @@ public class PlayCases extends PlayingStateDual
             old.replace(player,new Point(player.getPosX()/64,player.getPosY()/32));
 
             if (player.equals(this.player))
-                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), com.badlogic.gdx.graphics.Color.BLUE));//TODO
+                drawCase.add(new Cases(gs,Color.BLUE,tileWidth,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY()));//TODO
             else
-                drawCase.add(new Cases(gs,player.getPosX(),player.getPosY(), Color.RED));//TODO
+                drawCase.add(new Cases(gs,Color.RED,tileWidth,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY()));//TODO
 
             cases.get(adv.get(player)).remove(new Point(player.getPosX()/64,player.getPosY()/32));
 
