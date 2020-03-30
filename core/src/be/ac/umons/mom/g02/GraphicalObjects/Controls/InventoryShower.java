@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Animations.DoubleAnimation;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -320,7 +321,7 @@ public class InventoryShower extends Control implements Observer {
      */
     @Override
     public void update(Notification notify) {
-        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty())
+        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty() && ((UseItem)notify).getBuffer().removeInBag())
             inventory.remove(notify.getBuffer());
     }
 }

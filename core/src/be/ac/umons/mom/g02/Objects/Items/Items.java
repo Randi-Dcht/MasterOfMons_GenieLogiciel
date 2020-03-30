@@ -58,6 +58,16 @@ public abstract class Items implements Serializable
 
 
     /**
+     * This method allows to know if the item must be remove on the bag
+     * @return if can remove
+     */
+    public boolean removeInBag()
+    {
+        return true;//TODO
+    }
+
+
+    /**
      * This method allows to said when people takes the items
      * @param pp is the people
      */
