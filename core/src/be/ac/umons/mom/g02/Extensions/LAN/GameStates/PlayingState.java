@@ -91,6 +91,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     protected boolean pauseSent = false;
 
+    protected boolean ignoreEMQ = false;
+
 
     /**
      * @param gs The game's graphical settings.
@@ -209,8 +211,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
-            SupervisorLAN.getPeople().getQuest().passQuest();
+            if (! ignoreEMQ) {
+                timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
+                SupervisorLAN.getPeople().getQuest().passQuest();
+            }
+            ignoreEMQ = ! ignoreEMQ;
         });
         nm.setOnDisconnected(() -> gsm.setState(DisconnectedMenuState.class));
         nm.whenMessageReceivedDo("ITMP", (objects) -> {

@@ -38,6 +38,8 @@ public class PlayingState extends PlayingStateDual {
      */
     protected boolean pauseSent;
 
+    protected boolean ignoreEMQ = false;
+
     /**
      * @param gs The game's graphical settings
      */
@@ -104,8 +106,11 @@ public class PlayingState extends PlayingStateDual {
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
-            SupervisorLAN.getPeople().getQuest().passQuest();
+            if (! ignoreEMQ) {
+                timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
+                SupervisorLAN.getPeople().getQuest().passQuest();
+            }
+            ignoreEMQ = ! ignoreEMQ;
         });
         nm.setOnDisconnected(() -> {
             DisconnectedMenuState dms = (DisconnectedMenuState) gsm.setState(DisconnectedMenuState.class);

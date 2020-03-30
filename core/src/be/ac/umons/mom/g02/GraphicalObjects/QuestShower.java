@@ -163,8 +163,8 @@ public class QuestShower {
             questInAnimation = q;
             animateQuestRectangle(1, 0, 1500, () -> {
                 questToShow = null;
-                setQuest(q);
                 questInAnimation = null;
+                setQuest(q);
             });
             animateQuestItems(1,0,1500);
         }
