@@ -79,7 +79,7 @@ public class QuestProgressCircle {
             DoubleAnimation da = new DoubleAnimation(lastDegrees, degrees, 2 * degrees - lastDegrees);
             da.setRunningAction(() -> setDuringAnimationCircleDegrees(da.getActual().floatValue()));
             da.setEndingAction(this::finishAnimation);
-            AnimationManager.getInstance().addAnAnimation("QuestProgressCircleDegreesAnimation_" + quest.getName(), da);
+            AnimationManager.getInstance().addAnAnimation(da);
             duringAnimationCircleDegrees = lastDegrees;
             degrees = lastDegrees;
         }
@@ -111,7 +111,7 @@ public class QuestProgressCircle {
         }
         else {
             sr.set(ShapeRenderer.ShapeType.Filled);
-            sr.arc(x, y, radius, 0, (degrees == 0 ? 360 : degrees));
+            sr.arc(x, y, radius, 0, (degrees - 1E-8 < 0 ? 360 : degrees));
         }
         sr.end();
 
@@ -172,7 +172,7 @@ public class QuestProgressCircle {
      * @param percent The percent of the drawn circle's degree.
      */
     public void setDuringAnimationProgressPercent(double percent) {
-        setDuringAnimationCircleDegrees((float)(percent * (quest.getProgress() == 0 ? 1 : quest.getProgress()) * 360));
+        setDuringAnimationCircleDegrees((float)(percent * 360));
     }
 
     /**
