@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingFlag;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
@@ -87,6 +88,12 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     }
 
     @Override
+    public void update(Notification notify) {
+        super.update(notify);
+        PlayingDualLANHelper.update(this, notify);
+    }
+
+    @Override
     public Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y) {
         return null; // No PNJ on this map
     }
@@ -94,5 +101,11 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     @Override
     public HashMap<String, Character> getIdCharacterMap() {
         return null; // No PNJ on this map
+    }
+
+    @Override
+    public void getFocus() {
+        super.getFocus();
+        PlayingDualLANHelper.getFocus();
     }
 }

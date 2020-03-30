@@ -17,7 +17,6 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.net.SocketException;
 
@@ -35,7 +34,7 @@ public class PlayingDualLANHelper {
             nm.whenMessageReceivedDo("EndDual", objects ->
                     PlayingDualLANHelper.goToPreviousMenu());
             nm.whenMessageReceivedDo("Death", (objects) -> PlayingDualLANHelper.goToPreviousMenu());
-            nm.whenMessageReceivedDo("SPL", (objects) -> SupervisorMultiPlayer.getPeopleTwo().setActualLife((int) objects[0]));
+            nm.whenMessageReceivedDo("SPL", (objects) -> SupervisorMultiPlayer.getPeople().setActualLife((double) objects[0], false));
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -68,9 +67,7 @@ public class PlayingDualLANHelper {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
             nm.sendOnTCP("Death");
             PlayingDualLANHelper.goToPreviousMenu();
-        } else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(Supervisor.getPeople())) {
-            nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
-        }else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(SupervisorMultiPlayer.getPeopleTwo())) {
+        } else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(SupervisorMultiPlayer.getPeopleTwo())) {
             nm.sendMessageOnUDP("SPL", SupervisorMultiPlayer.getPeopleTwo().getActualLife());
         }
     }
