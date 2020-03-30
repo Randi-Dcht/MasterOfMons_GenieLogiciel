@@ -243,9 +243,11 @@ public class DialogCharacter
                 supervisor.getEvent().notify(new Dialog("ESC"));
         }
 
-        if (specificID.equals("SHOP")){
+        if (specificID.equals("SHOP"))
+        {
             supervisor.getEvent().notify(new Shop());
-        supervisor.getEvent().notify(new Dialog("ESC"));}
+            supervisor.getEvent().notify(new Dialog("ByeSeller","ESC"));
+        }
 
         if (answer.equals("Friendly"))
         {
