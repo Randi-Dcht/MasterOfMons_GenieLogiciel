@@ -896,4 +896,12 @@ public class PlayingState extends GameState implements Observer {
     public Player getPlayer() {
         return player;
     }
+
+    public List<MapObject> getMapObjects() {
+        return mapObjects;
+    }
+
+    public TimeShower getTimeShower() {
+        return timeShower;
+    }
 }

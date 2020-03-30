@@ -61,5 +61,7 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
         playerTwo.setMapPos(mapPos);
     }
 
-
+    public Player getSecondPlayer() {
+        return playerTwo;
+    }
 }
