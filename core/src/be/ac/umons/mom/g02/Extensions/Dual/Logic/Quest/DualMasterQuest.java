@@ -30,6 +30,14 @@ public class DualMasterQuest extends MasterQuest
         Supervisor.getEvent().add(Events.Attack,this);
     }
 
+    public People getWinner()
+    {
+        if (list.get(people).getAdvancement() > list.get(peopleSecond).getAdvancement())
+            return people;
+        else
+            return peopleSecond;
+    }
+
     private void createUnderQuest(Class<? extends DualUnderQuest> under)
     {
         try

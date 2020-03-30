@@ -82,7 +82,7 @@ public class PlayCases extends PlayingStateDual
 
         time -= dt;
         if (time <= 0)
-            gsm.removeAllStateAndAdd(DualChooseMenu.class);//TODO
+            finishDual();
 
         timerShow.setText(String.format("%2.0f",time));
     }

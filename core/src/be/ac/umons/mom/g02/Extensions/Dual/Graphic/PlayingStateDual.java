@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
+import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.WinMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
@@ -290,11 +291,17 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
-            gsm.removeAllStateAndAdd(DualChooseMenu.class);
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class) && supervisorDual.getDual().equals(TypeDual.DualPlayer))
+            finishDual();
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
             deadMobile(null);
 
+    }
+
+    /***/
+    public void finishDual()
+    {
+        gsm.removeAllStateAndAdd(WinMenu.class);
     }
 
 

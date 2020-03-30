@@ -122,6 +122,12 @@ public class SupervisorDual extends SupervisorMultiPlayer
         return adv.get(people);
     }
 
+    /***/
+    public String getNameWin()
+    {
+        return dualQuest.getName();
+    }
+
     @Override
     public MasterQuest actualQuest()
     {
