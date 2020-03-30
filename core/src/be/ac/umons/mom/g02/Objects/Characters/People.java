@@ -211,7 +211,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
         if (mobile.setFriend())
         {
             friend++;
-            Supervisor.getEvent().notify(new DisplayMessage(GraphicalSettings.getStringFromId("friend"),"NewFriend"));
+            Supervisor.getEvent().notify(new DisplayMessage(String.format(GraphicalSettings.getStringFromId("friend"),friend),"NewFriend"));
             Supervisor.getEvent().notify(new AddFriend(mobile));
         }
     }
