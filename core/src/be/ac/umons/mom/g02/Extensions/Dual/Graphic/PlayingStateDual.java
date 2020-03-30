@@ -6,7 +6,6 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.RectDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
@@ -18,17 +17,12 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-import com.badlogic.gdx.graphics.Color;
-
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 
 
 /***/
@@ -47,8 +41,7 @@ public class PlayingStateDual extends PlayingState
     protected Point objectSize;
     /***/
     protected InventoryShower inventoryShowerTwo;
-    /***/
-    protected RectDual baseOne,baseTwo;
+
 
     /**
      * @param gs The game's graphical settings
@@ -68,8 +61,6 @@ public class PlayingStateDual extends PlayingState
         Supervisor.getSupervisor().setMustPlaceItem(false);
         super.init();
 
-        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-            deleteFlag(new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32),new Point(40,32));
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
         //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
@@ -82,15 +73,7 @@ public class PlayingStateDual extends PlayingState
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
 
-        ((People)player.getCharacteristics()).pushObject(new Phone());//TODO
-        ((People)playerTwo.getCharacteristics()).pushObject(new Pen());//TODO
-
-        baseOne = new RectDual(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+player.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()));
-        baseTwo = new RectDual(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,(int)(MasterOfMonsGame.WIDTH/2+playerTwo.getPosX()),(int)(MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY()));
-
         inventoryShowerTwo = new InventoryShower(gs, playerTwo);
-
-        System.out.println(player.getCharacteristics().getInventory() + " / " + playerTwo.getCharacteristics().getInventory());
 
         adv.put(player,playerTwo);
         adv.put(playerTwo,player);
@@ -100,7 +83,7 @@ public class PlayingStateDual extends PlayingState
             for (Character ch : pnjs)
             {
                 if (ch.getCharacteristics().getClass().equals(ZombiePNJ.class))
-                    ((ZombiePNJ)ch.getCharacteristics()).initialisation(ch,player);
+                   ((ZombiePNJ)ch.getCharacteristics()).initialisation(ch,player);
             }
 
         }
@@ -120,15 +103,6 @@ public class PlayingStateDual extends PlayingState
         objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
     }
 
-    public void deleteFlag(Point ... pt)
-    {
-        ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
-        for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
-                addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
-
-       // for (OnMapObject m : mapObjects)
-       //     System.out.println(m.getPosX() + " " + m.getPosY());
-    }
 
     @Override
     protected void translateCamera(int x, int y) {
@@ -166,8 +140,8 @@ public class PlayingStateDual extends PlayingState
         player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
         playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
-        for (Character pnj : pnjs)
-            pnj.draw(sb, pnj.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnj.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        for (int i=0;i<Math.min(25,pnjs.size());i++)
+            pnjs.get(i).draw(sb, pnjs.get(i).getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnjs.get(i).getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
         for (MapObject mo : mapObjects)
             if (mo.getMap().equals(gmm.getActualMapName()))
@@ -202,14 +176,7 @@ public class PlayingStateDual extends PlayingState
 
 
     /***/
-    protected void drawAfterMaps()
-    {
-        if (supervisorDual.getDual().equals(TypeDual.CatchFlag))
-        {
-            baseOne.draw((int)cam.position.x,(int)cam.position.y);
-            baseTwo.draw((int)cam.position.x,(int)cam.position.y);
-        }
-    }
+    protected void drawAfterMaps(){}
 
 
     /***/
@@ -325,6 +292,16 @@ public class PlayingStateDual extends PlayingState
     {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
             gsm.removeAllStateAndAdd(DualChooseMenu.class);
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
+            deadMobile(null);
+
+    }
+
+
+    /***/
+    public void deadMobile(Mobile mb)
+    {
+        pnjs.removeIf(chr -> chr.getCharacteristics().equals(mb));
     }
 
 
@@ -346,7 +323,5 @@ public class PlayingStateDual extends PlayingState
         endDual.dispose();
         lifeBarTwo.dispose();
         inventoryShowerTwo.dispose();
-        baseOne.dispose();
-        baseTwo.dispose();
     }
 }

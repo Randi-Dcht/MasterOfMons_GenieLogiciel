@@ -140,6 +140,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
             time = new TimeGame(new Date(16,9,2019,8,15));
             regulator = new RegulatorMultiPlayer(playerOne,playerTwo,time,this);
             refreshQuest();
+            refreshList(dual.getStartMaps());
         }
     }
 

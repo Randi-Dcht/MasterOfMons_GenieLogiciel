@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.FrameTime;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
 import be.ac.umons.mom.g02.Other.HyperPlanning;
 import be.ac.umons.mom.g02.Enums.Actions;
@@ -207,8 +208,12 @@ public class People extends Character implements Serializable, Observer, FrameTi
         if (soulMate == null && mobile.getClass().equals(SaoulMatePNJ.class))
             soulMate = (SaoulMatePNJ) mobile;
 
-        if (mobile.addFriend)
+        if (mobile.setFriend())
+        {
             friend++;
+            Supervisor.getEvent().notify(new DisplayMessage(GraphicalSettings.getStringFromId("friend"),"NewFriend"));
+            Supervisor.getEvent().notify(new AddFriend(mobile));
+        }
     }
 
 
