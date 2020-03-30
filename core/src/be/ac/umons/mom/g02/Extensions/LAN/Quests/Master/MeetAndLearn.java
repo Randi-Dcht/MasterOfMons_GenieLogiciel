@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
@@ -28,7 +29,7 @@ public class MeetAndLearn extends be.ac.umons.mom.g02.Quests.Master.MeetAndLearn
 
     @Override
     public void nextQuest() {
-        super.nextQuest();
+        Supervisor.getSupervisor().getRegale().finishQuest();
         if (! alreadySent) {
             try {
                 NetworkManager.getInstance().sendOnTCP("EMQ");

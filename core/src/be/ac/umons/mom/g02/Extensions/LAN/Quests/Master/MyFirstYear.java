@@ -28,7 +28,7 @@ public class MyFirstYear extends be.ac.umons.mom.g02.Quests.Master.MyFirstYear {
 
     @Override
     public void nextQuest() {
-        super.nextQuest();
+        newQuest(new SuccessfulYear(people,this,difficulty));
         if (! alreadySent) {
             try {
                 NetworkManager.getInstance().sendOnTCP("EMQ");

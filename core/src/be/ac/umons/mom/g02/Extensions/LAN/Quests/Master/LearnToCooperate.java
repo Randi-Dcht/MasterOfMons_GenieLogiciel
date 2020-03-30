@@ -50,7 +50,7 @@ public class LearnToCooperate extends MasterQuest {
 
     @Override
     public void nextQuest() {
-        newQuest(new MyFirstYear(people,this,difficulty));
+        newQuest(new MyFirstYear(people,this, difficulty));
         Supervisor.getEvent().notify(new Teleport("Tmx/Umons_Nimy.tmx"));
         if (! alreadySent) {
             try {
