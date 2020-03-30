@@ -21,6 +21,12 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
      */
     public FlagPlayingState(GraphicalSettings gs) {
         super(gs);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
@@ -37,11 +43,6 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
             PlayingDualLANHelper.goToPreviousMenu();
             nm.sendOnTCP("EndDual");
         });
-    }
-
-    @Override
-    public void init() {
-        super.init();
 
         PlayingDualLANHelper.setNetworkManagerRunnable(this);
     }
