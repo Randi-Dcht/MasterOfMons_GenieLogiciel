@@ -89,6 +89,11 @@ public class QuestProgressCircle {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
+        if (degrees < 0)
+            degrees = 0;
+        else if (degrees > 360)
+            degrees = 360;
+
         sr.begin();
 
         sr.setColor(UNACTIVATED_QUEST_CIRCLE_COLOR);
