@@ -74,8 +74,7 @@ public class AttackRangeCircle {
         sr.setColor(GameColorManager.getInstance().getColorFor("attackRange"));
         DoubleAnimation da = new DoubleAnimation(0, attackRange, 200);
         isRecovering = true;
-        AnimationManager.getInstance().remove("AttackRangeCircleExpandAnim" + character.getCharacteristics().getName());
-        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleExpandAnim" + character.getCharacteristics().getName(), da);
+        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleExpandAnim" + character.hashCode(), da);
         da.setEndingAction(this::retract);
         da.setRunningAction(() -> {
             animatingAttackRange = da.getActual().intValue();
@@ -88,7 +87,7 @@ public class AttackRangeCircle {
      */
     public void retract() {
         DoubleAnimation da = new DoubleAnimation(attackRange, 0, 200);
-        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleRetractingAnim" + character.getCharacteristics().getName(), da);
+        AnimationManager.getInstance().addAnAnimation("AttackRangeCircleRetractingAnim" + hashCode(), da);
         da.setEndingAction(() -> isRecovering = false);
         da.setRunningAction(() -> animatingAttackRange = da.getActual().intValue());
         sr.setColor(GameColorManager.getInstance().getColorFor("recoveringAttackRange"));
