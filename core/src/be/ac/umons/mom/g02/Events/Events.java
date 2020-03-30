@@ -28,6 +28,7 @@ public enum Events
     LifeChanged("LifeChanged"),
     ExperienceChanged("ExperienceChanged"),
     EnergyChanged("EnergyChanged"),
+    MoneyChanged("MoneyChanged"),
     Teleport("Teleport"),;
 
 

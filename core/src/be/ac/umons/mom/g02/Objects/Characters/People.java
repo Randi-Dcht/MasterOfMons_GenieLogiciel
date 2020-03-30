@@ -101,6 +101,20 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public void addMoney(int add)
     {
         myMoney += add;
+        Supervisor.getEvent().notify(new MoneyChanged(this, myMoney));
+    }
+
+    @Override
+    public boolean pullMoney(int many) {
+        Supervisor.getEvent().notify(new MoneyChanged(this, myMoney));
+        return super.pullMoney(many);
+    }
+
+    /**
+     * @param money The money of the player
+     */
+    public void setMoney(int money) {
+        myMoney = money;
     }
 
 
