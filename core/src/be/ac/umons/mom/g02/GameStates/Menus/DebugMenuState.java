@@ -1,15 +1,13 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Enums.KeyStatus;
+import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
-import be.ac.umons.mom.g02.GameStates.PlayingState;
-import be.ac.umons.mom.g02.Managers.GameInputManager;
-import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Input;
 
 import java.awt.*;
@@ -41,9 +39,9 @@ public class DebugMenuState extends MenuState {
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId(gs.mustShowMapCoordinates() ? "debugHidePlayerCoord" : "debugPlayerCoord"), () -> gs.setShowMapCoordinates(! gs.mustShowMapCoordinates())),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugLevelUp"), () -> ps.debugLevelUp()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugMakeInvincible"), () -> ps.debugMakeInvincible()),
-                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugReinitiatePlayer"), () -> SuperviserNormally.getSupervisor().reinitialisationPlayer()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugReinitiatePlayer"), () -> Supervisor.getSupervisor().reinitialisationPlayer()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugGetObject"), () -> gsm.setState(DebugGetObject.class, true)),
-                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugNextQuest"), () -> SuperviserNormally.getSupervisor().getPeople().getQuest().passQuest()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugNextQuest"), () -> Supervisor.getPeople().getQuest().passQuest()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugSpeedUp"), () -> ps.debugChangePlayerSpeed()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), () -> gsm.removeFirstState())
         });
