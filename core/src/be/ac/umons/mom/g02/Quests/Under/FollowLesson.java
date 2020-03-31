@@ -111,6 +111,6 @@ public class FollowLesson extends UnderQuest implements FrameTime
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "FlLessonExplain";
     }
 }

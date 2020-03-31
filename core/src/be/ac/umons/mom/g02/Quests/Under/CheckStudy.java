@@ -120,6 +120,6 @@ public class CheckStudy extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "CkStudyExplain";
     }
 }

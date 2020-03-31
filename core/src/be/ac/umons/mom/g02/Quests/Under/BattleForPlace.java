@@ -8,6 +8,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Quests.Quest;
 
 /**
@@ -103,7 +104,7 @@ public class BattleForPlace extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "BattlePlaceExplain";
     }
 
 

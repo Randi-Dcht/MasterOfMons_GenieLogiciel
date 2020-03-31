@@ -120,6 +120,6 @@ public class MeetManyPeople extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "MeetExplain";
     }
 }

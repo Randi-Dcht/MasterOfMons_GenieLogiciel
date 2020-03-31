@@ -126,6 +126,6 @@ public class GoToLesson extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "GoLessonExplain";
     }
 }

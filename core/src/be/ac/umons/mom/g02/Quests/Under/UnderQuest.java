@@ -2,11 +2,10 @@ package be.ac.umons.mom.g02.Quests.Under;
 
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Quests.Quest;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
-
 import java.io.Serializable;
+
 
 /**
  * The UnderQuest is a subclass of a MasterQuest or of itself.
@@ -161,7 +160,7 @@ public abstract class UnderQuest implements Quest,Serializable
     {
         try
         {
-            return Supervisor.getGraphic().getStringFromId(name);
+            return GraphicalSettings.getStringFromId(name);
         }
         catch (Exception i)
         {

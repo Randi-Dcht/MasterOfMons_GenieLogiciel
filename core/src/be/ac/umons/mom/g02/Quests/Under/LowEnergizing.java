@@ -108,6 +108,6 @@ public class LowEnergizing extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "LowExplain";
     }
 }

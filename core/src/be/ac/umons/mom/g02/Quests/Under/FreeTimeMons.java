@@ -113,6 +113,6 @@ public class FreeTimeMons extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "FreeTimeExplain";
     }
 }

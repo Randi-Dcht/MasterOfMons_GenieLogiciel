@@ -92,6 +92,6 @@ public class ReadInformation extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "ReadExplain";
     }
 }

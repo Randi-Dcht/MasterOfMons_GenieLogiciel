@@ -116,6 +116,6 @@ public class LookSoulMate extends UnderQuest implements FrameTime
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "SoulMateExplain";
     }
 }

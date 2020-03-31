@@ -102,6 +102,6 @@ public class HelpMe extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "HPExplain";
     }
 }

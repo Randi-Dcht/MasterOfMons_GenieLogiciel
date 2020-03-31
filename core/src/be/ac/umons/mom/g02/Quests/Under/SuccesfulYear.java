@@ -94,6 +94,6 @@ public class SuccesfulYear extends UnderQuest
     @Override
     public String explainGoal()
     {
-        return "NONE";
+        return "SuccessExplain";
     }
 }
