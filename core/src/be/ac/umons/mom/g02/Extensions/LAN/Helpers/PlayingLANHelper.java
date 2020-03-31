@@ -162,7 +162,7 @@ public class PlayingLANHelper {
             pauseSent = true;
         }
         if (gim.isKey("attack", KeyStatus.Pressed))
-            nm.sendOnUDP("AC");
+            nm.sendOnTCP("AC"); // Don't work on UDP (?)
     }
 
     public static void update(NetworkReady ps, Notification notify) {

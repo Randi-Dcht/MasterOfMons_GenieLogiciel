@@ -508,7 +508,7 @@ public class NetworkManager {
             if (toSendOnUDP.size() > 0) {
                 sendUDPMessage(toSendOnUDP.pop());
             } else {
-                Thread.sleep(50);
+                Thread.sleep(15);
             }
         }
     }
@@ -519,7 +519,7 @@ public class NetworkManager {
      */
     protected void sendUDPMessage(String message) {
         if (selectedServer == null)
-            throw new NullPointerException("No server was selected");
+            throw new NullPointerException("No server was selected !");
         byte[] buf = message.getBytes();
         DatagramPacket p = new DatagramPacket(buf, buf.length, selectedServer.getIp(), PORT);
         try {
