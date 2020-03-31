@@ -6,7 +6,6 @@ import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
-import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
@@ -107,7 +106,7 @@ public class PlayingLANHelper {
             if (ps.getIdCharacterMap() != null) {
                 String name = (String) objects[0];
                 if (ps.getIdCharacterMap().containsKey(name)) {
-                    SupervisorLAN.getSupervisor().addADeathToIgnore((Mobile)ps.getIdCharacterMap().get(name).getCharacteristics());
+                    SupervisorMultiPlayer.getSupervisor().addADeathToIgnore((Mobile)ps.getIdCharacterMap().get(name).getCharacteristics());
                     Supervisor.getEvent().notify(new Dead(ps.getIdCharacterMap().get(name).getCharacteristics()));
                 }
             }
@@ -127,11 +126,15 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
             if (! ignoreEMQ) {
                 ps.getTimeShower().extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
-                SupervisorLAN.getPeople().getQuest().passQuest();
+                SupervisorMultiPlayer.getPeople().getQuest().passQuest();
+                SupervisorMultiPlayer.getPeopleTwo().newQuest(Supervisor.getPeople().getQuest(), false);
             }
             ignoreEMQ = ! ignoreEMQ;
         });
-        nm.whenMessageSentDo("EMQ", () -> ignoreEMQ = true);
+        nm.whenMessageSentDo("EMQ", () -> {
+            ignoreEMQ = true;
+            SupervisorMultiPlayer.getPeopleTwo().newQuest(Supervisor.getPeople().getQuest(), false);
+        });
         nm.whenMessageReceivedDo("LVLUP", (objects) -> {
             int newLevel = (int)objects[0];
             while (newLevel > ps.getSecondPlayer().getCharacteristics().getLevel())

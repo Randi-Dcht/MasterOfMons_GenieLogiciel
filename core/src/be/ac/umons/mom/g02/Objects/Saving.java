@@ -136,7 +136,7 @@ public class Saving implements Observer
         try
         {
             ObjectOutputStream sortie;
-            sortie = new ObjectOutputStream(new BufferedOutputStream(Gdx.files.external(file).write(false)));
+            sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
             sortie.writeObject(object);
             sortie.close();
         }

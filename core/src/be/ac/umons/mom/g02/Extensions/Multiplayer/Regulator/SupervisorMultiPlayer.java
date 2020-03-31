@@ -43,6 +43,12 @@ public abstract class SupervisorMultiPlayer extends Supervisor
         SupervisorMultiPlayer.playerTwo = playerTwo;
     }
 
+    public static SupervisorMultiPlayer getSupervisor() {
+        if (instance instanceof SupervisorMultiPlayer)
+            return (SupervisorMultiPlayer)instance;
+        return null;
+    }
+
 
     /*-----------------------------------------------------------------------------------------------*/
 

@@ -264,6 +264,10 @@ public class PlayingState extends GameState implements Observer {
         tileHeight = (int)gmm.getActualMap().getProperties().get("tileheight");
         mapWidth = (int)gmm.getActualMap().getProperties().get("width");
         mapHeight = (int)gmm.getActualMap().getProperties().get("height");
+        if (cam != null) {
+            cam.viewportWidth = SHOWED_MAP_WIDTH * tileWidth;
+            cam.viewportHeight = SHOWED_MAP_HEIGHT * tileHeight;
+        }
         MapLayer collLayer = gmm.getActualMap().getLayers().get("Interdit");
         if (collLayer != null)
             collisionObjects = collLayer.getObjects();

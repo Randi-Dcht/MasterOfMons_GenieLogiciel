@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
+import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.Gdx;
 
@@ -59,6 +60,7 @@ public class DisconnectedMenuState extends MenuState {
                 gsm.removeAllStateUntil(this);
                 nm.sendOnTCP("Loaded");
                 nm.whenMessageReceivedDo("Loaded", null);
+                nm.sendMessageOnTCP("CM", GameMapManager.getInstance().getActualMapName());
             });
             nm.setOnMagicNumberSent((magicNumber) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
