@@ -260,17 +260,17 @@ public class PlayingStateDual extends PlayingState
             playerTwo.setOrientation(Orientation.Bottom);
             toMoveY += -toMove;
         }
-        if (gim.isKey("movingUpwardSecond", KeyStatus.Down))
+        else if (gim.isKey("movingUpwardSecond", KeyStatus.Down))
         {
             playerTwo.setOrientation(Orientation.Top);
             toMoveY += toMove;
         }
-        if (gim.isKey("movingLeftwardSecond", KeyStatus.Down))
+        else if (gim.isKey("movingLeftwardSecond", KeyStatus.Down))
         {
             playerTwo.setOrientation(Orientation.Left);
             toMoveX += -toMove;
         }
-        if (gim.isKey("movingRightwardSecond", KeyStatus.Down))
+        else if (gim.isKey("movingRightwardSecond", KeyStatus.Down))
         {
             playerTwo.setOrientation(Orientation.Right);
             toMoveX += toMove;
