@@ -87,8 +87,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     protected boolean pauseSent = false;
 
-    public static boolean ignoreEMQ = false;
-
 
     /**
      * @param gs The game's graphical settings.

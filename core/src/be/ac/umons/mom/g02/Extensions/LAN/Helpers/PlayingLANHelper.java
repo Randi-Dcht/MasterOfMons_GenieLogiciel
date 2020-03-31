@@ -131,6 +131,7 @@ public class PlayingLANHelper {
             }
             ignoreEMQ = ! ignoreEMQ;
         });
+        nm.whenMessageSentDo("EMQ", () -> ignoreEMQ = true);
         nm.whenMessageReceivedDo("LVLUP", (objects) -> {
             int newLevel = (int)objects[0];
             while (newLevel > ps.getSecondPlayer().getCharacteristics().getLevel())
