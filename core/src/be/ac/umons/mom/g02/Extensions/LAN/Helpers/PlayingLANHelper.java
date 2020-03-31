@@ -47,7 +47,8 @@ public class PlayingLANHelper {
         }
         for (MovingPNJ mob : Supervisor.getSupervisor().getMovingPnj(Supervisor.getSupervisor().getMaps(map))) {
             Character c = idCharacterMap.get(mob.getName());
-            nm.sendMessageOnTCP("MPNJ", mob.getName(), mob.getPlayerBloc(), mob.getMobileType(), mob.getMaps(), mob.getAction(), c.getPosX(), c.getPosY());
+            if (c != null)
+                nm.sendMessageOnTCP("MPNJ", mob.getName(), mob.getPlayerBloc(), mob.getMobileType(), mob.getMaps(), mob.getAction(), c.getPosX(), c.getPosY());
         }
     }
 

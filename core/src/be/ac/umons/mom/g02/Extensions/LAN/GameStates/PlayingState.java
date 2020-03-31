@@ -320,7 +320,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
     @Override
     public void initPNJsPositions(List<Character> pnjs) {
-        if (nm.isTheServer()) {
+        if (nm.isTheServer() && randomPNJPositions != null) {
             Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
             for (Character c : pnjs) {
                 if (! idCharacterMap.containsKey(c.getCharacteristics().getName())) {
