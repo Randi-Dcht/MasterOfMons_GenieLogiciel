@@ -102,4 +102,15 @@ public class FollowLesson extends UnderQuest implements FrameTime
         if (nowCourse != null)
             checkLesson();
     }
+
+
+    /**
+     * Explain the goal of this underQuest to succeed this or not
+     * @return the explication of underQuest
+     */
+    @Override
+    public String explainGoal()
+    {
+        return "NONE";
+    }
 }

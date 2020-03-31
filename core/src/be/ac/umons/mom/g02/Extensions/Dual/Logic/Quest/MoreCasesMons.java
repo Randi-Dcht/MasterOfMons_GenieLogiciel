@@ -42,4 +42,14 @@ public class MoreCasesMons extends DualUnderQuest
             addProgress(0.3);
     }
 
+
+    /**
+     * Explain the goal of this underQuest to succeed this or not
+     * @return the explication of underQuest
+     */
+    @Override
+    public String explainGoal()
+    {
+        return "NONE";
+    }
 }

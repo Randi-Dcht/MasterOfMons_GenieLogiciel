@@ -60,4 +60,15 @@ public class BattlePeople extends DualUnderQuest
         if (this.victim.equals(victim))
             addProgress(progress);
     }
+
+
+    /**
+     * Explain the goal of this underQuest to succeed this or not
+     * @return the explication of underQuest
+     */
+    @Override
+    public String explainGoal()
+    {
+        return "NONE";
+    }
 }

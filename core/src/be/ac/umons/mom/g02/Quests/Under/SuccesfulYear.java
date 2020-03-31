@@ -85,4 +85,15 @@ public class SuccesfulYear extends UnderQuest
     {
         return 0;
     }
+
+
+    /**
+     * Explain the goal of this underQuest to succeed this or not
+     * @return the explication of underQuest
+     */
+    @Override
+    public String explainGoal()
+    {
+        return "NONE";
+    }
 }

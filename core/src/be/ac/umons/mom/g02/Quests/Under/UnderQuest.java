@@ -175,4 +175,11 @@ public abstract class UnderQuest implements Quest,Serializable
      * @return number of quest
      */
     public abstract int getTotalSubQuestsNumber();
+
+
+    /**
+     * Explain the goal of this underQuest to succeed this or not
+     * @return the explication of underQuest
+     */
+    public /*abstract*/ String explainGoal(){return "NONE";}
 }
