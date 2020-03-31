@@ -86,8 +86,8 @@ public class PlayingLANHelper {
         nm.setOnDisconnected(() -> gsm.setState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState.class));
         nm.whenMessageReceivedDo("PNJ", (objects) -> ps.onCharacterDetected(
                 (String)objects[0],
-                (be.ac.umons.mom.g02.Objects.Characters.Character)objects[3],
-                (int)objects[1], (int)objects[2]
+                (be.ac.umons.mom.g02.Objects.Characters.Character)objects[1],
+                (int)objects[2], (int)objects[3]
         ));
         nm.whenMessageReceivedDo("MPNJ", (objects) ->
         {
