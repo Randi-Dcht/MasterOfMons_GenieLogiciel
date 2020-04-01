@@ -33,6 +33,7 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 
@@ -371,13 +372,24 @@ public class People extends Character implements Serializable, Observer, FrameTi
         if (object instanceof Guns)
         {
             gun = (Guns)object;
-            myObject.add(object);
             return true;
         }
         if(myObject.size() == difficulty.getManyItem()+1)
             return false;
         myObject.add(object);
         return true;
+    }
+
+
+    /***/
+    @Override
+    public List<Items> getInventory()
+    {
+        if (gun == null)
+            return super.getInventory();
+        List<Items> list = super.getInventory();
+        list.add((Items)gun);
+        return list;
     }
 
 
