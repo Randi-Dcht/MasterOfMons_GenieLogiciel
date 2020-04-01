@@ -45,7 +45,6 @@ public class PositionOnMaps
             BufferedReader line = new BufferedReader(Gdx.files.internal(PATH).reader());
             while ((vertical = line.readLine()) != null)
             {
-
                 if (vertical.charAt(0) == '%')
                     actually = Supervisor.getSupervisor().getMaps(vertical.substring(1));
                 else if (vertical.charAt(0) == '+')
