@@ -852,4 +852,15 @@ public  abstract class Supervisor implements Observer
             time = new TimeGame(date);
         time.setDate(date);
     }
+
+    public void addMobile(Mobile mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical) {
+        listMobile.get(map).add(mob);
+        listUpdate.add(mob);
+        graphicalMob.put(mob, graphical);
+    }
+    public void addMoving(MovingPNJ mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical) {
+        listMoving.get(map).add(mob);
+        listUpdate.add(mob);
+        graphicalMob.put(mob, graphical);
+    }
 }
