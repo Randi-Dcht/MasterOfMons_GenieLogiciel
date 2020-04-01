@@ -43,16 +43,16 @@ public class SellerMenuState extends MenuState
         seller = new Dealer(Bloc.BA1);
         transparentBackground = true;
         ArrayList<MenuItem> list = new ArrayList<>();
-        list.add(new TitleMenuItem(gs,"Welcome on shop"));
-        list.add(new TextMenuItem(gs,String.format("You have %4d € in your wallet",player.getMyMoney())));//gs.getStringFromId("MoneyPlayerShop")
+        list.add(new TitleMenuItem(gs,GraphicalSettings.getStringFromId("WlcShop")));
+        list.add(new TextMenuItem(gs,String.format(GraphicalSettings.getStringFromId("MoneyWllt"),player.getMyMoney())));
 
         for (Items itm : seller.getInventory())
         {
-            list.add(new TextMenuItem(gs,itm.getIdItems()));//gs.getStringFromId(itm.getIdItems())
-            list.add(new ButtonMenuItem(gim,gs,"Buy for " + itm.buy() + " €",() -> buy(itm,player)));//gs.getStringFromId("BuyItm")
+            list.add(new TextMenuItem(gs,GraphicalSettings.getStringFromId(itm.getIdItems())));//gs.getStringFromId(itm.getIdItems())
+            list.add(new ButtonMenuItem(gim,gs,String.format(GraphicalSettings.getStringFromId("buttonPay"),itm.buy()),() -> buy(itm,player)));
         }
 
-        list.add(new ButtonMenuItem(gim,gs,"Quit shop",() -> gsm.removeFirstState()));//gs.getStringFromId("QuitShop")
+        list.add(new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("QShop"),() -> gsm.removeFirstState()));
 
         setMenuItems(list.toArray(new MenuItem[0]),false);
     }
