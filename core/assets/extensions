@@ -41,6 +41,10 @@ MasterOfMonsGame
 .file Pictures/Characters/bh_H_bas2.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Characters/bh_H_aa_haut2.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Characters/bh_F_aa_haut2.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/PassLevel.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/SuperChargerGun.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/Sword.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/TNT.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/Drink.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/Gun.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/ExamQuestion.png com.badlogic.gdx.graphics.Texture
