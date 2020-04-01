@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.Regulator;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
+import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
@@ -17,15 +18,18 @@ import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
+import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SupervisorLAN extends SupervisorMultiPlayer {
 
     protected Save save;
+    protected NetworkManager nm;
 
     /**
      * This method to give the only instance of <code>SupervisorLAN</code> if no other instance of <code>Supervisor</code> exists.
@@ -40,6 +44,11 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
     protected SupervisorLAN() {
         super();
         getEvent().add(Events.ChangeHour, this);
+        try {
+            nm = NetworkManager.getInstance();
+        } catch (SocketException e) {
+            Gdx.app.error("SupervisorLAN", "Unable to get the NetworkManager instance", e);
+        }
     }
 
     @Override

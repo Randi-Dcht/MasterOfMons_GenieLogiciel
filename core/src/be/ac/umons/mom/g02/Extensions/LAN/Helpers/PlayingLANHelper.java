@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.Helpers;
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.*;
+import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
@@ -30,6 +31,10 @@ import java.util.List;
 public class PlayingLANHelper {
     public static boolean ignoreEMQ;
     public static boolean pauseSent;
+
+    public static void init(Observer observer) {
+        Supervisor.getEvent().add(observer, Events.Dead, Events.UpLevel, Events.LifeChanged, Events.ExperienceChanged, Events.EnergyChanged, Events.PNJMoved);
+    }
 
     /**
      * Send all the PNJs positions to the second player.
@@ -153,6 +158,11 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("AC", objects -> ps.getSecondPlayer().expandAttackCircle());
         nm.whenMessageReceivedDo("LVLPA", objects -> SupervisorMultiPlayer.getPeopleTwo().updateUpLevel((int) objects[0], (int) objects[1], (int) objects[2]));
         nm.whenMessageReceivedDo("TIME", (objects) -> Supervisor.getSupervisor().setDate((Date) objects[0]));
+        nm.whenMessageReceivedDo("PNJMove", objects -> {
+            String pnj = (String) objects[0];
+            Point position = (Point) objects[1];
+            ps.getIdCharacterMap().get(pnj).setMapPos(position);
+        });
     }
 
     public static void handleInput() {
@@ -200,6 +210,10 @@ public class PlayingLANHelper {
             nm.sendMessageOnTCP("PXP", Supervisor.getPeople().getExperience());
         else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("PE", Supervisor.getPeople().getEnergy());
+        else if (notify.getEvents().equals(Events.PNJMoved) && notify.bufferNotEmpty()) {
+            PNJMoved notif = (PNJMoved)notify;
+            nm.sendMessageOnUDP("PNJMove", notif.getConcernedOne().getName(), notif.getBuffer());
+        }
     }
 
     public static void getFocus() {

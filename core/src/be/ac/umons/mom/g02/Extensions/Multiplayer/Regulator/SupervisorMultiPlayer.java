@@ -125,7 +125,7 @@ public abstract class SupervisorMultiPlayer extends Supervisor
             listMobile.get(mb.getMaps()).remove(mb);
             deadMobile.add(mb);
             listUpdate.remove(mb);
-            mb.setActualLife(0);
+            mb.setLiving(false);
 
             if (mb.equals(memoryMobile))
                 memoryMobile = null;
@@ -133,6 +133,7 @@ public abstract class SupervisorMultiPlayer extends Supervisor
         }
         else {
             super.deadMobile(mb);
+            deathToIgnore.remove(mb);
         }
     }
 

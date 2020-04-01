@@ -276,6 +276,11 @@ public class Character extends OnMapObject {
         this.posY = posY;
     }
 
+
+
+    public Point getMapPos() {
+        return new Point(getPosX(), getPosY());
+    }
     /**
      * Set the position.
      * @param pos The position

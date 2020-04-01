@@ -445,4 +445,12 @@ public abstract class Character implements Attack, Serializable
     {
         return living;
     }
+
+    /**
+     * Set the death (or not) of the mobile without sending an event
+     * @param living If the character is still living
+     */
+    public void setLiving(boolean living) {
+        this.living = living;
+    }
 }

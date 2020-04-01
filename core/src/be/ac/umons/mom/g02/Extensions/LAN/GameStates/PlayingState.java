@@ -133,7 +133,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                     SupervisorLAN.getPeople(), SupervisorLAN.getPeopleTwo());
 
         super.init();
-        Supervisor.getEvent().add(this, Events.LifeChanged, Events.EnergyChanged, Events.ExperienceChanged);
+        PlayingLANHelper.init(this);
+        Supervisor.getEvent().add(this, Events.MoneyChanged);
         if (! newParty && ! nm.isTheServer())
             ((SupervisorLAN)supervisor).oldGameLAN((Save)MasterOfMonsGame.getSaveToLoad(), this, gs);
 

@@ -6,6 +6,7 @@ import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.Events.Notifications.PNJMoved;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -173,6 +174,8 @@ public class MovingPNJ extends Mobile
     public void checkMove(int x, int y,double dtMemory)
     {
         myGraphic.move(x,y);
+        if (x != 0 || y != 0)
+            Supervisor.getEvent().notify(new PNJMoved(this, myGraphic.getMapPos()));
        if (!ps.checkForCollision(myGraphic))
         {
        //     myGraphic.move(-x,-y);//back to old position

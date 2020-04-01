@@ -29,7 +29,8 @@ public enum Events
     ExperienceChanged("ExperienceChanged"),
     EnergyChanged("EnergyChanged"),
     MoneyChanged("MoneyChanged"),
-    Teleport("Teleport"),;
+    Teleport("Teleport"),
+    PNJMoved("PNJMoved");
 
 
     /**The name of the events*/
