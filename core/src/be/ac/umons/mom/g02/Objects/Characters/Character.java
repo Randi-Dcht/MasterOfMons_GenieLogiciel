@@ -82,6 +82,7 @@ public abstract class Character implements Attack, Serializable
     protected int myMoney;
 
 
+
     /**
      * This constructor allows to create a new people who pilot by a player
      * @param name is the name of the character
@@ -304,7 +305,11 @@ public abstract class Character implements Attack, Serializable
      */
     public List<Items> getInventory()
     {
-        return myObject;
+        if (gun == null)
+            return myObject;
+        List<Items> list =myObject;
+        list.add((Items)gun);
+        return list;
     }
 
 
