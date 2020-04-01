@@ -17,6 +17,7 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.*;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
@@ -210,6 +211,8 @@ public  abstract class Supervisor implements Observer
     /***/
     protected boolean startDialog = true;
 
+    protected People victimPlayer;
+
 
     /***/
     protected Supervisor()
@@ -222,6 +225,7 @@ public  abstract class Supervisor implements Observer
         graphicalMob = new HashMap<>();
         listMoving = new HashMap<>();
         listMobile = new HashMap<>();
+        victimPlayer = playerOne;
     }
 
 
@@ -608,7 +612,7 @@ public  abstract class Supervisor implements Observer
     public void mobileMove(double dt)
     {
         be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical = graphicalMob.get(memoryMobile);
-        be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character player    = graphicalMob.get(playerOne);
+        be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character player    = graphicalMob.get(victimPlayer);
         int displaceX = player.getPosX() - graphical.getPosX();
         int displaceY = player.getPosY() - graphical.getPosY();
 
@@ -842,14 +846,38 @@ public  abstract class Supervisor implements Observer
         time.setDate(date);
     }
 
+    /**
+     * Add a mobile
+     * @param mob The mobile
+     * @param map On which map he is
+     * @param graphical Its graphical instance
+     */
     public void addMobile(Mobile mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical) {
         listMobile.get(map).add(mob);
         listUpdate.add(mob);
         graphicalMob.put(mob, graphical);
     }
+
+    /**
+     * Add a MovingPNJ
+     * @param mob The mobile
+     * @param map On which map he is
+     * @param graphical Its graphical instance
+     */
     public void addMoving(MovingPNJ mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical) {
         listMoving.get(map).add(mob);
         listUpdate.add(mob);
         graphicalMob.put(mob, graphical);
+    }
+
+    /**
+     * @param victimPlayer The player to attack
+     */
+    public void setVictimPlayer(People victimPlayer) {
+        this.victimPlayer = victimPlayer;
+    }
+
+    public HashMap<Maps, ArrayList<MovingPNJ>> getListMoving() {
+        return listMoving;
     }
 }

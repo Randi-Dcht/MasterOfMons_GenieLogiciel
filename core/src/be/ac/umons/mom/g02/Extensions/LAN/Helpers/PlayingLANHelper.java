@@ -25,6 +25,7 @@ import com.badlogic.gdx.Input;
 
 import java.awt.*;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class PlayingLANHelper {
     public static boolean pauseSent;
 
     public static void init(Observer observer) {
-        Supervisor.getEvent().add(observer, Events.Dead, Events.UpLevel, Events.LifeChanged, Events.ExperienceChanged, Events.EnergyChanged, Events.PNJMoved);
+        Supervisor.getEvent().add(observer, Events.Dead, Events.UpLevel, Events.LifeChanged, Events.ExperienceChanged, Events.EnergyChanged, Events.PNJMoved, Events.Attack);
     }
 
     /**
@@ -163,6 +164,18 @@ public class PlayingLANHelper {
             Point position = (Point) objects[1];
             ps.getIdCharacterMap().get(pnj).setMapPos(position);
         });
+        nm.whenMessageReceivedDo("PA", objects -> {
+            for (ArrayList<MovingPNJ> mvl : Supervisor.getSupervisor().getListMoving().values())
+                for (MovingPNJ mv : mvl)
+                    mv.setVictim(ps.getSecondPlayer());
+            Supervisor.getSupervisor().setVictimPlayer((People)ps.getSecondPlayer().getCharacteristics());
+        });
+        nm.whenMessageSentDo("PA", () -> {
+            for (ArrayList<MovingPNJ> mvl : Supervisor.getSupervisor().getListMoving().values())
+                for (MovingPNJ mv : mvl)
+                    mv.setVictim(ps.getPlayer());
+            Supervisor.getSupervisor().setVictimPlayer((People)ps.getPlayer().getCharacteristics());
+        });
     }
 
     public static void handleInput() {
@@ -213,7 +226,9 @@ public class PlayingLANHelper {
         else if (notify.getEvents().equals(Events.PNJMoved) && notify.bufferNotEmpty()) {
             PNJMoved notif = (PNJMoved)notify;
             nm.sendMessageOnUDP("PNJMove", notif.getConcernedOne().getName(), notif.getBuffer());
-        }
+        } else if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
+            nm.sendMessageOnUDP("PA"); // Player attack
+
     }
 
     public static void getFocus() {

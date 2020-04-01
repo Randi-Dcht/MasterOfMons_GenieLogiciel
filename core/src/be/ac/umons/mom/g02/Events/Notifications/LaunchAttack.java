@@ -48,7 +48,7 @@ public class LaunchAttack implements Notification
 
     /**
      * This method return the buffer of this notification if it isn't empty
-     * @return character
+     * @return The victim
      */
     public Character getBuffer()
     {
@@ -58,7 +58,7 @@ public class LaunchAttack implements Notification
 
     /**
      * This method return the buffer of this notification if it isn't empty
-     * @return character
+     * @return The attacker
      */
     public Character getBufferSecond()
     {
