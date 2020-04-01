@@ -180,6 +180,8 @@ public abstract class Character implements Attack, Serializable
     public void setActualLife(double actualLife, boolean notify)
     {
         this.actualLife = actualLife;
+        if (actualLife <= 0)
+            dead();
         if (notify)
             Supervisor.getEvent().notify(new LifeChanged(this, actualLife));
     }
