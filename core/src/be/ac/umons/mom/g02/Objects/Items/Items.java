@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.io.Serializable;
@@ -114,6 +115,16 @@ public abstract class Items implements Serializable
     public String getIdUse()
     {
         return "Use"+name+"Id";
+    }
+
+
+    /**
+     * This methods allows to explain the action of the items on the game
+     * @return the explain
+     */
+    public String explainAction()
+    {
+        return GraphicalSettings.getStringFromId("Explain"+name);
     }
 
 
