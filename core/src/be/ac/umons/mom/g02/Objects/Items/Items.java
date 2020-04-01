@@ -124,7 +124,7 @@ public abstract class Items implements Serializable
      */
     public String explainAction()
     {
-        return "Explain"+name;//GraphicalSettings.getStringFromId("Explain"+name);
+        return GraphicalSettings.getStringFromId("Explain"+name);
     }
 
 
