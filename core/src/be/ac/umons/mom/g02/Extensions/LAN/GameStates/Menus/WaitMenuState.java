@@ -22,7 +22,7 @@ public class WaitMenuState extends MenuState {
             e.printStackTrace();
         }
         nm.whenMessageReceivedDo("Loaded", (objects) -> {
-            gsm.setState(PlayingState.class, true);
+            gsm.removeAllStateAndAdd(PlayingState.class);
             nm.sendOnTCP("Loaded");
             nm.whenMessageReceivedDo("Loaded", null);
         });

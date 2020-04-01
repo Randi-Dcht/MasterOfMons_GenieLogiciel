@@ -72,7 +72,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
 
     @Override
     public void saveGame(String path) {
-        try (ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(Gdx.files.external(path).write(false)))) {
+        try (ObjectOutputStream sortie = new ObjectOutputStream(new FileOutputStream(path))) {
             sortie.writeObject(createSave());
         } catch (IOException e) {
             Gdx.app.error("Error in the saving the game (out)", e.getMessage());
@@ -153,7 +153,6 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
      * @param save The save representing the game to load
      * @param play The PlayingState which is drawing
      * @param gs The graphical settings of this game
-     * @return The save loaded
      */
     public void oldGameLAN(Save save, PlayingState play, GraphicalSettings gs) {
         play.setNewParty(false);
