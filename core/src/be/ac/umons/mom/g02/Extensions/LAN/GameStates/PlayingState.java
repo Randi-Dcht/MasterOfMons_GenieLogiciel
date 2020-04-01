@@ -31,10 +31,8 @@ import com.badlogic.gdx.utils.Array;
 
 import java.awt.*;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 /**
  * The playing state. This state suppose that a connection has already been established.
@@ -158,9 +156,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (nm.isTheServer()) {
             nm.sendMessageOnTCP("PLAN", SupervisorLAN.getPeople().getPlanning());
         } else {
-            nm.sendMessageOnTCP("getPNJsPos", gmm.getActualMapName());
             nm.sendMessageOnTCP("getItemsPos");
         }
+        supervisor.init(player.getCharacteristics(), player);
     }
 
     @Override
@@ -204,6 +202,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * @return The graphical object associated with the character
      */
     public Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y) {
+        if (idCharacterMap.containsKey(name))
+            return idCharacterMap.get(name);
         Character c = new Character(gs, mob);
         pnjs.add(c);
         idCharacterMap.put(name, c);
@@ -285,9 +285,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
     @Override
     protected List<Character> getPNJsOnMap(String mapName) {
+        if (! nm.isTheServer())
+            return new LinkedList<>();
         Maps map = supervisor.getMaps(mapName);
         List<Character> pnjs = new ArrayList<>();
-        supervisor.init(player.getCharacteristics(), player);
         for (Mobile mob : supervisor.getMobile(map)) {
             if (idCharacterMap.containsKey(mob.getName()))
                 pnjs.add(idCharacterMap.get(mob.getName()));
@@ -298,7 +299,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             }
         }
 
-        for (MovingPNJ mv : supervisor.getMovingPnj(map))
+        for (MovingPNJ mv : supervisor.getMovingPnj(map)) {
             if (idCharacterMap.containsKey(mv.getName()))
                 pnjs.add(idCharacterMap.get(mv.getName()));
             else {
@@ -306,6 +307,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
                 pnjs.add(c);
                 mv.initialisation(c, this, player);
             }
+        }
 
         return pnjs;
     }
