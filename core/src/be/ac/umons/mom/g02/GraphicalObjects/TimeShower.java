@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.awt.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -66,6 +67,8 @@ public class TimeShower {
      * If the text is being animated.
      */
     protected boolean isTextBeingAnimated = false;
+
+    protected ScheduledFuture unextendAction;
 
     /**
      * @param gs The game's graphical settings.
@@ -165,8 +168,10 @@ public class TimeShower {
         da.setRunningAction(() -> animationWidth = da.getActual());
         da.setEndingAction(() -> {
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.schedule(this::unextendFromFullWidth, 5, TimeUnit.SECONDS);
+            unextendAction = executorService.schedule(this::unextendFromFullWidth, 5, TimeUnit.SECONDS);
         });
+        if (unextendAction != null)
+            unextendAction.cancel(true);
         AnimationManager.getInstance().addAnAnimation("TimeShowerAnimExtend", da);
         isBeingAnimated = true;
         StringAnimation sa = new StringAnimation(text, EXPEND_TIME);
@@ -187,7 +192,6 @@ public class TimeShower {
      * Animate the object to make it go back to it's normal width.
      */
     protected void unextendFromFullWidth() {
-        isBeingAnimated = true;
         isTextBeingAnimated = false;
         updateTime();
         DoubleAnimation da = new DoubleAnimation(MasterOfMonsGame.WIDTH - 2 * leftMargin, getWidth(), EXPEND_TIME);
@@ -199,5 +203,6 @@ public class TimeShower {
         sa.setEndingAction(() -> isTextBeingAnimated = false);
         isTextBeingAnimated = true;
         AnimationManager.getInstance().addAnAnimation("SA_TimeShower_Unextend", sa);
+        unextendAction = null;
     }
 }
