@@ -44,12 +44,12 @@ public class TestCharacters
     {
         People people = new People("Junit",Type.normal,Gender.Men,Difficulty.Easy);
         double first = people.getEnergy();
-        for (int i = 0; i < 100 ; i++ ){/*people.energy(1);*/}
+        for (int i = 0; i < 100 ; i++ ){people.update(2);}
         double second = people.getEnergy();
         assertTrue(first > second,"depency energy");
 
         people.setMaps(Maps.Kot);
-        for (int i = 0; i < 100 ; i++ ){/*people.energy(1);*/}
+        for (int i = 0; i < 100 ; i++ ){people.update(2);}
         first = people.getEnergy();
         assertTrue(second < first,"add energy");
     }

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestOther
 {
     @Test
-    void TimeGameTest()
+    void TimeGameTest()//TODO date
     {
         TimeGame tg = new TimeGame(new Date(15,9,2019,8,0));
         tg.update(new ChangeQuest());

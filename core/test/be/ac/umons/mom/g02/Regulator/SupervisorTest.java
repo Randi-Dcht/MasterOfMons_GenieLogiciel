@@ -25,7 +25,7 @@ public class SupervisorTest extends SuperviserNormally
         assertEquals(Supervisor.getSupervisor().getClass(), SuperviserNormally.class,"Check if the supervisor class is the single people");
 
         SupervisorDual.initDual();
-        assertEquals(Supervisor.getSupervisor().getClass(), SupervisorMultiPlayer.class,"Check if the supervisor class is the two peoples");
+        assertEquals(Supervisor.getSupervisor().getClass(), SupervisorDual.class,"Check if the supervisor class is the two peoples");
     }
 
 
@@ -37,9 +37,9 @@ public class SupervisorTest extends SuperviserNormally
     {
         /*before new party*/
         assertNull(playerOne,"There isn't player instance");
-        assertNull(listItems);
-        assertNull(listMobile);
-        assertNull(listMoving);
+        assertTrue(listItems == null  || listItems.size() == 0);
+        assertTrue(listMobile == null || listMobile.size() == 0);
+        assertTrue(listMoving == null || listMoving.size() == 0);
         /*after init new party*/
         SuperviserNormally.initNormallyGame();
         newParty("Test", Type.athletic,Gender.Men, Difficulty.Easy);
