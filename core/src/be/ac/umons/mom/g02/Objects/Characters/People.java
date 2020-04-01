@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
+import be.ac.umons.mom.g02.Events.Event;
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -66,9 +67,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
         super(name,type);
-        Supervisor.getEvent().add(Events.PlaceInMons,this);
-        Supervisor.getEvent().add(Events.ChangeMonth,this);
-        Supervisor.getEvent().add(Events.EntryPlace,this);
+        Supervisor.getEvent().add(this, Events.MeetOther,Events.PlaceInMons,Events.ChangeMonth,Events.EntryPlace);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         this.threshold = minExperience(level+1);
         this.difficulty = difficulty;
@@ -127,7 +126,10 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
-    /***/
+    /**
+     * This method allows to give the point with the actual level
+     * @return total of point for characteristic
+     */
     public int getPointLevel()
     {
         int mem;
@@ -166,6 +168,16 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         if(!invincible)
             super.loseAttack(lose);
+    }
+
+
+    /**
+     * This method allows to give the mobile to meet on the maps
+     * @param mobile is the mobile to meet
+     */
+    public void setMeetMobile(Mobile mobile)
+    {
+        bufferMobile = mobile;
     }
 
 
@@ -628,6 +640,8 @@ public class People extends Character implements Serializable, Observer, FrameTi
             setPlaceMaps(((EntryPlaces)notify).getBuffer());
         if (notify.getEvents().equals(Events.ChangeMonth))
             createPlanning();
+        if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile)
+            setMeetMobile((Mobile) notify.getBuffer());
     }
 
 
