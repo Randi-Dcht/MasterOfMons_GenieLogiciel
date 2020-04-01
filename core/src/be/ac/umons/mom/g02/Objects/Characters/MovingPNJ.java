@@ -197,5 +197,10 @@ public class MovingPNJ extends Mobile
         return myGraphic;
     }
 
-
+    /**
+     * @param victim The player that this PNJ need to attack
+     */
+    public void setVictim(Character victim) {
+        this.victim = victim;
+    }
 }

@@ -160,6 +160,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendMessageOnTCP("getItemsPos");
         }
         supervisor.init(player.getCharacteristics(), player);
+        supervisor.init(playerTwo.getCharacteristics(), playerTwo);
+
     }
 
     @Override
