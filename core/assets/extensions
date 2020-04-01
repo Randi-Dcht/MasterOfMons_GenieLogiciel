@@ -49,7 +49,7 @@ MasterOfMonsGame
 .file Pictures/Objects/Gun.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/ExamQuestion.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/FlowerLove.png com.badlogic.gdx.graphics.Texture
-.file Pictures/Objects/sword.png com.badlogic.gdx.graphics.Texture
+.file Pictures/Objects/Sword.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/ExamAnswer.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/Phone.png com.badlogic.gdx.graphics.Texture
 .file Pictures/Objects/Pen.png com.badlogic.gdx.graphics.Texture
