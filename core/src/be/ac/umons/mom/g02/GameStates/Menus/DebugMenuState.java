@@ -41,7 +41,10 @@ public class DebugMenuState extends MenuState {
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugMakeInvincible"), () -> ps.debugMakeInvincible()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugReinitiatePlayer"), () -> Supervisor.getSupervisor().reinitialisationPlayer()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugGetObject"), () -> gsm.setState(DebugGetObject.class, true)),
-                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugNextQuest"), () -> Supervisor.getPeople().getQuest().passQuest()),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugNextQuest"), () -> {
+                    gsm.removeFirstStateFromStack(); // Non-animated
+                    Supervisor.getPeople().getQuest().passQuest();
+                }),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("debugSpeedUp"), () -> ps.debugChangePlayerSpeed()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), () -> gsm.removeFirstState())
         });

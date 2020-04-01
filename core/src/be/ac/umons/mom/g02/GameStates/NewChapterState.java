@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.GameStates;
 
 import be.ac.umons.mom.g02.Animations.StringAnimation;
+import be.ac.umons.mom.g02.GameStates.Dialogs.InGameDialogState;
 import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
@@ -45,6 +46,7 @@ public class NewChapterState extends GameState {
      * Part of this code is from https://stackoverflow.com/a/24104427 by "Boris the Spider"
      */
     public void init() {
+        InGameDialogState.hided = true;
         sb = new SpriteBatch();
         StringAnimation sa = new StringAnimation(GraphicalSettings.getStringFromId("newChapter"), 1000);
         sa.setRunningAction(() -> {
@@ -60,7 +62,10 @@ public class NewChapterState extends GameState {
             anim.setEndingAction(() -> {
                 ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.schedule(() ->
-                                Gdx.app.postRunnable(() -> gsm.removeFirstState()),
+                                Gdx.app.postRunnable(() -> {
+                                    gsm.removeFirstState();
+                                    InGameDialogState.hided = false;
+                                }),
                         4, TimeUnit.SECONDS);
             });
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();

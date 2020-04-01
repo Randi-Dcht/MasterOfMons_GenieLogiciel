@@ -27,6 +27,8 @@ import java.util.Set;
  */
 public class InGameDialogState extends DialogState {
 
+    public static boolean hided = false;
+
     /**
      * Animation for the text.
      */
@@ -53,6 +55,8 @@ public class InGameDialogState extends DialogState {
 
     @Override
     public void draw() {
+        if (hided)
+            return;
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         float height = (float) MasterOfMonsGame.HEIGHT / 6;
