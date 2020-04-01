@@ -14,6 +14,8 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
+import java.util.Random;
+
 
 /***/
 public class ZombiePNJ extends Mobile implements Observer
@@ -46,6 +48,8 @@ public class ZombiePNJ extends Mobile implements Observer
      * If the moving PNJ already meet the player on the maps
      */
     private boolean meet = false;
+    /***/
+    private Bloc[] listBloc = Bloc.values();
 
 
     /**
@@ -55,10 +59,9 @@ public class ZombiePNJ extends Mobile implements Observer
      */
     public ZombiePNJ(MobileType type, Maps maps)
     {
-        super("MovingPNJ",Bloc.Extend,type,Actions.Attack, NameDialog.Move);
+        super("MovingPNJ",Bloc.BA1,type,Actions.Attack, NameDialog.Move);
         setMaps(maps);
     }
-
 
     /**
      * This class allows to create the instance graphic of this PNJ

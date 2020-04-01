@@ -660,6 +660,8 @@ public  abstract class Supervisor implements Observer
     /**/
     public void mobileMove(double dt)
     {
+        if (!graphicalMob.containsKey(memoryMobile) || !graphicalMob.containsKey(victimPlayer))
+            return;
         be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical = graphicalMob.get(memoryMobile);
         be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character player    = graphicalMob.get(victimPlayer);
         int displaceX = player.getPosX() - graphical.getPosX();
