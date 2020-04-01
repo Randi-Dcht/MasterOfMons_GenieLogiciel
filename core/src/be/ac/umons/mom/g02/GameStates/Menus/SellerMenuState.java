@@ -18,9 +18,13 @@ import java.util.ArrayList;
  */
 public class SellerMenuState extends MenuState
 {
-    /***/
+    /**
+     * The player who speak with seller
+     */
     protected People player;
-    /***/
+    /**
+     * The seller of the gun
+     */
     protected Dealer seller;
 
 
@@ -34,13 +38,15 @@ public class SellerMenuState extends MenuState
     }
 
 
-    /***/
+    /**
+     * Initialization of the shop
+     */
     @Override
-    public void init()//TODO String format and bundle
+    public void init()
     {
         super.init();
         player = Supervisor.getPeople();
-        seller = new Dealer(Bloc.BA1);
+        seller = Supervisor.getSupervisor().getDealerOnMap();
         transparentBackground = true;
         ArrayList<MenuItem> list = new ArrayList<>();
         list.add(new TitleMenuItem(gs,GraphicalSettings.getStringFromId("WlcShop")));
@@ -48,8 +54,8 @@ public class SellerMenuState extends MenuState
 
         for (Items itm : seller.getInventory())
         {
-            list.add(new TextMenuItem(gs,GraphicalSettings.getStringFromId(itm.getIdItems())));//gs.getStringFromId(itm.getIdItems())
-            list.add(new ButtonMenuItem(gim,gs,String.format(GraphicalSettings.getStringFromId("buttonPay"),itm.buy()),() -> buy(itm,player)));
+            list.add(new TextMenuItem(gs,GraphicalSettings.getStringFromId(itm.getIdItems())));
+            list.add(new ButtonMenuItem(gim,gs,String.format(GraphicalSettings.getStringFromId("buttonPay"),itm.buy()),() -> buy(itm)));
         }
 
         list.add(new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("QShop"),() -> gsm.removeFirstState()));
@@ -58,7 +64,11 @@ public class SellerMenuState extends MenuState
     }
 
 
-    private void buy(Items itm,People player)
+    /**
+     * Check the buy of the people and quit the shop
+     * @param itm to buy
+     */
+    private void buy(Items itm)
     {
         if (player.pullMoney(itm.buy()) && seller.buyItem(itm))
         {

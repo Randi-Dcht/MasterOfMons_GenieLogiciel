@@ -503,6 +503,13 @@ public  abstract class Supervisor implements Observer
     }
 
 
+    /***/
+    public Dealer getDealerOnMap()
+    {
+        return dealerOnMap;
+    }
+
+
     /**
      * This method allows to create the items on the different maps for this Quest
      * @param quest who is the actual Quest
