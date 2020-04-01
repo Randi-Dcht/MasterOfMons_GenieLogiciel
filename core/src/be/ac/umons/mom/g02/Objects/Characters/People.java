@@ -48,6 +48,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private ArrayList<Lesson> myCourse = new ArrayList<>();
     private int friend = 0;
     private SaoulMatePNJ soulMate;
+    private Mobile bufferMobile;
     /*The point of the level*/
     private int actual = 0;
     private Places place;
@@ -86,7 +87,12 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
-    /***/
+    /**
+     * This method allows to upgrade the characteristic of the player
+     * @param agility is the strength  to add
+     * @param defence is the defence to add
+     * @param strength is the strength to add
+     */
     public void updateUpLevel(int strength, int defence, int agility)
     {
         super.updateType(strength, defence, agility);
@@ -104,16 +110,19 @@ public class People extends Character implements Serializable, Observer, FrameTi
         Supervisor.getEvent().notify(new MoneyChanged(this, myMoney));
     }
 
+
     @Override
     public boolean pullMoney(int many) {
         Supervisor.getEvent().notify(new MoneyChanged(this, myMoney));
         return super.pullMoney(many);
     }
 
+
     /**
      * @param money The money of the player
      */
-    public void setMoney(int money) {
+    public void setMoney(int money)
+    {
         myMoney = money;
     }
 
@@ -161,16 +170,6 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
 
     /**
-     * This method allows to give the arrayList of the Id dialog of this people
-     * @param answer is the answer of the other character
-     */
-    public ArrayList<String> getDialog(String answer)
-    {
-        return null;
-    }
-
-
-    /**
      *This method allows the change the actually MasterQuest
      *@param quest who is the new masterQuest
      */
@@ -178,6 +177,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     {
         newQuest(quest, true);
     }
+
 
     /**
      *This method allows the change the actually MasterQuest
@@ -231,8 +231,10 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
-    /***/
-    public void loseFriend()
+    /**
+     * This method allows to remove the friend in the list
+     */
+    public void loseFriend()//TODO
     {
         friend--;
     }
@@ -248,10 +250,15 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
+    /**
+     * This method allows to give the soul mate
+     * @return soul mate of this player
+     */
     public SaoulMatePNJ getSoulMate()
     {
         return soulMate;
     }
+
 
     /**
      * This method return the MasterQuest actual for this people
@@ -272,12 +279,14 @@ public class People extends Character implements Serializable, Observer, FrameTi
         return myPlanning;
     }
 
+
     /**
      * @param planning The planning for this character
      */
     public void setPlanning(HashMap<Integer, ArrayList<Course>> planning) {
         this.myPlanning = planning;
     }
+
 
     /**
      *This method allows to push a object in the bag of people.
@@ -339,7 +348,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      *This method allows to return the list of course where exams don't pass.
      *@return myCourse who is a list of course.
      */
-    public ArrayList<Lesson> myCourse()
+    public ArrayList<Lesson> myCourse()//TODO
     {
         return myCourse;
     }
@@ -365,11 +374,16 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
+    /**
+     * This method allows to changed the actual energy of player
+     * @param dt is the time between two frames
+     */
     @Override
     public void update(double dt)
     {
         energy(dt);
     }
+
 
     /**
      *This method allows to do exist energy of people.
@@ -451,6 +465,10 @@ public class People extends Character implements Serializable, Observer, FrameTi
         }
     }
 
+
+    /**
+     * This method allows to reinitialisation the characteristic of player
+     */
     public void reinitialization()
     {
         strength = 0;
