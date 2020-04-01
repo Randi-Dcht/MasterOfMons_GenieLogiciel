@@ -13,8 +13,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
 /**
- * La classe principale du jeu.
- * Une partie du contenu est tiré de https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids par ForeignGuyMike
+ * The main class of the game.
+ * Part of the content is taken from https://github.com/foreignguymike/legacyYTtutorials/tree/master/libgdxasteroids by ForeignGuyMike
  * @author Guillaume Cardoen
  */
 public class MasterOfMonsGame extends ApplicationAdapter {
@@ -23,26 +23,26 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	// For me : https://www.youtube.com/watch?v=VAMEpiKTUZI&list=PL-2t7SM0vDfeZUKeM7Jm4U9utHwFS1N-C&index=4
 
 	/**
-	 * La taille horizontale de la fenêtre.
+	 * The horizontal size of the window.
 	 */
 	public static int WIDTH;
 	/**
-	 * La taille verticale de la fenêtre.
+	 * The vertical size of the window.
 	 */
 	public static int HEIGHT;
 
 //	public static OrthographicCamera cam;
 
 	/**
-	 * Le gestionnaire d'entrée du jeu.
+	 * The entry manager.
 	 */
 	protected GameInputManager gim;
 	/**
-	 * Le gestionnaire d'état du jeu.
+	 * The game status manager.
 	 */
 	protected GameStateManager gsm;
 	/**
-	 * Les paramètres graphiques du jeu.
+	 * Game graphics settings.
 	 */
 	protected GraphicalSettings gs;
 
@@ -52,7 +52,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	protected static LogicSaving saveToLoad;
 
 	/**
-	 * S'éxécute quand l'application est crée.
+	 * Runs when the application is created.
 	 */
 	@Override
 	public void create () {
@@ -75,7 +75,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	}
 
 	/**
-	 * S'éxécute quand l'application doit se dessiner.
+	 * Runs when the application needs to take shape.
 	 */
 	@Override
 	public void render () {
@@ -120,7 +120,7 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	}
 
 	/**
-	 * S'éxécute quand l'application se détruit.
+	 * Execute when the application is destroyed.
 	 */
 	@Override
 	public void dispose() {
