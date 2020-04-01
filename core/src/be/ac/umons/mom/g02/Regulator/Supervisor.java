@@ -47,7 +47,6 @@ public  abstract class Supervisor implements Observer
      * This is the only instance of the Supervisor
      */
     protected static Supervisor instance;
-
     /**
      * The people who play this party
      */
@@ -60,8 +59,6 @@ public  abstract class Supervisor implements Observer
      * This is the instance of the Graphic
      */
     protected static GraphicalSettings graphic;
-    /***/
-    protected Dealer dealerOnMap;
 
 
     /**
@@ -86,20 +83,25 @@ public  abstract class Supervisor implements Observer
     }
 
 
-    public static void setPlayerOne(People playerOne) {
+    public static void setPlayerOne(People playerOne)
+    {
         Supervisor.playerOne = playerOne;
     }
+
+
     /**
      * This method to give the event instance
      * @return event
      */
     public static Event getEvent()
     {
-        if (event == null) {
+        if (event == null)
+        {
             event = new Event();
         }
         return event;
     }
+
 
     /**
      * This method allows to give the graphical instance of Graphic
@@ -190,9 +192,13 @@ public  abstract class Supervisor implements Observer
      * Instance of the PlayingState
      */
     protected PlayingState playGraphic;
-    /***/
+    /**
+     * The class to place the item on the maps (id of item)
+     */
     protected PositionOnMaps placePosition;
-    /***/
+    /**
+     * If the first start of the game (place item)
+     */
     protected boolean first = true;
     /**
      * The instance of the regulator class*
@@ -206,15 +212,27 @@ public  abstract class Supervisor implements Observer
      * This the actual variable of the Id on the maps
      */
     protected String actualID;
-    /***/
+    /**
+     * If the game have the shop and the transaction of money
+     */
     protected boolean haveMoney = false;
-    /***/
+    /**
+     * If the dialog can to show
+     */
     protected boolean startDialog = true;
-
+    /**
+     * The victim of the mobile during attack
+     */
     protected People victimPlayer;
+    /**
+     * The seller PNJ to buy the rare items
+     */
+    protected Dealer dealerOnMap;
 
 
-    /***/
+    /**
+     * This constructor define the supervisor of the logic game
+     */
     protected Supervisor()
     {
         for (Maps plt : Maps.values())
@@ -273,15 +291,20 @@ public  abstract class Supervisor implements Observer
     }
 
 
-    /***/
-    public Items[] getAllItems()//TODO optimize
+    /**
+     * This method return the all item for the #DEBUGS#
+     * @return a list of all item
+     */
+    public Items[] getAllItems()
     {
         return new Items[]{new Energizing(),new Flower(),new Gun(),new OldExam(),new PaperHelp(),new Pen(),new Phone(),new TheKillBoot(),
                                  new PassLevel(),new Sword(),new TNT(),new Sportswear()};
     }
 
 
-    /***/
+    /**
+     * This method allows to refresh and delete the delete the old list of frameTime
+     */
     public void refreshAndDelete()
     {
         listUpdate   = new ArrayList<>();
@@ -289,11 +312,17 @@ public  abstract class Supervisor implements Observer
     }
 
 
-    /***/
+    /**
+     * This method analyses the the object (About on the TMx)
+     * @param id is the name of rectangle About on Tmx
+     */
     public abstract void analyseIdMap(String id)throws Exception;
 
 
-    /***/
+    /**
+     * This method allows to analyse the object on maps to return the message
+     * @param id is the id of the object on the maps
+     */
     protected void analyseNormalGameIdMap(String id) throws Exception
     {
         if (!id.equals(actualID))
@@ -313,15 +342,27 @@ public  abstract class Supervisor implements Observer
     }
 
 
-    /***/
+    /**
+     * This method allows to old game
+     * @param pathAndFile  is the name path and the name file
+     * @param play is the playingState to run graphic play
+     * @param graphic is the graphicalSetting class
+     */
     public abstract void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic);
 
 
-    /***/
+    /**
+     * This method allows to save the game
+     * @param pathAndFile is the path and name of file
+     */
     public abstract void saveGame(String pathAndFile);
 
 
-    /***/
+    /**
+     * This methods allows to init the list the object graphic
+     * @param pnj is the logic instance
+     * @param graphic is the associate graphic instance
+     */
     public void init(Character pnj, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphic)
     {
         if (!graphicalMob.containsKey(pnj))
@@ -592,7 +633,7 @@ public  abstract class Supervisor implements Observer
         if (notify.getEvents().equals(Events.PlaceInMons) && notify.bufferNotEmpty())
         {
             refreshList(((PlaceInMons)notify).getBuffer());
-            if (first)//TODO changer et avec chaque position plus prècis !
+            if (first)
                 placeItem();
         }
 
@@ -854,17 +895,20 @@ public  abstract class Supervisor implements Observer
         time.setDate(date);
     }
 
+
     /**
      * Add a mobile
      * @param mob The mobile
      * @param map On which map he is
      * @param graphical Its graphical instance
      */
-    public void addMobile(Mobile mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical) {
+    public void addMobile(Mobile mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical)
+    {
         listMobile.get(map).add(mob);
         listUpdate.add(mob);
         graphicalMob.put(mob, graphical);
     }
+
 
     /**
      * Add a MovingPNJ
@@ -872,11 +916,13 @@ public  abstract class Supervisor implements Observer
      * @param map On which map he is
      * @param graphical Its graphical instance
      */
-    public void addMoving(MovingPNJ mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical) {
+    public void addMoving(MovingPNJ mob, Maps map, be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character graphical)
+    {
         listMoving.get(map).add(mob);
         listUpdate.add(mob);
         graphicalMob.put(mob, graphical);
     }
+
 
     /**
      * @param victimPlayer The player to attack
@@ -885,6 +931,11 @@ public  abstract class Supervisor implements Observer
         this.victimPlayer = victimPlayer;
     }
 
+
+    /**
+     * This methods return the list of all maps with the moving pnj on the maps
+     * @return hashmap<Maps,List<MovingPnj>>
+     */
     public HashMap<Maps, ArrayList<MovingPNJ>> getListMoving() {
         return listMoving;
     }
