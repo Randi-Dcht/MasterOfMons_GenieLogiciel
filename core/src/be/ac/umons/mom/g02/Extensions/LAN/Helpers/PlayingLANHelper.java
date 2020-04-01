@@ -47,7 +47,8 @@ public class PlayingLANHelper {
         }
         for (MovingPNJ mob : Supervisor.getSupervisor().getMovingPnj(Supervisor.getSupervisor().getMaps(map))) {
             Character c = idCharacterMap.get(mob.getName());
-            nm.sendMessageOnTCP("MPNJ", mob.getName(), mob.getPlayerBloc(), mob.getMobileType(), mob.getMaps(), mob.getAction(), c.getPosX(), c.getPosY());
+            if (c != null)
+                nm.sendMessageOnTCP("MPNJ", mob.getName(), mob.getPlayerBloc(), mob.getMobileType(), mob.getMaps(), mob.getAction(), c.getPosX(), c.getPosY());
         }
     }
 
@@ -161,7 +162,7 @@ public class PlayingLANHelper {
             pauseSent = true;
         }
         if (gim.isKey("attack", KeyStatus.Pressed))
-            nm.sendOnUDP("AC");
+            nm.sendOnTCP("AC"); // Don't work on UDP (?)
     }
 
     public static void update(NetworkReady ps, Notification notify) {

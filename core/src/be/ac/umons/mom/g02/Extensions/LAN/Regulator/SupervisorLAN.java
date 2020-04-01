@@ -131,7 +131,6 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
      * @param save
      */
     public void oldGameLAN(Save save) {
-
         listUpdate = new ArrayList<>();
         time = new TimeGame(save.getDate());
         playerOne = save.getPlayer();
