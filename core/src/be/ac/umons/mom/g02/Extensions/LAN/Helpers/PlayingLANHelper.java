@@ -12,6 +12,7 @@ import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
+import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
@@ -85,16 +86,21 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
         nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
         nm.setOnDisconnected(() -> gsm.setState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState.class));
-        nm.whenMessageReceivedDo("PNJ", (objects) -> ps.onCharacterDetected(
-                (String)objects[0],
-                (be.ac.umons.mom.g02.Objects.Characters.Character)objects[1],
-                (int)objects[2], (int)objects[3]
-        ));
+        nm.whenMessageReceivedDo("PNJ", (objects) -> {
+            Character c = ps.onCharacterDetected(
+                    (String)objects[0],
+                    (be.ac.umons.mom.g02.Objects.Characters.Character)objects[1],
+                    (int)objects[2], (int)objects[3]
+            );
+            Supervisor.getSupervisor().addMobile((Mobile)objects[1], Supervisor.getSupervisor().getMaps(GameMapManager.getInstance().getActualMapName()), c);
+        });
         nm.whenMessageReceivedDo("MPNJ", (objects) ->
         {
+            Character c;
             MovingPNJ mpnj = new MovingPNJ((Bloc)objects[1], (MobileType) objects[2], (Maps) objects[3], (Actions) objects[4]);
-            mpnj.initialisation(ps.onCharacterDetected((String) objects[0], mpnj, (int) objects[5], (int) objects[6]),
+            mpnj.initialisation(c = ps.onCharacterDetected((String) objects[0], mpnj, (int) objects[5], (int) objects[6]),
                     (PlayingState)ps, ps.getPlayer());
+            Supervisor.getSupervisor().addMoving(mpnj, Supervisor.getSupervisor().getMaps(GameMapManager.getInstance().getActualMapName()), c);
         });
         nm.whenMessageReceivedDo("hitPNJ", (objects) -> {
             if (ps.getIdCharacterMap() != null) {
@@ -116,7 +122,7 @@ public class PlayingLANHelper {
                 sendItemsPositions(ps.getMapObjects())));
         nm.whenMessageReceivedDo("getPNJsPos", (objects) ->
                 PlayingLANHelper.sendPNJsPositions((String) objects[0], ps.getIdCharacterMap()));
-        nm.whenMessageReceivedDo("PL", (objects -> SupervisorMultiPlayer.getPeopleTwo().setActualLife((int)(objects[0]))));
+        nm.whenMessageReceivedDo("PL", (objects -> SupervisorMultiPlayer.getPeopleTwo().setActualLife((double)objects[0])));
         nm.whenMessageReceivedDo("PXP", objects -> SupervisorMultiPlayer.getPeopleTwo().setExperience((double) objects[0]));
         nm.whenMessageReceivedDo("PE", objects -> SupervisorMultiPlayer.getPeopleTwo().setEnergy((double) objects[0]));
         nm.whenMessageReceivedDo("IPU", (objects) -> {
@@ -180,7 +186,7 @@ public class PlayingLANHelper {
         } else if (notify.getEvents().equals(Events.Dead) &&
                 (notify.getBuffer().equals(SupervisorMultiPlayer.getPeopleTwo()))) {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
-            dms.init(); // NullPointer because text set too fast
+            dms.init(); // NullPointer because text set too fast  TODO
             dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
         } else if (notify.getEvents().equals(Events.Dead)) {
             Mobile m = (Mobile) notify.getBuffer();
@@ -189,11 +195,11 @@ public class PlayingLANHelper {
         } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("LVLUP", Supervisor.getPeople().getLevel());
         else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
-            nm.sendMessageOnUDP("PL", Supervisor.getPeople().getActualLife());
+            nm.sendMessageOnTCP("PL", Supervisor.getPeople().getActualLife());
         else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
-            nm.sendMessageOnUDP("PXP", Supervisor.getPeople().getExperience());
+            nm.sendMessageOnTCP("PXP", Supervisor.getPeople().getExperience());
         else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
-            nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy());
+            nm.sendMessageOnTCP("PE", Supervisor.getPeople().getEnergy());
     }
 
     public static void getFocus() {

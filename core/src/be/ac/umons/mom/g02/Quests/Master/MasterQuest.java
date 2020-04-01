@@ -168,6 +168,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
         nextQuest();
         for (UnderQuest under : underQuest)
             under.passQuest();
+        Supervisor.getSupervisor().refreshQuest();
     }
 
 

@@ -130,6 +130,8 @@ public class MovingPNJ extends Mobile
      */
     private void moving(double dt, boolean onX, boolean onY)//TODO optimise this
     {
+        if (myGraphic == null)
+            return;
         int x=0,y=0;
         int toMove = 0;
         if (Supervisor.getSupervisor().getClass().equals(SuperviserNormally.class))
