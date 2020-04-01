@@ -205,7 +205,8 @@ public class Regulator implements Observer
      */
     private void soulMateMeet(SaoulMatePNJ pnj)
     {
-
+        if(pnj.isLove())
+            player.addFriend(pnj);
     }
 
 
