@@ -1,7 +1,16 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
-import be.ac.umons.mom.g02.Events.Event;
-import be.ac.umons.mom.g02.Events.Notifications.*;
+import be.ac.umons.mom.g02.Events.Notifications.AddFriend;
+import be.ac.umons.mom.g02.Events.Notifications.ChangeQuest;
+import be.ac.umons.mom.g02.Events.Notifications.DisplayMessage;
+import be.ac.umons.mom.g02.Events.Notifications.EnergyChanged;
+import be.ac.umons.mom.g02.Events.Notifications.EntryPlaces;
+import be.ac.umons.mom.g02.Events.Notifications.ExperienceChanged;
+import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
+import be.ac.umons.mom.g02.Events.Notifications.MoneyChanged;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
+import be.ac.umons.mom.g02.Events.Notifications.UpLevel;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
@@ -21,11 +30,11 @@ import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+
 
 /**
  *This class allows to define a people with all characteristic.
@@ -34,27 +43,78 @@ import java.util.Random;
  */
 public class People extends Character implements Serializable, Observer, FrameTime
 {
-    /*characteristic of people*/
+    /**
+     * The energy of the player
+     */
     private double energy = 100;
+    /**
+     * The actual state of the player on the maps
+     */
     private State state = State.normal;
-    private double threshold; /*seuil experience niveau à devoir atteindre*/
+    /**
+     * The threshold to have to pass level
+     */
+    private double threshold;
+    /**
+     * The experience of the player to have in the quest and attack
+     */
     private double experience = 0;
+    /**
+     * The actual MasterQuest of player plays
+     */
     private MasterQuest myQuest;
+    /**
+     * The actual bloc of player (Ba1 to Ma2)
+     */
     private Bloc year;
+    /**
+     * If the player can not be attacker
+     */
     private boolean invincible = false;
+    /**
+     * The difficulty of the game
+     */
     private Difficulty difficulty;
+    /**
+     * The gender of the player
+     */
     private Gender gender;
-    /*other thing*/
+    /**
+     * The list of the course with the day course
+     */
     private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO pass to list
+    /**
+     * The actual list of the course
+     */
     private ArrayList<Lesson> myCourse = new ArrayList<>();
+    /**
+     * The number of friend on the all maps
+     */
     private int friend = 0;
+    /**
+     * The soul mate of the player
+     */
     private SaoulMatePNJ soulMate;
-    private Mobile bufferMobile;
-    /*The point of the level*/
+    /**
+     * The mobile to meet now
+     */
+    private Mobile bufferMobile;//TODO
+    /**
+     * The total of the point of characteristic
+     */
     private int actual = 0;
+    /**
+     * The actual place of the player
+     */
     private Places place;
+    /**
+     * The actual item to use
+     */
     private Items use;
-    private int percentSuccess = 0;
+    /**
+     * The percent to succeed the course
+     */
+    private int percentSuccess = 0;//TODO
 
 
     /**
@@ -306,14 +366,15 @@ public class People extends Character implements Serializable, Observer, FrameTi
      *@param object who is the object taken.
      *@return true if the object is in the bag and false otherwise.
      */
-    public boolean pushObject(Items object)
+    public boolean pushObject(Items object)//TODO gun ???? -> see the possibility
     {
         if (object instanceof Guns)
         {
             gun = (Guns)object;
+            myObject.add(object);
             return true;
         }
-        if(myObject.size() == difficulty.getManyItem())
+        if(myObject.size() == difficulty.getManyItem()+1)
             return false;
         myObject.add(object);
         return true;

@@ -63,6 +63,7 @@ public class ZombiePNJ extends Mobile implements Observer
         setMaps(maps);
     }
 
+
     /**
      * This class allows to create the instance graphic of this PNJ
      * @param character is the graphic setting
@@ -163,6 +164,8 @@ public class ZombiePNJ extends Mobile implements Observer
         myGraphic.move(x,y);
     }
 
+
+    /***/
     public void emplaceAdd()
     {
         number++;
@@ -170,12 +173,15 @@ public class ZombiePNJ extends Mobile implements Observer
             speed = 0.12;
     }
 
+
+    /***/
     public void emplaceRemove()
     {
         number--;
         if (number < 10)
             speed = 0.17;
     }
+
 
     /**
      * This method allows to give the instance of graphic Character
