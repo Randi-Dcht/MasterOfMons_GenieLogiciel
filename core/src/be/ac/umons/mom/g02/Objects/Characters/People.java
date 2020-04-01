@@ -111,7 +111,8 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
 
     @Override
-    public boolean pullMoney(int many) {
+    public boolean pullMoney(int many)
+    {
         Supervisor.getEvent().notify(new MoneyChanged(this, myMoney));
         return super.pullMoney(many);
     }

@@ -272,7 +272,8 @@ public  abstract class Supervisor implements Observer
     /***/
     public Items[] getAllItems()//TODO optimize
     {
-        return new Items[]{new Energizing(),new Flower(),new Gun(),new OldExam(),new PaperHelp(),new Pen(),new Phone(),new TheKillBoot()};
+        return new Items[]{new Energizing(),new Flower(),new Gun(),new OldExam(),new PaperHelp(),new Pen(),new Phone(),new TheKillBoot(),
+                                 new PassLevel(),new Sword(),new TNT(),new Sportswear()};
     }
 
 

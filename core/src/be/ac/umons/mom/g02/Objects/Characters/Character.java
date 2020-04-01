@@ -156,7 +156,7 @@ public abstract class Character implements Attack, Serializable
      */
     public boolean pullMoney(int many)
     {
-        if (myMoney + many < 0)
+        if (myMoney - many < 0)
             return false;
         myMoney -= many;
         return true;

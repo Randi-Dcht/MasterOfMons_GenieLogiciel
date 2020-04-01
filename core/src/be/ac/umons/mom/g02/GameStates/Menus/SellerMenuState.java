@@ -44,9 +44,8 @@ public class SellerMenuState extends MenuState
         transparentBackground = true;
         ArrayList<MenuItem> list = new ArrayList<>();
         list.add(new TitleMenuItem(gs,"Welcome on shop"));
-        list.add(new TextMenuItem(gs,String.format("You have %3d € in your wallet",player.getMyMoney())));//gs.getStringFromId("MoneyPlayerShop")
+        list.add(new TextMenuItem(gs,String.format("You have %4d € in your wallet",player.getMyMoney())));//gs.getStringFromId("MoneyPlayerShop")
 
-        System.out.println(seller.getInventory() + " -> " + seller.getInventory().size());
         for (Items itm : seller.getInventory())
         {
             list.add(new TextMenuItem(gs,itm.getIdItems()));//gs.getStringFromId(itm.getIdItems())
@@ -61,7 +60,7 @@ public class SellerMenuState extends MenuState
 
     private void buy(Items itm,People player)
     {
-        if (seller.buyItem(itm,itm.buy()))
+        if (player.pullMoney(itm.buy()) && seller.buyItem(itm))
         {
             player.pushObject(itm);
             player.addMoney(-itm.buy());
