@@ -315,7 +315,7 @@ public class PlayingStateDual extends PlayingState
                 queuingToPlay((People)notify.getBuffer());
         }
         else if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
-            deadMobile(null);
+            deadMobile((Mobile)notify.getBuffer());
 
     }
 
