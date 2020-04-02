@@ -56,7 +56,7 @@ public class ConnectionRoomState extends MenuState {
             nm.setOnServerDetected(this::refresh);
             nm.setOnMagicNumberReceived((i, j, k, l, m) -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
-                ogds.setText(gs.getStringFromId("chooseTheMagicNumber"));
+                ogds.setText(GraphicalSettings.getStringFromId("chooseTheMagicNumber"));
                 ogds.addNonInternationalizedAnswer("" + i, () -> checkMagicNumber(i));
                 ogds.addNonInternationalizedAnswer("" + j, () -> checkMagicNumber(j));
                 ogds.addNonInternationalizedAnswer("" + k, () -> checkMagicNumber(k));
@@ -69,7 +69,7 @@ public class ConnectionRoomState extends MenuState {
             });
             nm.setOnWrongMagicNumber(() -> {
                 OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
-                ogds.setText(gs.getStringFromId("wrongOne"));
+                ogds.setText(GraphicalSettings.getStringFromId("wrongOne"));
                 ogds.addAnswer("OK");
             });
 
@@ -83,11 +83,11 @@ public class ConnectionRoomState extends MenuState {
         transparentBackground = false;
         TextBoxMenuItem tbmi;
         setMenuItems(new MenuItem[]{
-                new TitleMenuItem(gs, gs.getStringFromId("automaticDetect")),
-                new TitleMenuItem(gs, gs.getStringFromId("enterServerInfo")),
-                new TextMenuItem(gs, gs.getStringFromId("servInfo")),
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("automaticDetect")),
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("enterServerInfo")),
+                new TextMenuItem(gs, GraphicalSettings.getStringFromId("servInfo")),
                 tbmi = new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"),
-                new ButtonMenuItem(gim, gs, gs.getStringFromId("connect"), () ->  manualConnect(tbmi.getControl().getText()))
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("connect"), () ->  manualConnect(tbmi.getControl().getText()))
         });
     }
 
@@ -97,30 +97,42 @@ public class ConnectionRoomState extends MenuState {
     protected void refresh() {
         TextBoxMenuItem tbmi;
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("automaticDetect")));
+        menuItems.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("automaticDetect")));
         for (ServerInfo si : nm.getDetectedServers()) {
             menuItems.add(new ButtonMenuItem(gim, gs,
                     String.format("%s (%s)", si.getName(), si.getIp().toString().replace("/", "")),
                     () -> connectToServer(si)));
         }
-        menuItems.add(new TitleMenuItem(gs, gs.getStringFromId("enterServerInfo")));
-        menuItems.add(new TextMenuItem(gs, gs.getStringFromId("servInfo")));
+        menuItems.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("enterServerInfo")));
+        menuItems.add(new TextMenuItem(gs, GraphicalSettings.getStringFromId("servInfo")));
         menuItems.add(tbmi = new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"));
-        menuItems.add(new ButtonMenuItem(gim, gs, gs.getStringFromId("connect"), () -> manualConnect(tbmi.getControl().getText())));
+        menuItems.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("connect"), () -> manualConnect(tbmi.getControl().getText())));
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }
 
     protected void manualConnect(String ip) {
+        for (InetAddress ia : nm.getAddressToBroadcast().keySet()) {
+            if (ia.toString().contains(ip)) {
+                onIncorrectIP();
+                return;
+            }
+        }
+        if (ip.equals(""))
+            onIncorrectIP();
+
         try {
             connectToServer(
                     new ServerInfo(InetAddress.getByName(ip))
             );
         } catch (UnknownHostException e) {
-            OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
-            ogds.setText(gs.getStringFromId("ipIncorrect"));
-            ogds.addAnswer("OK");
             e.printStackTrace();
         }
+    }
+
+    protected void onIncorrectIP() {
+        OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
+        ogds.setText(GraphicalSettings.getStringFromId("ipIncorrect"));
+        ogds.addAnswer("OK");
     }
 
     /**
