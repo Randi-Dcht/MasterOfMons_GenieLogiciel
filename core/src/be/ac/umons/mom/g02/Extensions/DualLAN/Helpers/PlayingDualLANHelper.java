@@ -10,6 +10,7 @@ import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.FlagPlayingState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WinMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
@@ -33,7 +34,7 @@ public class PlayingDualLANHelper {
             });
             nm.whenMessageReceivedDo("EndDual", objects ->
                     PlayingDualLANHelper.goToPreviousMenu());
-            nm.whenMessageReceivedDo("Death", (objects) -> PlayingDualLANHelper.goToPreviousMenu());
+            nm.whenMessageReceivedDo("Death", (objects) -> gsm.setState(WinMenu.class, true));
             nm.whenMessageReceivedDo("SPL", (objects) -> SupervisorMultiPlayer.getPeople().setActualLife((double) objects[0], false));
         } catch (SocketException e) {
             e.printStackTrace();
@@ -48,9 +49,9 @@ public class PlayingDualLANHelper {
             NetworkManager nm = NetworkManager.getInstance();
             GameStateManager gsm = GameStateManager.getInstance();
             if (nm.isTheServer())
-                gsm.removeAllStateAndAdd(DualChooseMenu.class);
+                gsm.setState(DualChooseMenu.class, true);
             else
-                gsm.removeAllStateAndAdd(WaitMenuState.class);
+                gsm.setState(WaitMenuState.class, true);
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -66,7 +67,7 @@ public class PlayingDualLANHelper {
         }
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
             nm.sendOnTCP("Death");
-            PlayingDualLANHelper.goToPreviousMenu();
+//            PlayingDualLANHelper.goToPreviousMenu();
         } else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(SupervisorMultiPlayer.getPeopleTwo())) {
             nm.sendMessageOnUDP("SPL", SupervisorMultiPlayer.getPeopleTwo().getActualLife());
         }

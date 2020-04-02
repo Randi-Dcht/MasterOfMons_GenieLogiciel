@@ -191,7 +191,7 @@ public class PlayingLANHelper {
             pauseSent = true;
         }
         if (gim.isKey("attack", KeyStatus.Pressed))
-            nm.sendOnTCP("AC"); // Don't work on UDP (?)
+            nm.sendOnTCP("AC"); // TODO Don't work on UDP (?)
     }
 
     public static void update(NetworkReady ps, Notification notify) {
@@ -201,17 +201,7 @@ public class PlayingLANHelper {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        GameStateManager gsm = GameStateManager.getInstance();
-        if (notify.getEvents().equals(Events.Dead) &&
-                (notify.getBuffer().equals(Supervisor.getPeople()))) {
-            gsm.setState(DeadMenuState.class);
-            nm.sendOnTCP("Death");
-        } else if (notify.getEvents().equals(Events.Dead) &&
-                (notify.getBuffer().equals(SupervisorMultiPlayer.getPeopleTwo()))) {
-            DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
-            dms.init(); // NullPointer because text set too fast  TODO
-            dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
-        } else if (notify.getEvents().equals(Events.Dead)) {
+        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().getClass().equals(Mobile.class)) {
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendMessageOnTCP("PNJDeath", m.getName());
             ps.getIdCharacterMap().remove(m.getName());
