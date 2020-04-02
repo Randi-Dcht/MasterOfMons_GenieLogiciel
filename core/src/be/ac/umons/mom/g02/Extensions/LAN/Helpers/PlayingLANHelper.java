@@ -176,6 +176,7 @@ public class PlayingLANHelper {
                     mv.setVictim(ps.getPlayer());
             Supervisor.getSupervisor().setVictimPlayer((People)ps.getPlayer().getCharacteristics());
         });
+        nm.whenMessageReceivedDo("PO", (objects) -> ps.getSecondPlayer().setOrientation((Orientation) objects[0]));
     }
 
     public static void handleInput() {
@@ -218,7 +219,6 @@ public class PlayingLANHelper {
             nm.sendMessageOnUDP("PNJMove", notif.getConcernedOne().getName(), notif.getBuffer());
         } else if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
             nm.sendMessageOnUDP("PA"); // Player attack
-
     }
 
     public static void getFocus() {

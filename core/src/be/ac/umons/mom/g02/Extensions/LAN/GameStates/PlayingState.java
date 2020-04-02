@@ -320,8 +320,10 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     public void handleInput() {
         super.handleInput();
         PlayingLANHelper.handleInput();
-        if (! mazeMode || isTheMazePlayer )
+        if (! mazeMode || isTheMazePlayer ) {
             nm.sendMessageOnUDP("PP", player.getMapPos());
+            nm.sendMessageOnUDP("PO", player.getOrientation());
+        }
     }
 
     @Override

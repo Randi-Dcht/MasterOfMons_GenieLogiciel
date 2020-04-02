@@ -82,6 +82,7 @@ public class PlayingDualLANHelper {
         }
         PlayingLANHelper.handleInput();
         nm.sendMessageOnUDP("PP", ps.getPlayer().getMapPos());
+        nm.sendMessageOnUDP("PO", ps.getPlayer().getOrientation());
     }
 
     public static void getFocus() {
