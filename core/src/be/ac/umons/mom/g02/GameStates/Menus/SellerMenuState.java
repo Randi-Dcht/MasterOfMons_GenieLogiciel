@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
@@ -58,7 +59,11 @@ public class SellerMenuState extends MenuState
             list.add(new ButtonMenuItem(gim,gs,String.format(GraphicalSettings.getStringFromId("buttonPay"),itm.buy()),() -> buy(itm)));
         }
 
-        list.add(new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("QShop"),() -> gsm.removeFirstState()));
+        list.add(new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("QShop"),() ->
+        {
+            gsm.removeFirstState();
+            Supervisor.getEvent().notify(new Dialog("ByeSeller","ESC"));
+        }));
 
         setMenuItems(list.toArray(new MenuItem[0]),false);
     }
@@ -75,6 +80,7 @@ public class SellerMenuState extends MenuState
             player.pushObject(itm);
             player.addMoney(-itm.buy());
             gsm.removeFirstState();
+            Supervisor.getEvent().notify(new Dialog("ByeSellerBuy","ESC"));
         }
     }
 }

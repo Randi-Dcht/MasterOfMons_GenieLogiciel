@@ -26,7 +26,7 @@ public class WinMenu extends MenuState
         setMenuItems(new MenuItem[]
                 {
                         new TitleMenuItem(gs,String.format("Finish this dual (%s)", SupervisorDual.getSupervisorDual().getDual().toString())),// TODO bundle
-                        new TextMenuItem(gs,String.format("\n \n you are win : %s \n \n",SupervisorDual.getSupervisorDual().getNameWin())),//TODO bundle
+                        new TextMenuItem(gs,String.format("\n \n you are the winner : %s \n \n",SupervisorDual.getSupervisorDual().getNameWin())),//TODO bundle
                         new ButtonMenuItem(gim,gs,"continue",() -> gsm.removeAllStateAndAdd(DualChooseMenu.class))//TODO bundle
                 });
     }
