@@ -44,6 +44,24 @@ public class Dealer extends Mobile
     }
 
 
+    /***/
+    @Override
+    public void loseAttack(double lose)
+    {
+        //Invincible attack
+    }
+
+
+    /***/
+    @Override
+    public void update(double dt)
+    {
+        if (victim != null)
+            victim = null;
+    }
+
+
+    /***/
     private void createList(Class<Items>[] list) throws Exception
     {
         for (Class<Items> clss : list)
