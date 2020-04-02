@@ -17,11 +17,7 @@ public class Event implements Observable
      * This is a couple with a class associated to events
      */
     private HashMap<Events, List<Observer>> list;
-    /***/
-    private Observer removeObserver;
-    /***/
-    private Events removeEvents;
-
+public int old =0,actu=0;
 
     /**
      * This constructor define the observable with events
@@ -38,17 +34,18 @@ public class Event implements Observable
      * @param obs is an instance of the observer
      */
     @Override
-    public void add(Events evt, Observer ... obs)
+    public synchronized void add(Events evt, Observer ... obs)
     {
         if(!list.containsKey(evt))
             list.put(evt,new ArrayList<>());
         for(Observer ob : obs)
             list.get(evt).add(ob);
+        old++;
     }
 
 
     /***/
-    public void add(Observer obs,Events ... evts)
+    public synchronized void add(Observer obs,Events ... evts)
     {
         for (Events evt : evts)
             add(evt,obs);
@@ -61,10 +58,10 @@ public class Event implements Observable
      * @param obs is the observer who remove
      */
     @Override
-    public void remove(Events evt, Observer obs)
+    public synchronized void remove(Events evt, Observer obs)
     {
-       removeEvents   = evt;
-       removeObserver = obs;
+        list.get(evt).remove(obs);
+        old--;
     }
 
 
@@ -73,7 +70,7 @@ public class Event implements Observable
      * @param evt is teh event to remove in the list
      */
     @Override
-    public void remove(Events evt)
+    public synchronized void remove(Events evt)
     {
         list.remove(evt);
     }
@@ -84,14 +81,8 @@ public class Event implements Observable
      * @param notify is the notification with Events and a buffer
      */
     @Override
-    public void notify(Notification notify)
+    public synchronized void notify(Notification notify)
     {
-        if (removeObserver != null && removeEvents != null)
-        {
-            list.get(removeEvents).remove(removeObserver);
-            removeEvents=null; removeObserver=null;
-        }
-
         if(list.containsKey(notify.getEvents()))
         {
             for (int i = 0; i < list.get(notify.getEvents()).size(); i++)

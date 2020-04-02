@@ -817,8 +817,7 @@ public  abstract class Supervisor implements Observer
             attackMethod(memoryMobile, playerOne);
         else if (action.equals(Actions.Dialog))
         {
-            if (startDialog)
-            {event.add(Events.Answer,this);startDialog = false;}
+            startDialog = true;
             switchingDialog("Start");
         }
     }
@@ -830,15 +829,21 @@ public  abstract class Supervisor implements Observer
      */
     public void switchingDialog(String answer)
     {
+        if (startDialog)
+        {
+            event.add(Events.Answer,this);
+            startDialog = false;
+        }
         if( dialog == null)
         {
             event.notify(new Dialog("ESC"));
-            //event.remove(Events.Answer,this);//TODO
+            event.remove(Events.Answer,this);
         }
         else if (answer.equals("Attack"))
         {
             attackMethod(playerOne,memoryMobile);
             event.notify(new Dialog("ESC"));
+            event.remove(Events.Answer,this);
         }
         else
             dialog.analyzeAnswer(answer,memoryMobile);

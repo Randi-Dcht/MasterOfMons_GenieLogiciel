@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Notifications.Shop;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
@@ -203,16 +204,9 @@ public class DialogCharacter
             this.mobile = mobile;
 
             if (specificID != null)
-            {
                 idAnswer(answerID);
-            }
-            else if (!listDialog.containsKey(answerID))
-            {
-                supervisor.getEvent().notify(new Dialog("ESC"));
-                //classSp.getEvent().remove(Events.Answer,classSp);TODO
-            }
-            else if (answerID.equals("ESC"))
-                supervisor.getEvent().notify(new Dialog("ESC"));
+            else if (!listDialog.containsKey(answerID) || answerID.equals("ESC"))
+                quit();
             else if (check(getDialog(answerID)))
                 supervisor.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
             else
@@ -232,7 +226,7 @@ public class DialogCharacter
             Items it = getItems(mobile.getInventory(),answer);
             if (it != null)
                 supervisor.getPeople().pushObject(it);
-            supervisor.getEvent().notify(new Dialog(getDialog("ESC")));
+            quit();
         }
         if (specificID.equals("ITEMSUSE"))
         {
@@ -240,7 +234,7 @@ public class DialogCharacter
             if (it != null)
                 supervisor.getEvent().notify(new Dialog(it.getIdUse(),"ESC"));
             else
-                supervisor.getEvent().notify(new Dialog("ESC"));
+                quit();
         }
 
         if (specificID.equals("SHOP"))
@@ -249,11 +243,16 @@ public class DialogCharacter
         if (answer.equals("Friendly"))
         {
             Supervisor.getPeople().addFriend(mobile);
-            supervisor.getEvent().notify(new Dialog("ESC"));
+            quit();
         }
         specificID = null;
     }
 
+    private void quit()
+    {
+        Supervisor.getEvent().notify(new Dialog("ESC"));
+        Supervisor.getEvent().remove(Events.Answer,supervisor);
+    }
 
     /**
      * This method allows to give the Items in the list
