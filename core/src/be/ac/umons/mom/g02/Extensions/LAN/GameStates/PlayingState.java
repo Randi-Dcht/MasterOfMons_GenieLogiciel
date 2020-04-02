@@ -9,6 +9,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Quests.Master.LearnToCooperate;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
@@ -424,7 +425,16 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     public void update(Notification notify) {
         super.update(notify);
         PlayingLANHelper.update(this, notify);
-        if (notify.getEvents().equals(Events.MoneyChanged) && ((MoneyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
+        if (notify.getEvents().equals(Events.Dead) &&
+                (notify.getBuffer().equals(Supervisor.getPeople()))) {
+            gsm.setState(DeadMenuState.class);
+            nm.sendOnTCP("Death");
+        } else if (notify.getEvents().equals(Events.Dead) &&
+                (notify.getBuffer().equals(SupervisorMultiPlayer.getPeopleTwo()))) {
+            DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
+            dms.init(); // NullPointer because text set too fast  TODO
+            dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
+        } else if (notify.getEvents().equals(Events.MoneyChanged) && ((MoneyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
             nm.sendMessageOnTCP("Money", player.getCharacteristics().getMyMoney());
     }
 

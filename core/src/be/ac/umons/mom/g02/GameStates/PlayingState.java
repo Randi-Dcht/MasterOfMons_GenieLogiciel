@@ -675,7 +675,8 @@ public class PlayingState extends GameState implements Observer {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)
                 Supervisor.getPeople().useObject(ii.getItem());
-            timeShower.extendOnFullWidth(ii.getItem().explainAction());
+            if (timeShower != null && ii != null)
+                timeShower.extendOnFullWidth(ii.getItem().explainAction());
         }
         if (gim.isKey("quickSave", KeyStatus.Pressed)) {
             timeShower.extendOnFullWidth(GraphicalSettings.getStringFromId("quickSaving"));

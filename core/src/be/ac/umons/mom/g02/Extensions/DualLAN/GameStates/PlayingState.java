@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WinMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
@@ -118,6 +119,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     public void getFocus() {
         super.getFocus();
         PlayingDualLANHelper.getFocus();
+    }
+
+    @Override
+    public void finishDual() {
+        gsm.setState(WinMenu.class, true);
     }
 
     public HashMap<String, Character> getIdCharacterMap() {
