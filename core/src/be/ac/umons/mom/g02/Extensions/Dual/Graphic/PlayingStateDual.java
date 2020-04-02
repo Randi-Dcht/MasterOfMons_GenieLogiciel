@@ -209,7 +209,7 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void handleInput()
     {
-        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed))
+        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && player2Life)
         {
             if (selectedOne instanceof Character)
                 return;
@@ -219,13 +219,15 @@ public class PlayingStateDual extends PlayingState
                     pickUpAnObject();
             }
         }
-        if (gim.isKey("attackTwo", KeyStatus.Pressed))
+        if (gim.isKey("attackTwo", KeyStatus.Pressed) && player2Life)
         {
             pnjs.add(player);
             attack(playerTwo);
             pnjs.remove(player);
         }
-        super.handleInput();
+
+        if (player1Life)
+            super.handleInput();
 
         endDual.handleInput();
         inventoryShowerTwo.handleInput();//TODO
