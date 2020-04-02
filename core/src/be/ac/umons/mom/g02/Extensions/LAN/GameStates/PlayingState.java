@@ -135,7 +135,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         super.init();
         PlayingLANHelper.init(this);
-        Supervisor.getEvent().add(this, Events.MoneyChanged);
+        Supervisor.getEvent().add(this, Events.MoneyChanged, Events.PlanningChanged);
         if (! newParty && ! nm.isTheServer())
             ((SupervisorLAN)supervisor).oldGameLAN((Save)MasterOfMonsGame.getSaveToLoad(), this, gs);
 
@@ -155,9 +155,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             SupervisorLAN.getSupervisor().getRegale().push("InfoPuzzle");
         }
 
-        if (nm.isTheServer()) {
-            nm.sendMessageOnTCP("PLAN", SupervisorLAN.getPeople().getPlanning());
-        } else {
+        if (! nm.isTheServer()) {
             nm.sendMessageOnTCP("getItemsPos");
         }
         supervisor.init(player.getCharacteristics(), player);
@@ -438,6 +436,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
         } else if (notify.getEvents().equals(Events.MoneyChanged) && ((MoneyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
             nm.sendMessageOnTCP("Money", player.getCharacteristics().getMyMoney());
+        else if (nm.isTheServer() && notify.getEvents().equals(Events.PlanningChanged) && notify.bufferNotEmpty())
+            nm.sendMessageOnTCP("PLAN", SupervisorLAN.getPeople().getPlanning());
     }
 
     @Override

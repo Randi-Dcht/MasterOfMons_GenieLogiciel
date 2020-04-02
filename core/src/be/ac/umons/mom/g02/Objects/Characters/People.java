@@ -264,6 +264,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     private void createPlanning()
     {
         myPlanning = HyperPlanning.createSchedule(myCourse,Supervisor.getSupervisor().getTime().getDate());
+        Supervisor.getEvent().notify(new PlanningChanged(myPlanning));
     }
 
 
