@@ -17,7 +17,8 @@ public class Event implements Observable
      * This is a couple with a class associated to events
      */
     private HashMap<Events, List<Observer>> list;
-public int old =0,actu=0;
+
+
 
     /**
      * This constructor define the observable with events
@@ -40,7 +41,6 @@ public int old =0,actu=0;
             list.put(evt,new ArrayList<>());
         for(Observer ob : obs)
             list.get(evt).add(ob);
-        old++;
     }
 
 
@@ -61,7 +61,6 @@ public int old =0,actu=0;
     public synchronized void remove(Events evt, Observer obs)
     {
         list.get(evt).remove(obs);
-        old--;
     }
 
 
