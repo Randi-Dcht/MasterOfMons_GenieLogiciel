@@ -22,8 +22,12 @@ import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import org.graalvm.compiler.graph.NodeList;
+
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /***/
@@ -42,6 +46,10 @@ public class PlayingStateDual extends PlayingState
     protected Point objectSize;
     /***/
     protected InventoryShower inventoryShowerTwo;
+    /***/
+    protected boolean player1Life = true, player2Life = true;
+    /***/
+    protected List<Player> queing = new LinkedList<>();
 
 
     /**
@@ -124,6 +132,9 @@ public class PlayingStateDual extends PlayingState
             cam.position.y = MasterOfMonsGame.HEIGHT - MasterOfMonsGame.HEIGHT/2;
             cam.update();
         }
+
+        for (Player pp : queing)
+            lifePlayer(pp);
     }
 
 
@@ -138,8 +149,10 @@ public class PlayingStateDual extends PlayingState
 
         drawAfterMaps();
 
-        player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
-        playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        if (player1Life)
+            player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        if (player2Life)
+            playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
         for (int i=0;i<Math.min(25,pnjs.size());i++)
             pnjs.get(i).draw(sb, pnjs.get(i).getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnjs.get(i).getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
@@ -291,12 +304,28 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class) && supervisorDual.getDual().equals(TypeDual.DualPlayer))
-            finishDual();
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
+        {
+            if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+                finishDual();
+            else if (supervisorDual.getDual().equals(TypeDual.Survivor))
+                queuingToPlay((People)notify.getBuffer());
+        }
+        else if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
             deadMobile(null);
 
     }
+
+    protected void queuingToPlay(People people)
+    {
+        if (people.equals(player.getCharacteristics()))
+            player1Life = false;
+        else
+            player2Life = false;
+    }
+
+    protected void lifePlayer(Player player)
+    {}
 
     /***/
     public void finishDual()
