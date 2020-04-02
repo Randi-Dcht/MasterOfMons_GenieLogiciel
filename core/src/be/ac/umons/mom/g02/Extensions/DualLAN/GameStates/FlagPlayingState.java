@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingFlag;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WinMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
@@ -62,6 +63,11 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     public void PlaceFlag(Point... pt) {
         if (nm.isTheServer())
             super.PlaceFlag(pt);
+    }
+
+    @Override
+    public void finishDual() {
+        gsm.setState(WinMenu.class, true);
     }
 
     @Override

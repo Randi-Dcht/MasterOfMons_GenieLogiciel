@@ -1,7 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayCases;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WinMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
@@ -24,6 +24,8 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
      * The number of cases of each player (to show)
      */
     protected int cp1, cp2;
+
+    protected boolean changingAlreadyCalled = false;
 
     /**
      * @param gs The game's graphical settings
@@ -102,6 +104,13 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
     protected void pickUpAnObject() {
         nm.sendMessageOnTCP("IPU", ((MapObject) selectedOne).getCharacteristics());
         super.pickUpAnObject();
+    }
+
+    @Override
+    public void finishDual() {
+        if (! changingAlreadyCalled)
+            gsm.setState(WinMenu.class, true);
+        changingAlreadyCalled = true;
     }
 
     @Override

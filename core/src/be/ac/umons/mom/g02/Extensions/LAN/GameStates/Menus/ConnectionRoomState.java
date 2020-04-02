@@ -1,21 +1,10 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus;
 
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
-import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Objects.ServerInfo;
-import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
-import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
-import be.ac.umons.mom.g02.GameStates.LoadingState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.*;
-import be.ac.umons.mom.g02.Managers.ExtensionsManager;
-import be.ac.umons.mom.g02.MasterOfMonsGame;
-import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
 import java.net.InetAddress;
@@ -88,7 +77,7 @@ public class ConnectionRoomState extends MenuState {
                 new TextMenuItem(gs, GraphicalSettings.getStringFromId("servInfo")),
                 tbmi = new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("connect"), () ->  manualConnect(tbmi.getControl().getText()))
-        });
+        }, false);
     }
 
     /**

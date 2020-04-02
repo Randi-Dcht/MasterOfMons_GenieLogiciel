@@ -1,6 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 
-import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
@@ -11,7 +10,8 @@ import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
-import java.awt.Point;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,7 +34,7 @@ public class PlayCases extends PlayingStateDual
     /***/
     protected TextBox timerShow;
     /***/
-    protected double time = 90;
+    protected double time = 10;
 
 
     /**
