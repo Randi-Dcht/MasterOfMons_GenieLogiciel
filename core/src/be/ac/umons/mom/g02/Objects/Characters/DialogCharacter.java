@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -46,10 +47,6 @@ public class DialogCharacter
      */
     private String specificID = null;
     /**
-     * The before answer of the player
-     */
-    private String before="";
-    /**
      * This is an instance of the SuperviserNormally
      */
     private Supervisor supervisor;
@@ -57,6 +54,7 @@ public class DialogCharacter
      * The list of the actual underQuest of the player
      */
     private Quest[] listUnder;
+
 
     /**
      * This constructor define the dialog of the character
@@ -213,15 +211,20 @@ public class DialogCharacter
     {
             this.mobile = mobile;
 
+            if (answerID.equals("RandomItems"))
+                Supervisor.getPeople().pushObject(supervisor.getAllItems()[new Random().nextInt(supervisor.getAllItems().length)]);
+
             if (specificID != null)
                 idAnswer(answerID);
+
             else if (!listDialog.containsKey(answerID) || answerID.equals("ESC"))
                 quit();
+
             else if (check(getDialog(answerID)))
                 supervisor.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
+
             else
                 supervisor.getEvent().notify(new Dialog(getDialog(answerID)));
-            before = answerID;
     }
 
 
