@@ -224,7 +224,7 @@ public abstract class MenuState extends GameState {
             buttons.clear();
         }
         for (MenuItem mi : menuItems) {
-            if (mi instanceof ButtonMenuItem) {
+            if (mi.getClass().equals(ButtonMenuItem.class)) {
                 ButtonMenuItem bmi = (ButtonMenuItem)mi;
                 if (bmi.getDrawUnderPreviousOne()) {
                     ArrayList<Button> l = new ArrayList<>();

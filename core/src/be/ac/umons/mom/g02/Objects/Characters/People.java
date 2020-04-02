@@ -1,16 +1,6 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
-import be.ac.umons.mom.g02.Events.Notifications.AddFriend;
-import be.ac.umons.mom.g02.Events.Notifications.ChangeQuest;
-import be.ac.umons.mom.g02.Events.Notifications.DisplayMessage;
-import be.ac.umons.mom.g02.Events.Notifications.EnergyChanged;
-import be.ac.umons.mom.g02.Events.Notifications.EntryPlaces;
-import be.ac.umons.mom.g02.Events.Notifications.ExperienceChanged;
-import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
-import be.ac.umons.mom.g02.Events.Notifications.MoneyChanged;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
-import be.ac.umons.mom.g02.Events.Notifications.UpLevel;
+import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
@@ -377,16 +367,22 @@ public class People extends Character implements Serializable, Observer, FrameTi
         if(myObject.size() == difficulty.getManyItem())
             return false;
         myObject.add(object);
+        Supervisor.getEvent().notify(new InventoryChanged(this, object, InventoryChanged.Type.Added));
         return true;
     }
 
+    @Override
+    public boolean removeObject(Items object) {
+        Supervisor.getEvent().notify(new InventoryChanged(this, object, InventoryChanged.Type.Removed));
+        return super.removeObject(object);
+    }
 
     /**
      * This method check if the people can attack the other
      * @return boolean of can attack
      */
     @Override
-    public boolean canAttacker()
+    public boolean canAttack()
     {
         return energy>=10;
     }

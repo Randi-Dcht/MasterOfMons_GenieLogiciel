@@ -7,16 +7,16 @@ import be.ac.umons.mom.g02.Objects.Characters.Character;
  */
 public class EnergyChanged implements Notification {
 
-    private Character concernedOne;
+    private Character involvedOne;
     private Events evt;
     private double buffer;
 
     /**
-     * @param concernedOne The concerned character
+     * @param involvedOne The concerned character
      * @param buffer The new energy
      */
-    public EnergyChanged(Character concernedOne, double buffer) {
-        this.concernedOne = concernedOne;
+    public EnergyChanged(Character involvedOne, double buffer) {
+        this.involvedOne = involvedOne;
         evt = Events.EnergyChanged;
         this.buffer = buffer;
     }
@@ -35,8 +35,8 @@ public class EnergyChanged implements Notification {
     /**
      * @return The concerned character
      */
-    public Character getConcernedOne() {
-        return concernedOne;
+    public Character getInvolvedOne() {
+        return involvedOne;
     }
 
     /**

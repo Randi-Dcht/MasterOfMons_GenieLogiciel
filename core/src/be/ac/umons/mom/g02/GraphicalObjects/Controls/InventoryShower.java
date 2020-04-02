@@ -321,8 +321,8 @@ public class InventoryShower extends Control implements Observer {
      */
     @Override
     public void update(Notification notify) {
-        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty() && ((UseItem)notify).getBuffer().removeInBag()) {
-            inventory.remove(notify.getBuffer());
+        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty() && ((UseItem)notify).getBuffer().removeInBag() && selectedItem != null) {
+            Supervisor.getPeople().removeObject(selectedItem.getItem());
             selectedItem = null;
         }
     }

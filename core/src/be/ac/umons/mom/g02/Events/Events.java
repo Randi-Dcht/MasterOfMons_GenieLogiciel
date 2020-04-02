@@ -30,7 +30,8 @@ public enum Events
     EnergyChanged("EnergyChanged"),
     MoneyChanged("MoneyChanged"),
     Teleport("Teleport"),
-    PNJMoved("PNJMoved");
+    PNJMoved("PNJMoved"),
+    InventoryChanged("InventoryChanged");
 
 
     /**The name of the events*/

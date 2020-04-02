@@ -68,7 +68,7 @@ public class PlayingDualLANHelper {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class)) {
             nm.sendOnTCP("Death");
 //            PlayingDualLANHelper.goToPreviousMenu();
-        } else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(SupervisorMultiPlayer.getPeopleTwo())) {
+        } else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getInvolvedOne().equals(SupervisorMultiPlayer.getPeopleTwo())) {
             nm.sendMessageOnUDP("SPL", SupervisorMultiPlayer.getPeopleTwo().getActualLife());
         }
     }

@@ -96,6 +96,6 @@ public interface Attack
      * This method allows to say if the character can to attacker the other
      * @return boolean if can attack (true) else false
      */
-    public boolean canAttacker();
+    public boolean canAttack();
 
 }

@@ -115,7 +115,7 @@ public class Mobile extends Character implements Serializable, FrameTime
      * @return a boolean
      */
     @Override
-    public boolean canAttacker()
+    public boolean canAttack()
     {
         return true;
     }

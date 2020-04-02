@@ -8,7 +8,6 @@ import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
-import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -19,6 +18,7 @@ import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Input;
@@ -34,7 +34,7 @@ public class PlayingLANHelper {
     public static boolean pauseSent;
 
     public static void init(Observer observer) {
-        Supervisor.getEvent().add(observer, Events.Dead, Events.UpLevel, Events.LifeChanged, Events.ExperienceChanged, Events.EnergyChanged, Events.PNJMoved, Events.Attack);
+        Supervisor.getEvent().add(observer, Events.Dead, Events.UpLevel, Events.LifeChanged, Events.ExperienceChanged, Events.EnergyChanged, Events.InventoryChanged, Events.PNJMoved, Events.Attack);
     }
 
     /**
@@ -111,7 +111,7 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("hitPNJ", (objects) -> {
             if (ps.getIdCharacterMap() != null) {
                 Character c = ps.getIdCharacterMap().get(objects[0]);
-                if (c != null)
+                if (c != null && (double) objects[1] > 0) // Check > to not give the items when he dies (death is took into account lower)
                     c.getCharacteristics().setActualLife((double) objects[1]);
             }
         });
@@ -162,7 +162,8 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("PNJMove", objects -> {
             String pnj = (String) objects[0];
             Point position = (Point) objects[1];
-            ps.getIdCharacterMap().get(pnj).setMapPos(position);
+            if (ps.getIdCharacterMap().containsKey(pnj))
+                ps.getIdCharacterMap().get(pnj).setMapPos(position);
         });
         nm.whenMessageReceivedDo("PA", objects -> {
             for (ArrayList<MovingPNJ> mvl : Supervisor.getSupervisor().getListMoving().values())
@@ -177,6 +178,14 @@ public class PlayingLANHelper {
             Supervisor.getSupervisor().setVictimPlayer((People)ps.getPlayer().getCharacteristics());
         });
         nm.whenMessageReceivedDo("PO", (objects) -> ps.getSecondPlayer().setOrientation((Orientation) objects[0]));
+        nm.whenMessageReceivedDo("IC", objects -> {
+            Items it = (Items)objects[0];
+            InventoryChanged.Type type = (InventoryChanged.Type)objects[1];
+            if (type == InventoryChanged.Type.Added)
+                ((People)ps.getSecondPlayer().getCharacteristics()).pushObject(it);
+            else if (type == InventoryChanged.Type.Removed)
+                ps.getSecondPlayer().getCharacteristics().removeObject(it);
+        });
     }
 
     public static void handleInput() {
@@ -208,17 +217,19 @@ public class PlayingLANHelper {
             ps.getIdCharacterMap().remove(m.getName());
         } else if (notify.getEvents().equals(Events.UpLevel) && notify.getBuffer().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("LVLUP", Supervisor.getPeople().getLevel());
-        else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
+        else if (notify.getEvents().equals(Events.LifeChanged) && ((LifeChanged)notify).getInvolvedOne().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("PL", Supervisor.getPeople().getActualLife());
-        else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
+        else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getInvolvedOne().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("PXP", Supervisor.getPeople().getExperience());
-        else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getConcernedOne().equals(Supervisor.getPeople()))
+        else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getInvolvedOne().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("PE", Supervisor.getPeople().getEnergy());
         else if (notify.getEvents().equals(Events.PNJMoved) && notify.bufferNotEmpty()) {
             PNJMoved notif = (PNJMoved)notify;
             nm.sendMessageOnUDP("PNJMove", notif.getConcernedOne().getName(), notif.getBuffer());
         } else if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
             nm.sendMessageOnUDP("PA"); // Player attack
+        else if (notify.getEvents().equals(Events.InventoryChanged) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
+            nm.sendMessageOnTCP("IC", ((InventoryChanged)notify).getItem(), ((InventoryChanged)notify).getType()); // Player attack
     }
 
     public static void getFocus() {

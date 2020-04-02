@@ -17,7 +17,6 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.GraphicalObjects.QuestShower;
 import be.ac.umons.mom.g02.Objects.Characters.*;
 import be.ac.umons.mom.g02.Objects.Characters.Character;
@@ -30,7 +29,6 @@ import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -751,7 +749,7 @@ public  abstract class Supervisor implements Observer
         {
             ((People)attacker).reduceEnergizing(State.attack);
         }
-        if(victim.dodge() < 0.6 && attacker.canAttacker())
+        if(victim.dodge() < 0.6 && attacker.canAttack())
         {
             if(attacker.howGun())
             {

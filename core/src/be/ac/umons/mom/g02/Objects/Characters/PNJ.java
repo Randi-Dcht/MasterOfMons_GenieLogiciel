@@ -161,9 +161,9 @@ public class PNJ implements Attack
      * @return boolean if can attack (true) else false
      */
     @Override
-    public boolean canAttacker()
+    public boolean canAttack()
     {
-        return logic.canAttacker();
+        return logic.canAttack();
     }
 
 

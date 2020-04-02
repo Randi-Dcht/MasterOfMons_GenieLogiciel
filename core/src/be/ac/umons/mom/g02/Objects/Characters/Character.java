@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Enums.Actions;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
+import be.ac.umons.mom.g02.Events.Notifications.InventoryChanged;
 import be.ac.umons.mom.g02.Events.Notifications.LifeChanged;
 import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
@@ -307,7 +308,7 @@ public abstract class Character implements Attack, Serializable
     {
         if (gun == null)
             return myObject;
-        List<Items> list =myObject;
+        List<Items> list = myObject;
         list.add((Items)gun);
         return list;
     }

@@ -129,7 +129,8 @@ public abstract class SupervisorMultiPlayer extends Supervisor
 
             if (mb.equals(memoryMobile))
                 memoryMobile = null;
-            deathToIgnore.remove(mb);
+            while (deathToIgnore.size() > 5)
+                deathToIgnore.remove(0); // Remove the old one (now useless)
         }
         else {
             super.deadMobile(mb);
