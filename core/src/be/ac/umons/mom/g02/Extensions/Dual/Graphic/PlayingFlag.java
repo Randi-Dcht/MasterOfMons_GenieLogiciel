@@ -12,7 +12,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 
-/***/
+/**
+ * This class define the playingState for the catch the flag on the dual extension
+ */
 public class PlayingFlag extends PlayingStateDual
 {
     /**

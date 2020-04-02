@@ -4,17 +4,17 @@ import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Notifications.Shop;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Quests.Quest;
+import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -53,6 +53,10 @@ public class DialogCharacter
      * This is an instance of the SuperviserNormally
      */
     private Supervisor supervisor;
+    /**
+     * The list of the actual underQuest of the player
+     */
+    private Quest[] listUnder;
 
     /**
      * This constructor define the dialog of the character
@@ -62,7 +66,7 @@ public class DialogCharacter
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
-        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP","Friendly");
+        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP","Friendly","UNDERQUEST");
 
     }
 
@@ -156,10 +160,16 @@ public class DialogCharacter
             for (Items it : mobile.getInventory())
                 list.add(it.getIdItems());
         }
-        if (id.equals("ITEMSUSE"))
+        else if (id.equals("ITEMSUSE"))
         {
             for (Items it : supervisor.getAllItems())
                 list.add(it.getIdItems());
+        }
+        else if (id.equals("UNDERQUEST"))
+        {
+            listUnder = Supervisor.getPeople().getQuest().getSubQuests();
+            for (Quest udq : listUnder)
+                list.add(((UnderQuest)udq).getName(false));
         }
         else if (id.equals("MAPS"))
             list.add(supervisor.getPeople().getMaps().getInformation());
@@ -228,7 +238,8 @@ public class DialogCharacter
                 supervisor.getPeople().pushObject(it);
             quit();
         }
-        if (specificID.equals("ITEMSUSE"))
+
+        else if (specificID.equals("ITEMSUSE"))
         {
             Items it = getItems(Arrays.asList(supervisor.getAllItems()),answer);
             if (it != null)
@@ -237,10 +248,21 @@ public class DialogCharacter
                 quit();
         }
 
-        if (specificID.equals("SHOP"))
+        else if (specificID.equals("UNDERQUEST"))
+        {
+            String buff= "ESC";
+            for (Quest q : listUnder)
+            {
+                if (((UnderQuest)q).getName(false).equals(answer))
+                    buff = ((UnderQuest)q).explainGoal();
+            }
+            Supervisor.getEvent().notify(new Dialog(buff,"ESC"));
+        }
+
+        else if (specificID.equals("SHOP"))
             supervisor.getEvent().notify(new Shop());
 
-        if (answer.equals("Friendly"))
+        else if (answer.equals("Friendly"))
         {
             Supervisor.getPeople().addFriend(mobile);
             quit();

@@ -170,6 +170,18 @@ public abstract class UnderQuest implements Quest,Serializable
 
 
     /**
+     * Doesn't translate the name of the underQuest
+     * @param translate if the text must be translate
+     */
+    public String getName(boolean translate)
+    {
+        if (translate)
+            return getName();
+        return name;
+    }
+
+
+    /**
      * This method return the number of underQuest of this Quest
      * @return number of quest
      */
