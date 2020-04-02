@@ -48,8 +48,6 @@ public class PlayingStateDual extends PlayingState
     protected InventoryShower inventoryShowerTwo;
     /***/
     protected boolean player1Life = true, player2Life = true;
-    /***/
-    protected List<Player> queing = new LinkedList<>();
 
 
     /**
@@ -133,8 +131,13 @@ public class PlayingStateDual extends PlayingState
             cam.update();
         }
 
-        for (Player pp : queing)
-            lifePlayer(pp);
+        if (supervisorDual.getDual().equals(TypeDual.Survivor))
+        {
+            if (!player1Life)
+                lifePlayer(player,dt);
+            if (!player2Life)
+                lifePlayer(playerTwo,dt);
+        }
     }
 
 
@@ -324,18 +327,33 @@ public class PlayingStateDual extends PlayingState
             player2Life = false;
     }
 
-    protected void lifePlayer(Player player)
-    {}
+    protected void lifePlayer(Player player, double dt)
+    {
+        People pp = (People)player.getCharacteristics();
+        pp.setActualLife(pp.getActualLife()+dt*2);
+
+        if (pp.getActualLife() >= pp.lifeMax()*0.9)
+            whatPeople(player);
+
+    }
+
+    protected void whatPeople(Player player)
+    {
+        if (player.equals(this.player))
+            player1Life = true;
+        else
+            player2Life = true;
+    }
 
     /***/
-    public void finishDual()
+    protected void finishDual()
     {
         gsm.removeAllStateAndAdd(WinMenu.class);
     }
 
 
     /***/
-    public void deadMobile(Mobile mb)
+    protected void deadMobile(Mobile mb)
     {
         pnjs.removeIf(chr -> chr.getCharacteristics().equals(mb));
     }
