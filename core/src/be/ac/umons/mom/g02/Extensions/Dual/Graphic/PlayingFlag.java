@@ -5,11 +5,13 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Flag;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.graphics.Color;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -96,6 +98,12 @@ public class PlayingFlag extends PlayingStateDual
             if (itm.getClass().equals(Flag.class) && ((Flag)itm).getMyPeople().equals(player.getCharacteristics())
                     &&SupervisorMultiPlayer.getPeopleTwo().pushObject(itm))
                 pickUpAnObject();
+        }
+        else if (gim.isKey("useAnObject", KeyStatus.Pressed))
+        {
+            InventoryItem ii = inventoryShower.getSelectedItem();
+            if (ii != null)//TODO base
+                Supervisor.getPeople().useObject(ii.getItem());
         }
         else
             super.handleInput();

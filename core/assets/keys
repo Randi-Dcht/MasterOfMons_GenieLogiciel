@@ -18,6 +18,7 @@ movingLeftwardSecond=45
 movingRightwardSecond=32
 pickUpAnObjectTwo=29
 attackTwo=51
+useAnObjectTwo=35
 debugLevelUp=44
 debugReinitiatePlayer=46
 debugGetObject=43
