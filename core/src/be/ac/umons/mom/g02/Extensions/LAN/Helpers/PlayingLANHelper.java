@@ -257,7 +257,7 @@ public class PlayingLANHelper {
         if (! nm.isTheServer())
             return new LinkedList<>();
         Maps map = Supervisor.getSupervisor().getMaps(mapName);
-        List<Character> pnjs = new ArrayList<>();
+        List<Character> pnjs = new LinkedList<>();
         for (Mobile mob : Supervisor.getSupervisor().getMobile(map)) {
             if (ps.getIdCharacterMap().containsKey(mob.getName()))
                 pnjs.add(ps.getIdCharacterMap().get(mob.getName()));

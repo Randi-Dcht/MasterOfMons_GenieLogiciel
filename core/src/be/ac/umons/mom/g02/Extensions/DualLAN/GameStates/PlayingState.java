@@ -1,5 +1,9 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
+import be.ac.umons.mom.g02.Enums.Actions;
+import be.ac.umons.mom.g02.Enums.Bloc;
+import be.ac.umons.mom.g02.Enums.MobileType;
+import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
@@ -11,12 +15,14 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.awt.*;
 import java.net.SocketException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class PlayingState extends PlayingStateDual implements NetworkReady {
@@ -36,7 +42,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
 
     @Override
     public void init() {
-        idCharacterMap = new HashMap<>();
+        idCharacterMap = new LinkedHashMap<>();
 
         Supervisor.getEvent().add(this, Events.LifeChanged);
 
@@ -63,6 +69,8 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
             pnjs.clear();
             nm.sendMessageOnTCP("getZPNJsPos", gmm.getActualMapName());
         }
+
+        nm.processMessagesNotRan();
     }
 
     @Override
@@ -108,8 +116,22 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
      * @return The graphical object associated with the character
      */
     public Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y) {
+        return onCharacterDetected(name, mob, x, y, pnjs.size());
+    }
+
+    /**
+     * Executed when the second player sends a character characteristics. It adds the character to the map.
+     * @param name The character's name
+     * @param mob The character's characteristics
+     * @param x The horizontal position on the map (pixel)
+     * @param y The vertical position on the map (pixel)
+     * @return The graphical object associated with the character
+     */
+    public Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y, int posInPNJs) {
         Character c = new Character(gs, mob);
-        pnjs.add(c);
+        for (int i = pnjs.size(); i <= posInPNJs; i++) // We are sure that another PNJ will take the place of the this one (Not null because of the draw)
+            pnjs.add(c);
+        pnjs.set(posInPNJs, c);
         idCharacterMap.put(name, c);
         c.setMapPos(new Point(x, y));
         c.setMapWidth(mapWidth * tileWidth);
@@ -139,4 +161,6 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     public HashMap<String, Character> getIdCharacterMap() {
         return idCharacterMap;
     }
+
+
 }

@@ -43,6 +43,6 @@ public class WaitMenuState extends MenuState {
      * Set all the necessary action in the NetworkManager
      */
     protected void setNetworkManagerRunnables() {
-        nm.whenMessageReceivedDo("TC", (objects) -> PlayingDualLANHelper.onTypeSelected((TypeDual) objects[0]));
+        nm.whenMessageReceivedDo("DTS", (objects) -> PlayingDualLANHelper.onTypeSelected((TypeDual) objects[0]));
     }
 }

@@ -28,7 +28,7 @@ public class DisconnectedMenuState extends be.ac.umons.mom.g02.Extensions.LAN.Ga
         super.init();
         nm.whenMessageReceivedDo("Loaded", (objects) -> {
             gsm.removeAllStateUntil(this);
-            nm.sendMessageOnTCP("TC", SupervisorDual.getSupervisorDual().getDual());
+            nm.sendMessageOnTCP("DTS", SupervisorDual.getSupervisorDual().getDual());
             if (secondPlayerPosition != null)
                 nm.sendMessageOnTCP("SPP", secondPlayerPosition);
         });

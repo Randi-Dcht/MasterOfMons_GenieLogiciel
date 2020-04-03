@@ -23,13 +23,14 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
-import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.net.SocketException;
 
 public class PlayingDualLANHelper {
+
+
 
     public static void setNetworkManagerRunnable(NetworkReady ps) {
         try {
@@ -47,16 +48,16 @@ public class PlayingDualLANHelper {
             nm.whenMessageReceivedDo("ZPNJ", (objects) ->
             {
                 Character c;
-                ZombiePNJ zpnj = new ZombiePNJ((String)objects[0], (MobileType) objects[1], (Maps) objects[2], (int) objects[3]);
-                zpnj.initialisation(c = ps.onCharacterDetected((String) objects[0], zpnj, (int) objects[4], (int) objects[5]),
+                ZombiePNJ zpnj = new ZombiePNJ((String)objects[1], (MobileType) objects[2], (Maps) objects[3], (int) objects[4]);
+                zpnj.initialisation(c = ps.onCharacterDetected((String) objects[1], zpnj, (int) objects[5], (int) objects[6], (int) objects[0]),
                         ps.getPlayer());
                 Supervisor.getSupervisor().addMobile(zpnj, Supervisor.getSupervisor().getMaps(GameMapManager.getInstance().getActualMapName()), c);
             });
             nm.whenMessageReceivedDo("getZPNJsPos", (objects) -> {
-                for (Mobile mob : Supervisor.getSupervisor().getMobile(Supervisor.getSupervisor().getMaps((String) objects[0]))) {
-                    Character c = ps.getIdCharacterMap().get(mob.getName());
-                    if (c != null)
-                        nm.sendMessageOnTCP("ZPNJ", mob.getName(), mob.getMobileType(), mob.getMaps(), mob.getLevel(), c.getPosX(), c.getPosY());
+                for (int i = 0; i < ps.getPNJs().size(); i++) { // The order of the list is important
+                    Character c = ps.getPNJs().get(i);
+                    Mobile mob = (Mobile) c.getCharacteristics();
+                    nm.sendMessageOnTCP("ZPNJ", i, mob.getName(), mob.getMobileType(), mob.getMaps(), mob.getLevel(), c.getPosX(), c.getPosY());
                 }
             });
         } catch (SocketException e) {

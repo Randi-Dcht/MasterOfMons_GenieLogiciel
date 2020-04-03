@@ -1,8 +1,8 @@
 package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.*;
+import be.ac.umons.mom.g02.Events.Notifications.MoneyChanged;
+import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
@@ -18,7 +18,6 @@ import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
-import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -32,8 +31,10 @@ import com.badlogic.gdx.utils.Array;
 
 import java.awt.*;
 import java.net.SocketException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The playing state. This state suppose that a connection has already been established.
@@ -161,6 +162,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         supervisor.init(player.getCharacteristics(), player);
         supervisor.init(playerTwo.getCharacteristics(), playerTwo);
 
+        nm.processMessagesNotRan();
     }
 
     @Override

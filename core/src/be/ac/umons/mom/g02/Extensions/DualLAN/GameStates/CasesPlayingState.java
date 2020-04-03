@@ -128,4 +128,9 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
     public HashMap<String, Character> getIdCharacterMap() {
         return null; // NO PNJ IN THIS MODE
     }
+
+    @Override
+    public Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y, int posInList) {
+        return null; // NO PNJ IN THIS MODE
+    }
 }
