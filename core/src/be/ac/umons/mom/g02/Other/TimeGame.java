@@ -185,9 +185,13 @@ public class TimeGame implements Observer, Serializable
      * This method allows to check if two object TimeGame is equals
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
         TimeGame schedule = (TimeGame) o;
         return NBmonth == schedule.NBmonth &&
                 hour == schedule.hour &&
@@ -222,6 +226,7 @@ public class TimeGame implements Observer, Serializable
      * @param addDay is the day to add
      * @param addHour is the hour to add
      * @param addMin is the minute to add
+     * @param notif is the notification must be send
      */
     public void refreshTime(int addDay, int addHour, int addMin,boolean notif)
     {
@@ -237,17 +242,14 @@ public class TimeGame implements Observer, Serializable
     }
 
 
+    /**
+     * This method to call when the people pass an period in the game
+     * @param addDay is the day to add
+     * @param addHour is the hour to add
+     * @param addMin is the minute to add
+     */
     public void refreshTime(int addDay, int addHour, int addMin)
     {
         refreshTime(addDay,addHour,addMin,true);
-    }
-
-
-    /**
-     * This methods is only for the test of JunitTest
-     */
-    int[] getValueTest()
-    {
-        return new int[]{min,hour,day,year};
     }
 }

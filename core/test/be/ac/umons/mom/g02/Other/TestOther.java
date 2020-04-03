@@ -23,7 +23,6 @@ public class TestOther
         tg.update(new ChangeQuest());
         for(int i = 0; i <= 60; i++)
             tg.update(new ChangeQuest());
-        System.out.println(tg.getValueTest()[1]);//TODO
     }
 
 
