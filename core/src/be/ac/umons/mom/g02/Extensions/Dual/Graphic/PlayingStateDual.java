@@ -33,11 +33,11 @@ public class PlayingStateDual extends PlayingState
     /**
      * The constance of the camera on the axe X
      */
-    protected static int cam_X_pos = 0;
+    protected static int cam_X_pos = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
     /**
      * The constance of the camera on the axe Y
      */
-    protected static int cam_Y_pos = 0;
+    protected static int cam_Y_pos = MasterOfMonsGame.HEIGHT - MasterOfMonsGame.HEIGHT/2;
     /**
      * The second life bar for the second player
      */
@@ -134,6 +134,9 @@ public class PlayingStateDual extends PlayingState
     @Override
     protected void translateCamera(int x, int y)
     {
+        cam.position.x = x;
+        cam.position.y = y;
+        cam.update();
     }
 
 
@@ -148,12 +151,8 @@ public class PlayingStateDual extends PlayingState
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
 
-        if (cam.position.x != MasterOfMonsGame.WIDTH/2+MasterOfMonsGame.WIDTH/4 || cam.position.y != MasterOfMonsGame.HEIGHT/2-MasterOfMonsGame.HEIGHT/4)
-        {
-            cam.position.x = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
-            cam.position.y = MasterOfMonsGame.HEIGHT - MasterOfMonsGame.HEIGHT/2;
-            cam.update();
-        }
+        if (cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos)
+            translateCamera(cam_X_pos,cam_Y_pos);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
