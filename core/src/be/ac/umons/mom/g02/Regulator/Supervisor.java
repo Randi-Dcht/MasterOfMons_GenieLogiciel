@@ -400,7 +400,8 @@ public  abstract class Supervisor implements Observer
      */
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
-        placePosition = new PositionOnMaps();
+        if (mustPlaceItem)
+            placePosition = new PositionOnMaps();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);
         for (NameDialog name : NameDialog.values())

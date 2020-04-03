@@ -19,6 +19,8 @@ public class TestQuest
     @Test
     void TestnextQuest()
     {
+        SuperviserNormally.initNormallyGame();
+        Supervisor.getSupervisor().setMustPlaceItem(false);
         Supervisor.getSupervisor().newParty("Test", Type.beefy, Gender.Men, Difficulty.Easy);
         People p = SuperviserNormally.getPeople();
         MasterQuest mq = new MyFirstYear(p,null,Difficulty.Easy);
@@ -35,6 +37,8 @@ public class TestQuest
     @Test
     void TestNextWithLevel()
     {
+        SuperviserNormally.initNormallyGame();
+        Supervisor.getSupervisor().setMustPlaceItem(false);
         Supervisor.getSupervisor().newParty("Test",Type.beefy,Gender.Men,Difficulty.Easy);
         People p = SuperviserNormally.getPeople();
         People pTest = new People("Tesst", Type.normal, Gender.Men ,Difficulty.Easy);

@@ -39,6 +39,7 @@ public class TestEvents
     {
         SuperviserNormally.initNormallyGame();
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
+        sp.setMustPlaceItem(false);
         assertNotNull(Supervisor.getEvent(),"the event doesn't create");
         sp.newParty("Test", Type.beefy,Gender.Men,Difficulty.Easy); /*doesn't test here the saving of graphic so gs == null*/
         assertNotNull(Supervisor.getPeople(),"check if the people instance is create");
@@ -68,6 +69,7 @@ public class TestEvents
     public void checkNotification()
     {
         SuperviserNormally.initNormallyGame();
+        Supervisor.getSupervisor().setMustPlaceItem(false);
         SuperviserNormally.getSupervisor().newParty("TestNotif",Type.athletic,Gender.Men,Difficulty.Easy);
         Date oldDate = Supervisor.getSupervisor().getTime().getDate();
         Supervisor.getEvent().notify(new ChangeQuest());
