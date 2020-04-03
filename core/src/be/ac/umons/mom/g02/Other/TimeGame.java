@@ -223,17 +223,23 @@ public class TimeGame implements Observer, Serializable
      * @param addHour is the hour to add
      * @param addMin is the minute to add
      */
-    public void refreshTime(int addDay, int addHour, int addMin)
+    public void refreshTime(int addDay, int addHour, int addMin,boolean notif)
     {
         int memM,memH;
         min  = (memM = min + addMin)%60;
         hour = (memH = hour +(memM/60)+addHour)%24;
         day  = (day+memH/24+addDay)%years[NByear][NBmonth];
 
-        if(addHour != 0) //TODO
+        if(addHour != 0 && notif) //TODO
             Supervisor.getEvent().notify(new ChangeHour());
-        if(addDay != 0) //TODO
+        if(addDay != 0 && notif) //TODO
             Supervisor.getEvent().notify(new ChangeDay());
+    }
+
+
+    public void refreshTime(int addDay, int addHour, int addMin)
+    {
+        refreshTime(addDay,addHour,addMin,true);
     }
 
 

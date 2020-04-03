@@ -34,7 +34,7 @@ public class TestOther
         Supervisor.getSupervisor().setMustPlaceItem(false);
         Supervisor.getSupervisor().newParty("Test", Type.athletic, Gender.Men, Difficulty.Easy);
         TimeGame time = new TimeGame((new Date(15,1,2020,9,15)));
-        time.refreshTime(1,5,46);
+        time.refreshTime(1,5,46,false);
         assertEquals(new Date(16,1,2020,15,1),time.getDate(),"Check if the time refresh push the good time");
     }
 
