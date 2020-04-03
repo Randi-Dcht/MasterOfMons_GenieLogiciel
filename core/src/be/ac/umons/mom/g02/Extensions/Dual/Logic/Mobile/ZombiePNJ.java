@@ -59,7 +59,7 @@ public class ZombiePNJ extends Mobile implements Observer
      */
     public ZombiePNJ(MobileType type, Maps maps)
     {
-        super("MovingPNJ",Bloc.BA1,type,Actions.Attack, NameDialog.Move);
+        super(Bloc.BA1,type,Actions.Attack, NameDialog.Move);
         setMaps(maps);
     }
 
