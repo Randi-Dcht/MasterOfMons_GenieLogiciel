@@ -137,7 +137,6 @@ public class DialogCharacter
         for (String str : list)
         {
             if (listID.contains(str) && !str.equals("Friendly") && !str.equals("SHOP"))
-
                 newList.addAll(replaceId(str));
             else
                 newList.add(str);
@@ -170,11 +169,11 @@ public class DialogCharacter
                 list.add(((UnderQuest)udq).getName(false));
         }
         else if (id.equals("MAPS"))
-            list.add(supervisor.getPeople().getMaps().getInformation());
+            list.add(Supervisor.getPeople().getMaps().getInformation());
         else if (id.equals("PLACE"))
-            list.add("ESC");
+            list.add(Supervisor.getPeople().getPlace().getIdName());
         else if (id.equals("QUEST") || id.equals("RANDOM"))
-            list.add(supervisor.getPeople().getQuest().question());
+            list.add(Supervisor.getPeople().getQuest().question());
         else if (id.equals("NEXTLESSON") && supervisor.getActualCourse() != null)
             list.add(supervisor.getActualCourse().getLesson().location().getInformation());
         else
