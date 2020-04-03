@@ -131,6 +131,11 @@ public class PlayingStateDual extends PlayingState
     }
 
 
+    /**
+     * This methods allows to move the camera
+     * @param x is translate on X
+     * @param y is translate on Y
+     */
     @Override
     protected void translateCamera(int x, int y)
     {
@@ -151,8 +156,8 @@ public class PlayingStateDual extends PlayingState
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
 
-        if (cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos)
-            translateCamera(cam_X_pos,cam_Y_pos);
+        //if (cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos)
+        //    translateCamera(cam_X_pos,cam_Y_pos);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
