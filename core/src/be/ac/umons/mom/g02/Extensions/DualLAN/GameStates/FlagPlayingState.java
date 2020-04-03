@@ -114,4 +114,9 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         super.getFocus();
         PlayingDualLANHelper.getFocus();
     }
+
+    @Override
+    public Character onCharacterDetected(String name, be.ac.umons.mom.g02.Objects.Characters.Character mob, int x, int y, int posInList) {
+        return null; // No PNJ on this map
+    }
 }

@@ -37,7 +37,7 @@ public class DualChooseMenu extends be.ac.umons.mom.g02.Extensions.Dual.Graphic.
 
     @Override
     protected void checkChoose(TypeDual what) {
-        nm.sendMessageOnTCP("TC", what);
+        nm.sendMessageOnTCP("DTS", what);
         PlayingDualLANHelper.onTypeSelected(what);
     }
 

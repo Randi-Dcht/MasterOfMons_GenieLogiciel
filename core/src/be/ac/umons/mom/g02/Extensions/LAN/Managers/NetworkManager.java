@@ -161,6 +161,8 @@ public class NetworkManager {
      */
     protected HashMap<String, Runnable> runnableSendMap;
 
+    protected Stack<String> messagesNotRan;
+
     /**
      * @throws SocketException If the port used (32516) is already used
      */
@@ -178,6 +180,8 @@ public class NetworkManager {
         }
         toSendOnTCP = new Stack<>();
         toSendOnUDP = new Stack<>();
+        messagesNotRan = new Stack<>();
+        whenMessageReceivedDo("TC", (objects) -> Gdx.app.log("NetworkManager", "Test connection received : Possible unstable connection !"));
         msSinceLastMessage = 1;
         whenMessageReceivedDo("MOMServer", (objects) -> {
             InetAddress serverAddress = null;
@@ -585,6 +589,15 @@ public class NetworkManager {
      * @param received The received message
      */
     protected void processMessage(String received) {
+        processMessage(received, false);
+    }
+
+    /**
+     * Process the received message and execute the necessary actions.
+     * @param received The received message
+     * @param again If it's the second time this message is processed
+     */
+    protected void processMessage(String received, boolean again) {
         if (received == null) {
             Gdx.app.error("NetworkManager", "Disconnected from distant server !");
             onDisconnected();
@@ -603,9 +616,22 @@ public class NetworkManager {
             } catch (IOException | ClassNotFoundException e) {
                 Gdx.app.error("NetworkManager", String.format("Couldn't read the message : %s !", received), e);
             }
+        } else if (! again) {
+            if (messagesNotRan.size() > 100)
+                messagesNotRan.pop();
+            messagesNotRan.add(received);
         }
         if (! received.equals(""))
             msSinceLastMessage = 0;
+    }
+
+    /**
+     * Process again all the messages that wasn't ran.
+     * CAUTION : After that, they can't be ran again.
+     */
+    public void processMessagesNotRan() {
+        while (messagesNotRan.size() > 0)
+            processMessage(messagesNotRan.pop(), true);
     }
 
     /**

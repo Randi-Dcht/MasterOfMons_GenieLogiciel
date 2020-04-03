@@ -288,7 +288,7 @@ public class PlayingState extends GameState implements Observer {
 
     protected List<Character> getPNJsOnMap(String mapName) {
         Maps map = supervisor.getMaps(mapName);
-        List<Character> pnjs = new ArrayList<>();
+        List<Character> pnjs = new LinkedList<>();
         supervisor.init(player.getCharacteristics(), player);
         for (Mobile mob : supervisor.getMobile(map)) {
             Character c = new Character(gs, mob);
@@ -907,5 +907,9 @@ public class PlayingState extends GameState implements Observer {
 
     public TimeShower getTimeShower() {
         return timeShower;
+    }
+
+    public List<Character> getPNJs() {
+        return pnjs;
     }
 }
