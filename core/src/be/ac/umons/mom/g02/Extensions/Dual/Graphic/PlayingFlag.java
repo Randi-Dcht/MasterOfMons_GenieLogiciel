@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Flag;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
@@ -90,7 +91,6 @@ public class PlayingFlag extends PlayingStateDual
             if (itm.getClass().equals(Flag.class) && ((Flag)itm).getMyPeople().equals(playerTwo.getCharacteristics())
                     && SupervisorMultiPlayer.getPeopleTwo().pushObject(itm))
                 pickUpAnObject();
-
         }
         else if (gim.isKey("pickUpAnObject", KeyStatus.Pressed) && player2Life && !(selectedOne instanceof Character) && selectedOne != null)
         {
@@ -103,7 +103,23 @@ public class PlayingFlag extends PlayingStateDual
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)//TODO base
-                Supervisor.getPeople().useObject(ii.getItem());
+               {
+                   MapObject obj;
+                   Supervisor.getPeople().removeObject(ii.getItem());
+                   mapObjects.add(obj=new MapObject(gs,ii.getItem()));
+                   obj.setMapPos(player.getMapPos());obj.setMap(supervisorDual.getDual().getStartMaps().getMaps());
+               }
+        }
+        else if (gim.isKey("useAnObjectTwo", KeyStatus.Pressed))
+        {
+            InventoryItem ii = inventoryShower.getSelectedItem();
+            if (ii != null)//TODO base
+            {
+                MapObject obj;
+                SupervisorDual.getPeopleTwo().removeObject(ii.getItem());
+                mapObjects.add(obj=new MapObject(gs,ii.getItem()));
+                obj.setMapPos(playerTwo.getMapPos());obj.setMap(supervisorDual.getDual().getStartMaps().getMaps());
+            }
         }
         else
             super.handleInput();
