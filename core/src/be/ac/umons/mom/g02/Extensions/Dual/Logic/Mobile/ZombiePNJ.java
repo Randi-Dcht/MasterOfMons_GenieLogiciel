@@ -62,6 +62,8 @@ public class ZombiePNJ extends Mobile implements Observer
         super(Bloc.BA1,type,Actions.Attack, NameDialog.Move);
         setMaps(maps);
     }
+
+
     /**
      * This constructor define the moving PNJ in the maps
      * @param maps is the maps of this pnj

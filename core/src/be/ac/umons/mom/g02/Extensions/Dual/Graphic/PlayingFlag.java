@@ -1,7 +1,12 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic;
 
+import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Flag;
+import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
@@ -72,6 +77,28 @@ public class PlayingFlag extends PlayingStateDual
     {
         baseOne.draw((int)cam.position.x,(int)cam.position.y);
         baseTwo.draw((int)cam.position.x,(int)cam.position.y);
+    }
+
+    @Override
+    public void handleInput()
+    {
+        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && player2Life && !(selectedOne instanceof Character) && selectedOne != null)
+        {
+            Items itm = ((MapObject)selectedOne).getItem();
+            if (itm.getClass().equals(Flag.class) && ((Flag)itm).getMyPeople().equals(playerTwo.getCharacteristics())
+                    && SupervisorMultiPlayer.getPeopleTwo().pushObject(itm))
+                pickUpAnObject();
+
+        }
+        else if (gim.isKey("pickUpAnObject", KeyStatus.Pressed) && player2Life && !(selectedOne instanceof Character) && selectedOne != null)
+        {
+            Items itm = ((MapObject)selectedOne).getItem();
+            if (itm.getClass().equals(Flag.class) && ((Flag)itm).getMyPeople().equals(player.getCharacteristics())
+                    &&SupervisorMultiPlayer.getPeopleTwo().pushObject(itm))
+                pickUpAnObject();
+        }
+        else
+            super.handleInput();
     }
 
 

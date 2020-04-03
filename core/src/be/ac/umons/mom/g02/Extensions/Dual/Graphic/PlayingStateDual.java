@@ -246,7 +246,7 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void handleInput()
     {
-        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && player2Life)
+        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && player2Life && selectedOne != null)
         {
             if (selectedOne instanceof Character)
                 return;
