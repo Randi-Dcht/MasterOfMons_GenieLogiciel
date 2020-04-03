@@ -1,19 +1,21 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.NameDialog;
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Dialog;
 import be.ac.umons.mom.g02.Events.Notifications.Shop;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.Items;
+import be.ac.umons.mom.g02.Quests.Quest;
+import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -45,13 +47,14 @@ public class DialogCharacter
      */
     private String specificID = null;
     /**
-     * The before answer of the player
-     */
-    private String before="";
-    /**
      * This is an instance of the SuperviserNormally
      */
     private Supervisor supervisor;
+    /**
+     * The list of the actual underQuest of the player
+     */
+    private Quest[] listUnder;
+
 
     /**
      * This constructor define the dialog of the character
@@ -61,7 +64,7 @@ public class DialogCharacter
     {
         this.supervisor = supervisor;
         listDialog = readFileConversation(nameDialog);
-        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP","Friendly");
+        addIdSpecific("ITEMSGIVE","ITEMSUSE","MAPS","PLACE","QUEST","RANDOM","NEXTLESSON","SHOP","Friendly","UNDERQUEST");
 
     }
 
@@ -134,7 +137,6 @@ public class DialogCharacter
         for (String str : list)
         {
             if (listID.contains(str) && !str.equals("Friendly") && !str.equals("SHOP"))
-
                 newList.addAll(replaceId(str));
             else
                 newList.add(str);
@@ -155,17 +157,23 @@ public class DialogCharacter
             for (Items it : mobile.getInventory())
                 list.add(it.getIdItems());
         }
-        if (id.equals("ITEMSUSE"))
+        else if (id.equals("ITEMSUSE"))
         {
             for (Items it : supervisor.getAllItems())
                 list.add(it.getIdItems());
         }
+        else if (id.equals("UNDERQUEST"))
+        {
+            listUnder = Supervisor.getPeople().getQuest().getSubQuests();
+            for (Quest udq : listUnder)
+                list.add(((UnderQuest)udq).getName(false));
+        }
         else if (id.equals("MAPS"))
-            list.add(supervisor.getPeople().getMaps().getInformation());
+            list.add(Supervisor.getPeople().getMaps().getInformation());
         else if (id.equals("PLACE"))
-            list.add("ESC");
+            list.add(Supervisor.getPeople().getPlace().getIdName());
         else if (id.equals("QUEST") || id.equals("RANDOM"))
-            list.add(supervisor.getPeople().getQuest().question());
+            list.add(Supervisor.getPeople().getQuest().question());
         else if (id.equals("NEXTLESSON") && supervisor.getActualCourse() != null)
             list.add(supervisor.getActualCourse().getLesson().location().getInformation());
         else
@@ -202,22 +210,20 @@ public class DialogCharacter
     {
             this.mobile = mobile;
 
+            if (answerID.equals("RandomItems"))
+                Supervisor.getPeople().pushObject(supervisor.getAllItems()[new Random().nextInt(supervisor.getAllItems().length)]);
+
             if (specificID != null)
-            {
                 idAnswer(answerID);
-            }
-            else if (!listDialog.containsKey(answerID))
-            {
-                supervisor.getEvent().notify(new Dialog("ESC"));
-                //classSp.getEvent().remove(Events.Answer,classSp);TODO
-            }
-            else if (answerID.equals("ESC"))
-                supervisor.getEvent().notify(new Dialog("ESC"));
+
+            else if (!listDialog.containsKey(answerID) || answerID.equals("ESC"))
+                quit();
+
             else if (check(getDialog(answerID)))
                 supervisor.getEvent().notify(new Dialog(preparingDialog(getDialog(answerID))));
+
             else
                 supervisor.getEvent().notify(new Dialog(getDialog(answerID)));
-            before = answerID;
     }
 
 
@@ -232,28 +238,45 @@ public class DialogCharacter
             Items it = getItems(mobile.getInventory(),answer);
             if (it != null)
                 supervisor.getPeople().pushObject(it);
-            supervisor.getEvent().notify(new Dialog(getDialog("ESC")));
+            quit();
         }
-        if (specificID.equals("ITEMSUSE"))
+
+        else if (specificID.equals("ITEMSUSE"))
         {
             Items it = getItems(Arrays.asList(supervisor.getAllItems()),answer);
             if (it != null)
                 supervisor.getEvent().notify(new Dialog(it.getIdUse(),"ESC"));
             else
-                supervisor.getEvent().notify(new Dialog("ESC"));
+                quit();
         }
 
-        if (specificID.equals("SHOP"))
+        else if (specificID.equals("UNDERQUEST"))
+        {
+            String buff= "ESC";
+            for (Quest q : listUnder)
+            {
+                if (((UnderQuest)q).getName(false).equals(answer))
+                    buff = ((UnderQuest)q).explainGoal();
+            }
+            Supervisor.getEvent().notify(new Dialog(buff,"ESC"));
+        }
+
+        else if (specificID.equals("SHOP"))
             supervisor.getEvent().notify(new Shop());
 
-        if (answer.equals("Friendly"))
+        else if (answer.equals("Friendly"))
         {
             Supervisor.getPeople().addFriend(mobile);
-            supervisor.getEvent().notify(new Dialog("ESC"));
+            quit();
         }
         specificID = null;
     }
 
+    private void quit()
+    {
+        Supervisor.getEvent().notify(new Dialog("ESC"));
+        Supervisor.getEvent().remove(Events.Answer,supervisor);
+    }
 
     /**
      * This method allows to give the Items in the list

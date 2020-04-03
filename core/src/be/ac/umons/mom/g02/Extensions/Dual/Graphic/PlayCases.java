@@ -21,20 +21,35 @@ import java.util.HashMap;
  */
 public class PlayCases extends PlayingStateDual
 {
-    /***/
+    /**
+     * This is the association between player and her cases on the maps
+     */
     protected HashMap<Player,ArrayList<Point>> cases = new HashMap<>();
-    /***/
+    /**
+     * This is a list of the cases to draw on the maps
+     */
     protected ArrayList<Cases> drawCase = new ArrayList<>();
-    /***/
+    /**
+     * The association between player and old position on the maps
+     */
     protected HashMap<Player, Point> old = new HashMap<>();
-    /***/
+    /**
+     * The text with the number of cases (player one)
+     */
     protected TextBox player1Number;
-    /***/
+    /**
+     * The text with the number of cases (player two)
+     */
     protected TextBox player2Number;
-    /***/
+    /**
+     * The text with the timer
+     */
     protected TextBox timerShow;
-    /***/
-    protected double time = 10;
+    /**
+     * This is the time of the dual
+     */
+    protected double time = 90;
+
 
 
     /**
@@ -45,7 +60,10 @@ public class PlayCases extends PlayingStateDual
         super(gs);
     }
 
-    /***/
+
+    /**
+     * This method allows to initialization of the playingState of the dual
+     */
     @Override
     public void init()
     {
@@ -68,7 +86,10 @@ public class PlayCases extends PlayingStateDual
     }
 
 
-    /***/
+    /**
+     * This method allows to update the objects every changed frames
+     * @param dt is the time between two frames
+     */
     @Override
     public void update(float dt)
     {
@@ -88,7 +109,9 @@ public class PlayCases extends PlayingStateDual
     }
 
 
-    /***/
+    /**
+     * This method allows to draw the graphic object on the screen
+     */
     @Override
     public void draw()
     {
@@ -103,7 +126,9 @@ public class PlayCases extends PlayingStateDual
     }
 
 
-    /***/
+    /**
+     * This method allows to draw the object between map et player
+     */
     @Override
     protected void drawAfterMaps()
     {
@@ -111,7 +136,11 @@ public class PlayCases extends PlayingStateDual
             cc.draw((int)cam.position.x,(int)cam.position.y);
     }
 
-    /***/
+
+    /**
+     * When the player moves on the maps, this methods calculus the number of cases
+     * @param player is the player on the maps to move
+     */
     protected void checkCase(Player player)
     {
         if (!old.get(player).equals(new Point(player.getPosX()/64,player.getPosY()/32)))
@@ -135,6 +164,9 @@ public class PlayCases extends PlayingStateDual
     }
 
 
+    /**
+     * Allows to dispose the graphical object (draw)
+     */
     @Override
     public void dispose()
     {

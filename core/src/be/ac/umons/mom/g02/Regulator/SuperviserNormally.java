@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Regulator;
 
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
+import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
@@ -71,6 +72,7 @@ public class SuperviserNormally extends Supervisor
         refreshQuest();
         regulator = new Regulator(playerOne,time,this);
         listCourse = playerOne.getPlanning().get(time.getDate().getDay());
+        playerOne.setMaps(Maps.Nimy);
         checkPlanning();
     }
 

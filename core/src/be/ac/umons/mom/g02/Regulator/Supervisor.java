@@ -400,7 +400,8 @@ public  abstract class Supervisor implements Observer
      */
     public void newParty(String namePlayer, Type type, Gender gender, Difficulty difficulty)
     {
-        placePosition = new PositionOnMaps();
+        if (mustPlaceItem)
+            placePosition = new PositionOnMaps();
         time = new TimeGame(new Date(16,9,2019,8,15));
         playerOne = new People(namePlayer,type, gender,difficulty);
         for (NameDialog name : NameDialog.values())
@@ -817,8 +818,7 @@ public  abstract class Supervisor implements Observer
             attackMethod(memoryMobile, playerOne);
         else if (action.equals(Actions.Dialog))
         {
-            if (startDialog)
-            {event.add(Events.Answer,this);startDialog = false;}
+            startDialog = true;
             switchingDialog("Start");
         }
     }
@@ -830,15 +830,21 @@ public  abstract class Supervisor implements Observer
      */
     public void switchingDialog(String answer)
     {
+        if (startDialog)
+        {
+            event.add(Events.Answer,this);
+            startDialog = false;
+        }
         if( dialog == null)
         {
             event.notify(new Dialog("ESC"));
-            //event.remove(Events.Answer,this);//TODO
+            event.remove(Events.Answer,this);
         }
         else if (answer.equals("Attack"))
         {
             attackMethod(playerOne,memoryMobile);
             event.notify(new Dialog("ESC"));
+            event.remove(Events.Answer,this);
         }
         else
             dialog.analyzeAnswer(answer,memoryMobile);

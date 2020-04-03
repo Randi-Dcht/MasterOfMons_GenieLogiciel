@@ -451,14 +451,17 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      */
     public ArrayList<Mobile> getListPnj()
     {
-        if (listMobs == null) {
+        if (listMobs == null)
+        {
             try
             {
                 createListMobiles();
             }
             catch (Exception e)
             {
-                Gdx.app.error("Error in the MasterQuest to init the list of Mobile",String.valueOf(e));
+                return new ArrayList<>();
+               // Gdx.app.error("Error in the MasterQuest to init the list of Mobile",String.valueOf(e));
+
             }
         }
         return listMobs;

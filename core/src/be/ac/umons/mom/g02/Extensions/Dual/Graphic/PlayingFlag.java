@@ -12,7 +12,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 
-/***/
+/**
+ * This class define the playingState for the catch the flag on the dual extension
+ */
 public class PlayingFlag extends PlayingStateDual
 {
     /**
@@ -25,14 +27,18 @@ public class PlayingFlag extends PlayingStateDual
     protected Cases baseTwo;
 
 
-    /***/
+    /**
+     * @param gs The game's graphical settings
+     */
     public PlayingFlag(GraphicalSettings gs)
     {
         super(gs);
     }
 
 
-    /***/
+    /**
+     * This method allows to initialization of the playingState of the dual
+     */
     @Override
     public void init()
     {
@@ -47,7 +53,9 @@ public class PlayingFlag extends PlayingStateDual
     }
 
 
-    /***/
+    /**
+     * This method allows to place the flag on the maps
+     */
     public void PlaceFlag(Point... pt)
     {
         ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
@@ -56,7 +64,9 @@ public class PlayingFlag extends PlayingStateDual
     }
 
 
-    /***/
+    /**
+     * This method allows to draw the object between map et player
+     */
     @Override
     public void drawAfterMaps()
     {
@@ -65,7 +75,9 @@ public class PlayingFlag extends PlayingStateDual
     }
 
 
-    /***/
+    /**
+     * Allows to dispose the graphical object (draw)
+     */
     @Override
     public void dispose()
     {

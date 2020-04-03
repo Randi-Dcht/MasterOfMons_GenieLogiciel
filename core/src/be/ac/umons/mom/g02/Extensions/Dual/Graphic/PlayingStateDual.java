@@ -26,22 +26,46 @@ import java.awt.Point;
 import java.util.HashMap;
 
 
+
 /***/
 public class PlayingStateDual extends PlayingState
-
 {
-    /***/
+    /**
+     * The constance of the camera on the axe X
+     */
+    protected static int cam_X_pos = 0;
+    /**
+     * The constance of the camera on the axe Y
+     */
+    protected static int cam_Y_pos = 0;
+    /**
+     * The second life bar for the second player
+     */
     protected LifeBar lifeBarTwo;
-    /***/
+    /**
+     * The button to quit the dual
+     */
     protected Button endDual;
-    /***/
+    /**
+     * The association between player and adversary
+     */
     protected HashMap<Player,Player> adv = new HashMap<>();
-    /***/
+    /**
+     * The supervisor of the dual
+     */
     protected SupervisorDual supervisorDual;
-    /***/
+    /**
+     * The size of the object to draw
+     */
     protected Point objectSize;
-    /***/
+    /**
+     * The second inventory shower
+     */
     protected InventoryShower inventoryShowerTwo;
+    /**
+     * If the player is living
+     */
+    protected boolean player1Life = true, player2Life = true;
 
 
     /**
@@ -55,7 +79,9 @@ public class PlayingStateDual extends PlayingState
     }
 
 
-    /***/
+    /**
+     * This method allows to initialization of the playingState of the dual
+     */
     @Override
     public void init()
     {
@@ -106,11 +132,15 @@ public class PlayingStateDual extends PlayingState
 
 
     @Override
-    protected void translateCamera(int x, int y) {
-
+    protected void translateCamera(int x, int y)
+    {
     }
 
-    /***/
+
+    /**
+     * This method allows to update the objects every changed frames
+     * @param dt is the time between two frames
+     */
     @Override
     public void update(float dt)
     {
@@ -124,9 +154,20 @@ public class PlayingStateDual extends PlayingState
             cam.position.y = MasterOfMonsGame.HEIGHT - MasterOfMonsGame.HEIGHT/2;
             cam.update();
         }
+
+        if (supervisorDual.getDual().equals(TypeDual.Survivor))
+        {
+            if (!player1Life)
+                lifePlayer(player,dt);
+            if (!player2Life)
+                lifePlayer(playerTwo,dt);
+        }
     }
 
 
+    /**
+     * This method allows to draw the graphic object on the screen
+     */
     @Override
     public void draw()
     {
@@ -138,8 +179,10 @@ public class PlayingStateDual extends PlayingState
 
         drawAfterMaps();
 
-        player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
-        playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        if (player1Life)
+            player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
+        if (player2Life)
+            playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
         for (int i=0;i<Math.min(25,pnjs.size());i++)
             pnjs.get(i).draw(sb, pnjs.get(i).getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnjs.get(i).getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
@@ -176,11 +219,15 @@ public class PlayingStateDual extends PlayingState
     }
 
 
-    /***/
+    /**
+     * This method allows to draw the object between map et player
+     */
     protected void drawAfterMaps(){}
 
 
-    /***/
+    /**
+     * This methods allows to changed the orientation of the camera
+     */
     private void changedCam()
     {
         cam.setToOrtho(false,SHOWED_MAP_WIDTH * tileWidth, SHOWED_MAP_HEIGHT * tileHeight);//TODO changed
@@ -189,11 +236,13 @@ public class PlayingStateDual extends PlayingState
     }
 
 
-    /***/
+    /**
+     * This methods allows to analyse the input on the keyboard
+     */
     @Override
     public void handleInput()
     {
-        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed))
+        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && player2Life)
         {
             if (selectedOne instanceof Character)
                 return;
@@ -203,20 +252,25 @@ public class PlayingStateDual extends PlayingState
                     pickUpAnObject();
             }
         }
-        if (gim.isKey("attackTwo", KeyStatus.Pressed))
+        if (gim.isKey("attackTwo", KeyStatus.Pressed) && player2Life)
         {
             pnjs.add(player);
             attack(playerTwo);
             pnjs.remove(player);
         }
-        super.handleInput();
+
+        if (player1Life)
+            super.handleInput();
 
         endDual.handleInput();
         inventoryShowerTwo.handleInput();//TODO
     }
 
 
-    /***/
+    /**
+     * Add the second player to the list of can attack
+     * @param player is the player to add
+     */
     @Override
     protected void attack(Player player)
     {
@@ -230,7 +284,10 @@ public class PlayingStateDual extends PlayingState
     }
 
 
-    /***/
+    /**
+     * Add the second player to select this
+     * @param player is the player to add
+     */
     @Override
     protected void checkForNearSelectable(Player player)//TODO upgrade
     {
@@ -287,32 +344,89 @@ public class PlayingStateDual extends PlayingState
     }
 
 
-    /***/
+    /**
+     * This method receive the notification of the game
+     * @param notify is the changed on the game
+     */
     @Override
     public void update(Notification notify)
     {
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class) && supervisorDual.getDual().equals(TypeDual.DualPlayer))
-            finishDual();
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
-            deadMobile(null);
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
+        {
+            if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+                finishDual();
+            else if (supervisorDual.getDual().equals(TypeDual.Survivor))
+                queuingToPlay((People)notify.getBuffer());
+        }
+        else if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
+            deadMobile((Mobile)notify.getBuffer());
 
     }
 
-    /***/
-    public void finishDual()
+
+    /**
+     * When the people (human) is dead on the game
+     * @param people is the player dead
+     */
+    protected void queuingToPlay(People people)
+    {
+        if (people.equals(player.getCharacteristics()))
+            player1Life = false;
+        else
+            player2Life = false;
+    }
+
+
+    /**
+     * This method allows to increase the life of the player when this is dead
+     * @param player is the player dead
+     * @param dt is the time frame
+     */
+    protected void lifePlayer(Player player, double dt)
+    {
+        People pp = (People)player.getCharacteristics();
+        pp.setActualLife(pp.getActualLife()+dt*2);
+
+        if (pp.getActualLife() >= pp.lifeMax()*0.9)
+            whatPeople(player);
+
+    }
+
+
+    /**
+     * Checks the player and pass to true the living
+     */
+    protected void whatPeople(Player player)
+    {
+        if (player.equals(this.player))
+            player1Life = true;
+        else
+            player2Life = true;
+    }
+
+
+    /**
+     * This method is called when the dual finishes
+     */
+    protected void finishDual()
     {
         gsm.removeAllStateAndAdd(WinMenu.class);
     }
 
 
-    /***/
-    public void deadMobile(Mobile mb)
+    /**
+     * This method allows to remove the mobile when he dies
+     * @param mb is the mobile dies
+     */
+    protected void deadMobile(Mobile mb)
     {
         pnjs.removeIf(chr -> chr.getCharacteristics().equals(mb));
     }
 
 
-    /***/
+    /**
+     * This method allows to init the second player with the size of the graphic object
+     */
     protected void initSizeOfMaps()
     {
         playerTwo.setMapWidth(mapWidth * tileWidth);
@@ -322,7 +436,9 @@ public class PlayingStateDual extends PlayingState
     }
 
 
-    /***/
+    /**
+     * Allows to dispose the graphical object (draw)
+     */
     @Override
     public void dispose()
     {

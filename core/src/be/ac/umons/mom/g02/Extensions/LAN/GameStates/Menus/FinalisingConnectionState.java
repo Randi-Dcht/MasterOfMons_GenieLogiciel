@@ -57,7 +57,7 @@ public class FinalisingConnectionState extends MenuState {
         transparentBackground = false;
 
         setMenuItems(new MenuItem[]{
-                new TitleMenuItem(gs, gs.getStringFromId("finalisingConnection"))
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("finalisingConnection"))
         });
 
         Gdx.app.postRunnable(() -> {

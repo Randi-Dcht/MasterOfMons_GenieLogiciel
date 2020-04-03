@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Other;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * This define a date with day-moth-year and hour-min
@@ -105,9 +106,28 @@ public class Date implements Serializable
     public String toString()
     {
         return String.format("%02d / %02d / %s  %02d:%02d",day,month,year,hour,min);
-//        return "Date{" +
-//                ", day=" + day +
-//                ", month=" + month +
-//                '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Date date = (Date) o;
+        return year == date.year &&
+                day == date.day &&
+                month == date.month &&
+                hour == date.hour &&
+                min == date.min;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(year, day, month, hour, min);
     }
 }

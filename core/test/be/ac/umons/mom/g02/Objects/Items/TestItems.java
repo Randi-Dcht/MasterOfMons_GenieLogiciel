@@ -16,6 +16,7 @@ public class TestItems
     public void TestTheItem()
     {
         SuperviserNormally.initNormallyGame();
+        Supervisor.getSupervisor().setMustPlaceItem(false);
         Supervisor.getSupervisor().newParty("Test",Type.athletic,Gender.Men,Difficulty.Easy);
         Items phone = new Phone();
         People pp = Supervisor.getPeople();
@@ -23,6 +24,6 @@ public class TestItems
         assertTrue(pp.getFriend()>0,"Check if the phone give the things to the people");
         for (int i=0;i<3;i++)
             phone.used(pp);
-        assertFalse(phone.getObsolete(),"Check if the phone battery is lose");
+        assertTrue(phone.getObsolete(),"Check if the phone battery is lose");
     }
 }

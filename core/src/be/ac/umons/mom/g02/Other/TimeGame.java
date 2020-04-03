@@ -185,9 +185,13 @@ public class TimeGame implements Observer, Serializable
      * This method allows to check if two object TimeGame is equals
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
         TimeGame schedule = (TimeGame) o;
         return NBmonth == schedule.NBmonth &&
                 hour == schedule.hour &&
@@ -222,26 +226,30 @@ public class TimeGame implements Observer, Serializable
      * @param addDay is the day to add
      * @param addHour is the hour to add
      * @param addMin is the minute to add
+     * @param notif is the notification must be send
      */
-    public void refreshTime(int addDay, int addHour, int addMin)
+    public void refreshTime(int addDay, int addHour, int addMin,boolean notif)
     {
         int memM,memH;
         min  = (memM = min + addMin)%60;
         hour = (memH = hour +(memM/60)+addHour)%24;
         day  = (day+memH/24+addDay)%years[NByear][NBmonth];
 
-        if(addHour != 0) //TODO
+        if(addHour != 0 && notif) //TODO
             Supervisor.getEvent().notify(new ChangeHour());
-        if(addDay != 0) //TODO
+        if(addDay != 0 && notif) //TODO
             Supervisor.getEvent().notify(new ChangeDay());
     }
 
 
     /**
-     * This methods is only for the test of JunitTest
+     * This method to call when the people pass an period in the game
+     * @param addDay is the day to add
+     * @param addHour is the hour to add
+     * @param addMin is the minute to add
      */
-    int[] getValueTest()
+    public void refreshTime(int addDay, int addHour, int addMin)
     {
-        return new int[]{min,hour,day,year};
+        refreshTime(addDay,addHour,addMin,true);
     }
 }

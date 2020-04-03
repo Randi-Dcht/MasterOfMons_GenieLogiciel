@@ -1,13 +1,6 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Difficulty;
-import be.ac.umons.mom.g02.Enums.Gender;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
-import be.ac.umons.mom.g02.Enums.Type;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.Phone;
@@ -49,18 +42,20 @@ public class TestCharacters
         assertTrue(first > second,"depency energy");
 
         people.setMaps(Maps.Kot);
+        people.setPlaceMaps(Places.Bed);
         for (int i = 0; i < 100 ; i++ ){people.update(2);}
         first = people.getEnergy();
-        assertTrue(second < first,"add energy");
+        assertTrue(second < first,"add energy");//TODO
     }
 
     @Test
     void testingAttack()
     {
         SuperviserNormally sp = SuperviserNormally.getSupervisor();
+        sp.setMustPlaceItem(false);
         sp.newParty("Test",Type.beefy,Gender.Men,Difficulty.Easy);
         People p1 = sp.getPeople();
-        Mobile p2 = new Mobile("Testing",Bloc.BA3, MobileType.Athletic, Actions.Never, NameDialog.Lambda);
+        Mobile p2 = new Mobile("Testing",Bloc.BA3, MobileType.Athletic, Actions.Attack, NameDialog.Lambda);
 
         double memory = p1.getActualLife();
         sp.attackMethod(p2,p1);

@@ -24,7 +24,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -75,9 +74,13 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO pass to list
     /**
+     * The succeed for every lesson
+     */
+    private HashMap<Lesson,Integer> percentSucceedCourse;
+    /**
      * The actual list of the course
      */
-    private ArrayList<Lesson> myCourse = new ArrayList<>();
+    private ArrayList<Lesson> key = new ArrayList<>();
     /**
      * The number of friend on the all maps
      */
@@ -102,10 +105,6 @@ public class People extends Character implements Serializable, Observer, FrameTi
      * The actual item to use
      */
     private Items use;
-    /**
-     * The percent to succeed the course
-     */
-    private int percentSuccess = 0;//TODO
 
 
     /**
@@ -118,7 +117,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public People(String name, Type type, Gender gender, Difficulty difficulty)
     {
         super(name,type);
-        Supervisor.getEvent().add(this, Events.MeetOther,Events.PlaceInMons,Events.ChangeMonth,Events.EntryPlace);
+        Supervisor.getEvent().add(this, Events.MeetOther,Events.PlaceInMons,Events.ChangeMonth,Events.EntryPlace,Events.GoLesson);
         updateType(type.getStrength(),type.getDefence(),type.getAgility());
         this.threshold = minExperience(level+1);
         this.difficulty = difficulty;
@@ -250,7 +249,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     public void newQuest(MasterQuest quest, boolean showDialog)
     {
         myQuest = quest;
-        myCourse.addAll(quest.getLesson());
+        initLesson(quest.getLesson());
         if (showDialog)
             Supervisor.getEvent().notify(new ChangeQuest(quest));
         year = quest.getBloc();
@@ -259,11 +258,24 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
 
     /**
+     * This methods allows to init the list of the lesson
+     * @param list is a list of the lesson for this bloc
+     */
+    private void initLesson(List<Lesson> list)
+    {
+        key.addAll(list);
+        percentSucceedCourse = new HashMap<>();
+        for (Lesson lss : list)
+            percentSucceedCourse.put(lss,0);
+    }
+
+
+    /**
      * This method allows to create a new planning of the people
      */
     private void createPlanning()
     {
-        myPlanning = HyperPlanning.createSchedule(myCourse,Supervisor.getSupervisor().getTime().getDate());
+        myPlanning = HyperPlanning.createSchedule(key,Supervisor.getSupervisor().getTime().getDate());
         Supervisor.getEvent().notify(new PlanningChanged(myPlanning));
     }
 
@@ -372,11 +384,18 @@ public class People extends Character implements Serializable, Observer, FrameTi
         return true;
     }
 
+
+    /**
+     * Notify when the people remove the object in the bag
+     * @param object is the object to remove
+     */
     @Override
-    public boolean removeObject(Items object) {
+    public boolean removeObject(Items object)
+    {
         Supervisor.getEvent().notify(new InventoryChanged(this, object, InventoryChanged.Type.Removed));
         return super.removeObject(object);
     }
+
 
     /**
      * This method check if the people can attack the other
@@ -404,24 +423,44 @@ public class People extends Character implements Serializable, Observer, FrameTi
 
 
     /**
-     * This method allows to add the succes in the lesson to follow
+     * This method allows to add the success in the lesson to follow
      * @param cmb is the percent to add in success
      */
-    public void addSuccess(int cmb)//TODO add with penalise
+    private void addSuccess(int cmb,Lesson lesson)
     {
-        percentSuccess += cmb;
-        if (cmb <= 50)
-            myCourse.remove(new Random().nextInt(myCourse.size()));
+        if (percentSucceedCourse.containsKey(lesson))
+            percentSucceedCourse.replace(lesson,percentSucceedCourse.get(lesson)+cmb);
+
+        testingSucceed();
     }
 
 
     /**
-     *This method allows to return the list of course where exams don't pass.
-     *@return myCourse who is a list of course.
+     * This method allows to check the percent of every course
      */
-    public ArrayList<Lesson> myCourse()//TODO
+    private void testingSucceed()
     {
-        return myCourse;
+        for (Lesson ls : key)
+        {
+            if (percentSucceedCourse.get(ls) >= 70)
+            {
+                percentSucceedCourse.remove(ls);key.remove(ls);
+            }
+        }
+    }
+
+
+    /**
+     * This methods check if the player goes to lesson course
+     */
+    private void checkCourseNow(Course course)
+    {
+        if (course != null)
+        {
+            addSuccess(10,course.getLesson());
+            if (course.isLate())
+                addSuccess((int)course.getLate(),course.getLesson());//penalize
+        }
     }
 
 
@@ -701,6 +740,8 @@ public class People extends Character implements Serializable, Observer, FrameTi
             createPlanning();
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile)
             setMeetMobile((Mobile) notify.getBuffer());
+        if (notify.getEvents().equals(Events.GoLesson) && notify.bufferNotEmpty())
+            checkCourseNow(((GoToLesson)notify).getBuffer());
     }
 
 

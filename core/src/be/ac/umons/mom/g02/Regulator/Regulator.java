@@ -254,6 +254,7 @@ public class Regulator implements Observer
     {
         Date date = manager.getActualCourse().howTimeFinish(manager.getTime().getDate());
         manager.getActualCourse().goCourse();
+        Supervisor.getEvent().notify(new GoToLesson(manager.getActualCourse()));
         time.refreshTime(0,date.getHour(),date.getMin());
     }
 
