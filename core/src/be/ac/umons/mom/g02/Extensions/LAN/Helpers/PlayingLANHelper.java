@@ -27,6 +27,7 @@ import java.awt.*;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PlayingLANHelper {
@@ -50,7 +51,8 @@ public class PlayingLANHelper {
         }
         for (Mobile mob : Supervisor.getSupervisor().getMobile(Supervisor.getSupervisor().getMaps(map))) {
             Character c = idCharacterMap.get(mob.getName());
-            nm.sendMessageOnTCP("PNJ", c.getCharacteristics().getName(), c.getCharacteristics(), c.getPosX(), c.getPosY());
+            if (c != null)
+                nm.sendMessageOnTCP("PNJ", mob.getName(), mob.getPlayerBloc(), mob.getMobileType(), mob.getMaps(), mob.getAction(), c.getPosX(), c.getPosY());
         }
         for (MovingPNJ mob : Supervisor.getSupervisor().getMovingPnj(Supervisor.getSupervisor().getMaps(map))) {
             Character c = idCharacterMap.get(mob.getName());
@@ -243,5 +245,41 @@ public class PlayingLANHelper {
             nm.sendOnTCP("EndPause");
             pauseSent = false;
         }
+    }
+
+    public static List<Character> getPNJsOnMap(String mapName, NetworkReady ps, GraphicalSettings gs) {
+        NetworkManager nm = null;
+        try {
+            nm = NetworkManager.getInstance();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        if (! nm.isTheServer())
+            return new LinkedList<>();
+        Maps map = Supervisor.getSupervisor().getMaps(mapName);
+        List<Character> pnjs = new ArrayList<>();
+        for (Mobile mob : Supervisor.getSupervisor().getMobile(map)) {
+            if (ps.getIdCharacterMap().containsKey(mob.getName()))
+                pnjs.add(ps.getIdCharacterMap().get(mob.getName()));
+            else {
+                Character c = new Character(gs, mob);
+                pnjs.add(c);
+                Supervisor.getSupervisor().init(mob, c);
+                ps.getIdCharacterMap().put(mob.getName(), c);
+            }
+        }
+
+        for (MovingPNJ mv : Supervisor.getSupervisor().getMovingPnj(map)) {
+            if (ps.getIdCharacterMap().containsKey(mv.getName()))
+                pnjs.add(ps.getIdCharacterMap().get(mv.getName()));
+            else {
+                Character c = new Character(gs, mv);
+                pnjs.add(c);
+                mv.initialisation(c, (PlayingState)ps, ps.getPlayer());
+                ps.getIdCharacterMap().put(mv.getName(), c);
+            }
+        }
+
+        return pnjs;
     }
 }

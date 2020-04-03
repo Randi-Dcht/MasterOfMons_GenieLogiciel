@@ -287,31 +287,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
     @Override
     protected List<Character> getPNJsOnMap(String mapName) {
-        if (! nm.isTheServer())
-            return new LinkedList<>();
-        Maps map = supervisor.getMaps(mapName);
-        List<Character> pnjs = new ArrayList<>();
-        for (Mobile mob : supervisor.getMobile(map)) {
-            if (idCharacterMap.containsKey(mob.getName()))
-                pnjs.add(idCharacterMap.get(mob.getName()));
-            else {
-                Character c = new Character(gs, mob);
-                pnjs.add(c);
-                supervisor.init(mob, c);
-            }
-        }
-
-        for (MovingPNJ mv : supervisor.getMovingPnj(map)) {
-            if (idCharacterMap.containsKey(mv.getName()))
-                pnjs.add(idCharacterMap.get(mv.getName()));
-            else {
-                Character c = new Character(gs, mv);
-                pnjs.add(c);
-                mv.initialisation(c, this, player);
-            }
-        }
-
-        return pnjs;
+        return PlayingLANHelper.getPNJsOnMap(mapName, this, gs);
     }
 
     @Override

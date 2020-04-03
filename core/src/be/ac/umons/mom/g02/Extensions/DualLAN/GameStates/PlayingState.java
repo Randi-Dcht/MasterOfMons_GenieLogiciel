@@ -17,6 +17,7 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import java.awt.*;
 import java.net.SocketException;
 import java.util.HashMap;
+import java.util.List;
 
 public class PlayingState extends PlayingStateDual implements NetworkReady {
 
@@ -35,6 +36,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
 
     @Override
     public void init() {
+        idCharacterMap = new HashMap<>();
 
         Supervisor.getEvent().add(this, Events.LifeChanged);
 
@@ -57,7 +59,10 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         });
 
         PlayingDualLANHelper.setNetworkManagerRunnable(this);
-
+        if (! nm.isTheServer()) {
+            pnjs.clear();
+            nm.sendMessageOnTCP("getZPNJsPos", gmm.getActualMapName());
+        }
     }
 
     @Override
@@ -70,6 +75,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     protected void pickUpAnObject() {
         nm.sendMessageOnTCP("IPU", ((MapObject) selectedOne).getCharacteristics());
         super.pickUpAnObject();
+    }
+
+    @Override
+    protected List<Character> getPNJsOnMap(String mapName) {
+        return PlayingLANHelper.getPNJsOnMap(mapName, this, gs);
     }
 
     @Override

@@ -1,11 +1,6 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.Maps;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
-import be.ac.umons.mom.g02.Enums.Orientation;
+import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Notifications.PNJMoved;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
@@ -59,7 +54,7 @@ public class MovingPNJ extends Mobile
      */
     public MovingPNJ(Bloc bloc, MobileType type, Maps maps,Actions action)
     {
-        super("MovingPNJ",bloc,type,action, NameDialog.Move);
+        super(bloc,type,action, NameDialog.Move);
         setMaps(maps);
         Supervisor.getSupervisor().addRefresh(this);
     }

@@ -1,9 +1,12 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.Helpers;
 
+import be.ac.umons.mom.g02.Enums.Maps;
+import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.LifeChanged;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.CasesPlayingState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.FlagPlayingState;
@@ -16,8 +19,13 @@ import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
+import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
+import be.ac.umons.mom.g02.Objects.Characters.MovingPNJ;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.net.SocketException;
 
@@ -36,6 +44,21 @@ public class PlayingDualLANHelper {
                     PlayingDualLANHelper.goToPreviousMenu());
             nm.whenMessageReceivedDo("Death", (objects) -> gsm.setState(WinMenu.class, true));
             nm.whenMessageReceivedDo("SPL", (objects) -> SupervisorMultiPlayer.getPeople().setActualLife((double) objects[0], false));
+            nm.whenMessageReceivedDo("ZPNJ", (objects) ->
+            {
+                Character c;
+                ZombiePNJ zpnj = new ZombiePNJ((String)objects[0], (MobileType) objects[1], (Maps) objects[2], (int) objects[3]);
+                zpnj.initialisation(c = ps.onCharacterDetected((String) objects[0], zpnj, (int) objects[4], (int) objects[5]),
+                        ps.getPlayer());
+                Supervisor.getSupervisor().addMobile(zpnj, Supervisor.getSupervisor().getMaps(GameMapManager.getInstance().getActualMapName()), c);
+            });
+            nm.whenMessageReceivedDo("getZPNJsPos", (objects) -> {
+                for (Mobile mob : Supervisor.getSupervisor().getMobile(Supervisor.getSupervisor().getMaps((String) objects[0]))) {
+                    Character c = ps.getIdCharacterMap().get(mob.getName());
+                    if (c != null)
+                        nm.sendMessageOnTCP("ZPNJ", mob.getName(), mob.getMobileType(), mob.getMaps(), mob.getLevel(), c.getPosX(), c.getPosY());
+                }
+            });
         } catch (SocketException e) {
             e.printStackTrace();
         }
