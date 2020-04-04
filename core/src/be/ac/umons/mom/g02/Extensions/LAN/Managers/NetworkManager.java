@@ -150,8 +150,6 @@ public class NetworkManager {
      * The time gone by since the last message received from the second player
      */
     protected double msSinceLastMessage;
-
-    protected HashMap<Integer,ArrayList<Course>> planningReceived; // TODO
     /**
      * The map making the link between a message and the action to execute
      */
@@ -160,7 +158,9 @@ public class NetworkManager {
      * The map making the link between a message (to send) and the action to execute
      */
     protected HashMap<String, Runnable> runnableSendMap;
-
+    /**
+     * The messages that wasn't ran because no runnable was found !
+     */
     protected Stack<String> messagesNotRan;
 
     /**
