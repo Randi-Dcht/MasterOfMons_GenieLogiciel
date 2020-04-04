@@ -171,7 +171,7 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         if (gim.isKey("useAnObject", KeyStatus.Pressed))
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
-            if (ii != null && check(player,baseOne))
+            if (ii != null)
                 nm.sendMessageOnTCP("Item", new MapObject.OnMapItem(ii.getItem(), player.getMapPos(), supervisorDual.getDual().getStartMaps().getMaps()));
         }
     }

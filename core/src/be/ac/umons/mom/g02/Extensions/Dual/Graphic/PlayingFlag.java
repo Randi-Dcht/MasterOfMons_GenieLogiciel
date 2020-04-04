@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 
@@ -81,14 +80,15 @@ public class PlayingFlag extends PlayingStateDual
      * Remove the flag in the bag
      * @param people is the people to clean inventory
      */
-    private void cleanInventory(People people)
-    {/*
-        List<Items> it = people.getInventory();
-        for (Items items : it)
+    protected void cleanInventory(People people)
+    {
+        ArrayList<Items> it = new ArrayList<>();
+        for (Items items : people.getInventory())
         {
             if (items.getClass().equals(Flag.class))
-                people.removeObject(items);
-        }*/
+                it.add(items);
+        }
+        people.getInventory().removeAll(it);
     }
 
 
@@ -148,6 +148,14 @@ public class PlayingFlag extends PlayingStateDual
             super.handleInput();
     }
 
+
+    @Override
+    protected void finishDual()
+    {
+        cleanInventory((People)player.getCharacteristics());
+        cleanInventory((People)playerTwo.getCharacteristics());
+        super.finishDual();
+    }
 
     /**
      * Allows to dispose the graphical object (draw)
