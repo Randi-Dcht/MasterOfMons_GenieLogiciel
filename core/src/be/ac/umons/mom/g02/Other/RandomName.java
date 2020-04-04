@@ -43,7 +43,7 @@ public class RandomName
         }
         catch (Exception e)
         {
-            Gdx.app.error("Error in the reading text of the random name of the mobile", e.getMessage());
+            //Gdx.app.error("Error in the reading text of the random name of the mobile", e.getMessage());
         }
     }
 
@@ -56,6 +56,8 @@ public class RandomName
     {
         if (listName == null || listName.size()==0)
             createList();
+        if (listName.size()==0)
+            return "NONE ERROR";
         String name = listName.get(random(listName.size()));
         listName.remove(name);
         return name;

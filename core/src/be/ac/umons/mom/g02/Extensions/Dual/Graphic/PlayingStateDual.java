@@ -70,6 +70,10 @@ public class PlayingStateDual extends PlayingState
      * If the cam must be fixed
      */
     protected boolean pos = true;
+    /***/
+    protected int sizeList = 25;
+    /***/
+    protected double time = 7;
 
 
     /**
@@ -169,6 +173,14 @@ public class PlayingStateDual extends PlayingState
                 lifePlayer(player,dt);
             if (!player2Life)
                 lifePlayer(playerTwo,dt);
+
+            time -= dt;
+            if (time <= 0)
+            {
+                sizeList++;
+                time = 7;
+            }
+
         }
     }
 
@@ -192,11 +204,10 @@ public class PlayingStateDual extends PlayingState
         if (player2Life)
             playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
-        for (int i=0;i<Math.min(25,pnjs.size());i++)
+        for (int i=0;i<Math.min(sizeList,pnjs.size());i++)
             pnjs.get(i).draw(sb, pnjs.get(i).getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, pnjs.get(i).getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
         for (MapObject mo : mapObjects)
-            if (mo.getMap().equals(gmm.getActualMapName()))
                 mo.draw(sb, mo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, mo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, tileHeight);
 
         sb.begin();
