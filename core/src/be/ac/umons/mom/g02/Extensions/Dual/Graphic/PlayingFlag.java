@@ -9,6 +9,7 @@ import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlaye
 import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -77,6 +78,10 @@ public class PlayingFlag extends PlayingStateDual
     }
 
 
+    /**
+     * Remove the flag in the bag
+     * @param people is the people to clean inventory
+     */
     private void cleanInventory(People people)
     {
         List<Items> it = people.getInventory();
@@ -98,6 +103,10 @@ public class PlayingFlag extends PlayingStateDual
         baseTwo.draw((int)cam.position.x,(int)cam.position.y);
     }
 
+
+    /**
+     * See the input to check the input on the keyboard
+     */
     @Override
     public void handleInput()
     {
@@ -118,29 +127,34 @@ public class PlayingFlag extends PlayingStateDual
         else if (gim.isKey("useAnObject", KeyStatus.Pressed))
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
-            if (ii != null)//TODO base
+            if (ii != null && check(player,baseOne))
                {
-                   MapObject obj;
-                   mapObjects.add(obj=new MapObject(gs,ii.getItem()));
+                   addItemToMap(ii.getItem(),player.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                    ii.getItem().used(Supervisor.getPeople());
-                   obj.setMapPos(player.getMapPos());obj.setMap(supervisorDual.getDual().getStartMaps().getMaps());
                }
         }
         else if (gim.isKey("useAnObjectTwo", KeyStatus.Pressed))
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
-            if (ii != null)//TODO base
+            if (ii != null && check(playerTwo,baseTwo))
             {
-                MapObject obj;
-                mapObjects.add(obj=new MapObject(gs,ii.getItem()));
+                addItemToMap(ii.getItem(),playerTwo.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                 ii.getItem().used(SupervisorDual.getPeopleTwo());
-                obj.setMapPos(playerTwo.getMapPos());obj.setMap(supervisorDual.getDual().getStartMaps().getMaps());
             }
         }
         else if (gim.isKey("interact", KeyStatus.Pressed))
             return;
         else
             super.handleInput();
+    }
+
+
+    /**
+     * Check if the player is on the base
+     */
+    private boolean check(Player player,Cases cases)
+    {
+        return true;
     }
 
 
