@@ -36,10 +36,9 @@ public class MoreCasesMons extends DualUnderQuest
     public void callMe(int cb)
     {
         if (cb < 0)
-            addProgress(-0.2);
-
+            addProgress(-0.05);
         else
-            addProgress(0.3);
+            addProgress(0.08);
     }
 
 

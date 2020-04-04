@@ -39,9 +39,8 @@ public class SurvivorVsMobile extends DualUnderQuest
     {
         if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty())
             analyseAttack((LaunchAttack)notify);
-        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().equals(SupervisorDual.getSupervisorDual().getAdversary(people)));
+        if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
             winGame();
-
     }
 
     private void winGame()
