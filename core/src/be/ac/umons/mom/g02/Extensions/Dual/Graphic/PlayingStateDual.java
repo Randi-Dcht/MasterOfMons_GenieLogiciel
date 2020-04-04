@@ -93,14 +93,11 @@ public class PlayingStateDual extends PlayingState
         super.init();
 
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
-        //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
         initMap(supervisorDual.getDual().getStartMaps().getMaps(),supervisorDual.getDual().getPointPlayerOne().x,supervisorDual.getDual().getPointPlayerOne().y);
         playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
-        cam.position.x = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
-        cam.position.y = MasterOfMonsGame.HEIGHT/2 - MasterOfMonsGame.HEIGHT/4;
-        cam.update();
+        translateCamera(cam_X_pos,cam_Y_pos);
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
 
