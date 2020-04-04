@@ -107,6 +107,19 @@ public class MapObject extends OnMapObject {
          */
         String map;
 
+        public OnMapItem() {}
+
+        /**
+         * @param item The represented item
+         * @param mapPos The position on the map (in pixel)
+         * @param map On which map this object is
+         */
+        public OnMapItem(Items item, Point mapPos, String map) {
+            this.item = item;
+            this.mapPos = mapPos;
+            this.map = map;
+        }
+
         /**
          * @return The characteristics of this item
          */

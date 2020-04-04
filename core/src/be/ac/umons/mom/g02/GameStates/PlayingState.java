@@ -333,14 +333,14 @@ public class PlayingState extends GameState implements Observer {
     /**
      * Add the given item at the given position.
      * @param item The item
-     * @param pos The position
+     * @param pos The position (in cases)
+     * @param map The map on which this item is
      */
     public void addItemToMap(Items item, Point pos, String map) {
-        MapObject mo = new MapObject(gs, item);
-        mo.setMap(map);
-        mo.setMapPos(new Point((pos.x - pos.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
-                mapHeight * tileHeight / 2 - (pos.x + pos.y) * tileHeight / 2));
-        mapObjects.add(mo);
+        Point mapPos = new Point((pos.x - pos.y) * tileWidth / 2 + mapHeight * tileWidth / 2,
+                mapHeight * tileHeight / 2 - (pos.x + pos.y) * tileHeight / 2);
+        MapObject.OnMapItem omi = new MapObject.OnMapItem(item, mapPos, map);
+        addItemToMap(omi);
     }
     /**
      * Add the given item to the list of items to draw.
@@ -356,7 +356,7 @@ public class PlayingState extends GameState implements Observer {
      */
     public void addItemsToMap(MapObject.OnMapItem[] items) {
         for (MapObject.OnMapItem omi : items)
-            mapObjects.add(new MapObject(gs, omi));
+            addItemToMap(omi);
     }
 
     /**

@@ -1,10 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus;
 
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
-import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.FlagPlayingState;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.CasesPlayingState;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;

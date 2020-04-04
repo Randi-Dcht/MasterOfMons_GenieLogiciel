@@ -70,14 +70,8 @@ public class ConnectionRoomState extends MenuState {
         }
 
         transparentBackground = false;
-        TextBoxMenuItem tbmi;
-        setMenuItems(new MenuItem[]{
-                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("automaticDetect")),
-                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("enterServerInfo")),
-                new TextMenuItem(gs, GraphicalSettings.getStringFromId("servInfo")),
-                tbmi = new TextBoxMenuItem(gim, gs, "IP : ", "TXT_IP"),
-                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("connect"), () ->  manualConnect(tbmi.getControl().getText()))
-        }, false);
+
+        refresh();
     }
 
     /**

@@ -224,14 +224,14 @@ public class PlayingLANHelper {
         else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getInvolvedOne().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("PXP", Supervisor.getPeople().getExperience());
         else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getInvolvedOne().equals(Supervisor.getPeople()))
-            nm.sendMessageOnTCP("PE", Supervisor.getPeople().getEnergy());
+            nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy()); // Done pretty often as energy change by itself
         else if (notify.getEvents().equals(Events.PNJMoved) && notify.bufferNotEmpty()) {
             PNJMoved notif = (PNJMoved)notify;
             nm.sendMessageOnUDP("PNJMove", notif.getConcernedOne().getName(), notif.getBuffer());
         } else if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
             nm.sendMessageOnUDP("PA"); // Player attack
         else if (notify.getEvents().equals(Events.InventoryChanged) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
-            nm.sendMessageOnTCP("IC", ((InventoryChanged)notify).getItem(), ((InventoryChanged)notify).getType()); // Player attack
+            nm.sendMessageOnTCP("IC", ((InventoryChanged)notify).getItem(), ((InventoryChanged)notify).getType());
     }
 
     public static void getFocus() {

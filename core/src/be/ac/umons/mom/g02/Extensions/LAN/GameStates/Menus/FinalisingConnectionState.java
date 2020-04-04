@@ -117,7 +117,7 @@ public class FinalisingConnectionState extends MenuState {
             e.printStackTrace();
         }
         nm.whenMessageReceivedDo("PI", objects -> {
-            if (MasterOfMonsGame.getGameToLoad() == null)
+            if (MasterOfMonsGame.getGameToLoad() == null && MasterOfMonsGame.getSaveToLoad() == null)
                 FinalisingConnectionState.goToLoading();
             SupervisorMultiPlayer.setPlayerTwo((People) objects[0]);
         });
