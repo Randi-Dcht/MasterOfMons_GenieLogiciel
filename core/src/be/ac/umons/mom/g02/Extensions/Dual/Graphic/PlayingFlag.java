@@ -10,6 +10,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.graphics.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 
@@ -57,6 +59,9 @@ public class PlayingFlag extends PlayingStateDual
         Point ptFirst  = new Point((int)(MasterOfMonsGame.WIDTH/2+player.getPosX()-cam.position.x)/tileWidth,(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()-cam.position.y)/tileHeight);
         Point ptSecond = new Point(playerTwo.getPosX()/tileWidth,playerTwo.getPosY()/tileHeight);
 
+        cleanInventory((People)player.getCharacteristics());
+        cleanInventory((People)playerTwo.getCharacteristics());
+
         PlaceFlag(new Point(ptFirst.x,ptFirst.y + 1),new Point(ptFirst.x,ptFirst.y + 2),new Point(ptFirst.x,ptFirst.y + 3),new Point(ptSecond.x,ptSecond.y + 1),new Point(ptSecond.x,ptSecond.y + 2),new Point(ptSecond.x,ptSecond.y + 3));
     }
 
@@ -69,6 +74,17 @@ public class PlayingFlag extends PlayingStateDual
         ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
         for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
             addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
+    }
+
+
+    private void cleanInventory(People people)
+    {
+        List<Items> it = people.getInventory();
+        for (int i=0 ; i < it.size() ;i++)
+        {
+            if (it.get(i).getClass().equals(Flag.class))
+                people.getInventory().remove(i);
+        }
     }
 
 
@@ -96,7 +112,7 @@ public class PlayingFlag extends PlayingStateDual
         {
             Items itm = ((MapObject)selectedOne).getItem();
             if (itm.getClass().equals(Flag.class) && ((Flag)itm).getMyPeople().equals(player.getCharacteristics())
-                    &&SupervisorMultiPlayer.getPeopleTwo().pushObject(itm))
+                    && SupervisorMultiPlayer.getPeople().pushObject(itm))
                 pickUpAnObject();
         }
         else if (gim.isKey("useAnObject", KeyStatus.Pressed))
