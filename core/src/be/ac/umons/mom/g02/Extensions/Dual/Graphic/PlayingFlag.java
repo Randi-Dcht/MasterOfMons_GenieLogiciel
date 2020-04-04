@@ -9,7 +9,6 @@ import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlaye
 import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
-import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -54,8 +53,8 @@ public class PlayingFlag extends PlayingStateDual
     public void init()
     {
         super.init();
-        baseOne = new Cases(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
-        baseTwo = new Cases(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
+        baseOne = new Cases(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
+        baseTwo = new Cases(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
 
         Point ptFirst  = new Point((int)(MasterOfMonsGame.WIDTH/2+player.getPosX()-cam.position.x)/tileWidth,(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()-cam.position.y)/tileHeight);
         Point ptSecond = new Point(playerTwo.getPosX()/tileWidth,playerTwo.getPosY()/tileHeight);
@@ -83,13 +82,13 @@ public class PlayingFlag extends PlayingStateDual
      * @param people is the people to clean inventory
      */
     private void cleanInventory(People people)
-    {
+    {/*
         List<Items> it = people.getInventory();
-        for (int i=0 ; i < it.size() ;i++)
+        for (Items items : it)
         {
-            if (it.get(i).getClass().equals(Flag.class))
-                people.getInventory().remove(i);
-        }
+            if (items.getClass().equals(Flag.class))
+                people.removeObject(items);
+        }*/
     }
 
 
@@ -135,7 +134,7 @@ public class PlayingFlag extends PlayingStateDual
         }
         else if (gim.isKey("useAnObjectTwo", KeyStatus.Pressed))
         {
-            InventoryItem ii = inventoryShower.getSelectedItem();
+            InventoryItem ii = inventoryShowerTwo.getSelectedItem();
             if (ii != null && baseTwo.inCase(playerTwo))
             {
                 addItemToMap(ii.getItem(),playerTwo.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
