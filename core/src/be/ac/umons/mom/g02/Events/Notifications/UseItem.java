@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Events.Notifications;
 
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 
 /**
@@ -11,16 +12,18 @@ public class UseItem implements Notification
 {
     private Events evt;
     private Items buffer;
+    private People who;
 
 
     /**
      * This constructor define a notification when people uses item
      * @param buffer is a buffer with quest (specific to events)
      */
-    public UseItem(Items buffer)
+    public UseItem(Items buffer, People people)
     {
         evt = Events.UseItems;
         this.buffer = buffer;
+        who = people;
     }
 
 
@@ -29,7 +32,7 @@ public class UseItem implements Notification
      */
     public UseItem()
     {
-        this(null);
+        this(null,null);
     }
 
 
@@ -53,6 +56,11 @@ public class UseItem implements Notification
         return buffer;
     }
 
+
+    public People getPeople()
+    {
+        return who;
+    }
 
     /**
      * This method return if the buffer isn't empty

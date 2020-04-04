@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
@@ -27,7 +28,7 @@ public class DualMasterQuest extends MasterQuest
         peopleSecond = second;
         this.dual = dual;
         createUnderQuest(dual.getStart());
-        Supervisor.getEvent().add(Events.Attack,this);
+        Supervisor.getEvent().add(this,Events.Attack,Events.UseItems);
     }
 
     public People getWinner()
@@ -71,7 +72,7 @@ public class DualMasterQuest extends MasterQuest
     @Override
     public void nextQuest()
     {
-        //TODO call
+        SupervisorDual.getSupervisorDual().isFinish();
     }
 
     /**/

@@ -49,6 +49,8 @@ public class SupervisorDual extends SupervisorMultiPlayer
     private TypeDual dual;
     /***/
     private HashMap<People,People> adv = new HashMap<>();
+    /***/
+    private boolean finish = false;
 
 
     /**
@@ -140,6 +142,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
 
         if (playerTwo != null && playerOne != null)
         {
+            finish = false;
             adv.put(playerOne,playerTwo);
             adv.put(playerTwo,playerOne);
             dualQuest = new DualMasterQuest(dual,playerOne,playerTwo);
@@ -182,5 +185,15 @@ public class SupervisorDual extends SupervisorMultiPlayer
             playerTwoSave = (LogicSaving) Saving.getSaveObject(pathAndFile);
             playerTwo     = playerTwoSave.getPlayer();
         }
+    }
+
+    public void isFinish()
+    {
+        finish = true;
+    }
+
+    public boolean finish()
+    {
+        return finish;
     }
 }

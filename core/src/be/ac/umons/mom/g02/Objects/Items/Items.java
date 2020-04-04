@@ -74,7 +74,7 @@ public abstract class Items implements Serializable
      */
     public void used(People pp)
     {
-        Supervisor.getEvent().notify(new UseItem(this));
+        Supervisor.getEvent().notify(new UseItem(this,pp));
     }
 
 

@@ -128,17 +128,18 @@ public class PlayingFlag extends PlayingStateDual
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null && baseOne.inCase(player))
                {
-                   addItemToMap(ii.getItem(),player.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                    ii.getItem().used(Supervisor.getPeople());
+                   addItemToMap(ii.getItem(),player.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                }
         }
         else if (gim.isKey("useAnObjectTwo", KeyStatus.Pressed))
         {
             InventoryItem ii = inventoryShowerTwo.getSelectedItem();
+
             if (ii != null && baseTwo.inCase(playerTwo))
             {
-                addItemToMap(ii.getItem(),playerTwo.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                 ii.getItem().used(SupervisorDual.getPeopleTwo());
+                addItemToMap(ii.getItem(),playerTwo.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
             }
         }
         else if (gim.isKey("interact", KeyStatus.Pressed))

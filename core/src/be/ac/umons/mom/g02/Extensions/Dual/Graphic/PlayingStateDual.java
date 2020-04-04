@@ -157,6 +157,9 @@ public class PlayingStateDual extends PlayingState
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
 
+        if (SupervisorDual.getSupervisorDual().finish())
+            finishDual();
+
         if ((cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos) && pos)
             translateCamera(cam_X_pos,cam_Y_pos);
 

@@ -1,6 +1,8 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest;
 
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Flag;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
@@ -35,6 +37,19 @@ public class TakeFlag extends DualUnderQuest
     @Override
     public void evenActivity(Notification notify)
     {
+        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty())
+            analyzeUse(((UseItem)notify).getPeople());
+    }
+
+
+    /**
+     * This method analyses the people who use the object
+     * @param people is the people who use item
+     */
+    private void analyzeUse(People people)
+    {
+        if (people.equals(this.people))
+            addProgress(33.34);
     }
 
 
