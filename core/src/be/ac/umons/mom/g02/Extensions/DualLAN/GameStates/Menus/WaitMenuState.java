@@ -43,5 +43,7 @@ public class WaitMenuState extends MenuState {
      */
     protected void setNetworkManagerRunnables() {
         nm.whenMessageReceivedDo("DTS", (objects) -> PlayingDualLANHelper.onTypeSelected((TypeDual) objects[0]));
+
+        nm.processMessagesNotRan(true);
     }
 }

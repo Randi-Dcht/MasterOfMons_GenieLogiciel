@@ -82,7 +82,7 @@ public class PlayingFlag extends PlayingStateDual
      * Remove the flag in the bag
      * @param people is the people to clean inventory
      */
-    private void cleanInventory(People people)
+    protected void cleanInventory(People people)
     {
         List<Items> it = people.getInventory();
         for (int i=0 ; i < it.size() ;i++)
@@ -152,7 +152,7 @@ public class PlayingFlag extends PlayingStateDual
     /**
      * Check if the player is on the base
      */
-    private boolean check(Player player,Cases cases)
+    protected boolean check(Player player, Cases cases)
     {
         return true;
     }

@@ -205,6 +205,7 @@ public class GameStateManager {
         if (gameStateStack.contains(gs)) {
             while (gameStateStack.pop() != gs) {}
         }
+        gameStateStack.peek().getFocus();
     }
 
     /**

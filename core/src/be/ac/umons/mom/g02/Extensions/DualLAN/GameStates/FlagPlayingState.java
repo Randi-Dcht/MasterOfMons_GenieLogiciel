@@ -23,30 +23,33 @@ import com.badlogic.gdx.graphics.Color;
 import java.awt.*;
 import java.net.SocketException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class FlagPlayingState extends PlayingFlag implements NetworkReady {
 
-    NetworkManager nm;
+    protected NetworkManager nm;
+
+    protected boolean colorInverted;
 
     /**
      * @param gs
      */
     public FlagPlayingState(GraphicalSettings gs) {
         super(gs);
-    }
-
-    @Override
-    public void init() {
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
             e.printStackTrace();
         }
+        colorInverted = ! nm.isTheServer();
+    }
 
+    @Override
+    public void init() {
         super.init();
         PlayingDualLANHelper.init(this);
+
+        pos = false;
 
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
@@ -77,10 +80,20 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
             addItemToMap((MapObject.OnMapItem) objects[0]);
         });
         nm.sendMessageOnTCP("getItemsPos");
-        if (! nm.isTheServer()) {
+        if (colorInverted) {
             baseOne.setColorExt(Color.RED);
             baseTwo.setColorExt(Color.BLUE);
         }
+        nm.whenMessageReceivedDo("CI", (objects) -> { // Clear Inventory
+            super.cleanInventory((People) player.getCharacteristics());
+            super.cleanInventory((People) playerTwo.getCharacteristics());
+        });
+
+        for (Items it : player.getCharacteristics().getInventory()) // Can be done because the inventory was cleared if we wasn't disconnected
+            invertFlagColor((Flag)it); // Only flags in inventory (useful when disconnected)
+        for (Items it : playerTwo.getCharacteristics().getInventory())
+            invertFlagColor((Flag)it); // Only flags in inventory (useful when disconnected)
+
         nm.whenMessageReceivedDo("IC", objects -> {
             Items it = (Items)objects[0];
             InventoryChanged.Type type = (InventoryChanged.Type)objects[1];
@@ -92,6 +105,19 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
                 inventory.remove(inventory.size() - 1);
             }
         });
+
+        nm.whenMessageReceivedDo("MICC", (objects) -> {
+            colorInverted = (boolean)objects[0];
+            if (colorInverted) {
+                baseOne.setColorExt(Color.RED);
+                baseTwo.setColorExt(Color.BLUE);
+            } else {
+                baseOne.setColorExt(Color.BLUE);
+                baseTwo.setColorExt(Color.RED);
+            }
+        });
+
+        nm.processMessagesNotRan();
     }
 
     protected Flag invertFlagColor(Flag f) {
@@ -121,6 +147,14 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     }
 
     @Override
+    protected void cleanInventory(People people) {
+        if (nm.isTheServer()) {
+            super.cleanInventory(people);
+            nm.sendMessageOnTCP("CI"); // Clear inventory
+        }
+    }
+
+    @Override
     public void finishDual() {
         gsm.setState(WinMenu.class, true);
     }
@@ -137,10 +171,8 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         if (gim.isKey("useAnObject", KeyStatus.Pressed))
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
-            if (ii != null)
-            {
+            if (ii != null && check(player,baseOne))
                 nm.sendMessageOnTCP("Item", new MapObject.OnMapItem(ii.getItem(), player.getMapPos(), supervisorDual.getDual().getStartMaps().getMaps()));
-            }
         }
     }
 
@@ -171,6 +203,8 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     public void getFocus() {
         super.getFocus();
         PlayingDualLANHelper.getFocus();
+        if (nm.isTheServer())
+            nm.sendMessageOnTCP("MICC", ! colorInverted); // Must Inverse Case Color
     }
 
     @Override

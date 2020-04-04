@@ -161,7 +161,7 @@ public class NetworkManager {
     /**
      * The messages that wasn't ran because no runnable was found !
      */
-    protected Stack<String> messagesNotRan;
+    protected LinkedList<String> messagesNotRan;
 
     /**
      * @throws SocketException If the port used (32516) is already used
@@ -180,7 +180,7 @@ public class NetworkManager {
         }
         toSendOnTCP = new Stack<>();
         toSendOnUDP = new Stack<>();
-        messagesNotRan = new Stack<>();
+        messagesNotRan = new LinkedList<>();
         whenMessageReceivedDo("TC", (objects) -> Gdx.app.log("NetworkManager", "Test connection received : Possible unstable connection !"));
         msSinceLastMessage = 1;
         whenMessageReceivedDo("MOMServer", (objects) -> {
@@ -484,7 +484,7 @@ public class NetworkManager {
             DatagramPacket dp = new DatagramPacket(buf, buf.length);
             try {
                 ds.receive(dp);
-                processMessage(new String(dp.getData()));
+                processMessage(new String(dp.getData()), false); // Not stored because it will surely be sent again
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -589,15 +589,15 @@ public class NetworkManager {
      * @param received The received message
      */
     protected void processMessage(String received) {
-        processMessage(received, false);
+        processMessage(received, true);
     }
 
     /**
      * Process the received message and execute the necessary actions.
      * @param received The received message
-     * @param again If it's the second time this message is processed
+     * @param store If the message has to be stored in memory if no runnable was found
      */
-    protected void processMessage(String received, boolean again) {
+    protected void processMessage(String received, boolean store) {
         if (received == null) {
             Gdx.app.error("NetworkManager", "Disconnected from distant server !");
             onDisconnected();
@@ -616,10 +616,10 @@ public class NetworkManager {
             } catch (IOException | ClassNotFoundException e) {
                 Gdx.app.error("NetworkManager", String.format("Couldn't read the message : %s !", received), e);
             }
-        } else if (! again) {
+        } else if (store) {
             if (messagesNotRan.size() > 100)
                 messagesNotRan.pop();
-            messagesNotRan.add(received);
+            messagesNotRan.addFirst(received);
         }
         if (! received.equals(""))
             msSinceLastMessage = 0;
@@ -627,11 +627,23 @@ public class NetworkManager {
 
     /**
      * Process again all the messages that wasn't ran.
-     * CAUTION : After that, they can't be ran again.
+     * CAUTION : The messages will be lost if no runnable is detected.
      */
     public void processMessagesNotRan() {
-        while (messagesNotRan.size() > 0)
-            processMessage(messagesNotRan.pop(), true);
+        processMessagesNotRan(false);
+    }
+
+    /**
+     * Process again all the messages that wasn't ran.
+     * CAUTION : If processAgain is false, the messages will be lost if no runnable is detected.
+     * @param processAgain If the message needs to be in memory or not
+     */
+    public void processMessagesNotRan(boolean processAgain) {
+        LinkedList<String> messagesSave =  (LinkedList<String>) messagesNotRan.clone();
+        while (messagesSave.size() > 0) {
+            messagesNotRan.removeLast(); // If it's run, remove it from this stack, if not, processMessage put it back
+            processMessage(messagesSave.removeLast(), processAgain); // If we want to store it, we already have a save
+        }
     }
 
     /**

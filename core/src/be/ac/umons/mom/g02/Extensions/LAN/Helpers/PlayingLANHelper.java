@@ -224,7 +224,7 @@ public class PlayingLANHelper {
         else if (notify.getEvents().equals(Events.ExperienceChanged) && ((ExperienceChanged)notify).getInvolvedOne().equals(Supervisor.getPeople()))
             nm.sendMessageOnTCP("PXP", Supervisor.getPeople().getExperience());
         else if (notify.getEvents().equals(Events.EnergyChanged) && ((EnergyChanged)notify).getInvolvedOne().equals(Supervisor.getPeople()))
-            nm.sendMessageOnTCP("PE", Supervisor.getPeople().getEnergy());
+            nm.sendMessageOnUDP("PE", Supervisor.getPeople().getEnergy()); // Done pretty often as energy change by itself
         else if (notify.getEvents().equals(Events.PNJMoved) && notify.bufferNotEmpty()) {
             PNJMoved notif = (PNJMoved)notify;
             nm.sendMessageOnUDP("PNJMove", notif.getConcernedOne().getName(), notif.getBuffer());
