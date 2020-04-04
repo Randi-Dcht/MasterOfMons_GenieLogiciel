@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 
@@ -78,10 +79,11 @@ public class PlayingFlag extends PlayingStateDual
 
     private void cleanInventory(People people)
     {
-        for (Items it : people.getInventory())
+        List<Items> it = people.getInventory();
+        for (int i=0 ; i < it.size() ;i++)
         {
-            if (it.getClass().equals(Flag.class))
-                people.removeObject(it);
+            if (it.get(i).getClass().equals(Flag.class))
+                people.getInventory().remove(i);
         }
     }
 
