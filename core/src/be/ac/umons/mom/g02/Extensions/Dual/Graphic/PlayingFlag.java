@@ -121,8 +121,8 @@ public class PlayingFlag extends PlayingStateDual
             if (ii != null)//TODO base
                {
                    MapObject obj;
-                   Supervisor.getPeople().removeObject(ii.getItem());
                    mapObjects.add(obj=new MapObject(gs,ii.getItem()));
+                   ii.getItem().used(Supervisor.getPeople());
                    obj.setMapPos(player.getMapPos());obj.setMap(supervisorDual.getDual().getStartMaps().getMaps());
                }
         }
@@ -132,8 +132,8 @@ public class PlayingFlag extends PlayingStateDual
             if (ii != null)//TODO base
             {
                 MapObject obj;
-                SupervisorDual.getPeopleTwo().removeObject(ii.getItem());
                 mapObjects.add(obj=new MapObject(gs,ii.getItem()));
+                ii.getItem().used(SupervisorDual.getPeopleTwo());
                 obj.setMapPos(playerTwo.getMapPos());obj.setMap(supervisorDual.getDual().getStartMaps().getMaps());
             }
         }
