@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.LifeChanged;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
@@ -30,7 +31,9 @@ import java.net.SocketException;
 
 public class PlayingDualLANHelper {
 
-
+    public static void init(Observer observer) {
+        PlayingLANHelper.init(observer);
+    }
 
     public static void setNetworkManagerRunnable(NetworkReady ps) {
         try {

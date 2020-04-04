@@ -65,6 +65,12 @@ public class Cases
         sr.end();
     }
 
+    /**
+     * @param colorExt The exterior color of this case
+     */
+    public void setColorExt(Color colorExt) {
+        this.colorExt = colorExt;
+    }
 
     /***/
     public void dispose()

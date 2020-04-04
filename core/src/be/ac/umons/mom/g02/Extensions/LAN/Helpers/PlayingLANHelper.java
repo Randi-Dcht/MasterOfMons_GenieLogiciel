@@ -231,7 +231,7 @@ public class PlayingLANHelper {
         } else if (notify.getEvents().equals(Events.Attack) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
             nm.sendMessageOnUDP("PA"); // Player attack
         else if (notify.getEvents().equals(Events.InventoryChanged) && notify.bufferNotEmpty() && notify.getBuffer().equals(ps.getPlayer().getCharacteristics()))
-            nm.sendMessageOnTCP("IC", ((InventoryChanged)notify).getItem(), ((InventoryChanged)notify).getType()); // Player attack
+            nm.sendMessageOnTCP("IC", ((InventoryChanged)notify).getItem(), ((InventoryChanged)notify).getType());
     }
 
     public static void getFocus() {
