@@ -410,7 +410,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         } else if (notify.getEvents().equals(Events.Dead) &&
                 (notify.getBuffer().equals(SupervisorMultiPlayer.getPeopleTwo()))) {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
-            dms.init(); // NullPointer because text set too fast  TODO
             dms.setText(GraphicalSettings.getStringFromId("partnerDead"));
         } else if (notify.getEvents().equals(Events.MoneyChanged) && ((MoneyChanged)notify).getConcernedOne().equals(player.getCharacteristics()))
             nm.sendMessageOnTCP("Money", player.getCharacteristics().getMyMoney());

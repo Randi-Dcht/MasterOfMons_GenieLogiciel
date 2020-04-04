@@ -31,7 +31,6 @@ public class WaitMenuState extends MenuState {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        transparentBackground = true;
         setNetworkManagerRunnables();
         setMenuItems(new MenuItem[]{
                 new TitleMenuItem(gs, GraphicalSettings.getStringFromId("waiting")),

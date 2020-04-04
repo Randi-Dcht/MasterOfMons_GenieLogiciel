@@ -66,6 +66,10 @@ public class PlayingStateDual extends PlayingState
      * If the player is living
      */
     protected boolean player1Life = true, player2Life = true;
+    /**
+     * If the cam must be fixed
+     */
+    protected boolean pos = true;
 
 
     /**
@@ -89,14 +93,11 @@ public class PlayingStateDual extends PlayingState
         super.init();
 
         setSecondPlayerCharacteristics(SupervisorDual.getPeopleTwo());
-        //TODO setter the inventory for the second player
         lifeBarTwo = new LifeBar(gs);
         lifeBarTwo.setForegroundColor(gcm.getColorFor("lifeBar"));
         initMap(supervisorDual.getDual().getStartMaps().getMaps(),supervisorDual.getDual().getPointPlayerOne().x,supervisorDual.getDual().getPointPlayerOne().y);
         playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
-        cam.position.x = MasterOfMonsGame.WIDTH/2 + MasterOfMonsGame.WIDTH/4;
-        cam.position.y = MasterOfMonsGame.HEIGHT/2 - MasterOfMonsGame.HEIGHT/4;
-        cam.update();
+        translateCamera(cam_X_pos,cam_Y_pos);
         initSizeOfMaps();
         SupervisorDual.setGraphic(gs);
 
@@ -156,8 +157,8 @@ public class PlayingStateDual extends PlayingState
         lifeBarTwo.setValue((int)playerTwo.getCharacteristics().getActualLife());
         lifeBarTwo.setMaxValue((int)playerTwo.getCharacteristics().lifeMax());
 
-        //if (cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos)
-        //    translateCamera(cam_X_pos,cam_Y_pos);
+        if ((cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos) && pos)
+            translateCamera(cam_X_pos,cam_Y_pos);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
@@ -285,6 +286,16 @@ public class PlayingStateDual extends PlayingState
 
         if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
             pnjs.remove(adv.get(player));
+    }
+
+
+    /**
+     * Setter the fixed camera
+     * @param pos is the boolean if the cam can be fixed
+     */
+    public void setCamPos(boolean pos)
+    {
+        this.pos = pos;
     }
 
 

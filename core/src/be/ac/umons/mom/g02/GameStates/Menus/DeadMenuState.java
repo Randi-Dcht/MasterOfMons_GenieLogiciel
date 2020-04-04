@@ -10,11 +10,14 @@ import com.badlogic.gdx.Gdx;
 
 public class DeadMenuState extends MenuState {
 
+    protected static String text;
+
     /**
      * @param gs The game's graphical settings
      */
     public DeadMenuState(GraphicalSettings gs) {
         super(gs);
+        text = GraphicalSettings.getStringFromId("dead");
     }
 
     @Override
@@ -22,10 +25,13 @@ public class DeadMenuState extends MenuState {
         super.init();
         transparentBackground = true;
         handleEscape = false;
-        setText(GraphicalSettings.getStringFromId("dead"));
+        setText(text);
     }
 
     public void setText(String text) {
+        DeadMenuState.text = text;
+        if (buttons == null) // Not initialised
+            return;
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, text),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("loadPreviousGame"), () -> gsm.setState(LoadMenuState.class)),
