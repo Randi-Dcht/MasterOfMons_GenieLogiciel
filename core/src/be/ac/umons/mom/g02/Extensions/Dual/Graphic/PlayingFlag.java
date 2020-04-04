@@ -127,7 +127,7 @@ public class PlayingFlag extends PlayingStateDual
         else if (gim.isKey("useAnObject", KeyStatus.Pressed))
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
-            if (ii != null && check(player,baseOne))
+            if (ii != null && baseOne.inCase(player))
                {
                    addItemToMap(ii.getItem(),player.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                    ii.getItem().used(Supervisor.getPeople());
@@ -136,7 +136,7 @@ public class PlayingFlag extends PlayingStateDual
         else if (gim.isKey("useAnObjectTwo", KeyStatus.Pressed))
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
-            if (ii != null && check(playerTwo,baseTwo))
+            if (ii != null && baseTwo.inCase(playerTwo))
             {
                 addItemToMap(ii.getItem(),playerTwo.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                 ii.getItem().used(SupervisorDual.getPeopleTwo());
@@ -146,15 +146,6 @@ public class PlayingFlag extends PlayingStateDual
             return;
         else
             super.handleInput();
-    }
-
-
-    /**
-     * Check if the player is on the base
-     */
-    private boolean check(Player player,Cases cases)
-    {
-        return true;
     }
 
 

@@ -1,5 +1,7 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Logic.Items;
 
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
+import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -63,6 +65,19 @@ public class Cases
             sr.rect(positionX+5-camX,positionY+5-camY,width-10,height-10);
         }
         sr.end();
+    }
+
+
+    /***/
+    public boolean inCase(Player player)
+    {
+        int x = MasterOfMonsGame.WIDTH/2  + player.getPosX();
+        if (x < positionX || x > positionX + width)
+            return false;
+        int y = MasterOfMonsGame.HEIGHT/2 + player.getPosY();
+        if (y < positionY || y > positionY + height)
+            return false;
+        return true;
     }
 
 
