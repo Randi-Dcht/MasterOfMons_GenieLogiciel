@@ -50,6 +50,17 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         });
 
         PlayingDualLANHelper.setNetworkManagerRunnable(this);
+        nm.whenMessageReceivedDo("FPU", objects -> {
+            MapObject.OnMapItem rec = (MapObject.OnMapItem) objects[0];
+            for (int i = 0; i < mapObjects.size(); i++) {
+                MapObject.OnMapItem fomi = mapObjects.get(i).getCharacteristics();
+                if (fomi.getItem().idOfPlace().equals(rec.getItem().idOfPlace()) &&
+                        fomi.getMapPos().equals(rec.getMapPos())) {
+                    mapObjects.remove(i);
+                    break;
+                }
+            }
+        });
         nm.sendMessageOnTCP("getItemsPos");
     }
 
@@ -89,7 +100,7 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     }
     @Override
     protected void pickUpAnObject() {
-        nm.sendMessageOnTCP("IPU", ((MapObject) selectedOne).getCharacteristics());
+        nm.sendMessageOnTCP("FPU", ((MapObject) selectedOne).getCharacteristics()); // Only flag in this mode
         super.pickUpAnObject();
     }
 

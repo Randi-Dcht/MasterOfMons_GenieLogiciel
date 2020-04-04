@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represent on object on the map of the game (like a dropped inventory's item)
@@ -101,6 +102,30 @@ public class MapObject extends OnMapObject {
          */
         Point mapPos;
 
+        /**
+         * The map where this item is
+         */
         String map;
+
+        /**
+         * @return The characteristics of this item
+         */
+        public Items getItem() {
+            return item;
+        }
+
+        /**
+         * @return The position on the map (in pixel)
+         */
+        public Point getMapPos() {
+            return mapPos;
+        }
+
+        /**
+         * @return On which map this item is
+         */
+        public String getMap() {
+            return map;
+        }
     }
 }
