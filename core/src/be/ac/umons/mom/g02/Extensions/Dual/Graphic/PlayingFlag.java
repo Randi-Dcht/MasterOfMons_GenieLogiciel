@@ -137,6 +137,8 @@ public class PlayingFlag extends PlayingStateDual
                 obj.setMapPos(playerTwo.getMapPos());obj.setMap(supervisorDual.getDual().getStartMaps().getMaps());
             }
         }
+        else if (gim.isKey("interact", KeyStatus.Pressed))
+            return;
         else
             super.handleInput();
     }
