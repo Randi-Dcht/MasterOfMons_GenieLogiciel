@@ -12,18 +12,22 @@ import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Events.Notifications.Dead;
 import be.ac.umons.mom.g02.Events.Notifications.EntryPlaces;
 import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
+import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
 import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
+import be.ac.umons.mom.g02.Objects.Items.Phone;
 import be.ac.umons.mom.g02.Quests.Under.BattleForPlace;
 import be.ac.umons.mom.g02.Quests.Under.CheckStudy;
 import be.ac.umons.mom.g02.Quests.Under.FollowLesson;
 import be.ac.umons.mom.g02.Quests.Under.FreeTimeMons;
 import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
 import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
+import be.ac.umons.mom.g02.Quests.Under.LowEnergizing;
+import be.ac.umons.mom.g02.Quests.Under.MeetManyPeople;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
@@ -33,12 +37,8 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TestQuest
@@ -143,4 +143,51 @@ public class TestQuest
         go.evenActivity( new EntryPlaces(Places.StudyRoom));
         assertTrue(old < go.getProgress());
     }
+
+
+    //@Test
+    public void TestHelpMe()
+    {
+        //TODO
+    }
+
+
+    //@Test
+    public void TestSoulMate()
+    {
+        //TODO
+    }
+
+
+    @Test
+    public void TestLow()
+    {
+        LowEnergizing low = new LowEnergizing(Supervisor.getSupervisor().actualQuest(),10,Supervisor.getPeople());
+        double old = low.getProgress();
+        Mobile mobile = new Mobile("Test",Bloc.BA1,MobileType.Lambda,Actions.Attack,NameDialog.Lambda);
+        low.evenActivity(new LaunchAttack(mobile,Supervisor.getPeople()));
+        assertTrue(old < low.getProgress());
+        old = low.getProgress();
+        Supervisor.getPeople().setEnergy(9);
+        Supervisor.getEvent().notify(new LowSomething(LowSomething.TypeLow.Energy));
+        assertFalse(old < low.getProgress());
+    }
+
+
+    @Test
+    public void TestMeetMany()
+    {
+        MeetManyPeople many = new MeetManyPeople(Supervisor.getSupervisor().actualQuest(),10,Supervisor.getPeople());
+        Mobile mb = new Mobile("Test",Bloc.BA1,MobileType.Lambda,Actions.Attack,NameDialog.Lambda);
+        double old = many.getProgress();
+        many.evenActivity(new UseItem(new Phone(),Supervisor.getPeople()));
+        assertFalse(old < many.getProgress());
+        old = many.getProgress();
+        many.evenActivity(new MeetOther(mb));//first meet
+        assertTrue(old < many.getProgress());
+        old = many.getProgress();
+        many.evenActivity(new MeetOther(mb));//second meet
+        assertEquals(old, many.getProgress());
+    }
+
 }
