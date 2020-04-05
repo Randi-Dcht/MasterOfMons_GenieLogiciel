@@ -172,7 +172,7 @@ public class Saving implements Observer
      */
     public void playOldParty(String file , GraphicalSettings gs, PlayingState play)//TODO add playingState param
     {
-        SuperviserNormally.getSupervisor().oldGame(file,play,gs);//TODO delete
+        Supervisor.getSupervisor().oldGame(file,play,gs);//TODO delete
     }
 
 

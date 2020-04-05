@@ -18,7 +18,7 @@ public class LoadPlayerDual extends LoadMenuState
     }
 
     @Override
-    protected void load(String loadFilePath)
+    public void load(String loadFilePath)
     {
         SupervisorDual.getSupervisorDual().loadPeople(loadFilePath,playerNumber);
         gsm.removeFirstState();

@@ -19,9 +19,6 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class MasterOfMonsGame extends ApplicationAdapter {
 
-
-	// For me : https://www.youtube.com/watch?v=VAMEpiKTUZI&list=PL-2t7SM0vDfeZUKeM7Jm4U9utHwFS1N-C&index=4
-
 	/**
 	 * The horizontal size of the window.
 	 */

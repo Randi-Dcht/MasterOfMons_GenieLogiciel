@@ -295,9 +295,9 @@ public class ExtensionsManager {
 
     /**
      * Change the state and set its settings to correspond to the activated extensions one when we want to load an old game
-     * @param gsm The game's state manager
      */
-    public void initGameFromLoad(GameStateManager gsm) {
+    public void initGameFromLoad() {
+        GameStateManager gsm = GameStateManager.getInstance();
         ExtensionsManager.Extension mainExt = getMainExtension();
         try {
             if (mainExt != null && mainExt.getClassAfterOldGameSelection() != null) {

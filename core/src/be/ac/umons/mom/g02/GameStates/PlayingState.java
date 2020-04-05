@@ -709,7 +709,7 @@ public class PlayingState extends GameState implements Observer {
             quickSave();
         }
         if (gim.isKey("quickLoad", KeyStatus.Pressed))
-            quickLoad(gsm, gs);
+            quickLoad();
         if (gim.isKey("pointsAttribution", KeyStatus.Pressed))
             goToLevelUpState();
         if (gim.isKey("pickUpAnObject", KeyStatus.Pressed)) {
@@ -888,10 +888,13 @@ public class PlayingState extends GameState implements Observer {
     public static void quickSave() {
         String name = String.format("QS-MOM-%s", new SimpleDateFormat("dd_MM_yy_HH:mm:ss").format(new Date()));
         String newName = getNonExistingFilePath(name);
-        Saving save = SuperviserNormally.getSupervisor().getSave();
+        Saving save = Supervisor.getSupervisor().getSave();
         save.setNameSave(newName);
         save.signal();
         MasterOfMonsGame.getSettings().setLastSavePath(newName);
+        OutGameDialogState ogds = (OutGameDialogState) GameStateManager.getInstance().setState(OutGameDialogState.class, true);
+        ogds.setText(GraphicalSettings.getStringFromId("gameSaved"));
+        ogds.addAnswer("OK");
     }
 
     /**
@@ -901,23 +904,27 @@ public class PlayingState extends GameState implements Observer {
     private static String getNonExistingFilePath(String name) {
         String newName = name;
         int i = 1;
-        while (new File(new File(".").getAbsoluteFile().getParent(), newName + ".mom").exists()) {
+        File f = new File(new File(".").getAbsoluteFile().getParent() + "/Saves");
+        if (f.exists())
+            f.mkdirs();
+        while (new File(new File(".").getAbsoluteFile().getParent() + "/Saves", newName + ".mom").exists()) {
             newName = String.format("%s(%d)", name, i);
             i++;
         }
-        return newName + ".mom";
+        return new File(new File(".").getAbsoluteFile().getParent() + "/Saves", newName + ".mom").getAbsolutePath();
     }
 
     /**
      * Executed when the user want to quick load a game.
-     * @param gsm The game's state manager (needed for the dialog)
      */
-    public static void quickLoad(GameStateManager gsm, GraphicalSettings gs) {
-        OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
-        ogds.setText(GraphicalSettings.getStringFromId("sureLoad"));
-        ogds.addAnswer("yes", () ->
-                SuperviserNormally.getSupervisor().getSave().playOldParty(MasterOfMonsGame.getSettings().getLastSavePath(),gs));
-        ogds.addAnswer("no");
+    public void quickLoad() {
+        if (MasterOfMonsGame.getSettings().getLastSavePath() != null) {
+            OutGameDialogState ogds = (OutGameDialogState) GameStateManager.getInstance().setStateWithoutAnimation(OutGameDialogState.class);
+            ogds.setText(GraphicalSettings.getStringFromId("sureLoad"));
+            ogds.addAnswer("yes", () ->
+                    Supervisor.getSupervisor().oldGame(MasterOfMonsGame.getSettings().getLastSavePath(), this, gs));
+            ogds.addAnswer("no");
+        }
     }
 
     /**
