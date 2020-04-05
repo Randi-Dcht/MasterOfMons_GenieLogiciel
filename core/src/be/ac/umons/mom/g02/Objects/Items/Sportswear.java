@@ -4,20 +4,18 @@ import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 
-public class Sportswear extends Items {
-
-
-    private double reVisible = 0;
+public class Sportswear extends Items
+{
 
     public Sportswear() {
         super("Sportswear");
     }
 
     @Override
-    public void used(People pp)
+    public void used(People pp)//TODO
     {
         super.used(pp);
-        pp.setSpeed(2); //on double sa vitesse quand il possede cet item
+        pp.setSpeed(2);
         visibly();
         pp.pushObject(this);
     }
@@ -26,7 +24,6 @@ public class Sportswear extends Items {
     public boolean getObsolete() {
         return true ;
     }
-    // Il ne me faut pas cette methode car ça reste tout le temps vsible et ça ne casse pas
 
 
     /**
