@@ -298,7 +298,6 @@ public class PlayingLANHelper {
                 Character c = new Character(gs, mob);
                 pnjs.add(c);
                 Supervisor.getSupervisor().init(mob, c);
-                ps.getIdCharacterMap().put(mob.getName(), c);
             }
         }
 
