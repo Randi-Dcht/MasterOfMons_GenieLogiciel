@@ -39,13 +39,13 @@ public class DualChooseMenu extends MenuState
 
         setMenuItems(new MenuItem[]
                 {
-                        new TitleMenuItem(gs,gs.getStringFromId("menuDual")      ),
-                        new ButtonMenuItem(gim,gs,gs.getStringFromId("combat" )       ,() -> checkChoose(TypeDual.DualPlayer)),
-                        new ButtonMenuItem(gim,gs,gs.getStringFromId("flag")          ,() -> checkChoose(TypeDual.CatchFlag)),
-                        new ButtonMenuItem(gim,gs,gs.getStringFromId("survivor")      ,() -> checkChoose(TypeDual.Survivor)),
-                        new ButtonMenuItem(gim,gs,gs.getStringFromId("occupation")    ,() -> checkChoose(TypeDual.OccupationFloor)),
-                        new ButtonMenuItem(gim,gs,gs.getStringFromId("return")        ,() -> gsm.removeAllStateAndAdd(MainMenuState.class)),
-                        new ButtonMenuItem(gim,gs,gs.getStringFromId("quit")          ,() -> Gdx.app.exit())
+                        new TitleMenuItem(gs, GraphicalSettings.getStringFromId("menuDual")      ),
+                        new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("combat" )       ,() -> checkChoose(TypeDual.DualPlayer)),
+                        new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("flag")          ,() -> checkChoose(TypeDual.CatchFlag)),
+                        new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("survivor")      ,() -> checkChoose(TypeDual.Survivor)),
+                        new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("occupation")    ,() -> checkChoose(TypeDual.OccupationFloor)),
+                        new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("return")        ,() -> gsm.removeAllStateAndAdd(MainMenuState.class)),
+                        new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("quit")          ,() -> Gdx.app.exit())
                 });
     }
 
