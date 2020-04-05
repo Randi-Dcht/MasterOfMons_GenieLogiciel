@@ -14,31 +14,37 @@ import be.ac.umons.mom.g02.Events.Notifications.EntryPlaces;
 import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
 import be.ac.umons.mom.g02.Events.Notifications.LowSomething;
 import be.ac.umons.mom.g02.Events.Notifications.MeetOther;
+import be.ac.umons.mom.g02.Events.Notifications.OtherInformation;
 import be.ac.umons.mom.g02.Events.Notifications.PlaceInMons;
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.Pen;
 import be.ac.umons.mom.g02.Objects.Items.Phone;
+import be.ac.umons.mom.g02.Quests.Master.SuccessfulYear;
 import be.ac.umons.mom.g02.Quests.Under.BattleForPlace;
 import be.ac.umons.mom.g02.Quests.Under.CheckStudy;
 import be.ac.umons.mom.g02.Quests.Under.FollowLesson;
 import be.ac.umons.mom.g02.Quests.Under.FreeTimeMons;
 import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
-import be.ac.umons.mom.g02.Quests.Under.GoToLesson;
 import be.ac.umons.mom.g02.Quests.Under.LowEnergizing;
 import be.ac.umons.mom.g02.Quests.Under.MeetManyPeople;
+import be.ac.umons.mom.g02.Quests.Under.ReadInformation;
+import be.ac.umons.mom.g02.Quests.Under.SuccesfulYear;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
-import be.ac.umons.mom.g02.Quests.Master.SuccessfulYear;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class TestQuest
@@ -192,11 +198,23 @@ public class TestQuest
 
 
     @Test
-    public void TestRead()
-    {}
+    public void TestRead() throws Exception
+    {
+        ReadInformation read = new ReadInformation(Supervisor.getSupervisor().actualQuest(),10,Supervisor.getPeople());
+        double old = read.getAdvancement();
+        read.evenActivity(new OtherInformation("Info_MemoryPentagone"));
+        assertTrue(old < read.getAdvancement());
+        old = read.getAdvancement();
+        read.evenActivity(new OtherInformation("Info_MemoryPentagone"));
+        assertEquals(old, read.getAdvancement());
+    }
 
 
     @Test
     public void TestSuccess()
-    {}
+    {
+        SuccesfulYear success = new SuccesfulYear(Supervisor.getSupervisor().actualQuest(),10,Supervisor.getPeople());
+        double old = success.getAdvancement();
+        success.evenActivity(new EntryPlaces());//TODO
+    }
 }
