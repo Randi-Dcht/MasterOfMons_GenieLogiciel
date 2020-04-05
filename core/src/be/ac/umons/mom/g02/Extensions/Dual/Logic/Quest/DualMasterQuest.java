@@ -20,6 +20,7 @@ public class DualMasterQuest extends MasterQuest
     private DualUnderQuest[] ll = new DualUnderQuest[2];
     private People peopleSecond;
     private TypeDual dual;
+    private boolean canPass = true;
 
 
     public DualMasterQuest(TypeDual dual, People first, People second)
@@ -72,7 +73,8 @@ public class DualMasterQuest extends MasterQuest
     @Override
     public void nextQuest()
     {
-        SupervisorDual.getSupervisorDual().isFinish();
+        if ((Math.max(ll[0].getProgress(),ll[1].getProgress()) >= 100) && canPass)
+            SupervisorDual.getSupervisorDual().isFinish();
     }
 
     /**/

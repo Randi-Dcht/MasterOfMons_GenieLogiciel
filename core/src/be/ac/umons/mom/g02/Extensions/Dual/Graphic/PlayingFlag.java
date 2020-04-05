@@ -128,7 +128,7 @@ public class PlayingFlag extends PlayingStateDual
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null && baseOne.inCase(player))
                {
-                   ii.getItem().used(Supervisor.getPeople());
+                   ii.getItem().used(SupervisorDual.getPeople());
                    addItemToMap(ii.getItem(),player.getMapPos(),supervisorDual.getDual().getStartMaps().getMaps());
                }
         }
