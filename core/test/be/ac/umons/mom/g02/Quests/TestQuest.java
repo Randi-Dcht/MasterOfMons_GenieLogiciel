@@ -198,7 +198,7 @@ public class TestQuest
 
 
     @Test
-    public void TestRead() throws Exception
+    public void TestRead()
     {
         ReadInformation read = new ReadInformation(Supervisor.getSupervisor().actualQuest(),10,Supervisor.getPeople());
         double old = read.getAdvancement();
