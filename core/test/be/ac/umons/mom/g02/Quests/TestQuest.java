@@ -190,4 +190,13 @@ public class TestQuest
         assertEquals(old, many.getProgress());
     }
 
+
+    @Test
+    public void TestRead()
+    {}
+
+
+    @Test
+    public void TestSuccess()
+    {}
 }

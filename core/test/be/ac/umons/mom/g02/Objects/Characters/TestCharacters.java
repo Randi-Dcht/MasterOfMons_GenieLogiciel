@@ -1,11 +1,21 @@
 package be.ac.umons.mom.g02.Objects.Characters;
 
 import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Other.RandomName;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.Phone;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,6 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestCharacters
 {
+    @BeforeEach
+    void beforeAll()
+    {
+
+    }
 
     /**
      * This method allows you to test the character class
@@ -70,9 +85,10 @@ public class TestCharacters
     @Test
     void testingDialog()
     {
-        SuperviserNormally.initNormallyGame();
-        DialogCharacter dialog = new DialogCharacter(NameDialog.Lambda,Supervisor.getSupervisor());
-        //TODO check
+        Gdx.files = Mockito.mock(Files.class);FileHandle file = Mockito.mock(FileHandle.class);
+        Mockito.when(file.file()).thenReturn(new File("testAssets"));
+        Mockito.when(Gdx.files.getFileHandle("Name.LambdaPNJ.txt", Files.FileType.Internal)).thenReturn(file);
+        RandomName.giveName();
     }
 
 
