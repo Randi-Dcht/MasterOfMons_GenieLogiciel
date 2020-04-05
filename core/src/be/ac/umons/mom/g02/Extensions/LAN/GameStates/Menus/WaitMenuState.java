@@ -27,6 +27,7 @@ public class WaitMenuState extends MenuState {
             e.printStackTrace();
         }
         nm.whenMessageReceivedDo("Loaded", (objects) -> {
+            nm.whenMessageReceivedDo("Loaded", (objects1) -> {}); // Can't be null, else stored
             if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated) {
                 SupervisorDual.initDual();
                 if (nm.isTheServer())
@@ -37,7 +38,6 @@ public class WaitMenuState extends MenuState {
             else
                 gsm.removeAllStateAndAdd(PlayingState.class);
             nm.sendOnTCP("Loaded");
-            nm.whenMessageReceivedDo("Loaded", null);
         });
         nm.setOnDisconnected(() -> {
             gsm.removeAllStateAndAdd(MainMenuState.class);
