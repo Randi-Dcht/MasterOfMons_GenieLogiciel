@@ -494,6 +494,8 @@ public  abstract class Supervisor implements Observer
     /***/
     protected void placeItem()
     {
+        if (placePosition == null)
+            placePosition = new PositionOnMaps();
         if (playGraphic != null && mustPlaceItem)
         {
             for (Maps maps : Maps.values())

@@ -157,6 +157,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
         supervisor.init(player.getCharacteristics(), player);
         supervisor.init(playerTwo.getCharacteristics(), playerTwo);
+        if (nm.isTheServer() && SupervisorLAN.getPeople().getPlanning() != null)
+            nm.sendMessageOnTCP("PLAN", SupervisorLAN.getPeople().getPlanning());
 
         nm.processMessagesNotRan();
     }
@@ -176,8 +178,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             boolean b = (boolean) objects[0];
             isTheMazePlayer = b;
             player.setIsATarget(! isTheMazePlayer);
-            if (! b)
-                player.setNoMoving(true);
+            player.setNoMoving(!b);
         });
         nm.whenMessageReceivedDo("Death", (objects) -> {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);
@@ -303,7 +304,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         if (nm.isTheServer() && randomPNJPositions != null) {
             Array<RectangleMapObject> rmos = randomPNJPositions.getByType(RectangleMapObject.class);
             for (Character c : pnjs) {
-                if (! idCharacterMap.containsKey(c.getCharacteristics().getName())) {
+                if (idCharacterMap.containsKey(c.getCharacteristics().getName())) {
                     initPNJPosition(c, rmos);
                     idCharacterMap.put(c.getCharacteristics().getName(), c);
                 }

@@ -114,6 +114,7 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
             {
                 this.after = after;
                 people.newQuest(after);
+                Supervisor.getSupervisor().refreshQuest();
             }
             else
             {
