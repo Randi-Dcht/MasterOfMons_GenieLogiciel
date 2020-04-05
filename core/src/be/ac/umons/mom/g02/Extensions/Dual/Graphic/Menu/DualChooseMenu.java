@@ -44,7 +44,7 @@ public class DualChooseMenu extends MenuState
                         new ButtonMenuItem(gim,gs,gs.getStringFromId("flag")          ,() -> checkChoose(TypeDual.CatchFlag)),
                         new ButtonMenuItem(gim,gs,gs.getStringFromId("survivor")      ,() -> checkChoose(TypeDual.Survivor)),
                         new ButtonMenuItem(gim,gs,gs.getStringFromId("occupation")    ,() -> checkChoose(TypeDual.OccupationFloor)),
-                        new ButtonMenuItem(gim,gs,gs.getStringFromId("gpBackMainMenu"),() -> gsm.removeAllStateAndAdd(MainMenuState.class)),
+                        new ButtonMenuItem(gim,gs,gs.getStringFromId("return")        ,() -> gsm.removeAllStateAndAdd(MainMenuState.class)),
                         new ButtonMenuItem(gim,gs,gs.getStringFromId("quit")          ,() -> Gdx.app.exit())
                 });
     }
