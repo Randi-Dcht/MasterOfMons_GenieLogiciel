@@ -40,6 +40,7 @@ public class DualMasterQuest extends MasterQuest
             return peopleSecond;
     }
 
+
     private void createUnderQuest(Class<? extends DualUnderQuest> under)
     {
         try
@@ -73,15 +74,25 @@ public class DualMasterQuest extends MasterQuest
     @Override
     public void nextQuest()
     {
-        if ((Math.max(ll[0].getProgress(),ll[1].getProgress()) >= 100) && canPass)
-            SupervisorDual.getSupervisorDual().isFinish();
+        checkNext();
     }
+
+
+    /***/
+    public void checkNext()
+    {
+        System.out.println("pass to check next"+ll[0].getAdvancement()+" -- "+ll[1].getAdvancement());
+        if ((ll[0].getAdvancement() >= 99 || ll[1].getAdvancement() >= 99) && canPass)
+           { System.out.println("ok <----");SupervisorDual.getSupervisorDual().isFinish();}
+    }
+
 
     /**/
     public UnderQuest getUnderQuest(People player)
     {
         return list.get(player);
     }
+
 
     /**
      * This method returns the name of this Quest
@@ -126,6 +137,11 @@ public class DualMasterQuest extends MasterQuest
         listMobs.addAll(ll[1].getListMobile());//TODO pass static
     }
 
+
+    public void setPass(boolean condition)
+    {
+        canPass = condition;
+    }
 
     /**
      * This method return the maps for this Quest

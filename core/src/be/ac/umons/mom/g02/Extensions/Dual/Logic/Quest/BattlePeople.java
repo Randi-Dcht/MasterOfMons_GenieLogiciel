@@ -30,6 +30,7 @@ public class BattlePeople extends DualUnderQuest
         super("BattleDual",master,people);
         victim = SupervisorDual.getSupervisorDual().getAdversary(people);
         firstLife = victim.getActualLife();
+        ((DualMasterQuest)master).setPass(false);
     }
 
 

@@ -39,6 +39,7 @@ public class TakeFlag extends DualUnderQuest
     {
         if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty())
             analyzeUse(((UseItem)notify).getPeople());
+        ((DualMasterQuest)master).checkNext();
     }
 
 
@@ -49,7 +50,7 @@ public class TakeFlag extends DualUnderQuest
     private void analyzeUse(People people)
     {
         if (people.equals(this.people))
-            addProgress(33.34);
+            addProgress(33.50);
     }
 
 
