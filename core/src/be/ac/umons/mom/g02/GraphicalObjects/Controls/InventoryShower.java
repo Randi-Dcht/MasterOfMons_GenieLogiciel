@@ -86,6 +86,10 @@ public class InventoryShower extends Control implements Observer {
      * If the control is hided or not.
      */
     protected boolean hided = false;
+    /**
+     * The player of this inventory
+     */
+    protected Player player;
 
     /**
      * @param gs The game's graphical settings.
@@ -95,6 +99,7 @@ public class InventoryShower extends Control implements Observer {
         super(gs);
         inventory = inventoryOf.getInventory();
         this.am = AnimationManager.getInstance();
+        player = inventoryOf;
         init();
     }
 
@@ -321,8 +326,9 @@ public class InventoryShower extends Control implements Observer {
      */
     @Override
     public void update(Notification notify) {
-        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty() && ((UseItem)notify).getBuffer().removeInBag() && selectedItem != null) {
-            Supervisor.getPeople().removeObject(selectedItem.getItem());
+        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty() && ((UseItem)notify).getBuffer().removeInBag()
+                && selectedItem != null && ((UseItem)notify).getPeople().equals(player.getCharacteristics())) {
+            player.getCharacteristics().removeObject(selectedItem.getItem());
             selectedItem = null;
         }
     }
