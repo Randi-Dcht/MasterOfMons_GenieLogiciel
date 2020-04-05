@@ -52,7 +52,7 @@ public class PlayingLANHelper {
         for (Mobile mob : Supervisor.getSupervisor().getMobile(Supervisor.getSupervisor().getMaps(map))) {
             Character c = idCharacterMap.get(mob.getName());
             if (c != null)
-                nm.sendMessageOnTCP("PNJ", mob.getName(), mob.getPlayerBloc(), mob.getMobileType(), mob.getMaps(), mob.getAction(), c.getPosX(), c.getPosY());
+                nm.sendMessageOnTCP("PNJ", mob.getName(), mob, c.getPosX(), c.getPosY());
         }
         for (MovingPNJ mob : Supervisor.getSupervisor().getMovingPnj(Supervisor.getSupervisor().getMaps(map))) {
             Character c = idCharacterMap.get(mob.getName());
@@ -139,7 +139,7 @@ public class PlayingLANHelper {
                     ps.getMapObjects().remove(i);
         });
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
-            if (! ignoreEMQ) {
+            if (! ignoreEMQ && Supervisor.getPeople().getQuest().getName().equals(objects[0])) {
                 ps.getTimeShower().extendOnFullWidth(GraphicalSettings.getStringFromId("secondPlayerFinishedQuest"));
                 SupervisorMultiPlayer.getPeople().getQuest().passQuest();
                 SupervisorMultiPlayer.getPeopleTwo().newQuest(Supervisor.getPeople().getQuest(), false);
