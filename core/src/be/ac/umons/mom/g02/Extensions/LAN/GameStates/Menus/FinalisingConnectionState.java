@@ -8,7 +8,10 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
+import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.mom.g02.GameStates.GameState;
 import be.ac.umons.mom.g02.GameStates.LoadingState;
+import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
@@ -110,6 +113,7 @@ public class FinalisingConnectionState extends MenuState {
      * Set all the necessary actions in the NetworkManager
      */
     public static void setNetworkManagerRunnable() {
+        GameStateManager gsm = GameStateManager.getInstance();
         NetworkManager nm = null;
         try {
             nm = NetworkManager.getInstance();
@@ -133,5 +137,11 @@ public class FinalisingConnectionState extends MenuState {
                 SupervisorLAN.getSupervisor().oldGameLAN(save);
             FinalisingConnectionState.goToLoading();
         }));
+        nm.setOnDisconnected(() -> {
+            gsm.removeAllStateAndAdd(MainMenuState.class);
+            OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+            ogds.setText(GraphicalSettings.getStringFromId("disconnected"));
+            ogds.addAnswer("OK");
+        });
     }
 }

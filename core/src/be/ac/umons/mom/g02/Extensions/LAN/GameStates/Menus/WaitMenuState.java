@@ -4,6 +4,8 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
+import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
+import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
@@ -36,6 +38,12 @@ public class WaitMenuState extends MenuState {
                 gsm.removeAllStateAndAdd(PlayingState.class);
             nm.sendOnTCP("Loaded");
             nm.whenMessageReceivedDo("Loaded", null);
+        });
+        nm.setOnDisconnected(() -> {
+            gsm.removeAllStateAndAdd(MainMenuState.class);
+            OutGameDialogState ogds = (OutGameDialogState) gsm.setState(OutGameDialogState.class);
+            ogds.setText(GraphicalSettings.getStringFromId("disconnected"));
+            ogds.addAnswer("OK");
         });
     }
 
