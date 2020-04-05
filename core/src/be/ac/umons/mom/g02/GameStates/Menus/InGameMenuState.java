@@ -48,7 +48,7 @@ public class InGameMenuState extends MenuState {
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("save"), () -> gsm.setState(SaveMenuState.class)),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("load"), () -> gsm.setState(LoadMenuState.class)),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quickSave"), PlayingState::quickSave),
-                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quickLoad"), () -> PlayingState.quickLoad(gsm, gs)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quickLoad"), () -> ps.quickLoad()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), this::exit)});
     }

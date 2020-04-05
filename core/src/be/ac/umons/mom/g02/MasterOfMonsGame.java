@@ -19,9 +19,6 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class MasterOfMonsGame extends ApplicationAdapter {
 
-
-	// For me : https://www.youtube.com/watch?v=VAMEpiKTUZI&list=PL-2t7SM0vDfeZUKeM7Jm4U9utHwFS1N-C&index=4
-
 	/**
 	 * The horizontal size of the window.
 	 */
@@ -45,10 +42,17 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 	 * Game graphics settings.
 	 */
 	protected GraphicalSettings gs;
-
+	/**
+	 * The settings of the game
+	 */
 	protected static Settings settings;
-
+	/**
+	 * The path to the game to load if one has been selected.
+	 */
 	protected static String gameToLoad;
+	/**
+	 * The save to load if one has been selected
+	 */
 	protected static LogicSaving saveToLoad;
 
 	/**
@@ -89,32 +93,54 @@ public class MasterOfMonsGame extends ApplicationAdapter {
 		gsm.draw();
 	}
 
+	/**
+	 * @return The settings of the game
+	 */
 	public static Settings getSettings() {
 		return settings;
 	}
 
+	/**
+	 * @param settings The settings of the game
+	 */
 	public static void setSettings(Settings settings) {
 		MasterOfMonsGame.settings = settings;
 	}
 
+	/**
+	 * @param gameToLoad The path to the game to load if one has been selected.
+	 */
 	public static void setGameToLoad(String gameToLoad) {
 		MasterOfMonsGame.gameToLoad = gameToLoad;
 	}
 
+	/**
+	 * @return The path to the game to load if one has been selected.
+	 */
 	public static String getGameToLoad() {
 		return gameToLoad;
 	}
 
+	/**
+	 * Show an error with an OutGameStateDialog.
+	 * @param error The error to show.
+	 */
 	public static void showAnError(String error) {
 		OutGameDialogState ogds = (OutGameDialogState) GameStateManager.getInstance().setState(OutGameDialogState.class);
 		ogds.setText(error);
 		ogds.addAnswer("OK");
 	}
 
+	/**
+	 * @param saveToLoad The save to load if one has been selected
+	 */
 	public static void setSaveToLoad(LogicSaving saveToLoad) {
 		MasterOfMonsGame.saveToLoad = saveToLoad;
 	}
 
+	/**
+	 * @return The save to load if one has been selected
+	 */
 	public static LogicSaving getSaveToLoad() {
 		return saveToLoad;
 	}

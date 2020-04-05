@@ -192,6 +192,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         nm.whenMessageReceivedDo("getPNJsPos", (objects) ->
                 sendPNJsPositions((String) objects[0])); // Need to generate it first
         nm.whenMessageReceivedDo("Money", (objects -> ((People)(playerTwo.getCharacteristics())).setMoney((int) objects[0])));
+        nm.whenMessageReceivedDo("Save", objects -> {
+            Save s = (Save) objects[0];
+            s.invertPlayerOneAndTwo();
+            SupervisorLAN.getSupervisor().oldGameLAN(s, this, gs);
+        });
     }
 
     /**
@@ -455,6 +460,13 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     public Point getSecondPlayerPosition() {
         return new Point(playerTwo.getPosX(), playerTwo.getPosY());
+    }
+
+    @Override
+    public void quickLoad() {
+        super.quickLoad();
+        if (MasterOfMonsGame.getSettings().getLastSavePath() != null)
+            nm.sendMessageOnTCP("Save", SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getSettings().getLastSavePath()));
     }
 
     @Override
