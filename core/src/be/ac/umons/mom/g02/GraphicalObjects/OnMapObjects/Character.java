@@ -150,8 +150,8 @@ public class Character extends OnMapObject {
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             GlyphLayout gl = new GlyphLayout();
             StringBuilder sb = new StringBuilder();
-            sb.append("Name : ").append(getCharacteristics().getName()).append('\n');
-            sb.append("Level : ").append(getCharacteristics().getLevel());
+            sb.append(getCharacteristics().getName()).append('\n');
+            sb.append(GraphicalSettings.getStringFromId("level")).append(" ").append(getCharacteristics().getLevel());
             gl.setText(gs.getSmallFont(), sb.toString());
             sr.setColor(gcm.getColorFor("controlTransparentBackground"));
             sr.begin(ShapeRenderer.ShapeType.Filled);
