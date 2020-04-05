@@ -50,11 +50,11 @@ public class Character extends OnMapObject {
     /**
      * The character's characteristics
      */
-    private be.ac.umons.mom.g02.Objects.Characters.Character characteristics;
+    protected be.ac.umons.mom.g02.Objects.Characters.Character characteristics;
     /**
      * The time that the character needs to wait before his next attack
      */
-    private double timeBeforeAttack;
+    protected double timeBeforeAttack;
 
     /**
      * The life bar of this character.

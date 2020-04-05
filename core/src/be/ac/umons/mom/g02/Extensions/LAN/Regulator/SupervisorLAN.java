@@ -179,6 +179,7 @@ public class SupervisorLAN extends SupervisorMultiPlayer {
         play.setSecondPlayerMap(save.getSecondPlayerMap());
         play.setSecondPlayerPosition(save.getSecondPlayerPosition());
         play.addItemsToMap(save.getItemPosition());
+        play.getSecondPlayer().setCharacteristics(save.getSecondPlayer());
     }
 
     @Override
