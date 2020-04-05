@@ -348,6 +348,12 @@ public  abstract class Supervisor implements Observer
      */
     public abstract void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic);
 
+    /**
+     * This method allows to old game
+     * @param pathAndFile  is the name path and the name file
+     * @param graphic is the graphicalSetting class
+     */
+    public abstract void oldGame(String pathAndFile,GraphicalSettings graphic);
 
     /**
      * This method allows to save the game
@@ -481,7 +487,6 @@ public  abstract class Supervisor implements Observer
         if ( playerOne != null && qs != null && ps != null)
         {
             qs.setQuest(playerOne.getQuest());
-            save.setGraphic(ps);
             playGraphic = ps;
         }
     }

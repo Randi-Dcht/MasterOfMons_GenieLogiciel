@@ -39,10 +39,6 @@ public class Saving implements Observer
      * The name by default of the file
      */
     private String defaltName= "MasterOfMons_Save_NoneName.mom";
-    /**
-     * This is the instance of the playing state graphic
-     */
-    private PlayingState playingState;
 
 
     /**
@@ -57,16 +53,6 @@ public class Saving implements Observer
     public void setLogic(People people)
     {
         Supervisor.getEvent().add(Events.ChangeQuest,this);
-    }
-
-
-    /**
-     * This methods to give the instance of the playing state graphic
-     * @param playingState is the instance of playingState
-     */
-    public void setGraphic(PlayingState playingState)
-    {
-        this.playingState = playingState;
     }
 
 
@@ -163,26 +149,6 @@ public class Saving implements Observer
             Gdx.app.error("Error in the replay the get of setting (in)", e.getMessage());
         }
         return null;
-    }
-
-
-    /**
-     * This method allows you to resume the objects saved in a file and start a new game.
-     * @param file which is the full file name
-     */
-    public void playOldParty(String file , GraphicalSettings gs, PlayingState play)//TODO add playingState param
-    {
-        SuperviserNormally.getSupervisor().oldGame(file,play,gs);//TODO delete
-    }
-
-
-    /***/
-    public void playOldParty(String file , GraphicalSettings gs)//TODO delete
-    {
-        //if (playingState != null)
-            playOldParty(file,gs,playingState);
-       // else
-        //    Gdx.app.error("Error in play an old game with PlayingState","Null pointer");
     }
 
 

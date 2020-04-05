@@ -14,6 +14,8 @@ import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Other.TimeGame;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Master.MyFirstYear;
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 
 
@@ -103,6 +105,20 @@ public class SuperviserNormally extends Supervisor
             play.addItemsToMap(saving.getItemPosition());
             play.getPlayer().setCharacteristics(playerOne);
         }
+    }
+
+    /**
+     * This method allows to old game
+     * @param pathAndFile is the name path and the name file
+     * @param graphic     is the graphicalSetting class
+     */
+    @Override
+    public void oldGame(String pathAndFile, GraphicalSettings graphic)
+    {
+        if (playGraphic == null)
+            Gdx.app.error("Error to load an old party","null pointer on playingState in Supervisor");
+        else
+            oldGame(pathAndFile,playGraphic,graphic);
     }
 
 

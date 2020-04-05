@@ -7,6 +7,8 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Other.LogicSaving;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Gdx;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -75,6 +77,15 @@ public abstract class SupervisorMultiPlayer extends Supervisor
         super();
         deathToIgnore = new LinkedList<>();
     }
+
+
+    /**
+     * This method allows to old game
+     * @param pathAndFile is the name path and the name file
+     * @param graphic     is the graphicalSetting class
+     */
+    @Override
+    public void oldGame(String pathAndFile, GraphicalSettings graphic){}
 
 
     /**
