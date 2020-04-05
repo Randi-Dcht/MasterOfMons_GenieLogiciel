@@ -1,9 +1,5 @@
 package be.ac.umons.mom.g02.Extensions.DualLAN.GameStates;
 
-import be.ac.umons.mom.g02.Enums.Actions;
-import be.ac.umons.mom.g02.Enums.Bloc;
-import be.ac.umons.mom.g02.Enums.MobileType;
-import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingStateDual;
@@ -15,7 +11,6 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
-import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
@@ -158,9 +153,8 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         gsm.setState(WinMenu.class, true);
     }
 
+    @Override
     public HashMap<String, Character> getIdCharacterMap() {
         return idCharacterMap;
     }
-
-
 }

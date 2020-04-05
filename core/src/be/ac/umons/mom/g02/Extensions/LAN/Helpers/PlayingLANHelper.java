@@ -34,6 +34,10 @@ public class PlayingLANHelper {
     public static boolean ignoreEMQ;
     public static boolean pauseSent;
 
+    /**
+     * Set all the necessary variables and events.
+     * @param observer The <code>PlayingState</code> which use this class.
+     */
     public static void init(Observer observer) {
         Supervisor.getEvent().add(observer, Events.Dead, Events.UpLevel, Events.LifeChanged, Events.ExperienceChanged, Events.EnergyChanged, Events.InventoryChanged, Events.PNJMoved, Events.Attack);
     }
@@ -190,6 +194,9 @@ public class PlayingLANHelper {
         });
     }
 
+    /**
+     * Monitor all the changing due to a player input.
+     */
     public static void handleInput() {
         GameInputManager gim = GameInputManager.getInstance();
         NetworkManager nm = null;
@@ -206,6 +213,11 @@ public class PlayingLANHelper {
             nm.sendOnTCP("AC"); // TODO Don't work on UDP (?)
     }
 
+    /**
+     * Monitor and process all the events received by the <code>Observer</code> given before.
+     * @param ps The <code>PlayingState</code> which uses this class.
+     * @param notify The notification to process
+     */
     public static void update(NetworkReady ps, Notification notify) {
         NetworkManager nm = null;
         try {
@@ -234,6 +246,9 @@ public class PlayingLANHelper {
             nm.sendMessageOnTCP("IC", ((InventoryChanged)notify).getItem(), ((InventoryChanged)notify).getType());
     }
 
+    /**
+     * What to do when a <code>PlayingState</code> get the focus
+     */
     public static void getFocus() {
         NetworkManager nm = null;
         try {
@@ -247,6 +262,13 @@ public class PlayingLANHelper {
         }
     }
 
+    /**
+     * Return a list of the PNJs that must be drawn on the map and add these PNJs to the map making the link between them and their name.
+     * @param mapName The name of the map on which the PNJs must be
+     * @param ps The <code>PlayingState</code> using this class
+     * @param gs The graphical settings to use
+     * @return A list of the PNJs that must be drawn on the map.
+     */
     public static List<Character> getPNJsOnMap(String mapName, NetworkReady ps, GraphicalSettings gs) {
         NetworkManager nm = null;
         try {

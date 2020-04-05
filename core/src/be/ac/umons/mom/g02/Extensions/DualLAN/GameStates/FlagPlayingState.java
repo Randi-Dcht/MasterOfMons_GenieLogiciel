@@ -25,14 +25,23 @@ import java.net.SocketException;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The playing state when the player choose to play the dual "Flag"
+ */
 public class FlagPlayingState extends PlayingFlag implements NetworkReady {
 
+    /**
+     * The network manager of the game
+     */
     protected NetworkManager nm;
 
+    /**
+     * If the color of the bases are inverted or not.
+     */
     protected boolean colorInverted;
 
     /**
-     * @param gs
+     * @param gs The graphical settings to use
      */
     public FlagPlayingState(GraphicalSettings gs) {
         super(gs);
@@ -81,8 +90,8 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         });
         nm.sendMessageOnTCP("getItemsPos");
         if (colorInverted) {
-            baseOne.setColorExt(Color.RED);
-            baseTwo.setColorExt(Color.BLUE);
+            baseOne.setColorExt(Color.BLUE);
+            baseTwo.setColorExt(Color.RED);
         }
         nm.whenMessageReceivedDo("CI", (objects) -> { // Clear Inventory
             super.cleanInventory((People) player.getCharacteristics());
@@ -109,17 +118,22 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         nm.whenMessageReceivedDo("MICC", (objects) -> {
             colorInverted = (boolean)objects[0];
             if (colorInverted) {
-                baseOne.setColorExt(Color.RED);
-                baseTwo.setColorExt(Color.BLUE);
-            } else {
                 baseOne.setColorExt(Color.BLUE);
                 baseTwo.setColorExt(Color.RED);
+            } else {
+                baseOne.setColorExt(Color.RED);
+                baseTwo.setColorExt(Color.BLUE);
             }
         });
 
         nm.processMessagesNotRan();
     }
 
+    /**
+     * Invert the color of the given flag <code>f</code>. (<code>f</code> is modified too)
+     * @param f The flag
+     * @return The flag with the color inverted.
+     */
     protected Flag invertFlagColor(Flag f) {
         if (f.idOfPlace().equals("R")) { // R for second player => B for me
             f.setPeople((People)playerTwo.getCharacteristics(), "B");

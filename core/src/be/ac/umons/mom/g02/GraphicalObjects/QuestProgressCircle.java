@@ -48,6 +48,9 @@ public class QuestProgressCircle {
      * The last radius given on the last drawing.
      */
     protected float lastRadius;
+    /**
+     * The last degrees that were drawn.
+     */
     protected float lastDegrees;
 
     /**

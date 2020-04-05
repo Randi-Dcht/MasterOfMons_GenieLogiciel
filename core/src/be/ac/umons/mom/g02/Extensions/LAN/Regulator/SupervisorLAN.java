@@ -25,9 +25,19 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * A sub-class of "SupervisorMultiPlayer" adapted to the LAN Extension
+ * @see SupervisorMultiPlayer
+ */
 public class SupervisorLAN extends SupervisorMultiPlayer {
 
+    /**
+     * The save object representing the game
+     */
     protected Save save;
+    /**
+     * The <code>NetworkManager</code> of the game
+     */
     protected NetworkManager nm;
 
     /**

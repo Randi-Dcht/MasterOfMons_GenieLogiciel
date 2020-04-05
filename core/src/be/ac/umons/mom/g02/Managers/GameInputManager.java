@@ -61,7 +61,13 @@ public class GameInputManager implements InputProcessor {
      */
     private GameKeyManager gkm;
 
+    /**
+     * If the mouse was clicked before the update.
+     */
     private boolean isMouseJustClicked = false;
+    /**
+     * If the mouse was un-clicked before the update.
+     */
     private boolean isMouseJustUnclicked = false;
 
     protected GameInputManager() {
@@ -202,10 +208,16 @@ public class GameInputManager implements InputProcessor {
         return lastKeyCode;
     }
 
+    /**
+     * @return If the mouse was clicked before the update.
+     */
     public boolean isMouseJustClicked() {
         return isMouseJustClicked;
     }
 
+    /**
+     * @return If the mouse was un-clicked before the update.
+     */
     public boolean isMouseJustUnclicked() {
         return isMouseJustUnclicked;
     }

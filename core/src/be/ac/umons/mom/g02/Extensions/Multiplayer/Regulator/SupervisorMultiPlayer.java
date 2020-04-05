@@ -139,7 +139,10 @@ public abstract class SupervisorMultiPlayer extends Supervisor
     }
 
 
-    /***/
+    /**
+     * Add a Mobile to the list of death to "ignore". The player won't gain neither any experience from it's death, nor any objects.
+     * @param mb The mobile to add to the list.
+     */
     public void addADeathToIgnore(Mobile mb)
     {
         deathToIgnore.add(mb);

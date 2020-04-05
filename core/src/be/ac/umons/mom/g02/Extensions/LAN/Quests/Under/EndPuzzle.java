@@ -8,6 +8,9 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 
+/**
+ * Represent the under-quest where the player have to get out of a maze.
+ */
 public class EndPuzzle extends UnderQuest {
     /**
      * This constructor allows define the underQuest

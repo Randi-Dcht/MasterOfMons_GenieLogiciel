@@ -25,7 +25,6 @@ import java.util.Arrays;
  * @author Guillaume Cardoen
  */
 public class LoadingState extends GameState {
-    protected static boolean isLoading = false;
 
     /**
      * The margin the circles needs to have horizontally.
@@ -90,7 +89,6 @@ public class LoadingState extends GameState {
     public LoadingState(GraphicalSettings gs) {
         super(gs);
         afterLoadingState = PlayingState.class;
-        isLoading = true;
     }
 
     /**
@@ -139,7 +137,6 @@ public class LoadingState extends GameState {
                     if (onLoaded != null)
                         Gdx.app.postRunnable(onLoaded);
                     changedCalled = true;
-                    isLoading = false;
                 }
                 return;
             }
@@ -174,10 +171,6 @@ public class LoadingState extends GameState {
      */
     public void setAfterLoadingState(Class<? extends GameState> state) {
         this.afterLoadingState = state;
-    }
-
-    public static boolean isLoading() {
-        return isLoading;
     }
 
     public void setOnLoaded(Runnable onLoaded) {

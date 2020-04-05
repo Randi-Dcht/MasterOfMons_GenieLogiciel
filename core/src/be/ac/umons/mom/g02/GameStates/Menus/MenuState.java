@@ -195,6 +195,9 @@ public abstract class MenuState extends GameState {
             selectedItem.y = buttons.get(selectedItem.x).size() - 1;
     }
 
+    /**
+     * Check if the selected item is visible to the user. If not, go down/up to make it visible.
+     */
     protected void checkSelectedItemDrawingPosition() {
         int selectedItemY = buttons.get(selectedItem.x).get(selectedItem.y).getY();
         if (selectedItemY < 0)

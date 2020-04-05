@@ -8,8 +8,14 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
 import java.net.SocketException;
 
+/**
+ * Inherited from <code>be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu</code>. Let the user choose which type of dual he wants to play.
+ */
 public class DualChooseMenu extends be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu {
 
+    /**
+     * The network manager of the game.
+     */
     NetworkManager nm;
 
     /**

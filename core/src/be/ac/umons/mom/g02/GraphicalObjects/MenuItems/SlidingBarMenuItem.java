@@ -12,7 +12,7 @@ public class SlidingBarMenuItem extends MenuItem<SlidingBar> {
      * Construct a new item.
      *
      * @param gim    The game's input manager
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public SlidingBarMenuItem(GameInputManager gim, GraphicalSettings gs, String header) {
@@ -23,7 +23,7 @@ public class SlidingBarMenuItem extends MenuItem<SlidingBar> {
      * Construct a new item.
      *
      * @param gim    The game's input manager
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      * @param id     The item's id.
      */

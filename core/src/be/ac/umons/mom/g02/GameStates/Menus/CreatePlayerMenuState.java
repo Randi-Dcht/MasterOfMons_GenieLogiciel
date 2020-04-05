@@ -44,6 +44,10 @@ public class CreatePlayerMenuState extends MenuState {
      */
     protected Class<? extends GameState> afterLoadingState;
 
+    /**
+     * If it's false, we start a new party.
+     * If it's true, we set the first player in <code>SupervisorMultiplayer</code>.
+     */
     protected boolean mustUseMultiplayer = false;
 
     /**
@@ -144,6 +148,9 @@ public class CreatePlayerMenuState extends MenuState {
         this.afterLoadingState = afterLoadingState;
     }
 
+    /**
+     * @param mustUseMultiplayer If it's false, we start a new party. If it's true, we set the first player in <code>SupervisorMultiplayer</code>.
+     */
     public void setMustUseMultiplayer(boolean mustUseMultiplayer) {
         this.mustUseMultiplayer = mustUseMultiplayer;
     }

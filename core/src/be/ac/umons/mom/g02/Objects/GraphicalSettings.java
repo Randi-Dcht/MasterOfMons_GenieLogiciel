@@ -58,6 +58,9 @@ public class GraphicalSettings {
      */
     protected boolean showMapCoordinates = false;
 
+    /**
+     * The GameColorManager of the game.
+     */
     protected GameColorManager gcm;
 
     public GraphicalSettings() {

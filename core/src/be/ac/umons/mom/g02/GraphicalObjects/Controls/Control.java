@@ -30,6 +30,9 @@ public abstract class Control {
      */
     protected GraphicalSettings gs;
 
+    /**
+     * The GameColorManager of the game.
+     */
     protected GameColorManager gcm;
     /**
      * The horizontal margin
@@ -68,20 +71,36 @@ public abstract class Control {
         this.height = size.y;
     }
 
+    /**
+     * Update the control
+     * @param dt The time that has gone by since the last call.
+     */
     public void update(double dt) {}
 
+    /**
+     * @return The horizontal position of this control.
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * @return The vertical position of this control.
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * @return The width of this control.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * @return The height of this control
+     */
     public int getHeight() {
         return height;
     }

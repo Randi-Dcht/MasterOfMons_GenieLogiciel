@@ -7,7 +7,7 @@ public class NumberTextBoxMenuItem extends TextBoxMenuItem {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public NumberTextBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header) {
@@ -17,7 +17,7 @@ public class NumberTextBoxMenuItem extends TextBoxMenuItem {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      * @param id     The item's id.
      */

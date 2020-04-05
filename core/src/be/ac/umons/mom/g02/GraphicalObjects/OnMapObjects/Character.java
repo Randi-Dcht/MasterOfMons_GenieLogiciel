@@ -69,17 +69,29 @@ public class Character extends OnMapObject {
      */
     protected boolean isATarget = false;
 
+    /**
+     * The size of this character.
+     */
     protected int width, height;
-
-
+    /**
+     * The control activated when an attack occurs.
+     */
     protected AttackRangeCircle arc;
-
+    /**
+     * The horizontal margin
+     */
     protected double leftMargin;
-
+    /**
+     * The vertical margin
+     */
     protected double topMargin;
-
+    /**
+     * The color of the circle if this character is a target.
+     */
     protected Color isATargetColor;
-
+    /**
+     * If the character can't move.
+     */
     protected boolean noMoving = false;
 
     /**
@@ -100,6 +112,9 @@ public class Character extends OnMapObject {
         isATargetColor = gcm.getColorFor("characterIsATargetCircle");
     }
 
+    /**
+     * Default constructor. USES IT ONLY FOR TESTS PURPOSES
+     */
     protected Character() {}
 
     /**
@@ -191,12 +206,17 @@ public class Character extends OnMapObject {
         posY += y;
     }
 
-
+    /**
+     * Expand the circle showing an attack is launched.
+     */
     public void expandAttackCircle() {
         if (! isRecovering())
             arc.expand();
     }
 
+    /**
+     * @return If this character is still recovering from a previous attack.
+     */
     public boolean isRecovering() {
         return arc.isRecovering();
     }
@@ -242,6 +262,10 @@ public class Character extends OnMapObject {
     public be.ac.umons.mom.g02.Objects.Characters.Character getCharacteristics() {
         return characteristics;
     }
+
+    /**
+     * @param characteristics Character's characteristics
+     */
     public void setCharacteristics(People characteristics) {
         this.characteristics = characteristics;
     }
@@ -276,8 +300,9 @@ public class Character extends OnMapObject {
         this.posY = posY;
     }
 
-
-
+    /**
+     * @return The position of this character (in pixel)
+     */
     public Point getMapPos() {
         return new Point(getPosX(), getPosY());
     }
@@ -319,6 +344,9 @@ public class Character extends OnMapObject {
         return new Rectangle(x , y, ((float)this.width / tileWidth), (float)this.height / tileHeight);
     }
 
+    /**
+     * Dispose all resources allocated by this object.
+     */
     public void dispose() {
         lifeBar.dispose();
         arc.dispose();
@@ -354,10 +382,16 @@ public class Character extends OnMapObject {
         this.tileHeight = tileHeight;
     }
 
+    /**
+     * @param isATargetColor The color of the circle if this character is a target.
+     */
     public void setIsATargetColor(Color isATargetColor) {
         this.isATargetColor = isATargetColor;
     }
 
+    /**
+     * @param noMoving If the character can't move.
+     */
     public void setNoMoving(boolean noMoving) {
         this.noMoving = noMoving;
     }

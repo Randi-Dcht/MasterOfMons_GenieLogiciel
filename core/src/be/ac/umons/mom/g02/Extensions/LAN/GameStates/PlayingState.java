@@ -121,7 +121,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (nm.isTheServer())
                 refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
             secondPlayerMap = map;
-            mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
+            mustDrawSecondPlayer = map.equals(gmm.getActualMapName()) && ! mazeMode;
         });
         nm.whenMessageReceivedDo("SPMC", (objects -> initMap((String)objects[0])));
 

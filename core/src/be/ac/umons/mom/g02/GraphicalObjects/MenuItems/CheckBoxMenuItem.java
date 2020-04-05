@@ -9,12 +9,15 @@ import java.awt.*;
 
 public class CheckBoxMenuItem extends MenuItem<CheckBox> {
 
-    protected CheckBox.OnStateChangedRunnable toDoIfStateChanged;
+    /**
+     * What to do if the state on the CheckBox change.
+     */
+    protected CheckBox.OnStateChangedRunnable onStateChanged;
 
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public CheckBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header) {
@@ -24,30 +27,30 @@ public class CheckBoxMenuItem extends MenuItem<CheckBox> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header         The item's name
-     * @param toDoIfStateChanged The action to do if the item is selected.
+     * @param onStateChanged The action to do if the item is selected.
      */
-    public CheckBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header, CheckBox.OnStateChangedRunnable toDoIfStateChanged) {
-        this(gim, gs, header, toDoIfStateChanged, true);
+    public CheckBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header, CheckBox.OnStateChangedRunnable onStateChanged) {
+        this(gim, gs, header, onStateChanged, true);
     }
 
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header               The item's name
-     * @param toDoIfStateChanged       The action to do if the item is selected.
+     * @param onStateChanged       The action to do if the item is selected.
      * @param drawUnderPreviousOne If this item must be drawn under the previous one (=true) or next to it (=false).
      */
-    public CheckBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header, CheckBox.OnStateChangedRunnable toDoIfStateChanged, boolean drawUnderPreviousOne) {
-        this(gim, gs, header, toDoIfStateChanged, drawUnderPreviousOne, "");
+    public CheckBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header, CheckBox.OnStateChangedRunnable onStateChanged, boolean drawUnderPreviousOne) {
+        this(gim, gs, header, onStateChanged, drawUnderPreviousOne, "");
     }
 
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      * @param id     The item's id.
      */
@@ -58,17 +61,17 @@ public class CheckBoxMenuItem extends MenuItem<CheckBox> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header         The item's name
      * @param id             The item's id
-     * @param toDoIfStateChanged The action to do if the item is selected.
+     * @param onStateChanged The action to do if the item is selected.
      */
-    public CheckBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header, CheckBox.OnStateChangedRunnable toDoIfStateChanged, boolean drawUnderPreviousOne, String id) {
+    public CheckBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header, CheckBox.OnStateChangedRunnable onStateChanged, boolean drawUnderPreviousOne, String id) {
         super(gim, gs, header, id);
-        this.toDoIfStateChanged = toDoIfStateChanged;
+        this.onStateChanged = onStateChanged;
         this.drawUnderPreviousOne = drawUnderPreviousOne;
         control = new CheckBox(gs);
-        control.setOnStateChanged(toDoIfStateChanged);
+        control.setOnStateChanged(onStateChanged);
         control.setText(header);
     }
 
@@ -82,6 +85,6 @@ public class CheckBoxMenuItem extends MenuItem<CheckBox> {
     public void draw(Batch batch, Point pos) {
         super.draw(batch, pos);
         pos.y -= gs.getNormalFont().getLineHeight() + topMargin;
-        drawIfNonNull(batch, pos, size);
+        drawIfNotNull(batch, pos, size);
     }
 }

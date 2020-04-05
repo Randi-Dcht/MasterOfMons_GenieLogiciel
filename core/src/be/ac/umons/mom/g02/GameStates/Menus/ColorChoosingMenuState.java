@@ -12,8 +12,14 @@ import java.util.List;
 
 public class ColorChoosingMenuState extends MenuState {
 
+    /**
+     * The GameColorManager of the game
+     */
     protected GameColorManager gcm;
-    HashMap<String, Color> colorsMap;
+    /**
+     * The map making the link between an id and the color associated with this ID.
+     */
+    protected HashMap<String, Color> colorsMap;
 
     /**
      * @param gs The game's graphical settings

@@ -166,6 +166,9 @@ public class CheckBox extends Control {
         isSelected = selected;
     }
 
+    /**
+     * Represent an runnable taking a boolean as parameter.
+     */
     public interface OnStateChangedRunnable {
         void run(boolean newState);
     }

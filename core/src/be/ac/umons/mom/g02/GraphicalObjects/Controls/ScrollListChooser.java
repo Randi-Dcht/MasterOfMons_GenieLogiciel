@@ -34,6 +34,9 @@ public class ScrollListChooser extends Control {
      */
     protected boolean newItems = false;
 
+    /**
+     * The vertical size of one item of this control.
+     */
     protected int ySize;
 
     /**

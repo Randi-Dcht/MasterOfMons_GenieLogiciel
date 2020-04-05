@@ -70,13 +70,27 @@ public class GameColorManager {
         return colorsMap.get(id);
     }
 
+    /**
+     * Associate the Id with the color.
+     * @param id The ID
+     * @param color The color associated with the ID.
+     */
     public void setColorFor(String id, Color color) {
         colorsMap.put(id, color);
     }
+
+    /**
+     * Associate the Id with the color.
+     * @param id The ID
+     * @param color The color associated with the ID.
+     */
     public void setColorFor(String id, String color) {
         colorsMap.put(id, StringHelper.getColorFromString(color));
     }
 
+    /**
+     * @return The map associating an ID with a color.
+     */
     public HashMap<String, Color> getColorsMap() {
         return colorsMap;
     }

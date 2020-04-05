@@ -250,6 +250,9 @@ public class InventoryShower extends Control implements Observer {
         return height;
     }
 
+    /**
+     * @return The item that the user has selected.
+     */
     public InventoryItem getSelectedItem() {
         return selectedItem;
     }

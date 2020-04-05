@@ -147,6 +147,9 @@ public class AgendaShower extends Control {
         sr.dispose();
     }
 
+    /**
+     * Refresh the list of courses to show.
+     */
     public void refreshCourses() {
         if (Supervisor.getPeople().getPlanning() != null) {
             courses = Supervisor.getPeople().getPlanning().get(

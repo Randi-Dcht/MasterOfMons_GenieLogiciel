@@ -93,6 +93,10 @@ public class ConnectionRoomState extends MenuState {
         setMenuItems(menuItems.toArray(new MenuItem[0]));
     }
 
+    /**
+     * Executed when the user enter an IP and click on the "Connect" button
+     * @param ip The IP the user entered
+     */
     protected void manualConnect(String ip) {
         for (InetAddress ia : nm.getAddressToBroadcast().keySet()) {
             if (ia.toString().contains(ip)) {
@@ -112,6 +116,9 @@ public class ConnectionRoomState extends MenuState {
         }
     }
 
+    /**
+     * Executed when the IP the user typed is not correct.
+     */
     protected void onIncorrectIP() {
         OutGameDialogState ogds = (OutGameDialogState) gsm.setStateWithoutAnimation(OutGameDialogState.class);
         ogds.setText(GraphicalSettings.getStringFromId("ipIncorrect"));

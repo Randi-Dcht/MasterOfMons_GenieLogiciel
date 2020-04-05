@@ -23,7 +23,7 @@ public class ColorSelectorMenuItem extends MenuItem<ColorSelector> {
      * Construct a new item.
      *
      * @param gim    The game's input manager
-     * @param gs
+     * @param gs The graphical settings to use
      * @param id     The item's id.
      * @param header The item's name
      */

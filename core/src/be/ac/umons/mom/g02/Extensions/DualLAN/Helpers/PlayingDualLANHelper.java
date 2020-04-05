@@ -29,12 +29,23 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.net.SocketException;
 
+/**
+ * The class where all the (possible) redundant code for the extension LAN combined with Dual is.
+ */
 public class PlayingDualLANHelper {
 
+    /**
+     * Set all the necessary variables and events.
+     * @param observer The <code>PlayingState</code> which use this class.
+     */
     public static void init(Observer observer) {
         PlayingLANHelper.init(observer);
     }
 
+    /**
+     * Set all the necessary <code>Runnable</code> in the <code>NetworkManager</code>
+     * @param ps The playing state which use this class
+     */
     public static void setNetworkManagerRunnable(NetworkReady ps) {
         try {
             NetworkManager nm = NetworkManager.getInstance();
@@ -84,6 +95,11 @@ public class PlayingDualLANHelper {
         }
     }
 
+    /**
+     * Monitor and process all the events received by the <code>Observer</code> given before.
+     * @param ps The <code>PlayingState</code> which uses this class.
+     * @param notify The notification to process
+     */
     public static void update(NetworkReady ps, Notification notify) {
         PlayingLANHelper.update(ps, notify);
         NetworkManager nm = null;
@@ -100,6 +116,10 @@ public class PlayingDualLANHelper {
         }
     }
 
+    /**
+     * Monitor all the changing due to a player input.
+     * @param ps The <code>PlayingState</code> which uses this class.
+     */
     public static void handleInput(NetworkReady ps) {
         NetworkManager nm = null;
         try {
@@ -112,10 +132,17 @@ public class PlayingDualLANHelper {
         nm.sendMessageOnUDP("PO", ps.getPlayer().getOrientation());
     }
 
+    /**
+     * What to do when a <code>PlayingState</code> get the focus
+     */
     public static void getFocus() {
         PlayingLANHelper.getFocus();
     }
 
+    /**
+     * What to do when the user selected the type of dual.
+     * @param type The chosen type of dual.
+     */
     public static void onTypeSelected(TypeDual type) {
         GameStateManager gsm = GameStateManager.getInstance();
         if (SupervisorDual.getSupervisorDual() == null)

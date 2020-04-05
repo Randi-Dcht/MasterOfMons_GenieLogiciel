@@ -578,6 +578,10 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * Check if a <code>Runnable</code> must be run while sending the given message. Run it if one is found.
+     * @param mes The message to check
+     */
     protected void checkSendRunnableMessage(String mes) {
         Runnable run;
         if ((run = runnableSendMap.get(mes)) != null)
@@ -826,6 +830,9 @@ public class NetworkManager {
         this.onWrongMagicNumber = onWrongMagicNumber;
     }
 
+    /**
+     * @param onServerDetected What to do when a server is detected by the listener.
+     */
     public void setOnServerDetected(Runnable onServerDetected) {
         this.onServerDetected = onServerDetected;
     }
@@ -844,6 +851,9 @@ public class NetworkManager {
         this.onDisconnected = onDisconnected;
     }
 
+    /**
+     * Represent a runnable with an int as parameter.
+     */
     public interface IntRunnable {
         void run(int i);
     }
@@ -853,7 +863,9 @@ public class NetworkManager {
     public interface OnMagicNumberReceivedRunnable {
         void run(int i, int j, int k, int l, int m);
     }
-
+    /**
+     * Represent a runnable with an array of <code>Object</code> as parameter.
+     */
     public interface ObjectsRunnable {
         void run(Object[] objects);
     }
