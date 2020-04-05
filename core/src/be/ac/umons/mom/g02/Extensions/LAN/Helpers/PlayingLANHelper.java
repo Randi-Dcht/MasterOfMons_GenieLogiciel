@@ -149,9 +149,13 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("PXP", objects -> SupervisorMultiPlayer.getPeopleTwo().setExperience((double) objects[0]));
         nm.whenMessageReceivedDo("PE", objects -> SupervisorMultiPlayer.getPeopleTwo().setEnergy((double) objects[0]));
         nm.whenMessageReceivedDo("IPU", (objects) -> {
-            for (int i = 0; i < ps.getMapObjects().size(); i++)
-                if (ps.getMapObjects().get(i).getCharacteristics().equals(objects[0]))
+            MapObject.OnMapItem rec = (MapObject.OnMapItem)objects[0];
+            for (int i = 0; i < ps.getMapObjects().size(); i++) {
+                MapObject.OnMapItem it = ps.getMapObjects().get(i).getCharacteristics();
+                if (it.getItem().toString().equals(rec.getItem().toString()) && it.getMapPos().equals(rec.getMapPos()))
                     ps.getMapObjects().remove(i);
+
+            }
         });
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
             if (! ignoreEMQ && Supervisor.getPeople().getQuest().getName().equals(objects[0])) {
