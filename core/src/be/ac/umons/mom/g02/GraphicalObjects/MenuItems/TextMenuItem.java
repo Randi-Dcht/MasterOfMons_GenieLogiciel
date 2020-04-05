@@ -9,7 +9,7 @@ public class TextMenuItem extends MenuItem {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public TextMenuItem(GraphicalSettings gs, String header) {

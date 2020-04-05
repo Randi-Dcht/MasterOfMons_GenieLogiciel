@@ -169,8 +169,13 @@ public class PlayingState extends GameState implements Observer {
      */
     protected NotificationRappel notificationRappel;
 
+    /**
+     * The GameKeyManager of the game
+     */
     protected GameKeyManager gkm;
-
+    /**
+     * The instance of <code>Supervisor</code> to use.
+     */
     protected Supervisor supervisor;
 
     /**
@@ -180,8 +185,15 @@ public class PlayingState extends GameState implements Observer {
         super(gs);
         setSupervisor();
     }
+
+    /**
+     * Default constructor. USES IT ONLY FOR TESTS PURPOSES
+     */
     protected PlayingState() {}
 
+    /**
+     * Set the supervisor to use in this state.
+     */
     protected void setSupervisor() {
         supervisor = Supervisor.getSupervisor();
     }
@@ -231,6 +243,9 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setFont(gs.getSmallFont());
     }
 
+    /**
+     * Load an old game (MasterOfMonsGame.getGameToLoad()).
+     */
     protected void loadOldGame() {
         supervisor.oldGame(MasterOfMonsGame.getGameToLoad(), this, gs);
     }
@@ -286,6 +301,10 @@ public class PlayingState extends GameState implements Observer {
         Supervisor.getEvent().notify(new PlaceInMons(map));
     }
 
+    /**
+     * @param mapName The map where the PNJs must be.
+     * @return A list of the PNJs that must be drawn on the map.
+     */
     protected List<Character> getPNJsOnMap(String mapName) {
         Maps map = supervisor.getMaps(mapName);
         List<Character> pnjs = new LinkedList<>();
@@ -315,6 +334,11 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Set the position of the PNJ by selecting one in the given array.
+     * @param c The PNJ.
+     * @param rmos The array representing the positions where the PNJ can be.
+     */
     protected void initPNJPosition(Character c, Array<RectangleMapObject> rmos) {
         if (rmos.size <= 0)
             return;
@@ -395,6 +419,9 @@ public class PlayingState extends GameState implements Observer {
         makePlayerMove(dt);
         cam.update();
 
+        if (((People)player.getCharacteristics()).isInvincible())
+            player.getCharacteristics().setActualLife(player.getCharacteristics().lifeMax());
+
         supervisor.callMethod(dt);
         notificationRappel.update(dt);
 
@@ -435,9 +462,8 @@ public class PlayingState extends GameState implements Observer {
 
         translateCamera(player.getPosX() + toMoveX, player.getPosY() + toMoveY);
         player.move(toMoveX, toMoveY);
-        if (checkForCollision(player) && false) {
+        if (checkForCollision(player)) {
             player.move(-toMoveX, -toMoveY);
-//            return;
         }
         checkForMapChanging(player);
         checkForNearSelectable(player);
@@ -722,6 +748,9 @@ public class PlayingState extends GameState implements Observer {
             notificationRappel.removeANotification("pointsToAttribute");
     }
 
+    /**
+     * Pick up an object. (Doesn't check if it can be picked up)
+     */
     protected void pickUpAnObject() {
         inventoryShower.addAnItem(((MapObject)selectedOne).getItem());
         mapObjects.remove(selectedOne);
@@ -767,6 +796,9 @@ public class PlayingState extends GameState implements Observer {
         }
     }
 
+    /**
+     * Change the player speed if the user ask it as a debug option.
+     */
     public void debugChangePlayerSpeed() {
         Supervisor.getPeople().setSpeed(5);
         notificationRappel.addANotification("speedChangedNotification", GraphicalSettings.getStringFromId("playerIsFaster"));
@@ -888,27 +920,45 @@ public class PlayingState extends GameState implements Observer {
         ogds.addAnswer("no");
     }
 
+    /**
+     * @return The player position.
+     */
     public Point getPlayerPosition() {
         return new Point(player.getPosX(), player.getPosY());
     }
 
+    /**
+     * @param pos The player position
+     */
     public void setPlayerPosition(Point pos) {
         player.setPosX(pos.x);
         player.setPosY(pos.y);
     }
 
+    /**
+     * @return The player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * @return A list of the graphical object representing all the objects on the map.
+     */
     public List<MapObject> getMapObjects() {
         return mapObjects;
     }
 
+    /**
+     * @return The instance of <code>TimeShower</code> used in this state.
+     */
     public TimeShower getTimeShower() {
         return timeShower;
     }
 
+    /**
+     * @return A list of ths PNJs on this map.
+     */
     public List<Character> getPNJs() {
         return pnjs;
     }

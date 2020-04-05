@@ -8,6 +8,10 @@ import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
+/**
+ * The basic "My first year" quest adapted to the LAN Extension
+ * @see be.ac.umons.mom.g02.Quests.Master.MyFirstYear
+ */
 public class MyFirstYear extends be.ac.umons.mom.g02.Quests.Master.MyFirstYear {
 
     /**

@@ -26,6 +26,9 @@ public abstract class GameState {
      */
     protected GraphicalSettings gs;
 
+    /**
+     * The GameColorManager of the game
+     */
     protected GameColorManager gcm;
 
     /**

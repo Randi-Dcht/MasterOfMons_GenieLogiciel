@@ -10,6 +10,9 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
 public class RegulatorMultiPlayer extends Regulator
 {
 
+    /**
+     * The second player characteristics
+     */
     protected People peopleTwo;
 
     /**

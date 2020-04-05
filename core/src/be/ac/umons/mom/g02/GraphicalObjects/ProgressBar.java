@@ -52,6 +52,9 @@ public class ProgressBar {
      */
     protected GraphicalSettings gs;
 
+    /**
+     * The GameColorManager of the game.
+     */
     protected GameColorManager gcm;
 
     /**

@@ -7,6 +7,10 @@ import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
+/**
+ * Represent the MasterQuest in the dual extension adapted to the LAN extension
+ * @see be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest
+ */
 public class DualMasterQuest extends be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest {
 
     /**
@@ -14,6 +18,11 @@ public class DualMasterQuest extends be.ac.umons.mom.g02.Extensions.Dual.Logic.Q
      */
     protected boolean alreadySent = false;
 
+    /**
+     * @param dual The type of dual
+     * @param first The first player
+     * @param second The second player
+     */
     public DualMasterQuest(TypeDual dual, People first, People second) {
         super(dual, first, second);
     }

@@ -28,13 +28,22 @@ public class LevelUpMenuState extends MenuState {
      * Where the points has been attributed.
      */
     protected int[] pointsAttributed = new int[Characteristics.values().length];
+    /**
+     * The map linking each characteristics to the <code>TextBox</code> associated
+     */
     protected HashMap<Characteristics, TextBoxMenuItem> textBoxCharacteristicsMap;
+    /**
+     * The map linking each characteristics to the <code>SlidingBar</code> associated
+     */
     protected HashMap<Characteristics, SlidingBarMenuItem> slidingBarCharacteristicsMap;
     /**
      * What to do when the points are attributed.
      */
     protected OnPointsAttributedRunnable onPointsAttributed;
 
+    /**
+     * The menu item showing the number of points left
+     */
     protected TextMenuItem pointsToUseMi;
 
     /**
@@ -83,11 +92,20 @@ public class LevelUpMenuState extends MenuState {
         setMenuItems(menuItemList.toArray(new MenuItem[0]), false);
     }
 
+    /**
+     * Add all the remaining points to a characteristics.
+     * @param ch The characteristics where all the points must be added
+     */
     protected void addAllRemainingPoints(Characteristics ch) {
         pointsAttributed[ch.ordinal()] += pointToUse;
         pointToUse = 0;
         refresh();
     }
+
+    /**
+     * Remove all the points of a characteristics.
+     * @param ch The characteristics where all the points must be removed
+     */
     protected void removeAllPoints(Characteristics ch) {
         pointToUse += pointsAttributed[ch.ordinal()];
         pointsAttributed[ch.ordinal()] = 0;
@@ -161,6 +179,11 @@ public class LevelUpMenuState extends MenuState {
         this.onPointsAttributed = onPointsAttributed;
     }
 
+    /**
+     * What to do when the text of a <code>TextBox</code> changed
+     * @param tbmi The <code>MenuItem</code> where the text changed
+     * @param ch The characteristics represented by this <code>TextBox</code>
+     */
     protected void onTextChanged(TextBoxMenuItem tbmi, Characteristics ch) {
         int[] points = Arrays.copyOf(pointsAttributed, pointsAttributed.length);
         if (tbmi.getControl().getText().equals(""))
@@ -171,6 +194,11 @@ public class LevelUpMenuState extends MenuState {
             tbmi.getControl().setText("" + pointsAttributed[ch.ordinal()]);
     }
 
+    /**
+     * What to do when the value of a <code>SlidingBar</code> changed
+     * @param sbmi The <code>MenuItem</code> where the value changed
+     * @param ch The characteristics represented by this <code>TextBox</code>
+     */
     protected void onValueChanged(SlidingBarMenuItem sbmi, Characteristics ch) {
         int[] points = Arrays.copyOf(pointsAttributed, pointsAttributed.length);
         points[ch.ordinal()] = sbmi.getControl().getActualValue();
@@ -178,6 +206,12 @@ public class LevelUpMenuState extends MenuState {
             sbmi.getControl().setActualValue(pointsAttributed[ch.ordinal()]);
     }
 
+    /**
+     * Check if the points attributed doesn't exceed the point that the user can attribute.
+     * Refresh the state if it is.
+     * @param points An array of the points attributed to each characteristics
+     * @return If the points attributed doesn't exceed the point that the user can attribute
+     */
     protected boolean checkPoints(int[] points) {
         int usedPoints = computerUsedPoints(points);
         int availablePoints = player.getPointLevel();
@@ -190,6 +224,11 @@ public class LevelUpMenuState extends MenuState {
             return false;
     }
 
+    /**
+     * Computer the attributed points from the array. (Sum of all the int in the array)
+     * @param points An array of the points attributed to each characteristics
+     * @return The attributed points
+     */
     protected int computerUsedPoints(int[] points) {
         int attributedPoints = 0;
         for (int i : points)
@@ -197,6 +236,9 @@ public class LevelUpMenuState extends MenuState {
         return attributedPoints;
     }
 
+    /**
+     * Refresh the state by updating all the <code>SlidingBar</code> and <code>TextBox</code>.
+     */
     protected void refresh() {
         pointsToUseMi.setHeader(String.format(gs.getStringFromId("youHavePoints"), pointToUse));
         for (Characteristics ch : Characteristics.values()) {
@@ -220,6 +262,9 @@ public class LevelUpMenuState extends MenuState {
         Defence
     }
 
+    /**
+     * Represent a runnable that take 3 int as parameter
+     */
     public interface OnPointsAttributedRunnable {
         void run(int strength, int defence, int agility);
     }

@@ -82,10 +82,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * The color when we are on the bad path in a puzzle.
      */
     protected Color badPuzzlePathColor;
-    /**
-     * If a pause signal has been sent to the second player
-     */
-    protected boolean pauseSent = false;
 
 
     /**
@@ -121,7 +117,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             if (nm.isTheServer())
                 refreshPNJsMap(gmm.getActualMapName(), gmm.getActualMapName(), secondPlayerMap, map);
             secondPlayerMap = map;
-            mustDrawSecondPlayer = map.equals(gmm.getActualMapName());
+            mustDrawSecondPlayer = map.equals(gmm.getActualMapName()) && ! mazeMode;
         });
         nm.whenMessageReceivedDo("SPMC", (objects -> initMap((String)objects[0])));
 
@@ -145,7 +141,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
             nm.sendMessageOnTCP("Pause");
-            pauseSent = true;
+            PlayingLANHelper.pauseSent = true;
         });
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
@@ -161,6 +157,8 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         }
         supervisor.init(player.getCharacteristics(), player);
         supervisor.init(playerTwo.getCharacteristics(), playerTwo);
+        if (nm.isTheServer() && SupervisorLAN.getPeople().getPlanning() != null)
+            nm.sendMessageOnTCP("PLAN", SupervisorLAN.getPeople().getPlanning());
 
         nm.processMessagesNotRan();
     }
@@ -180,8 +178,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             boolean b = (boolean) objects[0];
             isTheMazePlayer = b;
             player.setIsATarget(! isTheMazePlayer);
-            if (! b)
-                player.setNoMoving(true);
+            player.setNoMoving(!b);
         });
         nm.whenMessageReceivedDo("Death", (objects) -> {
             DeadMenuState dms = (DeadMenuState) gsm.setState(DeadMenuState.class);

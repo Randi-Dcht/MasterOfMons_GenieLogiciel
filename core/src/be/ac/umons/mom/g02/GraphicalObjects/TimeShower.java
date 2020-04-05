@@ -68,6 +68,9 @@ public class TimeShower {
      */
     protected boolean isTextBeingAnimated = false;
 
+    /**
+     * The action that will make the control shrink to its normal size.
+     */
     protected ScheduledFuture unextendAction;
 
     /**

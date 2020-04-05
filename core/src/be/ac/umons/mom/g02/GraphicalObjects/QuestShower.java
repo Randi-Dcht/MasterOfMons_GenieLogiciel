@@ -76,6 +76,9 @@ public class QuestShower {
      */
     private Quest questToShow;
 
+    /**
+     * The quest to show after the animation ended
+     */
     protected Quest questInAnimation;
 
     /**

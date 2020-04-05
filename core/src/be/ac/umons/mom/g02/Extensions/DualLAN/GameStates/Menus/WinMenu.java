@@ -10,7 +10,14 @@ import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
+/**
+ * Let the user know which player wins.
+ */
 public class WinMenu extends be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.WinMenu {
+
+    /**
+     * @param gs The graphical settings to use.
+     */
     public WinMenu(GraphicalSettings gs) {
         super(gs);
     }

@@ -14,6 +14,9 @@ import java.util.List;
 
 public abstract class ChoosePathMenuState extends MenuState {
 
+    /**
+     * The default path / The directory the menu first show
+     */
     protected final String DEFAULT_PATH="Saves";
 
     /**

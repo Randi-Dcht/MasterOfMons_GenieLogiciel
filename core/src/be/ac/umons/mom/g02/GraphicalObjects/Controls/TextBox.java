@@ -58,6 +58,9 @@ public class TextBox extends Control {
      */
     protected double timeGone = 0;
 
+    /**
+     * What to do when the text change.
+     */
     protected Runnable onTextChanged;
 
     /**
@@ -167,6 +170,9 @@ public class TextBox extends Control {
                 block != Character.UnicodeBlock.SPECIALS;
     }
 
+    /**
+     * Remove the character at the position <code>selectedPosition</code>
+     */
     protected void removeACharacter() {
         if (selectedPosition == 0)
             return;
@@ -228,6 +234,9 @@ public class TextBox extends Control {
         this.acceptOnlyHexadecimal = acceptOnlyHexadecimal;
     }
 
+    /**
+     * @param onTextChanged What to do when the text changed
+     */
     public void setOnTextChanged(Runnable onTextChanged) {
         this.onTextChanged = onTextChanged;
     }

@@ -29,6 +29,9 @@ public abstract class OnMapObject {
      */
     protected GraphicalSettings gs;
 
+    /**
+     * The GameColorManager of the game.
+     */
     protected GameColorManager gcm;
 
     /**

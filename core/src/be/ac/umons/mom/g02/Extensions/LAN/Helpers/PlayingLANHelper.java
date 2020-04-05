@@ -33,7 +33,12 @@ import java.util.List;
 public class PlayingLANHelper {
     public static boolean ignoreEMQ;
     public static boolean pauseSent;
+    public static boolean pauseReceived;
 
+    /**
+     * Set all the necessary variables and events.
+     * @param observer The <code>PlayingState</code> which use this class.
+     */
     public static void init(Observer observer) {
         Supervisor.getEvent().add(observer, Events.Dead, Events.UpLevel, Events.LifeChanged, Events.ExperienceChanged, Events.EnergyChanged, Events.InventoryChanged, Events.PNJMoved, Events.Attack);
     }
@@ -91,9 +96,19 @@ public class PlayingLANHelper {
         GameStateManager gsm = GameStateManager.getInstance();
         nm.whenMessageReceivedDo("PP", (objects -> ps.setSecondPlayerPosition((Point) objects[0])));
         nm.whenMessageReceivedDo("SPP", (objects) -> ps.setPlayerPosition((Point) objects[0]));
-        nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
-        nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
-        nm.setOnDisconnected(() -> gsm.setState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState.class));
+        nm.whenMessageReceivedDo("Pause", (objects) -> {
+            pauseReceived = true;
+            gsm.setState(PauseMenuState.class);
+        });
+        nm.whenMessageReceivedDo("EndPause", (objects) -> {
+            pauseReceived = false;
+            gsm.removeFirstState();
+        });
+        nm.setOnDisconnected(() -> {
+            if (pauseReceived)
+                gsm.removeFirstStateFromStack();
+            gsm.setState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState.class);
+        });
         nm.whenMessageReceivedDo("PNJ", (objects) -> {
             Character c = ps.onCharacterDetected(
                     (String)objects[0],
@@ -134,9 +149,13 @@ public class PlayingLANHelper {
         nm.whenMessageReceivedDo("PXP", objects -> SupervisorMultiPlayer.getPeopleTwo().setExperience((double) objects[0]));
         nm.whenMessageReceivedDo("PE", objects -> SupervisorMultiPlayer.getPeopleTwo().setEnergy((double) objects[0]));
         nm.whenMessageReceivedDo("IPU", (objects) -> {
-            for (int i = 0; i < ps.getMapObjects().size(); i++)
-                if (ps.getMapObjects().get(i).getCharacteristics().equals(objects[0]))
+            MapObject.OnMapItem rec = (MapObject.OnMapItem)objects[0];
+            for (int i = 0; i < ps.getMapObjects().size(); i++) {
+                MapObject.OnMapItem it = ps.getMapObjects().get(i).getCharacteristics();
+                if (it.getItem().toString().equals(rec.getItem().toString()) && it.getMapPos().equals(rec.getMapPos()))
                     ps.getMapObjects().remove(i);
+
+            }
         });
         nm.whenMessageReceivedDo("EMQ", (objects) -> {
             if (! ignoreEMQ && Supervisor.getPeople().getQuest().getName().equals(objects[0])) {
@@ -190,6 +209,9 @@ public class PlayingLANHelper {
         });
     }
 
+    /**
+     * Monitor all the changing due to a player input.
+     */
     public static void handleInput() {
         GameInputManager gim = GameInputManager.getInstance();
         NetworkManager nm = null;
@@ -206,6 +228,11 @@ public class PlayingLANHelper {
             nm.sendOnTCP("AC"); // TODO Don't work on UDP (?)
     }
 
+    /**
+     * Monitor and process all the events received by the <code>Observer</code> given before.
+     * @param ps The <code>PlayingState</code> which uses this class.
+     * @param notify The notification to process
+     */
     public static void update(NetworkReady ps, Notification notify) {
         NetworkManager nm = null;
         try {
@@ -234,6 +261,9 @@ public class PlayingLANHelper {
             nm.sendMessageOnTCP("IC", ((InventoryChanged)notify).getItem(), ((InventoryChanged)notify).getType());
     }
 
+    /**
+     * What to do when a <code>PlayingState</code> get the focus
+     */
     public static void getFocus() {
         NetworkManager nm = null;
         try {
@@ -247,6 +277,13 @@ public class PlayingLANHelper {
         }
     }
 
+    /**
+     * Return a list of the PNJs that must be drawn on the map and add these PNJs to the map making the link between them and their name.
+     * @param mapName The name of the map on which the PNJs must be
+     * @param ps The <code>PlayingState</code> using this class
+     * @param gs The graphical settings to use
+     * @return A list of the PNJs that must be drawn on the map.
+     */
     public static List<Character> getPNJsOnMap(String mapName, NetworkReady ps, GraphicalSettings gs) {
         NetworkManager nm = null;
         try {
@@ -265,7 +302,6 @@ public class PlayingLANHelper {
                 Character c = new Character(gs, mob);
                 pnjs.add(c);
                 Supervisor.getSupervisor().init(mob, c);
-                ps.getIdCharacterMap().put(mob.getName(), c);
             }
         }
 

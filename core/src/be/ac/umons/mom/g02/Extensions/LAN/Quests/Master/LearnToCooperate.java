@@ -17,6 +17,9 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Represent the first quest of the LAN Extension, in which the player have to exit a maze and kill all the mobiles after.
+ */
 public class LearnToCooperate extends MasterQuest {
 
     /**

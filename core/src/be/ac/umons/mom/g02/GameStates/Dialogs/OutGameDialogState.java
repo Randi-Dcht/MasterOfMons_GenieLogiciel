@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.*;
 
+/**
+ * Represent a dialog that appears in a small box in the center of the screen.
+ */
 public class OutGameDialogState extends DialogState {
     /**
      * Create a new dialog.

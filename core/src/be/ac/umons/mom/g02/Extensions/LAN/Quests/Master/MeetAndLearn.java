@@ -9,6 +9,10 @@ import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
+/**
+ * The basic "Meet and learn" quest adapted to the LAN Extension
+ * @see be.ac.umons.mom.g02.Quests.Master.MeetAndLearn
+ */
 public class MeetAndLearn extends be.ac.umons.mom.g02.Quests.Master.MeetAndLearn {
 
     /**

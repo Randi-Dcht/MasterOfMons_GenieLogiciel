@@ -11,7 +11,7 @@ public class TitleMenuItem extends MenuItem {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public TitleMenuItem(GraphicalSettings gs, String header) {

@@ -13,7 +13,13 @@ import java.awt.*;
  */
 public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
 
+    /**
+     * The second player in the game.
+     */
     protected Player playerTwo;
+    /**
+     * If the second player have to be drawn.
+     */
     protected boolean mustDrawSecondPlayer = true;
 
     /**
@@ -25,6 +31,9 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
         super(gs);
     }
 
+    /**
+     * The default constructor of the PlayingState. USES IT ONLY FOR TESTS PURPOSES
+     */
     public PlayingState() { }
 
     @Override
@@ -61,6 +70,9 @@ public class PlayingState extends be.ac.umons.mom.g02.GameStates.PlayingState {
         playerTwo.setMapPos(mapPos);
     }
 
+    /**
+     * @return The second player
+     */
     public Player getSecondPlayer() {
         return playerTwo;
     }

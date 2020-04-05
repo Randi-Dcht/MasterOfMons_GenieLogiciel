@@ -59,7 +59,6 @@ public class MeetAndLearn extends MasterQuest
 
     /**
      * This method return the items for this quest
-     * @return list of items
      */
     @Override
     protected void createListItems() throws Exception

@@ -11,7 +11,7 @@ public class TextBoxMenuItem extends MenuItem<TextBox> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public TextBoxMenuItem(GameInputManager gim, GraphicalSettings gs, String header) {
@@ -21,7 +21,7 @@ public class TextBoxMenuItem extends MenuItem<TextBox> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      * @param id     The item's id.
      */

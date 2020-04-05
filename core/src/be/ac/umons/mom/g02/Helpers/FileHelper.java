@@ -13,6 +13,11 @@ import java.util.LinkedHashMap;
 
 public class FileHelper {
 
+    /**
+     * Read a file formatted as "ID=Value" and return an HashMap where each value is associated with the red value.
+     * @param file The file to read.
+     * @return An HashMap where each value is associated with the red value.
+     */
     public static HashMap<String, String> readSettingsFile(String file) {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
         BufferedReader br;

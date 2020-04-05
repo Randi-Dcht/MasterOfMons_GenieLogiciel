@@ -10,6 +10,9 @@ import com.badlogic.gdx.Gdx;
 
 public class DeadMenuState extends MenuState {
 
+    /**
+     * The text that must be shown in this state.
+     */
     protected static String text;
 
     /**
@@ -28,6 +31,9 @@ public class DeadMenuState extends MenuState {
         setText(text);
     }
 
+    /**
+     * @param text The text that must be shown in this state.
+     */
     public void setText(String text) {
         DeadMenuState.text = text;
         if (buttons == null) // Not initialised
@@ -35,7 +41,7 @@ public class DeadMenuState extends MenuState {
         setMenuItems(new MenuItem[] {
                 new TitleMenuItem(gs, text),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("loadPreviousGame"), () -> gsm.setState(LoadMenuState.class)),
-                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("gpBackMainMenu"), () -> gsm.removeAllStateAndAdd(MainMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("goBackMainMenu"), () -> gsm.removeAllStateAndAdd(MainMenuState.class)),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quitTheGame"), () -> Gdx.app.exit())
         });
     }

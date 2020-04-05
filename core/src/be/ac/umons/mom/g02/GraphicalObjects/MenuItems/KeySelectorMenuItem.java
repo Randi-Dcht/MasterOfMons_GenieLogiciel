@@ -11,7 +11,7 @@ public class KeySelectorMenuItem extends MenuItem<KeySelector> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public KeySelectorMenuItem(GameInputManager gim, GraphicalSettings gs, String header) {
@@ -21,7 +21,7 @@ public class KeySelectorMenuItem extends MenuItem<KeySelector> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      * @param id     The item's id.
      */

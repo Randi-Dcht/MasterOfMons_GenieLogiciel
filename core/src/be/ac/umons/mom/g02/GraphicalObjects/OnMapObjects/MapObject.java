@@ -70,10 +70,16 @@ public class MapObject extends OnMapObject {
         omi.mapPos = mapPos;
     }
 
+    /**
+     * @param map The map on which this object is.
+     */
     public void setMap(String map) {
         omi.map = map;
     }
 
+    /**
+     * @return The map on which this object is.
+     */
     public String getMap() {
         return omi.map;
     }

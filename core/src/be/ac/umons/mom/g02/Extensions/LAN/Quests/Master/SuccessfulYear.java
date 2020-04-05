@@ -8,6 +8,10 @@ import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
+/**
+ * The basic "Successful Year" quest adapted to the LAN Extension
+ * @see be.ac.umons.mom.g02.Quests.Master.SuccessfulYear
+ */
 public class SuccessfulYear extends be.ac.umons.mom.g02.Quests.Master.SuccessfulYear {
 
     /**

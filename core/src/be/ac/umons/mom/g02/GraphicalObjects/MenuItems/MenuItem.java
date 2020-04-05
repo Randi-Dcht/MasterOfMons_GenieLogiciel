@@ -5,22 +5,27 @@ import be.ac.umons.mom.g02.Helpers.StringHelper;
 import be.ac.umons.mom.g02.Managers.GameInputManager;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 import java.awt.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class MenuItem<T extends Control> {
     /**
      * The name of the item.
      */
     protected String header;
+    /**
+     * The number of line to show for this item.
+     */
     protected int lineNumber;
-
+    /**
+     * The graphical settings to use.
+     */
     protected GraphicalSettings gs;
+    /**
+     * The GameInputManager of the game
+     */
     protected GameInputManager gim;
     /**
      * If this item must be drawn under the previous one (=true) or next to it (=false).
@@ -42,8 +47,13 @@ public abstract class MenuItem<T extends Control> {
      * The item's size. (-1 = automatic) (-2 = all available space with margin)
      */
     protected Point size = new Point(-2,-1);
-
+    /**
+     * The vertical margin
+     */
     protected double topMargin;
+    /**
+     * The horizontal margin
+     */
     protected double leftMargin;
 
     /**
@@ -96,6 +106,11 @@ public abstract class MenuItem<T extends Control> {
             size.y = (int) (gs.getNormalFont().getLineHeight() * lineNumber + 2 * topMargin);
     }
 
+    /**
+     * Draw the control next to the header.
+     * @param batch Where to draw it.
+     * @param pos The position of the header and the control.
+     */
     protected void drawNextToHeader(Batch batch, Point pos) {
         GlyphLayout gl = new GlyphLayout();
         gl.setText(gs.getNormalFont(), header);
@@ -103,10 +118,16 @@ public abstract class MenuItem<T extends Control> {
         gs.getNormalFont().draw(batch, header, pos.x, pos.y + (int)(gs.getNormalFont().getLineHeight()));
         batch.end();
         pos.x += gl.width + leftMargin;
-        drawIfNonNull(batch, pos, new Point((int)(size.x - gl.width - leftMargin), size.y));
+        drawIfNotNull(batch, pos, new Point((int)(size.x - gl.width - leftMargin), size.y));
     }
 
-    protected void drawIfNonNull(Batch batch, Point pos, Point size) {
+    /**
+     * Draw the control if it's non null.
+     * @param batch Where to draw it
+     * @param pos The position of the control.
+     * @param size The size of the control.
+     */
+    protected void drawIfNotNull(Batch batch, Point pos, Point size) {
         if (control != null)
             control.draw(batch, pos, size);
     }
@@ -128,6 +149,9 @@ public abstract class MenuItem<T extends Control> {
             control.handleInput();
     }
 
+    /**
+     * @param header The header of this item.
+     */
     public void setHeader(String header) {
         if (gs.getNormalFont() != null) { // Test case
             this.header = StringHelper.adaptTextToWidth(gs.getNormalFont(), header, (int)(MasterOfMonsGame.WIDTH - 2 * leftMargin));
@@ -135,18 +159,30 @@ public abstract class MenuItem<T extends Control> {
         }
     }
 
+    /**
+     * @return The control that this item use.
+     */
     public T getControl() {
         return control;
     }
 
+    /**
+     * @return The ID associated with this item.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * @return The size of this item
+     */
     public Point getSize() {
         return size;
     }
 
+    /**
+     * @return If this item must be drawn under the previous one or next to it.
+     */
     public boolean getDrawUnderPreviousOne() {
         return drawUnderPreviousOne;
     }

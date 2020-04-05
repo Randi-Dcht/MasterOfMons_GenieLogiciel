@@ -132,7 +132,6 @@ public class SlidingBar extends Control {
         this.maxSlidingValue = maxValue;
         if (value > maxValue)
             value = maxValue;
-//        setActualValue(Math.round((posX - x - height / 2) / (width - height) * maxValue));
     }
 
     /**
@@ -142,7 +141,6 @@ public class SlidingBar extends Control {
         this.maxSlidingValue = maxValue;
         if (value > maxValue)
             value = maxValue;
-//        setActualValue(Math.round((posX - x - height / 2) / (width - height) * maxValue));
     }
 
     /**

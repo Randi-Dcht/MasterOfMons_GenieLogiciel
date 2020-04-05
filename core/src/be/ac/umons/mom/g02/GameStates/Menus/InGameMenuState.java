@@ -21,6 +21,9 @@ public class InGameMenuState extends MenuState {
      */
     protected ShapeRenderer sr;
 
+    /**
+     * The <code>PlayingState</code> that asked to in-game menu.
+     */
     protected PlayingState ps;
 
     /**
@@ -71,6 +74,9 @@ public class InGameMenuState extends MenuState {
         ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
     }
 
+    /**
+     * @param ps The <code>PlayingState</code> that asked to in-game menu.
+     */
     public void setPlayingState(PlayingState ps) {
         this.ps = ps;
     }

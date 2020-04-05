@@ -27,10 +27,11 @@ public class MainMenuState extends MenuState {
     /**
      * Allows to activate/deactivate an extension.
      */
-//    ExtensionsSelector extSel;
-
-    ExtensionsManager em;
-    HashMap<ExtensionsManager.Extension, MenuItem> extensionCheckBoxHashMap;
+    protected ExtensionsManager em;
+    /**
+     * The map making the link between an extension and the MenuItem visually representing it.
+     */
+    protected HashMap<ExtensionsManager.Extension, MenuItem> extensionCheckBoxHashMap;
 
     /**
      * @param gs The game's graphical settings.
@@ -75,6 +76,9 @@ public class MainMenuState extends MenuState {
         setMenuItems(menuItemList.toArray(new MenuItem[0]));
     }
 
+    /**
+     * Go to the load menu or another class if one extension needs it.
+     */
     protected void initLoad() {
         ExtensionsManager.Extension mainExt = em.getMainExtension();
         if (mainExt != null) {

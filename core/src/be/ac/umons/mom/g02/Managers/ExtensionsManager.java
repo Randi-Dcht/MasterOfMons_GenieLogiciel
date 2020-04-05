@@ -15,6 +15,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Manage all the extensions of the game and the "extensions" file as well.
+ * ID of the "extensions file" :
+ * <code>string</code> set the name of this extension as "string". (If it's the base game, it must be MasterOfMonsGame.
+ * <code>.mainClass class</code> launch the class after the loading state.
+ * <code>.mainClassBeforeLoading class</code> launch the class before the loading state.
+ * <code>.mainClassBeforeCharacterCreation class</code> launch the class before the creation of the character.
+ * <code>.classBeforeOldGameSelection class</code> launch the class before letting the user choose a file representing an old game.
+ * <code>.classAfterOldGameSelection class</code> launch the class after letting the user choose a file representing an old game.
+ * <code>.file file class</code> load the file and store it in an object the type class.
+ * <code>.map file</code> load the file and store it as a map.
+ * <code>.canActivateWith ext</code> precise this extension can be activated with the extension "ext"
+ * <code>.isMultiplayer</code> set this extension as a multiplayer one.
+ */
 public class ExtensionsManager {
 
     /**
@@ -36,6 +50,9 @@ public class ExtensionsManager {
      */
     protected HashMap<String, Extension> extensions;
 
+    /**
+     * The extension representing the game without any extension.
+     */
     protected Extension baseGame;
 
     /**

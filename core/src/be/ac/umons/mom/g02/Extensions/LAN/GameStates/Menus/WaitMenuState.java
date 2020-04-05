@@ -15,10 +15,19 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
 import java.net.SocketException;
 
+/**
+ * The state in which the user is while the second player is still loading.
+ */
 public class WaitMenuState extends MenuState {
 
+    /**
+     * The network manager of the game
+     */
     protected NetworkManager nm;
 
+    /**
+     * @param gs The graphical settings to use
+     */
     public WaitMenuState(GraphicalSettings gs) {
         super(gs);
         try {

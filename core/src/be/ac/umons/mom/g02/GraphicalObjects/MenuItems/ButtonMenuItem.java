@@ -17,7 +17,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      */
     public ButtonMenuItem(GameInputManager gim, GraphicalSettings gs, String header) {
@@ -27,7 +27,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header         The item's name
      * @param toDoIfExecuted The action to do if the item is selected.
      */
@@ -38,7 +38,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header               The item's name
      * @param toDoIfExecuted       The action to do if the item is selected.
      * @param drawUnderPreviousOne If this item must be drawn under the previous one (=true) or next to it (=false).
@@ -50,7 +50,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header The item's name
      * @param id     The item's id.
      */
@@ -61,7 +61,7 @@ public class ButtonMenuItem extends MenuItem<Button> {
     /**
      * Construct a new item.
      *
-     * @param gs
+     * @param gs The graphical settings to use
      * @param header         The item's name
      * @param id             The item's id
      * @param toDoIfExecuted The action to do if the item is selected.
@@ -85,6 +85,6 @@ public class ButtonMenuItem extends MenuItem<Button> {
     public void draw(Batch batch, Point pos) {
         super.draw(batch, pos);
         pos.y -= gs.getNormalFont().getLineHeight() + topMargin;
-        drawIfNonNull(batch, pos, size);
+        drawIfNotNull(batch, pos, size);
     }
 }

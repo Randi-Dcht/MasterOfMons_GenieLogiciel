@@ -14,6 +14,9 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import java.net.SocketException;
 import java.util.HashMap;
 
+/**
+ * The playing state when the user choose the play the dual "Cases"
+ */
 public class CasesPlayingState extends PlayCases implements NetworkReady {
 
     /**
@@ -25,6 +28,10 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
      */
     protected int cp1, cp2;
 
+    /**
+     * If we already called the changing to <code>WinMenu</code>
+     * @see WinMenu
+     */
     protected boolean changingAlreadyCalled = false;
 
     /**
