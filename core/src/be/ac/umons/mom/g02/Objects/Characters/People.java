@@ -450,6 +450,13 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
+    /***/
+    public ArrayList<Lesson> getLesson()
+    {
+        return key;
+    }
+
+
     /**
      * This methods check if the player goes to lesson course
      */

@@ -16,11 +16,8 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
  */
 public class SuccesfulYear extends UnderQuest
 {
-
-    /**
-     * The actual course of the player
-     */
-    protected Course actual;
+    /***/
+    private int oldSuccess;
 
 
     /**
@@ -32,6 +29,7 @@ public class SuccesfulYear extends UnderQuest
     public SuccesfulYear(Quest master, int max, People people)
     {
         super("SuccesfulYear",max,master, people);
+        oldSuccess = people.getLesson().size();
     }
 
 
@@ -42,8 +40,8 @@ public class SuccesfulYear extends UnderQuest
     @Override
     public void evenActivity(Notification notify)
     {
-        if (notify.getEvents().equals(Events.ChangeHour))
-            actual = Supervisor.getSupervisor().getActualCourse();
+        if (notify.getEvents().equals(Events.ChangeDay))
+            checkingCourse();
 
         if (notify.getEvents().equals(Events.EntryPlace))
         {
@@ -53,18 +51,33 @@ public class SuccesfulYear extends UnderQuest
     }
 
 
+    /***/
+    private void checkingCourse()
+    {
+        if (oldSuccess != people.getLesson().size())
+        {
+            oldSuccess = people.getLesson().size();
+            addProgress(5);
+        }
+    }
+
+
     /**
      * This method check if the people go to study in the specific place
      */
     private void goToStudy(Places place)
-    {}
+    {
+        addProgress(0.05);
+    }
 
 
     /**
      * This method allows to see if the player go follow the lesson in the specific room of University
      */
     private void goToLearn(Places place)
-    {}
+    {
+        addProgress(0.08);
+    }
 
 
     /**
