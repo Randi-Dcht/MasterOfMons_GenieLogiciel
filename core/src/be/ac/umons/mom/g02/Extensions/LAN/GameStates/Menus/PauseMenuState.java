@@ -25,7 +25,7 @@ public class PauseMenuState extends MenuState {
         handleEscape = false;
         transparentBackground = true;
         setMenuItems(new MenuItem[]{
-                new TitleMenuItem(gs, gs.getStringFromId("pauseMessage"))
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("pauseMessage"))
         });
     }
 }

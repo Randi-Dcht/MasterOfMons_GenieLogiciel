@@ -33,6 +33,7 @@ import java.util.List;
 public class PlayingLANHelper {
     public static boolean ignoreEMQ;
     public static boolean pauseSent;
+    public static boolean pauseReceived;
 
     /**
      * Set all the necessary variables and events.
@@ -95,9 +96,19 @@ public class PlayingLANHelper {
         GameStateManager gsm = GameStateManager.getInstance();
         nm.whenMessageReceivedDo("PP", (objects -> ps.setSecondPlayerPosition((Point) objects[0])));
         nm.whenMessageReceivedDo("SPP", (objects) -> ps.setPlayerPosition((Point) objects[0]));
-        nm.whenMessageReceivedDo("Pause", (objects) -> gsm.setState(PauseMenuState.class));
-        nm.whenMessageReceivedDo("EndPause", (objects) -> gsm.removeFirstState());
-        nm.setOnDisconnected(() -> gsm.setState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState.class));
+        nm.whenMessageReceivedDo("Pause", (objects) -> {
+            pauseReceived = true;
+            gsm.setState(PauseMenuState.class);
+        });
+        nm.whenMessageReceivedDo("EndPause", (objects) -> {
+            pauseReceived = false;
+            gsm.removeFirstState();
+        });
+        nm.setOnDisconnected(() -> {
+            if (pauseReceived)
+                gsm.removeFirstStateFromStack();
+            gsm.setState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.DisconnectedMenuState.class);
+        });
         nm.whenMessageReceivedDo("PNJ", (objects) -> {
             Character c = ps.onCharacterDetected(
                     (String)objects[0],

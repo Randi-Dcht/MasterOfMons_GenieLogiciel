@@ -419,6 +419,9 @@ public class PlayingState extends GameState implements Observer {
         makePlayerMove(dt);
         cam.update();
 
+        if (((People)player.getCharacteristics()).isInvincible())
+            player.getCharacteristics().setActualLife(player.getCharacteristics().lifeMax());
+
         supervisor.callMethod(dt);
         notificationRappel.update(dt);
 
@@ -461,7 +464,6 @@ public class PlayingState extends GameState implements Observer {
         player.move(toMoveX, toMoveY);
         if (checkForCollision(player)) {
             player.move(-toMoveX, -toMoveY);
-//            return;
         }
         checkForMapChanging(player);
         checkForNearSelectable(player);

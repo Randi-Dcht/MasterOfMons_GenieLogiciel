@@ -13,7 +13,7 @@ import java.util.*;
 
 /**
  * Manage all the networking for the extension LAN.
- * A part of this code is from https://www.baeldung.com/java-broadcast-multicast
+ * A part of this code is from https://www.baeldung.com/java-broadcast-multicast and from https://www.geeksforgeeks.org/datagrams-in-java/
  */
 public class NetworkManager {
 
@@ -200,8 +200,10 @@ public class NetworkManager {
      */
     public void update(double dt) {
         msSinceLastMessage += dt;
-        if (msSinceLastMessage > 2)
+        if (msSinceLastMessage > 2) {
             sendOnTCP("TC"); // Test Connection
+            msSinceLastMessage = 0; // Don't spam it
+        }
     }
 
     /**

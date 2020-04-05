@@ -82,10 +82,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * The color when we are on the bad path in a puzzle.
      */
     protected Color badPuzzlePathColor;
-    /**
-     * If a pause signal has been sent to the second player
-     */
-    protected boolean pauseSent = false;
 
 
     /**
@@ -145,7 +141,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
             nm.sendMessageOnTCP("Pause");
-            pauseSent = true;
+            PlayingLANHelper.pauseSent = true;
         });
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
