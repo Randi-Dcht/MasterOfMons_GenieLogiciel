@@ -604,8 +604,6 @@ public class NetworkManager {
             return;
         }
         String[] tab = received.split("#");
-        if (tab[0].equals("Loaded"))
-            System.out.println("Test");
         ObjectsRunnable run = runnableMap.get(tab[0]);
         if (run != null) {
             try {

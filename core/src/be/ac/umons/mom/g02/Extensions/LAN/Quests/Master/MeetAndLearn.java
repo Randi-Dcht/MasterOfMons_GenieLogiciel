@@ -32,7 +32,7 @@ public class MeetAndLearn extends be.ac.umons.mom.g02.Quests.Master.MeetAndLearn
         Supervisor.getSupervisor().getRegale().finishQuest();
         if (! alreadySent) {
             try {
-                NetworkManager.getInstance().sendOnTCP("EMQ");
+                NetworkManager.getInstance().sendOnTCP("EMQ", getName());
             } catch (SocketException e) {
                 Gdx.app.error("MasterQuest", "Unable to get the NetworkManager", e);
             }

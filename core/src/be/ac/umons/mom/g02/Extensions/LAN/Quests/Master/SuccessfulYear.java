@@ -31,7 +31,7 @@ public class SuccessfulYear extends be.ac.umons.mom.g02.Quests.Master.Successful
         newQuest(new MeetAndLearn(people,this,difficulty));
         if (! alreadySent) {
             try {
-                NetworkManager.getInstance().sendOnTCP("EMQ");
+                NetworkManager.getInstance().sendOnTCP("EMQ", getName());
             } catch (SocketException e) {
                 Gdx.app.error("MasterQuest", "Unable to get the NetworkManager", e);
             }

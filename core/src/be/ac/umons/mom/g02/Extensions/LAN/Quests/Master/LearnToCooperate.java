@@ -54,7 +54,7 @@ public class LearnToCooperate extends MasterQuest {
         Supervisor.getEvent().notify(new Teleport("Tmx/Umons_Nimy.tmx"));
         if (! alreadySent) {
             try {
-                NetworkManager.getInstance().sendOnTCP("EMQ");
+                NetworkManager.getInstance().sendMessageOnTCP("EMQ", getName());
             } catch (SocketException e) {
                 Gdx.app.error("MasterQuest", "Unable to get the NetworkManager", e);
             }
