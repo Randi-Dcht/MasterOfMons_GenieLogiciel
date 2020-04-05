@@ -17,6 +17,7 @@ public enum Events
     LowSomething("low"),                      /**/
     DisplayMessage("Display"),
     Shop("shop"),
+    Help("helpMobile"),
     GoLesson("goLesson"),
     MeetOther("meetOther"),                   /*This event notify when the character meet an other character*/
     Attack("LaunchAttack"),                   /*This event notify when the character attack other character*/

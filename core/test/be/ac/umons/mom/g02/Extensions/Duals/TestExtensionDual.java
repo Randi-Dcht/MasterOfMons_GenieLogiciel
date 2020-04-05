@@ -9,12 +9,9 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualMasterQuest;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Quest.DualUnderQuest;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Objects.Characters.People;
-import be.ac.umons.mom.g02.Regulator.Supervisor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class TestExtensionDual
