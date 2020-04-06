@@ -323,12 +323,12 @@ public class PlayingStateDual extends PlayingState
     @Override
     protected void checkForNearSelectable(Player player)//TODO upgrade
     {
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
             pnjs.add(adv.get(player));
 
         super.checkForNearSelectable(player);
 
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
             pnjs.remove(adv.get(player));
     }
 
@@ -385,14 +385,13 @@ public class PlayingStateDual extends PlayingState
     {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
         {
-            if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+            if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.Survivor))
                 finishDual();
-            else if (supervisorDual.getDual().equals(TypeDual.Survivor))
+            else
                 queuingToPlay((People)notify.getBuffer());
         }
         else if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
             deadMobile((Mobile)notify.getBuffer());
-
     }
 
 
