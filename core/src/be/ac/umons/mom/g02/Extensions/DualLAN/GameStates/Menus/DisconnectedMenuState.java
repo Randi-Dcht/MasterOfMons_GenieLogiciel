@@ -31,8 +31,13 @@ public class DisconnectedMenuState extends be.ac.umons.mom.g02.Extensions.LAN.Ga
             gsm.removeAllStateUntil(this);
             nm.sendOnTCP("Loaded");
             nm.sendMessageOnTCP("DTS", SupervisorDual.getSupervisorDual().getDual());
-            if (secondPlayerPosition != null)
+            if (secondPlayerPosition != null) {
                 nm.sendMessageOnTCP("SPP", secondPlayerPosition);
+                nm.sendMessageOnTCP("SPL", SupervisorMultiPlayer.getPeopleTwo().getActualLife());
+                nm.sendMessageOnTCP("PL", SupervisorMultiPlayer.getPeople().getActualLife());
+                nm.sendMessageOnTCP("SPInv", SupervisorMultiPlayer.getPeopleTwo().getInventory()); // Re-sent because each player is re-initialised at the beginning of a dual.
+                nm.sendMessageOnTCP("PInv", SupervisorMultiPlayer.getPeople().getInventory());
+            }
         });
     }
 

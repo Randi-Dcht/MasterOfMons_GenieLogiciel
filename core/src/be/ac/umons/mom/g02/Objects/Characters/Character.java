@@ -313,6 +313,14 @@ public abstract class Character implements Attack, Serializable
         return list;
     }
 
+    /**
+     * Set the inventory of this character
+     * @param inv The inventory
+     */
+    public void setInventory(ArrayList<Items> inv) {
+        myObject = inv;
+    }
+
 
     /***/
     public int getPointType(int level)

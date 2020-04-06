@@ -327,7 +327,7 @@ public class PlayingLANHelper {
         try {
             NetworkManager.getInstance().sendMessageOnTCP("Pause");
         } catch (SocketException e) {
-            Gdx.app.error("PlayingLANHelper", "Cannot send pause message !", e);
+            Gdx.app.error("PlayingLANHelper", "Couldn't send pause message !", e);
         }
         PlayingLANHelper.pauseSent = true;
     }

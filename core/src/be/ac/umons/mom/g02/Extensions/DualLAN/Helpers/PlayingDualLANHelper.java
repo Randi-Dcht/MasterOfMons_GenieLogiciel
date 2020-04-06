@@ -26,10 +26,12 @@ import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
+import java.util.ArrayList;
 
 /**
  * The class where all the (possible) redundant code for the extension LAN combined with Dual is.
@@ -89,6 +91,8 @@ public class PlayingDualLANHelper {
                     nm.sendMessageOnTCP("ZPNJ", i, mob.getName(), mob.getMobileType(), mob.getMaps(), mob.getLevel(), c.getPosX(), c.getPosY());
                 }
             });
+            nm.whenMessageReceivedDo("SPInv", (objects -> SupervisorMultiPlayer.getPeople().setInventory((ArrayList<Items>) objects[0])));
+            nm.whenMessageReceivedDo("PInv", (objects -> SupervisorMultiPlayer.getPeopleTwo().setInventory((ArrayList<Items>) objects[0])));
         } catch (SocketException e) {
             e.printStackTrace();
         }
