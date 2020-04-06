@@ -56,7 +56,7 @@ public class RegulatorLAN extends RegulatorMultiPlayer {
 
     @Override
     public void timeOfDay(Places place) {
-
+        manager.checkPlanning();
         if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom))) {
             if (!secondPlayerInCourseRoom)
                 nm.sendMessageOnTCP("PCR", true);
