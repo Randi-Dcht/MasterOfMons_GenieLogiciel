@@ -76,6 +76,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     }
 
     @Override
+    protected void onPause() {
+        PlayingLANHelper.onPause(this);
+    }
+
+    @Override
     public MapObject dropSelectedObject() {
         MapObject mo = super.dropSelectedObject();
         nm.sendMessageOnTCP("Item", mo.getCharacteristics());

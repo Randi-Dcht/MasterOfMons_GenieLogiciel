@@ -66,6 +66,11 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
         pos = false;
     }
 
+    @Override
+    protected void onPause() {
+        PlayingLANHelper.onPause(this);
+    }
+
     /**
      * Set all the needed network manager's runnables except the one for setting the map changing (must be done earlier)
      */

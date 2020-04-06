@@ -239,8 +239,13 @@ public class PlayingState extends GameState implements Observer {
 
         pauseButton = new Button(gs);
         pauseButton.setText("||");
-        pauseButton.setOnClick(() -> gsm.setState(InGameMenuState.class));
+        pauseButton.setOnClick(this::onPause);
         pauseButton.setFont(gs.getSmallFont());
+    }
+
+    protected void onPause() {
+        InGameMenuState igms = (InGameMenuState) gsm.setState(InGameMenuState.class);
+        igms.setPlayingState(this);
     }
 
     /**
@@ -686,8 +691,7 @@ public class PlayingState extends GameState implements Observer {
     @Override
     public void handleInput() {
         if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            InGameMenuState igms = (InGameMenuState) gsm.setState(InGameMenuState.class);
-            igms.setPlayingState(this);
+            onPause();
         }
         if (gim.isKey(Input.Keys.B, KeyStatus.Down) && gim.isKey(Input.Keys.UP, KeyStatus.Pressed)) {
             DebugMenuState dms = (DebugMenuState) gsm.setState(DebugMenuState.class);

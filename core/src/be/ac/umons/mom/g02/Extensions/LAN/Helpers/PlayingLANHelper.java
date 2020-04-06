@@ -4,6 +4,7 @@ import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Events.Observer;
+import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.PauseMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
@@ -21,6 +22,7 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Other.Date;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import java.awt.*;
@@ -220,10 +222,6 @@ public class PlayingLANHelper {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        if (gim.isKey(Input.Keys.ESCAPE, KeyStatus.Pressed)) {
-            nm.sendOnTCP("Pause");
-            pauseSent = true;
-        }
         if (gim.isKey("attack", KeyStatus.Pressed))
             nm.sendOnTCP("AC"); // Don't work on UDP (?)
     }
@@ -317,5 +315,20 @@ public class PlayingLANHelper {
         }
 
         return pnjs;
+    }
+
+    /**
+     * Executed when the pause menu is shown. Send the pause signal to the second player.
+     * @param ps The PlayingState which uses this class
+     */
+    public static void onPause(NetworkReady ps) {
+        InGameMenuState igms = (InGameMenuState) GameStateManager.getInstance().setState(InGameMenuState.class);
+        igms.setPlayingState((PlayingState)ps);
+        try {
+            NetworkManager.getInstance().sendMessageOnTCP("Pause");
+        } catch (SocketException e) {
+            Gdx.app.error("PlayingLANHelper", "Cannot send pause message !", e);
+        }
+        PlayingLANHelper.pauseSent = true;
     }
 }

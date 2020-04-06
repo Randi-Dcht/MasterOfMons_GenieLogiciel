@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Extensions.LAN.GameStates;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.MoneyChanged;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.Extensions.LAN.Helpers.PlayingLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Interfaces.NetworkReady;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
@@ -11,7 +12,6 @@ import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GameStates.Menus.DeadMenuState;
-import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -138,11 +138,7 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
 
         setNetworkManagerRunnables();
 
-        pauseButton.setOnClick(() -> {
-            gsm.setState(InGameMenuState.class);
-            nm.sendMessageOnTCP("Pause");
-            PlayingLANHelper.pauseSent = true;
-        });
+        pauseButton.setOnClick(this::onPause);
 
         goodPuzzlePathColor = new Color(0x2E7D32FF);
         badPuzzlePathColor = new Color(0xD50000FF);
@@ -161,6 +157,11 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
             nm.sendMessageOnTCP("PLAN", SupervisorLAN.getPeople().getPlanning());
 
         nm.processMessagesNotRan();
+    }
+
+    @Override
+    protected void onPause() {
+        PlayingLANHelper.onPause(this);
     }
 
     @Override

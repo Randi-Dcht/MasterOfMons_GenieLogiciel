@@ -135,6 +135,11 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         nm.processMessagesNotRan();
     }
 
+    @Override
+    protected void onPause() {
+        PlayingLANHelper.onPause(this);
+    }
+
     /**
      * Invert the two bases if necessary.
      * @param b If the two bases should be inverted
