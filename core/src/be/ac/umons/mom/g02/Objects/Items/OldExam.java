@@ -32,6 +32,6 @@ public class OldExam extends Items//TODO delete
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "OTHER";
     }
 }

@@ -72,6 +72,6 @@ public class TheKillBoot extends Items implements Guns
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "GUNS";
     }
 }

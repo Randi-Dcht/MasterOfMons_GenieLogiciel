@@ -42,7 +42,7 @@ public class SuperChargerGun extends Items
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "GUNS";
     }
 }
 

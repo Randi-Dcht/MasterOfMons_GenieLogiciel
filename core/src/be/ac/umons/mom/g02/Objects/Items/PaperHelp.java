@@ -33,6 +33,6 @@ public class PaperHelp extends Items//TODO delete
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "OTHER";
     }
 }

@@ -35,7 +35,7 @@ public class Flower extends Items
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "FLOWER";
     }
 
 

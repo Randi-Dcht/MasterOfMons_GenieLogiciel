@@ -58,6 +58,6 @@ public class PassLevel extends Items
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "OTHER";
     }
 }

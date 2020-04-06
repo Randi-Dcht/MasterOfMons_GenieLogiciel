@@ -32,6 +32,6 @@ public class Pen extends Items
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "BIC";
     }
 }

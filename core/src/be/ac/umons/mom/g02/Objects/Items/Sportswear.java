@@ -32,7 +32,7 @@ public class Sportswear extends Items
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "OTHER";
     }
 
 

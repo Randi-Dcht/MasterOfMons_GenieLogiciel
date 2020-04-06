@@ -53,6 +53,6 @@ public class Sword extends Items implements Guns//TODO epee
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "GUNS";
     }
 }

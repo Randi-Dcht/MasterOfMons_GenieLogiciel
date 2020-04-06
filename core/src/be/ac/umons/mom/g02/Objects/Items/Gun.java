@@ -45,7 +45,7 @@ public class Gun extends Items implements Guns
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "GUNS";
     }
 
 

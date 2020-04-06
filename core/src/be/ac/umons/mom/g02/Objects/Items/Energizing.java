@@ -43,7 +43,7 @@ public class Energizing extends Items
      */
     public String idOfPlace()
     {
-        return "OTHER";//TODO
+        return "OTHER";
     }
 
 
