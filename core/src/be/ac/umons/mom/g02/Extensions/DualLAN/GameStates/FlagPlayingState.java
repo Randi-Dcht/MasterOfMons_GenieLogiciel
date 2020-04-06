@@ -149,9 +149,9 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     }
 
     @Override
-    public void PlaceFlag(Point... pt) {
+    public void PlaceFlag() {
         if (nm.isTheServer())
-            super.PlaceFlag(pt);
+            super.PlaceFlag();
     }
 
     @Override
