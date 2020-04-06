@@ -5,8 +5,8 @@ package be.ac.umons.mom.g02.Enums;
  * @author Guillaume Cardoen
  */
 public enum Languages {
-    English("en"),  // TODO : Delete if not included
-    French("fr"); // TODO : Delete if not included
+    English("en"),
+    French("fr");
 
     /**
      * The locale.
