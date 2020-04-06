@@ -319,7 +319,7 @@ public class PlayingLANHelper {
 
     /**
      * Executed when the pause menu is shown. Send the pause signal to the second player.
-     * @param ps The PlayingState which uses this class
+     * @param ps The PlayingState (!) which uses this class
      */
     public static void onPause(NetworkReady ps) {
         InGameMenuState igms = (InGameMenuState) GameStateManager.getInstance().setState(InGameMenuState.class);
@@ -327,7 +327,7 @@ public class PlayingLANHelper {
         try {
             NetworkManager.getInstance().sendMessageOnTCP("Pause");
         } catch (SocketException e) {
-            Gdx.app.error("PlayingLANHelper", "Cannot send pause message !", e);
+            Gdx.app.error("PlayingLANHelper", "Couldn't send pause message !", e);
         }
         PlayingLANHelper.pauseSent = true;
     }
