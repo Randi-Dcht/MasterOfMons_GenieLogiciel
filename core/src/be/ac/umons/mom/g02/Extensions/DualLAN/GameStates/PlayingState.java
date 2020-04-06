@@ -66,6 +66,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         }
 
         nm.processMessagesNotRan();
+        pos = false;
     }
 
     @Override

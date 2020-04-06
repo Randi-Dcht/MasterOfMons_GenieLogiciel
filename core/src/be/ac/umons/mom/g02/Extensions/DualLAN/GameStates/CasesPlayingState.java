@@ -63,6 +63,7 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
             PlayingDualLANHelper.goToPreviousMenu();
             nm.sendOnTCP("EndDual");
         });
+        pos = false;
     }
 
     /**
