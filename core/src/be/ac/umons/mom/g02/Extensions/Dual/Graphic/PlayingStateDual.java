@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
+import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualPauseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.WinMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
@@ -137,6 +138,7 @@ public class PlayingStateDual extends PlayingState
         endDual = new Button(gs);
         endDual.setText("X");
         endDual.setOnClick(() -> gsm.removeAllStateAndAdd(DualChooseMenu.class));
+        pauseButton.setOnClick(()-> gsm.setState(DualPauseMenu.class));
         endDual.setFont(gs.getSmallFont());
 
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
