@@ -7,7 +7,11 @@ import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 public class LoadPlayerDual extends LoadMenuState
 {
 
+    /**
+     * The number of the actual player
+     */
     private static int playerNumber = 0;
+
 
     /**
      * @param gs  The game's graphical settings.
@@ -17,6 +21,10 @@ public class LoadPlayerDual extends LoadMenuState
         super(gs);
     }
 
+
+    /**
+     * Allows to load a player
+     */
     @Override
     public void load(String loadFilePath)
     {
@@ -24,6 +32,11 @@ public class LoadPlayerDual extends LoadMenuState
         gsm.removeFirstState();
     }
 
+
+    /**
+     * Setter of the player number
+     * @param player is the number of the player
+     */
     public static void setPlayer(int player)
     {
         playerNumber = player;

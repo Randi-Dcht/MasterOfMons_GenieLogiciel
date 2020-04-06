@@ -56,9 +56,6 @@ public class PlayingFlag extends PlayingStateDual
         baseOne = new Cases(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
         baseTwo = new Cases(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
 
-        Point ptFirst  = new Point(11,7);
-        Point ptSecond = new Point(10,32);
-
         cleanInventory((People)player.getCharacteristics());
         cleanInventory((People)playerTwo.getCharacteristics());
 
@@ -169,5 +166,17 @@ public class PlayingFlag extends PlayingStateDual
         super.dispose();
         baseOne.dispose();
         baseTwo.dispose();
+    }
+
+    @Override
+    protected void queuingToPlay(People people)
+    {
+        if (people.getInventory().size() != 0 && people.getInventory().get(0) instanceof Flag)
+        {
+            Items itm = people.getInventory().get(0);
+            people.removeObject(itm);
+            addItemToMap(itm,((Flag)itm).getPosition(),SupervisorDual.getSupervisorDual().getDual().getStartMaps().getMaps());
+        }
+        super.queuingToPlay(people);
     }
 }
