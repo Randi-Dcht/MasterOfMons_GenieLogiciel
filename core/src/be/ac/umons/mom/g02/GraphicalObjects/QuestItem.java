@@ -74,7 +74,7 @@ public class QuestItem {
             progressCircle.beginAnimation();
             progressCircle.setDuringAnimationProgressPercent(da.getActual());
         });
-        AnimationManager.getInstance().addAnAnimation("QuestCircleRectangleAnimation" + quest.toString(), da); // Evite de remplacer les animations :)
+        AnimationManager.getInstance().addAnAnimation("QuestCircleRectangleAnimation" + quest.hashCode(), da); // Evite de remplacer les animations :)
         da.setEndingAction(progressCircle::finishAnimation);
     }
 
@@ -88,6 +88,6 @@ public class QuestItem {
         sa.setRunningAction(() -> textToShow = sa.getActual());
         if (Double.compare(to, 0) == 0)
             sa.invert();
-        AnimationManager.getInstance().addAnAnimation("SA_QuestItem_" + quest.getName(), sa);
+        AnimationManager.getInstance().addAnAnimation("SA_QuestItem_" + quest.hashCode(), sa);
     }
 }

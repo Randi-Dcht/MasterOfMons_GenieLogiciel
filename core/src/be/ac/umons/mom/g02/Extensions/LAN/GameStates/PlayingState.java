@@ -384,15 +384,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     }
 
     @Override
-    protected void attack(Player player) {
-        if (player.isRecovering())
-            return;
-        player.expandAttackCircle();
-        for (Character c : getCharacterInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
-            supervisor.attackMethod(player.getCharacteristics(), c.getCharacteristics());
-            player.setTimeBeforeAttack(player.getCharacteristics().recovery());
-            nm.sendMessageOnUDP("hitPNJ", c.getCharacteristics().getName(), c.getCharacteristics().getActualLife());
-        }
+    protected void attack(Player player, Character ch) {
+        super.attack(player, ch);
+        nm.sendMessageOnUDP("hitPNJ", ch.getCharacteristics().getName(), ch.getCharacteristics().getActualLife());
     }
 
     @Override

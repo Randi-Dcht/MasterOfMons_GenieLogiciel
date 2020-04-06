@@ -61,7 +61,8 @@ public class PlayingDualLANHelper {
             nm.whenMessageReceivedDo("Death", (objects) -> gsm.setState(WinMenu.class, true));
             nm.whenMessageReceivedDo("SPL", (objects) -> {
                 SupervisorMultiPlayer.getPeople().setActualLife((double) objects[0], false);
-                Supervisor.getEvent().notify(new LaunchAttack(Supervisor.getPeople(), null));
+                if (SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.DualPlayer))
+                    Supervisor.getEvent().notify(new LaunchAttack(Supervisor.getPeople(), SupervisorMultiPlayer.getPeopleTwo()));
             });
             nm.whenMessageReceivedDo("ZPNJ", (objects) ->
             {

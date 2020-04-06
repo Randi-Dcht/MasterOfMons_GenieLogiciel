@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
@@ -27,6 +28,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
      * The hashmap making the link between a character's name and its graphical object
      */
     protected HashMap<String, Character> idCharacterMap;
+    /**
+     * If we already called the changing to <code>WinMenu</code>
+     * @see WinMenu
+     */
+    protected boolean changingAlreadyCalled = false;
 
     /**
      * @param gs The game's graphical settings
@@ -99,6 +105,12 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     }
 
     @Override
+    protected void attack(Player player, Character ch) {
+        super.attack(player, ch);
+        nm.sendMessageOnUDP("hitPNJ", ch.getCharacteristics().getName(), ch.getCharacteristics().getActualLife());
+    }
+
+    @Override
     protected void translateCamera(int x, int y) {
         translateCameraFollowingPlayer(x, y);
     }
@@ -151,7 +163,9 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
 
     @Override
     public void finishDual() {
-        gsm.setState(WinMenu.class, true);
+        if (! changingAlreadyCalled)
+            gsm.setState(WinMenu.class, true);
+        changingAlreadyCalled = true;
     }
 
     @Override

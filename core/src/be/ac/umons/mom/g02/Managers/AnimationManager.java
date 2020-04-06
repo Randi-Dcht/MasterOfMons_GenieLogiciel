@@ -39,6 +39,8 @@ public class AnimationManager {
      * @param anim Animation to add.
      */
     public void addAnAnimation(String animName, Animation anim) {
+        if (animations.containsKey(animName))
+            animations.get(animName).finishNow();
         animations.put(animName, anim);
     }
 
