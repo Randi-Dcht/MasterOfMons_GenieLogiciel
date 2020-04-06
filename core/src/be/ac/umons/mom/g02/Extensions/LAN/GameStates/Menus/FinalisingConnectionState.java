@@ -98,7 +98,10 @@ public class FinalisingConnectionState extends MenuState {
             NetworkManager nm = NetworkManager.getInstance();
             LoadingState ls = (LoadingState) gsm.removeAllStateAndAdd(LoadingState.class);
             ls.setOnLoaded(() -> nm.sendOnTCP("Loaded"));
-            ls.setAfterLoadingState(be.ac.umons.mom.g02.Extensions.LAN.GameStates.Menus.WaitMenuState.class);
+            if (ExtensionsManager.getInstance().getExtensionsMap().get("Dual").activated)
+                ls.setAfterLoadingState(be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState.class);
+            else
+                ls.setAfterLoadingState(WaitMenuState.class);
         } catch (SocketException e) {
             e.printStackTrace();
         }

@@ -13,7 +13,7 @@ import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.CasesPlayingState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.FlagPlayingState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DisconnectedMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.DualChooseMenu;
-import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitMenuState;
+import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WaitPlayerMenuState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WinMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
@@ -56,7 +56,7 @@ public class PlayingDualLANHelper {
                 dms.setSecondPlayerPosition(ps.getSecondPlayer().getMapPos());
             });
             nm.whenMessageReceivedDo("EndDual", objects ->
-                    PlayingDualLANHelper.goToPreviousMenu());
+                    PlayingDualLANHelper.goToChoosingMenu());
             nm.whenMessageReceivedDo("Death", (objects) -> gsm.setState(WinMenu.class, true));
             nm.whenMessageReceivedDo("SPL", (objects) -> SupervisorMultiPlayer.getPeople().setActualLife((double) objects[0], false));
             nm.whenMessageReceivedDo("ZPNJ", (objects) ->
@@ -82,14 +82,14 @@ public class PlayingDualLANHelper {
     /**
      * Go back to the choosing menu or the wait menu
      */
-    public static void goToPreviousMenu() {
+    public static void goToChoosingMenu() {
         try {
             NetworkManager nm = NetworkManager.getInstance();
             GameStateManager gsm = GameStateManager.getInstance();
             if (nm.isTheServer())
                 gsm.setState(DualChooseMenu.class, true);
             else
-                gsm.setState(WaitMenuState.class, true);
+                gsm.setState(WaitPlayerMenuState.class, true);
         } catch (SocketException e) {
             e.printStackTrace();
         }

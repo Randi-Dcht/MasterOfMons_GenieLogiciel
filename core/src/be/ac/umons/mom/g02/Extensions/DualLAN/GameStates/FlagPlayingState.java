@@ -67,7 +67,7 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
         });
 
         endDual.setOnClick(() -> {
-            PlayingDualLANHelper.goToPreviousMenu();
+            PlayingDualLANHelper.goToChoosingMenu();
             nm.sendOnTCP("EndDual");
         });
 
