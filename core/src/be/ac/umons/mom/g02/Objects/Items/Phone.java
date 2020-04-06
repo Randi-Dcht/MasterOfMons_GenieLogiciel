@@ -40,6 +40,12 @@ public class Phone extends Items
     }
 
 
+    @Override
+    public boolean removeInBag()
+    {
+        return false;
+    }
+
     /***/
     public boolean getObsolete()
     {

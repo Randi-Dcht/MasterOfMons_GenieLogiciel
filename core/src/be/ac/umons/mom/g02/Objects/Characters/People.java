@@ -472,10 +472,22 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
-    /***/
+    /**
+     * @return the list of the all lesson
+     */
     public ArrayList<Lesson> getLesson()
     {
         return key;
+    }
+
+
+    /**
+     * Allows to give the percent at the course
+     */
+    public void helpByItem(int cmb,Lesson lesson)
+    {
+        if (key.contains(lesson))
+            addSuccess(cmb,lesson);
     }
 
 
