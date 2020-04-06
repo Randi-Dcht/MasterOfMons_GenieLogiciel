@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Orientation;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualChooseMenu;
+import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualPauseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.WinMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
@@ -27,7 +28,9 @@ import java.util.HashMap;
 
 
 
-/***/
+/**
+ * This class define the playingState for the dual extension
+ */
 public class PlayingStateDual extends PlayingState
 {
     /**
@@ -70,11 +73,17 @@ public class PlayingStateDual extends PlayingState
      * If the cam must be fixed
      */
     protected boolean pos = true;
-    /***/
+    /**
+     * The size of the list (mobile draw on maps)
+     */
     protected int sizeList = 25;
-    /***/
+    /**
+     * The time to add the new mobile on the maps
+     */
     protected double time = 7;
-    /***/
+    /**
+     * If the players can relive
+     */
     protected boolean relive = false;
 
 
@@ -129,6 +138,7 @@ public class PlayingStateDual extends PlayingState
         endDual = new Button(gs);
         endDual.setText("X");
         endDual.setOnClick(() -> gsm.removeAllStateAndAdd(DualChooseMenu.class));
+        pauseButton.setOnClick(()-> gsm.setState(DualPauseMenu.class));
         endDual.setFont(gs.getSmallFont());
 
         if (supervisorDual.getDual().equals(TypeDual.CatchFlag) || SupervisorDual.getSupervisorDual().getDual().equals(TypeDual.OccupationFloor))
@@ -303,16 +313,6 @@ public class PlayingStateDual extends PlayingState
 
         if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
             pnjs.remove(adv.get(player));
-    }
-
-
-    /**
-     * Setter the fixed camera
-     * @param pos is the boolean if the cam can be fixed
-     */
-    public void setCamPos(boolean pos)
-    {
-        this.pos = pos;
     }
 
 
