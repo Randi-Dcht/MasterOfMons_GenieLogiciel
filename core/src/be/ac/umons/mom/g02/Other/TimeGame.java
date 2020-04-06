@@ -235,9 +235,9 @@ public class TimeGame implements Observer, Serializable
         hour = (memH = hour +(memM/60)+addHour)%24;
         day  = (day+memH/24+addDay)%years[NByear][NBmonth];
 
-        if(addHour != 0 && notif) //TODO
+        if(addHour != 0 && notif)
             Supervisor.getEvent().notify(new ChangeHour());
-        if(addDay != 0 && notif) //TODO
+        if(addDay != 0 && notif)
             Supervisor.getEvent().notify(new ChangeDay());
     }
 

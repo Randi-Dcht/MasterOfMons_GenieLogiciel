@@ -98,12 +98,6 @@ public class Course implements Serializable
     }
 
 
-    public void arrivedAtCourse(Date now)//TODO
-    {
-        Double ccl = difference(date,now,0);
-    }
-
-
     /***/
     public boolean isLate()
     {

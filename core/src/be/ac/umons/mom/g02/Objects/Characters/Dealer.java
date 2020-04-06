@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Enums.Bloc;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Enums.NameDialog;
 import be.ac.umons.mom.g02.Objects.Items.*;
+import com.badlogic.gdx.Gdx;
 
 
 /***/
@@ -20,10 +21,13 @@ public class Dealer extends Mobile
     public Dealer(Bloc playerBloc)
     {
         super("Dealer Game", playerBloc,MobileType.Lambda, Actions.Dialog, NameDialog.Seller);
-        try {//TODO displace
+        try
+        {
             createList(getMyList());
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            Gdx.app.error("Error in the instantiation : ",String.valueOf(e));
         }
     }
 

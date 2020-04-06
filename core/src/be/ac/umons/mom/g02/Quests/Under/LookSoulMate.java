@@ -62,7 +62,7 @@ public class LookSoulMate extends UnderQuest implements FrameTime
     /**
      * This method add in the memory the date of the first date of couple
      */
-    private void coupleIn()//TODO
+    private void coupleIn()
     {
         coupleFirstDate = Supervisor.getSupervisor().getTime().getDate();
     }

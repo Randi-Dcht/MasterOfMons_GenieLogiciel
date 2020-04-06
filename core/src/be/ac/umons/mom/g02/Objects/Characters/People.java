@@ -72,7 +72,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     /**
      * The list of the course with the day course
      */
-    private HashMap<Integer,ArrayList<Course>> myPlanning; // TODO pass to list
+    private HashMap<Integer,ArrayList<Course>> myPlanning;
     /**
      * The succeed for every lesson
      */
@@ -305,15 +305,6 @@ public class People extends Character implements Serializable, Observer, FrameTi
             Supervisor.getEvent().notify(new DisplayMessage(String.format(GraphicalSettings.getStringFromId("friend"),friend),"NewFriend"));
             Supervisor.getEvent().notify(new AddFriend(mobile));
         }
-    }
-
-
-    /**
-     * This method allows to remove the friend in the list
-     */
-    public void loseFriend()//TODO
-    {
-        friend--;
     }
 
 

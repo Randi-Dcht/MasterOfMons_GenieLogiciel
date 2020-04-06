@@ -81,7 +81,7 @@ public class SuperviserNormally extends Supervisor
 
     /***/
     @Override
-    public void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic)//TODO see same line
+    public void oldGame(String pathAndFile,PlayingState play, GraphicalSettings graphic)
     {
         LogicSaving saving =  (LogicSaving) Saving.getSaveObject(pathAndFile);
         if (saving != null && saving.getClass().equals(LogicSaving.class))

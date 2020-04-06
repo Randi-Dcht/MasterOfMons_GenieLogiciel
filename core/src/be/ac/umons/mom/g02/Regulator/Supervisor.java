@@ -65,7 +65,7 @@ public  abstract class Supervisor implements Observer
      */
     public static Supervisor getSupervisor()
     {
-        if (instance == null)//TODO
+        if (instance == null)
           SuperviserNormally.initNormallyGame();  //Gdx.app.error("Error in the Supervisor by bad initialization", String.valueOf(new ExceptionInInitializerError()));
         return instance;
     }
@@ -583,7 +583,7 @@ public  abstract class Supervisor implements Observer
     {
         createItems(actualQuest());
         createMobil(actualQuest());
-        createMovingPnj(playerOne.getDifficulty());//TODO changed
+        createMovingPnj(playerOne.getDifficulty());
     }
 
 
@@ -595,7 +595,7 @@ public  abstract class Supervisor implements Observer
         playerOne.winExperience(mb);
 
         for (Items it : mb.getInventory())
-            playerOne.pushObject(it);//TODO check !
+            playerOne.pushObject(it);
 
         if (mb.equals(memoryMobile))
             memoryMobile = null;
@@ -742,7 +742,7 @@ public  abstract class Supervisor implements Observer
      * @param attacker is the character who attack
      * @param victim is the character who give hits
      */
-    public void attackMethod(Attack attacker, Attack victim) //TODO ajout
+    public void attackMethod(Attack attacker, Attack victim)
     {
         attackMethod(attacker, victim,true);
     }
