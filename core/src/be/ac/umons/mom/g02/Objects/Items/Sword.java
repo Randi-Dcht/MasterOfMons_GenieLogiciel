@@ -12,10 +12,11 @@ public class Sword extends Items implements Guns
     }
 
 
-    /***/
     @Override
     public void used(People pp)
     {
+        super.used(pp);
+        pp.useGun(this);
     }
 
     public int buy()

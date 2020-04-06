@@ -28,7 +28,7 @@ public class TheKillBoot extends Items implements Guns
     public void used(People pp)
     {
         super.used(pp);
-        ball--;
+        pp.useGun(this);
     }
 
     public int buy()
@@ -57,6 +57,7 @@ public class TheKillBoot extends Items implements Guns
     @Override
     public void useGun()
     {
+        ball--;
     }
 
     @Override

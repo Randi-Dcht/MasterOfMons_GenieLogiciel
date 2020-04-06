@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Objects.Characters;
 import be.ac.umons.mom.g02.Events.Notifications.*;
 import be.ac.umons.mom.g02.Objects.FrameTime;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Objects.Items.Gun;
 import be.ac.umons.mom.g02.Objects.Items.Guns;
 import be.ac.umons.mom.g02.Other.HyperPlanning;
 import be.ac.umons.mom.g02.Enums.Actions;
@@ -366,18 +367,33 @@ public class People extends Character implements Serializable, Observer, FrameTi
      *@param object who is the object taken.
      *@return true if the object is in the bag and false otherwise.
      */
-    public boolean pushObject(Items object)//TODO gun ???? -> see the possibility
+    public boolean pushObject(Items object)
     {
-        if (object instanceof Guns)
+        if (object instanceof Guns && gun == null)
         {
             gun = (Guns)object;
             return true;
         }
+
         if(myObject.size() >= maxItem)
             return false;
+
         myObject.add(object);
         Supervisor.getEvent().notify(new InventoryChanged(this, object, InventoryChanged.Type.Added));
         return true;
+    }
+
+
+    /**
+     * This method allows to use a gun
+     * @param gun is a gun
+     */
+    public void useGun(Items gun)
+    {
+        if (this.gun != null)
+            pushObject((Items)this.gun);
+        myObject.remove(gun);
+        this.gun=(Guns)gun;
     }
 
 

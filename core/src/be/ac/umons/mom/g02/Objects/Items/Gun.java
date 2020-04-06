@@ -27,6 +27,13 @@ public class Gun extends Items implements Guns
     }
 
 
+    @Override
+    public void used(People pp)
+    {
+        super.used(pp);
+        pp.useGun(this);
+    }
+
     /**
      * This method returns the id to place the Item on the map
      * @return id of place

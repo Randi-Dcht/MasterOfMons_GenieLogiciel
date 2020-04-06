@@ -14,12 +14,11 @@ public class TNT extends Items implements Guns
     }
 
 
-    /***/
     @Override
     public void used(People pp)
     {
         super.used(pp);
-        useTnt = false;
+        pp.useGun(this);
     }
 
     public int buy()
@@ -42,8 +41,9 @@ public class TNT extends Items implements Guns
     }
 
     @Override
-    public void useGun() {
-
+    public void useGun()
+    {
+        useTnt = false;
     }
 
     @Override
