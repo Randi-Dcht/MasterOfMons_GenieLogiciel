@@ -5,6 +5,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Regulator.SupervisorLAN;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Objects.Save;
 import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
 import be.ac.umons.mom.g02.GameStates.GameState;
+import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GameStates.Menus.SaveMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
@@ -41,15 +42,14 @@ public class DisconnectedMenuState extends MenuState {
         super.init();
         handleEscape = false;
         transparentBackground = true;
-        List<MenuItem> menuItemList = new ArrayList<>();
-        menuItemList.add(new TitleMenuItem(gs, GraphicalSettings.getStringFromId("disconnected")));
-
-        menuItemList.add(new TextMenuItem(gs, GraphicalSettings.getStringFromId("waitingReconnection")));
-        menuItemList.add(new TextMenuItem(gs, GraphicalSettings.getStringFromId("searchInLoad")));
-
-        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("saveTheGame"), () -> gsm.setState(SaveMenuState.class)));
-        menuItemList.add(new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), this::exit));
-        setMenuItems(menuItemList.toArray(new MenuItem[0]));
+        setMenuItems(new MenuItem[] {
+                new TitleMenuItem(gs, GraphicalSettings.getStringFromId("disconnected")),
+                new TextMenuItem(gs, GraphicalSettings.getStringFromId("waitingReconnection")),
+                new TextMenuItem(gs, GraphicalSettings.getStringFromId("searchInLoad")),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("saveTheGame"), () -> gsm.setState(SaveMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("return"), this::returnMainMenu),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), this::exit)
+        });
 
         try {
             nm = NetworkManager.getInstance();
@@ -82,6 +82,16 @@ public class DisconnectedMenuState extends MenuState {
         nm.sendMessageOnTCP("SAVE", save);
         nm.sendMessageOnTCP("PLAN", Supervisor.getPeople().getPlanning());
         nm.stopBroadcastingServerInfo();
+    }
+
+    /**
+     * Executed when the "quit" option is chosen
+     */
+    public void returnMainMenu() {
+        GameState g = gsm.setState(OutGameDialogState.class);
+        ((OutGameDialogState)g).setText(GraphicalSettings.getStringFromId("sureQuitGame"));
+        ((OutGameDialogState)g).addAnswer("yes", () -> gsm.removeAllStateAndAdd(MainMenuState.class));
+        ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
     }
 
     /**

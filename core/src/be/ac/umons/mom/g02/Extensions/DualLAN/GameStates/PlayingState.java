@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.InGameMenuState;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
 
@@ -101,6 +102,12 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
     public void handleInput() {
         super.handleInput();
         PlayingDualLANHelper.handleInput(this);
+    }
+
+    @Override
+    protected void attack(Player player, Character ch) {
+        super.attack(player, ch);
+        nm.sendMessageOnUDP("hitPNJ", ch.getCharacteristics().getName(), ch.getCharacteristics().getActualLife());
     }
 
     @Override

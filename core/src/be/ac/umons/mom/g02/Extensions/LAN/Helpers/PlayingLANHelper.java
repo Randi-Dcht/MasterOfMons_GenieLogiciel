@@ -240,7 +240,7 @@ public class PlayingLANHelper {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer().getClass().equals(Mobile.class)) {
+        if (notify.getEvents().equals(Events.Dead) && notify.getBuffer() instanceof Mobile) {
             Mobile m = (Mobile) notify.getBuffer();
             nm.sendMessageOnTCP("PNJDeath", m.getName());
             ps.getIdCharacterMap().remove(m.getName());

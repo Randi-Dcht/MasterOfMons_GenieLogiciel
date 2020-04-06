@@ -631,9 +631,19 @@ public class PlayingState extends GameState implements Observer {
             return;
         player.expandAttackCircle();
         for (Character c : getCharacterInRange(player,player.getAttackRange() * player.getAttackRange(), true)) {
-            supervisor.attackMethod(player.getCharacteristics(), c.getCharacteristics());
-            player.setTimeBeforeAttack(player.getCharacteristics().recovery());
+            attack(player, c);
         }
+    }
+
+    /**
+     * Executed when a player launch an attack against a character.
+     * @param player The player
+     * @param ch The character which is attacked.
+     */
+    protected void attack(Player player, Character ch) {
+        supervisor.attackMethod(player.getCharacteristics(), ch.getCharacteristics());
+        player.setTimeBeforeAttack(player.getCharacteristics().recovery());
+
     }
 
     @Override
