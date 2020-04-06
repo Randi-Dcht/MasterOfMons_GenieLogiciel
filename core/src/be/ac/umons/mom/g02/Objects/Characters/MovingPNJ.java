@@ -124,7 +124,7 @@ public class MovingPNJ extends Mobile
     /**
      * This method allows to move the people in the maps with refresh
      */
-    private void moving(double dt, boolean onX, boolean onY)//TODO optimise this
+    private void moving(double dt, boolean onX, boolean onY)
     {
         if (myGraphic == null)
             return;

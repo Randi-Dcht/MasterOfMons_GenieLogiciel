@@ -62,9 +62,9 @@ public class Saving implements Observer
     public void signal()
     {
         if (defaltName == null)
-            newSave(Supervisor.getPeople(),path);
+            newSave(path);
         else
-            newSave(Supervisor.getPeople(),defaltName);
+            newSave(defaltName);
     }
 
 
@@ -81,11 +81,10 @@ public class Saving implements Observer
     /**
      * This method allows to create a file with the save of the game
      * @param file who is the file with the saving game.
-     * @param people qui est l'objet a safeguarded
      */
-    private void newSave(People people, String file)
+    private void newSave(String file)
     {
-        Supervisor.getSupervisor().saveGame(file); //TODO delete
+        Supervisor.getSupervisor().saveGame(file);
     }
 
 

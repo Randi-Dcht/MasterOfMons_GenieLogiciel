@@ -62,10 +62,6 @@ public class HyperPlanning
             for (int i =0; i < ls.numberOfCourse();i++)
                 monthL.add(ls);
         }
-
-        if (monthL.size()/31 <= 4)//TODO max
-            average= monthL.size()/31;
-        else
-            average = 4;
+        average = Math.min(monthL.size() / 31, 4);
     }
 }

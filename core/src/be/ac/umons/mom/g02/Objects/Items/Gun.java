@@ -17,22 +17,10 @@ public class Gun extends Items implements Guns
 
 
     /**
-     * This method allows to said when people takes the items
-     * @param pp is the people
-     */
-    @Override
-    public void used(People pp)
-    {
-        super.used(pp);
-        ball--;
-    }
-
-
-    /**
      * This method allows to recharge the gun
      * @param ball is the number of the recharge
      */
-    @Override//TODO 7
+    @Override
     public void setBall(int ball)
     {
         this.ball += ball;
@@ -67,7 +55,7 @@ public class Gun extends Items implements Guns
     }
 
 
-    @Override//TODO reflex on this if util with used(pp)
+    @Override
     public void useGun()
     {
         ball--;

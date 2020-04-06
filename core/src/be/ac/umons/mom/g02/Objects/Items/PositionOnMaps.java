@@ -69,7 +69,7 @@ public class PositionOnMaps
     /***/
     public Point getPosition(Maps maps,String id)
     {
-        if (listPoint.get(maps).containsKey(id))//TODO one list
+        if (listPoint.get(maps).containsKey(id))
             return listPoint.get(maps).get(id).get(new Random().nextInt(listPoint.get(maps).size()));
         return listPoint.get(maps).get("OTHER").get(new Random().nextInt(listPoint.get(maps).size()));
     }
