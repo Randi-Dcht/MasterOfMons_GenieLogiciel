@@ -17,10 +17,10 @@ import java.awt.Point;
 /***/
 public enum TypeDual
 {
-    DualPlayer(     "", BattlePeople.class    , PlayingStateDual.class,Maps.DualKiosk,new Point(11,20),new Point(1690,586)),
-    CatchFlag(      "", TakeFlag.class        , PlayingFlag.class     ,Maps.DualPark ,new Point(10,33) ,new Point(1674,476)),
-    Survivor(       "", SurvivorVsMobile.class, PlayingStateDual.class,Maps.DualKiosk,new Point(14,16),new Point(1570,496)),
-    OccupationFloor("", MoreCasesMons.class   , PlayCases.class,       Maps.DualPark ,new Point(10,33) ,new Point(1674,476));
+    DualPlayer(     "", BattlePeople.class    , PlayingStateDual.class,Maps.DualKiosk,new Point(11,20),new Point(1690,586),true),
+    CatchFlag(      "", TakeFlag.class        , PlayingFlag.class     ,Maps.DualPark ,new Point(10,33) ,new Point(1674,476),true),
+    Survivor(       "", SurvivorVsMobile.class, PlayingStateDual.class,Maps.DualKiosk,new Point(14,16),new Point(1570,496),false),
+    OccupationFloor("", MoreCasesMons.class   , PlayCases.class,       Maps.DualPark ,new Point(10,33) ,new Point(1674,476),true);
 
 
     /***/
@@ -31,6 +31,7 @@ public enum TypeDual
     final Class<? extends DualUnderQuest> start;
 
 
+    /***/
     final Class<? extends PlayingState> graphic;
 
 
@@ -47,7 +48,12 @@ public enum TypeDual
 
 
     /***/
-    TypeDual(String nameQuest, Class<? extends DualUnderQuest> startClass,Class<? extends PlayingState> graphic,Maps map, Point playerOnePos, Point playerTwoPos)
+    final boolean relife;
+
+
+    /***/
+    TypeDual(String nameQuest, Class<? extends DualUnderQuest> startClass,Class<? extends PlayingState> graphic,
+             Maps map, Point playerOnePos, Point playerTwoPos,boolean relife)
     {
         name  = nameQuest;
         start = startClass;
@@ -55,6 +61,7 @@ public enum TypeDual
         pointOne = playerOnePos;
         pointTwo = playerTwoPos;
         this.graphic = graphic;
+        this.relife  = relife;
     }
 
 
@@ -91,8 +98,16 @@ public enum TypeDual
     }
 
 
+    /***/
     public Maps getStartMaps()
     {
         return maps;
+    }
+
+
+    /***/
+    public boolean canReLife()
+    {
+        return relife;
     }
 }

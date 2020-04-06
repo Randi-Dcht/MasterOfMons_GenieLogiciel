@@ -105,6 +105,10 @@ public class People extends Character implements Serializable, Observer, FrameTi
      * The actual item to use
      */
     private Items use;
+    /***
+     *
+     */
+    private int maxItem;
 
 
     /**
@@ -123,6 +127,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
         this.difficulty = difficulty;
         this.gender = gender;
         myMoney = 5;
+        maxItem = difficulty.getManyItem();
     }
 
 
@@ -368,11 +373,18 @@ public class People extends Character implements Serializable, Observer, FrameTi
             gun = (Guns)object;
             return true;
         }
-        if(myObject.size() == difficulty.getManyItem())
+        if(myObject.size() >= maxItem)
             return false;
         myObject.add(object);
         Supervisor.getEvent().notify(new InventoryChanged(this, object, InventoryChanged.Type.Added));
         return true;
+    }
+
+
+    /***/
+    public void setMaxItem(int cmb)
+    {
+        maxItem = cmb;
     }
 
 

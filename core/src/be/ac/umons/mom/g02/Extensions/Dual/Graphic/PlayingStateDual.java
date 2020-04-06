@@ -74,6 +74,8 @@ public class PlayingStateDual extends PlayingState
     protected int sizeList = 25;
     /***/
     protected double time = 7;
+    /***/
+    protected boolean relive = false;
 
 
     /**
@@ -133,6 +135,7 @@ public class PlayingStateDual extends PlayingState
             changedCam();
 
         objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
+        relive = supervisorDual.getDual().canReLife();
     }
 
 
@@ -167,20 +170,20 @@ public class PlayingStateDual extends PlayingState
         if ((cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos) && pos)
             translateCamera(cam_X_pos,cam_Y_pos);
 
+        if (!player1Life && relive)
+            lifePlayer(player,dt);
+
+        if (!player2Life && relive)
+            lifePlayer(playerTwo,dt);
+
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
-            if (!player1Life)
-                lifePlayer(player,dt);
-            if (!player2Life)
-                lifePlayer(playerTwo,dt);
-
             time -= dt;
             if (time <= 0)
             {
                 sizeList++;
                 time = 7;
             }
-
         }
     }
 

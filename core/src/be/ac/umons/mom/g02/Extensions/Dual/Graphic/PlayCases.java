@@ -48,7 +48,7 @@ public class PlayCases extends PlayingStateDual
     /**
      * This is the time of the dual
      */
-    protected double time = 90;
+    protected double time = 50;
 
 
 
