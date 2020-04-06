@@ -225,7 +225,7 @@ public class PlayingLANHelper {
             pauseSent = true;
         }
         if (gim.isKey("attack", KeyStatus.Pressed))
-            nm.sendOnTCP("AC"); // TODO Don't work on UDP (?)
+            nm.sendOnTCP("AC"); // Don't work on UDP (?)
     }
 
     /**

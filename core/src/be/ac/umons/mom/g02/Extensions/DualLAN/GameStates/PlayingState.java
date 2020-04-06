@@ -55,7 +55,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
             PlayingLANHelper.pauseSent = true;
         });
         endDual.setOnClick(() -> {
-            PlayingDualLANHelper.goToPreviousMenu();
+            PlayingDualLANHelper.goToChoosingMenu();
             nm.sendOnTCP("EndDual");
         });
 
@@ -66,6 +66,7 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         }
 
         nm.processMessagesNotRan();
+        pos = false;
     }
 
     @Override
