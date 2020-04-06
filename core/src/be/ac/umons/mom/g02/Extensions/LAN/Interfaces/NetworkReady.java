@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Extensions.LAN.Interfaces;
 
+import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Player;
@@ -9,7 +10,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 
-public interface NetworkReady {
+public interface NetworkReady extends Observer {
     /**
      * @param p The second player position
      */

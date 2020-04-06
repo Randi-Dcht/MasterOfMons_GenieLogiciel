@@ -127,6 +127,11 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
             }
         });
 
+        if (! nm.isTheServer()) {
+            playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerOne());
+            player.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
+        }
+
         setColor(! nm.isTheServer());
         nm.whenMessageReceivedDo("MICC", (objects) -> {
             setColor((boolean)objects[0]);

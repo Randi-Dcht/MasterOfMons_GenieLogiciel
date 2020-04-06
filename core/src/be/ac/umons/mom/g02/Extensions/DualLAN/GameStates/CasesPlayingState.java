@@ -44,6 +44,7 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
     @Override
     public void init() {
         super.init();
+        PlayingDualLANHelper.init(this);
 
         try {
             nm = NetworkManager.getInstance();
@@ -51,7 +52,6 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-
 
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);

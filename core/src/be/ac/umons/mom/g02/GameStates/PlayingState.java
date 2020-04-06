@@ -243,6 +243,9 @@ public class PlayingState extends GameState implements Observer {
         pauseButton.setFont(gs.getSmallFont());
     }
 
+    /**
+     * Executed when the user pressed the pause key or the pause button
+     */
     protected void onPause() {
         InGameMenuState igms = (InGameMenuState) gsm.setState(InGameMenuState.class);
         igms.setPlayingState(this);

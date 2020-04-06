@@ -37,10 +37,19 @@ public class PlayingDualLANHelper {
 
     /**
      * Set all the necessary variables and events.
-     * @param observer The <code>PlayingState</code> which use this class.
+     * @param ps The <code>PlayingState</code> which use this class.
      */
-    public static void init(Observer observer) {
-        PlayingLANHelper.init(observer);
+    public static void init(NetworkReady ps) {
+        PlayingLANHelper.init(ps);
+        try {
+            NetworkManager nm = NetworkManager.getInstance();
+            if (! nm.isTheServer()) {
+                ps.setPlayerPosition(SupervisorDual.getSupervisorDual().getDual().getPointPlayerTwo());
+                ps.setSecondPlayerPosition(SupervisorDual.getSupervisorDual().getDual().getPointPlayerOne());
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
