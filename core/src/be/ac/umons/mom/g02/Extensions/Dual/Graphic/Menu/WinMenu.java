@@ -25,9 +25,9 @@ public class WinMenu extends MenuState
 
         setMenuItems(new MenuItem[]
                 {
-                        new TitleMenuItem(gs,String.format("Finish this dual (%s)", SupervisorDual.getSupervisorDual().getDual().toString())),// TODO bundle
-                        new TextMenuItem(gs,String.format("\n \n you are the winner : %s \n \n",SupervisorDual.getSupervisorDual().getNameWin())),//TODO bundle
-                        new ButtonMenuItem(gim,gs,"continue",() -> gsm.removeAllStateAndAdd(DualChooseMenu.class), true, "BTN_Continue")//TODO bundle
+                        new TitleMenuItem(gs,String.format(GraphicalSettings.getStringFromId("Finish"), SupervisorDual.getSupervisorDual().getDual().toString())),
+                        new TextMenuItem(gs,String.format(GraphicalSettings.getStringFromId("winDual"),SupervisorDual.getSupervisorDual().getNameWin())),
+                        new ButtonMenuItem(gim,gs,GraphicalSettings.getStringFromId("continue"),() -> gsm.removeAllStateAndAdd(DualChooseMenu.class), true, "BTN_Continue")
                 });
     }
 }

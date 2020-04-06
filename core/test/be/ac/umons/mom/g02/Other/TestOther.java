@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestOther
 {
     @Test
-    void TimeGameTest()//TODO date -> use date
+    void TimeGameTest()
     {
         SuperviserNormally.initNormallyGame();Supervisor.getSupervisor().setMustPlaceItem(false);
         Supervisor.getSupervisor().newParty("Test",Type.athletic,Gender.Men,Difficulty.Easy);
