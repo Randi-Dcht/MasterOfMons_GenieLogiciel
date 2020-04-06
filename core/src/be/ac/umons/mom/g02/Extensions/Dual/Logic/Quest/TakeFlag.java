@@ -11,6 +11,7 @@ import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -58,15 +59,23 @@ public class TakeFlag extends DualUnderQuest
     @Override
     public ArrayList<Items> getListItems()
     {
+        Point ptFirst  = new Point(11,7);
+        Point ptSecond = new Point(10,32);
         ArrayList<Items> list = new ArrayList<>();
         Flag flg;
         for (int i=0; i <3 ;i++)
         {
             list.add(flg = new Flag());flg.setMaps(TypeDual.CatchFlag.getStartMaps());
             if (people.equals(SupervisorDual.getPeople()))
+            {
                 flg.setPeople(people,"R");
+                flg.setPositionOnMap(new Point(ptFirst.x+i,ptFirst.y-i));
+            }
             else
+            {
                 flg.setPeople(people,"B");
+                flg.setPositionOnMap(new Point(ptSecond.x+i,ptSecond.y-i));
+            }
         }
         return list;
     }

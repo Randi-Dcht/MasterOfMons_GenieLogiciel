@@ -56,12 +56,12 @@ public class PlayingFlag extends PlayingStateDual
         baseTwo = new Cases(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
 
         Point ptFirst  = new Point(11,7);
-        Point ptSecond = new Point(30,20);
+        Point ptSecond = new Point(10,32);
 
         cleanInventory((People)player.getCharacteristics());
         cleanInventory((People)playerTwo.getCharacteristics());
 
-        PlaceFlag(new Point(ptFirst.x+1,ptFirst.y + 1),new Point(ptFirst.x+2,ptFirst.y + 2),new Point(ptFirst.x+3,ptFirst.y + 3),new Point(ptSecond.x,ptSecond.y + 1),new Point(ptSecond.x,ptSecond.y + 2),new Point(ptSecond.x,ptSecond.y + 3));
+        PlaceFlag();
 
         ((People) player.getCharacteristics()).setMaxItem(1);
         ((People) playerTwo.getCharacteristics()).setMaxItem(1);
@@ -71,11 +71,10 @@ public class PlayingFlag extends PlayingStateDual
     /**
      * This method allows to place the flag on the maps
      */
-    public void PlaceFlag(Point... pt)
+    public void PlaceFlag()
     {
-        ArrayList<Point> lists = new ArrayList<>(Arrays.asList(pt));
         for (Items it : supervisorDual.getItems(TypeDual.CatchFlag.getStartMaps()))
-            addItemToMap(it,lists.remove(new Random().nextInt(lists.size())),TypeDual.CatchFlag.getStartMaps().getMaps());
+            addItemToMap(it,((Flag)it).getPosition(),TypeDual.CatchFlag.getStartMaps().getMaps());
     }
 
 
