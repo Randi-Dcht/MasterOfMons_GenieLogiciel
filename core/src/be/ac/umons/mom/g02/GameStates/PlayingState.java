@@ -499,7 +499,6 @@ public class PlayingState extends GameState implements Observer {
             cam.position.x = x;
         if (pmr.y > minY && pmr.y < mapHeight - minY)
             cam.position.y = y;
-
     }
 
     /**
@@ -940,6 +939,8 @@ public class PlayingState extends GameState implements Observer {
     public void setPlayerPosition(Point pos) {
         player.setPosX(pos.x);
         player.setPosY(pos.y);
+        cam.position.x = pos.x;
+        cam.position.y = pos.y;
     }
 
     /**
