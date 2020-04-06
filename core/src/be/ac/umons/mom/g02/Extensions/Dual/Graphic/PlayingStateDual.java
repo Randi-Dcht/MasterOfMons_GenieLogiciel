@@ -69,7 +69,7 @@ public class PlayingStateDual extends PlayingState
     /**
      * If the player is living
      */
-    protected boolean player1Life = true, player2Life = true;
+    protected HashMap<Player,Boolean> playerLife = new HashMap<>();
     /**
      * If the cam must be fixed
      */
@@ -121,6 +121,9 @@ public class PlayingStateDual extends PlayingState
 
         adv.put(player,playerTwo);
         adv.put(playerTwo,player);
+
+        playerLife.put(player,true);
+        playerLife.put(playerTwo,true);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
@@ -181,10 +184,10 @@ public class PlayingStateDual extends PlayingState
         if ((cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos) && pos)
             translateCamera(cam_X_pos,cam_Y_pos);
 
-        if (!player1Life && relive)
+        if (!playerLife.get(player) && relive)
             lifePlayer(player,dt);
 
-        if (!player2Life && relive)
+        if (!playerLife.get(playerTwo) && relive)
             lifePlayer(playerTwo,dt);
 
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
@@ -213,9 +216,9 @@ public class PlayingStateDual extends PlayingState
 
         drawAfterMaps();
 
-        if (player1Life)
+        if (playerLife.get(player))
             player.draw(sb, player.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, player.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
-        if (player2Life)
+        if (playerLife.get(playerTwo))
             playerTwo.draw(sb, playerTwo.getPosX() - (int)cam.position.x + MasterOfMonsGame.WIDTH / 2, playerTwo.getPosY() - (int)cam.position.y + MasterOfMonsGame.HEIGHT / 2, tileWidth, 2 * tileHeight);
 
         for (int i=0;i<Math.min(sizeList,pnjs.size());i++)
@@ -275,7 +278,7 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void handleInput()
     {
-        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && player2Life && selectedOne != null)
+        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && playerLife.get(playerTwo) && selectedOne != null)
         {
             if (selectedOne instanceof Character)
                 return;
@@ -285,18 +288,18 @@ public class PlayingStateDual extends PlayingState
                     pickUpAnObject();
             }
         }
-        if (gim.isKey("attackTwo", KeyStatus.Pressed) && player2Life)
+        if (gim.isKey("attackTwo", KeyStatus.Pressed) && playerLife.get(playerTwo))
         {
             pnjs.add(player);
             attack(playerTwo);
             pnjs.remove(player);
         }
 
-        if (player1Life)
+        if (playerLife.get(player))
             super.handleInput();
 
         endDual.handleInput();
-        inventoryShowerTwo.handleInput();//TODO
+        inventoryShowerTwo.handleInput();
     }
 
 
@@ -307,12 +310,12 @@ public class PlayingStateDual extends PlayingState
     @Override
     protected void attack(Player player)
     {
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
             pnjs.add(adv.get(player));
 
         super.attack(player);
 
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.CatchFlag))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
             pnjs.remove(adv.get(player));
     }
 
@@ -322,14 +325,14 @@ public class PlayingStateDual extends PlayingState
      * @param player is the player to add
      */
     @Override
-    protected void checkForNearSelectable(Player player)//TODO upgrade
+    protected void checkForNearSelectable(Player player)
     {
-        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor) && playerLife.get(adv.get(player)))
             pnjs.add(adv.get(player));
 
         super.checkForNearSelectable(player);
 
-        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor) && playerLife.get(adv.get(player)))
             pnjs.remove(adv.get(player));
     }
 
@@ -403,9 +406,9 @@ public class PlayingStateDual extends PlayingState
     protected void queuingToPlay(People people)
     {
         if (people.equals(player.getCharacteristics()))
-            player1Life = false;
+            playerLife.replace(player,false);
         else
-            player2Life = false;
+            playerLife.replace(playerTwo,false);
     }
 
 
@@ -417,11 +420,10 @@ public class PlayingStateDual extends PlayingState
     protected void lifePlayer(Player player, double dt)
     {
         People pp = (People)player.getCharacteristics();
-        pp.setActualLife(pp.getActualLife()+dt*2);
+        pp.setActualLife(pp.getActualLife()+dt*3);
 
         if (pp.getActualLife() >= pp.lifeMax()*0.9)
             whatPeople(player);
-
     }
 
 
@@ -432,12 +434,14 @@ public class PlayingStateDual extends PlayingState
     {
         if (player.equals(this.player))
         {
-            player1Life = true;
-            player.setMapPos(supervisorDual.getDual().getPointPlayerOne());
+            playerLife.replace(this.player,true);
+            int x = (mapHeight - supervisorDual.getDual().getPointPlayerOne().y) * tileWidth / 2 + supervisorDual.getDual().getPointPlayerOne().x * tileHeight;
+            int y = (mapHeight - supervisorDual.getDual().getPointPlayerOne().x - supervisorDual.getDual().getPointPlayerOne().y) * tileHeight / 2;
+            player.setMapPos(new Point(x,y));
         }
         else
         {
-            player2Life = true;
+            playerLife.replace(playerTwo,true);
             playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
         }
     }
