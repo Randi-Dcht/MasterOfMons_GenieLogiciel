@@ -426,7 +426,9 @@ public  abstract class Supervisor implements Observer
 
 
     /**
-     * */
+     * If the game haves the money and shop in the party
+     * @param haveMoney can have the money
+     */
     public void setMoneyGame(boolean haveMoney)
     {
         this.haveMoney = haveMoney;

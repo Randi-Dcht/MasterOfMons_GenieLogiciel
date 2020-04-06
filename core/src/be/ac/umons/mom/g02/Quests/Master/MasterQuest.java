@@ -106,11 +106,11 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * This method check the level of player and if this quest is finished
      * @param after is the next MasterQuest.
      */
-    protected void newQuest(MasterQuest after)//TODO difficulte
+    protected void newQuest(MasterQuest after)
     {
         if(finished)
         {
-            if (after.bloc.getMinPeople() <= people.getLevel())
+            if (after.bloc.getMinPeople()-difficulty.getUpLevel() <= people.getLevel())
             {
                 this.after = after;
                 people.newQuest(after);
@@ -394,10 +394,10 @@ public abstract class MasterQuest implements Quest,Serializable,Observer
      * @param notify is the notification with event
      */
     @Override
-    public void update(Notification notify)//TODO difficulte
+    public void update(Notification notify)
     {
         eventMaps(notify);
-        if(notify.getEvents().equals(Events.UpLevel) && memory != null && memory.bloc.getMinPeople() <= people.getLevel())
+        if(notify.getEvents().equals(Events.UpLevel) && memory != null && memory.bloc.getMinPeople()-difficulty.getUpLevel() <= people.getLevel())
         {
             this.after = memory;
             people.newQuest(memory);
