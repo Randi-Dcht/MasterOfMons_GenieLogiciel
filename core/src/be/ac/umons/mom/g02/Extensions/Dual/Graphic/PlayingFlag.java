@@ -62,6 +62,9 @@ public class PlayingFlag extends PlayingStateDual
         cleanInventory((People)playerTwo.getCharacteristics());
 
         PlaceFlag(new Point(ptFirst.x,ptFirst.y + 1),new Point(ptFirst.x,ptFirst.y + 2),new Point(ptFirst.x,ptFirst.y + 3),new Point(ptSecond.x,ptSecond.y + 1),new Point(ptSecond.x,ptSecond.y + 2),new Point(ptSecond.x,ptSecond.y + 3));
+
+        ((People) player.getCharacteristics()).setMaxItem(1);
+        ((People) playerTwo.getCharacteristics()).setMaxItem(1);
     }
 
 
@@ -82,12 +85,7 @@ public class PlayingFlag extends PlayingStateDual
      */
     protected void cleanInventory(People people)
     {
-        ArrayList<Items> it = new ArrayList<>();
-        for (Items items : people.getInventory())
-        {
-            if (items.getClass().equals(Flag.class))
-                it.add(items);
-        }
+        ArrayList<Items> it = new ArrayList<>(people.getInventory());
         people.getInventory().removeAll(it);
     }
 

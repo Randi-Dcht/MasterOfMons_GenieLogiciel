@@ -74,6 +74,8 @@ public class PlayingStateDual extends PlayingState
     protected int sizeList = 25;
     /***/
     protected double time = 7;
+    /***/
+    protected boolean relive = false;
 
 
     /**
@@ -133,6 +135,7 @@ public class PlayingStateDual extends PlayingState
             changedCam();
 
         objectSize = new Point((int)(2 * gs.getSmallFont().getXHeight() + 2 * leftMargin), (int)(2 * topMargin + gs.getSmallFont().getLineHeight()));
+        relive = supervisorDual.getDual().canReLife();
     }
 
 
@@ -167,20 +170,20 @@ public class PlayingStateDual extends PlayingState
         if ((cam.position.x != cam_X_pos|| cam.position.y != cam_Y_pos) && pos)
             translateCamera(cam_X_pos,cam_Y_pos);
 
+        if (!player1Life && relive)
+            lifePlayer(player,dt);
+
+        if (!player2Life && relive)
+            lifePlayer(playerTwo,dt);
+
         if (supervisorDual.getDual().equals(TypeDual.Survivor))
         {
-            if (!player1Life)
-                lifePlayer(player,dt);
-            if (!player2Life)
-                lifePlayer(playerTwo,dt);
-
             time -= dt;
             if (time <= 0)
             {
                 sizeList++;
                 time = 7;
             }
-
         }
     }
 
@@ -320,12 +323,12 @@ public class PlayingStateDual extends PlayingState
     @Override
     protected void checkForNearSelectable(Player player)//TODO upgrade
     {
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
             pnjs.add(adv.get(player));
 
         super.checkForNearSelectable(player);
 
-        if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+        if (!supervisorDual.getDual().equals(TypeDual.Survivor))
             pnjs.remove(adv.get(player));
     }
 
@@ -382,14 +385,13 @@ public class PlayingStateDual extends PlayingState
     {
         if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer().getClass().equals(People.class))
         {
-            if (supervisorDual.getDual().equals(TypeDual.DualPlayer))
+            if (supervisorDual.getDual().equals(TypeDual.DualPlayer) || supervisorDual.getDual().equals(TypeDual.Survivor))
                 finishDual();
-            else if (supervisorDual.getDual().equals(TypeDual.Survivor))
+            else
                 queuingToPlay((People)notify.getBuffer());
         }
         else if (notify.getEvents().equals(Events.Dead) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile )
             deadMobile((Mobile)notify.getBuffer());
-
     }
 
 
@@ -428,9 +430,15 @@ public class PlayingStateDual extends PlayingState
     protected void whatPeople(Player player)
     {
         if (player.equals(this.player))
+        {
             player1Life = true;
+            player.setMapPos(supervisorDual.getDual().getPointPlayerOne());
+        }
         else
+        {
             player2Life = true;
+            playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
+        }
     }
 
 

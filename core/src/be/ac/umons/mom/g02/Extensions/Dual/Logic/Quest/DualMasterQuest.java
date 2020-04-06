@@ -7,6 +7,7 @@ import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Objects.Characters.People;
+import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 import be.ac.umons.mom.g02.Quests.Master.MasterQuest;
 import be.ac.umons.mom.g02.Quests.Under.UnderQuest;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
@@ -81,9 +82,8 @@ public class DualMasterQuest extends MasterQuest
     /***/
     public void checkNext()
     {
-        System.out.println("pass to check next"+ll[0].getAdvancement()+" -- "+ll[1].getAdvancement());
         if ((ll[0].getAdvancement() >= 99 || ll[1].getAdvancement() >= 99) && canPass)
-           { System.out.println("ok <----");SupervisorDual.getSupervisorDual().isFinish();}
+           {SupervisorDual.getSupervisorDual().isFinish();}
     }
 
 
@@ -101,7 +101,7 @@ public class DualMasterQuest extends MasterQuest
     @Override
     public String getName()
     {
-        return Supervisor.getGraphic().getStringFromId("StartDualQuest");
+        return GraphicalSettings.getStringFromId("StartDualQuest");
     }
 
 
