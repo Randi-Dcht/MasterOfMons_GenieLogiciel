@@ -1,10 +1,14 @@
 package be.ac.umons.mom.g02.Objects.Items;
 
 
+import be.ac.umons.mom.g02.Objects.Characters.HelpPnj;
+import be.ac.umons.mom.g02.Objects.Characters.Mobile;
+import be.ac.umons.mom.g02.Objects.Characters.People;
+
 /**
  * This class define the paper of the paper with the exam question
  */
-public class PaperHelp extends Items//TODO delete
+public class PaperHelp extends Items
 {
 
     /**
@@ -24,6 +28,19 @@ public class PaperHelp extends Items//TODO delete
     public boolean getObsolete()
     {
         return true;
+    }
+
+
+    /**
+     * This methods allows to use the item
+     * @param pp is the player who uses the item
+     */
+    @Override
+    public void used(People pp)
+    {
+        Mobile mob = pp.meet();
+        if (mob != null && mob.getClass().equals(HelpPnj.class))
+            ((HelpPnj)mob).giveHelp(this);
     }
 
 

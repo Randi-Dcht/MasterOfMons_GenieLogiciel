@@ -36,7 +36,10 @@ public class HelpPnj extends Mobile
     }
 
 
-    /***/
+    /**
+     * Return the name of this mobile with the symbol help
+     * @return the name
+     */
     @Override
     public String getName()
     {
