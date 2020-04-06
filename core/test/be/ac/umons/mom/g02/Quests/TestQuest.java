@@ -201,6 +201,6 @@ public class TestQuest
         SuccesfulYear success = new SuccesfulYear(Supervisor.getSupervisor().actualQuest(),10,Supervisor.getPeople());
         double old = success.getAdvancement();
         success.evenActivity(new EntryPlaces());
-        assertTrue(old < success.getAdvancement());
+        assertFalse(old < success.getAdvancement());
     }
 }
