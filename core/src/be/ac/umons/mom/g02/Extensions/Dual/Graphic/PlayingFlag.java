@@ -9,6 +9,7 @@ import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlaye
 import be.ac.umons.mom.g02.GraphicalObjects.InventoryItem;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
+import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.OnMapObject;
 import be.ac.umons.mom.g02.MasterOfMonsGame;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -146,6 +147,11 @@ public class PlayingFlag extends PlayingStateDual
     }
 
 
+    /**
+     * When this dual is finish:
+     * - clean inventory
+     * - display the winner
+     */
     @Override
     protected void finishDual()
     {

@@ -14,7 +14,6 @@ import be.ac.umons.mom.g02.Extensions.Multiplayer.GameStates.PlayingState;
 import be.ac.umons.mom.g02.Extensions.Multiplayer.Regulator.SupervisorMultiPlayer;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
 import be.ac.umons.mom.g02.GraphicalObjects.Controls.InventoryShower;
-import be.ac.umons.mom.g02.GraphicalObjects.Controls.TextBox;
 import be.ac.umons.mom.g02.GraphicalObjects.LifeBar;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.Character;
 import be.ac.umons.mom.g02.GraphicalObjects.OnMapObjects.MapObject;
@@ -484,7 +483,6 @@ public class PlayingStateDual extends PlayingState
     @Override
     public void dispose()
     {
-       // super.dispose();TODO problem with multi dispose of lifeBar
         endDual.dispose();
         lifeBarTwo.dispose();
         inventoryShowerTwo.dispose();
