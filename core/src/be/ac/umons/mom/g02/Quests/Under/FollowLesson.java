@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Quests.Under;
 
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.GoToLesson;
 import be.ac.umons.mom.g02.Events.Notifications.UseItem;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
@@ -17,12 +18,8 @@ import be.ac.umons.mom.g02.Regulator.Supervisor;
  * This class define the goals if the player go to follow the lesson on auditory
  * @author Umons_Group_2_ComputerScience_RandyDauchot
  */
-public class FollowLesson extends UnderQuest implements FrameTime
+public class FollowLesson extends UnderQuest
 {
-    /**
-     * This is a memory to the actual course of the player
-     */
-    private Course nowCourse;
 
 
         /**
@@ -46,15 +43,17 @@ public class FollowLesson extends UnderQuest implements FrameTime
       {
           if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty())
               helpByItems(((UseItem)notify).getBuffer());
+          if (notify.getEvents().equals(Events.GoLesson) && notify.bufferNotEmpty())
+              checkLesson(((GoToLesson)notify).getBuffer());
       }
 
 
       /**
        * This method check if the player go to learn the lesson in the auditory
        */
-      private void checkLesson()
+      private void checkLesson(Course nowCourse)
       {
-          if (nowCourse.isGo() && (nowCourse.getDate().getMin()+15) >= Supervisor.getSupervisor().getTime().getDate().getMin())
+          if ( nowCourse != null && nowCourse.isGo() && (nowCourse.getDate().getMin()+15) >= Supervisor.getSupervisor().getTime().getDate().getMin())
               addProgress(0.6);
       }
 
@@ -89,19 +88,6 @@ public class FollowLesson extends UnderQuest implements FrameTime
       {
         return 0;
       }
-
-
-    /**
-     * This method allows to give the time between two frames
-     * This method allows to refresh the class every call
-     * @param dt us the time between two frame
-     */
-    @Override
-    public void update(double dt)
-    {
-        if (nowCourse != null)
-            checkLesson();
-    }
 
 
     /**
