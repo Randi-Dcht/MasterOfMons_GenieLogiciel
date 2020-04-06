@@ -41,7 +41,7 @@ public class RandomName
             }
             line.close();
         }
-        catch (Exception e)//TODO test
+        catch (Exception e)
         {
             //Gdx.app.error("Error in the reading text of the random name of the mobile", e.getMessage());
         }

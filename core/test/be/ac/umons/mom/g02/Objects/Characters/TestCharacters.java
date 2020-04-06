@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -79,16 +81,6 @@ public class TestCharacters
         memory = p2.getActualLife();
         sp.attackMethod(p1,p2);
         assertTrue(memory > p2.getActualLife(),"Chack the life after the attack (PNJ)");
-    }
-
-
-    @Test
-    void testingDialog()
-    {/*
-        Gdx.files = Mockito.mock(Files.class);FileHandle file = Mockito.mock(FileHandle.class);
-        Mockito.when(file.file()).thenReturn(new File("testAssets"));
-        Mockito.when(Gdx.files.getFileHandle("Name.LambdaPNJ.txt", Files.FileType.Internal)).thenReturn(file);
-        RandomName.giveName();*/
     }
 
 

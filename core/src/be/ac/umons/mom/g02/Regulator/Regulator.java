@@ -216,10 +216,10 @@ public class Regulator implements Observer
      */
     public void timeOfDay(Places place)
     {
-        if (place.equals(Places.Bed))
+        if (place != null && place.equals(Places.Bed))
             kotliebed();
 
-        if((place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)))
+        if(place != null && (place.equals(Places.RoomCourse) || place.equals(Places.ComputerRoom)))
         {
             if (firstCourse)
             {
@@ -232,16 +232,16 @@ public class Regulator implements Observer
         }
 
 
-        if (place.equals(Places.StudyRoom) && firstStudy)
+        if ( place != null && place.equals(Places.StudyRoom) && firstStudy)
         {
             push("TimeStudy");
             firstStudy=false;
         }
 
-        if (place.equals(Places.StudyRoom))
+        if ( place != null && place.equals(Places.StudyRoom))
             TimeGame.FASTER = 350;
 
-        if (place.equals(Places.OnTheMap))
+        if (place != null && place.equals(Places.OnTheMap))
             TimeGame.FASTER = 10;
 
     }

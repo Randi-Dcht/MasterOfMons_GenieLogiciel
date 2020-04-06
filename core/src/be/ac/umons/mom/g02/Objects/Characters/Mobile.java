@@ -171,6 +171,8 @@ public class Mobile extends Character implements Serializable, FrameTime
      */
     private int calculus(Bloc playerBloc)
     {
+        if (playerBloc == null)
+            return 1;
         int rd = new Random().nextInt((playerBloc.getMaxMob()-playerBloc.getMinMob()+1))+playerBloc.getMinMob();
         if (rd >= playerBloc.getMinMob() && rd <= playerBloc.getMaxMob())
             return rd;
