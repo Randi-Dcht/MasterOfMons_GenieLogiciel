@@ -4,9 +4,12 @@ import be.ac.umons.mom.g02.Enums.Places;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Answer;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Events.Notifications.PlayerHelpMe;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Quests.Quest;
+
+import java.util.ArrayList;
 
 
 /**
@@ -15,6 +18,8 @@ import be.ac.umons.mom.g02.Quests.Quest;
  */
 public class HelpMe extends UnderQuest
 {
+    private ArrayList<Mobile> list = new ArrayList<>();
+
     /**
      * This constructor allows to define a goals of help an other people (PNJ)
      * @param master is the above this
@@ -38,7 +43,13 @@ public class HelpMe extends UnderQuest
             goToPnj((Mobile) notify.getBuffer());
 
         if (notify.getEvents().equals(Events.Answer) && notify.bufferNotEmpty() && !notify.getBuffer().equals("ESC"))
+        {
             percentPassPnj(((Answer)notify).getBuffer());
+            studyWithPnj();
+        }
+
+        if (notify.getEvents().equals(Events.Help) && notify.bufferNotEmpty() && notify.getBuffer() instanceof Mobile)
+            goToPnj((Mobile)((PlayerHelpMe)notify).getBuffer());
     }
 
 
@@ -48,7 +59,11 @@ public class HelpMe extends UnderQuest
      */
     private void goToPnj(Mobile mobile)
     {
-        addProgress(0.1);
+        if (!list.contains(mobile))
+        {
+            addProgress(0.1);
+            list.add(mobile);
+        }
     }
 
 
@@ -58,9 +73,7 @@ public class HelpMe extends UnderQuest
      */
     private void percentPassPnj(String answer)
     {
-        if (answer.equals("HELPMe"))
-            addProgress(0.3);
-        if (answer.equals("PASSITEMYES"))
+        if (answer.equals("GiveMeItems"))
             addProgress(1);
     }
 
@@ -68,9 +81,9 @@ public class HelpMe extends UnderQuest
     /**
      * Ask to the PNJ if he want to study with the people
      */
-    private void studyWithPnj(Mobile mobile)
+    private void studyWithPnj()
     {
-        if (people.getPlace().equals(Places.StudyRoom))
+        if (people.meet() != null && people.getPlace().equals(Places.StudyRoom))
             addProgress(0.7);
     }
 

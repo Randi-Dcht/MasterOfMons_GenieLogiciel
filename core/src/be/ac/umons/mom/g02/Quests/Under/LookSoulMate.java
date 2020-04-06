@@ -45,6 +45,12 @@ public class LookSoulMate extends UnderQuest implements FrameTime
     {
         if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty())
             meetSoulMate((Mobile)notify.getBuffer());
+
+        if (people.getSoulMate() != null && coupleFirstDate == null)
+            coupleIn();
+
+        if (notify.getEvents().equals(Events.ChangeDay))
+            timeForSoulMate();
     }
 
 
@@ -69,11 +75,26 @@ public class LookSoulMate extends UnderQuest implements FrameTime
 
 
     /**
+     * Calculus the point for the date of first meet and now
+     * @param one is the meet date
+     * @param two is the now date
+     * @return the points
+     */
+    public double difference(Date one, Date two)
+    {
+        double a = one.getDay()*30 + one.getMonth();
+        double b = two.getDay()*30 + two.getMonth();
+        return b-a;
+    }
+
+
+    /**
      * This method add the progress with the advance of time of the couple
      */
     private void timeForSoulMate()
     {
-
+        if (coupleFirstDate != null)
+            addProgress(difference(coupleFirstDate,Supervisor.getSupervisor().getTime().getDate())/10);
     }
 
 
