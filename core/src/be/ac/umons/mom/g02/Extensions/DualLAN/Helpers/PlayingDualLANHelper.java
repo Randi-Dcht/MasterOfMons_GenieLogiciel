@@ -6,7 +6,7 @@ import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
 import be.ac.umons.mom.g02.Events.Notifications.LifeChanged;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Observer;
+import be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu.DualPauseMenu;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Mobile.ZombiePNJ;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
@@ -27,6 +27,7 @@ import be.ac.umons.mom.g02.Managers.GameStateManager;
 import be.ac.umons.mom.g02.Objects.Characters.Mobile;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Regulator.Supervisor;
+import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
 
@@ -168,5 +169,18 @@ public class PlayingDualLANHelper {
             gsm.removeAllStateAndAdd(FlagPlayingState.class);
         else
             gsm.removeAllStateAndAdd(PlayingState.class);
+    }
+
+    /**
+     * Executed when the pause menu is shown. Send the pause signal to the second player.
+     */
+    public static void onPause() {
+        GameStateManager.getInstance().setState(DualPauseMenu.class);
+        try {
+            NetworkManager.getInstance().sendMessageOnTCP("Pause");
+        } catch (SocketException e) {
+            Gdx.app.error("PlayingLANHelper", "Cannot send pause message !", e);
+        }
+        PlayingLANHelper.pauseSent = true;
     }
 }

@@ -68,7 +68,7 @@ public class CasesPlayingState extends PlayCases implements NetworkReady {
 
     @Override
     protected void onPause() {
-        PlayingLANHelper.onPause(this);
+        PlayingDualLANHelper.onPause();
     }
 
     /**
