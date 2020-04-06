@@ -109,7 +109,7 @@ public class MeetManyPeople extends UnderQuest
      */
     public int getTotalSubQuestsNumber()
     {
-        return getSubQuests().length;
+        return 0;
     }
 
 
