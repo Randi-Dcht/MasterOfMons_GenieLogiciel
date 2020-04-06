@@ -2,6 +2,7 @@ package be.ac.umons.mom.g02.Objects.Items;
 
 import be.ac.umons.mom.g02.Enums.Difficulty;
 import be.ac.umons.mom.g02.Enums.Gender;
+import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.Type;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
@@ -19,6 +20,7 @@ public class TestItems
         Supervisor.getSupervisor().setMustPlaceItem(false);
         Supervisor.getSupervisor().newParty("Test",Type.athletic,Gender.Men,Difficulty.Easy);
         Items phone = new Phone();
+        phone.setMaps(Maps.Nimy);
         People pp = Supervisor.getPeople();
         phone.used(pp);
         assertTrue(pp.getFriend()>0,"Check if the phone give the things to the people");

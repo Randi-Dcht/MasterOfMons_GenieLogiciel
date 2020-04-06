@@ -33,7 +33,8 @@ public class Phone extends Items
      */
     public void used(People pp)
     {
-        pp.addFriend(new Mobile("FriendRandom",pp.getBloc(), MobileType.Lambda, Actions.Never, NameDialog.Lambda));
+        for (int i=0; i < 10;i++)
+            pp.addFriend(new Mobile("FriendRandom",pp.getBloc(), MobileType.Lambda, Actions.Never, NameDialog.Lambda));
         batteryEnergizing -= 25;
         super.used(pp);
     }
