@@ -50,6 +50,7 @@ public class InGameMenuState extends MenuState {
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quickSave"), PlayingState::quickSave),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quickLoad"), () -> ps.quickLoad()),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("settings"), () -> gsm.setState(SettingsMenuState.class)),
+                new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("return"), this::goMainMenu),
                 new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("quit"), this::exit)});
     }
 
@@ -65,13 +66,23 @@ public class InGameMenuState extends MenuState {
     }
 
     /**
+     * Executed when the "return" option is chosen
+     */
+    public void goMainMenu() {
+        GameState g = gsm.setState(OutGameDialogState.class);
+        ((OutGameDialogState)g).setText(GraphicalSettings.getStringFromId("sureQuitGame"));
+        ((OutGameDialogState)g).addAnswer("yes", () -> gsm.removeAllStateAndAdd(MainMenuState.class));
+        ((OutGameDialogState)g).addAnswer("no");
+    }
+
+    /**
      * Executed when the "exit" option is chosen
      */
     public void exit() {
         GameState g = gsm.setState(OutGameDialogState.class);
         ((OutGameDialogState)g).setText(GraphicalSettings.getStringFromId("sureQuitGame"));
         ((OutGameDialogState)g).addAnswer("yes", () -> Gdx.app.exit());
-        ((OutGameDialogState)g).addAnswer("no", () -> gsm.removeFirstState());
+        ((OutGameDialogState)g).addAnswer("no");
     }
 
     /**
