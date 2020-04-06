@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Extensions.DualLAN.Helpers;
 import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Enums.MobileType;
 import be.ac.umons.mom.g02.Events.Events;
+import be.ac.umons.mom.g02.Events.Notifications.LaunchAttack;
 import be.ac.umons.mom.g02.Events.Notifications.LifeChanged;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Events.Observer;
@@ -58,7 +59,10 @@ public class PlayingDualLANHelper {
             nm.whenMessageReceivedDo("EndDual", objects ->
                     PlayingDualLANHelper.goToChoosingMenu());
             nm.whenMessageReceivedDo("Death", (objects) -> gsm.setState(WinMenu.class, true));
-            nm.whenMessageReceivedDo("SPL", (objects) -> SupervisorMultiPlayer.getPeople().setActualLife((double) objects[0], false));
+            nm.whenMessageReceivedDo("SPL", (objects) -> {
+                SupervisorMultiPlayer.getPeople().setActualLife((double) objects[0], false);
+                Supervisor.getEvent().notify(new LaunchAttack(Supervisor.getPeople(), null));
+            });
             nm.whenMessageReceivedDo("ZPNJ", (objects) ->
             {
                 Character c;
