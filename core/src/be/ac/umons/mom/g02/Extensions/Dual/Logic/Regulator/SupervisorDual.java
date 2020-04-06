@@ -77,23 +77,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
      * @param pathAndFile
      */
     @Override
-    public void saveGame(String pathAndFile)
-    {
-        LogicSaving saveOne,saveTwo=null;
-
-        if (playerOneSave != null)
-            saveOne = new LogicSaving(playerOne,playerOneSave.getMap(),playerOneSave.getDate(),playerOneSave.getPlayerPosition(),playerOneSave.getItemPosition());
-        else//TODO update
-            saveOne = new LogicSaving(playerOne,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
-
-        if (playerTwoSave != null)
-            saveTwo = new LogicSaving(playerTwo,playerTwoSave.getMap(),playerTwoSave.getDate(),playerTwoSave.getPlayerPosition(),playerTwoSave.getItemPosition());
-        else//TODO update
-            saveOne = new LogicSaving(playerTwo,time.getDate(),playGraphic.getPlayerPosition(),playGraphic.getItemsOnMap());
-
-        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveOne);
-        be.ac.umons.mom.g02.Objects.Saving.setSaveObject(pathAndFile,saveTwo);
-    }
+    public void saveGame(String pathAndFile){}
 
 
     public void createNewPlayer(People people,int number)
@@ -163,7 +147,7 @@ public class SupervisorDual extends SupervisorMultiPlayer
     @Override
     public void attackMethod(Attack attacker, Attack victim)
     {
-        if (attacker != null && victim != null)//TODO
+        if (attacker != null && victim != null)
             super.attackMethod(attacker, victim);
     }
 

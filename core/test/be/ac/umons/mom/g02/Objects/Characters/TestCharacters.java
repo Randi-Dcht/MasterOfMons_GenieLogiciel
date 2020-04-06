@@ -60,7 +60,7 @@ public class TestCharacters
         people.setPlaceMaps(Places.Bed);
         for (int i = 0; i < 100 ; i++ ){people.update(2);}
         first = people.getEnergy();
-        assertTrue(second < first,"add energy");//TODO
+        assertTrue(second < first,"add energy");
     }
 
     @Test

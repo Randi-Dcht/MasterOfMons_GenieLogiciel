@@ -22,8 +22,7 @@ public class CreateAPlayer extends CreatePlayerMenuState
 
     @Override
     public void initGame(String name, String level)
-    {//TODO visibility
-        //SupervisorDual.getSupervisorDual().createNewPlayer(new People(name,characterType, playerGender, difficulty),playerNumber);
+    {
         SupervisorDual.getSupervisorDual().createNewPlayer(new People(name, Type.athletic, Gender.Men, Difficulty.Easy),playerNumber);
         gsm.removeFirstState();
     }

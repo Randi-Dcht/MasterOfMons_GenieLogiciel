@@ -18,11 +18,14 @@ public class TestOther
     @Test
     void TimeGameTest()//TODO date -> use date
     {
-        SuperviserNormally.initNormallyGame();
-        TimeGame tg = new TimeGame(new Date(15,9,2019,8,0));
+        SuperviserNormally.initNormallyGame();Supervisor.getSupervisor().setMustPlaceItem(false);
+        Supervisor.getSupervisor().newParty("Test",Type.athletic,Gender.Men,Difficulty.Easy);
+        TimeGame tg = Supervisor.getSupervisor().getTime();
+        int old = tg.getDate().getYear();
         tg.update(new ChangeQuest());
-        for(int i = 0; i <= 60; i++)
+        for(int i = 0; i < 60; i++)
             tg.update(new ChangeQuest());
+        assertEquals(tg.getDate().getYear(), (old + 61));
     }
 
 

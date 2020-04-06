@@ -174,7 +174,7 @@ public class MovingPNJ extends Mobile
        if (!ps.checkForCollision(myGraphic))
         {
        //     myGraphic.move(-x,-y);//back to old position
-            /*if (x == 0)TODO this (stack overflow !!)
+            /*if (x == 0)TODO
                 moving(dtMemory,true,false);
             else
                 moving(dtMemory,false,true);*/

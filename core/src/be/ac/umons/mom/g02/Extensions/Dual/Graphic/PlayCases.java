@@ -148,18 +148,15 @@ public class PlayCases extends PlayingStateDual
             old.replace(player,new Point(player.getPosX()/64,player.getPosY()/32));
 
             if (player.equals(this.player))
-                drawCase.add(new Cases(gs,Color.BLUE,tileWidth,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY()));//TODO
+                drawCase.add(new Cases(gs,Color.BLUE,tileWidth,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY()));
             else
-                drawCase.add(new Cases(gs,Color.RED,tileWidth,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY()));//TODO
+                drawCase.add(new Cases(gs,Color.RED,tileWidth,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY()));
 
             cases.get(adv.get(player)).remove(new Point(player.getPosX()/64,player.getPosY()/32));
             ((MoreCasesMons)supervisorDual.actualQuest().getUnderQuest((People)player.getCharacteristics())).callMe(+1);
 
             if (!cases.get(player).contains(new Point(player.getPosX()/64,player.getPosY()/32)))
                 cases.get(player).add(new Point(player.getPosX()/64,player.getPosY()/32));
-
-            if(supervisorDual.getDual().equals(TypeDual.OccupationFloor))//TODO
-                ((MoreCasesMons)((DualMasterQuest) supervisorDual.actualQuest()).getUnderQuest((People)player.getCharacteristics())).callMe(1);
         }
     }
 
