@@ -3,9 +3,6 @@ package be.ac.umons.mom.g02.GraphicalObjects.Controls;
 import be.ac.umons.mom.g02.Animations.Animation;
 import be.ac.umons.mom.g02.Animations.DoubleAnimation;
 import be.ac.umons.mom.g02.Enums.KeyStatus;
-import be.ac.umons.mom.g02.Events.Events;
-import be.ac.umons.mom.g02.Events.Notifications.Notification;
-import be.ac.umons.mom.g02.Events.Observer;
 import be.ac.umons.mom.g02.Managers.AnimationManager;
 import be.ac.umons.mom.g02.Objects.Course;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
@@ -67,7 +64,6 @@ public class AgendaShower extends Control {
             return;
         Point size = getMaximumSize(courses);
         if (isBeingAnimated) {
-            size.x = (int)(size.x * da.getActual());
             size.y = (int)(size.y * da.getActual());
         }
         Point pos = new Point(leftMargin, topMargin);

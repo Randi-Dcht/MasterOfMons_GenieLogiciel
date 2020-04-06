@@ -13,6 +13,7 @@ import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TextMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Managers.GameMapManager;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 import com.badlogic.gdx.Gdx;
 
 import java.net.SocketException;
@@ -79,6 +80,7 @@ public class DisconnectedMenuState extends MenuState {
     protected void onConnected() {
         Save save = SupervisorLAN.getSupervisor().createSave();
         nm.sendMessageOnTCP("SAVE", save);
+        nm.sendMessageOnTCP("PLAN", Supervisor.getPeople().getPlanning());
         nm.stopBroadcastingServerInfo();
     }
 

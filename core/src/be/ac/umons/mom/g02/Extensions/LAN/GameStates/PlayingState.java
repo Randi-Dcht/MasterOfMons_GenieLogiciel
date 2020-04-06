@@ -346,9 +346,9 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      * @param p2New The second player's new map
      */
     protected void refreshPNJsMap(String p1Old, String p1New, String p2Old, String p2New) {
-        if ( p1Old != null && p2New != null && ! p1Old.equals(p1New) && ! p2New.equals(p1Old))
+        if ( p1Old != null && p2New != null && ! p1Old.equals(p1New) && ! p2New.equals(p1Old)) // No player on p1Old
             removeAllPNJsFromMap(p1Old);
-        else if (p2Old != null && p2New != null && ! p2Old.equals(p1New) && ! p2New.equals(p2Old))
+        else if (p2Old != null && p2New != null && ! p2Old.equals(p1New) && ! p2New.equals(p2Old)) // No player on p2Old
             removeAllPNJsFromMap(p2Old);
     }
 
@@ -420,10 +420,17 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
     }
 
     @Override
+    public void quickLoad() {
+        super.quickLoad();
+        if (MasterOfMonsGame.getSettings().getLastSavePath() != null)
+            nm.sendMessageOnTCP("Save", SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getSettings().getLastSavePath()));
+    }
+
+    @Override
     public void getFocus() {
         super.getFocus();
         PlayingLANHelper.getFocus();
-        if (mazeMode) // If second player was disconnected
+        if (mazeMode && nm.isTheServer()) // If second player was disconnected
             nm.sendMessageOnTCP("ITMP", ! isTheMazePlayer);
     }
 
@@ -460,13 +467,6 @@ public class PlayingState extends be.ac.umons.mom.g02.Extensions.Multiplayer.Gam
      */
     public Point getSecondPlayerPosition() {
         return new Point(playerTwo.getPosX(), playerTwo.getPosY());
-    }
-
-    @Override
-    public void quickLoad() {
-        super.quickLoad();
-        if (MasterOfMonsGame.getSettings().getLastSavePath() != null)
-            nm.sendMessageOnTCP("Save", SupervisorLAN.getSupervisor().oldGameLAN(MasterOfMonsGame.getSettings().getLastSavePath()));
     }
 
     @Override
