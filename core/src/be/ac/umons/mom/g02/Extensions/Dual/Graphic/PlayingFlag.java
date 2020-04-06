@@ -106,14 +106,14 @@ public class PlayingFlag extends PlayingStateDual
     @Override
     public void handleInput()
     {
-        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && player2Life && !(selectedOne instanceof Character) && selectedOne != null)
+        if (gim.isKey("pickUpAnObjectTwo", KeyStatus.Pressed) && playerLife.get(playerTwo) && !(selectedOne instanceof Character) && selectedOne != null)
         {
             Items itm = ((MapObject)selectedOne).getItem();
             if (itm.getClass().equals(Flag.class) && ((Flag)itm).getMyPeople().equals(playerTwo.getCharacteristics())
                     && SupervisorMultiPlayer.getPeopleTwo().pushObject(itm))
                 pickUpAnObject();
         }
-        else if (gim.isKey("pickUpAnObject", KeyStatus.Pressed) && player2Life && !(selectedOne instanceof Character) && selectedOne != null)
+        else if (gim.isKey("pickUpAnObject", KeyStatus.Pressed) && playerLife.get(playerTwo) && !(selectedOne instanceof Character) && selectedOne != null)
         {
             Items itm = ((MapObject)selectedOne).getItem();
             if (itm.getClass().equals(Flag.class) && ((Flag)itm).getMyPeople().equals(player.getCharacteristics())
