@@ -40,10 +40,10 @@ public class SuccesfulYear extends UnderQuest
     @Override
     public void evenActivity(Notification notify)
     {
-        if (notify.getEvents().equals(Events.ChangeDay))
+        if (notify.getEvents().equals(Events.ChangeDay) && notify.bufferNotEmpty())
             checkingCourse();
 
-        if (notify.getEvents().equals(Events.EntryPlace))
+        if (notify.getEvents().equals(Events.EntryPlace) && notify.bufferNotEmpty())
         {
             goToStudy(((EntryPlaces)notify).getBuffer());
             goToLearn(((EntryPlaces)notify).getBuffer());

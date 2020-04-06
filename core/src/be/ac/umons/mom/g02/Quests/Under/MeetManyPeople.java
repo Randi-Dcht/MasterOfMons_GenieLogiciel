@@ -48,9 +48,9 @@ public class MeetManyPeople extends UnderQuest
     {
         if (notify.getEvents().equals(Events.Dialog) && notify.bufferNotEmpty())
             goToSpeak(((Dialog)notify).getBuffer().get(0));
-        if (notify.getEvents().equals(Events.MeetOther))
+        if (notify.getEvents().equals(Events.MeetOther) && notify.bufferNotEmpty())
             meetPNJ((Mobile)notify.getBuffer());
-        if (notify.getEvents().equals(Events.UseItems))
+        if (notify.getEvents().equals(Events.UseItems) && notify.bufferNotEmpty())
             helpByPhone(((UseItem)notify).getBuffer());
     }
 

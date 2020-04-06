@@ -39,9 +39,4 @@ public class TestExtensionDual
         assertEquals(d1.getAdvancement(), db1);
         assertEquals(d2.getAdvancement(), db2);
     }
-
-
-    @Test
-    public void catchFlag()
-    {}
 }
