@@ -235,7 +235,7 @@ public  abstract class Supervisor implements Observer
     {
         for (Maps plt : Maps.values())
             listMap.put(plt.getMaps(),plt);
-        getEvent().add(this, Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons);
+        getEvent().add(this, Events.Dead,Events.ChangeDay,Events.ChangeHour,Events.PlaceInMons, Events.LifeChanged);
         save = new Saving();
         associateLesson();
         graphicalMob = new HashMap<>();
@@ -642,6 +642,9 @@ public  abstract class Supervisor implements Observer
             if (first)
                 placeItem();
         }
+
+        if (notify.getEvents().equals(Events.LifeChanged) && playerOne != null && playerOne.isInvincible())
+            playerOne.setActualLife(playerOne.lifeMax(), false);
 
     }
 
