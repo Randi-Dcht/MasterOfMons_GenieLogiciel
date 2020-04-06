@@ -1,16 +1,13 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu;
 
-
-import be.ac.umons.mom.g02.GameStates.Dialogs.OutGameDialogState;
-import be.ac.umons.mom.g02.GameStates.GameState;
-import be.ac.umons.mom.g02.GameStates.Menus.*;
+import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
 import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 
 /***
  * This class allows to display the pause menu for the extension dual
@@ -30,7 +27,8 @@ public class DualPauseMenu extends MenuState {
     /**
      * @param gs The game's graphical settings.
      */
-    public DualPauseMenu(GraphicalSettings gs) {
+    public DualPauseMenu(GraphicalSettings gs)
+    {
         super(gs);
     }
 
@@ -45,17 +43,5 @@ public class DualPauseMenu extends MenuState {
              new TitleMenuItem(gs, GraphicalSettings.getStringFromId("dualPause")),
              new ButtonMenuItem(gim, gs, GraphicalSettings.getStringFromId("continue"), () -> gsm.removeFirstState())
         });
-    }
-
-    @Override
-    public void dispose()
-    {
-        super.dispose();
-        sr.dispose();
-    }
-
-    @Override
-    public void handleInput() {
-        super.handleInput();
     }
 }
