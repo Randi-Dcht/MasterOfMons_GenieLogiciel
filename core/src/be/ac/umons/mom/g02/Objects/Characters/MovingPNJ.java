@@ -162,23 +162,20 @@ public class MovingPNJ extends Mobile
             else
                 myGraphic.setOrientation(Orientation.Bottom);
         }
-        checkMove(x,y,dt);
+        checkMove(x,y);
     }
 
 
-    public void checkMove(int x, int y,double dtMemory)
+    /**
+     * This method allows to check the displacement on the city
+     * @param x is the translate on x
+     * @param y is the translate on y
+     */
+    public void checkMove(int x, int y)
     {
         myGraphic.move(x,y);
         if (x != 0 || y != 0)
             Supervisor.getEvent().notify(new PNJMoved(this, myGraphic.getMapPos()));
-       if (!ps.checkForCollision(myGraphic))
-        {
-       //     myGraphic.move(-x,-y);//back to old position
-            /*if (x == 0)TODO
-                moving(dtMemory,true,false);
-            else
-                moving(dtMemory,false,true);*/
-        }
     }
 
 
@@ -191,6 +188,7 @@ public class MovingPNJ extends Mobile
     {
         return myGraphic;
     }
+
 
     /**
      * @param victim The player that this PNJ need to attack

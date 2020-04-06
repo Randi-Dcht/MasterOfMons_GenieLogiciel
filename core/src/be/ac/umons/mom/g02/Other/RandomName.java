@@ -57,7 +57,7 @@ public class RandomName
         if (listName == null || listName.size()==0)
             createList();
         if (listName.size() == 0)
-            return "ERROR NAME";
+            return "Mobile";
         String name = listName.get(random(listName.size()));
         listName.remove(name);
         return name;
