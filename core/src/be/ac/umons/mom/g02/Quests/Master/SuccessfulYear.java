@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
 import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Quests.Under.*;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
@@ -10,6 +11,7 @@ import be.ac.umons.mom.g02.Objects.Items.Energizing;
 import be.ac.umons.mom.g02.Objects.Items.OldExam;
 import be.ac.umons.mom.g02.Objects.Items.PaperHelp;
 import be.ac.umons.mom.g02.Objects.Items.TheKillBoot;
+import be.ac.umons.mom.g02.Regulator.Supervisor;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,7 @@ public class SuccessfulYear extends MasterQuest
     {
         super(before,people, Bloc.BA2,difficulty);
         addUnderQuest(underQuest);
+        Supervisor.getEvent().add(this, Events.MeetOther,Events.Answer,Events.Help,Events.PlaceInMons,Events.ChangeHour,Events.UseItems,Events.Attack,Events.Dead);
     }
 
 

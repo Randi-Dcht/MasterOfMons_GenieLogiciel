@@ -1,6 +1,7 @@
 package be.ac.umons.mom.g02.Quests.Master;
 
 import be.ac.umons.mom.g02.Enums.*;
+import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Objects.Items.*;
 import be.ac.umons.mom.g02.Quests.Under.*;
@@ -35,6 +36,7 @@ public class MeetAndLearn extends MasterQuest
     {
         super(before,people, Bloc.BA3,difficulty);
         addUnderQuest(underQuest);
+        Supervisor.getEvent().add(this, Events.MeetOther,Events.EntryPlace,Events.PlaceInMons,Events.ChangeDay);
     }
 
 
