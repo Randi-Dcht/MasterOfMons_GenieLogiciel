@@ -439,6 +439,7 @@ public  abstract class Supervisor implements Observer
      */
     private void createMovingPnj(Difficulty difficulty)
     {
+        Random rd = new Random();int k;
         listMoving = new HashMap<>();
         Maps[] plc = Maps.values();
         Maps maps;
@@ -446,9 +447,13 @@ public  abstract class Supervisor implements Observer
             listMoving.put(pl,new ArrayList<>());
         for (int i = 0 ; i <= difficulty.getNumberPNJ() ; i++)
         {
-            //listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(people.getBloc(), MobileType.Athletic, maps)); TODO
+            k = rd.nextInt();
+            if (k%2 ==0)
+                listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(playerOne.getBloc(), MobileType.Athletic, maps,Actions.Dialog));
+            else
+                listMoving.get((maps = plc[new Random().nextInt(plc.length)])).add(new MovingPNJ(playerOne.getBloc(), MobileType.Athletic, maps,Actions.Attack));
         }
-        listMoving.get(Maps.Nimy).add(new MovingPNJ(Bloc.BA1,MobileType.Lambda,Maps.Nimy,Actions.Dialog));
+
     }
 
 
