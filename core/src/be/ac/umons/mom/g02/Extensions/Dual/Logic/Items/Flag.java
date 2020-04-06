@@ -3,6 +3,8 @@ package be.ac.umons.mom.g02.Extensions.Dual.Logic.Items;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 import be.ac.umons.mom.g02.Objects.Items.Items;
 
+import java.awt.*;
+
 /**
  * This class define the fag to catch in the game Dual
  */
@@ -17,6 +19,10 @@ public class Flag extends Items
      * This is the name of the camps
      */
     private String id;
+    /**
+     * This is the position on the maps
+     */
+    private Point positionOnMap;
 
 
     /**
@@ -70,7 +76,29 @@ public class Flag extends Items
     }
 
 
-    /***/
+    /**
+     * @return the position of the flag on the maps
+     */
+    public Point getPosition()
+    {
+        return positionOnMap;
+    }
+
+
+    /**
+     * Setter of the position of the flag
+     * @param positionOnMap is the point of position
+     */
+    public void setPositionOnMap(Point positionOnMap)
+    {
+        this.positionOnMap = positionOnMap;
+    }
+
+
+    /**
+     * The name of the flag
+     * @return the name of the flag
+     */
     @Override
     public String toString()
     {
