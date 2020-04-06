@@ -1,12 +1,10 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu;
 
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
-import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 
 /***
