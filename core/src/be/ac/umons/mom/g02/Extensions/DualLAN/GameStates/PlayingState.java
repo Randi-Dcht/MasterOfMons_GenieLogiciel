@@ -54,12 +54,14 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
         }
 
         super.init();
+        PlayingDualLANHelper.init(this);
 
         pauseButton.setOnClick(() -> {
             gsm.setState(InGameMenuState.class);
             nm.sendMessageOnTCP("Pause");
             PlayingLANHelper.pauseSent = true;
         });
+
         endDual.setOnClick(() -> {
             PlayingDualLANHelper.goToChoosingMenu();
             nm.sendOnTCP("EndDual");
@@ -73,6 +75,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
 
         nm.processMessagesNotRan();
         pos = false;
+    }
+
+    @Override
+    protected void onPause() {
+        PlayingLANHelper.onPause(this);
     }
 
     @Override

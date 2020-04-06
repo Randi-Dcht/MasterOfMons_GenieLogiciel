@@ -761,6 +761,7 @@ public class NetworkManager {
      * Close all the connections established.
      */
     public void close() {
+        onDisconnected = null;
         ps.close();
         try {
             br.close();

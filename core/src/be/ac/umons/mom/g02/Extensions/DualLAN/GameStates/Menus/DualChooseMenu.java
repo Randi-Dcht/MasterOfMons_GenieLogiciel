@@ -4,6 +4,8 @@ import be.ac.umons.mom.g02.Extensions.Dual.Logic.Enum.TypeDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.LAN.Managers.NetworkManager;
 import be.ac.umons.mom.g02.GameStates.Menus.MainMenuState;
+import be.ac.umons.mom.g02.GraphicalObjects.Controls.Button;
+import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
 
 import java.net.SocketException;
@@ -34,6 +36,14 @@ public class DualChooseMenu extends be.ac.umons.mom.g02.Extensions.Dual.Graphic.
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
             e.printStackTrace();
+        }
+
+        for (MenuItem mi : menuItems) {
+            if (mi.getId().equals("BTN_Go_Back"))
+                ((Button)mi.getControl()).setOnClick(() -> {
+                    gsm.removeAllStateAndAdd(MainMenuState.class);
+                    nm.close();
+                });
         }
     }
 
