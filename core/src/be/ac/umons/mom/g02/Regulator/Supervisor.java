@@ -598,7 +598,10 @@ public  abstract class Supervisor implements Observer
             playerOne.pushObject(it);
 
         if (mb.equals(memoryMobile))
-            memoryMobile = null;
+         {
+             memoryMobile = null;
+             playerOne.leaveMobile();
+         }
     }
 
 
@@ -823,6 +826,7 @@ public  abstract class Supervisor implements Observer
             event.notify(new MeetOther(memoryMobile = (Mobile)player2));
             dialog= listDialog.get(((Mobile)player2).getDialog());
         }
+        playerOne.meetMobile(memoryMobile);
         Actions action = player1.getAction().comparable(player2.getAction());
         if (action.equals(Actions.Attack))
             attackMethod(memoryMobile, playerOne);
@@ -849,6 +853,7 @@ public  abstract class Supervisor implements Observer
         {
             event.notify(new Dialog("ESC"));
             event.remove(Events.Answer,this);
+            playerOne.leaveMobile();
         }
         else if (answer.equals("Attack"))
         {

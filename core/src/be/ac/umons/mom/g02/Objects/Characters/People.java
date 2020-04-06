@@ -92,7 +92,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
     /**
      * The mobile to meet now
      */
-    private Mobile bufferMobile;//TODO
+    private Mobile bufferMobile;
     /**
      * The total of the point of characteristic
      */
@@ -106,7 +106,7 @@ public class People extends Character implements Serializable, Observer, FrameTi
      */
     private Items use;
     /***
-     *
+     * The size of list item
      */
     private int maxItem;
 
@@ -381,7 +381,10 @@ public class People extends Character implements Serializable, Observer, FrameTi
     }
 
 
-    /***/
+    /**
+     * This method allows to set the number of the item in the bag
+     * @param cmb is the number maximum of item
+     */
     public void setMaxItem(int cmb)
     {
         maxItem = cmb;
@@ -752,6 +755,29 @@ public class People extends Character implements Serializable, Observer, FrameTi
             setMeetMobile((Mobile) notify.getBuffer());
         if (notify.getEvents().equals(Events.GoLesson) && notify.bufferNotEmpty())
             checkCourseNow(((GoToLesson)notify).getBuffer());
+    }
+
+
+    /**
+     * Method is called when the player leave the mobile
+     */
+    public void leaveMobile()
+    {
+        bufferMobile =null;
+    }
+
+
+    /***/
+    public Mobile meet()
+    {
+        return bufferMobile;
+    }
+
+
+    /***/
+    public void meetMobile(Mobile mobile)
+    {
+        bufferMobile = mobile;
     }
 
 

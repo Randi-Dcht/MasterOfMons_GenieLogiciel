@@ -276,6 +276,7 @@ public class DialogCharacter
     {
         Supervisor.getEvent().notify(new Dialog("ESC"));
         Supervisor.getEvent().remove(Events.Answer,supervisor);
+        Supervisor.getPeople().leaveMobile();
     }
 
     /**
