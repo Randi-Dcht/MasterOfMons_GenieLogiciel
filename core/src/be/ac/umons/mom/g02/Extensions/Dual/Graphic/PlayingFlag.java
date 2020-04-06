@@ -55,13 +55,13 @@ public class PlayingFlag extends PlayingStateDual
         baseOne = new Cases(gs, Color.BLACK,Color.RED,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+player.getPosX(),MasterOfMonsGame.HEIGHT/2+player.getPosY());
         baseTwo = new Cases(gs, Color.BLACK,Color.BLUE,tileWidth*3,tileHeight,MasterOfMonsGame.WIDTH/2+playerTwo.getPosX(),MasterOfMonsGame.HEIGHT/2+playerTwo.getPosY());
 
-        Point ptFirst  = new Point((int)(MasterOfMonsGame.WIDTH/2+player.getPosX()-cam.position.x)/tileWidth,(int)(MasterOfMonsGame.HEIGHT/2+player.getPosY()-cam.position.y)/tileHeight);
-        Point ptSecond = new Point(playerTwo.getPosX()/tileWidth,playerTwo.getPosY()/tileHeight);
+        Point ptFirst  = new Point(11,7);
+        Point ptSecond = new Point(30,20);
 
         cleanInventory((People)player.getCharacteristics());
         cleanInventory((People)playerTwo.getCharacteristics());
 
-        PlaceFlag(new Point(ptFirst.x,ptFirst.y + 1),new Point(ptFirst.x,ptFirst.y + 2),new Point(ptFirst.x,ptFirst.y + 3),new Point(ptSecond.x,ptSecond.y + 1),new Point(ptSecond.x,ptSecond.y + 2),new Point(ptSecond.x,ptSecond.y + 3));
+        PlaceFlag(new Point(ptFirst.x+1,ptFirst.y + 1),new Point(ptFirst.x+2,ptFirst.y + 2),new Point(ptFirst.x+3,ptFirst.y + 3),new Point(ptSecond.x,ptSecond.y + 1),new Point(ptSecond.x,ptSecond.y + 2),new Point(ptSecond.x,ptSecond.y + 3));
 
         ((People) player.getCharacteristics()).setMaxItem(1);
         ((People) playerTwo.getCharacteristics()).setMaxItem(1);

@@ -1,28 +1,17 @@
 package be.ac.umons.mom.g02.Extensions.Dual.Graphic.Menu;
 
 import be.ac.umons.mom.g02.GameStates.Menus.MenuState;
-import be.ac.umons.mom.g02.GameStates.PlayingState;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.ButtonMenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.MenuItem;
 import be.ac.umons.mom.g02.GraphicalObjects.MenuItems.TitleMenuItem;
 import be.ac.umons.mom.g02.Objects.GraphicalSettings;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 
 /***
  * This class allows to display the pause menu for the extension dual
  */
-public class DualPauseMenu extends MenuState {
-
-    /**
-     * Allow to draw shapes.
-     */
-    protected ShapeRenderer sr;
-
-    /**
-     * The <code>PlayingState</code> that asked to in-game menu.
-     */
-    protected PlayingState ps;
+public class DualPauseMenu extends MenuState
+{
 
     /**
      * @param gs The game's graphical settings.
@@ -33,6 +22,9 @@ public class DualPauseMenu extends MenuState {
     }
 
 
+    /**
+     * Allows to init the menu of pause in the dual extension
+     */
     @Override
     public void init()
     {
