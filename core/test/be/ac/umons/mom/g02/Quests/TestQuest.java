@@ -150,21 +150,6 @@ public class TestQuest
         assertTrue(old < go.getProgress());
     }
 
-
-    //@Test
-    public void TestHelpMe()
-    {
-        //TODO
-    }
-
-
-    //@Test
-    public void TestSoulMate()
-    {
-        //TODO
-    }
-
-
     @Test
     public void TestLow()
     {
@@ -215,6 +200,7 @@ public class TestQuest
     {
         SuccesfulYear success = new SuccesfulYear(Supervisor.getSupervisor().actualQuest(),10,Supervisor.getPeople());
         double old = success.getAdvancement();
-        success.evenActivity(new EntryPlaces());//TODO
+        success.evenActivity(new EntryPlaces());
+        assertTrue(old < success.getAdvancement());
     }
 }
