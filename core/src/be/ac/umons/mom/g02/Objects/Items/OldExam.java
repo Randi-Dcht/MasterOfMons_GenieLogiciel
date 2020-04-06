@@ -3,7 +3,7 @@ package be.ac.umons.mom.g02.Objects.Items;
 /**
  * This class define the old exam for the player
  */
-public class OldExam extends Items//TODO delete
+public class OldExam extends Items
 {
 
     /**

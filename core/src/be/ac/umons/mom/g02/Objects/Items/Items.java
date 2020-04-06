@@ -63,7 +63,7 @@ public abstract class Items implements Serializable
      */
     public boolean removeInBag()
     {
-        return true;//TODO
+        return true;
     }
 
 
