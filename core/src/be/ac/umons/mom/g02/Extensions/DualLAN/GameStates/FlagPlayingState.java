@@ -4,7 +4,9 @@ import be.ac.umons.mom.g02.Enums.KeyStatus;
 import be.ac.umons.mom.g02.Events.Notifications.InventoryChanged;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
 import be.ac.umons.mom.g02.Extensions.Dual.Graphic.PlayingFlag;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Cases;
 import be.ac.umons.mom.g02.Extensions.Dual.Logic.Items.Flag;
+import be.ac.umons.mom.g02.Extensions.Dual.Logic.Regulator.SupervisorDual;
 import be.ac.umons.mom.g02.Extensions.DualLAN.GameStates.Menus.WinMenu;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Helpers.PlayingDualLANHelper;
 import be.ac.umons.mom.g02.Extensions.DualLAN.Interfaces.NetworkReady;
@@ -39,22 +41,30 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
      * If the color of the bases are inverted or not.
      */
     protected boolean colorInverted;
+    /**
+     * If we already called the changing to <code>WinMenu</code>
+     * @see WinMenu
+     */
+    protected boolean changingAlreadyCalled = false;
+    /**
+     * If a flag has already been picked up.
+     */
+    protected boolean flagPickedUp = false; // Useful because the inventory is cleared at each game -> Can induce bug
 
     /**
      * @param gs The graphical settings to use
      */
     public FlagPlayingState(GraphicalSettings gs) {
         super(gs);
+    }
+
+    @Override
+    public void init() {
         try {
             nm = NetworkManager.getInstance();
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        colorInverted = ! nm.isTheServer();
-    }
-
-    @Override
-    public void init() {
         super.init();
         PlayingDualLANHelper.init(this);
 
@@ -79,6 +89,7 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
                 if (! fomi.getItem().idOfPlace().equals(rec.getItem().idOfPlace()) && // ! because inversed camp (and only two camps)
                         fomi.getMapPos().equals(rec.getMapPos())) {
                     mapObjects.remove(i);
+                    flagPickedUp = true;
                     break;
                 }
             }
@@ -89,10 +100,7 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
             addItemToMap((MapObject.OnMapItem) objects[0]);
         });
         nm.sendMessageOnTCP("getItemsPos");
-        if (colorInverted) {
-            baseOne.setColorExt(Color.BLUE);
-            baseTwo.setColorExt(Color.RED);
-        }
+
         nm.whenMessageReceivedDo("CI", (objects) -> { // Clear Inventory
             super.cleanInventory((People) player.getCharacteristics());
             super.cleanInventory((People) playerTwo.getCharacteristics());
@@ -107,26 +115,39 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
             Items it = (Items)objects[0];
             InventoryChanged.Type type = (InventoryChanged.Type)objects[1];
             if (type == InventoryChanged.Type.Added)
-                ((People)getSecondPlayer().getCharacteristics()).pushObject(
+                ((People)getSecondPlayer().getCharacteristics()).pushObject( // Only flags in inventory
                         invertFlagColor((Flag)it));
             else if (type == InventoryChanged.Type.Removed) {
                 List<Items> inventory = playerTwo.getCharacteristics().getInventory();
-                inventory.remove(inventory.size() - 1);
+                Items f = inventory.remove(inventory.size() - 1); // Only flags in inventory
+                if (flagPickedUp) {
+                    f.used(SupervisorDual.getPeopleTwo());
+                    flagPickedUp = false;
+                }
             }
         });
 
+        setColor(! nm.isTheServer());
         nm.whenMessageReceivedDo("MICC", (objects) -> {
-            colorInverted = (boolean)objects[0];
-            if (colorInverted) {
-                baseOne.setColorExt(Color.BLUE);
-                baseTwo.setColorExt(Color.RED);
-            } else {
-                baseOne.setColorExt(Color.RED);
-                baseTwo.setColorExt(Color.BLUE);
-            }
+            setColor((boolean)objects[0]);
         });
 
         nm.processMessagesNotRan();
+    }
+
+    /**
+     * Invert the two bases if necessary.
+     * @param b If the two bases should be inverted
+     */
+    protected void setColor(boolean b) {
+        if (b == colorInverted)
+            return;
+        baseOne.setColorExt(Color.BLUE);
+        baseTwo.setColorExt(Color.RED);
+        Cases tmp = baseOne;
+        baseOne = baseTwo;
+        baseTwo = tmp;
+        colorInverted = b;
     }
 
     /**
@@ -170,7 +191,9 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
 
     @Override
     public void finishDual() {
-        gsm.setState(WinMenu.class, true);
+        if (! changingAlreadyCalled)
+            gsm.setState(WinMenu.class, true);
+        changingAlreadyCalled = true;
     }
 
     @Override
@@ -182,7 +205,7 @@ public class FlagPlayingState extends PlayingFlag implements NetworkReady {
     public void handleInput() {
         super.handleInput();
         PlayingDualLANHelper.handleInput(this);
-        if (gim.isKey("useAnObject", KeyStatus.Pressed))
+        if (gim.isKey("useAnObject", KeyStatus.Pressed) && baseOne.inCase(player))
         {
             InventoryItem ii = inventoryShower.getSelectedItem();
             if (ii != null)

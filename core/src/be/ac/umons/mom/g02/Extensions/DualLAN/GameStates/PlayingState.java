@@ -27,6 +27,11 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
      * The hashmap making the link between a character's name and its graphical object
      */
     protected HashMap<String, Character> idCharacterMap;
+    /**
+     * If we already called the changing to <code>WinMenu</code>
+     * @see WinMenu
+     */
+    protected boolean changingAlreadyCalled = false;
 
     /**
      * @param gs The game's graphical settings
@@ -151,7 +156,9 @@ public class PlayingState extends PlayingStateDual implements NetworkReady {
 
     @Override
     public void finishDual() {
-        gsm.setState(WinMenu.class, true);
+        if (! changingAlreadyCalled)
+            gsm.setState(WinMenu.class, true);
+        changingAlreadyCalled = true;
     }
 
     @Override
