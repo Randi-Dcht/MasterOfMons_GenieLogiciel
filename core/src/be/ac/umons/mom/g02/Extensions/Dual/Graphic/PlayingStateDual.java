@@ -431,9 +431,15 @@ public class PlayingStateDual extends PlayingState
     protected void whatPeople(Player player)
     {
         if (player.equals(this.player))
+        {
             player1Life = true;
+            player.setMapPos(supervisorDual.getDual().getPointPlayerOne());
+        }
         else
+        {
             player2Life = true;
+            playerTwo.setMapPos(supervisorDual.getDual().getPointPlayerTwo());
+        }
     }
 
 
