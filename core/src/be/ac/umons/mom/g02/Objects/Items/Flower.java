@@ -1,5 +1,6 @@
 package be.ac.umons.mom.g02.Objects.Items;
 
+import be.ac.umons.mom.g02.Enums.Maps;
 import be.ac.umons.mom.g02.Objects.Characters.People;
 
 /***/
@@ -12,6 +13,7 @@ public class Flower extends Items
     public Flower()
     {
         super("FlowerLove");
+        setMaps(Maps.Mons);
     }
 
 

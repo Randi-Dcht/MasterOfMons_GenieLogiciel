@@ -3,6 +3,7 @@ package be.ac.umons.mom.g02.Quests.Master;
 import be.ac.umons.mom.g02.Enums.*;
 import be.ac.umons.mom.g02.Events.Events;
 import be.ac.umons.mom.g02.Events.Notifications.Notification;
+import be.ac.umons.mom.g02.Objects.Characters.HelpPnj;
 import be.ac.umons.mom.g02.Quests.Under.*;
 import be.ac.umons.mom.g02.Regulator.SuperviserNormally;
 import be.ac.umons.mom.g02.Objects.Characters.People;
@@ -38,7 +39,7 @@ public class SuccessfulYear extends MasterQuest
     {
         super(before,people, Bloc.BA2,difficulty);
         addUnderQuest(underQuest);
-        Supervisor.getEvent().add(this, Events.MeetOther,Events.Answer,Events.Help,Events.PlaceInMons,Events.ChangeHour,Events.UseItems,Events.Attack,Events.Dead);
+        Supervisor.getEvent().add(this, Events.MeetOther,Events.Answer,Events.Help,Events.PlaceInMons,Events.ChangeHour,Events.UseItems,Events.Attack,Events.Dead,Events.GoLesson);
     }
 
 
@@ -68,7 +69,7 @@ public class SuccessfulYear extends MasterQuest
     public void createListItems() throws Exception
     {
         listItems = new ArrayList<>();
-        listItems.addAll(createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class,PaperHelp.class},new int[]{6,1,6,3}, new Maps[]{null,null,null,null}));
+        listItems.addAll(createListItems(new Class[]{Energizing.class, TheKillBoot.class, OldExam.class,PaperHelp.class},new int[]{16,1,6,3}, new Maps[]{null,null,null,null}));
     }
 
 
@@ -85,6 +86,8 @@ public class SuccessfulYear extends MasterQuest
                 new NameDialog[]{NameDialog.Lambda,NameDialog.Student,NameDialog.Lambda,NameDialog.Lambda,NameDialog.Lambda},
                 new Maps[]{null,null,Maps.Mons,Maps.GrandAmphi,Maps.Warocque},
                 true));
+        for (int i=0; i < 4 ; i++)
+            listMobs.add(new HelpPnj(getBloc()));
     }
 
 

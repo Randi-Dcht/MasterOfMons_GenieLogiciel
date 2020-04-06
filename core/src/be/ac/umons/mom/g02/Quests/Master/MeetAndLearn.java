@@ -66,7 +66,7 @@ public class MeetAndLearn extends MasterQuest
     protected void createListItems() throws Exception
     {
         listItems = new ArrayList<>();
-        listItems.addAll(createListItems(new Class[]{Energizing.class, Flower.class, OldExam.class},new int[]{10,1,6}, new Maps[]{null,null,null}));
+        listItems.addAll(createListItems(new Class[]{Energizing.class, Flower.class, OldExam.class},new int[]{25,1,6}, new Maps[]{null,null,null}));
 
     }
 
